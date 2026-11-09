@@ -1,0 +1,1111 @@
+{
+  "controls": [
+    {
+      "expanded": null,
+      "label": "Review: Refund $240 to Acme Corp",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Review",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Approve: Refund $240 to Acme Corp",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Approve",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Review: Merge the checkout fix",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Review",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Merge: Merge the checkout fix",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Merge",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Retry: Contact sync to the CRM",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Retry",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Undo: Answered support tickets",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Undo",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Undo: Closed stale pull requests",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Undo",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Undo: Triaged new issues",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Undo",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-rcp",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "14px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "16px 16px 12px"
+      },
+      "rect": {
+        "bottom": 935,
+        "height": 532,
+        "left": 442,
+        "right": 1246,
+        "top": 403,
+        "width": 804,
+        "x": 442,
+        "y": 403
+      },
+      "tag": "SECTION",
+      "text": "While you were awaySince 6:40 PM13h 30m3 done0 need you0 failed6:40 PM8:10 AMNeeds you2Refund $240 to Acme CorpSupport agent · over the $200 auto-approve limit2"
+    },
+    {
+      "cls": "ui-rcp__sr",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 419,
+        "height": 1,
+        "left": 457,
+        "right": 458,
+        "top": 418,
+        "width": 1,
+        "x": 457,
+        "y": 418
+      },
+      "tag": "P",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px 16px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 463,
+        "height": 44,
+        "left": 458,
+        "right": 1230,
+        "top": 419,
+        "width": 772,
+        "x": 458,
+        "y": 419
+      },
+      "tag": "HEADER",
+      "text": "While you were awaySince 6:40 PM13h 30m3 done0 need you0 failed"
+    },
+    {
+      "cls": "ui-rcp__title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "24px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 443,
+        "height": 24,
+        "left": 458,
+        "right": 610.0390625,
+        "top": 419,
+        "width": 152.0390625,
+        "x": 458,
+        "y": 419
+      },
+      "tag": "H2",
+      "text": "While you were away"
+    },
+    {
+      "cls": "ui-rcp__since",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "18px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 463,
+        "height": 18,
+        "left": 458,
+        "right": 610.0390625,
+        "top": 445,
+        "width": 152.0390625,
+        "x": 458,
+        "y": 445
+      },
+      "tag": "P",
+      "text": "Since 6:40 PM13h 30m"
+    },
+    {
+      "cls": "ui-rcp__pill",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.05)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "18px",
+        "padding": "0px 6px"
+      },
+      "rect": {
+        "bottom": 463,
+        "height": 18,
+        "left": 547.0703125,
+        "right": 609.1015625,
+        "top": 445,
+        "width": 62.03125,
+        "x": 547.0703125,
+        "y": 445
+      },
+      "tag": "SPAN",
+      "text": "13h 30m"
+    },
+    {
+      "cls": "ui-rcp__counts",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "4px 12px",
+        "lineHeight": "16px",
+        "padding": "4px 0px 0px"
+      },
+      "rect": {
+        "bottom": 439,
+        "height": 20,
+        "left": 998.265625,
+        "right": 1230,
+        "top": 419,
+        "width": 231.734375,
+        "x": 998.265625,
+        "y": 419
+      },
+      "tag": "UL",
+      "text": "3 done0 need you0 failed"
+    },
+    {
+      "cls": "ui-rcp__kind",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 438,
+        "height": 14,
+        "left": 998.265625,
+        "right": 1012.265625,
+        "top": 424,
+        "width": 14,
+        "x": 998.265625,
+        "y": 424
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__chart",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 573,
+        "height": 96,
+        "left": 458,
+        "right": 1230,
+        "top": 477,
+        "width": 772,
+        "x": 458,
+        "y": 477
+      },
+      "tag": "DIV",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__grid",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 573,
+        "height": 96,
+        "left": 458,
+        "right": 1230,
+        "top": 477,
+        "width": 772,
+        "x": 458,
+        "y": 477
+      },
+      "tag": "g",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__area",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 573,
+        "height": 82.94207763671875,
+        "left": 458,
+        "right": 1230,
+        "top": 490.0579223632813,
+        "width": 772,
+        "x": 458,
+        "y": 490.0579223632813
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__line",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 568.8541870117188,
+        "height": 78.7962646484375,
+        "left": 458,
+        "right": 1230,
+        "top": 490.0579223632813,
+        "width": 772,
+        "x": 458,
+        "y": 490.0579223632813
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__frame",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 573,
+        "height": 96,
+        "left": 458,
+        "right": 1230,
+        "top": 477,
+        "width": 772,
+        "x": 458,
+        "y": 477
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__dot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.55)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "50%",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 492.12689208984375,
+        "height": 4.3006591796875,
+        "left": 479.66998291015625,
+        "right": 483.97064208984375,
+        "top": 487.82623291015625,
+        "width": 4.3006591796875,
+        "x": 479.66998291015625,
+        "y": 487.82623291015625
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__ends",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "14px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 591,
+        "height": 14,
+        "left": 458,
+        "right": 1230,
+        "top": 577,
+        "width": 772,
+        "x": 458,
+        "y": 577
+      },
+      "tag": "DIV",
+      "text": "6:40 PM8:10 AM"
+    },
+    {
+      "cls": "ui-rcp__board",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 923,
+        "height": 318,
+        "left": 458,
+        "right": 1230,
+        "top": 605,
+        "width": 772,
+        "x": 458,
+        "y": 605
+      },
+      "tag": "DIV",
+      "text": "Needs you2Refund $240 to Acme CorpSupport agent · over the $200 auto-approve limit2:14 AMReviewApproveMerge the checkout fixAll 212 tests green · needs a code o"
+    },
+    {
+      "cls": "ui-rcp__lane",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(244, 244, 245)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "14px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "4px"
+      },
+      "rect": {
+        "bottom": 923,
+        "height": 318,
+        "left": 458,
+        "right": 710,
+        "top": 605,
+        "width": 252,
+        "x": 458,
+        "y": 605
+      },
+      "tag": "DIV",
+      "text": "Needs you2Refund $240 to Acme CorpSupport agent · over the $200 auto-approve limit2:14 AMReviewApproveMerge the checkout fixAll 212 tests green · needs a code o"
+    },
+    {
+      "cls": "ui-rcp__lane-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px 10px 0px 9px"
+      },
+      "rect": {
+        "bottom": 641,
+        "height": 32,
+        "left": 462,
+        "right": 706,
+        "top": 609,
+        "width": 244,
+        "x": 462,
+        "y": 609
+      },
+      "tag": "H3",
+      "text": "Needs you2"
+    },
+    {
+      "cls": "ui-rcp__lane-n",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(16, 16, 24, 0.06)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px 5px"
+      },
+      "rect": {
+        "bottom": 634,
+        "height": 18,
+        "left": 676,
+        "right": 696,
+        "top": 616,
+        "width": 20,
+        "x": 676,
+        "y": 616
+      },
+      "tag": "SPAN",
+      "text": "2"
+    },
+    {
+      "cls": "ui-rcp__cards",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 919,
+        "height": 278,
+        "left": 462,
+        "right": 706,
+        "top": 641,
+        "width": 244,
+        "x": 462,
+        "y": 641
+      },
+      "tag": "UL",
+      "text": "Refund $240 to Acme CorpSupport agent · over the $200 auto-approve limit2:14 AMReviewApproveMerge the checkout fixAll 212 tests green · needs a code owner4:37 A"
+    },
+    {
+      "cls": "ui-rcp__card",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "2px",
+        "lineHeight": "20px",
+        "padding": "9px 10px 9px 9px"
+      },
+      "rect": {
+        "bottom": 735,
+        "height": 90,
+        "left": 462,
+        "right": 706,
+        "top": 645,
+        "width": 244,
+        "x": 462,
+        "y": 645
+      },
+      "tag": "LI",
+      "text": "Refund $240 to Acme CorpSupport agent · over the $200 auto-approve limit2:14 AMReviewApprove"
+    },
+    {
+      "cls": "ui-rcp__card-top",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 674,
+        "height": 20,
+        "left": 471,
+        "right": 696,
+        "top": 654,
+        "width": 225,
+        "x": 471,
+        "y": 654
+      },
+      "tag": "SPAN",
+      "text": "Refund $240 to Acme Corp"
+    },
+    {
+      "cls": "ui-rcp__mark",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 673,
+        "height": 18,
+        "left": 471,
+        "right": 489,
+        "top": 655,
+        "width": 18,
+        "x": 471,
+        "y": 655
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__card-title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 674,
+        "height": 20,
+        "left": 497,
+        "right": 696,
+        "top": 654,
+        "width": 199,
+        "x": 497,
+        "y": 654
+      },
+      "tag": "SPAN",
+      "text": "Refund $240 to Acme Corp"
+    },
+    {
+      "cls": "ui-rcp__card-meta",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px 0px 0px 26px"
+      },
+      "rect": {
+        "bottom": 694,
+        "height": 18,
+        "left": 471,
+        "right": 696,
+        "top": 676,
+        "width": 225,
+        "x": 471,
+        "y": 676
+      },
+      "tag": "SPAN",
+      "text": "Support agent · over the $200 auto-approve limit2:14 AM"
+    },
+    {
+      "cls": "ui-rcp__detail",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 693,
+        "height": 16,
+        "left": 497,
+        "right": 643.1640625,
+        "top": 677,
+        "width": 146.1640625,
+        "x": 497,
+        "y": 677
+      },
+      "tag": "SPAN",
+      "text": "Support agent · over the $200 auto-approve limit"
+    },
+    {
+      "cls": "ui-rcp__time",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 695,
+        "height": 20,
+        "left": 651.1640625,
+        "right": 696,
+        "top": 675,
+        "width": 44.8359375,
+        "x": 651.1640625,
+        "y": 675
+      },
+      "tag": "TIME",
+      "text": "2:14 AM"
+    },
+    {
+      "cls": "ui-rcp__card-foot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 726,
+        "height": 24,
+        "left": 471,
+        "right": 696,
+        "top": 702,
+        "width": 225,
+        "x": 471,
+        "y": 702
+      },
+      "tag": "SPAN",
+      "text": "ReviewApprove"
+    },
+    {
+      "cls": "ui-rcp__status",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 714,
+        "height": 0,
+        "left": 471,
+        "right": 564.3515625,
+        "top": 714,
+        "width": 93.3515625,
+        "x": 471,
+        "y": 714
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-rcp__btn",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "5px",
+        "lineHeight": "20px",
+        "padding": "0px 8px"
+      },
+      "rect": {
+        "bottom": 726,
+        "height": 24,
+        "left": 568.3515625,
+        "right": 625.5078125,
+        "top": 702,
+        "width": 57.15625,
+        "x": 568.3515625,
+        "y": 702
+      },
+      "tag": "BUTTON",
+      "text": "Review"
+    },
+    {
+      "cls": "ui-rcp__btn ui-rcp__btn--main",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "5px",
+        "lineHeight": "20px",
+        "padding": "0px 9px"
+      },
+      "rect": {
+        "bottom": 726,
+        "height": 24,
+        "left": 629.5078125,
+        "right": 696,
+        "top": 702,
+        "width": 66.4921875,
+        "x": 629.5078125,
+        "y": 702
+      },
+      "tag": "BUTTON",
+      "text": "Approve"
+    },
+    {
+      "cls": "ui-rcp__btn-label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 724,
+        "height": 20,
+        "left": 638.5078125,
+        "right": 687,
+        "top": 704,
+        "width": 48.4921875,
+        "x": 638.5078125,
+        "y": 704
+      },
+      "tag": "SPAN",
+      "text": "Approve"
+    },
+    {
+      "cls": "ui-rcp__tag",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.05)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "4px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px 5px"
+      },
+      "rect": {
+        "bottom": 689.8016357421875,
+        "height": 16,
+        "left": 1140.1171875,
+        "right": 1163.7265625,
+        "top": 673.8016357421875,
+        "width": 23.609375,
+        "x": 1140.1171875,
+        "y": 673.8016357421875
+      },
+      "tag": "SPAN",
+      "text": "38"
+    },
+    {
+      "cls": "ui-rcp__state",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(26, 154, 82, 0.1)",
+        "border": "0px none rgb(26, 154, 82)",
+        "borderRadius": "5px",
+        "color": "rgb(26, 154, 82)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px 6px"
+      },
+      "rect": {
+        "bottom": 720.8016357421875,
+        "height": 20,
+        "left": 991,
+        "right": 1031.921875,
+        "top": 700.8016357421875,
+        "width": 40.921875,
+        "x": 991,
+        "y": 700.8016357421875
+      },
+      "tag": "SPAN",
+      "text": "Done"
+    }
+  ],
+  "svg": [
+    "<svg class=\"ui-rcp__kind\" data-kind=\"done\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"5.75\"></circle><path d=\"m5.6 8.2 1.6 1.6 3.2-3.4\"></path></svg>",
+    "<svg class=\"ui-rcp__kind\" data-kind=\"needs\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"5.25\" r=\"2.5\"></circle><path d=\"M3.25 13.25c.6-2.35 2.45-3.75 4.75-3.75s4.15 1.4 4.75 3.75\"></path></svg>",
+    "<svg class=\"ui-rcp__kind\" data-kind=\"failed\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7.13 2.75a1 1 0 0 1 1.74 0l5.2 9.25a1 1 0 0 1-.87 1.5H2.8a1 1 0 0 1-.87-1.5z\"></path><path d=\"M8 6.5v2.75M8 11.25v.01\"></path></svg>",
+    "<svg viewBox=\"0 0 1000 100\" preserveAspectRatio=\"none\"><defs><linearGradient id=\"ui-rcp_r_1_-fade\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"var(--ui-rcp-area)\" stop-opacity=\"1\"></stop><stop offset=\"1\" stop-color=\"var(--ui-rcp-area)\" stop-opacity=\"0\"></stop></linearGradient><clipPath id=\"ui-rcp_r_1_-clip\"><rect x=\"0\" y=\"0\" width=\"284.68348195501744\" height=\"100\"></rect></clipPath></defs><g class=\"ui-rcp__grid\"><line x1=\"0\" x2=\"1000\" y1=\"25\" y2=\"25\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"0\" x2=\"1000\" y1=\"50\" y2=\"50\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"0\" x2=\"1000\" y1=\"75\" y2=\"75\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"24.691358024691358\" x2=\"24.691358024691358\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"98.76543209876543\" x2=\"98.76543209876543\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"172.8395061728395\" x2=\"172.8395061728395\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"246.91358024691357\" x2=\"246.91358024691357\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"320.98765432098764\" x2=\"320.98765432098764\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"395.0617283950617\" x2=\"395.0617283950617\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"469.1358024691358\" x2=\"469.1358024691358\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"543.2098765432098\" x2=\"543.2098765432098\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"617.283950617284\" x2=\"617.283950617284\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"691.358024691358\" x2=\"691.358024691358\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"765.4320987654321\" x2=\"765.4320987654321\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"839.5061728395061\" x2=\"839.5061728395061\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"913.5802469135801\" x2=\"913.5802469135801\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line><line x1=\"987.6543209876543\" x2=\"987.6543209876543\" y1=\"0\" y2=\"100\" vector-effect=\"non-scaling-stroke\"></line></g><g clip-path=\"url(#ui-rcp_r_1_-clip)\"><path class=\"ui-rcp__area\" d=\"M 0 65.00302375908241 C 1.388888888888889 62.01915712724161, 5.555555555555555 53.0956230557175, 8.333333333333334 47.099823968037626 C 11.111111111111112 41.10402488035775, 13.888888888888891 34.138073237099796, 16.666666666666668 29.02822923300313 C 19.444444444444446 23.918385228906462, 22.22222222222222 18.94546481562481, 25 16.44075994345762 C 27.77777777777778 13.936055071290433, 30.555555555555557 12.990585815126378, 33.333333333333336 14 C 36.111111111111114 15.009414184873622, 38.888888888888886 18.47478951069365, 41.666666666666664 22.497245052699355 C 44.44444444444444 26.51970059470506, 47.22222222222222 32.79845649229814, 50 38.13473325203424 C 52.77777777777778 43.47101001177033, 55.55555555555556 49.918929750962064, 58.333333333333336 54.5149056111159 C 61.111111111111114 59.110881471269735, 63.88888888888889 63.391367862234894, 66.66666666666667 65.71058841295724 C 69.44444444444444 68.02980896367957, 72.22222222222223 68.93402132905243, 75 68.43022891544994 C 77.77777777777777 67.92643650184746, 80.55555555555556 65.50805090381202, 83.33333333333333 62.68783393134231 C 86.1111111111111 59.8676169588726, 88.88888888888889 55.294789368457245, 91.66666666666666 51.5089270806317 C 94.44444444444443 47.723064792806156, 97.22222222222221 42.991838854154295, 100 39.972660204389044 C 102.77777777777779 36.95348155462379, 105.55555555555557 34.22471612791091, 108.33333333333334 33.39385518204017 C 111.11111111111111 32.56299423616943, 113.8888888888889 33.158414347541466, 116.66666666666667 34.987494529164614 C 119.44444444444444 36.81657471078776, 122.22222222222223 40.518979033181736, 125 44.368336271779064 C 127.77777777777777 48.21769351037639, 130.55555555555557 53.50953742766584, 133.33333333333334 58.08363796074857 C 136.11111111111111 62.657738493831296, 138.88888888888889 67.73457325720635, 141.66666666666666 71.81293947027544 C 144.44444444444443 75.89130568334453, 147.22222222222223 79.61827297964099, 150 82.55383523916313 C 152.77777777777777 85.48939749868528, 155.55555555555554 87.66873793407044, 158.33333333333331 89.42631302740831 C 161.1111111111111 91.18388812074619, 163.88888888888889 92.2107257353409, 166.66666666666666 93.09928579919037 C 169.44444444444443 93.98784586303984, 172.22222222222223 94.37534776593426, 175 94.75767341050513 C 177.77777777777777 95.139999055076, 180.55555555555554 95.2539228623834, 183.33333333333331 95.39323966661557 C 186.1111111111111 95.53255647084774, 188.8888888888889 95.5569325558634, 191.66666666666669 95.59357423589815 C 194.44444444444446 95.6302159159329, 197.22222222222223 95.6322861278529, 200 95.61308974682403 C 202.77777777777777 95.59389336579517, 205.55555555555557 95.58085861954888, 208.33333333333334 95.47839594972494 C 211.11111111111111 95.375933279901, 213.8888888888889 95.30170754172782, 216.66666666666669 94.99831372788043 C 219.44444444444446 94.69491991403304, 222.22222222222223 94.41026453726576, 225 93.65803306664061 C 227.77777777777777 92.90580159601546, 230.55555555555557 92.07475161014236, 233.33333333333334 90.4849249041295 C 236.11111111111111 88.89509819811664, 238.88888888888889 86.96764041032154, 241.66666666666666 84.11907283056347 C 244.44444444444443 81.2705052508054, 247.22222222222223 77.66983918416851, 250 73.3935194255811 C 252.77777777777777 69.1171996669937, 255.5555555555556 63.72132440186208, 258.33333333333337 58.46115427903902 C 261.11111111111114 53.200984156215966, 263.8888888888889 46.87803442537304, 266.6666666666667 41.832498688642794 C 269.44444444444446 36.78696295191255, 272.22222222222223 31.427816086593598, 275 28.187939858657572 C 277.77777777777777 24.948063630721546, 280.55555555555554 22.63491146955502, 283.3333333333333 22.393241321026636 C 286.1111111111111 22.15157117249825, 288.8888888888889 23.887812827123174, 291.6666666666667 26.73791896748726 C 294.44444444444446 29.588025107851347, 297.22222222222223 34.61514111868684, 300 39.493878163211164 C 302.77777777777777 44.372615207735485, 305.5555555555556 50.69005663744893, 308.33333333333337 56.01034123463319 C 311.11111111111114 61.33062583181744, 313.88888888888886 66.94688807888194, 316.66666666666663 71.4155857463167 C 319.4444444444444 75.88428341375145, 322.22222222222223 79.76211367220853, 325 82.82252723924174 C 327.77777777777777 85.88294080627495, 330.55555555555554 88.02623515346455, 333.3333333333333 89.77806714851599 C 336.1111111111111 91.52989914356742, 338.8888888888889 92.4844587095649, 341.6666666666667 93.33351920955036 C 344.44444444444446 94.18257970953582, 347.22222222222223 94.52135943259337, 350 94.87243014842868 C 352.77777777777777 95.22350086426398, 355.55555555555554 95.31551733941464, 358.3333333333333 95.4399435045622 C 361.1111111111111 95.56436966970975, 363.88888888888886 95.58106965670645, 366.66666666666663 95.61898713931402 C 369.4444444444444 95.65690462192158, 372.22222222222223 95.65749211467259, 375 95.6674484002076 C 377.77777777777777 95.67740468574262, 380.5555555555556 95.67646891210802, 383.33333333333337 95.67872485252411 C 386.11111111111114 95.6809807929402, 388.8888888888889 95.68054248499314, 391.6666666666667 95.68098404270415 C 394.44444444444446 95.68142560041517, 397.22222222222223 95.68129948438244, 400 95.68137419879017 C 402.77777777777777 95.6814489131979, 405.55555555555554 95.68142139925988, 408.3333333333333 95.68143232915052 C 411.1111111111111 95.68144325904117, 413.8888888888889 95.6814384516405, 416.6666666666667 95.68143977813409 C 419.44444444444446 95.68144110462768, 422.22222222222223 95.68144069539647, 425 95.68144028811209 C 427.77777777777777 95.6814398808277, 430.5555555555556 95.68144195242334, 433.33333333333337 95.6814373344278 C 436.11111111111114 95.68143271643225, 438.88888888888886 95.68144579483825, 441.66666666666663 95.68141258013884 C 444.4444444444444 95.68137936543943, 447.22222222222223 95.68144408531317, 450 95.68123804623129 C 452.77777777777777 95.6810320071494, 455.55555555555554 95.68128144614838, 458.3333333333333 95.6801763456475 C 461.1111111111111 95.67907124514662, 463.8888888888889 95.67972904019534, 466.6666666666667 95.67460744322605 C 469.44444444444446 95.66948584625676, 472.22222222222223 95.66993721091785, 475 95.64944676383178 C 477.77777777777777 95.6289563167457, 480.55555555555554 95.62234013381799, 483.3333333333333 95.55166476070963 C 486.1111111111111 95.48098938760127, 488.88888888888886 95.43516465945495, 491.66666666666663 95.22539452518164 C 494.4444444444444 95.01562439090833, 497.22222222222223 94.82736294606542, 500 94.29304395506979 C 502.77777777777777 93.75872496407416, 505.55555555555554 93.18275205565047, 508.3333333333333 92.01948057920784 C 511.1111111111111 90.8562091027652, 513.8888888888889 89.46449031434285, 516.6666666666667 87.31341509641402 C 519.4444444444446 85.16233987848518, 522.2222222222222 82.4568965256843, 525 79.11302927163484 C 527.7777777777778 75.76916201758539, 530.5555555555557 71.5408720931531, 533.3333333333334 67.25021157211728 C 536.1111111111111 62.95955105108146, 538.8888888888889 57.7500589712766, 541.6666666666666 53.369066145419936 C 544.4444444444443 48.98807331956327, 547.2222222222222 44.21301900250748, 550 40.96425461697729 C 552.7777777777778 37.715490231447106, 555.5555555555557 35.06096060175625, 558.3333333333334 33.876479832238815 C 561.1111111111111 32.69199906272138, 563.8888888888889 32.99957179171396, 566.6666666666666 33.857369999872674 C 569.4444444444443 34.715168208031386, 572.2222222222222 37.21400831634862, 575 39.02326908119111 C 577.7777777777778 40.8325298460336, 580.5555555555557 43.477488675614545, 583.3333333333334 44.71293458892761 C 586.1111111111111 45.948380502240674, 588.8888888888889 46.74266152892541, 591.6666666666666 46.43594456106951 C 594.4444444444443 46.12922759321361, 597.2222222222222 44.48390943007233, 600 42.872632781792234 C 602.7777777777778 41.26135613351214, 605.5555555555554 38.40070099817573, 608.3333333333333 36.76828467138893 C 611.1111111111111 35.13586834460214, 613.8888888888889 33.256399013691436, 616.6666666666667 33.07813482107146 C 619.4444444444446 32.89987062845148, 622.2222222222223 33.69128182676483, 625 35.69869951566905 C 627.7777777777777 37.70611720457327, 630.5555555555554 41.31421135790858, 633.3333333333333 45.12264095449679 C 636.1111111111111 48.93107055108499, 638.8888888888889 54.07161832818008, 641.6666666666667 58.54927709519828 C 644.4444444444446 63.026935862216476, 647.2222222222222 67.99703988231528, 650 71.98859355660596 C 652.7777777777778 75.98014723089665, 655.5555555555557 79.65492009805486, 658.3333333333334 82.49859914094239 C 661.1111111111111 85.34227818382992, 663.8888888888889 87.4772005200424, 666.6666666666666 89.05066781393111 C 669.4444444444443 90.62413510781982, 672.2222222222222 91.50558947315415, 675 91.93940290427462 C 677.7777777777778 92.37321633539509, 680.5555555555557 92.28805367627275, 683.3333333333334 91.65354840065393 C 686.1111111111111 91.01904312503511, 688.8888888888889 89.9331715965844, 691.6666666666666 88.13237125056169 C 694.4444444444443 86.33157090453898, 697.2222222222222 83.92426097833177, 700 80.84874632451765 C 702.7777777777778 77.77323167070352, 705.5555555555557 73.81514040299987, 708.3333333333334 69.67928332767697 C 711.1111111111111 65.54342625235407, 713.8888888888889 60.43357460970127, 716.6666666666666 56.033603872580215 C 719.4444444444443 51.633633135459164, 722.2222222222222 46.67246794175344, 725 43.27945890495064 C 727.7777777777778 39.886449868147835, 730.5555555555554 36.863451437572714, 733.3333333333333 35.6755496517634 C 736.1111111111111 34.48764786595408, 738.8888888888889 34.67825002602433, 741.6666666666667 36.152048190094725 C 744.4444444444446 37.62584635416512, 747.2222222222223 40.94596467440556, 750 44.51833863618579 C 752.7777777777777 48.09071259796602, 755.5555555555554 53.15471789952722, 758.3333333333333 57.58629196077612 C 761.1111111111111 62.017866022025025, 763.8888888888889 67.04738183498873, 766.6666666666667 71.1077830036792 C 769.4444444444446 75.16818417236968, 772.2222222222222 78.9611939768014, 775 81.94869897291902 C 777.7777777777778 84.93620396903664, 780.5555555555557 87.2087977825723, 783.3333333333334 89.03281298038496 C 786.1111111111111 90.85682817819762, 788.8888888888889 91.95357098883596, 791.6666666666666 92.89279015979498 C 794.4444444444443 93.832009330754, 797.2222222222222 94.25651829574225, 800 94.66812800613904 C 802.7777777777778 95.07973771653583, 805.5555555555557 95.20806246719332, 808.3333333333334 95.36244842217573 C 811.1111111111111 95.51683437715815, 813.8888888888889 95.54470417007208, 816.6666666666666 95.59444373603354 C 819.4444444444443 95.644183301995, 822.2222222222222 95.64708755331921, 825 95.66088581794452 C 827.7777777777778 95.67468408256983, 830.5555555555557 95.67393185634498, 833.3333333333334 95.67723332378539 C 836.1111111111111 95.6805347912258, 838.8888888888889 95.68001249245282, 841.6666666666666 95.68069462258694 C 844.4444444444443 95.68137675272106, 847.2222222222222 95.6812042963079, 850 95.68132610459011 C 852.7777777777778 95.68144791287233, 855.5555555555554 95.68140666154791, 858.3333333333333 95.68142547228027 C 861.1111111111111 95.68144428301262, 863.8888888888889 95.68143645564238, 866.6666666666667 95.68143896898425 C 869.4444444444446 95.68144148232612, 872.2222222222223 95.68144026168835, 875 95.68144055233148 C 877.7777777777777 95.68144084297461, 880.5555555555554 95.68144068374664, 883.3333333333333 95.68144071284303 C 886.1111111111111 95.68144074193941, 888.8888888888889 95.68144072438764, 891.6666666666667 95.68144072690978 C 894.4444444444446 95.68144072943193, 897.2222222222222 95.68144072778652, 900 95.68144072797585 C 902.7777777777778 95.68144072816519, 905.5555555555557 95.68144072803344, 908.3333333333334 95.68144072804574 C 911.1111111111111 95.68144072805805, 913.8888888888889 95.681440728049, 916.6666666666666 95.6814407280497 C 919.4444444444443 95.68144072805039, 922.2222222222222 95.68144072804986, 925 95.68144072804989 C 927.7777777777778 95.68144072804992, 930.5555555555557 95.6814407280499, 933.3333333333334 95.6814407280499 C 936.1111111111111 95.6814407280499, 938.8888888888889 95.6814407280499, 941.6666666666666 95.6814407280499 C 944.4444444444443 95.6814407280499, 947.2222222222222 95.6814407280499, 950 95.6814407280499 C 952.7777777777778 95.6814407280499, 955.5555555555557 95.6814407280499, 958.3333333333334 95.6814407280499 C 961.1111111111111 95.6814407280499, 963.8888888888889 95.6814407280499, 966.6666666666666 95.6814407280499 C 969.4444444444443 95.6814407280499, 972.2222222222222 95.6814407280499, 975 95.6814407280499 C 977.7777777777778 95.6814407280499, 980.5555555555554 95.6814407280499, 983.3333333333333 95.6814407280499 C 986.1111111111111 95.6814407280499, 988.8888888888889 95.6814407280499, 991.6666666666667 95.6814407280499 C 994.4444444444446 95.6814407280499, 998.6111111111111 95.6814407280499, 1000 95.6814407280499 L 1000 100 L 0 100 Z\" fill=\"url(#ui-rcp_r_1_-fade)\"></path><path class=\"ui-rcp__line\" d=\"M 0 65.00302375908241 C 1.388888888888889 62.01915712724161, 5.555555555555555 53.0956230557175, 8.333333333333334 47.099823968037626 C 11.111111111111112 41.10402488035775, 13.888888888888891 34.138073237099796, 16.666666666666668 29.02822923300313 C 19.444444444444446 23.918385228906462, 22.22222222222222 18.94546481562481, 25 16.44075994345762 C 27.77777777777778 13.936055071290433, 30.555555555555557 12.990585815126378, 33.333333333333336 14 C 36.111111111111114 15.009414184873622, 38.888888888888886 18.47478951069365, 41.666666666666664 22.497245052699355 C 44.44444444444444 26.51970059470506, 47.22222222222222 32.79845649229814, 50 38.13473325203424 C 52.77777777777778 43.47101001177033, 55.55555555555556 49.918929750962064, 58.333333333333336 54.5149056111159 C 61.111111111111114 59.110881471269735, 63.88888888888889 63.391367862234894, 66.66666666666667 65.71058841295724 C 69.44444444444444 68.02980896367957, 72.22222222222223 68.93402132905243, 75 68.43022891544994 C 77.77777777777777 67.92643650184746, 80.55555555555556 65.50805090381202, 83.33333333333333 62.68783393134231 C 86.1111111111111 59.8676169588726, 88.88888888888889 55.294789368457245, 91.66666666666666 51.5089270806317 C 94.44444444444443 47.723064792806156, 97.22222222222221 42.991838854154295, 100 39.972660204389044 C 102.77777777777779 36.95348155462379, 105.55555555555557 34.22471612791091, 108.33333333333334 33.39385518204017 C 111.11111111111111 32.56299423616943, 113.8888888888889 33.158414347541466, 116.66666666666667 34.987494529164614 C 119.44444444444444 36.81657471078776, 122.22222222222223 40.518979033181736, 125 44.368336271779064 C 127.77777777777777 48.21769351037639, 130.55555555555557 53.50953742766584, 133.33333333333334 58.08363796074857 C 136.11111111111111 62.657738493831296, 138.88888888888889 67.73457325720635, 141.66666666666666 71.81293947027544 C 144.44444444444443 75.89130568334453, 147.22222222222223 79.61827297964099, 150 82.55383523916313 C 152.77777777777777 85.48939749868528, 155.55555555555554 87.66873793407044, 158.33333333333331 89.42631302740831 C 161.1111111111111 91.18388812074619, 163.88888888888889 92.2107257353409, 166.66666666666666 93.09928579919037 C 169.44444444444443 93.98784586303984, 172.22222222222223 94.37534776593426, 175 94.75767341050513 C 177.77777777777777 95.139999055076, 180.55555555555554 95.2539228623834, 183.33333333333331 95.39323966661557 C 186.1111111111111 95.53255647084774, 188.8888888888889 95.5569325558634, 191.66666666666669 95.59357423589815 C 194.44444444444446 95.6302159159329, 197.22222222222223 95.6322861278529, 200 95.61308974682403 C 202.77777777777777 95.59389336579517, 205.55555555555557 95.58085861954888, 208.33333333333334 95.47839594972494 C 211.11111111111111 95.375933279901, 213.8888888888889 95.30170754172782, 216.66666666666669 94.99831372788043 C 219.44444444444446 94.69491991403304, 222.22222222222223 94.41026453726576, 225 93.65803306664061 C 227.77777777777777 92.90580159601546, 230.55555555555557 92.07475161014236, 233.33333333333334 90.4849249041295 C 236.11111111111111 88.89509819811664, 238.88888888888889 86.96764041032154, 241.66666666666666 84.11907283056347 C 244.44444444444443 81.2705052508054, 247.22222222222223 77.66983918416851, 250 73.3935194255811 C 252.77777777777777 69.1171996669937, 255.5555555555556 63.72132440186208, 258.33333333333337 58.46115427903902 C 261.11111111111114 53.200984156215966, 263.8888888888889 46.87803442537304, 266.6666666666667 41.832498688642794 C 269.44444444444446 36.78696295191255, 272.22222222222223 31.427816086593598, 275 28.187939858657572 C 277.77777777777777 24.948063630721546, 280.55555555555554 22.63491146955502, 283.3333333333333 22.393241321026636 C 286.1111111111111 22.15157117249825, 288.8888888888889 23.887812827123174, 291.6666666666667 26.73791896748726 C 294.44444444444446 29.588025107851347, 297.22222222222223 34.61514111868684, 300 39.493878163211164 C 302.77777777777777 44.372615207735485, 305.5555555555556 50.69005663744893, 308.33333333333337 56.01034123463319 C 311.11111111111114 61.33062583181744, 313.88888888888886 66.94688807888194, 316.66666666666663 71.4155857463167 C 319.4444444444444 75.88428341375145, 322.22222222222223 79.76211367220853, 325 82.82252723924174 C 327.77777777777777 85.88294080627495, 330.55555555555554 88.02623515346455, 333.3333333333333 89.77806714851599 C 336.1111111111111 91.52989914356742, 338.8888888888889 92.4844587095649, 341.6666666666667 93.33351920955036 C 344.44444444444446 94.18257970953582, 347.22222222222223 94.52135943259337, 350 94.87243014842868 C 352.77777777777777 95.22350086426398, 355.55555555555554 95.31551733941464, 358.3333333333333 95.4399435045622 C 361.1111111111111 95.56436966970975, 363.88888888888886 95.58106965670645, 366.66666666666663 95.61898713931402 C 369.4444444444444 95.65690462192158, 372.22222222222223 95.65749211467259, 375 95.6674484002076 C 377.77777777777777 95.67740468574262, 380.5555555555556 95.67646891210802, 383.33333333333337 95.67872485252411 C 386.11111111111114 95.6809807929402, 388.8888888888889 95.68054248499314, 391.6666666666667 95.68098404270415 C 394.44444444444446 95.68142560041517, 397.22222222222223 95.68129948438244, 400 95.68137419879017 C 402.77777777777777 95.6814489131979, 405.55555555555554 95.68142139925988, 408.3333333333333 95.68143232915052 C 411.1111111111111 95.68144325904117, 413.8888888888889 95.6814384516405, 416.6666666666667 95.68143977813409 C 419.44444444444446 95.68144110462768, 422.22222222222223 95.68144069539647, 425 95.68144028811209 C 427.77777777777777 95.6814398808277, 430.5555555555556 95.68144195242334, 433.33333333333337 95.6814373344278 C 436.11111111111114 95.68143271643225, 438.88888888888886 95.68144579483825, 441.66666666666663 95.68141258013884 C 444.4444444444444 95.68137936543943, 447.22222222222223 95.68144408531317, 450 95.68123804623129 C 452.77777777777777 95.6810320071494, 455.55555555555554 95.68128144614838, 458.3333333333333 95.6801763456475 C 461.1111111111111 95.67907124514662, 463.8888888888889 95.67972904019534, 466.6666666666667 95.67460744322605 C 469.44444444444446 95.66948584625676, 472.22222222222223 95.66993721091785, 475 95.64944676383178 C 477.77777777777777 95.6289563167457, 480.55555555555554 95.62234013381799, 483.3333333333333 95.55166476070963 C 486.1111111111111 95.48098938760127, 488.88888888888886 95.43516465945495, 491.66666666666663 95.22539452518164 C 494.4444444444444 95.01562439090833, 497.22222222222223 94.82736294606542, 500 94.29304395506979 C 502.77777777777777 93.75872496407416, 505.55555555555554 93.18275205565047, 508.3333333333333 92.01948057920784 C 511.1111111111111 90.8562091027652, 513.8888888888889 89.46449031434285, 516.6666666666667 87.31341509641402 C 519.4444444444446 85.16233987848518, 522.2222222222222 82.4568965256843, 525 79.11302927163484 C 527.7777777777778 75.76916201758539, 530.5555555555557 71.5408720931531, 533.3333333333334 67.25021157211728 C 536.1111111111111 62.95955105108146, 538.8888888888889 57.7500589712766, 541.6666666666666 53.369066145419936 C 544.4444444444443 48.98807331956327, 547.2222222222222 44.21301900250748, 550 40.96425461697729 C 552.7777777777778 37.715490231447106, 555.5555555555557 35.06096060175625, 558.3333333333334 33.876479832238815 C 561.1111111111111 32.69199906272138, 563.8888888888889 32.99957179171396, 566.6666666666666 33.857369999872674 C 569.4444444444443 34.715168208031386, 572.2222222222222 37.21400831634862, 575 39.02326908119111 C 577.7777777777778 40.8325298460336, 580.5555555555557 43.477488675614545, 583.3333333333334 44.71293458892761 C 586.1111111111111 45.948380502240674, 588.8888888888889 46.74266152892541, 591.6666666666666 46.43594456106951 C 594.4444444444443 46.12922759321361, 597.2222222222222 44.48390943007233, 600 42.872632781792234 C 602.7777777777778 41.26135613351214, 605.5555555555554 38.40070099817573, 608.3333333333333 36.76828467138893 C 611.1111111111111 35.13586834460214, 613.8888888888889 33.256399013691436, 616.6666666666667 33.07813482107146 C 619.4444444444446 32.89987062845148, 622.2222222222223 33.69128182676483, 625 35.69869951566905 C 627.7777777777777 37.70611720457327, 630.5555555555554 41.31421135790858, 633.3333333333333 45.12264095449679 C 636.1111111111111 48.93107055108499, 638.8888888888889 54.07161832818008, 641.6666666666667 58.54927709519828 C 644.4444444444446 63.026935862216476, 647.2222222222222 67.99703988231528, 650 71.98859355660596 C 652.7777777777778 75.98014723089665, 655.5555555555557 79.65492009805486, 658.3333333333334 82.49859914094239 C 661.1111111111111 85.34227818382992, 663.8888888888889 87.4772005200424, 666.6666666666666 89.05066781393111 C 669.4444444444443 90.62413510781982, 672.2222222222222 91.50558947315415, 675 91.93940290427462 C 677.7777777777778 92.37321633539509, 680.5555555555557 92.28805367627275, 683.3333333333334 91.65354840065393 C 686.1111111111111 91.01904312503511, 688.8888888888889 89.9331715965844, 691.6666666666666 88.13237125056169 C 694.4444444444443 86.33157090453898, 697.2222222222222 83.92426097833177, 700 80.84874632451765 C 702.7777777777778 77.77323167070352, 705.5555555555557 73.81514040299987, 708.3333333333334 69.67928332767697 C 711.1111111111111 65.54342625235407, 713.8888888888889 60.43357460970127, 716.6666666666666 56.033603872580215 C 719.4444444444443 51.633633135459164, 722.2222222222222 46.67246794175344, 725 43.27945890495064 C 727.7777777777778 39.886449868147835, 730.5555555555554 36.863451437572714, 733.3333333333333 35.6755496517634 C 736.1111111111111 34.48764786595408, 738.8888888888889 34.67825002602433, 741.6666666666667 36.152048190094725 C 744.4444444444446 37.62584635416512, 747.2222222222223 40.94596467440556, 750 44.51833863618579 C 752.7777777777777 48.09071259796602, 755.5555555555554 53.15471789952722, 758.3333333333333 57.58629196077612 C 761.1111111111111 62.017866022025025, 763.8888888888889 67.04738183498873, 766.6666666666667 71.1077830036792 C 769.4444444444446 75.16818417236968, 772.2222222222222 78.9611939768014, 775 81.94869897291902 C 777.7777777777778 84.93620396903664, 780.5555555555557 87.2087977825723, 783.3333333333334 89.03281298038496 C 786.1111111111111 90.85682817819762, 788.8888888888889 91.95357098883596, 791.6666666666666 92.89279015979498 C 794.4444444444443 93.832009330754, 797.2222222222222 94.25651829574225, 800 94.66812800613904 C 802.7777777777778 95.07973771653583, 805.5555555555557 95.20806246719332, 808.3333333333334 95.36244842217573 C 811.1111111111111 95.51683437715815, 813.8888888888889 95.54470417007208, 816.6666666666666 95.59444373603354 C 819.4444444444443 95.644183301995, 822.2222222222222 95.64708755331921, 825 95.66088581794452 C 827.7777777777778 95.67468408256983, 830.5555555555557 95.67393185634498, 833.3333333333334 95.67723332378539 C 836.1111111111111 95.6805347912258, 838.8888888888889 95.68001249245282, 841.6666666666666 95.68069462258694 C 844.4444444444443 95.68137675272106, 847.2222222222222 95.6812042963079, 850 95.68132610459011 C 852.7777777777778 95.68144791287233, 855.5555555555554 95.68140666154791, 858.3333333333333 95.68142547228027 C 861.1111111111111 95.68144428301262, 863.8888888888889 95.68143645564238, 866.6666666666667 95.68143896898425 C 869.4444444444446 95.68144148232612, 872.2222222222223 95.68144026168835, 875 95.68144055233148 C 877.7777777777777 95.68144084297461, 880.5555555555554 95.68144068374664, 883.3333333333333 95.68144071284303 C 886.1111111111111 95.68144074193941, 888.8888888888889 95.68144072438764, 891.6666666666667 95.68144072690978 C 894.4444444444446 95.68144072943193, 897.2222222222222 95.68144072778652, 900 95.68144072797585 C 902.7777777777778 95.68144072816519, 905.5555555555557 95.68144072803344, 908.3333333333334 95.68144072804574 C 911.1111111111111 95.68144072805805, 913.8888888888889 95.681440728049, 916.6666666666666 95.6814407280497 C 919.4444444444443 95.68144072805039, 922.2222222222222 95.68144072804986, 925 95.68144072804989 C 927.7777777777778 95.68144072804992, 930.5555555555557 95.6814407280499, 933.3333333333334 95.6814407280499 C 936.1111111111111 95.6814407280499, 938.8888888888889 95.6814407280499, 941.6666666666666 95.6814407280499 C 944.4444444444443 95.6814407280499, 947.2222222222222 95.6814407280499, 950 95.6814407280499 C 952.7777777777778 95.6814407280499, 955.5555555555557 95.6814407280499, 958.3333333333334 95.6814407280499 C 961.1111111111111 95.6814407280499, 963.8888888888889 95.6814407280499, 966.6666666666666 95.6814407280499 C 969.4444444444443 95.6814407280499, 972.2222222222222 95.6814407280499, 975 95.6814407280499 C 977.7777777777778 95.6814407280499, 980.5555555555554 95.6814407280499, 983.3333333333333 95.6814407280499 C 986.1111111111111 95.6814407280499, 988.8888888888889 95.6814407280499, 991.6666666666667 95.6814407280499 C 994.4444444444446 95.6814407280499, 998.6111111111111 95.6814407280499, 1000 95.6814407280499\" vector-effect=\"non-scaling-stroke\"></path></g></svg>",
+    "<svg class=\"ui-rcp__kind\" data-kind=\"needs\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"5.25\" r=\"2.5\"></circle><path d=\"M3.25 13.25c.6-2.35 2.45-3.75 4.75-3.75s4.15 1.4 4.75 3.75\"></path></svg>",
+    "<svg viewBox=\"0 0 49.883 49.877\" fill=\"none\" aria-hidden=\"true\"><g transform=\"translate(0 0)\"><path d=\"M18.3549 10.4784C15.4713 10.4784 13.1157 8.12279 13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V10.4784H18.3549Z\" fill=\"#36C5F0\"></path><path d=\"M18.3575 13.12C21.2411 13.12 23.5967 15.4756 23.5967 18.3592C23.5967 21.2428 21.2411 23.5984 18.3575 23.5984H5.2392C2.35561 23.5984 0 21.2428 0 18.3592C0 15.4756 2.35561 13.12 5.2392 13.12H18.3575Z\" fill=\"#36C5F0\"></path></g><g transform=\"translate(26.28 0)\"><path d=\"M13.1244 18.3592C13.1244 15.4756 15.48 13.12 18.3636 13.12C21.2472 13.12 23.6028 15.4756 23.6028 18.3592C23.6028 21.2428 21.2472 23.5984 18.3636 23.5984H13.1244V18.3592Z\" fill=\"#2EB67D\"></path><path d=\"M10.4785 18.3575C10.4785 21.2411 8.12286 23.5967 5.23927 23.5967C2.35568 23.5967 7.4362e-05 21.2411 7.4362e-05 18.3575V5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0C8.12286 0 10.4785 2.35561 10.4785 5.2392V18.3575Z\" fill=\"#2EB67D\"></path></g><g transform=\"translate(0 26.28)\"><path d=\"M10.4784 5.2392C10.4784 8.12279 8.12279 10.4784 5.2392 10.4784C2.35561 10.4784 0 8.12279 0 5.2392C0 2.35561 2.35561 0 5.2392 0H10.4784V5.2392Z\" fill=\"#E01E5A\"></path><path d=\"M13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V18.3575C23.5941 21.2411 21.2385 23.5967 18.3549 23.5967C15.4713 23.5967 13.1157 21.2411 13.1157 18.3575V5.2392Z\" fill=\"#E01E5A\"></path></g><g transform=\"translate(26.28 26.28)\"><path d=\"M5.23927 13.1157C8.12286 13.1157 10.4785 15.4713 10.4785 18.3549C10.4785 21.2385 8.12286 23.5941 5.23927 23.5941C2.35568 23.5941 7.4362e-05 21.2385 7.4362e-05 18.3549V13.1157H5.23927Z\" fill=\"#ECB22E\"></path><path d=\"M5.23927 10.4784C2.35568 10.4784 7.4362e-05 8.12279 7.4362e-05 5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0H18.3576C21.2412 0 23.5968 2.35561 23.5968 5.2392C23.5968 8.12279 21.2412 10.4784 18.3576 10.4784H5.23927Z\" fill=\"#ECB22E\"></path></g></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-rcp-strong, #181717);\"><path d=\"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12\"></path></svg>",
+    "<svg class=\"ui-rcp__kind\" data-kind=\"failed\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7.13 2.75a1 1 0 0 1 1.74 0l5.2 9.25a1 1 0 0 1-.87 1.5H2.8a1 1 0 0 1-.87-1.5z\"></path><path d=\"M8 6.5v2.75M8 11.25v.01\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#1FA463\" aria-hidden=\"true\"><path d=\"M12.01 1.485c-2.082 0-3.754.02-3.743.047.01.02 1.708 3.001 3.774 6.62l3.76 6.574h3.76c2.081 0 3.753-.02 3.742-.047-.005-.02-1.708-3.001-3.775-6.62l-3.76-6.574zm-4.76 1.73a789.828 789.861 0 0 0-3.63 6.319L0 15.868l1.89 3.298 1.885 3.297 3.62-6.335 3.618-6.33-1.88-3.287C8.1 4.704 7.255 3.22 7.25 3.214zm2.259 12.653-.203.348c-.114.198-.96 1.672-1.88 3.287a423.93 423.948 0 0 1-1.698 2.97c-.01.026 3.24.042 7.222.042h7.244l1.796-3.157c.992-1.734 1.85-3.23 1.906-3.323l.104-.167h-7.249z\"></path></svg>",
+    "<svg class=\"ui-rcp__kind\" data-kind=\"done\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"5.75\"></circle><path d=\"m5.6 8.2 1.6 1.6 3.2-3.4\"></path></svg>",
+    "<svg viewBox=\"0 0 49.883 49.877\" fill=\"none\" aria-hidden=\"true\"><g transform=\"translate(0 0)\"><path d=\"M18.3549 10.4784C15.4713 10.4784 13.1157 8.12279 13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V10.4784H18.3549Z\" fill=\"#36C5F0\"></path><path d=\"M18.3575 13.12C21.2411 13.12 23.5967 15.4756 23.5967 18.3592C23.5967 21.2428 21.2411 23.5984 18.3575 23.5984H5.2392C2.35561 23.5984 0 21.2428 0 18.3592C0 15.4756 2.35561 13.12 5.2392 13.12H18.3575Z\" fill=\"#36C5F0\"></path></g><g transform=\"translate(26.28 0)\"><path d=\"M13.1244 18.3592C13.1244 15.4756 15.48 13.12 18.3636 13.12C21.2472 13.12 23.6028 15.4756 23.6028 18.3592C23.6028 21.2428 21.2472 23.5984 18.3636 23.5984H13.1244V18.3592Z\" fill=\"#2EB67D\"></path><path d=\"M10.4785 18.3575C10.4785 21.2411 8.12286 23.5967 5.23927 23.5967C2.35568 23.5967 7.4362e-05 21.2411 7.4362e-05 18.3575V5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0C8.12286 0 10.4785 2.35561 10.4785 5.2392V18.3575Z\" fill=\"#2EB67D\"></path></g><g transform=\"translate(0 26.28)\"><path d=\"M10.4784 5.2392C10.4784 8.12279 8.12279 10.4784 5.2392 10.4784C2.35561 10.4784 0 8.12279 0 5.2392C0 2.35561 2.35561 0 5.2392 0H10.4784V5.2392Z\" fill=\"#E01E5A\"></path><path d=\"M13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V18.3575C23.5941 21.2411 21.2385 23.5967 18.3549 23.5967C15.4713 23.5967 13.1157 21.2411 13.1157 18.3575V5.2392Z\" fill=\"#E01E5A\"></path></g><g transform=\"translate(26.28 26.28)\"><path d=\"M5.23927 13.1157C8.12286 13.1157 10.4785 15.4713 10.4785 18.3549C10.4785 21.2385 8.12286 23.5941 5.23927 23.5941C2.35568 23.5941 7.4362e-05 21.2385 7.4362e-05 18.3549V13.1157H5.23927Z\" fill=\"#ECB22E\"></path><path d=\"M5.23927 10.4784C2.35568 10.4784 7.4362e-05 8.12279 7.4362e-05 5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0H18.3576C21.2412 0 23.5968 2.35561 23.5968 5.2392C23.5968 8.12279 21.2412 10.4784 18.3576 10.4784H5.23927Z\" fill=\"#ECB22E\"></path></g></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-rcp-strong, #181717);\"><path d=\"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#5E6AD2\" aria-hidden=\"true\"><path d=\"M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.887 4.18ZM1.817 5.626l16.556 16.556c-.524.33-1.075.62-1.65.866L.951 7.277c.247-.575.537-1.126.866-1.65ZM.322 9.163l14.515 14.515c-.71.172-1.443.282-2.195.322L0 11.358a12 12 0 0 1 .322-2.195Zm-.17 4.862 9.823 9.824a12.02 12.02 0 0 1-9.824-9.824Z\"></path></svg>"
+  ],
+  "url": "https://www.affectui.com/components/agent-recap",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Agents\":\n        - /url: /category/agents\n      - generic: Agent Recap\n    - heading \"Agent Recap\" [level=1]\n    - paragraph: What the agents did while you were away – the night as a small chart with a peak per event, then a board of what needs you, what failed and what's done, acted on right on the card.\n    - link \"Get Pro to install\":\n      - /url: /pricing\n      - generic: Get Pro to install\n    - tablist \"Agent Recap preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - region \"While you were away\":\n      - paragraph\n      - heading \"While you were away\" [level=2]\n      - paragraph:\n        - text: Since 6:40 PM\n        - generic: 13h 30m\n      - list \"Summary\":\n        - generic: \"2\"\n        - text: done\n        - generic: \"0\"\n        - text: need you\n        - generic: \"0\"\n        - text: failed\n      - generic: 6:40 PM\n      - generic: 8:10 AM\n      - heading \"Needs you 2\" [level=3]:\n        - text: Needs you\n        - generic: \"2\"\n      - list:\n        - generic \"Refund $240 to Acme Corp\"\n        - generic \"Support agent · over the $200 auto-approve limit\"\n        - time: 2:14 AM\n        - 'button \"Review: Refund $240 to Acme Corp\"': Review\n        - 'button \"Approve: Refund $240 to Acme Corp\"':\n          - generic: Approve\n        - generic \"Merge the checkout fix\"\n        - generic \"All 212 tests green · needs a code owner\"\n        - time: 4:37 AM\n        - 'button \"Review: Merge the checkout fix\"': Review\n        - 'button \"Merge: Merge the checkout fix\"':\n          - generic: Merge\n      - heading \"Failed 1\" [level=3]:\n        - text: Failed\n        - generic: \"1\"\n      - list:\n        - generic \"Contact sync to the CRM\"\n        - generic \"Token expired after 1,284 of 3,900 contacts\"\n        - time: 3:02 AM\n        - 'button \"Retry: Contact sync to the CRM\"':\n          - generic: Retry\n      - heading \"Done 3\" [level=3]:\n        - text: Done\n        - generic: \"3\"\n      - list:\n        - generic \"Answered support tickets\"\n        - generic \"first reply in 2 min\"\n        - generic: \"38\"\n        - time: 7:05 PM\n        - generic: Done\n        - 'button \"Undo: Answered support tickets\"': Undo\n        - generic \"Closed stale pull requests\"\n        - generic: \"6\"\n        - time: 8:10 PM\n        - generic: Done\n        - 'button \"Undo: Closed stale pull requests\"': Undo\n        - generic \"Triaged new issues\"\n        - generic \"4 marked urgent\"\n        - generic: \"17\"\n        - time: 10:30 PM\n        - generic: Done\n        - 'button \"Undo: Triaged new issues\"': Undo\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: The first thing people see when they come back to agents that kept working – in the morning, after a meeting, after a weekend\n      - listitem: A catch-up where the few things that need a decision come first and can be decided right there\n      - listitem: Showing that the agents were busy without making people read every step\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: A live feed of what agents are doing right now – use Agent Monitor or Agent Lanes\n      - listitem: A full log with undo for every change – use Agent Ledger\n      - listitem: Decisions without the rest of the night – use Decision Inbox\n    - heading \"Installation\" [level=2]\n    - paragraph: Agent Recap is a Pro component.\n    - strong: Installation is part of Pro\n    - generic: Get Pro to copy the code, install it with the CLI and use it in your projects.\n    - link \"Unlock with Pro\":\n      - /url: /pricing\n      - generic: Unlock with Pro\n    - heading \"Usage\" [level=2]\n    - strong: Usage example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Examples\" [level=2]\n    - heading \"Retry that takes a while\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"No replay\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"API reference\" [level=2]\n    - heading \"AgentRecap\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - 'row \"events RecapEvent[] – { id, at, kind, title, detail?, logo?, count?, action?, doneLabel? } – everything that happened, any order\"':\n          - cell \"events\":\n            - code: events\n          - cell \"RecapEvent[]\":\n            - code: RecapEvent[]\n          - cell \"–\"\n          - 'cell \"{ id, at, kind, title, detail?, logo?, count?, action?, doneLabel? } – everything that happened, any order\"'\n        - row \"kind \\\"needs\\\" | \\\"failed\\\" | \\\"done\\\" – Per event – needs you (with its action), failed (with Retry) or done\":\n          - cell \"kind\":\n            - code: kind\n          - cell \"\\\"needs\\\" | \\\"failed\\\" | \\\"done\\\"\":\n            - code: \"\\\"needs\\\" | \\\"failed\\\" | \\\"done\\\"\"\n          - cell \"–\"\n          - cell \"Per event – needs you (with its action), failed (with Retry) or done\"\n        - row \"since / until Date | string | number – When the person left, and now – the chart runs between them; until defaults to the time it renders\":\n          - cell \"since / until\":\n            - code: since / until\n          - cell \"Date | string | number\":\n            - code: Date | string | number\n          - cell \"–\"\n          - cell \"When the person left, and now – the chart runs between them; until defaults to the time it renders\"\n        - 'row \"onAction (event, action: \\\"primary\\\" | \\\"review\\\") => void | Promise – The main action (Approve, Retry …) or Review. Return a promise and the row shows it working until it settles – a rejected one puts the row back\"':\n          - cell \"onAction\":\n            - code: onAction\n          - 'cell \"(event, action: \\\"primary\\\" | \\\"review\\\") => void | Promise\"':\n            - code: \"(event, action: \\\"primary\\\" | \\\"review\\\") => void | Promise\"\n          - cell \"–\"\n          - cell \"The main action (Approve, Retry …) or Review. Return a promise and the row shows it working until it settles – a rejected one puts the row back\"\n        - row \"onUndo / onRedo (event) => void – Undo on a card that was acted on or on something an agent did (a done card), and Redo after that\":\n          - cell \"onUndo / onRedo\":\n            - code: onUndo / onRedo\n          - cell \"(event) => void\":\n            - code: (event) => void\n          - cell \"–\"\n          - cell \"Undo on a card that was acted on or on something an agent did (a done card), and Redo after that\"\n        - row \"limit number 3 Cards per lane at most – every lane keeps room for this many, so the three stay the same height however full they are\":\n          - cell \"limit\":\n            - code: limit\n          - cell \"number\":\n            - code: number\n          - cell \"3\":\n            - code: \"3\"\n          - cell \"Cards per lane at most – every lane keeps room for this many, so the three stay the same height however full they are\"\n        - row \"replay number 1800 How long the night replays when it opens, in ms – 0 shows everything at once\":\n          - cell \"replay\":\n            - code: replay\n          - cell \"number\":\n            - code: number\n          - cell \"1800\":\n            - code: \"1800\"\n          - cell \"How long the night replays when it opens, in ms – 0 shows everything at once\"\n        - row \"title string \\\"While you were away\\\" Heading\":\n          - cell \"title\":\n            - code: title\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"While you were away\\\"\":\n            - code: \"\\\"While you were away\\\"\"\n          - cell \"Heading\"\n        - row \"locale string – For the times and counts\":\n          - cell \"locale\":\n            - code: locale\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"For the times and counts\"\n        - row \"className string – Extra class on the root\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Tab Moves through the actions card by card – Review, then the main action (or Undo / Redo)\":\n          - cell \"Tab\":\n            - generic: Tab\n          - cell \"Moves through the actions card by card – Review, then the main action (or Undo / Redo)\"\n        - row \"Enter or Space Runs the focused action; focus then moves to Undo, and back to the action after Undo\":\n          - cell \"Enter or Space\":\n            - generic: Enter\n            - text: or\n            - generic: Space\n          - cell \"Runs the focused action; focus then moves to Undo, and back to the action after Undo\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: A section named by its heading; each lane has a heading with its count – of everything in it, also beyond the limit\n      - listitem: \"Every button says what it does to which task – \\\"Approve: Refund $240 to Acme Corp\\\" – so a screen reader never hears three bare Approves\"\n      - listitem: \"When an action finishes, a polite live region says so – \\\"Approved: Refund $240 to Acme Corp\\\" – and focus moves to Undo, so it never drops to the page\"\n      - listitem: Focusing anything in a card lights up its dot on the chart, the same as pointing at it; the chart itself is decorative and hidden from screen readers – everything on it is in the cards\n      - listitem: Every time is a <time> with the full date; empty lanes say so in words\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: The night is a small line chart with a peak per event and an area fading out below; when it opens, the line draws itself from left to right, each dot pops onto its peak as it's passed, its card fades in and the counts count along\n      - listitem: Pointing at the chart draws a line through its whole height; close to an event it snaps there, the dot grows, its card lights up and a tip says what it was – pointing at a card lights up its dot\n      - listitem: With prefers-reduced-motion everything shows at once\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: Every card is the same height and ends in the same line – a state tag (Done, Fixed, Approved) and the buttons – so acting on one never moves anything\n      - listitem: Under 640px the three lanes stack\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Notes for AI\" [level=2]\n    - paragraph: Give your coding assistant this summary instead of screenshots.\n    - list:\n      - listitem: Give every event a unique id – Undo, focus and the chart keep track of cards by it\n      - listitem: Events without a readable time are left out; ones before since or after until sit at the chart's edges\n      - listitem: A lane shows up to limit cards – keep the rest for a full view and link to it from your page\n      - listitem: since is when the person was last active – store it when they leave or go idle\n      - listitem: Merge many small done events into one card with a count (38 tickets) instead of 38 cards – the count also makes its peak taller\n      - listitem: Give needs cards a doneLabel in the past tense of their action – Approve → Approved, Send → Sent\n      - listitem: Colors are variables on .ui-rcp, e.g. --ui-rcp-needs or --ui-rcp-failed\n    - heading \"Related\" [level=2]\n    - article:\n      - generic: Feedback\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - link \"Decision Inbox Open decisions with two quick answers each – answered ones confirm and fold away\":\n        - /url: /components/decision-inbox\n        - heading \"Decision Inbox\" [level=3]\n        - paragraph: Open decisions with two quick answers each – answered ones confirm and fold away\n      - button \"Copy to clipboard\":\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Agent Inbox All your background agent tasks in one calm list – live clocks and status tags, filter tabs with rolling counts, rows that unfold to the last steps with Approve, Reject, Retry or Open, and glide to their new place\":\n        - /url: /components/agent-inbox\n        - heading \"Agent Inbox\" [level=3]\n        - paragraph: All your background agent tasks in one calm list – live clocks and status tags, filter tabs with rolling counts, rows that unfold to the last steps with Approve, Reject, Retry or Open, and glide to their new place\n      - button \"Agent Inbox is part of Pro – see pricing\":\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - 'link \"Agent Ledger Everything an agent changed in your systems, each change with an undo – before and after per row, and pointing at Undo shows what builds on it: what would be undone too, and what can''t be taken back\"':\n        - /url: /components/agent-ledger\n        - heading \"Agent Ledger\" [level=3]\n        - paragraph: \"Everything an agent changed in your systems, each change with an undo – before and after per row, and pointing at Undo shows what builds on it: what would be undone too, and what can't be taken back\"\n      - button \"Agent Ledger is part of Pro – see pricing\":\n    - article:\n      - generic: Feedback\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - link \"Notification Stack Notice cards stacked behind each other – dismiss the front one to reveal the next\":\n        - /url: /components/notification-stack\n        - heading \"Notification Stack\" [level=3]\n        - paragraph: Notice cards stacked behind each other – dismiss the front one to reveal the next\n      - button \"Copy to clipboard\":\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

@@ -1,0 +1,1754 @@
+{
+  "controls": [
+    {
+      "expanded": null,
+      "label": "Pause the queue",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Pause",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "One worker less",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "One worker more",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": "Embed 240 docs · 4/5, Tool call, running 1.3s, 88%",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Embed 240 docs · 4/51.3s",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": "Embed 240 docs · 5/5, Tool call, running 0.4s, 29%",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Embed 240 docs · 5/50.4s",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": "Update roadmap page, Tool call, running 0.1s, 6%",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Update roadmap page0.1s",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": "Open PR #500, Tool call, waiting 1.6s, position 1 of 2",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Open PR #5001.6s",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": "Score lead – Tailspin, LLM call, waiting 1.1s, position 2 of 2",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Score lead – Tailspin1.1s",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": "Draft reply – Acme VIP, LLM call, running 0.5s, 25%, high priority",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Draft reply – Acme VIP0.5s",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-agqc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "12px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 998,
+        "height": 540,
+        "left": 466,
+        "right": 1222,
+        "top": 458,
+        "width": 756,
+        "x": 466,
+        "y": 458
+      },
+      "tag": "DIV",
+      "text": "Queueagent-jobsLivePause4Waiting2Running4/4Throughput77/minWait p9513sQueue2Workers4/4Sonnet 5.5GPT-6 SolGemini 3.8 FlashHaiku 5Done131Failed3Embed 240 docs · 4"
+    },
+    {
+      "cls": "ui-agqc__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "12px 12px 12px 16px"
+      },
+      "rect": {
+        "bottom": 510.5,
+        "height": 52.5,
+        "left": 466,
+        "right": 1222,
+        "top": 458,
+        "width": 756,
+        "x": 466,
+        "y": 458
+      },
+      "tag": "HEADER",
+      "text": "Queueagent-jobsLivePause4"
+    },
+    {
+      "cls": "ui-agqc__mark",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 96, 226, 0.765)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 96, 226, 0.765)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 492,
+        "height": 16,
+        "left": 482,
+        "right": 498,
+        "top": 476,
+        "width": 16,
+        "x": 482,
+        "y": 476
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 494,
+        "height": 20,
+        "left": 506,
+        "right": 546.90625,
+        "top": 474,
+        "width": 40.90625,
+        "x": 506,
+        "y": 474
+      },
+      "tag": "SPAN",
+      "text": "Queue"
+    },
+    {
+      "cls": "ui-agqc__name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 494,
+        "height": 20,
+        "left": 554.90625,
+        "right": 621.1875,
+        "top": 474,
+        "width": 66.28125,
+        "x": 554.90625,
+        "y": 474
+      },
+      "tag": "SPAN",
+      "text": "agent-jobs"
+    },
+    {
+      "cls": "ui-agqc__pill",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 143, 245, 0.098)",
+        "border": "0px none rgba(0, 109, 203, 0.95)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 109, 203, 0.95)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "5px",
+        "lineHeight": "16px",
+        "padding": "0px 7px"
+      },
+      "rect": {
+        "bottom": 494,
+        "height": 20,
+        "left": 629.1875,
+        "right": 677.71875,
+        "top": 474,
+        "width": 48.53125,
+        "x": 629.1875,
+        "y": 474
+      },
+      "tag": "SPAN",
+      "text": "Live"
+    },
+    {
+      "cls": "ui-agqc__pulse",
+      "css": {
+        "animationDuration": "1.4s",
+        "animationName": "ui-agqc-pulse",
+        "backgroundColor": "rgba(0, 109, 203, 0.95)",
+        "border": "0px none rgba(0, 109, 203, 0.95)",
+        "borderRadius": "50%",
+        "color": "rgba(0, 109, 203, 0.95)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 487,
+        "height": 6,
+        "left": 636.1875,
+        "right": 642.1875,
+        "top": 481,
+        "width": 6,
+        "x": 636.1875,
+        "y": 481
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__tools",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 498,
+        "height": 28,
+        "left": 1047.875,
+        "right": 1210,
+        "top": 470,
+        "width": 162.125,
+        "x": 1047.875,
+        "y": 470
+      },
+      "tag": "SPAN",
+      "text": "Pause4"
+    },
+    {
+      "cls": "ui-agqc__btn",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 10px 0px 6px"
+      },
+      "rect": {
+        "bottom": 498,
+        "height": 28,
+        "left": 1047.875,
+        "right": 1124,
+        "top": 470,
+        "width": 76.125,
+        "x": 1047.875,
+        "y": 470
+      },
+      "tag": "BUTTON",
+      "text": "Pause"
+    },
+    {
+      "cls": "ui-agqc__btn-text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 494,
+        "height": 20,
+        "left": 1075.875,
+        "right": 1114,
+        "top": 474,
+        "width": 38.125,
+        "x": 1075.875,
+        "y": 474
+      },
+      "tag": "SPAN",
+      "text": "Pause"
+    },
+    {
+      "cls": "ui-agqc__stepper",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px 2px 0px 10px"
+      },
+      "rect": {
+        "bottom": 498,
+        "height": 28,
+        "left": 1132,
+        "right": 1210,
+        "top": 470,
+        "width": 78,
+        "x": 1132,
+        "y": 470
+      },
+      "tag": "SPAN",
+      "text": "4"
+    },
+    {
+      "cls": "ui-agqc__stepper-value",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 494,
+        "height": 20,
+        "left": 1166,
+        "right": 1184,
+        "top": 474,
+        "width": 18,
+        "x": 1166,
+        "y": 474
+      },
+      "tag": "OUTPUT",
+      "text": "4"
+    },
+    {
+      "cls": "ui-agqc__card",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 998,
+        "height": 487.5,
+        "left": 466,
+        "right": 1222,
+        "top": 510.5,
+        "width": 756,
+        "x": 466,
+        "y": 510.5
+      },
+      "tag": "DIV",
+      "text": "Waiting2Running4/4Throughput77/minWait p9513sQueue2Workers4/4Sonnet 5.5GPT-6 SolGemini 3.8 FlashHaiku 5Done131Failed3Embed 240 docs · 4/51.3sEmbed 240 docs · 5/"
+    },
+    {
+      "cls": "ui-agqc__stats",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "12px 0px"
+      },
+      "rect": {
+        "bottom": 578,
+        "height": 67.5,
+        "left": 466,
+        "right": 1222,
+        "top": 510.5,
+        "width": 756,
+        "x": 466,
+        "y": 510.5
+      },
+      "tag": "DL",
+      "text": "Waiting2Running4/4Throughput77/minWait p9513s"
+    },
+    {
+      "cls": "ui-agqc__stat",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "2px",
+        "lineHeight": "20px",
+        "padding": "0px 16px 0px 22px"
+      },
+      "rect": {
+        "bottom": 565.5,
+        "height": 43,
+        "left": 466,
+        "right": 655,
+        "top": 522.5,
+        "width": 189,
+        "x": 466,
+        "y": 522.5
+      },
+      "tag": "DIV",
+      "text": "Waiting2"
+    },
+    {
+      "cls": "ui-agqc__num",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "24px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 562,
+        "height": 18,
+        "left": 488,
+        "right": 497.7265625,
+        "top": 544,
+        "width": 9.7265625,
+        "x": 488,
+        "y": 544
+      },
+      "tag": "SPAN",
+      "text": "2"
+    },
+    {
+      "cls": "ui-agqc__of",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "24px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 561,
+        "height": 15.5,
+        "left": 682.2265625,
+        "right": 695.46875,
+        "top": 545.5,
+        "width": 13.2421875,
+        "x": 682.2265625,
+        "y": 545.5
+      },
+      "tag": "SPAN",
+      "text": "/4"
+    },
+    {
+      "cls": "ui-agqc__flow",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 814,
+        "height": 236,
+        "left": 466,
+        "right": 1222,
+        "top": 578,
+        "width": 756,
+        "x": 466,
+        "y": 578
+      },
+      "tag": "DIV",
+      "text": "Queue2Workers4/4Sonnet 5.5GPT-6 SolGemini 3.8 FlashHaiku 5Done131Failed3Embed 240 docs · 4/51.3sEmbed 240 docs · 5/50.4sUpdate roadmap page0.1sOpen PR #5001.6sS"
+    },
+    {
+      "cls": "ui-agqc__col-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 608,
+        "height": 16,
+        "left": 482,
+        "right": 679,
+        "top": 592,
+        "width": 197,
+        "x": 482,
+        "y": 592
+      },
+      "tag": "SPAN",
+      "text": "Queue2"
+    },
+    {
+      "cls": "ui-agqc__well",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.02)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 796,
+        "height": 80,
+        "left": 482,
+        "right": 679,
+        "top": 716,
+        "width": 197,
+        "x": 482,
+        "y": 716
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__slot",
+      "css": {
+        "animationDuration": "0.42s",
+        "animationName": "ui-agqc-slot",
+        "backgroundColor": "rgba(0, 0, 0, 0.02)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 658,
+        "height": 40,
+        "left": 708.3297119140625,
+        "right": 1128.3609619140625,
+        "top": 618,
+        "width": 420.03125,
+        "x": 708.3297119140625,
+        "y": 618
+      },
+      "tag": "DIV",
+      "text": "Sonnet 5.5"
+    },
+    {
+      "cls": "ui-agqc__who",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 658,
+        "height": 40,
+        "left": 716.3297119140625,
+        "right": 855.3297119140625,
+        "top": 618,
+        "width": 139,
+        "x": 716.3297119140625,
+        "y": 618
+      },
+      "tag": "SPAN",
+      "text": "Sonnet 5.5"
+    },
+    {
+      "cls": "ui-agqc__logo",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 650,
+        "height": 24,
+        "left": 716.3297119140625,
+        "right": 740.3297119140625,
+        "top": 626,
+        "width": 24,
+        "x": 716.3297119140625,
+        "y": 626
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__who-text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 646,
+        "height": 16,
+        "left": 748.3297119140625,
+        "right": 814.8922119140625,
+        "top": 630,
+        "width": 66.5625,
+        "x": 748.3297119140625,
+        "y": 630
+      },
+      "tag": "SPAN",
+      "text": "Sonnet 5.5"
+    },
+    {
+      "cls": "ui-agqc__who-name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 646,
+        "height": 16,
+        "left": 748.3297119140625,
+        "right": 814.8922119140625,
+        "top": 630,
+        "width": 66.5625,
+        "x": 748.3297119140625,
+        "y": 630
+      },
+      "tag": "SPAN",
+      "text": "Sonnet 5.5"
+    },
+    {
+      "cls": "ui-agqc__rail",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px 0px 0px 10px"
+      },
+      "rect": {
+        "bottom": 652,
+        "height": 28,
+        "left": 863.3297119140625,
+        "right": 1089.3297119140625,
+        "top": 624,
+        "width": 226,
+        "x": 863.3297119140625,
+        "y": 624
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__bin",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.02)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "12px"
+      },
+      "rect": {
+        "bottom": 703,
+        "height": 85,
+        "left": 1114,
+        "right": 1206,
+        "top": 618,
+        "width": 92,
+        "x": 1114,
+        "y": 618
+      },
+      "tag": "DIV",
+      "text": "Done131"
+    },
+    {
+      "cls": "ui-agqc__bin-icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 164, 51, 0.098)",
+        "border": "0px none rgba(0, 125, 46, 0.88)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 125, 46, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 650,
+        "height": 20,
+        "left": 1126,
+        "right": 1146,
+        "top": 630,
+        "width": 20,
+        "x": 1126,
+        "y": 630
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__bin-label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 648,
+        "height": 16,
+        "left": 1154,
+        "right": 1184.4765625,
+        "top": 632,
+        "width": 30.4765625,
+        "x": 1154,
+        "y": 632
+      },
+      "tag": "SPAN",
+      "text": "Done"
+    },
+    {
+      "cls": "ui-agqc__bin-count",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "20px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "28px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 693,
+        "height": 28,
+        "left": 1126,
+        "right": 1164.28125,
+        "top": 665,
+        "width": 38.28125,
+        "x": 1126,
+        "y": 665
+      },
+      "tag": "SPAN",
+      "text": "131"
+    },
+    {
+      "cls": "ui-agqc__bin-hit",
+      "css": {
+        "animationDuration": "0.7s",
+        "animationName": "ui-agqc-hit",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 650,
+        "height": 20,
+        "left": 1126,
+        "right": 1146,
+        "top": 630,
+        "width": 20,
+        "x": 1126,
+        "y": 630
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__jobs",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 813.5,
+        "height": 235.5,
+        "left": 466,
+        "right": 1222,
+        "top": 578,
+        "width": 756,
+        "x": 466,
+        "y": 578
+      },
+      "tag": "DIV",
+      "text": "Embed 240 docs · 4/51.3sEmbed 240 docs · 5/50.4sUpdate roadmap page0.1sOpen PR #5001.6sScore lead – Tailspin1.1sDraft reply – Acme VIP0.5s"
+    },
+    {
+      "cls": "ui-agqc__job",
+      "css": {
+        "animationDuration": "0.52s",
+        "animationName": "ui-agqc-drop",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 732.000244140625,
+        "height": 19.384765625,
+        "left": 914.853515625,
+        "right": 1089.2841796875,
+        "top": 712.615478515625,
+        "width": 174.4306640625,
+        "x": 914.853515625,
+        "y": 712.615478515625
+      },
+      "tag": "BUTTON",
+      "text": "Embed 240 docs · 4/51.3s"
+    },
+    {
+      "cls": "ui-agqc__fill",
+      "css": {
+        "animationDuration": "0.56s",
+        "animationName": "ui-agqc-grow",
+        "backgroundColor": "rgba(0, 123, 172, 0.086)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 732.000244140625,
+        "height": 19.384765625,
+        "left": 914.853515625,
+        "right": 1089.2841796875,
+        "top": 712.615478515625,
+        "width": 174.4306640625,
+        "x": 914.853515625,
+        "y": 712.615478515625
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__job-in",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 8px 0px 6px"
+      },
+      "rect": {
+        "bottom": 732.000244140625,
+        "height": 19.384765625,
+        "left": 914.853515625,
+        "right": 1089.2841796875,
+        "top": 712.615478515625,
+        "width": 174.4306640625,
+        "x": 914.853515625,
+        "y": 712.615478515625
+      },
+      "tag": "SPAN",
+      "text": "Embed 240 docs · 4/51.3s"
+    },
+    {
+      "cls": "ui-agqc__job-icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 106, 148)",
+        "borderRadius": "4px",
+        "color": "rgb(0, 106, 148)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 728.5386962890625,
+        "height": 12.461669921875,
+        "left": 919.00732421875,
+        "right": 931.468994140625,
+        "top": 716.0770263671875,
+        "width": 12.461669921875,
+        "x": 919.00732421875,
+        "y": 716.0770263671875
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__job-name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 727.8463134765625,
+        "height": 11.07696533203125,
+        "left": 935.6229248046876,
+        "right": 1062.197265625,
+        "top": 716.7693481445312,
+        "width": 126.5743408203125,
+        "x": 935.6229248046876,
+        "y": 716.7693481445312
+      },
+      "tag": "SPAN",
+      "text": "Embed 240 docs · 4/5"
+    },
+    {
+      "cls": "ui-agqc__job-meta",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 106, 148)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 106, 148)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 727.8463134765625,
+        "height": 11.07696533203125,
+        "left": 1066.3511962890625,
+        "right": 1083.74560546875,
+        "top": 716.7693481445312,
+        "width": 17.3944091796875,
+        "x": 1066.3511962890625,
+        "y": 716.7693481445312
+      },
+      "tag": "SPAN",
+      "text": "1.3s"
+    },
+    {
+      "cls": "ui-agqc__badge",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(255, 156, 0, 0.16)",
+        "border": "0px none rgb(204, 78, 0)",
+        "borderRadius": "4px",
+        "color": "rgb(204, 78, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "2px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 773.8463134765625,
+        "height": 11.07696533203125,
+        "left": 1051.120361328125,
+        "right": 1062.197265625,
+        "top": 762.7693481445312,
+        "width": 11.076904296875,
+        "x": 1051.120361328125,
+        "y": 762.7693481445312
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__chart",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "12px 16px"
+      },
+      "rect": {
+        "bottom": 998,
+        "height": 184,
+        "left": 466,
+        "right": 1222,
+        "top": 814,
+        "width": 756,
+        "x": 466,
+        "y": 814
+      },
+      "tag": "DIV",
+      "text": "Queue depth0241296s agonow"
+    },
+    {
+      "cls": "ui-agqc__chart-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 842,
+        "height": 16,
+        "left": 482,
+        "right": 1206,
+        "top": 826,
+        "width": 724,
+        "x": 482,
+        "y": 826
+      },
+      "tag": "DIV",
+      "text": "Queue depth"
+    },
+    {
+      "cls": "ui-agqc__chart-title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 842,
+        "height": 16,
+        "left": 482,
+        "right": 558.359375,
+        "top": 826,
+        "width": 76.359375,
+        "x": 482,
+        "y": 826
+      },
+      "tag": "SPAN",
+      "text": "Queue depth"
+    },
+    {
+      "cls": "ui-agqc__plot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 964,
+        "height": 112,
+        "left": 508,
+        "right": 1206,
+        "top": 852,
+        "width": 698,
+        "x": 508,
+        "y": 852
+      },
+      "tag": "DIV",
+      "text": "02412"
+    },
+    {
+      "cls": "ui-agqc__grid",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.1)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 964,
+        "height": 0.5,
+        "left": 502,
+        "right": 1206,
+        "top": 963.5,
+        "width": 704,
+        "x": 502,
+        "y": 963.5
+      },
+      "tag": "SPAN",
+      "text": "0"
+    },
+    {
+      "cls": "ui-agqc__svg",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 964,
+        "height": 112,
+        "left": 508,
+        "right": 1206,
+        "top": 852,
+        "width": 698,
+        "x": 508,
+        "y": 852
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__stop",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "stop",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__band",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 964,
+        "height": 112,
+        "left": 508,
+        "right": 551.5108642578125,
+        "top": 852,
+        "width": 43.5108642578125,
+        "x": 508,
+        "y": 852
+      },
+      "tag": "g",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__scaled",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 964,
+        "height": 93.33331298828124,
+        "left": 508,
+        "right": 1206,
+        "top": 870.6666870117188,
+        "width": 698,
+        "x": 508,
+        "y": 870.6666870117188
+      },
+      "tag": "g",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__area",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 964,
+        "height": 93.33331298828124,
+        "left": 508,
+        "right": 1206,
+        "top": 870.6666870117188,
+        "width": 698,
+        "x": 508,
+        "y": 870.6666870117188
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__line",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 964,
+        "height": 93.33331298828124,
+        "left": 508,
+        "right": 1206,
+        "top": 870.6666870117188,
+        "width": 698,
+        "x": 508,
+        "y": 870.6666870117188
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__bp",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 908,
+        "height": 0,
+        "left": 508,
+        "right": 1206,
+        "top": 908,
+        "width": 698,
+        "x": 508,
+        "y": 908
+      },
+      "tag": "line",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__bp-label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 916,
+        "height": 16,
+        "left": 484.4375,
+        "right": 500,
+        "top": 900,
+        "width": 15.5625,
+        "x": 484.4375,
+        "y": 900
+      },
+      "tag": "SPAN",
+      "text": "12"
+    },
+    {
+      "cls": "ui-agqc__dot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(91, 91, 214, 0.9)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "50%",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 957.671875,
+        "height": 6,
+        "left": 1203,
+        "right": 1209,
+        "top": 951.671875,
+        "width": 6,
+        "x": 1203,
+        "y": 951.671875
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-agqc__axis",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 986,
+        "height": 16,
+        "left": 508,
+        "right": 1206,
+        "top": 970,
+        "width": 698,
+        "x": 508,
+        "y": 970
+      },
+      "tag": "DIV",
+      "text": "96s agonow"
+    },
+    {
+      "cls": "ui-agqc__sr",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 998,
+        "height": 1,
+        "left": 465,
+        "right": 466,
+        "top": 997,
+        "width": 1,
+        "x": 465,
+        "y": 997
+      },
+      "tag": "DIV",
+      "text": ""
+    }
+  ],
+  "svg": [
+    "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M18 18H6C5.05719 18 4.58579 18 4.29289 17.7071C4 17.4142 4 16.9428 4 16C4 15.0572 4 14.5858 4.29289 14.2929C4.58579 14 5.05719 14 6 14H18C18.9428 14 19.4142 14 19.7071 14.2929C20 14.5858 20 15.0572 20 16C20 16.9428 20 17.4142 19.7071 17.7071C19.4142 18 18.9428 18 18 18Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"></path><path d=\"M4 10H20\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"></path><path d=\"M4 6H20\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"></path></svg>",
+    "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 7C4 5.58579 4 4.87868 4.43934 4.43934C4.87868 4 5.58579 4 7 4C8.41421 4 9.12132 4 9.56066 4.43934C10 4.87868 10 5.58579 10 7V17C10 18.4142 10 19.1213 9.56066 19.5607C9.12132 20 8.41421 20 7 20C5.58579 20 4.87868 20 4.43934 19.5607C4 19.1213 4 18.4142 4 17V7Z\" stroke=\"currentColor\" stroke-width=\"1.8\"></path><path d=\"M14 7C14 5.58579 14 4.87868 14.4393 4.43934C14.8787 4 15.5858 4 17 4C18.4142 4 19.1213 4 19.5607 4.43934C20 4.87868 20 5.58579 20 7V17C20 18.4142 20 19.1213 19.5607 19.5607C19.1213 20 18.4142 20 17 20C15.5858 20 14.8787 20 14.4393 19.5607C14 19.1213 14 18.4142 14 17V7Z\" stroke=\"currentColor\" stroke-width=\"1.8\"></path></svg>",
+    "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M20 12L4 12\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"></path></svg>",
+    "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 4V20M20 12H4\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.8\"></path></svg>",
+    "<svg viewBox=\"0 0 1200 1200\" aria-hidden=\"true\"><path fill=\"#D97757\" d=\"M 233.959793 800.214905 L 468.644287 668.536987 L 472.590637 657.100647 L 468.644287 650.738403 L 457.208069 650.738403 L 417.986633 648.322144 L 283.892639 644.69812 L 167.597321 639.865845 L 54.926208 633.825623 L 26.577238 627.785339 L 3.3e-05 592.751709 L 2.73832 575.27533 L 26.577238 559.248352 L 60.724873 562.228149 L 136.187973 567.382629 L 249.422867 575.194763 L 331.570496 580.026978 L 453.261841 592.671082 L 472.590637 592.671082 L 475.328857 584.859009 L 468.724915 580.026978 L 463.570557 575.194763 L 346.389313 495.785217 L 219.543671 411.865906 L 153.100723 363.543762 L 117.181267 339.060425 L 99.060455 316.107361 L 91.248367 266.01355 L 123.865784 230.093994 L 167.677887 233.073853 L 178.872513 236.053772 L 223.248367 270.201477 L 318.040283 343.570496 L 441.825592 434.738342 L 459.946411 449.798706 L 467.194672 444.64447 L 468.080597 441.020203 L 459.946411 427.409485 L 392.617493 305.718323 L 320.778564 181.932983 L 288.80542 130.630859 L 280.348999 99.865845 C 277.369171 87.221436 275.194641 76.590698 275.194641 63.624268 L 312.322174 13.20813 L 332.8591 6.604126 L 382.389313 13.20813 L 403.248352 31.328979 L 434.013519 101.71814 L 483.865753 212.537048 L 561.181274 363.221497 L 583.812134 407.919434 L 595.892639 449.315491 L 600.40271 461.959839 L 608.214783 461.959839 L 608.214783 454.711609 L 614.577271 369.825623 L 626.335632 265.61084 L 637.771851 131.516846 L 641.718201 93.745117 L 660.402832 48.483276 L 697.530334 24.000122 L 726.52356 37.852417 L 750.362549 72 L 747.060486 94.067139 L 732.886047 186.201416 L 705.100708 330.52356 L 686.979919 427.167847 L 697.530334 427.167847 L 709.61084 415.087341 L 758.496704 350.174561 L 840.644348 247.490051 L 876.885925 206.738342 L 919.167847 161.71814 L 946.308838 140.29541 L 997.61084 140.29541 L 1035.38269 196.429626 L 1018.469849 254.416199 L 965.637634 321.422852 L 921.825562 378.201538 L 859.006714 462.765259 L 819.785278 530.41626 L 823.409424 535.812073 L 832.75177 534.92627 L 974.657776 504.724915 L 1051.328979 490.872559 L 1142.818848 475.167786 L 1184.214844 494.496582 L 1188.724854 514.147644 L 1172.456421 554.335693 L 1074.604126 578.496765 L 959.838989 601.449829 L 788.939636 641.879272 L 786.845764 643.409485 L 789.261841 646.389343 L 866.255127 653.637634 L 899.194702 655.409424 L 979.812134 655.409424 L 1129.932861 666.604187 L 1169.154419 692.537109 L 1192.671265 724.268677 L 1188.724854 748.429688 L 1128.322144 779.194641 L 1046.818848 759.865845 L 856.590759 714.604126 L 791.355774 698.335754 L 782.335693 698.335754 L 782.335693 703.731567 L 836.69812 756.885986 L 936.322205 846.845581 L 1061.073975 962.81897 L 1067.436279 991.490112 L 1051.409424 1014.120911 L 1034.496704 1011.704712 L 924.885986 929.234924 L 882.604126 892.107544 L 786.845764 811.48999 L 780.483276 811.48999 L 780.483276 819.946289 L 802.550415 852.241699 L 919.087341 1027.409424 L 925.127625 1081.127686 L 916.671204 1098.604126 L 886.469849 1109.154419 L 853.288696 1103.114136 L 785.073914 1007.355835 L 714.684631 899.516785 L 657.906067 802.872498 L 650.979858 806.81897 L 617.476624 1167.704834 L 601.771851 1186.147705 L 565.530212 1200 L 535.328857 1177.046997 L 519.302124 1139.919556 L 535.328857 1066.550537 L 554.657776 970.792053 L 570.362488 894.68457 L 584.536926 800.134277 L 592.993347 768.724976 L 592.429626 766.630859 L 585.503479 767.516968 L 514.22821 865.369263 L 405.825531 1011.865906 L 320.053711 1103.677979 L 299.516815 1111.812256 L 263.919525 1093.369263 L 267.221497 1060.429688 L 287.114136 1031.114136 L 405.825531 880.107361 L 477.422913 786.52356 L 523.651062 732.483276 L 523.328918 724.671265 L 520.590698 724.671265 L 205.288605 929.395935 L 149.154434 936.644409 L 124.993355 914.01355 L 127.973183 876.885986 L 139.409409 864.80542 L 234.201385 799.570435 L 233.879227 799.8927 Z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-agqc-strong, var(--ui-agq-ink, #000));\"><path d=\"M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><defs><linearGradient id=\"gm_r_2_\" x1=\"0\" y1=\"24\" x2=\"24\" y2=\"0\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#1C7DFF\"></stop><stop offset=\"0.52\" stop-color=\"#1C69FF\"></stop><stop offset=\"1\" stop-color=\"#B04DFF\"></stop></linearGradient></defs><path fill=\"url(#gm_r_2_)\" d=\"M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81\"></path></svg>",
+    "<svg viewBox=\"0 0 1200 1200\" aria-hidden=\"true\"><path fill=\"#D97757\" d=\"M 233.959793 800.214905 L 468.644287 668.536987 L 472.590637 657.100647 L 468.644287 650.738403 L 457.208069 650.738403 L 417.986633 648.322144 L 283.892639 644.69812 L 167.597321 639.865845 L 54.926208 633.825623 L 26.577238 627.785339 L 3.3e-05 592.751709 L 2.73832 575.27533 L 26.577238 559.248352 L 60.724873 562.228149 L 136.187973 567.382629 L 249.422867 575.194763 L 331.570496 580.026978 L 453.261841 592.671082 L 472.590637 592.671082 L 475.328857 584.859009 L 468.724915 580.026978 L 463.570557 575.194763 L 346.389313 495.785217 L 219.543671 411.865906 L 153.100723 363.543762 L 117.181267 339.060425 L 99.060455 316.107361 L 91.248367 266.01355 L 123.865784 230.093994 L 167.677887 233.073853 L 178.872513 236.053772 L 223.248367 270.201477 L 318.040283 343.570496 L 441.825592 434.738342 L 459.946411 449.798706 L 467.194672 444.64447 L 468.080597 441.020203 L 459.946411 427.409485 L 392.617493 305.718323 L 320.778564 181.932983 L 288.80542 130.630859 L 280.348999 99.865845 C 277.369171 87.221436 275.194641 76.590698 275.194641 63.624268 L 312.322174 13.20813 L 332.8591 6.604126 L 382.389313 13.20813 L 403.248352 31.328979 L 434.013519 101.71814 L 483.865753 212.537048 L 561.181274 363.221497 L 583.812134 407.919434 L 595.892639 449.315491 L 600.40271 461.959839 L 608.214783 461.959839 L 608.214783 454.711609 L 614.577271 369.825623 L 626.335632 265.61084 L 637.771851 131.516846 L 641.718201 93.745117 L 660.402832 48.483276 L 697.530334 24.000122 L 726.52356 37.852417 L 750.362549 72 L 747.060486 94.067139 L 732.886047 186.201416 L 705.100708 330.52356 L 686.979919 427.167847 L 697.530334 427.167847 L 709.61084 415.087341 L 758.496704 350.174561 L 840.644348 247.490051 L 876.885925 206.738342 L 919.167847 161.71814 L 946.308838 140.29541 L 997.61084 140.29541 L 1035.38269 196.429626 L 1018.469849 254.416199 L 965.637634 321.422852 L 921.825562 378.201538 L 859.006714 462.765259 L 819.785278 530.41626 L 823.409424 535.812073 L 832.75177 534.92627 L 974.657776 504.724915 L 1051.328979 490.872559 L 1142.818848 475.167786 L 1184.214844 494.496582 L 1188.724854 514.147644 L 1172.456421 554.335693 L 1074.604126 578.496765 L 959.838989 601.449829 L 788.939636 641.879272 L 786.845764 643.409485 L 789.261841 646.389343 L 866.255127 653.637634 L 899.194702 655.409424 L 979.812134 655.409424 L 1129.932861 666.604187 L 1169.154419 692.537109 L 1192.671265 724.268677 L 1188.724854 748.429688 L 1128.322144 779.194641 L 1046.818848 759.865845 L 856.590759 714.604126 L 791.355774 698.335754 L 782.335693 698.335754 L 782.335693 703.731567 L 836.69812 756.885986 L 936.322205 846.845581 L 1061.073975 962.81897 L 1067.436279 991.490112 L 1051.409424 1014.120911 L 1034.496704 1011.704712 L 924.885986 929.234924 L 882.604126 892.107544 L 786.845764 811.48999 L 780.483276 811.48999 L 780.483276 819.946289 L 802.550415 852.241699 L 919.087341 1027.409424 L 925.127625 1081.127686 L 916.671204 1098.604126 L 886.469849 1109.154419 L 853.288696 1103.114136 L 785.073914 1007.355835 L 714.684631 899.516785 L 657.906067 802.872498 L 650.979858 806.81897 L 617.476624 1167.704834 L 601.771851 1186.147705 L 565.530212 1200 L 535.328857 1177.046997 L 519.302124 1139.919556 L 535.328857 1066.550537 L 554.657776 970.792053 L 570.362488 894.68457 L 584.536926 800.134277 L 592.993347 768.724976 L 592.429626 766.630859 L 585.503479 767.516968 L 514.22821 865.369263 L 405.825531 1011.865906 L 320.053711 1103.677979 L 299.516815 1111.812256 L 263.919525 1093.369263 L 267.221497 1060.429688 L 287.114136 1031.114136 L 405.825531 880.107361 L 477.422913 786.52356 L 523.651062 732.483276 L 523.328918 724.671265 L 520.590698 724.671265 L 205.288605 929.395935 L 149.154434 936.644409 L 124.993355 914.01355 L 127.973183 876.885986 L 139.409409 864.80542 L 234.201385 799.570435 L 233.879227 799.8927 Z\"></path></svg>",
+    "<svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M5 14L8.5 17.5L19 6.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.4\"></path></svg>",
+    "<svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M18 6L6.00081 17.9992M17.9992 18L6 6.00085\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.4\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" style=\"color: rgb(51, 103, 145);\"><ellipse cx=\"12\" cy=\"6\" rx=\"7.5\" ry=\"3\" stroke=\"currentColor\" stroke-width=\"2\"></ellipse><path d=\"M4.5 6V18C4.5 19.66 7.86 21 12 21C16.14 21 19.5 19.66 19.5 18V6\" stroke=\"currentColor\" stroke-width=\"2\"></path><path d=\"M4.5 12C4.5 13.66 7.86 15 12 15C16.14 15 19.5 13.66 19.5 12\" stroke=\"currentColor\" stroke-width=\"2\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" style=\"color: rgb(51, 103, 145);\"><ellipse cx=\"12\" cy=\"6\" rx=\"7.5\" ry=\"3\" stroke=\"currentColor\" stroke-width=\"2\"></ellipse><path d=\"M4.5 6V18C4.5 19.66 7.86 21 12 21C16.14 21 19.5 19.66 19.5 18V6\" stroke=\"currentColor\" stroke-width=\"2\"></path><path d=\"M4.5 12C4.5 13.66 7.86 15 12 15C16.14 15 19.5 13.66 19.5 12\" stroke=\"currentColor\" stroke-width=\"2\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-agqc-strong, var(--ui-agq-ink, #000));\"><path d=\"M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-agqc-strong, var(--ui-agq-ink, #181717));\"><path d=\"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12\"></path></svg>",
+    "<svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M15 2L15.5387 4.39157C15.9957 6.42015 17.5798 8.00431 19.6084 8.46127L22 9L19.6084 9.53873C17.5798 9.99569 15.9957 11.5798 15.5387 13.6084L15 16L14.4613 13.6084C14.0043 11.5798 12.4202 9.99569 10.3916 9.53873L8 9L10.3916 8.46127C12.4201 8.00431 14.0043 6.42015 14.4613 4.39158L15 2Z\" stroke=\"currentColor\" stroke-linejoin=\"round\" stroke-width=\"2\"></path><path d=\"M7 12L7.38481 13.7083C7.71121 15.1572 8.84275 16.2888 10.2917 16.6152L12 17L10.2917 17.3848C8.84275 17.7112 7.71121 18.8427 7.38481 20.2917L7 22L6.61519 20.2917C6.28879 18.8427 5.15725 17.7112 3.70827 17.3848L2 17L3.70827 16.6152C5.15725 16.2888 6.28879 15.1573 6.61519 13.7083L7 12Z\" stroke=\"currentColor\" stroke-linejoin=\"round\" stroke-width=\"2\"></path></svg>",
+    "<svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M15 2L15.5387 4.39157C15.9957 6.42015 17.5798 8.00431 19.6084 8.46127L22 9L19.6084 9.53873C17.5798 9.99569 15.9957 11.5798 15.5387 13.6084L15 16L14.4613 13.6084C14.0043 11.5798 12.4202 9.99569 10.3916 9.53873L8 9L10.3916 8.46127C12.4201 8.00431 14.0043 6.42015 14.4613 4.39158L15 2Z\" stroke=\"currentColor\" stroke-linejoin=\"round\" stroke-width=\"2\"></path><path d=\"M7 12L7.38481 13.7083C7.71121 15.1572 8.84275 16.2888 10.2917 16.6152L12 17L10.2917 17.3848C8.84275 17.7112 7.71121 18.8427 7.38481 20.2917L7 22L6.61519 20.2917C6.28879 18.8427 5.15725 17.7112 3.70827 17.3848L2 17L3.70827 16.6152C5.15725 16.2888 6.28879 15.1573 6.61519 13.7083L7 12Z\" stroke=\"currentColor\" stroke-linejoin=\"round\" stroke-width=\"2\"></path></svg>",
+    "<svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 5.5V19\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.8\"></path><path d=\"M18 11C18 11 13.5811 5.00001 12 5C10.4188 4.99999 6 11 6 11\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2.8\"></path></svg>",
+    "<svg class=\"ui-agqc__svg\" width=\"698\" height=\"112\" viewBox=\"0 0 698 112\" aria-hidden=\"true\"><defs><linearGradient id=\"ui-agqc-_r_1_\" x1=\"0\" y1=\"1\" x2=\"0\" y2=\"0\"><stop offset=\"0\" class=\"ui-agqc__stop\" data-at=\"top\"></stop><stop offset=\"1\" class=\"ui-agqc__stop\" data-at=\"bottom\"></stop></linearGradient></defs><g class=\"ui-agqc__band\"><rect x=\"0\" y=\"0\" width=\"43.51084791666669\" height=\"112\"></rect></g><g class=\"ui-agqc__band\"><rect x=\"225.28168125000002\" y=\"0\" width=\"65.4375\" height=\"112\"></rect></g><g class=\"ui-agqc__band\"><rect x=\"472.4900145833334\" y=\"0\" width=\"65.4375\" height=\"112\"></rect></g><g class=\"ui-agqc__scaled\" style=\"--h: 112;\"><path class=\"ui-agqc__area\" d=\"M0,5C2.39,7.33 4.77,11.42 7.16,12C9.58,12.59 12,12.67 14.43,13C16.85,13.33 19.27,13.67 21.7,14C24.12,14.33 26.55,14.67 28.97,15C31.39,15.33 33.82,16 36.24,16C38.66,16 41.09,15 43.51,15C45.93,15 48.36,15 50.78,15C53.21,15 55.63,14.44 58.05,14C60.48,13.56 62.9,12 65.32,12C67.75,12 70.17,12 72.59,12C75.02,12 77.44,11.5 79.87,11C82.29,10.5 84.71,8 87.14,8C89.56,8 91.98,9 94.41,9C96.83,9 99.25,7 101.68,7C104.1,7 106.52,7 108.95,7C111.37,7 113.8,6.44 116.22,6C118.64,5.56 121.07,4 123.49,4C125.91,4 128.34,5 130.76,5C133.18,5 135.61,3 138.03,3C140.46,3 142.88,3 145.3,3C147.73,3 150.15,2 152.57,2C155,2 157.42,2 159.84,2C162.27,2 164.69,0 167.12,0C169.54,0 171.96,0 174.39,0C176.81,0 179.23,4 181.66,4C184.08,4 186.5,4 188.93,4C191.35,4 193.77,2 196.2,2C198.62,2 201.05,2 203.47,2C205.89,2 208.32,0 210.74,0C213.16,0 215.59,0 218.01,0C220.43,0 222.86,0 225.28,0C227.71,0 230.13,0.67 232.55,1C234.98,1.33 237.4,1.67 239.82,2C242.25,2.33 244.67,2.42 247.09,3C249.52,3.58 251.94,9.42 254.37,10C256.79,10.58 259.21,10.67 261.64,11C264.06,11.33 266.48,11.67 268.91,12C271.33,12.33 273.75,12.67 276.18,13C278.6,13.33 281.02,14 283.45,14C285.87,14 288.3,13 290.72,13C293.14,13 295.57,13 297.99,13C300.41,13 302.84,13 305.26,13C307.68,13 310.11,11.44 312.53,11C314.96,10.56 317.38,10 319.8,10C322.23,10 324.65,10 327.07,10C329.5,10 331.92,8.44 334.34,8C336.77,7.56 339.19,7 341.62,7C344.04,7 346.46,7 348.89,7C351.31,7 353.73,6.33 356.16,6C358.58,5.67 361,5 363.43,5C365.85,5 368.27,5 370.7,5C373.12,5 375.55,4.33 377.97,4C380.39,3.67 382.82,3 385.24,3C387.66,3 390.09,4 392.51,4C394.93,4 397.36,2.44 399.78,2C402.21,1.56 404.63,1 407.05,1C409.48,1 411.9,2 414.32,2C416.75,2 419.17,1 421.59,1C424.02,1 426.44,5 428.87,5C431.29,5 433.71,5 436.14,5C438.56,5 440.98,3 443.41,3C445.83,3 448.25,3 450.68,3C453.1,3 455.52,3 457.95,3C460.37,3 462.8,4 465.22,4C467.64,4 470.07,4 472.49,4C474.91,4 477.34,4.67 479.76,5C482.18,5.33 484.61,5.56 487.03,6C489.46,6.44 491.88,6.96 494.3,8C496.73,9.04 499.15,14.42 501.57,15C504,15.58 506.42,15.67 508.84,16C511.27,16.33 513.69,16.67 516.12,17C518.54,17.33 520.96,17.67 523.39,18C525.81,18.33 528.23,18.67 530.66,19C533.08,19.33 535.5,20 537.93,20C540.35,20 542.77,19.44 545.2,19C547.62,18.56 550.05,17.44 552.47,17C554.89,16.56 557.32,16 559.74,16C562.16,16 564.59,16 567.01,16C569.43,16 571.86,15.44 574.28,15C576.71,14.56 579.13,13 581.55,13C583.98,13 586.4,13 588.82,13C591.25,13 593.67,11 596.09,11C598.52,11 600.94,12 603.37,12C605.79,12 608.21,11.44 610.64,11C613.06,10.56 615.48,9 617.91,9C620.33,9 622.75,9 625.18,9C627.6,9 630.02,7.44 632.45,7C634.87,6.56 637.3,6 639.72,6C642.14,6 644.57,7 646.99,7C649.41,7 651.84,4 654.26,4C656.68,4 659.11,5 661.53,5C663.96,5 666.38,3 668.8,3C671.23,3 673.65,4 676.07,4C678.5,4 680.92,4 683.34,4C685.77,4 688.19,4 690.62,4C693.08,4 695.54,2.67 698,2L698,0L0,0Z\" fill=\"url(#ui-agqc-_r_1_)\"></path><path class=\"ui-agqc__line\" d=\"M0,5C2.39,7.33 4.77,11.42 7.16,12C9.58,12.59 12,12.67 14.43,13C16.85,13.33 19.27,13.67 21.7,14C24.12,14.33 26.55,14.67 28.97,15C31.39,15.33 33.82,16 36.24,16C38.66,16 41.09,15 43.51,15C45.93,15 48.36,15 50.78,15C53.21,15 55.63,14.44 58.05,14C60.48,13.56 62.9,12 65.32,12C67.75,12 70.17,12 72.59,12C75.02,12 77.44,11.5 79.87,11C82.29,10.5 84.71,8 87.14,8C89.56,8 91.98,9 94.41,9C96.83,9 99.25,7 101.68,7C104.1,7 106.52,7 108.95,7C111.37,7 113.8,6.44 116.22,6C118.64,5.56 121.07,4 123.49,4C125.91,4 128.34,5 130.76,5C133.18,5 135.61,3 138.03,3C140.46,3 142.88,3 145.3,3C147.73,3 150.15,2 152.57,2C155,2 157.42,2 159.84,2C162.27,2 164.69,0 167.12,0C169.54,0 171.96,0 174.39,0C176.81,0 179.23,4 181.66,4C184.08,4 186.5,4 188.93,4C191.35,4 193.77,2 196.2,2C198.62,2 201.05,2 203.47,2C205.89,2 208.32,0 210.74,0C213.16,0 215.59,0 218.01,0C220.43,0 222.86,0 225.28,0C227.71,0 230.13,0.67 232.55,1C234.98,1.33 237.4,1.67 239.82,2C242.25,2.33 244.67,2.42 247.09,3C249.52,3.58 251.94,9.42 254.37,10C256.79,10.58 259.21,10.67 261.64,11C264.06,11.33 266.48,11.67 268.91,12C271.33,12.33 273.75,12.67 276.18,13C278.6,13.33 281.02,14 283.45,14C285.87,14 288.3,13 290.72,13C293.14,13 295.57,13 297.99,13C300.41,13 302.84,13 305.26,13C307.68,13 310.11,11.44 312.53,11C314.96,10.56 317.38,10 319.8,10C322.23,10 324.65,10 327.07,10C329.5,10 331.92,8.44 334.34,8C336.77,7.56 339.19,7 341.62,7C344.04,7 346.46,7 348.89,7C351.31,7 353.73,6.33 356.16,6C358.58,5.67 361,5 363.43,5C365.85,5 368.27,5 370.7,5C373.12,5 375.55,4.33 377.97,4C380.39,3.67 382.82,3 385.24,3C387.66,3 390.09,4 392.51,4C394.93,4 397.36,2.44 399.78,2C402.21,1.56 404.63,1 407.05,1C409.48,1 411.9,2 414.32,2C416.75,2 419.17,1 421.59,1C424.02,1 426.44,5 428.87,5C431.29,5 433.71,5 436.14,5C438.56,5 440.98,3 443.41,3C445.83,3 448.25,3 450.68,3C453.1,3 455.52,3 457.95,3C460.37,3 462.8,4 465.22,4C467.64,4 470.07,4 472.49,4C474.91,4 477.34,4.67 479.76,5C482.18,5.33 484.61,5.56 487.03,6C489.46,6.44 491.88,6.96 494.3,8C496.73,9.04 499.15,14.42 501.57,15C504,15.58 506.42,15.67 508.84,16C511.27,16.33 513.69,16.67 516.12,17C518.54,17.33 520.96,17.67 523.39,18C525.81,18.33 528.23,18.67 530.66,19C533.08,19.33 535.5,20 537.93,20C540.35,20 542.77,19.44 545.2,19C547.62,18.56 550.05,17.44 552.47,17C554.89,16.56 557.32,16 559.74,16C562.16,16 564.59,16 567.01,16C569.43,16 571.86,15.44 574.28,15C576.71,14.56 579.13,13 581.55,13C583.98,13 586.4,13 588.82,13C591.25,13 593.67,11 596.09,11C598.52,11 600.94,12 603.37,12C605.79,12 608.21,11.44 610.64,11C613.06,10.56 615.48,9 617.91,9C620.33,9 622.75,9 625.18,9C627.6,9 630.02,7.44 632.45,7C634.87,6.56 637.3,6 639.72,6C642.14,6 644.57,7 646.99,7C649.41,7 651.84,4 654.26,4C656.68,4 659.11,5 661.53,5C663.96,5 666.38,3 668.8,3C671.23,3 673.65,4 676.07,4C678.5,4 680.92,4 683.34,4C685.77,4 688.19,4 690.62,4C693.08,4 695.54,2.67 698,2\"></path><line class=\"ui-agqc__bp\" x1=\"0\" x2=\"698\" y1=\"12\" y2=\"12\"></line></g></svg>"
+  ],
+  "url": "https://www.affectui.com/components/agent-queue",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Agents\":\n        - /url: /category/agents\n      - generic: Agent Queue\n    - heading \"Agent Queue\" [level=1]\n    - paragraph: The work waiting for your agents, and how fast it moves – jobs drop into a live queue, glide into free worker slots as growing bars and land in Done or Failed, while a depth chart shows the backlog build up when a rate limit pauses the workers and drain when they resume.\n    - link \"Get Pro to install\":\n      - /url: /pricing\n      - generic: Get Pro to install\n    - tablist \"Agent Queue preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - generic \"Queue\"\n    - generic: agent-jobs\n    - generic: Live\n    - button \"Pause the queue\":\n      - generic: Pause\n    - group \"Workers\":\n      - button \"One worker less\":\n      - status \"4 workers\": \"4\"\n      - button \"One worker more\":\n    - term: Waiting\n    - definition: \"2\"\n    - term: Running\n    - definition:\n      - text: \"4\"\n      - generic: /4\n    - term: Throughput\n    - definition: 77/min\n    - term: Wait p95\n    - definition: 13s\n    - generic: Queue\n    - generic: \"2\"\n    - generic: Workers\n    - generic: 4/4\n    - generic: Sonnet 5.5\n    - generic: GPT-6 Sol\n    - generic: Gemini 3.8 Flash\n    - generic: Haiku 5\n    - generic: Done\n    - generic \"131\"\n    - generic: Failed\n    - generic \"3\"\n    - 'group \"Jobs: 4 running, 2 waiting\"':\n      - button \"Embed 240 docs · 4/5, Tool call, running 1.3s, 88%\":\n        - generic: Embed 240 docs · 4/5\n        - generic: 1.3s\n      - button \"Embed 240 docs · 5/5, Tool call, running 0.4s, 29%\":\n        - generic: Embed 240 docs · 5/5\n        - generic: 0.4s\n      - button \"Update roadmap page, Tool call, running 0.1s, 6%\":\n        - generic: Update roadmap page\n        - generic: 0.1s\n      - 'button \"Open PR #500, Tool call, waiting 1.6s, position 1 of 2\"':\n        - generic: \"Open PR #500\"\n        - generic: 1.6s\n      - button \"Score lead – Tailspin, LLM call, waiting 1.1s, position 2 of 2\":\n        - generic: Score lead – Tailspin\n        - generic: 1.1s\n      - button \"Draft reply – Acme VIP, LLM call, running 0.5s, 25%, high priority\":\n        - generic: Draft reply – Acme VIP\n        - generic: 0.5s\n    - generic: Queue depth\n    - 'img \"Queue depth over the last 96s: 2 waiting now, peak 20, average 7.9, backpressure line at 12, rate limited 3 times, 3 failed in all.\"':\n      - generic: \"0\"\n      - generic: \"24\"\n      - generic: \"12\"\n    - generic: 96s ago\n    - generic: now\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: A job queue in an agent product – how many tasks wait, which worker runs what, and how fast the backlog moves\n      - listitem: \"Watching backpressure live: a provider rate-limits, the workers pause, the queue builds up and drains again\"\n      - listitem: An ops view next to your agents where people can pause the queue, add or remove workers, or move a job to the front\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: Several agents side by side over time – use Agent Lanes\n      - listitem: Handing work to a specific agent by hand – use Delegate Board\n      - listitem: A list of background tasks with their results – use Agent Inbox\n      - listitem: Where the time and money of one run go – use Trace Waterfall\n    - heading \"Installation\" [level=2]\n    - paragraph: Agent Queue is a Pro component.\n    - strong: Installation is part of Pro\n    - generic: Get Pro to copy the code, install it with the CLI and use it in your projects.\n    - link \"Unlock with Pro\":\n      - /url: /pricing\n      - generic: Unlock with Pro\n    - heading \"Usage\" [level=2]\n    - strong: Usage example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Examples\" [level=2]\n    - heading \"A rate limit\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Pause and the number of workers\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Actions on a job\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Only the recent jobs\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"API reference\" [level=2]\n    - heading \"AgentQueue\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - 'row \"jobs QueueJob[] – { id, name, kind, status, enqueuedAt, priority?, startedAt?, endedAt?, worker?, progress?, estimate?, attempt?, maxAttempts?, detail?, icon?, error? } – waiting, running and recently finished jobs\"':\n          - cell \"jobs\":\n            - code: jobs\n          - cell \"QueueJob[]\":\n            - code: QueueJob[]\n          - cell \"–\"\n          - 'cell \"{ id, name, kind, status, enqueuedAt, priority?, startedAt?, endedAt?, worker?, progress?, estimate?, attempt?, maxAttempts?, detail?, icon?, error? } – waiting, running and recently finished jobs\"'\n        - 'row \"kind \\\"llm\\\" | \\\"tool\\\" | \\\"agent\\\" | \\\"human\\\" – Per job – picks its tint: LLM calls violet, tool calls teal, sub-agents slate, human review blue\"':\n          - cell \"kind\":\n            - code: kind\n          - cell \"\\\"llm\\\" | \\\"tool\\\" | \\\"agent\\\" | \\\"human\\\"\":\n            - code: \"\\\"llm\\\" | \\\"tool\\\" | \\\"agent\\\" | \\\"human\\\"\"\n          - cell \"–\"\n          - 'cell \"Per job – picks its tint: LLM calls violet, tool calls teal, sub-agents slate, human review blue\"'\n        - row \"status \\\"queued\\\" | \\\"running\\\" | \\\"done\\\" | \\\"failed\\\" – Per job – a job that goes from running back to queued with a higher attempt shows as a retry\":\n          - cell \"status\":\n            - code: status\n          - cell \"\\\"queued\\\" | \\\"running\\\" | \\\"done\\\" | \\\"failed\\\"\":\n            - code: \"\\\"queued\\\" | \\\"running\\\" | \\\"done\\\" | \\\"failed\\\"\"\n          - cell \"–\"\n          - cell \"Per job – a job that goes from running back to queued with a higher attempt shows as a retry\"\n        - row \"priority \\\"high\\\" | \\\"normal\\\" | \\\"low\\\" \\\"normal\\\" Per job – a high one glides past the others to the front\":\n          - cell \"priority\":\n            - code: priority\n          - cell \"\\\"high\\\" | \\\"normal\\\" | \\\"low\\\"\":\n            - code: \"\\\"high\\\" | \\\"normal\\\" | \\\"low\\\"\"\n          - cell \"\\\"normal\\\"\":\n            - code: \"\\\"normal\\\"\"\n          - cell \"Per job – a high one glides past the others to the front\"\n        - row \"progress / estimate number – Per job – 0–1 while it runs, or the expected run time in ms to estimate it\":\n          - cell \"progress / estimate\":\n            - code: progress / estimate\n          - cell \"number\":\n            - code: number\n          - cell \"–\"\n          - cell \"Per job – 0–1 while it runs, or the expected run time in ms to estimate it\"\n        - 'row \"workers QueueWorker[] – { id, name, detail?, icon? } – the slots; their number is the concurrency\"':\n          - cell \"workers\":\n            - code: workers\n          - cell \"QueueWorker[]\":\n            - code: QueueWorker[]\n          - cell \"–\"\n          - 'cell \"{ id, name, detail?, icon? } – the slots; their number is the concurrency\"'\n        - row \"now number – The clock, on the same scale as the job times – without it, the component keeps its own (Date.now)\":\n          - cell \"now\":\n            - code: now\n          - cell \"number\":\n            - code: number\n          - cell \"–\"\n          - cell \"The clock, on the same scale as the job times – without it, the component keeps its own (Date.now)\"\n        - 'row \"rateLimits { from, until, label? }[] – Stretches when the provider rate-limits – while one is active the running jobs pause in amber with a countdown\"':\n          - cell \"rateLimits\":\n            - code: rateLimits\n          - 'cell \"{ from, until, label? }[]\"':\n            - code: \"{ from, until, label? }[]\"\n          - cell \"–\"\n          - cell \"Stretches when the provider rate-limits – while one is active the running jobs pause in amber with a countdown\"\n        - row \"paused / onPausedChange boolean / (paused) => void – The queue is paused; the handler shows a Pause/Resume button\":\n          - cell \"paused / onPausedChange\":\n            - code: paused / onPausedChange\n          - cell \"boolean / (paused) => void\":\n            - code: boolean / (paused) => void\n          - cell \"–\"\n          - cell \"The queue is paused; the handler shows a Pause/Resume button\"\n        - 'row \"onConcurrencyChange (workers: number) => void – Shows a – N + stepper for the number of workers\"':\n          - cell \"onConcurrencyChange\":\n            - code: onConcurrencyChange\n          - 'cell \"(workers: number) => void\"':\n            - code: \"(workers: number) => void\"\n          - cell \"–\"\n          - cell \"Shows a – N + stepper for the number of workers\"\n        - row \"minConcurrency / maxConcurrency number 1 / 8 The stepper's range\":\n          - cell \"minConcurrency / maxConcurrency\":\n            - code: minConcurrency / maxConcurrency\n          - cell \"number\":\n            - code: number\n          - cell \"1 / 8\":\n            - code: 1 / 8\n          - cell \"The stepper's range\"\n        - row \"backpressure number – A depth that means trouble – a dashed line on the chart; above it Waiting turns amber\":\n          - cell \"backpressure\":\n            - code: backpressure\n          - cell \"number\":\n            - code: number\n          - cell \"–\"\n          - cell \"A depth that means trouble – a dashed line on the chart; above it Waiting turns amber\"\n        - row \"window number 120000 How far back the depth chart looks, in ms\":\n          - cell \"window\":\n            - code: window\n          - cell \"number\":\n            - code: number\n          - cell \"120000\":\n            - code: \"120000\"\n          - cell \"How far back the depth chart looks, in ms\"\n        - 'row \"totals { done?, failed? } – Counts since the start, when jobs only holds the recent ones\"':\n          - cell \"totals\":\n            - code: totals\n          - 'cell \"{ done?, failed? }\"':\n            - code: \"{ done?, failed? }\"\n          - cell \"–\"\n          - cell \"Counts since the start, when jobs only holds the recent ones\"\n        - row \"openId / defaultOpenId string | null null The job whose card is pinned, controlled or uncontrolled\":\n          - cell \"openId / defaultOpenId\":\n            - code: openId / defaultOpenId\n          - cell \"string | null\":\n            - code: string | null\n          - cell \"null\":\n            - code: \"null\"\n          - cell \"The job whose card is pinned, controlled or uncontrolled\"\n        - 'row \"onOpenChange (id: string | null, job?: QueueJob) => void – A job''s card was pinned or closed\"':\n          - cell \"onOpenChange\":\n            - code: onOpenChange\n          - 'cell \"(id: string | null, job?: QueueJob) => void\"':\n            - code: \"(id: string | null, job?: QueueJob) => void\"\n          - cell \"–\"\n          - cell \"A job's card was pinned or closed\"\n        - 'row \"onPromote / onCancel (job: QueueJob) => void – Show \\\"Move to front\\\" and \\\"Cancel\\\" in a pinned card\"':\n          - cell \"onPromote / onCancel\":\n            - code: onPromote / onCancel\n          - 'cell \"(job: QueueJob) => void\"':\n            - code: \"(job: QueueJob) => void\"\n          - cell \"–\"\n          - cell \"Show \\\"Move to front\\\" and \\\"Cancel\\\" in a pinned card\"\n        - row \"title / name string \\\"Queue\\\" Heading, and the queue's name muted next to it\":\n          - cell \"title / name\":\n            - code: title / name\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Queue\\\"\":\n            - code: \"\\\"Queue\\\"\"\n          - cell \"Heading, and the queue's name muted next to it\"\n        - row \"className string – Extra class on the root\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Tab Moves into the jobs (one job is in the tab order), then to the card's buttons\":\n          - cell \"Tab\":\n            - generic: Tab\n          - cell \"Moves into the jobs (one job is in the tab order), then to the card's buttons\"\n        - row \"ArrowUp or ArrowDown or ArrowLeft or ArrowRight Walks through the running jobs, slot by slot, then the queue from the front; Home and End jump to the ends\":\n          - cell \"ArrowUp or ArrowDown or ArrowLeft or ArrowRight\":\n            - generic: ArrowUp\n            - text: or\n            - generic: ArrowDown\n            - text: or\n            - generic: ArrowLeft\n            - text: or\n            - generic: ArrowRight\n          - cell \"Walks through the running jobs, slot by slot, then the queue from the front; Home and End jump to the ends\"\n        - row \"Enter or Space Pins or closes the focused job's card\":\n          - cell \"Enter or Space\":\n            - generic: Enter\n            - text: or\n            - generic: Space\n          - cell \"Pins or closes the focused job's card\"\n        - row \"Esc Closes the card\":\n          - cell \"Esc\":\n            - generic: Esc\n          - cell \"Closes the card\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: Every job is a real button, labelled with its name, kind, how long it waited or ran, its place in line, priority and attempt\n      - listitem: Roving focus – only one job is in the tab order, so the flow is a single stop\n      - listitem: The pinned card is a dialog with a close button; Esc closes it and returns focus to the job\n      - listitem: Rate limits, their end, failures, retries and crossing the backpressure line are announced in a polite live region\n      - listitem: \"The chart is an image with a text summary: how many wait now, the peak, the average and the rate-limited stretches\"\n      - listitem: Pause is a toggle button with aria-pressed; the stepper's buttons say what they do and the count is announced\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: New jobs drop in at the back of the queue; a high-priority job lands at the back first, then glides past the others\n      - listitem: The front job moves into a free worker and becomes a bar that grows with its progress, with a sheen and a glowing front edge\n      - listitem: A finished job turns green for a beat and flies into Done; a failed one shakes red and goes to Failed – or slides back into the queue with a retry badge\n      - listitem: During a rate limit the bars stop and turn amber, a countdown runs out; the chart line climbs, then falls as the queue drains\n      - listitem: The numbers ease to their new value and the chart's scale glides when it changes – one frame loop that sleeps when nothing moves or the queue is off-screen\n      - listitem: With prefers-reduced-motion everything appears in place\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: \"Built on a container query and the measured width: wide, the flow runs left to right – queue, workers, Done and Failed\"\n      - listitem: \"Under 600px the flow stacks: queue on top, the workers below (just their marks, the rail gets the room), Done and Failed side by side\"\n      - listitem: The four numbers wrap to two columns; under 440px Pause and the stepper get a row of their own\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Notes for AI\" [level=2]\n    - paragraph: Give your coding assistant this summary instead of screenshots.\n    - list:\n      - listitem: Pass the whole list every time something changes – ids keep jobs in place and every change glides\n      - listitem: All times are on one clock – epoch ms, or your own (then pass now)\n      - listitem: A retry is the same id going back to \"queued\" with attempt + 1, a new enqueuedAt and no startedAt or worker\n      - listitem: \"The chart is computed from the jobs: keep finished jobs for as long as window, or pass totals and accept a shorter history\"\n      - listitem: Pass progress while a job runs for honest bars; otherwise give an estimate\n      - listitem: Colors are variables on .ui-agqc, e.g. --ui-agqc-llm-bg / --ui-agqc-llm-edge for LLM calls\n      - listitem: The icons are Hugeicons Free (MIT) – keep the credit comment when you copy the file\n    - heading \"Related\" [level=2]\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Agent Lanes Where every agent is right now – a live timeline with a lane per agent, tasks growing into “now”, hand-offs drawn between agents and approvals right on the block\":\n        - /url: /components/agent-lanes\n        - heading \"Agent Lanes\" [level=3]\n        - paragraph: Where every agent is right now – a live timeline with a lane per agent, tasks growing into “now”, hand-offs drawn between agents and approvals right on the block\n      - button \"Agent Lanes is part of Pro – see pricing\":\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Delegate Board Hand work to your agents by dragging it onto them – each agent previews its new “busy until” time, or switch to Auto and every new task goes to whoever is free first\":\n        - /url: /components/delegate-board\n        - heading \"Delegate Board\" [level=3]\n        - paragraph: Hand work to your agents by dragging it onto them – each agent previews its new “busy until” time, or switch to Auto and every new task goes to whoever is free first\n      - button \"Delegate Board is part of Pro – see pricing\":\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Agent Inbox All your background agent tasks in one calm list – live clocks and status tags, filter tabs with rolling counts, rows that unfold to the last steps with Approve, Reject, Retry or Open, and glide to their new place\":\n        - /url: /components/agent-inbox\n        - heading \"Agent Inbox\" [level=3]\n        - paragraph: All your background agent tasks in one calm list – live clocks and status tags, filter tabs with rolling counts, rows that unfold to the last steps with Approve, Reject, Retry or Open, and glide to their new place\n      - button \"Agent Inbox is part of Pro – see pricing\":\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Trace Waterfall Where the time and money of an agent run go – every LLM call, tool call and sub-agent as a bar on a live timeline, with tokens and cost per step, the slowest call marked and branches that fold into their parent\":\n        - /url: /components/trace-waterfall\n        - heading \"Trace Waterfall\" [level=3]\n        - paragraph: Where the time and money of an agent run go – every LLM call, tool call and sub-agent as a bar on a live timeline, with tokens and cost per step, the slowest call marked and branches that fold into their parent\n      - button \"Trace Waterfall is part of Pro – see pricing\":\n    - heading \"Guides\" [level=2]\n    - 'link \"Multi-agent UI in React: orchestrators, sub-agents and hand-offs Guide How to show several AI agents working together – who started whom, who is busy, hand-offs, parallel work, conflicts and the queue – with React components for each.\"':\n      - /url: /guides/multi-agent-ui-react\n      - generic: \"Multi-agent UI in React: orchestrators, sub-agents and hand-offs\"\n      - generic: Guide\n      - generic: How to show several AI agents working together – who started whom, who is busy, hand-offs, parallel work, conflicts and the queue – with React components for each.\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

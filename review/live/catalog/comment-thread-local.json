@@ -1,0 +1,701 @@
+{
+  "controls": [
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Updated the draft",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Reply",
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Send reply",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "submit"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-ctc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 620.1875,
+        "height": 254,
+        "left": 639,
+        "right": 1059,
+        "top": 366.1875,
+        "width": 420,
+        "x": 639,
+        "y": 366.1875
+      },
+      "tag": "SECTION",
+      "text": "Launch notes2 messagesMCMaya Chen2min agoCan we simplify the first paragraph?AAssistantjust nowI shortened the opening and kept the important details.Updated th"
+    },
+    {
+      "cls": "ui-ctc__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "10px 10px 10px 16px"
+      },
+      "rect": {
+        "bottom": 414.1875,
+        "height": 48,
+        "left": 639,
+        "right": 1059,
+        "top": 366.1875,
+        "width": 420,
+        "x": 639,
+        "y": 366.1875
+      },
+      "tag": "HEADER",
+      "text": "Launch notes2 messages"
+    },
+    {
+      "cls": "ui-ctc__title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flow-root",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 399.9375,
+        "height": 20,
+        "left": 655,
+        "right": 738.7734375,
+        "top": 379.9375,
+        "width": 83.7734375,
+        "x": 655,
+        "y": 379.9375
+      },
+      "tag": "H3",
+      "text": "Launch notes"
+    },
+    {
+      "cls": "ui-ctc__count",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 397.9375,
+        "height": 16,
+        "left": 746.7734375,
+        "right": 815.390625,
+        "top": 381.9375,
+        "width": 68.6171875,
+        "x": 746.7734375,
+        "y": 381.9375
+      },
+      "tag": "SPAN",
+      "text": "2 messages"
+    },
+    {
+      "cls": "ui-ctc__morph",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 578.1875,
+        "height": 164,
+        "left": 639,
+        "right": 1059,
+        "top": 414.1875,
+        "width": 420,
+        "x": 639,
+        "y": 414.1875
+      },
+      "tag": "DIV",
+      "text": "MCMaya Chen2min agoCan we simplify the first paragraph?AAssistantjust nowI shortened the opening and kept the important details.Updated the draftRemoved repeate"
+    },
+    {
+      "cls": "ui-ctc__scroll",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "16px",
+        "lineHeight": "20px",
+        "padding": "16px 16px 12px"
+      },
+      "rect": {
+        "bottom": 578.1875,
+        "height": 164,
+        "left": 639,
+        "right": 1059,
+        "top": 414.1875,
+        "width": 420,
+        "x": 639,
+        "y": 414.1875
+      },
+      "tag": "DIV",
+      "text": "MCMaya Chen2min agoCan we simplify the first paragraph?AAssistantjust nowI shortened the opening and kept the important details.Updated the draftRemoved repeate"
+    },
+    {
+      "cls": "ui-ctc__msg",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 474.1875,
+        "height": 44,
+        "left": 655,
+        "right": 1043,
+        "top": 430.1875,
+        "width": 388,
+        "x": 655,
+        "y": 430.1875
+      },
+      "tag": "ARTICLE",
+      "text": "MCMaya Chen2min agoCan we simplify the first paragraph?"
+    },
+    {
+      "cls": "ui-ctc__meta",
+      "css": {
+        "animationDuration": "0.42s",
+        "animationName": "ui-ctc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 451.50439453125,
+        "height": 20,
+        "left": 655,
+        "right": 1043,
+        "top": 431.50439453125,
+        "width": 388,
+        "x": 655,
+        "y": 431.50439453125
+      },
+      "tag": "DIV",
+      "text": "MCMaya Chen2min ago"
+    },
+    {
+      "cls": "ui-ctc__avatar ui-ctc__avatar--initials",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.06)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "50%",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "9px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "9px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 451.50439453125,
+        "height": 20,
+        "left": 655,
+        "right": 675,
+        "top": 431.50439453125,
+        "width": 20,
+        "x": 655,
+        "y": 431.50439453125
+      },
+      "tag": "SPAN",
+      "text": "MC"
+    },
+    {
+      "cls": "ui-ctc__name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 451.50439453125,
+        "height": 20,
+        "left": 683,
+        "right": 753.1015625,
+        "top": 431.50439453125,
+        "width": 70.1015625,
+        "x": 683,
+        "y": 431.50439453125
+      },
+      "tag": "SPAN",
+      "text": "Maya Chen"
+    },
+    {
+      "cls": "ui-ctc__time",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 449.50439453125,
+        "height": 16,
+        "left": 990.1953125,
+        "right": 1043,
+        "top": 433.50439453125,
+        "width": 52.8046875,
+        "x": 990.1953125,
+        "y": 433.50439453125
+      },
+      "tag": "TIME",
+      "text": "2min ago"
+    },
+    {
+      "cls": "ui-ctc__text",
+      "css": {
+        "animationDuration": "0.42s",
+        "animationName": "ui-ctc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 478.0432434082031,
+        "height": 20,
+        "left": 683,
+        "right": 1043,
+        "top": 458.0432434082031,
+        "width": 360,
+        "x": 683,
+        "y": 458.0432434082031
+      },
+      "tag": "P",
+      "text": "Can we simplify the first paragraph?"
+    },
+    {
+      "cls": "ui-ctc__status",
+      "css": {
+        "animationDuration": "0.42s",
+        "animationName": "ui-ctc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 570.1875,
+        "height": 28,
+        "left": 677,
+        "right": 1043,
+        "top": 542.1875,
+        "width": 366,
+        "x": 677,
+        "y": 542.1875
+      },
+      "tag": "DIV",
+      "text": "Updated the draftRemoved repeated phrasesKept the launch date"
+    },
+    {
+      "cls": "ui-ctc__status-btn",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "inline-flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 4px 0px 6px"
+      },
+      "rect": {
+        "bottom": 570.1875,
+        "height": 28,
+        "left": 677,
+        "right": 840.1484375,
+        "top": 542.1875,
+        "width": 163.1484375,
+        "x": 677,
+        "y": 542.1875
+      },
+      "tag": "BUTTON",
+      "text": "Updated the draft"
+    },
+    {
+      "cls": "ui-ctc__check",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 564.1875,
+        "height": 16,
+        "left": 683,
+        "right": 699,
+        "top": 548.1875,
+        "width": 16,
+        "x": 683,
+        "y": 548.1875
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-ctc__status-text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 566.1875,
+        "height": 20,
+        "left": 705,
+        "right": 814.1484375,
+        "top": 546.1875,
+        "width": 109.1484375,
+        "x": 705,
+        "y": 546.1875
+      },
+      "tag": "SPAN",
+      "text": "Updated the draft"
+    },
+    {
+      "cls": "ui-ctc__chevron",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 564.1875,
+        "height": 16,
+        "left": 820.1484375,
+        "right": 836.1484375,
+        "top": 548.1875,
+        "width": 16,
+        "x": 820.1484375,
+        "y": 548.1875
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-ctc__glyph",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 564.1875,
+        "height": 16,
+        "left": 820.1484375,
+        "right": 836.1484375,
+        "top": 548.1875,
+        "width": 16,
+        "x": 820.1484375,
+        "y": 548.1875
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-ctc__details",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 570.1875,
+        "height": 0,
+        "left": 677,
+        "right": 1043,
+        "top": 570.1875,
+        "width": 366,
+        "x": 677,
+        "y": 570.1875
+      },
+      "tag": "DIV",
+      "text": "Removed repeated phrasesKept the launch date"
+    },
+    {
+      "cls": "ui-ctc__composer",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "4px 10px 10px 16px"
+      },
+      "rect": {
+        "bottom": 620.1875,
+        "height": 42,
+        "left": 639,
+        "right": 1059,
+        "top": 578.1875,
+        "width": 420,
+        "x": 639,
+        "y": 578.1875
+      },
+      "tag": "FORM",
+      "text": ""
+    },
+    {
+      "cls": "ui-ctc__input",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 610.1875,
+        "height": 28,
+        "left": 655,
+        "right": 1013,
+        "top": 582.1875,
+        "width": 358,
+        "x": 655,
+        "y": 582.1875
+      },
+      "tag": "INPUT",
+      "text": ""
+    },
+    {
+      "cls": "ui-ctc__send",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.06)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 610.1875,
+        "height": 28,
+        "left": 1021,
+        "right": 1049,
+        "top": 582.1875,
+        "width": 28,
+        "x": 1021,
+        "y": 582.1875
+      },
+      "tag": "BUTTON",
+      "text": ""
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 16 16\" class=\"ui-ctc__check\" aria-hidden=\"true\"><path d=\"M1.5 8a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0Zm8.9-1.2a.5.5 0 0 0-.8-.6L7.44 9.23 6.35 8.15a.5.5 0 1 0-.7.7l1.5 1.5a.5.5 0 0 0 .76-.06l2.5-3.5Z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" class=\"ui-ctc__glyph\" aria-hidden=\"true\"><path d=\"m5 6.5 3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M8 12.5v-9M4.25 7.25 8 3.5l3.75 3.75\"></path></svg>"
+  ],
+  "url": "http://127.0.0.1:5173/#/comment-thread",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- complementary:\n  - button \"Component Studio home\":\n    - text: s\n    - generic: ·\n    - generic: componentstudio\n    - generic: \"01\"\n  - textbox \"Search components\":\n    - /placeholder: Find a component…\n  - generic: /\n  - button \"▦ All components 90\":\n    - generic: ▦\n    - text: All components\n    - generic: \"90\"\n  - button \"Favorites 0\":\n    - text: Favorites\n    - generic: \"0\"\n  - navigation \"Components\":\n    - generic: ⌘\n    - text: Agents\n    - generic: \"43\"\n    - button \"Agent Checkpoints\":\n      - generic: Agent Checkpoints\n    - button \"Agent Cursors\":\n      - generic: Agent Cursors\n    - button \"Agent Findings\":\n      - generic: Agent Findings\n    - button \"Agent Fleet\":\n      - generic: Agent Fleet\n    - button \"Agent Graph\":\n      - generic: Agent Graph\n    - button \"Agent Handoff\":\n      - generic: Agent Handoff\n    - button \"Agent Inbox\":\n      - generic: Agent Inbox\n    - button \"Agent Lanes\":\n      - generic: Agent Lanes\n    - button \"Agent Ledger\":\n      - generic: Agent Ledger\n    - button \"Agent Monitor\":\n      - generic: Agent Monitor\n    - button \"Agent Plan\":\n      - generic: Agent Plan\n    - button \"Agent Queue\":\n      - generic: Agent Queue\n    - button \"Agent Recap\":\n      - generic: Agent Recap\n    - button \"Agent Steering\":\n      - generic: Agent Steering\n    - button \"Agent Trail\":\n      - generic: Agent Trail\n    - button \"Agent Tree\":\n      - generic: Agent Tree\n    - button \"Approval Card\":\n      - generic: Approval Card\n    - button \"Approval Gates\":\n      - generic: Approval Gates\n    - button \"Autonomy Dial\":\n      - generic: Autonomy Dial\n    - button \"Away Summary\":\n      - generic: Away Summary\n    - button \"Collaboration Stream\":\n      - generic: Collaboration Stream\n    - button \"Conflict Radar\":\n      - generic: Conflict Radar\n    - button \"Context Map\":\n      - generic: Context Map\n    - button \"Context Window\":\n      - generic: Context Window\n    - button \"Cost Waterfall\":\n      - generic: Cost Waterfall\n    - button \"Decision Card\":\n      - generic: Decision Card\n    - button \"Decision Tree\":\n      - generic: Decision Tree\n    - button \"Delegate Board\":\n      - generic: Delegate Board\n    - button \"Fallback Chain\":\n      - generic: Fallback Chain\n    - button \"Fan-out Grid\":\n      - generic: Fan-out Grid\n    - button \"Inline Diff\":\n      - generic: Inline Diff\n    - button \"Judge Bracket\":\n      - generic: Judge Bracket\n    - button \"Memory Panel\":\n      - generic: Memory Panel\n    - button \"Parallel Attempts\":\n      - generic: Parallel Attempts\n    - button \"Permission Request\":\n      - generic: Permission Request\n    - button \"Plan vs Actual\":\n      - generic: Plan vs Actual\n    - button \"Review Center\":\n      - generic: Review Center\n    - button \"Root Cause Tree\":\n      - generic: Root Cause Tree\n    - button \"Running Now\":\n      - generic: Running Now\n    - button \"Scheduled Runs\":\n      - generic: Scheduled Runs\n    - button \"Tool Access Map\":\n      - generic: Tool Access Map\n    - button \"Tool Call Card\":\n      - generic: Tool Call Card\n    - button \"Trace Waterfall\":\n      - generic: Trace Waterfall\n    - generic: ◌\n    - text: Chat\n    - generic: \"10\"\n    - button \"AI Answer\":\n      - generic: AI Answer\n    - button \"Chat Composer\":\n      - generic: Chat Composer\n    - button \"Cited Answer\":\n      - generic: Cited Answer\n    - button \"Comment Thread\":\n      - generic: Comment Thread\n    - button \"Comments Panel\":\n      - generic: Comments Panel\n    - button \"Message Actions\":\n      - generic: Message Actions\n    - button \"Model Picker\":\n      - generic: Model Picker\n    - button \"Thinking Loader\":\n      - generic: Thinking Loader\n    - button \"Thinking State\":\n      - generic: Thinking State\n    - button \"Writing Assistant\":\n      - generic: Writing Assistant\n    - generic: ⊞\n    - text: Inputs\n    - generic: \"15\"\n    - button \"Billing Schedule\":\n      - generic: Billing Schedule\n    - button \"Checkbox\":\n      - generic: Checkbox\n    - button \"Combobox\":\n      - generic: Combobox\n    - button \"Date Range Picker\":\n      - generic: Date Range Picker\n    - button \"Dropzone\":\n      - generic: Dropzone\n    - button \"Filter Menu\":\n      - generic: Filter Menu\n    - button \"Integration Settings\":\n      - generic: Integration Settings\n    - button \"OTP Input\":\n      - generic: OTP Input\n    - button \"Prompt Library\":\n      - generic: Prompt Library\n    - button \"Select\":\n      - generic: Select\n    - button \"Stepper Form\":\n      - generic: Stepper Form\n    - button \"Switch\":\n      - generic: Switch\n    - button \"Tag Input\":\n      - generic: Tag Input\n    - button \"Text Area\":\n      - generic: Text Area\n    - button \"Text Field\":\n      - generic: Text Field\n    - generic: ▤\n    - text: Data display\n    - generic: \"7\"\n    - button \"Breakdown Chart\":\n      - generic: Breakdown Chart\n    - button \"Change Summary\":\n      - generic: Change Summary\n    - button \"Compact Breakdown\":\n      - generic: Compact Breakdown\n    - button \"Data Table\":\n      - generic: Data Table\n    - button \"Experiment Card\":\n      - generic: Experiment Card\n    - button \"KPI Chart\":\n      - generic: KPI Chart\n    - button \"Usage Meter\":\n      - generic: Usage Meter\n    - generic: ↗\n    - text: Navigation\n    - generic: \"4\"\n    - button \"Command Menu\":\n      - generic: Command Menu\n    - button \"Integration Picker\":\n      - generic: Integration Picker\n    - button \"Profile Menu\":\n      - generic: Profile Menu\n    - button \"Segmented Control\":\n      - generic: Segmented Control\n    - generic: ◉\n    - text: Feedback\n    - generic: \"5\"\n    - button \"Decision Inbox\":\n      - generic: Decision Inbox\n    - button \"Notification Stack\":\n      - generic: Notification Stack\n    - button \"Progress Tracker\":\n      - generic: Progress Tracker\n    - button \"Setup Guide\":\n      - generic: Setup Guide\n    - button \"Toaster\":\n      - generic: Toaster\n    - generic: ▢\n    - text: Cards\n    - generic: \"4\"\n    - button \"Email Draft\":\n      - generic: Email Draft\n    - button \"Project Card\":\n      - generic: Project Card\n    - button \"Smart Recommendation\":\n      - generic: Smart Recommendation\n    - button \"Tips Panel\":\n      - generic: Tips Panel\n    - generic: ↵\n    - text: Buttons\n    - generic: \"2\"\n    - button \"Button\":\n      - generic: Button\n    - button \"Reaction Bar\":\n      - generic: Reaction Bar\n  - link \"Take the library with you All source files · ZIP download ↗\":\n    - /url: /component-library.zip\n    - strong: Take the library with you\n    - generic: All source files · ZIP download\n    - generic: ↗\n  - generic: 90 components. Yours to build with.\n- banner:\n  - button \"Library\"\n  - generic: /\n  - generic: Chat\n  - generic: /\n  - strong: Comment Thread\n  - link \"GitHub ↗\":\n    - /url: https://github.com/Atlas322/thinking-state\n  - button \"Switch to dark theme\":\n- main:\n  - text: CHAT\n  - generic: /\n  - text: COMPONENT 32\n  - heading \"Comment Thread\" [level=1]\n  - button \"Add to favorites\":\n  - paragraph: One comment with replies – an assistant reports what it did, folds open details and answers @mentions\n  - generic: Original · MIT license\n  - generic: React 19\n  - generic: TypeScript\n  - generic: Self-contained\n  - region \"Comment Thread showcase\":\n    - tablist \"Component view\":\n      - tab \"◉ Preview\" [selected]:\n        - generic: ◉\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n      - tab \"↗ Usage\":\n        - generic: ↗\n        - text: Usage\n    - group \"Component style\":\n      - button \"Clean\" [pressed]\n      - button \"Classic\"\n    - button \"Use narrow preview\":\n      - generic: ▯\n    - button \"Replay component\":\n    - tabpanel \"◉ Preview\":\n      - region \"Launch notes\":\n        - heading \"Launch notes\" [level=3]\n        - generic: 2 messages\n        - article:\n          - generic: MC\n          - generic \"Maya Chen\"\n          - time: 2min ago\n          - paragraph: Can we simplify the first paragraph?\n        - article:\n          - generic: A\n          - generic \"Assistant\"\n          - time: just now\n          - paragraph: I shortened the opening and kept the important details.\n          - button \"Updated the draft\":\n            - generic \"Updated the draft\"\n          - list:\n            - listitem: Removed repeated phrases\n            - listitem: Kept the launch date\n        - textbox \"Reply\":\n          - /placeholder: Add comment…\n        - button \"Send reply\" [disabled]:\n    - generic: Interactive preview — try it out\n    - generic: No backend connected\n  - strong: Make it part of your project.\n  - paragraph: Copy the source, or give an AI assistant the complete prompt.\n  - button \"Download component file\":\n  - button \"Copy code\":\n    - text: Copy code\n  - button \"✦ Copy prompt\":\n    - generic: ✦\n    - text: Copy prompt\n  - status\n  - heading \"Copy. Paste. Build.\" [level=3]\n  - list:\n    - text: Copy the code or download the\n    - code: .tsx\n    - text: file.\n    - listitem: Add it to your React 19 project. Styles are already included.\n    - listitem: Pass your data and connect the callbacks to your application.\n  - button \"See usage example\":\n    - text: See usage example\n  - heading \"From the open-source collection\" [level=3]\n  - paragraph: The original affectUI component under the MIT license, with a local working example. The license notice is included when you copy or download the code.\n  - link \"View original reference ↗\":\n    - /url: https://www.affectui.com/components/comment-thread\n  - heading \"Keep exploring\" [level=2]\n  - button \"View all 90\":\n    - text: View all 90\n  - button \"◌ Chat AI Answer ↗\":\n    - generic: ◌\n    - generic: Chat\n    - strong: AI Answer\n    - generic: ↗\n  - button \"◌ Chat Chat Composer ↗\":\n    - generic: ◌\n    - generic: Chat\n    - strong: Chat Composer\n    - generic: ↗\n  - button \"◌ Chat Cited Answer ↗\":\n    - generic: ◌\n    - generic: Chat\n    - strong: Cited Answer\n    - generic: ↗\n  - generic: Component Studio · Built to be used.\n  - link \"Source repository ↗\":\n    - /url: https://github.com/Atlas322/thinking-state"
+}

@@ -1,0 +1,1005 @@
+{
+  "controls": [
+    {
+      "expanded": "true",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Using tools…· 0.0s",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "search_webSearching the web for 'CRM pricing 2026'0.0s",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Copy arguments",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-tclc-group",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 625.296875,
+        "height": 90.703125,
+        "left": 614,
+        "right": 1074,
+        "top": 534.59375,
+        "width": 460,
+        "x": 614,
+        "y": 534.59375
+      },
+      "tag": "DIV",
+      "text": "Using tools…Using tools…· 0.0ssearch_web runningsearch_webSearching the web for 'CRM pricing 2026'0.0sArguments{\n  \"query\": \"CRM pricing 2026 small sales team\","
+    },
+    {
+      "cls": "ui-tclc-sr",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 535.671875,
+        "height": 1.078125,
+        "left": 614,
+        "right": 615.078125,
+        "top": 534.59375,
+        "width": 1.078125,
+        "x": 614,
+        "y": 534.59375
+      },
+      "tag": "SPAN",
+      "text": "Using tools…"
+    },
+    {
+      "cls": "ui-tclc-group__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "4px 10px 4px 6px"
+      },
+      "rect": {
+        "bottom": 569.1484375,
+        "height": 34.5546875,
+        "left": 607.5234375,
+        "right": 811.40625,
+        "top": 534.59375,
+        "width": 203.8828125,
+        "x": 607.5234375,
+        "y": 534.59375
+      },
+      "tag": "BUTTON",
+      "text": "Using tools…· 0.0s"
+    },
+    {
+      "cls": "ui-tclc-group__stack",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0.5px"
+      },
+      "rect": {
+        "bottom": 564.2890625,
+        "height": 24.8359375,
+        "left": 614,
+        "right": 638.8359375,
+        "top": 539.453125,
+        "width": 24.8359375,
+        "x": 614,
+        "y": 539.453125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-tclc__icon",
+      "css": {
+        "animationDuration": "0.42s",
+        "animationName": "ui-tclc-pop",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 562.1641235351562,
+        "height": 20.5860595703125,
+        "left": 616.1249389648438,
+        "right": 636.7109985351562,
+        "top": 541.5780639648438,
+        "width": 20.5860595703125,
+        "x": 616.1249389648438,
+        "y": 541.5780639648438
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-tclc-group__title",
+      "css": {
+        "animationDuration": "0.36s",
+        "animationName": "ui-tclc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 563.546630859375,
+        "height": 21.6015625,
+        "left": 647.46875,
+        "right": 779.0234375,
+        "top": 541.945068359375,
+        "width": 131.5546875,
+        "x": 647.46875,
+        "y": 541.945068359375
+      },
+      "tag": "SPAN",
+      "text": "Using tools…· 0.0s"
+    },
+    {
+      "cls": "ui-tclc-group__label ui-tclc__shine",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 563.546630859375,
+        "height": 21.6015625,
+        "left": 647.46875,
+        "right": 735.3359375,
+        "top": 541.945068359375,
+        "width": 87.8671875,
+        "x": 647.46875,
+        "y": 541.945068359375
+      },
+      "tag": "SPAN",
+      "text": "Using tools…"
+    },
+    {
+      "cls": "ui-tclc-group__time",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 563.546630859375,
+        "height": 21.6015625,
+        "left": 741.8125,
+        "right": 779.0234375,
+        "top": 541.945068359375,
+        "width": 37.2109375,
+        "x": 741.8125,
+        "y": 541.945068359375
+      },
+      "tag": "SPAN",
+      "text": "· 0.0s"
+    },
+    {
+      "cls": "ui-tclc__chevron",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 558.34375,
+        "height": 12.953125,
+        "left": 787.65625,
+        "right": 800.609375,
+        "top": 545.390625,
+        "width": 12.953125,
+        "x": 787.65625,
+        "y": 545.390625
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-tclc__body",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 625.296875,
+        "height": 56.1484375,
+        "left": 614,
+        "right": 1074,
+        "top": 569.1484375,
+        "width": 460,
+        "x": 614,
+        "y": 569.1484375
+      },
+      "tag": "DIV",
+      "text": "search_web runningsearch_webSearching the web for 'CRM pricing 2026'0.0sArguments{\n  \"query\": \"CRM pricing 2026 small sales team\",\n  \"max_results\": 5\n}ResultWai"
+    },
+    {
+      "cls": "ui-tclc__clip",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 625.296875,
+        "height": 56.1484375,
+        "left": 614,
+        "right": 1074,
+        "top": 569.1484375,
+        "width": 460,
+        "x": 614,
+        "y": 569.1484375
+      },
+      "tag": "DIV",
+      "text": "search_web runningsearch_webSearching the web for 'CRM pricing 2026'0.0sArguments{\n  \"query\": \"CRM pricing 2026 small sales team\",\n  \"max_results\": 5\n}ResultWai"
+    },
+    {
+      "cls": "ui-tclc-group__list",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "6px 0px 2px"
+      },
+      "rect": {
+        "bottom": 625.296875,
+        "height": 56.1484375,
+        "left": 614,
+        "right": 1074,
+        "top": 569.1484375,
+        "width": 460,
+        "x": 614,
+        "y": 569.1484375
+      },
+      "tag": "DIV",
+      "text": "search_web runningsearch_webSearching the web for 'CRM pricing 2026'0.0sArguments{\n  \"query\": \"CRM pricing 2026 small sales team\",\n  \"max_results\": 5\n}ResultWai"
+    },
+    {
+      "cls": "ui-tclc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 623.140625,
+        "height": 47.515625,
+        "left": 614,
+        "right": 1074,
+        "top": 575.625,
+        "width": 460,
+        "x": 614,
+        "y": 575.625
+      },
+      "tag": "DIV",
+      "text": "search_web runningsearch_webSearching the web for 'CRM pricing 2026'0.0sArguments{\n  \"query\": \"CRM pricing 2026 small sales team\",\n  \"max_results\": 5\n}ResultWai"
+    },
+    {
+      "cls": "ui-tclc__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "lineHeight": "20px",
+        "padding": "0px 14px"
+      },
+      "rect": {
+        "bottom": 623.140625,
+        "height": 47.515625,
+        "left": 614,
+        "right": 1074,
+        "top": 575.625,
+        "width": 460,
+        "x": 614,
+        "y": 575.625
+      },
+      "tag": "BUTTON",
+      "text": "search_webSearching the web for 'CRM pricing 2026'0.0s"
+    },
+    {
+      "cls": "ui-tclc__main",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 610.4296875,
+        "height": 22.1015625,
+        "left": 657.1875,
+        "right": 975.609375,
+        "top": 588.328125,
+        "width": 318.421875,
+        "x": 657.1875,
+        "y": 588.328125
+      },
+      "tag": "SPAN",
+      "text": "search_webSearching the web for 'CRM pricing 2026'"
+    },
+    {
+      "cls": "ui-tclc__name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "ui-monospace, \"SF Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 610.4296875,
+        "height": 21.6015625,
+        "left": 657.1875,
+        "right": 735.21875,
+        "top": 588.828125,
+        "width": 78.03125,
+        "x": 657.1875,
+        "y": 588.828125
+      },
+      "tag": "CODE",
+      "text": "search_web"
+    },
+    {
+      "cls": "ui-tclc__summary",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 609.9296875,
+        "height": 21.6015625,
+        "left": 743.8515625,
+        "right": 975.609375,
+        "top": 588.328125,
+        "width": 231.7578125,
+        "x": 743.8515625,
+        "y": 588.328125
+      },
+      "tag": "SPAN",
+      "text": "Searching the web for 'CRM pricing 2026'"
+    },
+    {
+      "cls": "ui-tclc__status",
+      "css": {
+        "animationDuration": "0.36s",
+        "animationName": "ui-tclc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 608.898193359375,
+        "height": 17.28125,
+        "left": 986.40625,
+        "right": 1035.1328125,
+        "top": 591.616943359375,
+        "width": 48.7265625,
+        "x": 986.40625,
+        "y": 591.616943359375
+      },
+      "tag": "SPAN",
+      "text": "0.0s"
+    },
+    {
+      "cls": "ui-tclc__spinner",
+      "css": {
+        "animationDuration": "0.8s",
+        "animationName": "ui-tclc-spin",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 610.8419189453125,
+        "height": 21.17645263671875,
+        "left": 983.3765869140624,
+        "right": 1004.5531005859376,
+        "top": 589.6654663085938,
+        "width": 21.176513671875,
+        "x": 983.3765869140624,
+        "y": 589.6654663085938
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-tclc__time",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 608.898193359375,
+        "height": 17.28125,
+        "left": 1008,
+        "right": 1035.1328125,
+        "top": 591.616943359375,
+        "width": 27.1328125,
+        "x": 1008,
+        "y": 591.616943359375
+      },
+      "tag": "SPAN",
+      "text": "0.0s"
+    },
+    {
+      "cls": "ui-tclc__sections",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "14px",
+        "lineHeight": "20px",
+        "padding": "12px 14px 14px"
+      },
+      "rect": {
+        "bottom": 865.53125,
+        "height": 242.390625,
+        "left": 614,
+        "right": 1074,
+        "top": 623.140625,
+        "width": 460,
+        "x": 614,
+        "y": 623.140625
+      },
+      "tag": "DIV",
+      "text": "Arguments{\n  \"query\": \"CRM pricing 2026 small sales team\",\n  \"max_results\": 5\n}ResultWaiting for result…"
+    },
+    {
+      "cls": "ui-tclc__section",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 781.3046875,
+        "height": 144.7109375,
+        "left": 629.1171875,
+        "right": 1058.8828125,
+        "top": 636.59375,
+        "width": 429.765625,
+        "x": 629.1171875,
+        "y": 636.59375
+      },
+      "tag": "DIV",
+      "text": "Arguments{\n  \"query\": \"CRM pricing 2026 small sales team\",\n  \"max_results\": 5\n}"
+    },
+    {
+      "cls": "ui-tclc__section-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 666.828125,
+        "height": 30.234375,
+        "left": 629.1171875,
+        "right": 1058.8828125,
+        "top": 636.59375,
+        "width": 429.765625,
+        "x": 629.1171875,
+        "y": 636.59375
+      },
+      "tag": "DIV",
+      "text": "Arguments"
+    },
+    {
+      "cls": "ui-tclc__label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 660.3515625,
+        "height": 17.28125,
+        "left": 629.1171875,
+        "right": 703.25,
+        "top": 643.0703125,
+        "width": 74.1328125,
+        "x": 629.1171875,
+        "y": 643.0703125
+      },
+      "tag": "SPAN",
+      "text": "Arguments"
+    },
+    {
+      "cls": "ui-tclc__copy",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 666.828125,
+        "height": 30.234375,
+        "left": 1028.6484375,
+        "right": 1058.8828125,
+        "top": 636.59375,
+        "width": 30.234375,
+        "x": 1028.6484375,
+        "y": 636.59375
+      },
+      "tag": "BUTTON",
+      "text": ""
+    },
+    {
+      "cls": "ui-tclc__copy-icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 660.34375,
+        "height": 17.2734375,
+        "left": 1035.125,
+        "right": 1052.3984375,
+        "top": 643.0703125,
+        "width": 17.2734375,
+        "x": 1035.125,
+        "y": 643.0703125
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-tclc__copy-done",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 656.8890380859375,
+        "height": 10.364013671875,
+        "left": 1038.5797119140625,
+        "right": 1048.9437255859375,
+        "top": 646.5250244140625,
+        "width": 10.364013671875,
+        "x": 1038.5797119140625,
+        "y": 646.5250244140625
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-tclc__code",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(250, 250, 250)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "ui-monospace, \"SF Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "10px 12px"
+      },
+      "rect": {
+        "bottom": 781.3046875,
+        "height": 108,
+        "left": 629.1171875,
+        "right": 1058.8828125,
+        "top": 673.3046875,
+        "width": 429.765625,
+        "x": 629.1171875,
+        "y": 673.3046875
+      },
+      "tag": "PRE",
+      "text": "{\n  \"query\": \"CRM pricing 2026 small sales team\",\n  \"max_results\": 5\n}"
+    },
+    {
+      "cls": "ui-tclc__t-key",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "inline",
+        "fontFamily": "ui-monospace, \"SF Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 723.703125,
+        "height": 15,
+        "left": 657.6796875,
+        "right": 712.3046875,
+        "top": 708.703125,
+        "width": 54.625,
+        "x": 657.6796875,
+        "y": 708.703125
+      },
+      "tag": "SPAN",
+      "text": "\"query\""
+    },
+    {
+      "cls": "ui-tclc__t-str",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 123, 172, 0.9)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 123, 172, 0.9)",
+        "display": "inline",
+        "fontFamily": "ui-monospace, \"SF Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 723.703125,
+        "height": 15,
+        "left": 727.9140625,
+        "right": 1001.0078125,
+        "top": 708.703125,
+        "width": 273.09375,
+        "x": 727.9140625,
+        "y": 708.703125
+      },
+      "tag": "SPAN",
+      "text": "\"CRM pricing 2026 small sales team\""
+    },
+    {
+      "cls": "ui-tclc__t-num",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(178, 91, 12)",
+        "borderRadius": "0px",
+        "color": "rgb(178, 91, 12)",
+        "display": "inline",
+        "fontFamily": "ui-monospace, \"SF Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 745.3046875,
+        "height": 15,
+        "left": 774.7265625,
+        "right": 782.53125,
+        "top": 730.3046875,
+        "width": 7.8046875,
+        "x": 774.7265625,
+        "y": 730.3046875
+      },
+      "tag": "SPAN",
+      "text": "5"
+    },
+    {
+      "cls": "ui-tclc__pending",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 850.4140625,
+        "height": 17.28125,
+        "left": 629.1171875,
+        "right": 1058.8828125,
+        "top": 833.1328125,
+        "width": 429.765625,
+        "x": 629.1171875,
+        "y": 833.1328125
+      },
+      "tag": "P",
+      "text": "Waiting for result…"
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 16 16\"><circle cx=\"7\" cy=\"7\" r=\"4.25\"></circle><path d=\"m10.25 10.25 3 3\"></path></svg>",
+    "<svg class=\"ui-tclc__chevron\" viewBox=\"0 0 12 12\" aria-hidden=\"true\"><path d=\"M3.5 5.25 6 7.75l2.5-2.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\"><circle cx=\"7\" cy=\"7\" r=\"4.25\"></circle><path d=\"m10.25 10.25 3 3\"></path></svg>",
+    "<svg class=\"ui-tclc__spinner\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"6\"></circle><path d=\"M8 2a6 6 0 0 1 6 6\"></path></svg>",
+    "<svg class=\"ui-tclc__chevron\" viewBox=\"0 0 12 12\" aria-hidden=\"true\"><path d=\"M3.5 5.25 6 7.75l2.5-2.5\"></path></svg>",
+    "<svg class=\"ui-tclc__copy-icon\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><rect x=\"5.5\" y=\"5.5\" width=\"8.5\" height=\"8.5\" rx=\"2\"></rect><path d=\"M10.5 3.75v-.25A1.5 1.5 0 0 0 9 2H3.5A1.5 1.5 0 0 0 2 3.5V9a1.5 1.5 0 0 0 1.5 1.5h.25\"></path></svg>",
+    "<svg class=\"ui-tclc__copy-done\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M3.5 8.4 6.6 11.3 12.5 4.9\" pathLength=\"1\"></path></svg>"
+  ],
+  "url": "https://www.affectui.com/components/tool-call-card",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Agents\":\n        - /url: /category/agents\n      - generic: Tool Call Card\n    - heading \"Tool Call Card\" [level=1]\n    - paragraph: An agent's tool call in one line – live timer, status and summary, folds open to highlighted arguments and result with copy, retry on errors and a group that sums them up.\n    - code: $ pnpm dlx shadcn@latest add https://www.affectui.com/r/tool-call-card-clean.json\n    - button \"Copy to clipboard\":\n    - tablist \"Tool Call Card preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - paragraph: Compare CRM pricing for our 10-person team and check open deals.\n    - status: Using tools…\n    - button \"Using tools… · 0.0s\" [expanded]:\n      - generic: Using tools…\n      - generic: · 0.0s\n    - status: search_web running\n    - button \"search_web Searching the web for 'CRM pricing 2026' 0.0s\":\n      - code: search_web\n      - generic \"Searching the web for 'CRM pricing 2026'\"\n      - generic: 0.0s\n    - generic: Arguments\n    - button \"Copy arguments\":\n    - code: \"{ \\\"query\\\": \\\"CRM pricing 2026 small sales team\\\", \\\"max_results\\\": 5 }\"\n    - generic: Result\n    - paragraph: Waiting for result…\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: Tool and function calls in an agent chat or run log – what was called, with what, and what came back\n      - listitem: Agents that call several tools per turn – wrap them in ToolCallGroup so the answer isn't buried under cards\n      - listitem: Developer-facing views where people need to copy the exact arguments or result to debug\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: Plain reasoning with no tool calls – use Thinking State or Thinking Loader\n      - listitem: End users who never care about JSON – show a one-line status instead and keep the details in a log\n      - listitem: Huge payloads (megabytes of JSON) – trim or paginate them first; the card renders the whole string\n    - heading \"Installation\" [level=2]\n    - paragraph: Add Tool Call Card with the shadcn CLI – your project needs a components.json, see Installation in the docs – or copy the file by hand.\n    - paragraph: Requires React 19.\n    - tablist \"Installation method\":\n      - tab \"CLI\" [selected]\n      - tab \"Manual\"\n    - tablist \"Package manager\":\n      - tab \"pnpm\" [selected]\n      - tab \"npm\"\n      - tab \"yarn\"\n      - tab \"bun\"\n    - button \"Copy\":\n      - text: Copy\n    - code: pnpm dlx shadcn@latest add https://www.affectui.com/r/tool-call-card-clean.json\n    - heading \"Usage\" [level=2]\n    - text: example.tsx\n    - button \"Copy\":\n      - text: Copy\n    - code:\n      - generic: \"import { ToolCallCard, ToolCallGroup } from \\\"@/components/ui/tool-call-card-clean\\\";\"\n      - generic: \"export function ToolCalls({ calls }: { calls: ToolCall[] }) {\"\n      - generic: return (\n      - generic: <ToolCallGroup>\n      - generic: \"{calls.map((call) => (\"\n      - generic: <ToolCallCard\n      - generic: \"key={call.id}\"\n      - generic: \"name={call.name}\"\n      - generic: \"summary={call.summary}\"\n      - generic: \"status={call.status}\"\n      - generic: \"args={call.args}\"\n      - generic: \"result={call.result}\"\n      - generic: \"error={call.error}\"\n      - generic: \"startedAt={call.startedAt}\"\n      - generic: \"duration={call.durationMs}\"\n      - generic: \"onRetry={() => retryToolCall(call.id)}\"\n      - generic: />\n      - generic: \"))}\"\n      - generic: </ToolCallGroup>\n      - generic: );\n      - generic: \"}\"\n    - heading \"Examples\" [level=2]\n    - heading \"A single call with your own icon\" [level=3]\n    - text: example.tsx\n    - button \"Copy\":\n      - text: Copy\n    - code:\n      - generic: <ToolCallCard\n      - generic: name=\"search_web\"\n      - generic: \"icon={<GlobeIcon />}\"\n      - generic: status=\"success\"\n      - generic: summary=\"Searched the web for 'CRM pricing 2026'\"\n      - generic: \"args={{ query: \\\"CRM pricing 2026\\\", max_results: 5 }}\"\n      - generic: \"result={searchResults}\"\n      - generic: \"duration={1420}\"\n      - generic: />\n    - heading \"Failed call with retry, group open by default\" [level=3]\n    - text: example.tsx\n    - button \"Copy\":\n      - text: Copy\n    - code:\n      - generic: <ToolCallGroup defaultOpen label=\"Checked the knowledge base\">\n      - generic: \"<ToolCallCard name=\\\"kb.search\\\" status=\\\"success\\\" args={{ q: \\\"refund policy\\\" }} result={hits} duration={380} />\"\n      - generic: <ToolCallCard\n      - generic: name=\"kb.fetch\"\n      - generic: status=\"error\"\n      - generic: \"args={{ id: \\\"doc_381\\\" }}\"\n      - generic: error=\"403 – the agent has no access to this space\"\n      - generic: \"onRetry={() => rerun(\\\"kb.fetch\\\")}\"\n      - generic: />\n      - generic: </ToolCallGroup>\n    - heading \"API reference\" [level=2]\n    - heading \"ToolCallCard\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - row \"name string – Tool name as the agent calls it, shown in mono – e.g. \\\"search_web\\\"\":\n          - cell \"name\":\n            - code: name\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Tool name as the agent calls it, shown in mono – e.g. \\\"search_web\\\"\"\n        - row \"status \\\"running\\\" | \\\"success\\\" | \\\"error\\\" – Blue spinner with a live timer, a solid blue check with the duration, or a red \\\"Failed\\\"\":\n          - cell \"status\":\n            - code: status\n          - cell \"\\\"running\\\" | \\\"success\\\" | \\\"error\\\"\":\n            - code: \"\\\"running\\\" | \\\"success\\\" | \\\"error\\\"\"\n          - cell \"–\"\n          - cell \"Blue spinner with a live timer, a solid blue check with the duration, or a red \\\"Failed\\\"\"\n        - row \"summary ReactNode – Short human summary next to the name; truncates with an ellipsis\":\n          - cell \"summary\":\n            - code: summary\n          - cell \"ReactNode\":\n            - code: ReactNode\n          - cell \"–\"\n          - cell \"Short human summary next to the name; truncates with an ellipsis\"\n        - row \"icon ReactNode wrench icon Icon on the left, drawn in the icon gray without a tile – a 16px stroke SVG fits best\":\n          - cell \"icon\":\n            - code: icon\n          - cell \"ReactNode\":\n            - code: ReactNode\n          - cell \"wrench icon\":\n            - code: wrench icon\n          - cell \"Icon on the left, drawn in the icon gray without a tile – a 16px stroke SVG fits best\"\n        - row \"args unknown – Arguments – objects are pretty-printed and highlighted, JSON strings are parsed; the section is hidden when undefined\":\n          - cell \"args\":\n            - code: args\n          - cell \"unknown\":\n            - code: unknown\n          - cell \"–\"\n          - cell \"Arguments – objects are pretty-printed and highlighted, JSON strings are parsed; the section is hidden when undefined\"\n        - row \"result unknown – What the tool returned – like args; other strings are shown as plain text. While running without a result, \\\"Waiting for result…\\\" is shown\":\n          - cell \"result\":\n            - code: result\n          - cell \"unknown\":\n            - code: unknown\n          - cell \"–\"\n          - cell \"What the tool returned – like args; other strings are shown as plain text. While running without a result, \\\"Waiting for result…\\\" is shown\"\n        - row \"error string – Error message, shown in the body when status is \\\"error\\\"\":\n          - cell \"error\":\n            - code: error\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Error message, shown in the body when status is \\\"error\\\"\"\n        - row \"startedAt number – Start time in ms since epoch – the live timer counts from here instead of from when the card turned running\":\n          - cell \"startedAt\":\n            - code: startedAt\n          - cell \"number\":\n            - code: number\n          - cell \"–\"\n          - cell \"Start time in ms since epoch – the live timer counts from here instead of from when the card turned running\"\n        - row \"duration number – Final duration in ms – otherwise the time measured while the card was running\":\n          - cell \"duration\":\n            - code: duration\n          - cell \"number\":\n            - code: number\n          - cell \"–\"\n          - cell \"Final duration in ms – otherwise the time measured while the card was running\"\n        - row \"defaultOpen boolean false Start expanded (uncontrolled)\":\n          - cell \"defaultOpen\":\n            - code: defaultOpen\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"false\":\n            - code: \"false\"\n          - cell \"Start expanded (uncontrolled)\"\n        - row \"open boolean – Expanded state (controlled)\":\n          - cell \"open\":\n            - code: open\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"–\"\n          - cell \"Expanded state (controlled)\"\n        - 'row \"onOpenChange (open: boolean) => void – Called when the header is toggled\"':\n          - cell \"onOpenChange\":\n            - code: onOpenChange\n          - 'cell \"(open: boolean) => void\"':\n            - code: \"(open: boolean) => void\"\n          - cell \"–\"\n          - cell \"Called when the header is toggled\"\n        - row \"openOnError boolean true Opens the card when the call fails and closes it on the next run, unless someone toggled it by hand (uncontrolled only)\":\n          - cell \"openOnError\":\n            - code: openOnError\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"true\":\n            - code: \"true\"\n          - cell \"Opens the card when the call fails and closes it on the next run, unless someone toggled it by hand (uncontrolled only)\"\n        - row \"onRetry () => void – Shows a Retry button next to the error message\":\n          - cell \"onRetry\":\n            - code: onRetry\n          - cell \"() => void\":\n            - code: () => void\n          - cell \"–\"\n          - cell \"Shows a Retry button next to the error message\"\n        - row \"maxCodeHeight number 220 Height in px after which arguments and result are capped with a fade and a \\\"Show all\\\" toggle\":\n          - cell \"maxCodeHeight\":\n            - code: maxCodeHeight\n          - cell \"number\":\n            - code: number\n          - cell \"220\":\n            - code: \"220\"\n          - cell \"Height in px after which arguments and result are capped with a fade and a \\\"Show all\\\" toggle\"\n        - row \"className string – Extra class on the root\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n        - row \"ToolCallGroup · children ToolCallCard elements – The cards – the group reads their icon, status and duration props for its header, so pass them as direct children\":\n          - cell \"ToolCallGroup · children\":\n            - code: ToolCallGroup · children\n          - cell \"ToolCallCard elements\":\n            - code: ToolCallCard elements\n          - cell \"–\"\n          - cell \"The cards – the group reads their icon, status and duration props for its header, so pass them as direct children\"\n        - row \"ToolCallGroup · label string \\\"Used N tools\\\" Header label once nothing is running\":\n          - cell \"ToolCallGroup · label\":\n            - code: ToolCallGroup · label\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Used N tools\\\"\":\n            - code: \"\\\"Used N tools\\\"\"\n          - cell \"Header label once nothing is running\"\n        - row \"ToolCallGroup · runningLabel string \\\"Using tools…\\\" Shimmering header label while any card is running\":\n          - cell \"ToolCallGroup · runningLabel\":\n            - code: ToolCallGroup · runningLabel\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Using tools…\\\"\":\n            - code: \"\\\"Using tools…\\\"\"\n          - cell \"Shimmering header label while any card is running\"\n        - row \"ToolCallGroup · duration number – Total in ms – otherwise the sum of the cards' duration props, or the time measured while any card was running\":\n          - cell \"ToolCallGroup · duration\":\n            - code: ToolCallGroup · duration\n          - cell \"number\":\n            - code: number\n          - cell \"–\"\n          - cell \"Total in ms – otherwise the sum of the cards' duration props, or the time measured while any card was running\"\n        - row \"ToolCallGroup · defaultOpen / open / onOpenChange boolean / boolean / (open) => void false Expanded state, uncontrolled or controlled\":\n          - cell \"ToolCallGroup · defaultOpen / open / onOpenChange\":\n            - code: ToolCallGroup · defaultOpen / open / onOpenChange\n          - cell \"boolean / boolean / (open) => void\":\n            - code: boolean / boolean / (open) => void\n          - cell \"false\":\n            - code: \"false\"\n          - cell \"Expanded state, uncontrolled or controlled\"\n        - row \"ToolCallGroup · className string – Extra class on the root\":\n          - cell \"ToolCallGroup · className\":\n            - code: ToolCallGroup · className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Tab Moves through the headers, copy buttons, Show all and Retry; content of closed cards is skipped\":\n          - cell \"Tab\":\n            - generic: Tab\n          - cell \"Moves through the headers, copy buttons, Show all and Retry; content of closed cards is skipped\"\n        - 'row \"Enter or Space On a header: expands or collapses the card or the group\"':\n          - cell \"Enter or Space\":\n            - generic: Enter\n            - text: or\n            - generic: Space\n          - 'cell \"On a header: expands or collapses the card or the group\"'\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: Headers are real buttons with aria-expanded and aria-controls pointing at the body\n      - listitem: Closed bodies are inert, so they can't be focused or read until opened\n      - listitem: \"A polite live region per card announces \\\"search_web running\\\", \\\"finished\\\" or \\\"failed: …\\\"; the group announces \\\"Using tools…\\\" and \\\"Used 3 tools\\\"\"\n      - listitem: Copy buttons are labelled \"Copy arguments\" / \"Copy result\" and switch to \"Copied\"; icons are aria-hidden\n      - listitem: Errors use text and an icon, not only red\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: The body grows with grid-template-rows 0fr → 1fr and fades in; the chevron turns\n      - listitem: Status changes blur in; the blue check pops in and draws itself; the spinner turns while running\n      - listitem: The small white copy button morphs into a blue check for 1.4s; Show all opens the capped block to its full height\n      - listitem: In the group, new tool icons pop into the stack of small white tiles and \"Using tools…\" shimmers while anything runs\n      - listitem: With prefers-reduced-motion everything switches instantly and the shimmer is off\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: Fills its container; name and summary truncate with an ellipsis, the status never wraps – works down to ~320px\n      - listitem: Each call is one white card with hairline shadows; tighter padding below 360px and taller headers on touch screens\n      - listitem: Code wraps long lines instead of scrolling sideways\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Notes for AI\" [level=2]\n    - paragraph: Give your coding assistant this summary instead of screenshots.\n    - list:\n      - listitem: \"Map your agent's tool-call events 1:1: status running on the call, success or error on the result; pass startedAt from the event for an exact timer\"\n      - listitem: Write summary in past tense when done (\"Searched…\") and present progressive while running (\"Searching…\")\n      - listitem: Pass args and result as objects – stringify nothing yourself; redact secrets before they reach the card\n      - listitem: Wrap all calls of one assistant turn in a single ToolCallGroup and keep cards as direct children\n    - heading \"Related\" [level=2]\n    - article:\n      - generic: Chat\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - link \"Thinking Loader A small working pill for AI replies – an eight-ray spinner and a shimmering label that rolls through phases and settles on a check\":\n        - /url: /components/thinking-loader\n        - heading \"Thinking Loader\" [level=3]\n        - paragraph: A small working pill for AI replies – an eight-ray spinner and a shimmering label that rolls through phases and settles on a check\n      - button \"Copy to clipboard\":\n    - article:\n      - generic: Chat\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Thinking State AI working panel with a live timer, searched sources and thinking steps that appear one by one\":\n        - /url: /components/thinking-state\n        - heading \"Thinking State\" [level=3]\n        - paragraph: AI working panel with a live timer, searched sources and thinking steps that appear one by one\n      - button \"Thinking State is part of Pro – see pricing\":\n    - article:\n      - generic: Chat\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"AI Answer Streamed answer with source cards, citation chips that preview their source, copy, regenerate, feedback and follow-ups\":\n        - /url: /components/ai-answer\n        - heading \"AI Answer\" [level=3]\n        - paragraph: Streamed answer with source cards, citation chips that preview their source, copy, regenerate, feedback and follow-ups\n      - button \"AI Answer is part of Pro – see pricing\":\n    - heading \"Guides\" [level=2]\n    - link \"React components for AI chat interfaces Guide What an AI chat UI needs – composer, streaming answers, thinking states, tool calls, citations, message actions – and React components for each.\":\n      - /url: /guides/ai-chat-ui-components-react\n      - generic: React components for AI chat interfaces\n      - generic: Guide\n      - generic: What an AI chat UI needs – composer, streaming answers, thinking states, tool calls, citations, message actions – and React components for each.\n    - link \"How to show tool calls in an AI agent UI Guide How to display an agent's tool calls – one readable line per call, arguments and results on demand, errors with retry – and when to switch to a trace or a graph.\":\n      - /url: /guides/tool-calls-agent-ui\n      - generic: How to show tool calls in an AI agent UI\n      - generic: Guide\n      - generic: How to display an agent's tool calls – one readable line per call, arguments and results on demand, errors with retry – and when to switch to a trace or a graph.\n    - link \"How to show what an AI agent is doing Guide UI patterns that make an AI agent's work visible – the current step, its plan, tool calls, a live tree or timeline, and a trace of where time and money went.\":\n      - /url: /guides/show-what-ai-agent-is-doing\n      - generic: How to show what an AI agent is doing\n      - generic: Guide\n      - generic: UI patterns that make an AI agent's work visible – the current step, its plan, tool calls, a live tree or timeline, and a trace of where time and money went.\n    - 'link \"MCP UI in React: tool calls, results and approvals Guide Build the interface around MCP tools: visible calls, useful results, approvals and errors. Understand where the protocol ends and your React UI begins.\"':\n      - /url: /guides/mcp-ui-react\n      - generic: \"MCP UI in React: tool calls, results and approvals\"\n      - generic: Guide\n      - generic: \"Build the interface around MCP tools: visible calls, useful results, approvals and errors. Understand where the protocol ends and your React UI begins.\"\n    - 'link \"Generative UI in React: turn tool results into useful views Guide Use model-selected tools and validated data to show React views. Build useful generative UI without executing arbitrary model-generated code.\"':\n      - /url: /guides/generative-ui-react\n      - generic: \"Generative UI in React: turn tool results into useful views\"\n      - generic: Guide\n      - generic: Use model-selected tools and validated data to show React views. Build useful generative UI without executing arbitrary model-generated code.\n    - 'link \"Agent UI in React: tasks, progress and human control Guide Design an agent UI around delegated work: a clear task, visible progress, reviewable actions and a result people can verify.\"':\n      - /url: /guides/agent-ui-react\n      - generic: \"Agent UI in React: tasks, progress and human control\"\n      - generic: Guide\n      - generic: \"Design an agent UI around delegated work: a clear task, visible progress, reviewable actions and a result people can verify.\"\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

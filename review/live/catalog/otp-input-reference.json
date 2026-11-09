@@ -1,0 +1,654 @@
+{
+  "controls": [
+    {
+      "expanded": null,
+      "label": "Verification code, 6 digits",
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": "text"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-otpc otp-demo__otp",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 682.75,
+        "height": 90,
+        "left": 668,
+        "right": 1020,
+        "top": 592.75,
+        "width": 352,
+        "x": 668,
+        "y": 592.75
+      },
+      "tag": "DIV",
+      "text": "VerifiedThat code didn't work. 3 tries left.Didn't get a code? Resend in 0:30"
+    },
+    {
+      "cls": "ui-otpc__field",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "3px 0px"
+      },
+      "rect": {
+        "bottom": 642.75,
+        "height": 50,
+        "left": 696,
+        "right": 992,
+        "top": 592.75,
+        "width": 296,
+        "x": 696,
+        "y": 592.75
+      },
+      "tag": "DIV",
+      "text": "Verified"
+    },
+    {
+      "cls": "ui-otpc__slots",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 639.75,
+        "height": 44,
+        "left": 696,
+        "right": 992,
+        "top": 595.75,
+        "width": 296,
+        "x": 696,
+        "y": 595.75
+      },
+      "tag": "DIV",
+      "text": "Verified"
+    },
+    {
+      "cls": "ui-otpc__box",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "24px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 639.75,
+        "height": 44,
+        "left": 696,
+        "right": 736,
+        "top": 595.75,
+        "width": 40,
+        "x": 696,
+        "y": 595.75
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-otpc__sep",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.27)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "1px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 618.25,
+        "height": 1,
+        "left": 840,
+        "right": 848,
+        "top": 617.25,
+        "width": 8,
+        "x": 840,
+        "y": 617.25
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-otpc__ring",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 639.75,
+        "height": 44,
+        "left": 696,
+        "right": 736,
+        "top": 595.75,
+        "width": 40,
+        "x": 696,
+        "y": 595.75
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-otpc__caret",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 96, 226, 0.765)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "1px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 626.75,
+        "height": 18,
+        "left": 715.5,
+        "right": 716.5,
+        "top": 608.75,
+        "width": 1,
+        "x": 715.5,
+        "y": 608.75
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-otpc__pill",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 639.75,
+        "height": 44,
+        "left": 696,
+        "right": 992,
+        "top": 595.75,
+        "width": 296,
+        "x": 696,
+        "y": 595.75
+      },
+      "tag": "SPAN",
+      "text": "Verified"
+    },
+    {
+      "cls": "ui-otpc__pill-inner",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 14px 0px 12px"
+      },
+      "rect": {
+        "bottom": 627.75,
+        "height": 20,
+        "left": 795.7578125,
+        "right": 892.234375,
+        "top": 607.75,
+        "width": 96.4765625,
+        "x": 795.7578125,
+        "y": 607.75
+      },
+      "tag": "SPAN",
+      "text": "Verified"
+    },
+    {
+      "cls": "ui-otpc__check",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 625.75,
+        "height": 16,
+        "left": 807.7578125,
+        "right": 823.7578125,
+        "top": 609.75,
+        "width": 16,
+        "x": 807.7578125,
+        "y": 609.75
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-otpc__pill-text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 627.75,
+        "height": 20,
+        "left": 829.7578125,
+        "right": 878.234375,
+        "top": 607.75,
+        "width": 48.4765625,
+        "x": 829.7578125,
+        "y": 607.75
+      },
+      "tag": "SPAN",
+      "text": "Verified"
+    },
+    {
+      "cls": "ui-otpc__input",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 639.75,
+        "height": 44,
+        "left": 696,
+        "right": 992,
+        "top": 595.75,
+        "width": 296,
+        "x": 696,
+        "y": 595.75
+      },
+      "tag": "INPUT",
+      "text": ""
+    },
+    {
+      "cls": "ui-otpc__msg",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 642.75,
+        "height": 0,
+        "left": 668,
+        "right": 1020,
+        "top": 642.75,
+        "width": 352,
+        "x": 668,
+        "y": 642.75
+      },
+      "tag": "DIV",
+      "text": "That code didn't work. 3 tries left."
+    },
+    {
+      "cls": "ui-otpc__msg-inner",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 642.75,
+        "height": 0,
+        "left": 668,
+        "right": 1020,
+        "top": 642.75,
+        "width": 352,
+        "x": 668,
+        "y": 642.75
+      },
+      "tag": "DIV",
+      "text": "That code didn't work. 3 tries left."
+    },
+    {
+      "cls": "ui-otpc__msg-text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "8px 0px 0px"
+      },
+      "rect": {
+        "bottom": 662.75,
+        "height": 24,
+        "left": 668,
+        "right": 1020,
+        "top": 638.75,
+        "width": 352,
+        "x": 668,
+        "y": 638.75
+      },
+      "tag": "P",
+      "text": "That code didn't work. 3 tries left."
+    },
+    {
+      "cls": "ui-otpc__alert",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline-block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 661.75,
+        "height": 14,
+        "left": 738.28125,
+        "right": 752.28125,
+        "top": 647.75,
+        "width": 14,
+        "x": 738.28125,
+        "y": 647.75
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-otpc__resend",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "4px 8px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 682.75,
+        "height": 28,
+        "left": 745.9609375,
+        "right": 942.0390625,
+        "top": 654.75,
+        "width": 196.078125,
+        "x": 745.9609375,
+        "y": 654.75
+      },
+      "tag": "DIV",
+      "text": "Didn't get a code? Resend in 0:30"
+    },
+    {
+      "cls": "ui-otpc__resend-q",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 676.75,
+        "height": 16,
+        "left": 745.9609375,
+        "right": 848.7109375,
+        "top": 660.75,
+        "width": 102.75,
+        "x": 745.9609375,
+        "y": 660.75
+      },
+      "tag": "SPAN",
+      "text": "Didn't get a code?"
+    },
+    {
+      "cls": "ui-otpc__swap ui-otpc__wait",
+      "css": {
+        "animationDuration": "0.26s",
+        "animationName": "ui-otpc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 677.0278930664062,
+        "height": 16,
+        "left": 856.7109375,
+        "right": 942.0390625,
+        "top": 661.0278930664062,
+        "width": 85.328125,
+        "x": 856.7109375,
+        "y": 661.0278930664062
+      },
+      "tag": "SPAN",
+      "text": "Resend in 0:30"
+    },
+    {
+      "cls": "ui-otpc__time",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "inline-block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 677.0278930664062,
+        "height": 16,
+        "left": 915.46875,
+        "right": 942.0390625,
+        "top": 661.0278930664062,
+        "width": 26.5703125,
+        "x": 915.46875,
+        "y": 661.0278930664062
+      },
+      "tag": "SPAN",
+      "text": "0:30"
+    },
+    {
+      "cls": "ui-otpc__live",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 593.75,
+        "height": 1,
+        "left": 843.5,
+        "right": 844.5,
+        "top": 592.75,
+        "width": 1,
+        "x": 843.5,
+        "y": 592.75
+      },
+      "tag": "SPAN",
+      "text": ""
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 24 24\" class=\"ui-otpc__check\" aria-hidden=\"true\"><path d=\"M5.5 12.5l4 4L18.5 8\" pathLength=\"1\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" class=\"ui-otpc__alert\" aria-hidden=\"true\"><path d=\"M12 8v4.5M12 16h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z\"></path></svg>"
+  ],
+  "url": "https://www.affectui.com/components/otp-input",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Inputs\":\n        - /url: /category/inputs\n      - generic: OTP Input\n    - heading \"OTP Input\" [level=1]\n    - paragraph: The verification code field done right – a gliding focus ring, paste and SMS autofill, a calm shake on errors and a morph into Verified.\n    - code: $ pnpm dlx shadcn@latest add https://www.affectui.com/r/otp-input-clean.json\n    - button \"Copy to clipboard\":\n    - tablist \"OTP Input preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - heading \"Check your email\" [level=3]\n    - paragraph:\n      - text: We sent a code to\n      - strong: maya@acme.com\n    - generic: Verified\n    - textbox \"Verification code, 6 digits\"\n    - paragraph:\n      - text: That code didn't work. 3 tries left.\n    - generic: Didn't get a code?\n    - text: Resend in\n    - generic: 0:30\n    - paragraph:\n      - text: \"Demo code:\"\n      - generic: 482 913\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: Two-step sign-in, email or phone verification, confirming a sensitive action with a one-time code\n      - listitem: Any short code people copy from an email or SMS – paste and autofill fill every box at once\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: Codes longer than about 8 characters or with free-form text – a plain text field is easier to read and correct\n      - listitem: Passwords or PINs that must stay hidden – the boxes show what's typed\n    - heading \"Installation\" [level=2]\n    - paragraph: Add OTP Input with the shadcn CLI – your project needs a components.json, see Installation in the docs – or copy the file by hand.\n    - paragraph: Requires React 19.\n    - tablist \"Installation method\":\n      - tab \"CLI\" [selected]\n      - tab \"Manual\"\n    - tablist \"Package manager\":\n      - tab \"pnpm\" [selected]\n      - tab \"npm\"\n      - tab \"yarn\"\n      - tab \"bun\"\n    - button \"Copy\":\n      - text: Copy\n    - code: pnpm dlx shadcn@latest add https://www.affectui.com/r/otp-input-clean.json\n    - heading \"Usage\" [level=2]\n    - text: example.tsx\n    - button \"Copy\":\n      - text: Copy\n    - code:\n      - generic: \"import { useState } from \\\"react\\\";\"\n      - generic: \"import { OtpInput, type OtpStatus } from \\\"@/components/ui/otp-input-clean\\\";\"\n      - generic: \"export function VerifyEmail() {\"\n      - generic: const [code, setCode] = useState(\"\");\n      - generic: const [status, setStatus] = useState<OtpStatus>(\"idle\");\n      - generic: const [triesLeft, setTriesLeft] = useState(3);\n      - generic: \"async function verify(value: string) {\"\n      - generic: setStatus(\"verifying\");\n      - generic: \"const res = await fetch(\\\"/api/verify\\\", { method: \\\"POST\\\", body: JSON.stringify({ code: value }) });\"\n      - generic: \"if (res.ok) {\"\n      - generic: setStatus(\"success\");\n      - generic: router.push(\"/dashboard\");\n      - generic: \"} else {\"\n      - generic: setTriesLeft((n) => n - 1);\n      - generic: setStatus(\"error\");\n      - generic: \"}\"\n      - generic: \"}\"\n      - generic: return (\n      - generic: <OtpInput\n      - generic: \"value={code}\"\n      - generic: \"onChange={(next) => {\"\n      - generic: setCode(next);\n      - generic: if (status === \"error\" && next) setStatus(\"idle\");\n      - generic: \"}}\"\n      - generic: \"onComplete={verify}\"\n      - generic: \"status={status}\"\n      - generic: \"errorMessage={`That code didn't work. ${triesLeft} tries left.`}\"\n      - generic: separator\n      - generic: autoFocus\n      - generic: \"onResend={() => fetch(\\\"/api/send-code\\\", { method: \\\"POST\\\" })}\"\n      - generic: \"resendIn={30}\"\n      - generic: />\n      - generic: );\n      - generic: \"}\"\n    - heading \"API reference\" [level=2]\n    - heading \"OTPInput\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - row \"length number 6 Number of boxes\":\n          - cell \"length\":\n            - code: length\n          - cell \"number\":\n            - code: number\n          - cell \"6\":\n            - code: \"6\"\n          - cell \"Number of boxes\"\n        - row \"separator boolean | number false A small dash between the boxes – true puts it in the middle, a number after that many boxes\":\n          - cell \"separator\":\n            - code: separator\n          - cell \"boolean | number\":\n            - code: boolean | number\n          - cell \"false\":\n            - code: \"false\"\n          - cell \"A small dash between the boxes – true puts it in the middle, a number after that many boxes\"\n        - row \"numeric boolean true Digits only with the numeric keyboard on phones; false allows letters too, shown in capitals\":\n          - cell \"numeric\":\n            - code: numeric\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"true\":\n            - code: \"true\"\n          - cell \"Digits only with the numeric keyboard on phones; false allows letters too, shown in capitals\"\n        - row \"value string – The code – makes the field controlled\":\n          - cell \"value\":\n            - code: value\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"The code – makes the field controlled\"\n        - row \"defaultValue string \\\"\\\" Starting code when uncontrolled\":\n          - cell \"defaultValue\":\n            - code: defaultValue\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"\\\"\":\n            - code: \"\\\"\\\"\"\n          - cell \"Starting code when uncontrolled\"\n        - 'row \"onChange (code: string) => void – Every change: typing, Backspace, paste, autofill and the clearing after an error\"':\n          - cell \"onChange\":\n            - code: onChange\n          - 'cell \"(code: string) => void\"':\n            - code: \"(code: string) => void\"\n          - cell \"–\"\n          - 'cell \"Every change: typing, Backspace, paste, autofill and the clearing after an error\"'\n        - 'row \"onComplete (code: string) => void – Called once the last box is filled by the user – the place to start verifying\"':\n          - cell \"onComplete\":\n            - code: onComplete\n          - 'cell \"(code: string) => void\"':\n            - code: \"(code: string) => void\"\n          - cell \"–\"\n          - cell \"Called once the last box is filled by the user – the place to start verifying\"\n        - row \"status \\\"idle\\\" | \\\"verifying\\\" | \\\"error\\\" | \\\"success\\\" \\\"idle\\\" Verifying shimmers and locks the field, error shakes and shows the message, success morphs into the \\\"Verified\\\" chip\":\n          - cell \"status\":\n            - code: status\n          - cell \"\\\"idle\\\" | \\\"verifying\\\" | \\\"error\\\" | \\\"success\\\"\":\n            - code: \"\\\"idle\\\" | \\\"verifying\\\" | \\\"error\\\" | \\\"success\\\"\"\n          - cell \"\\\"idle\\\"\":\n            - code: \"\\\"idle\\\"\"\n          - cell \"Verifying shimmers and locks the field, error shakes and shows the message, success morphs into the \\\"Verified\\\" chip\"\n        - row \"errorMessage ReactNode \\\"That code didn't work. Try again.\\\" Shown below the boxes after an error, until the user types again\":\n          - cell \"errorMessage\":\n            - code: errorMessage\n          - cell \"ReactNode\":\n            - code: ReactNode\n          - cell \"\\\"That code didn't work. Try again.\\\"\":\n            - code: \"\\\"That code didn't work. Try again.\\\"\"\n          - cell \"Shown below the boxes after an error, until the user types again\"\n        - row \"clearOnError boolean true Clears the boxes shortly after the shake, ready for the next try\":\n          - cell \"clearOnError\":\n            - code: clearOnError\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"true\":\n            - code: \"true\"\n          - cell \"Clears the boxes shortly after the shake, ready for the next try\"\n        - row \"successLabel string \\\"Verified\\\" Text in the chip on success\":\n          - cell \"successLabel\":\n            - code: successLabel\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Verified\\\"\":\n            - code: \"\\\"Verified\\\"\"\n          - cell \"Text in the chip on success\"\n        - row \"onResend () => void – Shows \\\"Didn't get a code?\\\" below the boxes with a countdown that becomes a tab-style Resend button; clicking restarts the countdown\":\n          - cell \"onResend\":\n            - code: onResend\n          - cell \"() => void\":\n            - code: () => void\n          - cell \"–\"\n          - cell \"Shows \\\"Didn't get a code?\\\" below the boxes with a countdown that becomes a tab-style Resend button; clicking restarts the countdown\"\n        - row \"resendIn number 30 Seconds until the code can be resent\":\n          - cell \"resendIn\":\n            - code: resendIn\n          - cell \"number\":\n            - code: number\n          - cell \"30\":\n            - code: \"30\"\n          - cell \"Seconds until the code can be resent\"\n        - row \"align \\\"start\\\" | \\\"center\\\" \\\"start\\\" Where the boxes and the lines below them sit\":\n          - cell \"align\":\n            - code: align\n          - cell \"\\\"start\\\" | \\\"center\\\"\":\n            - code: \"\\\"start\\\" | \\\"center\\\"\"\n          - cell \"\\\"start\\\"\":\n            - code: \"\\\"start\\\"\"\n          - cell \"Where the boxes and the lines below them sit\"\n        - row \"disabled boolean false Dims the field and ignores input\":\n          - cell \"disabled\":\n            - code: disabled\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"false\":\n            - code: \"false\"\n          - cell \"Dims the field and ignores input\"\n        - row \"autoFocus boolean false Focuses the field on mount (without scrolling)\":\n          - cell \"autoFocus\":\n            - code: autoFocus\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"false\":\n            - code: \"false\"\n          - cell \"Focuses the field on mount (without scrolling)\"\n        - row \"label string \\\"Verification code\\\" Accessible name; the number of digits is added\":\n          - cell \"label\":\n            - code: label\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Verification code\\\"\":\n            - code: \"\\\"Verification code\\\"\"\n          - cell \"Accessible name; the number of digits is added\"\n        - row \"className string – Extra class on the root\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"0–9 Fills the active box and moves on; typing on a filled box replaces it\":\n          - cell \"0–9\":\n            - generic: 0–9\n          - cell \"Fills the active box and moves on; typing on a filled box replaces it\"\n        - row \"⌫ Clears the box and goes back one\":\n          - cell \"⌫\":\n            - generic: ⌫\n          - cell \"Clears the box and goes back one\"\n        - row \"← or → Moves between the filled boxes and the next empty one\":\n          - cell \"← or →\":\n            - generic: ←\n            - text: or\n            - generic: →\n          - cell \"Moves between the filled boxes and the next empty one\"\n        - row \"Home or End Jumps to the first box, or to the next empty one\":\n          - cell \"Home or End\":\n            - generic: Home\n            - text: or\n            - generic: End\n          - cell \"Jumps to the first box, or to the next empty one\"\n        - row \"⌘ or V Pastes a whole code – spaces and dashes are ignored\":\n          - cell \"⌘ or V\":\n            - generic: ⌘\n            - text: or\n            - generic: V\n          - cell \"Pastes a whole code – spaces and dashes are ignored\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: One real text input carries the whole code, so screen readers hear one field (\"Verification code, 6 digits\") instead of six\n      - listitem: autocomplete=\"one-time-code\" lets iOS and Android offer the code from an SMS; inputMode=\"numeric\" opens the number pad\n      - listitem: Errors set aria-invalid and point to the message with aria-describedby; verifying, errors, success and resend are announced in a polite live region\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: A single blue focus outline glides from box to box with a thin, softly blinking blue caret; digits pop in out of a short blur\n      - listitem: Pasted or autofilled codes fill the boxes one after another\n      - listitem: \"Verifying: the digits turn gray and a lighter band passes over the white boxes. Error: a calm shake, a faint red fill and red digits, the message grows in below and the code fades out for the next try\"\n      - listitem: \"Success: the boxes slide together while one frame morphs its width into a \\\"Verified\\\" chip with a faint green fill and the check draws in\"\n      - listitem: With prefers-reduced-motion everything switches instantly\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: \"Container query: the boxes shrink to fit their container – six boxes with a separator fit a 320px phone\"\n      - listitem: Inputs use 16px text under the hood, so iOS doesn't zoom in on focus\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Related\" [level=2]\n    - article:\n      - generic: Inputs\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Combobox Pick one or many from a searchable, grouped list – chips with avatars, highlighted matches, create-on-the-fly and full keyboard support\":\n        - /url: /components/combobox\n        - heading \"Combobox\" [level=3]\n        - paragraph: Pick one or many from a searchable, grouped list – chips with avatars, highlighted matches, create-on-the-fly and full keyboard support\n      - button \"Combobox is part of Pro – see pricing\":\n    - article:\n      - generic: Navigation\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - link \"Segmented Control Switch between two to six options – a raised pill or underline that glides, stretches a little and can be dragged across, with icons, counts and badges\":\n        - /url: /components/segmented-control\n        - heading \"Segmented Control\" [level=3]\n        - paragraph: Switch between two to six options – a raised pill or underline that glides, stretches a little and can be dragged across, with icons, counts and badges\n      - button \"Copy to clipboard\":\n    - article:\n      - generic: Buttons\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - link \"Button Primary, secondary, ghost and destructive buttons with icons, sizes and a shimmering loading state\":\n        - /url: /components/button\n        - heading \"Button\" [level=3]\n        - paragraph: Primary, secondary, ghost and destructive buttons with icons, sizes and a shimmering loading state\n      - button \"Copy to clipboard\":\n    - article:\n      - generic: Feedback\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Toaster Calm toasts from anywhere – a stack that fans out on hover, promise toasts that morph from spinner to check, swipe to dismiss\":\n        - /url: /components/toaster\n        - heading \"Toaster\" [level=3]\n        - paragraph: Calm toasts from anywhere – a stack that fans out on hover, promise toasts that morph from spinner to check, swipe to dismiss\n      - button \"Toaster is part of Pro – see pricing\":\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

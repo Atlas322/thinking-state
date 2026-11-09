@@ -383,7 +383,7 @@ export default function App() {
           </div>
           <div className="topbar-actions">
             <a
-              href="https://github.com/Bold322/thinking-state"
+              href="https://github.com/Atlas322/thinking-state"
               target="_blank"
               rel="noreferrer"
               className="repo-link"
@@ -787,7 +787,7 @@ export default function App() {
               used.
             </span>
             <a
-              href="https://github.com/Bold322/thinking-state"
+              href="https://github.com/Atlas322/thinking-state"
               target="_blank"
               rel="noreferrer"
             >

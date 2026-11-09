@@ -1,0 +1,3152 @@
+{
+  "nodes": [
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-lead",
+          ""
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "style",
+          "--d: 56px; z-index: 2; transform: translate3d(307.5px, 200.5px, 0px);"
+        ]
+      ],
+      "text": "OrchestratorOpus 5.5"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "style",
+          "--d: 46px; z-index: 1; transform: translate3d(381.6px, 146.1px, 0px);"
+        ]
+      ],
+      "text": "ResearcherSonnet 5.5"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "style",
+          "--d: 46px; z-index: 1; transform: translate3d(381.6px, 254.9px, 0px);"
+        ]
+      ],
+      "text": "AnalystGemini 3.8 Pro"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "style",
+          "--d: 46px; z-index: 1; transform: translate3d(233.4px, 254.9px, 0px);"
+        ]
+      ],
+      "text": "CoderGPT-6 Sol"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "style",
+          "--d: 46px; z-index: 1; transform: translate3d(233.4px, 146.1px, 0px);"
+        ]
+      ],
+      "text": "WriterSonnet 5.5"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "style",
+          "--d: 34px; z-index: 1; transform: translate3d(510px, 146.1px, 0px);"
+        ]
+      ],
+      "text": "Web search"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "style",
+          "--d: 34px; z-index: 1; transform: translate3d(349.5px, 65.1px, 0px);"
+        ]
+      ],
+      "text": "Notion"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "style",
+          "--d: 34px; z-index: 1; transform: translate3d(512.1px, 254.9px, 0px);"
+        ]
+      ],
+      "text": "HubSpot"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "style",
+          "--d: 34px; z-index: 1; transform: translate3d(352.3px, 335.6px, 0px);"
+        ]
+      ],
+      "text": "Database"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "style",
+          "--d: 34px; z-index: 1; transform: translate3d(174.9px, 323.2px, 0px);"
+        ]
+      ],
+      "text": "GitHub"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "style",
+          "--d: 34px; z-index: 1; transform: translate3d(65px, 146.1px, 0px);"
+        ]
+      ],
+      "text": "Slack"
+    },
+    {
+      "attrs": [
+        [
+          "class",
+          "ui-aggc__node"
+        ],
+        [
+          "data-kind",
+          "user"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "style",
+          "--d: 34px; z-index: 1; transform: translate3d(172.1px, 78.9px, 0px);"
+        ]
+      ],
+      "text": "You"
+    }
+  ],
+  "paths": [
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M307.5 200.5L307.5 86.9Q307.5 78.9 299.5 78.9L172.1 78.9\" style=\"animation-delay: 1040ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M315.5 200.5L315.5 154.1Q315.5 146.1 323.5 146.1L381.6 146.1\" style=\"animation-delay: 140ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M311.5 200.5L311.5 246.9Q311.5 254.9 319.5 254.9L381.6 254.9\" style=\"animation-delay: 230ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M303.5 200.5L303.5 246.9Q303.5 254.9 295.5 254.9L233.4 254.9\" style=\"animation-delay: 320ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M299.5 200.5L299.5 154.1Q299.5 146.1 291.5 146.1L233.4 146.1\" style=\"animation-delay: 410ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M307.5 200.5L73 200.5Q65 200.5 65 192.5L65 146.1\" style=\"animation-delay: 970ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M381.6 146.1L510 146.1\" style=\"animation-delay: 690ms;\" data-live=\"\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M381.6 146.1L381.6 73.1Q381.6 65.1 373.6 65.1L349.5 65.1\" style=\"animation-delay: 620ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M381.6 254.9L381.6 327.6Q381.6 335.6 373.6 335.6L352.3 335.6\" style=\"animation-delay: 830ms;\" data-live=\"\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M381.6 254.9L512.1 254.9\" style=\"animation-delay: 760ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M233.4 254.9L182.9 254.9Q174.9 254.9 174.9 262.9L174.9 323.2\" style=\"animation-delay: 900ms;\" data-live=\"\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M233.4 146.1L233.4 73.1Q233.4 65.1 241.4 65.1L349.5 65.1\" style=\"animation-delay: 620ms;\" data-live=\"\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M233.4 150.1L65 150.1\" style=\"animation-delay: 970ms;\"></path>",
+    "<path class=\"ui-aggc__edge\" pathLength=\"1\" d=\"M233.4 142.1L180.1 142.1Q172.1 142.1 172.1 134.1L172.1 78.9\" style=\"animation-delay: 1040ms;\"></path>"
+  ],
+  "styles": [
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "463px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "615px"
+          },
+          "rect": {
+            "bottom": 921,
+            "height": 463,
+            "left": 97,
+            "right": 712,
+            "top": 458,
+            "width": 615,
+            "x": 97,
+            "y": 458
+          },
+          "text": "Agent graph5 agents6 tools157 calls/min$1.82OrchestratorOpus 5.5ResearcherSonnet 5.5AnalystGemini 3."
+        }
+      ],
+      "selector": ".ui-aggc"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__bar"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "4px 8px",
+            "height": "20px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "615px"
+          },
+          "rect": {
+            "bottom": 478,
+            "height": 20,
+            "left": 97,
+            "right": 712,
+            "top": 458,
+            "width": 615,
+            "x": 97,
+            "y": 458
+          },
+          "text": "Agent graph5 agents6 tools157 calls/min$1.82"
+        }
+      ],
+      "selector": ".ui-aggc__bar"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__panel"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "10px",
+            "boxShadow": "rgba(255, 255, 255, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "427px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "615px"
+          },
+          "rect": {
+            "bottom": 921,
+            "height": 427,
+            "left": 97,
+            "right": 712,
+            "top": 494,
+            "width": 615,
+            "x": 97,
+            "y": 494
+          },
+          "text": "OrchestratorOpus 5.5ResearcherSonnet 5.5AnalystGemini 3.8 ProCoderGPT-6 SolWriterSonnet 5.5Web searc"
+        }
+      ],
+      "selector": ".ui-aggc__panel"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__stage"
+            ],
+            [
+              "role",
+              "group"
+            ],
+            [
+              "aria-label",
+              "Agent graph: 5 agents and 6 tools"
+            ],
+            [
+              "style",
+              "height: 401px;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "401px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "615px"
+          },
+          "rect": {
+            "bottom": 895,
+            "height": 401,
+            "left": 97,
+            "right": 712,
+            "top": 494,
+            "width": 615,
+            "x": 97,
+            "y": 494
+          },
+          "text": "OrchestratorOpus 5.5ResearcherSonnet 5.5AnalystGemini 3.8 ProCoderGPT-6 SolWriterSonnet 5.5Web searc"
+        }
+      ],
+      "selector": ".ui-aggc__stage"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Orchestrator · Opus 5.5"
+            ],
+            [
+              "aria-label",
+              "Orchestrator, agent, working: Waiting on four agents. 29 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "15.12px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.14) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 4px 12px -4px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "56px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "56px"
+          },
+          "rect": {
+            "bottom": 722.5,
+            "height": 56,
+            "left": 376.5,
+            "right": 432.5,
+            "top": 666.5,
+            "width": 56,
+            "x": 376.5,
+            "y": 666.5
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Researcher · Sonnet 5.5"
+            ],
+            [
+              "aria-label",
+              "Researcher, agent, working: Reading the pricing pages of five competitors. 41 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "12.42px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.14) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 4px 12px -4px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "46px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "46px"
+          },
+          "rect": {
+            "bottom": 663.0999755859375,
+            "height": 46,
+            "left": 455.6000061035156,
+            "right": 501.6000061035156,
+            "top": 617.0999755859375,
+            "width": 46,
+            "x": 455.6000061035156,
+            "y": 617.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Analyst · Gemini 3.8 Pro"
+            ],
+            [
+              "aria-label",
+              "Analyst, agent, working: Counting seats and upgrades per plan. 41 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "12.42px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.14) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 4px 12px -4px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "46px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "46px"
+          },
+          "rect": {
+            "bottom": 771.9000244140625,
+            "height": 46,
+            "left": 455.6000061035156,
+            "right": 501.6000061035156,
+            "top": 725.9000244140625,
+            "width": 46,
+            "x": 455.6000061035156,
+            "y": 725.9000244140625
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Coder · GPT-6 Sol"
+            ],
+            [
+              "aria-label",
+              "Coder, agent, working: Building the pricing page on a new branch. 31 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "12.42px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.14) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 4px 12px -4px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "46px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "46px"
+          },
+          "rect": {
+            "bottom": 771.9000244140625,
+            "height": 46,
+            "left": 307.3999938964844,
+            "right": 353.3999938964844,
+            "top": 725.9000244140625,
+            "width": 46,
+            "x": 307.3999938964844,
+            "y": 725.9000244140625
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Writer · Sonnet 5.5"
+            ],
+            [
+              "aria-label",
+              "Writer, agent, working: Drafting the copy for the three plans. 35 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "12.42px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.14) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 4px 12px -4px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "46px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "46px"
+          },
+          "rect": {
+            "bottom": 663.0999755859375,
+            "height": 46,
+            "left": 307.3999938964844,
+            "right": 353.3999938964844,
+            "top": 617.0999755859375,
+            "width": 46,
+            "x": 307.3999938964844,
+            "y": 617.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Web search · Search API"
+            ],
+            [
+              "aria-label",
+              "Web search, tool. 28 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "9.18px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "34px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "34px"
+          },
+          "rect": {
+            "bottom": 657.0999755859375,
+            "height": 34,
+            "left": 590,
+            "right": 624,
+            "top": 623.0999755859375,
+            "width": 34,
+            "x": 590,
+            "y": 623.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Notion · Launch workspace"
+            ],
+            [
+              "aria-label",
+              "Notion, tool. 26 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "9.18px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "34px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "34px"
+          },
+          "rect": {
+            "bottom": 576.0999755859375,
+            "height": 34,
+            "left": 429.5,
+            "right": 463.5,
+            "top": 542.0999755859375,
+            "width": 34,
+            "x": 429.5,
+            "y": 542.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "HubSpot · CRM"
+            ],
+            [
+              "aria-label",
+              "HubSpot, tool. 13 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "9.18px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "34px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "34px"
+          },
+          "rect": {
+            "bottom": 765.9000244140625,
+            "height": 34,
+            "left": 592.0999755859375,
+            "right": 626.0999755859375,
+            "top": 731.9000244140625,
+            "width": 34,
+            "x": 592.0999755859375,
+            "y": 731.9000244140625
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Database · Postgres, read-only"
+            ],
+            [
+              "aria-label",
+              "Database, tool. 23 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "9.18px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "34px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "34px"
+          },
+          "rect": {
+            "bottom": 846.5999755859375,
+            "height": 34,
+            "left": 432.2999877929687,
+            "right": 466.2999877929687,
+            "top": 812.5999755859375,
+            "width": 34,
+            "x": 432.2999877929687,
+            "y": 812.5999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "GitHub · acme/web"
+            ],
+            [
+              "aria-label",
+              "GitHub, tool. 26 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "9.18px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "34px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "34px"
+          },
+          "rect": {
+            "bottom": 834.2000122070312,
+            "height": 34,
+            "left": 254.8999938964844,
+            "right": 288.8999938964844,
+            "top": 800.2000122070312,
+            "width": 34,
+            "x": 254.8999938964844,
+            "y": 800.2000122070312
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "Slack · #launch"
+            ],
+            [
+              "aria-label",
+              "Slack, tool. 12 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(35, 35, 38)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "9.18px",
+            "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 999px inset, rgba(255, 255, 255, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "34px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "34px"
+          },
+          "rect": {
+            "bottom": 657.0999755859375,
+            "height": 34,
+            "left": 145,
+            "right": 179,
+            "top": 623.0999755859375,
+            "width": 34,
+            "x": 145,
+            "y": 623.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "type",
+              "button"
+            ],
+            [
+              "class",
+              "ui-aggc__disc"
+            ],
+            [
+              "data-agg-node",
+              ""
+            ],
+            [
+              "data-logo",
+              ""
+            ],
+            [
+              "title",
+              "You"
+            ],
+            [
+              "aria-label",
+              "You, you: Asked for the pricing launch. 9 calls in the last minute"
+            ],
+            [
+              "aria-haspopup",
+              "dialog"
+            ],
+            [
+              "aria-expanded",
+              "false"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(255, 255, 255, 0.92)",
+            "border": "0px none rgb(20, 20, 22)",
+            "borderRadius": "9.18px",
+            "boxShadow": "rgba(0, 0, 0, 0.16) 0px 1px 2px 0px",
+            "color": "rgb(20, 20, 22)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "34px",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "34px"
+          },
+          "rect": {
+            "bottom": 589.9000244140625,
+            "height": 34,
+            "left": 252.1000061035156,
+            "right": 286.1000061035156,
+            "top": 555.9000244140625,
+            "width": 34,
+            "x": 252.1000061035156,
+            "y": 555.9000244140625
+          },
+          "text": ""
+        }
+      ],
+      "selector": ".ui-aggc__disc"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "30px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "82.6094px"
+          },
+          "rect": {
+            "bottom": 758.5,
+            "height": 30,
+            "left": 363.1953125,
+            "right": 445.8046875,
+            "top": 728.5,
+            "width": 82.609375,
+            "x": 363.1953125,
+            "y": 728.5
+          },
+          "text": "OrchestratorOpus 5.5"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "30px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "75.3516px"
+          },
+          "rect": {
+            "bottom": 699.0999755859375,
+            "height": 30,
+            "left": 440.9242248535156,
+            "right": 516.2757568359375,
+            "top": 669.0999755859375,
+            "width": 75.35153198242188,
+            "x": 440.9242248535156,
+            "y": 669.0999755859375
+          },
+          "text": "ResearcherSonnet 5.5"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "30px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "86.125px"
+          },
+          "rect": {
+            "bottom": 807.9000244140625,
+            "height": 30,
+            "left": 435.5375061035156,
+            "right": 521.6624755859375,
+            "top": 777.9000244140625,
+            "width": 86.12496948242188,
+            "x": 435.5375061035156,
+            "y": 777.9000244140625
+          },
+          "text": "AnalystGemini 3.8 Pro"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "30px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "62.8203px"
+          },
+          "rect": {
+            "bottom": 807.9000244140625,
+            "height": 30,
+            "left": 298.9898376464844,
+            "right": 361.8101501464844,
+            "top": 777.9000244140625,
+            "width": 62.8203125,
+            "x": 298.9898376464844,
+            "y": 777.9000244140625
+          },
+          "text": "CoderGPT-6 Sol"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "30px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "65.5312px"
+          },
+          "rect": {
+            "bottom": 699.0999755859375,
+            "height": 30,
+            "left": 297.6343688964844,
+            "right": 363.1656188964844,
+            "top": 669.0999755859375,
+            "width": 65.53125,
+            "x": 297.6343688964844,
+            "y": 669.0999755859375
+          },
+          "text": "WriterSonnet 5.5"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "77.3906px"
+          },
+          "rect": {
+            "bottom": 678.0999755859375,
+            "height": 16,
+            "left": 568.3046875,
+            "right": 645.6953125,
+            "top": 662.0999755859375,
+            "width": 77.390625,
+            "x": 568.3046875,
+            "y": 662.0999755859375
+          },
+          "text": "Web search"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "data-above",
+              ""
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "47.3594px"
+          },
+          "rect": {
+            "bottom": 537.0999755859375,
+            "height": 16,
+            "left": 422.8203125,
+            "right": 470.1796875,
+            "top": 521.0999755859375,
+            "width": 47.359375,
+            "x": 422.8203125,
+            "y": 521.0999755859375
+          },
+          "text": "Notion"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "59.5312px"
+          },
+          "rect": {
+            "bottom": 786.9000244140625,
+            "height": 16,
+            "left": 579.3343505859375,
+            "right": 638.8656005859375,
+            "top": 770.9000244140625,
+            "width": 59.53125,
+            "x": 579.3343505859375,
+            "y": 770.9000244140625
+          },
+          "text": "HubSpot"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "63.6562px"
+          },
+          "rect": {
+            "bottom": 867.5999755859375,
+            "height": 16,
+            "left": 417.4718627929687,
+            "right": 481.1281127929687,
+            "top": 851.5999755859375,
+            "width": 63.65625,
+            "x": 417.4718627929687,
+            "y": 851.5999755859375
+          },
+          "text": "Database"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "49.1484px"
+          },
+          "rect": {
+            "bottom": 855.2000122070312,
+            "height": 16,
+            "left": 247.3257751464844,
+            "right": 296.4742126464844,
+            "top": 839.2000122070312,
+            "width": 49.1484375,
+            "x": 247.3257751464844,
+            "y": 839.2000122070312
+          },
+          "text": "GitHub"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "40.7891px"
+          },
+          "rect": {
+            "bottom": 678.0999755859375,
+            "height": 16,
+            "left": 141.60546875,
+            "right": 182.39453125,
+            "top": 662.0999755859375,
+            "width": 40.7890625,
+            "x": 141.60546875,
+            "y": 662.0999755859375
+          },
+          "text": "Slack"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__label"
+            ],
+            [
+              "data-above",
+              ""
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgb(28, 28, 31)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "5px",
+            "boxShadow": "rgb(28, 28, 31) 0px 0px 6px 2px",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "20px",
+            "padding": "0px 5px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "31.5156px"
+          },
+          "rect": {
+            "bottom": 550.9000244140625,
+            "height": 16,
+            "left": 253.3421936035156,
+            "right": 284.8578186035156,
+            "top": 534.9000244140625,
+            "width": 31.515625,
+            "x": 253.3421936035156,
+            "y": 534.9000244140625
+          },
+          "text": "You"
+        }
+      ],
+      "selector": ".ui-aggc__label"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgb(255, 255, 255)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgb(255, 255, 255)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "500",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "72.6094px"
+          },
+          "rect": {
+            "bottom": 744.5,
+            "height": 16,
+            "left": 368.1953125,
+            "right": 440.8046875,
+            "top": 728.5,
+            "width": 72.609375,
+            "x": 368.1953125,
+            "y": 728.5
+          },
+          "text": "Orchestrator"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgb(255, 255, 255)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgb(255, 255, 255)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "500",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "65.3516px"
+          },
+          "rect": {
+            "bottom": 685.0999755859375,
+            "height": 16,
+            "left": 445.9242248535156,
+            "right": 511.2757873535156,
+            "top": 669.0999755859375,
+            "width": 65.3515625,
+            "x": 445.9242248535156,
+            "y": 669.0999755859375
+          },
+          "text": "Researcher"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgb(255, 255, 255)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgb(255, 255, 255)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "500",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "43.1016px"
+          },
+          "rect": {
+            "bottom": 793.9000244140625,
+            "height": 16,
+            "left": 457.0453186035156,
+            "right": 500.1468811035156,
+            "top": 777.9000244140625,
+            "width": 43.1015625,
+            "x": 457.0453186035156,
+            "y": 777.9000244140625
+          },
+          "text": "Analyst"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgb(255, 255, 255)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgb(255, 255, 255)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "500",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "35.1562px"
+          },
+          "rect": {
+            "bottom": 793.9000244140625,
+            "height": 16,
+            "left": 312.8179626464844,
+            "right": 347.9742126464844,
+            "top": 777.9000244140625,
+            "width": 35.15625,
+            "x": 312.8179626464844,
+            "y": 777.9000244140625
+          },
+          "text": "Coder"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgb(255, 255, 255)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgb(255, 255, 255)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "500",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "35.0391px"
+          },
+          "rect": {
+            "bottom": 685.0999755859375,
+            "height": 16,
+            "left": 312.8765563964844,
+            "right": 347.9156188964844,
+            "top": 669.0999755859375,
+            "width": 35.0390625,
+            "x": 312.8765563964844,
+            "y": 669.0999755859375
+          },
+          "text": "Writer"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "67.3906px"
+          },
+          "rect": {
+            "bottom": 678.0999755859375,
+            "height": 16,
+            "left": 573.3046875,
+            "right": 640.6953125,
+            "top": 662.0999755859375,
+            "width": 67.390625,
+            "x": 573.3046875,
+            "y": 662.0999755859375
+          },
+          "text": "Web search"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "37.3594px"
+          },
+          "rect": {
+            "bottom": 537.0999755859375,
+            "height": 16,
+            "left": 427.8203125,
+            "right": 465.1796875,
+            "top": 521.0999755859375,
+            "width": 37.359375,
+            "x": 427.8203125,
+            "y": 521.0999755859375
+          },
+          "text": "Notion"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "49.5312px"
+          },
+          "rect": {
+            "bottom": 786.9000244140625,
+            "height": 16,
+            "left": 584.3343505859375,
+            "right": 633.8656005859375,
+            "top": 770.9000244140625,
+            "width": 49.53125,
+            "x": 584.3343505859375,
+            "y": 770.9000244140625
+          },
+          "text": "HubSpot"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "53.6562px"
+          },
+          "rect": {
+            "bottom": 867.5999755859375,
+            "height": 16,
+            "left": 422.4718627929687,
+            "right": 476.1281127929687,
+            "top": 851.5999755859375,
+            "width": 53.65625,
+            "x": 422.4718627929687,
+            "y": 851.5999755859375
+          },
+          "text": "Database"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "39.1484px"
+          },
+          "rect": {
+            "bottom": 855.2000122070312,
+            "height": 16,
+            "left": 252.3257751464844,
+            "right": 291.4742126464844,
+            "top": 839.2000122070312,
+            "width": 39.1484375,
+            "x": 252.3257751464844,
+            "y": 839.2000122070312
+          },
+          "text": "GitHub"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "30.7891px"
+          },
+          "rect": {
+            "bottom": 678.0999755859375,
+            "height": 16,
+            "left": 146.60546875,
+            "right": 177.39453125,
+            "top": 662.0999755859375,
+            "width": 30.7890625,
+            "x": 146.60546875,
+            "y": 662.0999755859375
+          },
+          "text": "Slack"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__name"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "16px",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "21.5156px"
+          },
+          "rect": {
+            "bottom": 550.9000244140625,
+            "height": 16,
+            "left": 258.3421936035156,
+            "right": 279.8578186035156,
+            "top": 534.9000244140625,
+            "width": 21.515625,
+            "x": 258.3421936035156,
+            "y": 534.9000244140625
+          },
+          "text": "You"
+        }
+      ],
+      "selector": ".ui-aggc__name"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__line"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.45)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.45)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "11px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "14px",
+            "lineHeight": "14px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "46.3203px"
+          },
+          "rect": {
+            "bottom": 758.5,
+            "height": 14,
+            "left": 381.3359375,
+            "right": 427.65625,
+            "top": 744.5,
+            "width": 46.3203125,
+            "x": 381.3359375,
+            "y": 744.5
+          },
+          "text": "Opus 5.5"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__line"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.45)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.45)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "11px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "14px",
+            "lineHeight": "14px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "55.5312px"
+          },
+          "rect": {
+            "bottom": 699.0999755859375,
+            "height": 14,
+            "left": 450.8304748535156,
+            "right": 506.3617248535156,
+            "top": 685.0999755859375,
+            "width": 55.53125,
+            "x": 450.8304748535156,
+            "y": 685.0999755859375
+          },
+          "text": "Sonnet 5.5"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__line"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.45)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.45)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "11px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "14px",
+            "lineHeight": "14px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "76.125px"
+          },
+          "rect": {
+            "bottom": 807.9000244140625,
+            "height": 14,
+            "left": 440.5375061035156,
+            "right": 516.6624755859375,
+            "top": 793.9000244140625,
+            "width": 76.12496948242188,
+            "x": 440.5375061035156,
+            "y": 793.9000244140625
+          },
+          "text": "Gemini 3.8 Pro"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__line"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.45)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.45)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "11px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "14px",
+            "lineHeight": "14px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "52.8203px"
+          },
+          "rect": {
+            "bottom": 807.9000244140625,
+            "height": 14,
+            "left": 303.9898376464844,
+            "right": 356.8101501464844,
+            "top": 793.9000244140625,
+            "width": 52.8203125,
+            "x": 303.9898376464844,
+            "y": 793.9000244140625
+          },
+          "text": "GPT-6 Sol"
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__line"
+            ],
+            [
+              "dir",
+              "auto"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.45)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.45)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "11px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "14px",
+            "lineHeight": "14px",
+            "padding": "0px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "55.5312px"
+          },
+          "rect": {
+            "bottom": 699.0999755859375,
+            "height": 14,
+            "left": 302.6343688964844,
+            "right": 358.1656188964844,
+            "top": 685.0999755859375,
+            "width": 55.53125,
+            "x": 302.6343688964844,
+            "y": 685.0999755859375
+          },
+          "text": "Sonnet 5.5"
+        }
+      ],
+      "selector": ".ui-aggc__line"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M307.5 200.5L307.5 86.9Q307.5 78.9 299.5 78.9L172.1 78.9"
+            ],
+            [
+              "style",
+              "animation-delay: 1040ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 694.5,
+            "height": 121.5999755859375,
+            "left": 269.1000061035156,
+            "right": 404.5,
+            "top": 572.9000244140625,
+            "width": 135.39999389648438,
+            "x": 269.1000061035156,
+            "y": 572.9000244140625
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M315.5 200.5L315.5 154.1Q315.5 146.1 323.5 146.1L381.6 146.1"
+            ],
+            [
+              "style",
+              "animation-delay: 140ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 694.5,
+            "height": 54.4000244140625,
+            "left": 412.5,
+            "right": 478.6000061035156,
+            "top": 640.0999755859375,
+            "width": 66.10000610351562,
+            "x": 412.5,
+            "y": 640.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M311.5 200.5L311.5 246.9Q311.5 254.9 319.5 254.9L381.6 254.9"
+            ],
+            [
+              "style",
+              "animation-delay: 230ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 748.9000244140625,
+            "height": 54.4000244140625,
+            "left": 408.5,
+            "right": 478.6000061035156,
+            "top": 694.5,
+            "width": 70.10000610351562,
+            "x": 408.5,
+            "y": 694.5
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M303.5 200.5L303.5 246.9Q303.5 254.9 295.5 254.9L233.4 254.9"
+            ],
+            [
+              "style",
+              "animation-delay: 320ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 748.9000244140625,
+            "height": 54.4000244140625,
+            "left": 330.3999938964844,
+            "right": 400.5,
+            "top": 694.5,
+            "width": 70.10000610351562,
+            "x": 330.3999938964844,
+            "y": 694.5
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M299.5 200.5L299.5 154.1Q299.5 146.1 291.5 146.1L233.4 146.1"
+            ],
+            [
+              "style",
+              "animation-delay: 410ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 694.5,
+            "height": 54.4000244140625,
+            "left": 330.3999938964844,
+            "right": 396.5,
+            "top": 640.0999755859375,
+            "width": 66.10000610351562,
+            "x": 330.3999938964844,
+            "y": 640.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M307.5 200.5L73 200.5Q65 200.5 65 192.5L65 146.1"
+            ],
+            [
+              "style",
+              "animation-delay: 970ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 694.5,
+            "height": 54.4000244140625,
+            "left": 162,
+            "right": 404.5,
+            "top": 640.0999755859375,
+            "width": 242.5,
+            "x": 162,
+            "y": 640.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M381.6 146.1L510 146.1"
+            ],
+            [
+              "style",
+              "animation-delay: 690ms;"
+            ],
+            [
+              "data-live",
+              ""
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 640.0999755859375,
+            "height": 0,
+            "left": 478.6000061035156,
+            "right": 607,
+            "top": 640.0999755859375,
+            "width": 128.39999389648438,
+            "x": 478.6000061035156,
+            "y": 640.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M381.6 146.1L381.6 73.1Q381.6 65.1 373.6 65.1L349.5 65.1"
+            ],
+            [
+              "style",
+              "animation-delay: 620ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 640.0999755859375,
+            "height": 81,
+            "left": 446.5,
+            "right": 478.6000061035156,
+            "top": 559.0999755859375,
+            "width": 32.100006103515625,
+            "x": 446.5,
+            "y": 559.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M381.6 254.9L381.6 327.6Q381.6 335.6 373.6 335.6L352.3 335.6"
+            ],
+            [
+              "style",
+              "animation-delay: 830ms;"
+            ],
+            [
+              "data-live",
+              ""
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 829.5999755859375,
+            "height": 80.699951171875,
+            "left": 449.2999877929687,
+            "right": 478.6000061035156,
+            "top": 748.9000244140625,
+            "width": 29.300018310546875,
+            "x": 449.2999877929687,
+            "y": 748.9000244140625
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M381.6 254.9L512.1 254.9"
+            ],
+            [
+              "style",
+              "animation-delay: 760ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 748.9000244140625,
+            "height": 0,
+            "left": 478.6000061035156,
+            "right": 609.0999755859375,
+            "top": 748.9000244140625,
+            "width": 130.49996948242188,
+            "x": 478.6000061035156,
+            "y": 748.9000244140625
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M233.4 254.9L182.9 254.9Q174.9 254.9 174.9 262.9L174.9 323.2"
+            ],
+            [
+              "style",
+              "animation-delay: 900ms;"
+            ],
+            [
+              "data-live",
+              ""
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 817.2000122070312,
+            "height": 68.29998779296875,
+            "left": 271.8999938964844,
+            "right": 330.3999938964844,
+            "top": 748.9000244140625,
+            "width": 58.5,
+            "x": 271.8999938964844,
+            "y": 748.9000244140625
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M233.4 146.1L233.4 73.1Q233.4 65.1 241.4 65.1L349.5 65.1"
+            ],
+            [
+              "style",
+              "animation-delay: 620ms;"
+            ],
+            [
+              "data-live",
+              ""
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 640.0999755859375,
+            "height": 81,
+            "left": 330.3999938964844,
+            "right": 446.5,
+            "top": 559.0999755859375,
+            "width": 116.10000610351562,
+            "x": 330.3999938964844,
+            "y": 559.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M233.4 150.1L65 150.1"
+            ],
+            [
+              "style",
+              "animation-delay: 970ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 644.0999755859375,
+            "height": 0,
+            "left": 162,
+            "right": 330.3999938964844,
+            "top": 644.0999755859375,
+            "width": 168.39999389648438,
+            "x": 162,
+            "y": 644.0999755859375
+          },
+          "text": ""
+        },
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__edge"
+            ],
+            [
+              "pathLength",
+              "1"
+            ],
+            [
+              "d",
+              "M233.4 142.1L180.1 142.1Q172.1 142.1 172.1 134.1L172.1 78.9"
+            ],
+            [
+              "style",
+              "animation-delay: 1040ms;"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.62)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.62)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "gap": "normal",
+            "height": "auto",
+            "lineHeight": "20px",
+            "padding": "0px",
+            "stroke": "rgba(255, 255, 255, 0.08)",
+            "strokeWidth": "1.5px",
+            "width": "auto"
+          },
+          "rect": {
+            "bottom": 636.0999755859375,
+            "height": 63.199951171875,
+            "left": 269.1000061035156,
+            "right": 330.3999938964844,
+            "top": 572.9000244140625,
+            "width": 61.29998779296875,
+            "x": 269.1000061035156,
+            "y": 572.9000244140625
+          },
+          "text": ""
+        }
+      ],
+      "selector": ".ui-aggc__edge"
+    },
+    {
+      "elements": [
+        {
+          "attrs": [
+            [
+              "class",
+              "ui-aggc__legend"
+            ],
+            [
+              "aria-hidden",
+              "true"
+            ]
+          ],
+          "css": {
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "border": "0px none rgba(255, 255, 255, 0.45)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "color": "rgba(255, 255, 255, 0.45)",
+            "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+            "fontSize": "11px",
+            "fontWeight": "400",
+            "gap": "4px 14px",
+            "height": "26px",
+            "lineHeight": "16px",
+            "padding": "0px 10px 10px",
+            "stroke": "none",
+            "strokeWidth": "1px",
+            "width": "615px"
+          },
+          "rect": {
+            "bottom": 921,
+            "height": 26,
+            "left": 97,
+            "right": 712,
+            "top": 895,
+            "width": 615,
+            "x": 97,
+            "y": 895
+          },
+          "text": "CallAnswerNeeds youFailed"
+        }
+      ],
+      "selector": ".ui-aggc__legend"
+    }
+  ],
+  "viewport": [
+    809,
+    977
+  ]
+}

@@ -1,0 +1,2590 @@
+{
+  "elements": [
+    {
+      "attrs": [
+        [
+          "aria-label",
+          "Agent inbox"
+        ]
+      ],
+      "classes": "ai-inbox ",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "693px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "720px"
+      },
+      "rect": {
+        "bottom": 1109.28125,
+        "height": 693,
+        "left": 489,
+        "right": 1209,
+        "top": 416.28125,
+        "width": 720,
+        "x": 489,
+        "y": 416.28125
+      },
+      "tag": "SECTION"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-header",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "height": "32px",
+        "lineHeight": "20px",
+        "margin": "0px 0px 12px",
+        "padding": "0px 2px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "720px"
+      },
+      "rect": {
+        "bottom": 448.28125,
+        "height": 32,
+        "left": 489,
+        "right": 1209,
+        "top": 416.28125,
+        "width": 720,
+        "x": 489,
+        "y": 416.28125
+      },
+      "tag": "HEADER"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-header-actions",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "32px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "142.516px"
+      },
+      "rect": {
+        "bottom": 448.28125,
+        "height": 32,
+        "left": 1064.484375,
+        "right": 1207,
+        "top": 416.28125,
+        "width": 142.515625,
+        "x": 1064.484375,
+        "y": 416.28125
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "radiogroup"
+        ],
+        [
+          "aria-label",
+          "Inbox view"
+        ]
+      ],
+      "classes": "ai-inbox-switch",
+      "css": {
+        "backgroundColor": "rgb(244, 244, 245)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "2px",
+        "height": "32px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "3px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "142.516px"
+      },
+      "rect": {
+        "bottom": 448.28125,
+        "height": 32,
+        "left": 1064.484375,
+        "right": 1207,
+        "top": 416.28125,
+        "width": 142.515625,
+        "x": 1064.484375,
+        "y": 416.28125
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-groups ai-inbox-list",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "649px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "720px"
+      },
+      "rect": {
+        "bottom": 1109.28125,
+        "height": 649,
+        "left": 489,
+        "right": 1209,
+        "top": 460.28125,
+        "width": 720,
+        "x": 489,
+        "y": 460.28125
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "aria-label",
+          "Needs you"
+        ]
+      ],
+      "classes": "ai-inbox-group",
+      "css": {
+        "backgroundColor": "rgb(244, 244, 245)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "14px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "246px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "4px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "720px"
+      },
+      "rect": {
+        "bottom": 706.28125,
+        "height": 246,
+        "left": 489,
+        "right": 1209,
+        "top": 460.28125,
+        "width": 720,
+        "x": 489,
+        "y": 460.28125
+      },
+      "tag": "SECTION"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-cards",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "204px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 702.28125,
+        "height": 204,
+        "left": 493,
+        "right": 1205,
+        "top": 498.28125,
+        "width": 712,
+        "x": 493,
+        "y": 498.28125
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "data-task",
+          "migrate"
+        ]
+      ],
+      "classes": "ai-inbox-card waiting ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(233, 233, 236) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 597.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 498.28125,
+        "width": 712,
+        "x": 493,
+        "y": 498.28125
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "aria-controls",
+          "_r_2g_-migrate"
+        ]
+      ],
+      "classes": "ai-inbox-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "12px 14px 12px 12px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 597.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 498.28125,
+        "width": 712,
+        "x": 493,
+        "y": 498.28125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 530.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 510.28125,
+        "width": 686,
+        "x": 505,
+        "y": 510.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-mark",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(231, 171, 80)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(231, 171, 80)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 530.28125,
+        "height": 20,
+        "left": 505,
+        "right": 521,
+        "top": 510.28125,
+        "width": 16,
+        "x": 505,
+        "y": 510.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-description",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flow-root",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "19px",
+        "lineHeight": "19px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 555.28125,
+        "height": 19,
+        "left": 505,
+        "right": 1191,
+        "top": 536.28125,
+        "width": 686,
+        "x": 505,
+        "y": 536.28125
+      },
+      "tag": "SPAN",
+      "text": "Split users into accounts and profiles on Postgres 17. The dry run on staging passed."
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-meta",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "4px 0px 0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 585.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 565.28125,
+        "width": 686,
+        "x": 505,
+        "y": 565.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-status",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "164.281px"
+      },
+      "rect": {
+        "bottom": 585.28125,
+        "height": 20,
+        "left": 531,
+        "right": 695.28125,
+        "top": 565.28125,
+        "width": 164.28125,
+        "x": 531,
+        "y": 565.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-counters",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px 0px 0px 400.375px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "85.3438px"
+      },
+      "rect": {
+        "bottom": 585.28125,
+        "height": 20,
+        "left": 1105.65625,
+        "right": 1191,
+        "top": 565.28125,
+        "width": 85.34375,
+        "x": 1105.65625,
+        "y": 565.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "9 sources"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "42.7812px"
+      },
+      "rect": {
+        "bottom": 585.28125,
+        "height": 20,
+        "left": 1105.65625,
+        "right": 1148.4375,
+        "top": 565.28125,
+        "width": 42.78125,
+        "x": 1105.65625,
+        "y": 565.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "14 tool calls"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "42.5625px"
+      },
+      "rect": {
+        "bottom": 585.28125,
+        "height": 20,
+        "left": 1148.4375,
+        "right": 1191,
+        "top": 565.28125,
+        "width": 42.5625,
+        "x": 1148.4375,
+        "y": 565.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "data-task",
+          "crm"
+        ]
+      ],
+      "classes": "ai-inbox-card failed ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(233, 233, 236) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 702.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 603.28125,
+        "width": 712,
+        "x": 493,
+        "y": 603.28125
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "aria-controls",
+          "_r_2g_-crm"
+        ]
+      ],
+      "classes": "ai-inbox-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "12px 14px 12px 12px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 702.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 603.28125,
+        "width": 712,
+        "x": 493,
+        "y": 603.28125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 635.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 615.28125,
+        "width": 686,
+        "x": 505,
+        "y": 615.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-mark",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(229, 72, 77)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(229, 72, 77)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 635.28125,
+        "height": 20,
+        "left": 505,
+        "right": 521,
+        "top": 615.28125,
+        "width": 16,
+        "x": 505,
+        "y": 615.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-description",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flow-root",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "19px",
+        "lineHeight": "19px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 660.28125,
+        "height": 19,
+        "left": 505,
+        "right": 1191,
+        "top": 641.28125,
+        "width": 686,
+        "x": 505,
+        "y": 641.28125
+      },
+      "tag": "SPAN",
+      "text": "Matched 1,312 likely duplicates, then the merge hit the API rate limit."
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-meta",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "4px 0px 0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 690.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 670.28125,
+        "width": 686,
+        "x": 505,
+        "y": 670.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-status",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "55.0938px"
+      },
+      "rect": {
+        "bottom": 690.28125,
+        "height": 20,
+        "left": 531,
+        "right": 586.09375,
+        "top": 670.28125,
+        "width": 55.09375,
+        "x": 531,
+        "y": 670.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-counters",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px 0px 0px 517.344px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "77.5625px"
+      },
+      "rect": {
+        "bottom": 690.28125,
+        "height": 20,
+        "left": 1113.4375,
+        "right": 1191,
+        "top": 670.28125,
+        "width": 77.5625,
+        "x": 1113.4375,
+        "y": 670.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "2 sources"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "42.7812px"
+      },
+      "rect": {
+        "bottom": 690.28125,
+        "height": 20,
+        "left": 1113.4375,
+        "right": 1156.21875,
+        "top": 670.28125,
+        "width": 42.78125,
+        "x": 1113.4375,
+        "y": 670.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "6 tool calls"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34.7812px"
+      },
+      "rect": {
+        "bottom": 690.28125,
+        "height": 20,
+        "left": 1156.21875,
+        "right": 1191,
+        "top": 670.28125,
+        "width": 34.78125,
+        "x": 1156.21875,
+        "y": 670.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-label",
+          "Running"
+        ]
+      ],
+      "classes": "ai-inbox-group",
+      "css": {
+        "backgroundColor": "rgb(244, 244, 245)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "14px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "246px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "4px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "720px"
+      },
+      "rect": {
+        "bottom": 960.28125,
+        "height": 246,
+        "left": 489,
+        "right": 1209,
+        "top": 714.28125,
+        "width": 720,
+        "x": 489,
+        "y": 714.28125
+      },
+      "tag": "SECTION"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-cards",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "204px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 956.28125,
+        "height": 204,
+        "left": 493,
+        "right": 1205,
+        "top": 752.28125,
+        "width": 712,
+        "x": 493,
+        "y": 752.28125
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "data-task",
+          "review"
+        ]
+      ],
+      "classes": "ai-inbox-card running ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(233, 233, 236) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 851.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 752.28125,
+        "width": 712,
+        "x": 493,
+        "y": 752.28125
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "aria-controls",
+          "_r_2g_-review"
+        ]
+      ],
+      "classes": "ai-inbox-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "12px 14px 12px 12px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 851.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 752.28125,
+        "width": 712,
+        "x": 493,
+        "y": 752.28125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 784.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 764.28125,
+        "width": 686,
+        "x": 505,
+        "y": 764.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-mark",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(47, 107, 255)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(47, 107, 255)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 784.28125,
+        "height": 20,
+        "left": 505,
+        "right": 521,
+        "top": 764.28125,
+        "width": 16,
+        "x": 505,
+        "y": 764.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-description",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flow-root",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "19px",
+        "lineHeight": "19px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 809.28125,
+        "height": 19,
+        "left": 505,
+        "right": 1191,
+        "top": 790.28125,
+        "width": 686,
+        "x": 505,
+        "y": 790.28125
+      },
+      "tag": "SPAN",
+      "text": "Billing webhooks: reading the diff and the test run, writing comments."
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-meta",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "4px 0px 0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 839.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 819.28125,
+        "width": 686,
+        "x": 505,
+        "y": 819.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-status",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "65.2266px"
+      },
+      "rect": {
+        "bottom": 839.28125,
+        "height": 20,
+        "left": 531,
+        "right": 596.2265625,
+        "top": 819.28125,
+        "width": 65.2265625,
+        "x": 531,
+        "y": 819.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "viewBox",
+          "0 0 12 12"
+        ],
+        [
+          "fill",
+          "none"
+        ],
+        [
+          "stroke",
+          "currentColor"
+        ],
+        [
+          "stroke-width",
+          "1.2"
+        ],
+        [
+          "stroke-linecap",
+          "round"
+        ],
+        [
+          "stroke-linejoin",
+          "round"
+        ],
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ai-inbox-spinner",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(47, 107, 255)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(47, 107, 255)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "12px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgb(47, 107, 255)",
+        "strokeWidth": "1.2px",
+        "width": "12px"
+      },
+      "rect": {
+        "bottom": 835.9364013671875,
+        "height": 13.310302734375,
+        "left": 530.3448486328125,
+        "right": 543.6551513671875,
+        "top": 822.6260986328125,
+        "width": 13.310302734375,
+        "x": 530.3448486328125,
+        "y": 822.6260986328125
+      },
+      "tag": "svg"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-counters",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px 0px 0px 491.648px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "93.125px"
+      },
+      "rect": {
+        "bottom": 839.28125,
+        "height": 20,
+        "left": 1097.875,
+        "right": 1191,
+        "top": 819.28125,
+        "width": 93.125,
+        "x": 1097.875,
+        "y": 819.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "12 sources"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "50.5625px"
+      },
+      "rect": {
+        "bottom": 839.28125,
+        "height": 20,
+        "left": 1097.875,
+        "right": 1148.4375,
+        "top": 819.28125,
+        "width": 50.5625,
+        "x": 1097.875,
+        "y": 819.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "21 tool calls"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "42.5625px"
+      },
+      "rect": {
+        "bottom": 839.28125,
+        "height": 20,
+        "left": 1148.4375,
+        "right": 1191,
+        "top": 819.28125,
+        "width": 42.5625,
+        "x": 1148.4375,
+        "y": 819.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "data-task",
+          "notes"
+        ]
+      ],
+      "classes": "ai-inbox-card running ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(233, 233, 236) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 956.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 857.28125,
+        "width": 712,
+        "x": 493,
+        "y": 857.28125
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "aria-controls",
+          "_r_2g_-notes"
+        ]
+      ],
+      "classes": "ai-inbox-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "12px 14px 12px 12px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 956.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 857.28125,
+        "width": 712,
+        "x": 493,
+        "y": 857.28125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 889.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 869.28125,
+        "width": 686,
+        "x": 505,
+        "y": 869.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-mark",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(47, 107, 255)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(47, 107, 255)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 889.28125,
+        "height": 20,
+        "left": 505,
+        "right": 521,
+        "top": 869.28125,
+        "width": 16,
+        "x": 505,
+        "y": 869.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-description",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flow-root",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "19px",
+        "lineHeight": "19px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 914.28125,
+        "height": 19,
+        "left": 505,
+        "right": 1191,
+        "top": 895.28125,
+        "width": 686,
+        "x": 505,
+        "y": 895.28125
+      },
+      "tag": "SPAN",
+      "text": "Grouping 23 merged pull requests into features and fixes."
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-meta",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "4px 0px 0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 944.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 924.28125,
+        "width": 686,
+        "x": 505,
+        "y": 924.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-status",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "65.2266px"
+      },
+      "rect": {
+        "bottom": 944.28125,
+        "height": 20,
+        "left": 531,
+        "right": 596.2265625,
+        "top": 924.28125,
+        "width": 65.2265625,
+        "x": 531,
+        "y": 924.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "viewBox",
+          "0 0 12 12"
+        ],
+        [
+          "fill",
+          "none"
+        ],
+        [
+          "stroke",
+          "currentColor"
+        ],
+        [
+          "stroke-width",
+          "1.2"
+        ],
+        [
+          "stroke-linecap",
+          "round"
+        ],
+        [
+          "stroke-linejoin",
+          "round"
+        ],
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ai-inbox-spinner",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(47, 107, 255)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(47, 107, 255)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "12px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgb(47, 107, 255)",
+        "strokeWidth": "1.2px",
+        "width": "12px"
+      },
+      "rect": {
+        "bottom": 940.9364013671876,
+        "height": 13.310302734375,
+        "left": 530.3448486328125,
+        "right": 543.6551513671875,
+        "top": 927.6260986328124,
+        "width": 13.310302734375,
+        "x": 530.3448486328125,
+        "y": 927.6260986328124
+      },
+      "tag": "svg"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-counters",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px 0px 0px 499.43px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "85.3438px"
+      },
+      "rect": {
+        "bottom": 944.28125,
+        "height": 20,
+        "left": 1105.65625,
+        "right": 1191,
+        "top": 924.28125,
+        "width": 85.34375,
+        "x": 1105.65625,
+        "y": 924.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "23 sources"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "50.5625px"
+      },
+      "rect": {
+        "bottom": 944.28125,
+        "height": 20,
+        "left": 1105.65625,
+        "right": 1156.21875,
+        "top": 924.28125,
+        "width": 50.5625,
+        "x": 1105.65625,
+        "y": 924.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "5 tool calls"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34.7812px"
+      },
+      "rect": {
+        "bottom": 944.28125,
+        "height": 20,
+        "left": 1156.21875,
+        "right": 1191,
+        "top": 924.28125,
+        "width": 34.78125,
+        "x": 1156.21875,
+        "y": 924.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-label",
+          "Done"
+        ]
+      ],
+      "classes": "ai-inbox-group",
+      "css": {
+        "backgroundColor": "rgb(244, 244, 245)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "14px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "141px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "4px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "720px"
+      },
+      "rect": {
+        "bottom": 1109.28125,
+        "height": 141,
+        "left": 489,
+        "right": 1209,
+        "top": 968.28125,
+        "width": 720,
+        "x": 489,
+        "y": 968.28125
+      },
+      "tag": "SECTION"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-cards",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 1105.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 1006.28125,
+        "width": 712,
+        "x": 493,
+        "y": 1006.28125
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "data-task",
+          "digest"
+        ]
+      ],
+      "classes": "ai-inbox-card done ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(233, 233, 236) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 1105.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 1006.28125,
+        "width": 712,
+        "x": 493,
+        "y": 1006.28125
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "aria-controls",
+          "_r_2g_-digest"
+        ]
+      ],
+      "classes": "ai-inbox-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "99px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "12px 14px 12px 12px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "712px"
+      },
+      "rect": {
+        "bottom": 1105.28125,
+        "height": 99,
+        "left": 493,
+        "right": 1205,
+        "top": 1006.28125,
+        "width": 712,
+        "x": 493,
+        "y": 1006.28125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 1038.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 1018.28125,
+        "width": 686,
+        "x": 505,
+        "y": 1018.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-mark",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(34, 160, 90)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(34, 160, 90)",
+        "display": "grid",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 1038.28125,
+        "height": 20,
+        "left": 505,
+        "right": 521,
+        "top": 1018.28125,
+        "width": 16,
+        "x": 505,
+        "y": 1018.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-description",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flow-root",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "19px",
+        "lineHeight": "19px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 1063.28125,
+        "height": 19,
+        "left": 505,
+        "right": 1191,
+        "top": 1044.28125,
+        "width": 686,
+        "x": 505,
+        "y": 1044.28125
+      },
+      "tag": "SPAN",
+      "text": "Pulled numbers from three dashboards and posted the summary to #metrics."
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-meta",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "4px 0px 0px",
+        "padding": "0px 0px 0px 26px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "686px"
+      },
+      "rect": {
+        "bottom": 1093.28125,
+        "height": 20,
+        "left": 505,
+        "right": 1191,
+        "top": 1073.28125,
+        "width": 686,
+        "x": 505,
+        "y": 1073.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-status",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "65.2266px"
+      },
+      "rect": {
+        "bottom": 1093.28125,
+        "height": 20,
+        "left": 531,
+        "right": 596.2265625,
+        "top": 1073.28125,
+        "width": 65.2265625,
+        "x": 531,
+        "y": 1073.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "viewBox",
+          "0 0 12 12"
+        ],
+        [
+          "fill",
+          "none"
+        ],
+        [
+          "stroke",
+          "currentColor"
+        ],
+        [
+          "stroke-width",
+          "1.2"
+        ],
+        [
+          "stroke-linecap",
+          "round"
+        ],
+        [
+          "stroke-linejoin",
+          "round"
+        ],
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ai-inbox-dot",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(34, 160, 90)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(34, 160, 90)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "12px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgb(34, 160, 90)",
+        "strokeWidth": "1.2px",
+        "width": "12px"
+      },
+      "rect": {
+        "bottom": 1089.28125,
+        "height": 12,
+        "left": 531,
+        "right": 543,
+        "top": 1077.28125,
+        "width": 12,
+        "x": 531,
+        "y": 1077.28125
+      },
+      "tag": "svg"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-counters",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px 0px 0px 507.211px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "77.5625px"
+      },
+      "rect": {
+        "bottom": 1093.28125,
+        "height": 20,
+        "left": 1113.4375,
+        "right": 1191,
+        "top": 1073.28125,
+        "width": 77.5625,
+        "x": 1113.4375,
+        "y": 1073.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "3 sources"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(142, 142, 150)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "42.7812px"
+      },
+      "rect": {
+        "bottom": 1093.28125,
+        "height": 20,
+        "left": 1113.4375,
+        "right": 1156.21875,
+        "top": 1073.28125,
+        "width": 42.78125,
+        "x": 1113.4375,
+        "y": 1073.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "title",
+          "8 tool calls"
+        ]
+      ],
+      "classes": "ai-inbox-count",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(142, 142, 150)",
+        "display": "flex",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34.7812px"
+      },
+      "rect": {
+        "bottom": 1093.28125,
+        "height": 20,
+        "left": 1156.21875,
+        "right": 1191,
+        "top": 1073.28125,
+        "width": 34.78125,
+        "x": 1156.21875,
+        "y": 1073.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ai-inbox-footer",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "1px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "1px"
+      },
+      "rect": {
+        "bottom": 1110.28125,
+        "height": 1,
+        "left": 489,
+        "right": 490,
+        "top": 1109.28125,
+        "width": 1,
+        "x": 489,
+        "y": 1109.28125
+      },
+      "tag": "FOOTER"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "status"
+        ],
+        [
+          "aria-live",
+          "polite"
+        ]
+      ],
+      "classes": "ai-inbox-notice",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(85, 85, 92)",
+        "display": "none",
+        "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "1px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "1px"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "P",
+      "text": ""
+    }
+  ],
+  "url": "http://127.0.0.1:5173/#/agent-inbox",
+  "viewport": [
+    1440,
+    1000
+  ]
+}

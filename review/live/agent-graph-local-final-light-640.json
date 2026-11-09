@@ -1,0 +1,2771 @@
+{
+  "elements": [
+    {
+      "attrs": [
+        [
+          "aria-labelledby",
+          "_r_38_-title"
+        ],
+        [
+          "data-paused",
+          "false"
+        ],
+        [
+          "style",
+          "width: 640px;"
+        ]
+      ],
+      "classes": "agg-root ",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "478px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "640px"
+      },
+      "rect": {
+        "bottom": 894.28125,
+        "height": 478,
+        "left": 529,
+        "right": 1169,
+        "top": 416.28125,
+        "width": 640,
+        "x": 529,
+        "y": 416.28125
+      },
+      "tag": "SECTION"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-header",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px 8px",
+        "height": "36px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 0px 16px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "640px"
+      },
+      "rect": {
+        "bottom": 452.28125,
+        "height": 36,
+        "left": 529,
+        "right": 1169,
+        "top": 416.28125,
+        "width": 640,
+        "x": 529,
+        "y": 416.28125
+      },
+      "tag": "HEADER"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-stats",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "224.344px"
+      },
+      "rect": {
+        "bottom": 436.28125,
+        "height": 20,
+        "left": 944.65625,
+        "right": 1169,
+        "top": 416.28125,
+        "width": 224.34375,
+        "x": 944.65625,
+        "y": 416.28125
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "aria-live",
+          "polite"
+        ]
+      ],
+      "classes": "agg-alerts",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "0px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "616px"
+      },
+      "rect": {
+        "bottom": 470.28125,
+        "height": 0,
+        "left": 541,
+        "right": 1157,
+        "top": 470.28125,
+        "width": 616,
+        "x": 541,
+        "y": 470.28125
+      },
+      "tag": "DIV",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "style",
+          "height: 442px;"
+        ]
+      ],
+      "classes": "agg-canvas",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "10px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "442px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "640px"
+      },
+      "rect": {
+        "bottom": 894.28125,
+        "height": 442,
+        "left": 529,
+        "right": 1169,
+        "top": 452.28125,
+        "width": 640,
+        "x": 529,
+        "y": 452.28125
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "viewBox",
+          "0 0 640 416"
+        ],
+        [
+          "width",
+          "100%"
+        ],
+        [
+          "height",
+          "416"
+        ],
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "agg-links",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "416px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "640px"
+      },
+      "rect": {
+        "bottom": 868.28125,
+        "height": 416,
+        "left": 529,
+        "right": 1169,
+        "top": 452.28125,
+        "width": 640,
+        "x": 529,
+        "y": 452.28125
+      },
+      "tag": "svg"
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"lead\",\"you\"]"
+        ],
+        [
+          "data-lit",
+          "true"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M312,208 L312,86.699872 Q312,78.699872 304,78.699872 L219.8,78.699872"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 660.28125,
+        "height": 129.30010986328125,
+        "left": 748.7999877929688,
+        "right": 841,
+        "top": 530.9811401367188,
+        "width": 92.20001220703124,
+        "x": 748.7999877929688,
+        "y": 530.9811401367188
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"lead\",\"research\"]"
+        ],
+        [
+          "data-lit",
+          "true"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M328,208 L328,162.70016 Q328,154.70016 336,154.70016 L398,154.70016"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 660.28125,
+        "height": 53.2998046875,
+        "left": 857,
+        "right": 927,
+        "top": 606.9814453125,
+        "width": 70,
+        "x": 857,
+        "y": 606.9814453125
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"lead\",\"writer\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M320,208 L320,162.70016 Q320,154.70016 312,154.70016 L242,154.70016"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 660.28125,
+        "height": 53.2998046875,
+        "left": 771,
+        "right": 849,
+        "top": 606.9814453125,
+        "width": 78,
+        "x": 771,
+        "y": 606.9814453125
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"coder\",\"lead\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M242,265.29984 L242,216 Q242,208 250,208 L320,208"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 717.5810546875,
+        "height": 57.2998046875,
+        "left": 771,
+        "right": 849,
+        "top": 660.28125,
+        "width": 78,
+        "x": 771,
+        "y": 660.28125
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"analyst\",\"lead\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M398,265.29984 L398,216 Q398,208 390,208 L320,208"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 717.5810546875,
+        "height": 57.2998046875,
+        "left": 849,
+        "right": 927,
+        "top": 660.28125,
+        "width": 78,
+        "x": 849,
+        "y": 660.28125
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"research\",\"web\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M398,150.70016 L526.8,150.70016"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 602.9814453125,
+        "height": 0,
+        "left": 927,
+        "right": 1055.800048828125,
+        "top": 602.9814453125,
+        "width": 128.800048828125,
+        "x": 927,
+        "y": 602.9814453125
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"notion\",\"research\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M382.8,66.89987199999999 L382.8,139.10016000000002 Q382.8,146.70016 390.4,146.70016 L398,146.70016"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 598.9814453125,
+        "height": 79.80029296875,
+        "left": 911.7999877929688,
+        "right": 927,
+        "top": 519.18115234375,
+        "width": 15.20001220703125,
+        "x": 911.7999877929688,
+        "y": 519.18115234375
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"notion\",\"writer\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M374.8,66.89987199999999 L374.8,138.70016 Q374.8,146.70016 366.8,146.70016 L242,146.70016"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 598.9814453125,
+        "height": 79.80029296875,
+        "left": 771,
+        "right": 903.7999877929688,
+        "top": 519.18115234375,
+        "width": 132.79998779296875,
+        "x": 771,
+        "y": 519.18115234375
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"coder\",\"github\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M242,265.29984 L242,340 Q242,348 250,348 L261.2,348"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 800.28125,
+        "height": 82.7001953125,
+        "left": 771,
+        "right": 790.2000122070312,
+        "top": 717.5810546875,
+        "width": 19.20001220703125,
+        "x": 771,
+        "y": 717.5810546875
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"coder\",\"stripe\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M242,265.29984 L113.2,265.29984"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 717.5810546875,
+        "height": 0,
+        "left": 642.2000122070312,
+        "right": 771,
+        "top": 717.5810546875,
+        "width": 128.79998779296875,
+        "x": 642.2000122070312,
+        "y": 717.5810546875
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"slack\",\"writer\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M84,150.70016 L242,150.70016"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 602.9814453125,
+        "height": 0,
+        "left": 613,
+        "right": 771,
+        "top": 602.9814453125,
+        "width": 158,
+        "x": 613,
+        "y": 602.9814453125
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"writer\",\"you\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M242,150.70016 L242,78.699872 Q242,70.699872 234,70.699872 L219.8,70.699872"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 602.9814453125,
+        "height": 80.00030517578125,
+        "left": 748.7999877929688,
+        "right": 771,
+        "top": 522.9811401367188,
+        "width": 22.20001220703125,
+        "x": 748.7999877929688,
+        "y": 522.9811401367188
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"analyst\",\"database\"]"
+        ],
+        [
+          "data-lit",
+          "false"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M398,265.29984 L398,333.300128 Q398,341.300128 406,341.300128 L420.20000000000005,341.300128"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 793.5814208984375,
+        "height": 76.0003662109375,
+        "left": 927,
+        "right": 949.2000122070312,
+        "top": 717.5810546875,
+        "width": 22.20001220703125,
+        "x": 927,
+        "y": 717.5810546875
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-graph-link",
+          "[\"analyst\",\"hubspot\"]"
+        ],
+        [
+          "data-lit",
+          "true"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "d",
+          "M398,265.29984 L556,265.29984"
+        ],
+        [
+          "stroke-width",
+          "1.5"
+        ]
+      ],
+      "classes": "agg-link",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "rgba(0, 0, 0, 0.07)",
+        "strokeWidth": "1.5px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 717.5810546875,
+        "height": 0,
+        "left": 927,
+        "right": 1085,
+        "top": 717.5810546875,
+        "width": 158,
+        "x": 927,
+        "y": 717.5810546875
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-answer",
+          "true"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "data-user",
+          "false"
+        ],
+        [
+          "d",
+          "M312,208 L312,86.699872 Q312,78.699872 304,78.699872 L219.8,78.699872"
+        ],
+        [
+          "pathLength",
+          "100"
+        ],
+        [
+          "stroke-dasharray",
+          "7 100"
+        ],
+        [
+          "stroke-dashoffset",
+          "-60.68888889154833"
+        ],
+        [
+          "stroke",
+          "url(#_r_38_-pulse-1)"
+        ]
+      ],
+      "classes": "agg-pulse",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "url(\"#_r_38_-pulse-1\")",
+        "strokeWidth": "1.8px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 660.28125,
+        "height": 129.30010986328125,
+        "left": 748.7999877929688,
+        "right": 841,
+        "top": 530.9811401367188,
+        "width": 92.20001220703124,
+        "x": 748.7999877929688,
+        "y": 530.9811401367188
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "data-answer",
+          "true"
+        ],
+        [
+          "data-error",
+          "false"
+        ],
+        [
+          "data-user",
+          "false"
+        ],
+        [
+          "d",
+          "M398,154.70016 L336,154.70016 Q328,154.70016 328,162.70016 L328,208"
+        ],
+        [
+          "pathLength",
+          "100"
+        ],
+        [
+          "stroke-dasharray",
+          "7 100"
+        ],
+        [
+          "stroke-dashoffset",
+          "-21.377777779112673"
+        ],
+        [
+          "stroke",
+          "url(#_r_38_-pulse-2)"
+        ]
+      ],
+      "classes": "agg-pulse",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "url(\"#_r_38_-pulse-2\")",
+        "strokeWidth": "1.8px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 660.28125,
+        "height": 53.2998046875,
+        "left": 857,
+        "right": 927,
+        "top": 606.9814453125,
+        "width": 70,
+        "x": 857,
+        "y": 606.9814453125
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "lead"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "data-lead",
+          "true"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Orchestrator, agent, Working, Preparing the launch plan, 60 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 320px; top: 208px; --agg-label-room: 624px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "56px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "56px"
+      },
+      "rect": {
+        "bottom": 688.28125,
+        "height": 56,
+        "left": 821,
+        "right": 877,
+        "top": 632.28125,
+        "width": 56,
+        "x": 821,
+        "y": 632.28125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "15.12px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "56px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "56px"
+      },
+      "rect": {
+        "bottom": 688.28125,
+        "height": 56,
+        "left": 821,
+        "right": 877,
+        "top": 632.28125,
+        "width": 56,
+        "x": 821,
+        "y": 632.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "writer"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Writer, agent, Working, Drafting launch copy, 48 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 242px; top: 150.7px; --agg-label-room: 468px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "46px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "46px"
+      },
+      "rect": {
+        "bottom": 625.9765625,
+        "height": 46,
+        "left": 748,
+        "right": 794,
+        "top": 579.9765625,
+        "width": 46,
+        "x": 748,
+        "y": 579.9765625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "12.42px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "46px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "46px"
+      },
+      "rect": {
+        "bottom": 625.9765625,
+        "height": 46,
+        "left": 748,
+        "right": 794,
+        "top": 579.9765625,
+        "width": 46,
+        "x": 748,
+        "y": 579.9765625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "research"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Researcher, agent, Working, Comparing competitor pricing, 35 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 398px; top: 150.7px; --agg-label-room: 468px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "46px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "46px"
+      },
+      "rect": {
+        "bottom": 625.9765625,
+        "height": 46,
+        "left": 904,
+        "right": 950,
+        "top": 579.9765625,
+        "width": 46,
+        "x": 904,
+        "y": 579.9765625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "12.42px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "46px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "46px"
+      },
+      "rect": {
+        "bottom": 625.9765625,
+        "height": 46,
+        "left": 904,
+        "right": 950,
+        "top": 579.9765625,
+        "width": 46,
+        "x": 904,
+        "y": 579.9765625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "analyst"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Analyst, agent, Working, Analyzing customer segments, 36 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 398px; top: 265.3px; --agg-label-room: 468px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "46px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "46px"
+      },
+      "rect": {
+        "bottom": 740.578125,
+        "height": 46,
+        "left": 904,
+        "right": 950,
+        "top": 694.578125,
+        "width": 46,
+        "x": 904,
+        "y": 694.578125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "12.42px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "46px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "46px"
+      },
+      "rect": {
+        "bottom": 740.578125,
+        "height": 46,
+        "left": 904,
+        "right": 950,
+        "top": 694.578125,
+        "width": 46,
+        "x": 904,
+        "y": 694.578125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "coder"
+        ],
+        [
+          "data-kind",
+          "agent"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "working"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Coder, agent, Working, Building the pricing page, 36 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 242px; top: 265.3px; --agg-label-room: 468px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "46px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "46px"
+      },
+      "rect": {
+        "bottom": 740.578125,
+        "height": 46,
+        "left": 748,
+        "right": 794,
+        "top": 694.578125,
+        "width": 46,
+        "x": 748,
+        "y": 694.578125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "12.42px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "46px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "46px"
+      },
+      "rect": {
+        "bottom": 740.578125,
+        "height": 46,
+        "left": 748,
+        "right": 794,
+        "top": 694.578125,
+        "width": 46,
+        "x": 748,
+        "y": 694.578125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "you"
+        ],
+        [
+          "data-kind",
+          "user"
+        ],
+        [
+          "data-label-above",
+          "true"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "You, user, Idle, 24 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 219.8px; top: 74.6999px; --agg-label-room: 423.6px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 543.9765625,
+        "height": 34,
+        "left": 731.796875,
+        "right": 765.796875,
+        "top": 509.9765625,
+        "width": 34,
+        "x": 731.796875,
+        "y": 509.9765625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0.88)",
+        "border": "0px none rgba(0, 0, 0, 0)",
+        "borderRadius": "9.18px",
+        "boxShadow": "rgba(0, 0, 0, 0.133) 0px 1px 2px 0px inset",
+        "color": "rgb(252, 252, 252)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 543.9765625,
+        "height": 34,
+        "left": 731.796875,
+        "right": 765.796875,
+        "top": 509.9765625,
+        "width": 34,
+        "x": 731.796875,
+        "y": 509.9765625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "notion"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-label-above",
+          "true"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Notion, tool, Idle, 24 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 378.8px; top: 66.8999px; --agg-label-room: 506.4px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 536.1796875,
+        "height": 34,
+        "left": 890.796875,
+        "right": 924.796875,
+        "top": 502.1796875,
+        "width": 34,
+        "x": 890.796875,
+        "y": 502.1796875
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "9.18px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 536.1796875,
+        "height": 34,
+        "left": 890.796875,
+        "right": 924.796875,
+        "top": 502.1796875,
+        "width": 34,
+        "x": 890.796875,
+        "y": 502.1796875
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "web"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Web search, tool, Idle, 11 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 526.8px; top: 150.7px; --agg-label-room: 210.4000000000001px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 619.9765625,
+        "height": 34,
+        "left": 1038.796875,
+        "right": 1072.796875,
+        "top": 585.9765625,
+        "width": 34,
+        "x": 1038.796875,
+        "y": 585.9765625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "9.18px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 619.9765625,
+        "height": 34,
+        "left": 1038.796875,
+        "right": 1072.796875,
+        "top": 585.9765625,
+        "width": 34,
+        "x": 1038.796875,
+        "y": 585.9765625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "hubspot"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "HubSpot, tool, Idle, 12 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 556px; top: 265.3px; --agg-label-room: 152px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 734.578125,
+        "height": 34,
+        "left": 1068,
+        "right": 1102,
+        "top": 700.578125,
+        "width": 34,
+        "x": 1068,
+        "y": 700.578125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "9.18px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 734.578125,
+        "height": 34,
+        "left": 1068,
+        "right": 1102,
+        "top": 700.578125,
+        "width": 34,
+        "x": 1068,
+        "y": 700.578125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "database"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Database, tool, Idle, 12 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 420.2px; top: 341.3px; --agg-label-room: 423.5999999999999px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 810.578125,
+        "height": 34,
+        "left": 932.1953125,
+        "right": 966.1953125,
+        "top": 776.578125,
+        "width": 34,
+        "x": 932.1953125,
+        "y": 776.578125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "9.18px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 810.578125,
+        "height": 34,
+        "left": 932.1953125,
+        "right": 966.1953125,
+        "top": 776.578125,
+        "width": 34,
+        "x": 932.1953125,
+        "y": 776.578125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "github"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "GitHub, tool, Idle, 12 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 261.2px; top: 348px; --agg-label-room: 506.4px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 817.28125,
+        "height": 34,
+        "left": 773.1953125,
+        "right": 807.1953125,
+        "top": 783.28125,
+        "width": 34,
+        "x": 773.1953125,
+        "y": 783.28125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "9.18px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 817.28125,
+        "height": 34,
+        "left": 773.1953125,
+        "right": 807.1953125,
+        "top": 783.28125,
+        "width": 34,
+        "x": 773.1953125,
+        "y": 783.28125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "stripe"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Stripe, tool, Idle, 12 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 113.2px; top: 265.3px; --agg-label-room: 210.4px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 734.578125,
+        "height": 34,
+        "left": 625.1953125,
+        "right": 659.1953125,
+        "top": 700.578125,
+        "width": 34,
+        "x": 625.1953125,
+        "y": 700.578125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "9.18px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 734.578125,
+        "height": 34,
+        "left": 625.1953125,
+        "right": 659.1953125,
+        "top": 700.578125,
+        "width": 34,
+        "x": 625.1953125,
+        "y": 700.578125
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-node-id",
+          "slack"
+        ],
+        [
+          "data-kind",
+          "tool"
+        ],
+        [
+          "data-label-above",
+          "false"
+        ],
+        [
+          "data-status",
+          "idle"
+        ],
+        [
+          "data-lead",
+          "false"
+        ],
+        [
+          "data-dimmed",
+          "false"
+        ],
+        [
+          "aria-label",
+          "Slack, tool, Idle, 12 calls in the last minute"
+        ],
+        [
+          "aria-haspopup",
+          "dialog"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ],
+        [
+          "style",
+          "left: 84px; top: 150.7px; --agg-label-room: 152px;"
+        ]
+      ],
+      "classes": "agg-node",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 619.9765625,
+        "height": 34,
+        "left": 596,
+        "right": 630,
+        "top": 585.9765625,
+        "width": 34,
+        "x": 596,
+        "y": 585.9765625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "agg-node-icon",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "9.18px",
+        "boxShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px, rgba(0, 0, 0, 0.12) 0px 4px 12px -4px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "34px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "34px"
+      },
+      "rect": {
+        "bottom": 619.9765625,
+        "height": 34,
+        "left": 596,
+        "right": 630,
+        "top": 585.9765625,
+        "width": 34,
+        "x": 596,
+        "y": 585.9765625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-label",
+          "Call legend"
+        ]
+      ],
+      "classes": "agg-footer",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "4px 14px",
+        "height": "26px",
+        "lineHeight": "16px",
+        "margin": "0px",
+        "padding": "0px 10px 10px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "640px"
+      },
+      "rect": {
+        "bottom": 894.28125,
+        "height": 26,
+        "left": 529,
+        "right": 1169,
+        "top": 868.28125,
+        "width": 640,
+        "x": 529,
+        "y": 868.28125
+      },
+      "tag": "FOOTER"
+    },
+    {
+      "attrs": [
+        [
+          "aria-label",
+          "Network description"
+        ]
+      ],
+      "classes": "agg-sr",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "1px",
+        "lineHeight": "20px",
+        "margin": "13px 0px",
+        "padding": "0px 0px 0px 40px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "40px"
+      },
+      "rect": {
+        "bottom": 908.28125,
+        "height": 1,
+        "left": 529,
+        "right": 569,
+        "top": 907.28125,
+        "width": 40,
+        "x": 529,
+        "y": 907.28125
+      },
+      "tag": "UL"
+    }
+  ],
+  "url": "http://127.0.0.1:5173/#/agent-graph",
+  "viewport": [
+    1440,
+    1000
+  ]
+}

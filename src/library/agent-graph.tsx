@@ -69,7 +69,7 @@ function layout(
 ) {
   const points: Record<string, Point> = {};
   const cx = width / 2,
-    cy = height * 0.47;
+    cy = height * 0.5;
   const lead =
     nodes.find((n) => n.kind === "agent" && n.lead) ??
     nodes.find((n) => n.kind === "agent");
@@ -108,17 +108,25 @@ function layout(
     if (node.position)
       points[node.id] = {
         x: Math.min(width - 36, Math.max(36, node.position.x * width)),
-        y: Math.min(height - 68, Math.max(48, node.position.y * height)),
+        y: Math.min(height - 48, Math.max(48, node.position.y * height)),
       };
   }
   return points;
 }
 
-function graphRoute(from: Point, to: Point): Point[] {
-  if (Math.abs(from.x - to.x) < 1 || Math.abs(from.y - to.y) < 1)
-    return [from, to];
-  const middle = (from.x + to.x) / 2;
-  return [from, { x: middle, y: from.y }, { x: middle, y: to.y }, to];
+// Pick one orthogonal bend, avoiding intervening tiles where possible.
+function graphRoute(from: Point, to: Point, obstacles: Point[] = []): Point[] {
+  if (Math.abs(from.x - to.x) < 1 || Math.abs(from.y - to.y) < 1) return [from, to];
+  const candidates = [{ x: from.x, y: to.y }, { x: to.x, y: from.y }];
+  const hits = (corner: Point) => obstacles.filter(p => {
+    if (Math.hypot(p.x - from.x, p.y - from.y) < 1 || Math.hypot(p.x - to.x, p.y - to.y) < 1) return false;
+    return [[from, corner], [corner, to]].some(([a,b]) => {
+      const dx=b.x-a.x, dy=b.y-a.y, length=dx*dx+dy*dy;
+      const t=length ? Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/length)) : 0;
+      return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy)<30;
+    });
+  }).length;
+  return [from, hits(candidates[0]) <= hits(candidates[1]) ? candidates[0] : candidates[1], to];
 }
 function roundedPath(points: Point[]) {
   let path = `M${points[0].x},${points[0].y}`;
@@ -169,7 +177,7 @@ export function AgentGraph({
     active = selected ?? hovered;
   const h = Math.max(
     160,
-    height ?? Math.min(520, Math.max(360, width * (width < 520 ? 1.2 : 0.7))),
+    height ?? (width < 520 ? 600 : Math.min(520, Math.max(360, width * 0.6)) + 32),
   );
   const unique = React.useMemo(
     () => [...new Map(nodes.map((node) => [node.id, node])).values()],
@@ -347,17 +355,8 @@ export function AgentGraph({
   const recent = validCalls.filter(
     (call) => timestamp >= call.at && timestamp - call.at <= 60000,
   );
-  const heat = new Map(
-    links.map(([a, b]) => [
-      pair(a, b),
-      validCalls.filter(
-        (call) =>
-          pair(call.from, call.to) === pair(a, b) &&
-          timestamp >= call.at &&
-          timestamp - call.at <= Math.max(1, heatWindow),
-      ).length,
-    ]),
-  );
+  // Clean links remain uniformly 1.5px; heatWindow is retained for API compatibility.
+  void heatWindow;
   const neighbours = new Set(
     active
       ? [
@@ -368,6 +367,59 @@ export function AgentGraph({
   );
   const position = (nodeId: string) =>
     reduced ? targets[nodeId] : (motion.current[nodeId] ?? targets[nodeId]);
+  const routes = new Map(links.map(([a, b]) => [
+    pair(a, b), graphRoute(position(a), position(b), unique.map(n => position(n.id))),
+  ]));
+  type Port = { key: string; end: 0 | 1; other: number; vertical: boolean; offset: number };
+  const ports = new Map<string, Port[]>();
+  const routePorts = new Map<string, Port[]>();
+  links.forEach(([a, b]) => {
+    const key = pair(a, b), route = routes.get(key)!;
+    const ends = [a, b].map((node, end) => {
+      const p = route[end ? route.length - 1 : 0];
+      const near = route[end ? route.length - 2 : 1];
+      const vertical = Math.abs(p.x - near.x) < 1;
+      const side = vertical ? (near.y > p.y ? "bottom" : "top") : (near.x > p.x ? "right" : "left");
+      const port: Port = {
+        key, end: end as 0 | 1, vertical, offset: 0,
+        other: vertical ? position(end ? a : b).x : position(end ? a : b).y,
+      };
+      const group = node + ":" + side;
+      const list = ports.get(group) ?? [];
+      list.push(port);
+      ports.set(group, list);
+      return port;
+    });
+    routePorts.set(key, ends);
+  });
+  ports.forEach(list => {
+    list.sort((a, b) => a.other - b.other || a.key.localeCompare(b.key));
+    list.forEach((port, i) => {
+      port.offset = (i - (list.length - 1) / 2) * (width < 520 ? 6 : 8);
+    });
+  });
+  // Compute both attachments from the original route together. Mutating the
+  // corner while assigning ports can misclassify the opposite attachment.
+  routes.forEach((route, key) => {
+    const [startPort, endPort] = routePorts.get(key)!;
+    const shift = (p: Point, port: Port): Point => port.vertical
+      ? { x: p.x + port.offset, y: p.y }
+      : { x: p.x, y: p.y + port.offset };
+    const from = shift(route[0], startPort);
+    const to = shift(route[route.length - 1], endPort);
+    if (route.length > 2) {
+      routes.set(key, [from, startPort.vertical ? { x: from.x, y: to.y } : { x: to.x, y: from.y }, to]);
+    } else if (startPort.vertical ? from.x === to.x : from.y === to.y) {
+      routes.set(key, [from, to]);
+    } else {
+      // Different port offsets on an otherwise straight link need two short
+      // orthogonal turns; connecting the shifted ends directly would be diagonal.
+      const middle = startPort.vertical ? (from.y + to.y) / 2 : (from.x + to.x) / 2;
+      routes.set(key, startPort.vertical
+        ? [from, { x: from.x, y: middle }, { x: to.x, y: middle }, to]
+        : [from, { x: middle, y: from.y }, { x: middle, y: to.y }, to]);
+    }
+  });
   return (
     <section
       ref={root}
@@ -433,12 +485,12 @@ export function AgentGraph({
             </button>
           ))}
       </div>
-      <div className="agg-canvas" style={{ height: h }}>
+      <div className="agg-canvas" style={{ height: h + 26 }}>
         <svg
           className="agg-links"
           viewBox={`0 0 ${width} ${h}`}
           width="100%"
-          height="100%"
+          height={h}
           aria-hidden="true"
           onClick={close}
         >
@@ -468,7 +520,7 @@ export function AgentGraph({
             const from = position(a),
               to = position(b);
             if (!from || !to) return null;
-            const route = graphRoute(from, to),
+            const route = routes.get(pair(a,b))!,
               flashing = pulses.current.filter(
                 (p) =>
                   pair(p.from, p.to) === pair(a, b) &&
@@ -483,9 +535,7 @@ export function AgentGraph({
                 data-lit={!!flashing.length || active === a || active === b}
                 data-error={flashing.some((p) => p.error)}
                 d={roundedPath(route)}
-                strokeWidth={
-                  1.25 + 1.25 * Math.min(1, (heat.get(pair(a, b)) ?? 0) / 10)
-                }
+                strokeWidth={1.5}
                 style={{
                   opacity:
                     active && active !== a && active !== b ? 0.15 : undefined,
@@ -500,7 +550,9 @@ export function AgentGraph({
                 to = position(pulse.to);
               if (!from || !to || t < 0 || t > 1) return null;
               const [a, b] = [pulse.from, pulse.to].sort();
-              const points = graphRoute(position(a), position(b));
+              const route = routes.get(pair(a,b));
+              if (!route) return null;
+              const points = [...route];
               if (pulse.from !== a) points.reverse();
               return (
                 <path
@@ -542,7 +594,8 @@ export function AgentGraph({
                 // Centered labels must also fit when a fixed node is near an edge.
                 "--agg-label-room": `${Math.max(0, Math.min(p.x, width - p.x) * 2 - 16)}px`,
               } as React.CSSProperties}
-              aria-label={`${node.name}, ${node.kind}, ${statusLabel(node.status)}${node.doing ? `, ${node.doing}` : ""}, ${recent.filter((call) => call.from === node.id).length} calls in the last minute`}
+              aria-label={`${node.name}, ${node.kind}, ${statusLabel(node.status)}${node.doing ? `, ${node.doing}` : ""}, ${recent.filter((call) => call.from === node.id || call.to === node.id).length} calls in the last minute`}
+              aria-haspopup="dialog"
               aria-expanded={selected === node.id}
               aria-controls={selected === node.id ? `${id}-card` : undefined}
               onClick={() => choose(node)}
@@ -592,78 +645,34 @@ export function AgentGraph({
           <div
             id={`${id}-card`}
             className="agg-card"
+            style={width >= 520 ? {left: position(current.id).x > width/2 ? Math.max(14,position(current.id).x-302) : Math.min(width-274,position(current.id).x+42), top:Math.max(14,Math.min(h-239,position(current.id).y-112.5)),right:'auto',bottom:'auto'} : undefined}
             role="dialog"
             aria-label={`${current.name} details`}
           >
             <div className="agg-card-heading">
-              <span>{current.name}</span>
-              <button
-                ref={closeButton}
-                type="button"
-                onClick={close}
-                aria-label={`Close ${current.name} details`}
-              >
-                ×
+              <span className="agg-card-icon">{current.icon ?? current.name.slice(0,2)}</span>
+              <div className="agg-card-who"><strong>{current.name}</strong><small>{current.detail ?? current.kind}</small></div>
+              <span className="agg-card-pill" data-status={current.status}>{statusLabel(current.status)}</span>
+              <button ref={closeButton} type="button" onClick={close} aria-label={`Close ${current.name} details`}>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="m6 6 12 12M18 6 6 18"/></svg>
               </button>
             </div>
-            <small>
-              {current.detail ?? current.kind} · {statusLabel(current.status)}
-            </small>
             {current.doing && <p>{current.doing}</p>}
-            <div className="agg-card-meta">
-              <span>
-                {
-                  recent.filter(
-                    (call) =>
-                      call.from === current.id || call.to === current.id,
-                  ).length
-                }{" "}
-                recent calls
-              </span>
-              <strong>{formatCost(current.cost ?? 0)}</strong>
-            </div>
-            <ul>
-              {[...validCalls]
-                .filter(
-                  (call) => call.from === current.id || call.to === current.id,
-                )
-                .sort((a, b) => b.at - a.at)
-                .slice(0, 5)
-                .map((call) => (
-                  <li key={call.id}>
-                    <span>
-                      {call.label ??
-                        `${unique.find((node) => node.id === call.from)?.name} → ${unique.find((node) => node.id === call.to)?.name}`}
-                    </span>
-                    <small>
-                      {call.status ?? "pending"}
-                      {call.ms === undefined ? "" : ` · ${call.ms} ms`}
-                    </small>
-                  </li>
-                ))}
+            <ul aria-label="Latest calls">
+              {[...validCalls].filter(call => call.from === current.id || call.to === current.id).sort((a,b)=>b.at-a.at).slice(0,4).map(call => {
+                const outgoing=call.from===current.id;
+                const other=unique.find(n=>n.id===(outgoing?call.to:call.from));
+                return <li key={call.id}>
+                  <span className="agg-call-direction" aria-label={outgoing?'To':'From'}>{outgoing?'↗':'↙'}</span>
+                  <span className="agg-call-icon">{other?.icon ?? other?.name.slice(0,2)}</span>
+                  <span className="agg-call-text"><b>{other?.name}</b>{call.label && ` · ${call.label}`}</span>
+                  <small>{call.status==='pending' ? <span className="agg-call-spin" aria-label="Pending"/> : call.ms===undefined ? call.status : call.ms<1000 ? `${call.ms}ms` : `${(call.ms/1000).toFixed(1)}s`}</small>
+                </li>;
+              })}
             </ul>
+            <div className="agg-card-meta"><strong>{formatCost(current.cost ?? 0)}</strong><span>{recent.filter(call => call.from === current.id || call.to === current.id).length} calls in the last minute</span></div>
           </div>
         )}
-      </div>
-      <ul className="agg-sr" aria-label="Network description">
-        {unique.map((node) => (
-          <li key={node.id}>
-            {node.name}, {node.kind}, {statusLabel(node.status)},{" "}
-            {formatCost(node.cost ?? 0)}.{" "}
-            {unique
-              .filter((other) =>
-                recent.some(
-                  (call) => call.from === node.id && call.to === other.id,
-                ),
-              )
-              .map(
-                (other) =>
-                  `Called ${other.name} ${recent.filter((call) => call.from === node.id && call.to === other.id).length} times in the last minute.`,
-              )
-              .join(" ")}
-          </li>
-        ))}
-      </ul>
       <footer className="agg-footer" aria-label="Call legend">
         <span>
           <i style={{ "--color": "var(--agg-pulse)" } as React.CSSProperties} />
@@ -684,13 +693,39 @@ export function AgentGraph({
           Failed
         </span>
       </footer>
+      </div>
+      <ul className="agg-sr" aria-label="Network description">
+        {unique.map((node) => (
+          <li key={node.id}>
+            {node.name}, {node.kind}, {statusLabel(node.status)},{" "}
+            {formatCost(node.cost ?? 0)}.{" "}
+            {unique
+              .filter((other) =>
+                recent.some(
+                  (call) => call.from === node.id && call.to === other.id,
+                ),
+              )
+              .map(
+                (other) =>
+                  `Called ${other.name} ${recent.filter((call) => call.from === node.id && call.to === other.id).length} times in the last minute.`,
+              )
+              .join(" ")}
+          </li>
+        ))}
+      </ul>
+
     </section>
   );
 }
 
 const css = `
-.agg-root{--agg-bg:#fff;--agg-canvas:#fafafa;--agg-node-bg:#fff;--agg-fg:#323236;--agg-muted:#96969b;--agg-edge:rgba(0,0,0,.075);--agg-soft:#f5f5f6;--agg-link:#e1e2e6;--agg-pulse:#6db5fa;--agg-answer:#34ca82;--agg-amber:#e49b5b;--agg-red:#e76c79;position:relative;width:100%;max-width:720px;min-width:0;color:var(--agg-fg);font:13px/1.5 Inter,system-ui,sans-serif;container:agg/inline-size;isolation:isolate}
-:where(.dark,[data-theme=dark]) .agg-root{--agg-bg:#202022;--agg-canvas:#1d1d1f;--agg-node-bg:#242426;--agg-fg:#ededee;--agg-muted:#89898d;--agg-edge:#303033;--agg-soft:#242426;--agg-link:#343437;color-scheme:dark}.agg-root *{box-sizing:border-box}.agg-root button{font:inherit;cursor:pointer;color:inherit}.agg-root :focus-visible{outline:2px solid var(--agg-pulse);outline-offset:5px}.agg-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 0 18px;min-height:42px}.agg-header>div{display:flex;gap:10px;align-items:center}.agg-header h3{font-size:14px;font-weight:500;margin:0}.agg-header svg{width:17px;height:17px;color:var(--agg-pulse)}.agg-stats{color:var(--agg-muted);font-size:12px;gap:12px!important;white-space:nowrap;font-variant-numeric:tabular-nums}.agg-stats strong{font-weight:400;color:var(--agg-fg);margin-left:14px}.agg-alerts{position:absolute;top:54px;left:12px;right:12px;display:flex;gap:6px;flex-wrap:wrap;z-index:2;pointer-events:none}.agg-alerts button{pointer-events:auto;border:1px solid color-mix(in srgb,var(--agg-amber) 18%,transparent);color:var(--agg-amber);background:color-mix(in srgb,var(--agg-amber) 6%,var(--agg-bg));padding:3px 7px;border-radius:5px;font-size:9px}.agg-alerts button[data-status=error]{color:var(--agg-red);border-color:color-mix(in srgb,var(--agg-red) 18%,transparent)}.agg-canvas{position:relative;background:var(--agg-canvas);border:1px solid var(--agg-edge);border-radius:12px;overflow:hidden}.agg-links{position:absolute;inset:0;overflow:visible}.agg-link{stroke:var(--agg-link);fill:none;stroke-linecap:round;opacity:.9;transition:stroke-width .7s,opacity .2s}.agg-link[data-lit=true]{opacity:1}.agg-link[data-error=true]{stroke:color-mix(in srgb,var(--agg-red) 40%,var(--agg-link))}.agg-pulse{fill:none;stroke-width:1.8;stroke-linecap:round}.agg-node{--agg-size:36px;position:absolute;transform:translate(-50%,-50%);border:0;background:none;padding:0;width:var(--agg-size);height:var(--agg-size);z-index:1;transition:opacity .2s}.agg-node[data-kind=agent]{--agg-size:48px}.agg-node[data-lead=true]{--agg-size:58px}.agg-node[data-dimmed=true]{opacity:.4}.agg-node-icon{display:grid;place-items:center;position:relative;width:100%;height:100%;border:1px solid var(--agg-edge);border-radius:11px;background:var(--agg-node-bg);box-shadow:0 2px 2px #00000008;font-size:14px;font-weight:500;isolation:isolate}.agg-node-icon>svg,.agg-node-icon>img{width:18px;height:18px;object-fit:contain}.agg-node[data-kind=agent] .agg-node-icon{border-radius:15px}.agg-node[data-kind=agent] .agg-node-icon>svg{width:23px;height:23px}.agg-node[data-lead=true] .agg-node-icon{border-radius:18px}.agg-node[data-lead=true] .agg-node-icon>svg{width:29px;height:29px}.agg-node[data-kind=user] .agg-node-icon{background:#ececec;color:#151516;border-color:#d4d4d4;box-shadow:inset 0 1px 2px #0002}.agg-node[data-status=working] .agg-node-icon:before,.agg-node[data-status=waiting] .agg-node-icon:before{content:'';position:absolute;inset:-7px;border:6px solid color-mix(in srgb,var(--agg-pulse) 15%,transparent);border-radius:22px;z-index:-1;animation:agg-breathe 2.8s ease-in-out infinite}.agg-node[data-lead=true] .agg-node-icon:before{inset:-9px;border-width:8px;border-radius:27px}.agg-node[data-status=waiting] .agg-node-icon:before{border-color:color-mix(in srgb,var(--agg-amber) 18%,transparent);animation-duration:1.9s}.agg-node:nth-of-type(2n) .agg-node-icon:before{animation-delay:-1.3s}.agg-node-icon i{position:absolute;right:-3px;bottom:-1px;display:grid;place-items:center;width:15px;height:15px;border-radius:50%;font:10px/1 Inter,system-ui;background:var(--agg-node-bg);color:var(--agg-amber);border:1px solid var(--agg-edge)}.agg-node[data-status=error] .agg-node-icon i{color:var(--agg-red)}.agg-node strong,.agg-node small{position:absolute;left:50%;transform:translateX(-50%);display:block;width:max-content;max-width:min(120px,var(--agg-label-room));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--agg-canvas);border-radius:3px;padding:0 2px;pointer-events:none}.agg-node strong{top:calc(100% + 5px);font-size:12px;font-weight:400;color:var(--agg-muted)}.agg-node[data-kind=agent] strong{font-size:13px;font-weight:500;color:var(--agg-fg);top:calc(100% + 5px)}.agg-node small{top:calc(100% + 23px);font-size:11px;color:var(--agg-muted)}.agg-node[data-label-above=true] strong{top:auto;bottom:calc(100% + 6px)}.agg-node-status{color:var(--agg-amber)!important}.agg-node[data-status=error] .agg-node-status{color:var(--agg-red)!important}.agg-node[aria-expanded=true] .agg-node-icon{outline:1px solid var(--agg-pulse);outline-offset:4px}.agg-card{position:absolute;right:14px;bottom:42px;width:260px;max-width:calc(100% - 28px);z-index:4;background:var(--agg-node-bg);border:1px solid var(--agg-edge);border-radius:11px;padding:12px;box-shadow:0 8px 35px #0002;animation:agg-enter .18s ease-out}.agg-card-heading{display:flex;gap:10px;justify-content:space-between;align-items:center;font-size:12px;font-weight:500}.agg-card-heading button{border:0;background:var(--agg-soft);border-radius:5px;width:24px;height:24px;font-size:17px;padding:0}.agg-card small{font-size:10px;color:var(--agg-muted)}.agg-card p{font-size:11px;margin:12px 0}.agg-card-meta{display:flex;justify-content:space-between;margin:12px 0 4px;font-size:10px}.agg-card-meta span{color:var(--agg-muted)}.agg-card-meta strong{font-weight:500}.agg-card ul{list-style:none;margin:0;padding:0;max-height:140px;overflow:auto}.agg-card li{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;padding:7px 0;border-top:1px solid var(--agg-edge)}.agg-card li>span{overflow-wrap:anywhere}.agg-card li small{white-space:nowrap;font-size:9px}.agg-footer{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:18px;color:var(--agg-muted);font-size:11px;pointer-events:none}.agg-footer span{display:flex;align-items:center;gap:7px}.agg-footer i{width:17px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--color,var(--agg-pulse)))}.agg-empty{position:absolute;inset:0;display:grid;place-items:center;color:var(--agg-muted)}.agg-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.agg-root[data-paused=true] *{animation-play-state:paused!important}@container agg(max-width:520px){.agg-header{gap:8px;padding-bottom:14px}.agg-stats{gap:7px!important;font-size:10px}.agg-stats>span:first-child{display:none}.agg-stats strong{margin-left:3px}.agg-node{--agg-size:30px}.agg-node[data-kind=agent]{--agg-size:38px}.agg-node[data-lead=true]{--agg-size:46px}.agg-node[data-kind=agent] .agg-node-icon{border-radius:12px}.agg-node[data-kind=agent] .agg-node-icon>svg{width:20px;height:20px}.agg-node[data-lead=true] .agg-node-icon>svg{width:25px;height:25px}.agg-node strong{font-size:10px;max-width:min(84px,var(--agg-label-room))}.agg-node[data-kind=agent] strong{font-size:10px}.agg-node small{font-size:9px;max-width:min(92px,var(--agg-label-room))}.agg-node-icon:before{inset:-5px!important;border-width:4px!important;border-radius:17px!important}.agg-card{left:12px;right:12px;bottom:40px;width:auto;max-width:none}.agg-footer{gap:11px;font-size:9px;bottom:11px}.agg-footer i{width:12px}.agg-alerts{top:48px}.agg-header h3{font-size:12px}}
+.agg-root{--agg-bg:#fff;--agg-canvas:#fff;--agg-node-bg:#fff;--agg-fg:#000;--agg-muted:rgba(0,0,0,.45);--agg-edge:rgba(0,0,0,.075);--agg-soft:#f5f5f6;--agg-link:rgba(0,0,0,.07);--agg-pulse:#6db5fa;--agg-answer:#34ca82;--agg-amber:#e49b5b;--agg-red:#e76c79;position:relative;width:100%;max-width:100%;min-width:0;color:var(--agg-fg);font:13px/20px Inter,system-ui,sans-serif;container:agg/inline-size;isolation:isolate}
+:where(.dark,[data-theme=dark]) .agg-root{--agg-bg:#202022;--agg-canvas:#1c1c1f;--agg-node-bg:#232326;--agg-fg:#fff;--agg-muted:rgba(255,255,255,.45);--agg-edge:#303033;--agg-soft:#242426;--agg-link:rgba(255,255,255,.08);color-scheme:dark}.agg-root *{box-sizing:border-box}.agg-root button{font:inherit;cursor:pointer;color:inherit}.agg-root :focus-visible{outline:2px solid var(--agg-pulse);outline-offset:5px}.agg-header{display:flex;align-items:center;justify-content:space-between;gap:4px 8px;padding:0 0 16px;min-height:36px}.agg-header>div{display:flex;gap:8px;align-items:center}.agg-header h3{font-size:13px;font-weight:500;margin:0}.agg-header svg{width:17px;height:17px;color:var(--agg-pulse)}.agg-stats{color:var(--agg-muted);font-size:12px;gap:12px!important;white-space:nowrap;font-variant-numeric:tabular-nums}.agg-stats strong{font-weight:500;color:var(--agg-fg);margin-left:0}.agg-alerts{position:absolute;top:54px;left:12px;right:12px;display:flex;gap:6px;flex-wrap:wrap;z-index:2;pointer-events:none}.agg-alerts button{pointer-events:auto;border:1px solid color-mix(in srgb,var(--agg-amber) 18%,transparent);color:var(--agg-amber);background:color-mix(in srgb,var(--agg-amber) 6%,var(--agg-bg));padding:3px 7px;border-radius:5px;font-size:9px}.agg-alerts button[data-status=error]{color:var(--agg-red);border-color:color-mix(in srgb,var(--agg-red) 18%,transparent)}.agg-canvas{position:relative;background:var(--agg-canvas);border:0;border-radius:10px;overflow:hidden;box-shadow:0 0 0 .5px #0000000f,0 1px 1px -1px #0000001a,0 1px 2px #0000000d}.agg-links{position:absolute;inset:0;overflow:visible}.agg-link{stroke:var(--agg-link);fill:none;stroke-linecap:round;opacity:.9;transition:stroke-width .7s,opacity .2s}.agg-link[data-lit=true]{opacity:1}.agg-link[data-error=true]{stroke:color-mix(in srgb,var(--agg-red) 40%,var(--agg-link))}.agg-pulse{fill:none;stroke-width:1.8;stroke-linecap:round}.agg-node{--agg-size:34px;position:absolute;transform:translate(-50%,-50%);border:0;background:none;padding:0;width:var(--agg-size);height:var(--agg-size);z-index:1;transition:opacity .2s}.agg-node[data-kind=agent]{--agg-size:46px}.agg-node[data-lead=true]{--agg-size:56px}.agg-node[data-dimmed=true]{opacity:.4}.agg-node-icon{display:grid;place-items:center;position:relative;width:100%;height:100%;border:0;border-radius:calc(var(--agg-size)*.27);background:var(--agg-node-bg);box-shadow:0 0 0 .5px #00000014,0 1px 2px #0000000f,0 4px 12px -4px #0000001f;font-size:14px;font-weight:500;isolation:isolate}.agg-node-icon>svg,.agg-node-icon>img{width:18px;height:18px;object-fit:contain}.agg-node[data-kind=agent] .agg-node-icon{border-radius:calc(var(--agg-size)*.27)}.agg-node[data-kind=agent] .agg-node-icon>svg{width:23px;height:23px}.agg-node[data-lead=true] .agg-node-icon{border-radius:calc(var(--agg-size)*.27)}.agg-node[data-lead=true] .agg-node-icon>svg{width:29px;height:29px}.agg-node[data-kind=user] .agg-node-icon{background:rgba(0,0,0,.88);color:#fcfcfc;border-color:transparent;box-shadow:inset 0 1px 2px #0002}.agg-node[data-status=working] .agg-node-icon:before,.agg-node[data-status=waiting] .agg-node-icon:before{content:'';position:absolute;inset:-7px;border:6px solid color-mix(in srgb,var(--agg-pulse) 15%,transparent);border-radius:22px;z-index:-1;animation:agg-breathe 2.8s ease-in-out infinite}.agg-node[data-lead=true] .agg-node-icon:before{inset:-9px;border-width:8px;border-radius:27px}.agg-node[data-status=waiting] .agg-node-icon:before{border-color:color-mix(in srgb,var(--agg-amber) 18%,transparent);animation-duration:1.9s}.agg-node:nth-of-type(2n) .agg-node-icon:before{animation-delay:-1.3s}.agg-node-icon i{position:absolute;right:-3px;bottom:-1px;display:grid;place-items:center;width:15px;height:15px;border-radius:50%;font:10px/1 Inter,system-ui;background:var(--agg-node-bg);color:var(--agg-amber);border:1px solid var(--agg-edge)}.agg-node[data-status=error] .agg-node-icon i{color:var(--agg-red)}.agg-node strong,.agg-node small{position:absolute;left:50%;transform:translateX(-50%);display:block;width:max-content;max-width:min(120px,var(--agg-label-room));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--agg-canvas);border-radius:3px;padding:0 5px;pointer-events:none;box-shadow:0 0 6px 2px var(--agg-canvas)}.agg-node strong{top:calc(100% + 6px);font-size:11px;line-height:14px;font-weight:400;color:var(--agg-muted)}.agg-node[data-kind=agent] strong{font-size:12px;line-height:16px;font-weight:500;color:var(--agg-fg);top:calc(100% + 6px)}.agg-node small{top:calc(100% + 22px);font-size:11px;line-height:14px;color:var(--agg-muted)}.agg-node[data-label-above=true] strong{top:auto;bottom:calc(100% + 6px)}.agg-node-status{color:var(--agg-amber)!important}.agg-node[data-status=error] .agg-node-status{color:var(--agg-red)!important}.agg-node[aria-expanded=true] .agg-node-icon{outline:1px solid var(--agg-pulse);outline-offset:4px}.agg-card{position:absolute;right:14px;bottom:42px;width:260px;max-width:calc(100% - 28px);z-index:4;background:var(--agg-node-bg);border:1px solid var(--agg-edge);border-radius:11px;padding:12px;box-shadow:0 8px 35px #0002;animation:agg-enter .18s ease-out}.agg-card-heading{display:flex;gap:10px;justify-content:space-between;align-items:center;font-size:12px;font-weight:500}.agg-card-heading button{border:0;background:var(--agg-soft);border-radius:5px;width:24px;height:24px;font-size:17px;padding:0}.agg-card small{font-size:10px;color:var(--agg-muted)}.agg-card p{font-size:11px;margin:12px 0}.agg-card-meta{display:flex;justify-content:space-between;margin:12px 0 4px;font-size:10px}.agg-card-meta span{color:var(--agg-muted)}.agg-card-meta strong{font-weight:500}.agg-card ul{list-style:none;margin:0;padding:0;max-height:140px;overflow:auto}.agg-card li{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;padding:7px 0;border-top:1px solid var(--agg-edge)}.agg-card li>span{overflow-wrap:anywhere}.agg-card li small{white-space:nowrap;font-size:9px}.agg-footer{position:absolute;bottom:0;left:0;right:0;padding:0 10px 10px;line-height:16px;display:flex;justify-content:center;gap:4px 14px;color:var(--agg-muted);font-size:11px;pointer-events:none}.agg-footer span{display:flex;align-items:center;gap:7px}.agg-footer i{width:17px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--color,var(--agg-pulse)))}.agg-empty{position:absolute;inset:0;display:grid;place-items:center;color:var(--agg-muted)}.agg-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.agg-root[data-paused=true] *{animation-play-state:paused!important}@container agg(max-width:519px){.agg-header{gap:4px 8px;padding-bottom:16px;flex-wrap:wrap}.agg-header h3{font-size:13px;line-height:22px}.agg-stats{width:100%;gap:8px!important;font-size:12px;line-height:16px}.agg-node{--agg-size:28px}.agg-node[data-kind=agent]{--agg-size:34px}.agg-node[data-lead=true]{--agg-size:42px}.agg-node-icon>svg{width:16px;height:16px}.agg-node[data-kind=agent] .agg-node-icon>svg{width:20px;height:20px}.agg-node[data-lead=true] .agg-node-icon>svg{width:25px;height:25px}.agg-node strong{font-size:11px;max-width:min(84px,var(--agg-label-room))}.agg-node[data-kind=agent] strong{font-size:12px}.agg-node small{font-size:11px;max-width:min(92px,var(--agg-label-room))}.agg-node-icon:before{inset:-5px!important;border-width:4px!important;border-radius:calc(var(--agg-size)*.27 + 5px)!important}.agg-card{left:12px;right:12px;bottom:32px;width:auto;max-width:none}.agg-footer{gap:4px 14px;font-size:11px}.agg-footer i{width:17px}.agg-alerts{top:68px}}
+:where(.dark,[data-theme=dark]) .agg-canvas{box-shadow:0 0 0 .5px #ffffff1a,0 1px 2px #0006}
+:where(.dark,[data-theme=dark]) .agg-node-icon{box-shadow:0 0 0 .5px #ffffff24,0 1px 2px #0006,0 4px 12px -4px #0008}
+:where(.dark,[data-theme=dark]) .agg-node[data-kind=user] .agg-node-icon{background:#fcfcfc;color:rgba(0,0,0,.88)}
+
+.agg-card{border:0;border-radius:10px;padding:10px;box-shadow:0 0 0 .5px #00000014,0 12px 28px -10px #0000002e,0 1px 2px #0000000d}.agg-card-heading{gap:8px;font-size:13px;line-height:16px}.agg-card-icon{display:grid;place-items:center;flex:0 0 28px;height:28px;border-radius:8px;background:var(--agg-soft)}.agg-card-icon svg{width:20px;height:20px}.agg-card-who{flex:1;min-width:0}.agg-card-who strong{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.agg-card small{font-size:11px;line-height:14px}.agg-card-pill{font-size:11px;font-weight:500;line-height:18px;padding:0 6px;border-radius:4px;background:var(--agg-soft);white-space:nowrap}.agg-card-pill[data-status=working]{color:#006dcb;background:#0088ff12}.agg-card-pill[data-status=waiting]{color:var(--agg-amber)}.agg-card-pill[data-status=error]{color:var(--agg-red)}.agg-card-heading button{flex:0 0 24px;display:grid;place-items:center;background:none}.agg-card p{font-size:12px;line-height:16px;margin:10px 0;color:var(--agg-muted)}.agg-card li{height:28px;padding:0;gap:6px;font-size:12px;line-height:16px}.agg-call-direction{flex:0 0 12px;color:var(--agg-muted)}.agg-call-icon{flex:0 0 16px;height:16px;display:grid;place-items:center}.agg-call-icon svg{width:16px;height:16px}.agg-call-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;color:var(--agg-muted)}.agg-call-text b{font-weight:500;color:var(--agg-fg)}.agg-card li small{font-size:11px}.agg-card-meta{gap:8px;justify-content:flex-start;margin:10px 0 0;font-size:12px;line-height:16px}.agg-call-spin{display:block;width:12px;height:12px;border:1.5px solid var(--agg-pulse);border-right-color:transparent;border-radius:50%;animation:agg-spin .9s linear infinite}@keyframes agg-spin{to{transform:rotate(360deg)}}
 @keyframes agg-breathe{0%,100%{opacity:.35}50%{opacity:1}}@keyframes agg-enter{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.agg-root *{animation:none!important;transition:none!important}}
 `;
 
@@ -801,7 +836,8 @@ export default function Demo() {
         doing: "Preparing the launch plan",
         cost: 5.8,
         icon: <GraphBrandIcon brand="claude" />,
-        position: { x: 0.5, y: 0.47 },
+        short: "Lead",
+        position: { x: 0.5, y: 0.5 },
       },
       {
         id: "writer",
@@ -812,7 +848,7 @@ export default function Demo() {
         doing: "Drafting launch copy",
         cost: 3,
         icon: <GraphBrandIcon brand="claude" />,
-        position: { x: 0.38, y: 0.344 },
+        position: { x: 0.378125, y: 0.36226 },
       },
       {
         id: "research",
@@ -823,7 +859,8 @@ export default function Demo() {
         doing: "Comparing competitor pricing",
         cost: 3.2,
         icon: <GraphBrandIcon brand="claude" />,
-        position: { x: 0.62, y: 0.344 },
+        short: "Research",
+        position: { x: 0.621875, y: 0.36226 },
       },
       {
         id: "analyst",
@@ -834,7 +871,7 @@ export default function Demo() {
         doing: "Analyzing customer segments",
         cost: 2.2,
         icon: <GraphBrandIcon brand="googlegemini" />,
-        position: { x: 0.62, y: 0.595 },
+        position: { x: 0.621875, y: 0.63774 },
       },
       {
         id: "coder",
@@ -845,21 +882,21 @@ export default function Demo() {
         doing: "Building the pricing page",
         cost: 3.8,
         icon: <GraphBrandIcon brand="openai" />,
-        position: { x: 0.38, y: 0.595 },
+        position: { x: 0.378125, y: 0.63774 },
       },
       {
         id: "you",
         name: "You",
         kind: "user",
         icon: <GraphBrandIcon brand="you" />,
-        position: { x: 0.346, y: 0.178 },
+        position: { x: 0.3434375, y: 0.179567 },
       },
       {
         id: "notion",
         name: "Notion",
         kind: "tool",
         icon: <GraphBrandIcon brand="notion" />,
-        position: { x: 0.591, y: 0.16 },
+        position: { x: 0.591875, y: 0.160817 },
       },
       {
         id: "web",
@@ -867,42 +904,43 @@ export default function Demo() {
         short: "Search",
         kind: "tool",
         icon: <GraphBrandIcon brand="search" />,
-        position: { x: 0.817, y: 0.344 },
+        position: { x: 0.823125, y: 0.36226 },
       },
       {
         id: "hubspot",
         name: "HubSpot",
         kind: "tool",
         icon: <GraphBrandIcon brand="hubspot" />,
-        position: { x: 0.862, y: 0.595 },
+        position: { x: 0.86875, y: 0.63774 },
       },
       {
         id: "database",
         name: "Database",
         kind: "tool",
         icon: <GraphBrandIcon brand="database" />,
-        position: { x: 0.653, y: 0.763 },
+        short: "DB",
+        position: { x: 0.6565625, y: 0.820433 },
       },
       {
         id: "github",
         name: "GitHub",
         kind: "tool",
         icon: <GraphBrandIcon brand="github" />,
-        position: { x: 0.409, y: 0.779 },
+        position: { x: 0.408125, y: 0.839183 },
       },
       {
         id: "stripe",
         name: "Stripe",
         kind: "tool",
         icon: <GraphBrandIcon brand="stripe" />,
-        position: { x: 0.184, y: 0.595 },
+        position: { x: 0.176875, y: 0.63774 },
       },
       {
         id: "slack",
         name: "Slack",
         kind: "tool",
         icon: <GraphBrandIcon brand="slack" />,
-        position: { x: 0.138, y: 0.344 },
+        position: { x: 0.13125, y: 0.36226 },
       },
     ],
     [],

@@ -1,3 +1,5 @@
+> **Current update (2026-11-09):** Browser access now works. All 90 components have paired initial desktop DOM/style/SVG captures and per-component findings; Graph, Inbox, Tree and Handoff received detailed partial corrections. 193 tests, 114 copy compilations and build pass. Full 90-component interaction/visual parity is still incomplete; none is newly marked matched. See [live checkpoint](review/LIVE_REVIEW_2026-11-09.md). Statements below about blocked browser access describe the earlier session.
+
 # affectUI architecture audit
 
 This audit distinguishes verified component source from website bootstrap hints and public Pro documentation. It does not treat a screenshot, a registry command, or a passing render test as evidence of the underlying implementation.

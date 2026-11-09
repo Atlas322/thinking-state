@@ -1,0 +1,666 @@
+{
+  "controls": [
+    {
+      "expanded": "true",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Thinking 0s",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "+3 more",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "thinking-state",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 565.6875,
+        "height": 145,
+        "left": 629,
+        "right": 1069,
+        "top": 420.6875,
+        "width": 440,
+        "x": 629,
+        "y": 420.6875
+      },
+      "tag": "DIV",
+      "text": ".thinking-state {\n  --thinking-fg: rgb(0 0 0 / 88%);\n  --thinking-muted: rgb(0 0 0 / 61%);\n  --thinking-line: rgb(0 0 0 / 8%);\n  --thinking-dot: rgb(0 0 0 / 25%"
+    },
+    {
+      "cls": "thinking-header",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "lineHeight": "20px",
+        "padding": "0px 8px"
+      },
+      "rect": {
+        "bottom": 456.6875,
+        "height": 36,
+        "left": 629,
+        "right": 770.125,
+        "top": 420.6875,
+        "width": 141.125,
+        "x": 629,
+        "y": 420.6875
+      },
+      "tag": "BUTTON",
+      "text": "Thinking 0s"
+    },
+    {
+      "cls": "thinking-mark",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "1.5px",
+        "lineHeight": "20px",
+        "padding": "1.5px"
+      },
+      "rect": {
+        "bottom": 446.6875,
+        "height": 16,
+        "left": 637,
+        "right": 653,
+        "top": 430.6875,
+        "width": 16,
+        "x": 637,
+        "y": 430.6875
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "thinking-heading",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 448.6875,
+        "height": 20,
+        "left": 663,
+        "right": 740.125,
+        "top": 428.6875,
+        "width": 77.125,
+        "x": 663,
+        "y": 428.6875
+      },
+      "tag": "SPAN",
+      "text": "Thinking 0s"
+    },
+    {
+      "cls": "thinking-shimmer",
+      "css": {
+        "animationDuration": "2.3s",
+        "animationName": "thinking-shimmer",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 448.6875,
+        "height": 20,
+        "left": 663,
+        "right": 716.828125,
+        "top": 428.6875,
+        "width": 53.828125,
+        "x": 663,
+        "y": 428.6875
+      },
+      "tag": "SPAN",
+      "text": "Thinking"
+    },
+    {
+      "cls": "thinking-time",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 448.6875,
+        "height": 20,
+        "left": 724.828125,
+        "right": 740.125,
+        "top": 428.6875,
+        "width": 15.296875,
+        "x": 724.828125,
+        "y": 428.6875
+      },
+      "tag": "SPAN",
+      "text": "0s"
+    },
+    {
+      "cls": "thinking-chevron",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 446.6875,
+        "height": 16,
+        "left": 746.125,
+        "right": 762.125,
+        "top": 430.6875,
+        "width": 16,
+        "x": 746.125,
+        "y": 430.6875
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "thinking-body",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 565.6875,
+        "height": 109,
+        "left": 629,
+        "right": 1069,
+        "top": 456.6875,
+        "width": 440,
+        "x": 629,
+        "y": 456.6875
+      },
+      "tag": "DIV",
+      "text": "SearchingSlack – #team-offsiteslack.comX – @lisbonguidex.comNotion – Offsite plannotion.soWikipedia – Lisbonen.wikipedia.org/wiki/Lisbon+3 more"
+    },
+    {
+      "cls": "thinking-clip",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 565.6875,
+        "height": 109,
+        "left": 629,
+        "right": 1069,
+        "top": 456.6875,
+        "width": 440,
+        "x": 629,
+        "y": 456.6875
+      },
+      "tag": "DIV",
+      "text": "SearchingSlack – #team-offsiteslack.comX – @lisbonguidex.comNotion – Offsite plannotion.soWikipedia – Lisbonen.wikipedia.org/wiki/Lisbon+3 more"
+    },
+    {
+      "cls": "thinking-list",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "8px 8px 0px"
+      },
+      "rect": {
+        "bottom": 565.6875,
+        "height": 109,
+        "left": 629,
+        "right": 1069,
+        "top": 456.6875,
+        "width": 440,
+        "x": 629,
+        "y": 456.6875
+      },
+      "tag": "OL",
+      "text": "SearchingSlack – #team-offsiteslack.comX – @lisbonguidex.comNotion – Offsite plannotion.soWikipedia – Lisbonen.wikipedia.org/wiki/Lisbon+3 more"
+    },
+    {
+      "cls": "thinking-item",
+      "css": {
+        "animationDuration": "0.52s",
+        "animationName": "thinking-enter",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal 10px",
+        "lineHeight": "20px",
+        "padding": "0px 0px 12px"
+      },
+      "rect": {
+        "bottom": 568.6162109375,
+        "height": 101,
+        "left": 637,
+        "right": 1061,
+        "top": 467.6162109375,
+        "width": 424,
+        "x": 637,
+        "y": 467.6162109375
+      },
+      "tag": "LI",
+      "text": "SearchingSlack – #team-offsiteslack.comX – @lisbonguidex.comNotion – Offsite plannotion.soWikipedia – Lisbonen.wikipedia.org/wiki/Lisbon+3 more"
+    },
+    {
+      "cls": "thinking-node",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 487.6162109375,
+        "height": 20,
+        "left": 637,
+        "right": 653,
+        "top": 467.6162109375,
+        "width": 16,
+        "x": 637,
+        "y": 467.6162109375
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "thinking-content",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 556.6162109375,
+        "height": 89,
+        "left": 663,
+        "right": 1061,
+        "top": 467.6162109375,
+        "width": 398,
+        "x": 663,
+        "y": 467.6162109375
+      },
+      "tag": "DIV",
+      "text": "SearchingSlack – #team-offsiteslack.comX – @lisbonguidex.comNotion – Offsite plannotion.soWikipedia – Lisbonen.wikipedia.org/wiki/Lisbon+3 more"
+    },
+    {
+      "cls": "thinking-label thinking-shimmer",
+      "css": {
+        "animationDuration": "2.3s",
+        "animationName": "thinking-shimmer",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 485.1162109375,
+        "height": 15.5,
+        "left": 663,
+        "right": 724.9453125,
+        "top": 469.6162109375,
+        "width": 61.9453125,
+        "x": 663,
+        "y": 469.6162109375
+      },
+      "tag": "SPAN",
+      "text": "Searching"
+    },
+    {
+      "cls": "thinking-sources",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "1px 0px 2px"
+      },
+      "rect": {
+        "bottom": 556.6162109375,
+        "height": 61,
+        "left": 663,
+        "right": 1061,
+        "top": 495.6162109375,
+        "width": 398,
+        "x": 663,
+        "y": 495.6162109375
+      },
+      "tag": "DIV",
+      "text": "Slack – #team-offsiteslack.comX – @lisbonguidex.comNotion – Offsite plannotion.soWikipedia – Lisbonen.wikipedia.org/wiki/Lisbon+3 more"
+    },
+    {
+      "cls": "thinking-source",
+      "css": {
+        "animationDuration": "0.42s",
+        "animationName": "thinking-chip",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "16px",
+        "padding": "0px 8px 0px 6px"
+      },
+      "rect": {
+        "bottom": 526.09619140625,
+        "height": 24.9599609375,
+        "left": 666.084228515625,
+        "right": 814.126708984375,
+        "top": 501.13623046875,
+        "width": 148.04248046875,
+        "x": 666.084228515625,
+        "y": 501.13623046875
+      },
+      "tag": "A",
+      "text": "Slack – #team-offsiteslack.com"
+    },
+    {
+      "cls": "thinking-source-icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "4px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 520.3362426757812,
+        "height": 13.440032958984377,
+        "left": 671.84423828125,
+        "right": 685.2842407226562,
+        "top": 506.8962097167969,
+        "width": 13.44000244140625,
+        "x": 671.84423828125,
+        "y": 506.8962097167969
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "thinking-source-label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 521.2962036132812,
+        "height": 15.3599853515625,
+        "left": 691.044189453125,
+        "right": 806.4467163085938,
+        "top": 505.9362182617187,
+        "width": 115.40252685546876,
+        "x": 691.044189453125,
+        "y": 505.9362182617187
+      },
+      "tag": "SPAN",
+      "text": "Slack – #team-offsite"
+    },
+    {
+      "cls": "thinking-tooltip",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "4px 8px"
+      },
+      "rect": {
+        "bottom": 496.3362121582031,
+        "height": 23.040008544921875,
+        "left": 666.084228515625,
+        "right": 736.5917358398438,
+        "top": 473.2962036132813,
+        "width": 70.50750732421875,
+        "x": 666.084228515625,
+        "y": 473.2962036132813
+      },
+      "tag": "SPAN",
+      "text": "slack.com"
+    },
+    {
+      "cls": "thinking-extra-sources",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "none",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "thinking-source thinking-more",
+      "css": {
+        "animationDuration": "0.42s",
+        "animationName": "thinking-chip",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "16px",
+        "padding": "0px 8px"
+      },
+      "rect": {
+        "bottom": 558.09619140625,
+        "height": 24.9599609375,
+        "left": 965.1707763671876,
+        "right": 1026.2432861328125,
+        "top": 533.13623046875,
+        "width": 61.072509765625,
+        "x": 965.1707763671876,
+        "y": 533.13623046875
+      },
+      "tag": "BUTTON",
+      "text": "+3 more"
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m4.5 6.25 3.5 3.5 3.5-3.5\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21a9 9 0 1 1 9-9M3.5 8h17M3 13h9M12 3c-4 4-4 12 0 18M12 3c2 2 3 4 3 7\"></path><circle cx=\"17\" cy=\"17\" r=\"4\"></circle><path d=\"m20 20 3 3\"></path></svg>",
+    "<svg aria-hidden=\"true\" viewBox=\"0 0 16 16\"><rect x=\"1\" y=\"5\" width=\"7\" height=\"3\" rx=\"1.5\" fill=\"#36c5f0\"></rect><circle cx=\"6.5\" cy=\"2.5\" r=\"1.5\" fill=\"#36c5f0\"></circle><rect x=\"8\" y=\"1\" width=\"3\" height=\"7\" rx=\"1.5\" fill=\"#2eb67d\"></rect><circle cx=\"13.5\" cy=\"6.5\" r=\"1.5\" fill=\"#2eb67d\"></circle><rect x=\"8\" y=\"8\" width=\"7\" height=\"3\" rx=\"1.5\" fill=\"#ecb22e\"></rect><circle cx=\"9.5\" cy=\"13.5\" r=\"1.5\" fill=\"#ecb22e\"></circle><rect x=\"5\" y=\"8\" width=\"3\" height=\"7\" rx=\"1.5\" fill=\"#e01e5a\"></rect><circle cx=\"2.5\" cy=\"9.5\" r=\"1.5\" fill=\"#e01e5a\"></circle></svg>",
+    "<svg aria-hidden=\"true\" viewBox=\"0 0 16 16\"><rect width=\"16\" height=\"16\" rx=\"3\" fill=\"#111\"></rect><path d=\"m4 3 8 10h-2L2 3h2Zm0 10L12 3\" transform=\"translate(1 0)\" fill=\"none\" stroke=\"white\" stroke-width=\"1\"></path></svg>",
+    "<svg aria-hidden=\"true\" viewBox=\"0 0 16 16\"><rect x=\"1\" y=\"1\" width=\"14\" height=\"14\" rx=\"1.5\" fill=\"white\" stroke=\"#111\" stroke-width=\"1.2\"></rect><path d=\"M4 12V4h1.5l5 8H12V4M3 4h4m2 0h4M3 12h4\" fill=\"none\" stroke=\"#111\" stroke-width=\"1.2\"></path></svg>",
+    "<svg aria-hidden=\"true\" viewBox=\"0 0 16 16\"><rect width=\"16\" height=\"16\" rx=\"2\" fill=\"white\"></rect><path d=\"m2 4 3.5 8L8 6l2.5 6L14 4M1 4h4m1 0h4m2 0h3\" fill=\"none\" stroke=\"#111\" stroke-width=\"1\"></path></svg>"
+  ],
+  "url": "http://127.0.0.1:5173/#/thinking-state",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- complementary:\n  - button \"Component Studio home\":\n    - text: s\n    - generic: ·\n    - generic: componentstudio\n    - generic: \"01\"\n  - textbox \"Search components\":\n    - /placeholder: Find a component…\n  - generic: /\n  - button \"▦ All components 90\":\n    - generic: ▦\n    - text: All components\n    - generic: \"90\"\n  - button \"Favorites 0\":\n    - text: Favorites\n    - generic: \"0\"\n  - navigation \"Components\":\n    - generic: ⌘\n    - text: Agents\n    - generic: \"43\"\n    - button \"Agent Checkpoints\":\n      - generic: Agent Checkpoints\n    - button \"Agent Cursors\":\n      - generic: Agent Cursors\n    - button \"Agent Findings\":\n      - generic: Agent Findings\n    - button \"Agent Fleet\":\n      - generic: Agent Fleet\n    - button \"Agent Graph\":\n      - generic: Agent Graph\n    - button \"Agent Handoff\":\n      - generic: Agent Handoff\n    - button \"Agent Inbox\":\n      - generic: Agent Inbox\n    - button \"Agent Lanes\":\n      - generic: Agent Lanes\n    - button \"Agent Ledger\":\n      - generic: Agent Ledger\n    - button \"Agent Monitor\":\n      - generic: Agent Monitor\n    - button \"Agent Plan\":\n      - generic: Agent Plan\n    - button \"Agent Queue\":\n      - generic: Agent Queue\n    - button \"Agent Recap\":\n      - generic: Agent Recap\n    - button \"Agent Steering\":\n      - generic: Agent Steering\n    - button \"Agent Trail\":\n      - generic: Agent Trail\n    - button \"Agent Tree\":\n      - generic: Agent Tree\n    - button \"Approval Card\":\n      - generic: Approval Card\n    - button \"Approval Gates\":\n      - generic: Approval Gates\n    - button \"Autonomy Dial\":\n      - generic: Autonomy Dial\n    - button \"Away Summary\":\n      - generic: Away Summary\n    - button \"Collaboration Stream\":\n      - generic: Collaboration Stream\n    - button \"Conflict Radar\":\n      - generic: Conflict Radar\n    - button \"Context Map\":\n      - generic: Context Map\n    - button \"Context Window\":\n      - generic: Context Window\n    - button \"Cost Waterfall\":\n      - generic: Cost Waterfall\n    - button \"Decision Card\":\n      - generic: Decision Card\n    - button \"Decision Tree\":\n      - generic: Decision Tree\n    - button \"Delegate Board\":\n      - generic: Delegate Board\n    - button \"Fallback Chain\":\n      - generic: Fallback Chain\n    - button \"Fan-out Grid\":\n      - generic: Fan-out Grid\n    - button \"Inline Diff\":\n      - generic: Inline Diff\n    - button \"Judge Bracket\":\n      - generic: Judge Bracket\n    - button \"Memory Panel\":\n      - generic: Memory Panel\n    - button \"Parallel Attempts\":\n      - generic: Parallel Attempts\n    - button \"Permission Request\":\n      - generic: Permission Request\n    - button \"Plan vs Actual\":\n      - generic: Plan vs Actual\n    - button \"Review Center\":\n      - generic: Review Center\n    - button \"Root Cause Tree\":\n      - generic: Root Cause Tree\n    - button \"Running Now\":\n      - generic: Running Now\n    - button \"Scheduled Runs\":\n      - generic: Scheduled Runs\n    - button \"Tool Access Map\":\n      - generic: Tool Access Map\n    - button \"Tool Call Card\":\n      - generic: Tool Call Card\n    - button \"Trace Waterfall\":\n      - generic: Trace Waterfall\n    - generic: ◌\n    - text: Chat\n    - generic: \"10\"\n    - button \"AI Answer\":\n      - generic: AI Answer\n    - button \"Chat Composer\":\n      - generic: Chat Composer\n    - button \"Cited Answer\":\n      - generic: Cited Answer\n    - button \"Comment Thread\":\n      - generic: Comment Thread\n    - button \"Comments Panel\":\n      - generic: Comments Panel\n    - button \"Message Actions\":\n      - generic: Message Actions\n    - button \"Model Picker\":\n      - generic: Model Picker\n    - button \"Thinking Loader\":\n      - generic: Thinking Loader\n    - button \"Thinking State\":\n      - generic: Thinking State\n    - button \"Writing Assistant\":\n      - generic: Writing Assistant\n    - generic: ⊞\n    - text: Inputs\n    - generic: \"15\"\n    - button \"Billing Schedule\":\n      - generic: Billing Schedule\n    - button \"Checkbox\":\n      - generic: Checkbox\n    - button \"Combobox\":\n      - generic: Combobox\n    - button \"Date Range Picker\":\n      - generic: Date Range Picker\n    - button \"Dropzone\":\n      - generic: Dropzone\n    - button \"Filter Menu\":\n      - generic: Filter Menu\n    - button \"Integration Settings\":\n      - generic: Integration Settings\n    - button \"OTP Input\":\n      - generic: OTP Input\n    - button \"Prompt Library\":\n      - generic: Prompt Library\n    - button \"Select\":\n      - generic: Select\n    - button \"Stepper Form\":\n      - generic: Stepper Form\n    - button \"Switch\":\n      - generic: Switch\n    - button \"Tag Input\":\n      - generic: Tag Input\n    - button \"Text Area\":\n      - generic: Text Area\n    - button \"Text Field\":\n      - generic: Text Field\n    - generic: ▤\n    - text: Data display\n    - generic: \"7\"\n    - button \"Breakdown Chart\":\n      - generic: Breakdown Chart\n    - button \"Change Summary\":\n      - generic: Change Summary\n    - button \"Compact Breakdown\":\n      - generic: Compact Breakdown\n    - button \"Data Table\":\n      - generic: Data Table\n    - button \"Experiment Card\":\n      - generic: Experiment Card\n    - button \"KPI Chart\":\n      - generic: KPI Chart\n    - button \"Usage Meter\":\n      - generic: Usage Meter\n    - generic: ↗\n    - text: Navigation\n    - generic: \"4\"\n    - button \"Command Menu\":\n      - generic: Command Menu\n    - button \"Integration Picker\":\n      - generic: Integration Picker\n    - button \"Profile Menu\":\n      - generic: Profile Menu\n    - button \"Segmented Control\":\n      - generic: Segmented Control\n    - generic: ◉\n    - text: Feedback\n    - generic: \"5\"\n    - button \"Decision Inbox\":\n      - generic: Decision Inbox\n    - button \"Notification Stack\":\n      - generic: Notification Stack\n    - button \"Progress Tracker\":\n      - generic: Progress Tracker\n    - button \"Setup Guide\":\n      - generic: Setup Guide\n    - button \"Toaster\":\n      - generic: Toaster\n    - generic: ▢\n    - text: Cards\n    - generic: \"4\"\n    - button \"Email Draft\":\n      - generic: Email Draft\n    - button \"Project Card\":\n      - generic: Project Card\n    - button \"Smart Recommendation\":\n      - generic: Smart Recommendation\n    - button \"Tips Panel\":\n      - generic: Tips Panel\n    - generic: ↵\n    - text: Buttons\n    - generic: \"2\"\n    - button \"Button\":\n      - generic: Button\n    - button \"Reaction Bar\":\n      - generic: Reaction Bar\n  - link \"Take the library with you All source files · ZIP download ↗\":\n    - /url: /component-library.zip\n    - strong: Take the library with you\n    - generic: All source files · ZIP download\n    - generic: ↗\n  - generic: 90 components. Yours to build with.\n- banner:\n  - button \"Library\"\n  - generic: /\n  - generic: Chat\n  - generic: /\n  - strong: Thinking State\n  - link \"GitHub ↗\":\n    - /url: https://github.com/Atlas322/thinking-state\n  - button \"Switch to dark theme\":\n- main:\n  - text: CHAT\n  - generic: /\n  - text: COMPONENT 83\n  - heading \"Thinking State\" [level=1]\n  - button \"Add to favorites\":\n  - paragraph: AI working panel with a live timer, searched sources and thinking steps that appear one by one\n  - generic: Independent recreation\n  - generic: React 19\n  - generic: TypeScript\n  - generic: Self-contained\n  - region \"Thinking State showcase\":\n    - tablist \"Component view\":\n      - tab \"◉ Preview\" [selected]:\n        - generic: ◉\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n      - tab \"↗ Usage\":\n        - generic: ↗\n        - text: Usage\n    - group \"Component style\":\n      - button \"Clean\" [pressed]\n      - button \"Classic\"\n    - button \"Use narrow preview\":\n      - generic: ▯\n    - button \"Replay component\":\n    - tabpanel \"◉ Preview\":\n      - button \"Thinking 0s\" [expanded]:\n        - generic: Thinking\n        - generic: 0s\n      - list:\n        - text: Searching\n        - 'link \"Slack – #team-offsite\"':\n          - /url: https://slack.com/\n          - generic: \"Slack – #team-offsite\"\n        - link \"X – @lisbonguide\":\n          - /url: https://x.com/\n          - generic: X – @lisbonguide\n        - link \"Notion – Offsite plan\":\n          - /url: https://notion.so/\n          - generic: Notion – Offsite plan\n        - link \"Wikipedia – Lisbon\":\n          - /url: https://en.wikipedia.org/wiki/Lisbon\n          - generic: Wikipedia – Lisbon\n        - button \"+3 more\"\n    - generic: Interactive preview — try it out\n    - generic: No backend connected\n  - strong: Make it part of your project.\n  - paragraph: Copy the source, or give an AI assistant the complete prompt.\n  - button \"Download component file\":\n  - button \"Copy code\":\n    - text: Copy code\n  - button \"✦ Copy prompt\":\n    - generic: ✦\n    - text: Copy prompt\n  - status\n  - heading \"Copy. Paste. Build.\" [level=3]\n  - list:\n    - text: Copy the code or download the\n    - code: .tsx\n    - text: file.\n    - listitem: Add it to your React 19 project. Styles are already included.\n    - listitem: Pass your data and connect the callbacks to your application.\n  - button \"See usage example\":\n    - text: See usage example\n  - heading \"About this recreation\" [level=3]\n  - paragraph: Independently built from the public preview and documented behavior. Visual details and APIs may differ from affectUI Pro. The code here is fully available to copy and customize.\n  - link \"View original reference ↗\":\n    - /url: https://www.affectui.com/components/thinking-state\n  - heading \"Keep exploring\" [level=2]\n  - button \"View all 90\":\n    - text: View all 90\n  - button \"◌ Chat AI Answer ↗\":\n    - generic: ◌\n    - generic: Chat\n    - strong: AI Answer\n    - generic: ↗\n  - button \"◌ Chat Chat Composer ↗\":\n    - generic: ◌\n    - generic: Chat\n    - strong: Chat Composer\n    - generic: ↗\n  - button \"◌ Chat Cited Answer ↗\":\n    - generic: ◌\n    - generic: Chat\n    - strong: Cited Answer\n    - generic: ↗\n  - generic: Component Studio · Built to be used.\n  - link \"Source repository ↗\":\n    - /url: https://github.com/Atlas322/thinking-state"
+}

@@ -1,3 +1,5 @@
+> **Current update (2026-11-09):** Browser access now works. All 90 components have paired initial desktop DOM/style/SVG captures and per-component findings; Graph, Inbox, Tree and Handoff received detailed partial corrections. 193 tests, 114 copy compilations and build pass. Full 90-component interaction/visual parity is still incomplete; none is newly marked matched. See [live checkpoint](review/LIVE_REVIEW_2026-11-09.md). Statements below about blocked browser access describe the earlier session.
+
 # Browser comparison — 2026-11-09
 
 The actual affectUI website was opened in a browser and compared with the running local app. This is a qualitative comparison, not a pixel-difference certification.
