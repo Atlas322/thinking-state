@@ -117,6 +117,15 @@
     "usage": "import { AgentRecap } from \"./agent-recap\";\n\nexport default function App() {\n  return <AgentRecap />;\n}"
   },
   {
+    "slug": "agent-reply",
+    "name": "Agent Reply",
+    "category": "Agents",
+    "pro": true,
+    "description": "One structured agent reply: summary, findings, proposal, openable outputs, choice buttons with an own-answer field, and folded sources",
+    "exportName": "AgentReply",
+    "usage": "import { AgentReply } from \"./agent-reply\";\n\nexport default function App() {\n  return (\n    <AgentReply\n      agent=\"Project agent\"\n      summary=\"Draft is ready for review.\"\n      findings={[\"Hero copy updated\", \"Two tasks still open\"]}\n      outputs={[{ label: \"landing.html\", kind: \"site\" }]}\n      choices={[\"Ship it\", \"Revise\"]}\n      onChoose={(c) => console.log(c)}\n    />\n  );\n}"
+  },
+  {
     "slug": "agent-steering",
     "name": "Agent Steering",
     "category": "Agents",
