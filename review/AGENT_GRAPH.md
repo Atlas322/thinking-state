@@ -17,6 +17,10 @@ The current file also handles selection dialogs, keyboard focus, missing nodes, 
 
 **Verification still required:** a screenshot of the revised local render, paired at the same width/theme/time with the reference. Current browser permissions block this capture. No pixel-identical claim is made. These supplied screenshots only establish the reference state shown; they do not establish all animation, popup or mobile states.
 
+## Cached-reference follow-up
+
+A separate local review corrected two source-level edge cases: pulse gradients now use each call's from/to coordinates (including vertical and reverse answers), and centered labels use the available space to both canvas edges. Five regression tests cover pulse direction, clock updates without replay, animation expiry, offscreen/reduced-motion behavior and label bounds at 320px/640px. These are logic/geometry checks, not browser screenshots. The gradient still spans a connection; the precise short tail around bends requires live comparison.
+
 ## User-supplied reference
 
 ![affectUI reference, cropped to the component](agent-graph-reference.png)

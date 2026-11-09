@@ -28,9 +28,11 @@ These are bootstrap observations, not a complete dependency inventory. They do n
 
 The 23 MIT components preserve the actual implementation, with appended local demos. The other 67 were independently implemented from public descriptions. The first pass generalized too much and is **not a faithful replacement for the original Pro collection**.
 
-[REFERENCE_API_AUDIT.csv](./REFERENCE_API_AUDIT.csv) compares public prop names with each named component's destructured parameters. The scan excludes documented per-item fields and splits grouped prop names. **56 of the 67** still have at least one unmatched name. This is a name-level diagnostic, not an API or design certification. Nested data shapes, callback signatures, visual states and motion need separate checks.
+[REFERENCE_API_AUDIT.csv](./REFERENCE_API_AUDIT.csv) compares public prop names with each named component's destructured parameters. The scan excludes documented per-item fields and splits grouped prop names. **55 of the 67** still have at least one unmatched name. This is a name-level diagnostic, not an API or design certification. Nested data shapes, callback signatures, visual states and motion need separate checks.
 
 The subsequent pass rebuilt **Chat Composer, Agent Tree, Agent Handoff, Context Map, Trace Waterfall, Agent Graph, Approval Card, Agent Ledger, Dropzone and Prompt Library**. These ten now expose the documented root prop names. Chat Composer uses the documented two-argument `onSend(message, details)` contract and includes model/folder/app selectors, approval loading/failure, and simulated dictation. The other rebuilt components have focused behavioral tests; details are in [COMPONENT_REVIEW.md](./COMPONENT_REVIEW.md).
+
+A subsequent delegated review used only already-cached references. Agent Inbox now accepts the documented optional task fields, millisecond timestamps/durations and header action, and follows the documented callback/fallback ownership rules. Its legacy `elapsedSeconds` input remains supported. This closes the remaining root prop-name gap for that component; it does not establish exact motion or visual parity.
 
 The 46 imported Clean/Classic implementations were compared with the pinned upstream source using normalized TypeScript ASTs, excluding appended demos and formatting-only differences. All 46 matched; [MIT_SOURCE_VERIFICATION.json](./MIT_SOURCE_VERIFICATION.json) records the evidence. This does not certify that the local example content is identical to the website's examples.
 

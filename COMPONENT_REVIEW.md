@@ -3,7 +3,7 @@
 **The full screenshot comparison is not finished.** The table covers all 90 catalog entries without treating compilation, a prop-name scan or an imported source file as a visual pass.
 
 - 23 MIT components: all 46 Clean/Classic source bodies match the pinned upstream TypeScript AST after formatting normalization and excluding appended demos. Demo content still needs its own comparison.
-- 10 independent components were rebuilt in this pass. 35 new focused behavioral tests pass; the full suite has 164 tests.
+- 10 independent components were rebuilt in the prior pass. A follow-up delegated review corrected Agent Inbox integration and Agent Graph edge cases from cached references; the current suite has 177 tests, including 13 additional regressions.
 - Earlier live browser comparisons covered Checkbox, Thinking State and Agent Inbox. They were qualitative comparisons, not a pixel-match certification.
 - Agent Graph now uses the user's screenshot as a reference. Agent Tree, Agent Handoff, Context Map and Trace Waterfall use previously cached official demo frames plus public documentation. No post-change screenshot is available for these revisions.
 - The other 55 independent components have a documented-prop-name scan and render/copy checks. Their detailed reference design and interactions still need individual review and correction.
@@ -14,9 +14,17 @@ The browser rejected reference-site access and local preview access. Later expli
 
 - [Architecture and shadcn findings](ARCHITECTURE_AUDIT.md)
 - [Per-variant original-source hashes](MIT_SOURCE_VERIFICATION.json)
-- [Public prop-name diagnostic](REFERENCE_API_AUDIT.csv): 56/67 independent implementations still have unmatched names. The 10 rebuilt files and Thinking State have no unmatched names; this does not establish type or behavioral compatibility.
+- [Public prop-name diagnostic](REFERENCE_API_AUDIT.csv): 55/67 independent implementations still have unmatched names. The 10 rebuilt files, Agent Inbox and Thinking State have no unmatched names; this does not establish type or behavioral compatibility.
 - [Agent Graph screenshot findings](review/AGENT_GRAPH.md)
 - Automated render coverage: 114/114 variants. Independent source + usage compilation: 114/114. Production build: passed.
+
+## Cached-reference follow-up
+
+Two subagents reviewed Agent Inbox and Agent Graph using existing local documentation, source and the supplied reference image. Neither used the blocked browser origins or an alternative access path.
+
+- Agent Inbox: optional task data, millisecond clocks, header action, supplied-task fallback transitions, retry timing, callback ownership, conditional Open, Escape focus and layout keyboard navigation. The copyable usage example now supplies application state and callbacks.
+- Agent Graph: pulse gradients follow each request/answer on both axes, and label widths respect the canvas edges without shifting fixed node positions. Tests cover direction, clock updates, animation expiry, offscreen pausing, reduced motion and edge bounds.
+- Still pending: fresh renders, font/icon/spacing inspection, exact transition timing, narrow-layout appearance and the gradient tail around connector bends. No additional component is marked visually matched by this review.
 
 ## Per-component status
 
@@ -30,7 +38,7 @@ The browser rejected reference-site access and local preview access. Later expli
 | [Agent Fleet](https://www.affectui.com/components/agent-fleet)                   | Prop-name scan only; unmatched: agents, open, defaultOpen, onOpenChange, onResolve and 3 more. Detailed design/behavior review remains.                                                                                                             | Pending — not visually matched.                                    |
 | [Agent Graph](https://www.affectui.com/components/agent-graph)                   | Revised from supplied screenshots: branded rounded-square nodes, 5-agent/7-tool demo, measured node positions, rounded orthogonal connectors, flat canvas and call legend. New render not captured. User-provided reference and before screenshots. | Pending — reference available, revised render not captured.        |
 | [Agent Handoff](https://www.affectui.com/components/agent-handoff)               | Rebuilt agent columns, handoff history, context-loss details, restoration, forward-only assignment, narrow layout and provider SVGs. Cached official frame inspected.                                                                               | Pending — reference available, revised render not captured.        |
-| [Agent Inbox](https://www.affectui.com/components/agent-inbox)                   | Earlier browser comparison rebuilt Needs you / Running / Done board and List mode. Header action and nested timing/API differences remain.                                                                                                          | Earlier browser review; API and detailed motion remain unverified. |
+| [Agent Inbox](https://www.affectui.com/components/agent-inbox)                   | Earlier browser comparison rebuilt Board/List. Cached-doc follow-up adds the header action, sparse task fields, millisecond clocks, fallback actions, callback ownership and keyboard handling.                                                                                                          | Earlier browser review; follow-up render and detailed motion remain unverified. |
 | [Agent Lanes](https://www.affectui.com/components/agent-lanes)                   | Prop-name scan only; unmatched: agents, tasks, span, now, onApprove and 2 more. Detailed design/behavior review remains.                                                                                                                            | Pending — not visually matched.                                    |
 | [Agent Ledger](https://www.affectui.com/components/agent-ledger)                 | Replaced positional undo with transitive dependency traversal; preserves irreversible/unrelated changes, handles cycles and callback failure, supports controlled undo/redo. Public documentation and focused behavior tests.                       | Pending — no live reference comparison.                            |
 | [Agent Monitor](https://www.affectui.com/components/agent-monitor)               | Prop-name scan only; unmatched: state, agent, steps, tool, detail and 16 more. Detailed design/behavior review remains.                                                                                                                             | Pending — not visually matched.                                    |

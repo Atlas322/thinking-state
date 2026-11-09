@@ -60,7 +60,7 @@
     "pro": true,
     "description": "Background tasks in a Board or List, grouped by Needs you, Running, and Done. Expand cards to review steps, approve, reject, or retry.",
     "exportName": "AgentInbox",
-    "usage": "import { AgentInbox } from \"./agent-inbox\";\n\nexport default function App() {\n  return <AgentInbox />;\n}"
+    "usage": "import { useState } from \"react\";\nimport { AgentInbox, type AgentTask } from \"./agent-inbox\";\n\nexport default function App() {\n  const [tasks, setTasks] = useState<AgentTask[]>(() => [\n    {\n      id: \"review\",\n      title: \"Review release notes\",\n      agent: \"Writer\",\n      status: \"waiting\",\n      startedAt: Date.now() - 80_000,\n      steps: [{ label: \"Draft is ready for approval\" }],\n    },\n  ]);\n\n  function updateTask(task: AgentTask, status: AgentTask[\"status\"], restart = false) {\n    // Connect your backend here; update this state with its confirmed result.\n    const now = Date.now();\n    setTasks((current) => current.map((item) => item.id === task.id\n      ? {\n          ...item,\n          status,\n          startedAt: restart ? now : item.startedAt,\n          elapsed: status === \"failed\" ? now - (item.startedAt ?? now) : undefined,\n        }\n      : item));\n  }\n\n  return (\n    <AgentInbox\n      tasks={tasks}\n      onApprove={(task) => updateTask(task, \"running\")}\n      onReject={(task) => updateTask(task, \"failed\")}\n      onRetry={(task) => updateTask(task, \"running\", true)}\n    />\n  );\n}"
   },
   {
     "slug": "agent-lanes",
