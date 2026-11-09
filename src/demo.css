@@ -409,6 +409,36 @@ kbd {
   color: var(--soft-fg);
   white-space: nowrap;
 }
+.notify-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  font-size: 10px;
+  white-space: nowrap;
+  color: var(--soft-fg);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.notify-button:hover {
+  background: var(--hover);
+  color: var(--fg);
+}
+.notify-button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.notify-button.sent {
+  color: #15803d;
+  border-color: #15803d;
+}
+.notify-button.error {
+  color: #b91c1c;
+  border-color: #b91c1c;
+}
 .toolbar-divider {
   height: 14px;
   width: 1px;

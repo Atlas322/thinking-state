@@ -120,6 +120,51 @@ function initialRoute() {
     : "thinking-state";
 }
 
+function NotifyTestButton() {
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
+  const [detail, setDetail] = useState("");
+  useEffect(() => {
+    if (state !== "sent" && state !== "error") return;
+    const timer = setTimeout(() => setState("idle"), 4000);
+    return () => clearTimeout(timer);
+  }, [state]);
+  const send = async () => {
+    setState("sending");
+    try {
+      const res = await fetch("/api/notify-test", { method: "POST" });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || `HTTP ${res.status}`);
+      setDetail(`Sent to ${body.to?.join(", ") ?? "inbox"}`);
+      setState("sent");
+    } catch (err) {
+      setDetail(err instanceof Error ? err.message : "Failed");
+      setState("error");
+    }
+  };
+  const label =
+    state === "sending"
+      ? "Sending…"
+      : state === "sent"
+        ? "Sent ✓"
+        : state === "error"
+          ? "Failed ✕"
+          : "Test notification";
+  return (
+    <button
+      type="button"
+      className={`notify-button ${state}`}
+      onClick={send}
+      disabled={state === "sending"}
+      title={state === "idle" ? "Send a test email notification" : detail}
+      aria-live="polite"
+    >
+      <span aria-hidden="true">🔔</span> {label}
+    </button>
+  );
+}
+
 export default function App() {
   const [route, setRoute] = useState(initialRoute);
   const [query, setQuery] = useState("");
@@ -382,6 +427,8 @@ export default function App() {
             )}
           </div>
           <div className="topbar-actions">
+            <NotifyTestButton />
+            <span className="toolbar-divider" />
             <a
               href="https://github.com/Atlas322/thinking-state"
               target="_blank"
