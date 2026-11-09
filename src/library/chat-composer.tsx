@@ -2,364 +2,698 @@
 
 import * as React from "react";
 
-/** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+/** Independent implementation of the documented public behavior. */
+export type ChatModel = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  name: string;
+  description?: string;
+  logo?: React.ReactNode;
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+export type ChatApp = { id: string; name: string; logo?: React.ReactNode };
+export type ChatComposerProps = {
+  placeholder?: string;
+  models?: ChatModel[];
+  loadMs?: number;
+  dictation?: string;
+  onSend?: (message: string, details: { model: string }) => void;
+  onModelChange?: (model: ChatModel) => void;
+  onAttach?: () => void;
+  onRequestApproval?: () => void | Promise<void>;
+  folders?: string[];
+  folder?: string;
+  onFolderChange?: (folder: string | null) => void;
+  apps?: ChatApp[];
+  connectedApps?: string[];
+  onAppsChange?: (connected: string[]) => void;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
+const defaultModels: ChatModel[] = [
+  { id: "auto", name: "Auto", description: "The right model for the task" },
+  {
+    id: "claude",
+    name: "Claude",
+    description: "Thoughtful reasoning and writing",
+  },
+  {
+    id: "chatgpt",
+    name: "ChatGPT",
+    description: "Versatile help for everyday work",
+  },
+];
+const defaultApps: ChatApp[] = [
+  { id: "gmail", name: "Gmail" },
+  { id: "slack", name: "Slack" },
+  { id: "clickup", name: "ClickUp" },
+];
+const defaultFolders = ["Personal", "Product", "Marketing", "Engineering"];
+const initialConnections = ["gmail"];
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
+type GlyphName =
+  | "plus"
+  | "down"
+  | "arrow"
+  | "mic"
+  | "check"
+  | "close"
+  | "folder"
+  | "hand"
+  | "bolt"
+  | "wave";
+function Glyph({ name }: { name: GlyphName }) {
+  const paths: Record<GlyphName, React.ReactNode> = {
+    plus: <path d="M8 3v10M3 8h10" />,
+    down: <path d="m5 6 3 3 3-3" />,
+    arrow: <path d="M8 13V3m-4 4 4-4 4 4" />,
+    mic: (
       <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
+        <rect x="5.5" y="1.5" width="5" height="8" rx="2.5" />
+        <path d="M3 7v.5a5 5 0 0 0 10 0V7M8 12.5v2M5.5 14.5h5" />
       </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
-
-export function ChatComposer({
-  title = "Ask anything",
-  onSend,
-  className,
-}: StudioProps & {
-  onSend?: (message: { text: string; model: string; files: File[] }) => void;
-}) {
-  const [text, setText] = React.useState("");
-  const [model, setModel] = React.useState("Balanced");
-  const [files, setFiles] = React.useState<File[]>([]);
-  const [messages, setMessages] = React.useState<string[]>([]);
-  const input = React.useRef<HTMLInputElement>(null);
-  const send = () => {
-    if (!text.trim()) return;
-    onSend?.({ text, model, files });
-    setMessages((s) => [...s, text]);
-    setText("");
-    setFiles([]);
+    ),
+    check: <path d="m3 8 3 3 7-7" />,
+    close: <path d="m4 4 8 8m0-8-8 8" />,
+    folder: (
+      <path d="M2 4.5V3a1 1 0 0 1 1-1h3l2 2h5a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1Z" />
+    ),
+    hand: (
+      <path d="M4 8V4.5a1 1 0 0 1 2 0V7 2.5a1 1 0 0 1 2 0V7 2a1 1 0 0 1 2 0v5-3a1 1 0 0 1 2 0v5l1-1a1.1 1.1 0 0 1 1.5 1.6L11 14H6L2 9a1.1 1.1 0 0 1 1.7-1.4L5 9" />
+    ),
+    bolt: <path d="m9 1-6 8h4l-1 6 7-9H9Z" />,
+    wave: <path d="M2 6v4m3-7v10m3-8v6m3-9v12m3-8v4" />,
   };
   return (
-    <UI.Panel className={className}>
-      {messages.map((m, i) => (
-        <div className="st-bubble user" key={i}>
-          {m}
-        </div>
-      ))}
-      <textarea
-        aria-label={title}
-        placeholder={title + "…"}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            send();
-          }
-        }}
-        style={{
-          border: 0,
-          resize: "none",
-          minHeight: 130,
-          padding: "20px 2px",
-        }}
-      />
-      <div className="st-actions">
-        {files.map((f, i) => (
-          <span className="st-chip" key={i}>
-            {f.name}
-            <button
-              aria-label={`Remove ${f.name}`}
-              onClick={() => setFiles((s) => s.filter((_, j) => j !== i))}
-            >
-              ×
-            </button>
-          </span>
-        ))}
-      </div>
-      <input
-        ref={input}
-        type="file"
-        multiple
-        style={{ display: "none" }}
-        onChange={(e) =>
-          setFiles((s) => [...s, ...Array.from(e.target.files ?? [])])
-        }
-      />
-      <div className="st-actions" style={{ marginTop: 8 }}>
-        <UI.Button
-          aria-label="Attach files"
-          onClick={() => input.current?.click()}
-        >
-          ＋
-        </UI.Button>
-        <select
-          aria-label="Model"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          style={{ width: "auto", border: 0 }}
-        >
-          <option>Balanced</option>
-          <option>Reasoning</option>
-          <option>Fast</option>
-        </select>
-        <span className="st-grow" />
-        <small>Shift + Enter for a new line</small>
-        <UI.Button
-          primary
-          disabled={!text.trim()}
-          aria-label="Send message"
-          onClick={send}
-        >
-          ↑
-        </UI.Button>
-      </div>
-    </UI.Panel>
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {paths[name]}
+    </svg>
   );
 }
+function AppMark({ app }: { app: ChatApp }) {
+  if (app.logo) return <span className="cc-app-mark">{app.logo}</span>;
+  const colors: Record<string, string> = {
+    gmail: "#e66b63",
+    slack: "#6da9a6",
+    clickup: "#a080da",
+  };
+  return (
+    <span
+      className="cc-app-mark"
+      style={{ color: colors[app.id] ?? "var(--cc-muted)" }}
+      aria-hidden="true"
+    >
+      {app.id === "gmail" ? (
+        <svg viewBox="0 0 16 16">
+          <path d="M2 4v9h3V7l3 2 3-2v6h3V4l-6 5Z" fill="currentColor" />
+        </svg>
+      ) : app.id === "slack" ? (
+        <svg viewBox="0 0 16 16">
+          <path
+            d="M5 2v12M11 2v12M2 5h12M2 11h12"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 16 16">
+          <path
+            d="m3 6 5-4 5 4M3 10q5 6 10 0"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            fill="none"
+          />
+        </svg>
+      )}
+    </span>
+  );
+}
+
+type MenuItem = {
+  id: string;
+  label: string;
+  description?: string;
+  icon?: React.ReactNode;
+  selected?: boolean;
+};
+function Picker({
+  label,
+  children,
+  items,
+  multiple = false,
+  align = "left",
+  onPick,
+  className = "",
+}: {
+  label: string;
+  children: React.ReactNode;
+  items: MenuItem[];
+  multiple?: boolean;
+  align?: "left" | "right";
+  onPick: (id: string) => void;
+  className?: string;
+}) {
+  const [open, setOpen] = React.useState(false);
+  const [highlight, setHighlight] = React.useState(0);
+  const [below, setBelow] = React.useState(false);
+  const button = React.useRef<HTMLButtonElement>(null);
+  const popup = React.useRef<HTMLDivElement>(null);
+  const root = React.useRef<HTMLDivElement>(null);
+  const id = React.useId();
+  const close = (restore = true) => {
+    setOpen(false);
+    if (restore) button.current?.focus();
+  };
+  const show = (last = false) => {
+    const rect = button.current?.getBoundingClientRect();
+    const height = Math.min(items.length * 48 + 16, 280);
+    setBelow(
+      Boolean(
+        rect &&
+        rect.top < height &&
+        window.innerHeight - rect.bottom > rect.top,
+      ),
+    );
+    setHighlight(
+      last
+        ? Math.max(0, items.length - 1)
+        : Math.max(
+            0,
+            items.findIndex((item) => item.selected),
+          ),
+    );
+    setOpen(true);
+  };
+  React.useEffect(() => {
+    if (open) popup.current?.focus();
+  }, [open]);
+  React.useEffect(() => {
+    if (!open) return;
+    const outside = (event: PointerEvent) => {
+      if (event.target instanceof Node && !root.current?.contains(event.target))
+        close(false);
+    };
+    document.addEventListener("pointerdown", outside);
+    return () => document.removeEventListener("pointerdown", outside);
+  }, [open]);
+  const choose = (index: number) => {
+    const item = items[index];
+    if (!item) return;
+    onPick(item.id);
+    if (!multiple) close();
+  };
+  return (
+    <div
+      className={`cc-picker ${className}`}
+      ref={root}
+      data-align={align}
+      data-below={below}
+    >
+      <button
+        ref={button}
+        type="button"
+        className="cc-picker-trigger"
+        aria-label={label}
+        aria-haspopup={multiple ? "menu" : "listbox"}
+        aria-expanded={open}
+        aria-controls={open ? id : undefined}
+        onClick={() => (open ? close() : show())}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            event.preventDefault();
+            show(event.key === "ArrowUp");
+          }
+        }}
+      >
+        {children}
+      </button>
+      {open && (
+        <div
+          ref={popup}
+          id={id}
+          role={multiple ? "menu" : "listbox"}
+          aria-label={label}
+          aria-activedescendant={
+            items.length ? `${id}-${highlight}` : undefined
+          }
+          className="cc-menu"
+          tabIndex={0}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget))
+              close(false);
+          }}
+          onKeyDown={(event) => {
+            const max = items.length - 1;
+            if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
+              event.preventDefault();
+              setHighlight((current) =>
+                event.key === "Home"
+                  ? 0
+                  : event.key === "End"
+                    ? max
+                    : event.key === "ArrowDown"
+                      ? (current + 1) % Math.max(1, items.length)
+                      : (current - 1 + items.length) %
+                        Math.max(1, items.length),
+              );
+            }
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              choose(highlight);
+            }
+            if (event.key === "Escape") {
+              event.preventDefault();
+              event.stopPropagation();
+              close();
+            }
+            if (event.key === "Tab") {
+              close();
+            }
+          }}
+        >
+          <span className="cc-menu-heading">{label}</span>
+          {items.map((item, index) => (
+            <div
+              key={item.id}
+              id={`${id}-${index}`}
+              role={multiple ? "menuitemcheckbox" : "option"}
+              aria-checked={multiple ? Boolean(item.selected) : undefined}
+              aria-selected={!multiple ? Boolean(item.selected) : undefined}
+              className="cc-menu-row"
+              data-highlighted={highlight === index}
+              onPointerMove={() => setHighlight(index)}
+              onPointerDown={(event) => event.preventDefault()}
+              onClick={() => choose(index)}
+            >
+              {item.icon}
+              <span>
+                <strong>{item.label}</strong>
+                {item.description && <small>{item.description}</small>}
+              </span>
+              {item.selected && <Glyph name="check" />}
+            </div>
+          ))}
+          {!items.length && (
+            <p className="cc-menu-empty">No options available</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function ChatComposer({
+  placeholder = "Start by typing...",
+  models = defaultModels,
+  loadMs = 1300,
+  dictation = "Draft a short update for the team about what we shipped this week.",
+  onSend,
+  onModelChange,
+  onAttach,
+  onRequestApproval,
+  folders = defaultFolders,
+  folder,
+  onFolderChange,
+  apps = defaultApps,
+  connectedApps = initialConnections,
+  onAppsChange,
+  className = "",
+}: ChatComposerProps) {
+  const [message, setMessage] = React.useState("");
+  const [modelId, setModelId] = React.useState(models[0]?.id ?? "auto");
+  const [currentFolder, setCurrentFolder] = React.useState<string | null>(
+    folder ?? null,
+  );
+  const [connections, setConnections] = React.useState(connectedApps);
+  const [approval, setApproval] = React.useState<
+    "idle" | "loading" | "granted"
+  >("idle");
+  const [approvalError, setApprovalError] = React.useState("");
+  const [recording, setRecording] = React.useState(false);
+  const [wordsHeard, setWordsHeard] = React.useState(0);
+  const [files, setFiles] = React.useState<File[]>([]);
+  const [notice, setNotice] = React.useState("");
+  const textarea = React.useRef<HTMLTextAreaElement>(null);
+  const fileInput = React.useRef<HTMLInputElement>(null);
+  const voiceButton = React.useRef<HTMLButtonElement>(null);
+  const mounted = React.useRef(true);
+  const approvalTimer = React.useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+  const words = React.useMemo(
+    () => dictation.trim().split(/\s+/).filter(Boolean),
+    [dictation],
+  );
+  const selectedModel =
+    models.find((model) => model.id === modelId) ?? models[0];
+  React.useEffect(() => {
+    setCurrentFolder(folder ?? null);
+  }, [folder]);
+  React.useEffect(() => {
+    setConnections(connectedApps);
+  }, [connectedApps]);
+  React.useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      if (approvalTimer.current) clearTimeout(approvalTimer.current);
+    };
+  }, []);
+  React.useEffect(() => {
+    if (!recording) return;
+    const timer = setInterval(
+      () => setWordsHeard((count) => Math.min(words.length, count + 1)),
+      260,
+    );
+    return () => clearInterval(timer);
+  }, [recording, words.length]);
+  React.useLayoutEffect(() => {
+    const field = textarea.current;
+    if (field) {
+      field.style.height = "auto";
+      field.style.height = `${Math.max(94, Math.min(220, field.scrollHeight))}px`;
+    }
+  }, [message]);
+  const send = () => {
+    if (!message.trim() || recording) return;
+    const text = message.trim();
+    onSend?.(text, { model: selectedModel?.id ?? "auto" });
+    setNotice(onSend ? "Message sent" : `Message ready: ${text}`);
+    setMessage("");
+    setFiles([]);
+    textarea.current?.focus();
+  };
+  const requestApproval = async () => {
+    if (approval !== "idle") return;
+    setApproval("loading");
+    setApprovalError("");
+    try {
+      await Promise.all([
+        Promise.resolve(onRequestApproval?.()),
+        new Promise<void>((resolve) => {
+          approvalTimer.current = setTimeout(resolve, Math.max(0, loadMs));
+        }),
+      ]);
+      if (mounted.current) {
+        setApproval("granted");
+        setNotice("Unrestricted access selected");
+      }
+    } catch {
+      if (approvalTimer.current) {
+        clearTimeout(approvalTimer.current);
+        approvalTimer.current = null;
+      }
+      if (mounted.current) {
+        setApproval("idle");
+        setApprovalError("Approval could not be completed. Try again.");
+      }
+    }
+  };
+  const finishVoice = (confirm: boolean) => {
+    if (confirm) {
+      const transcript = words.slice(0, wordsHeard).join(" ");
+      setMessage(
+        (text) => `${text}${text && transcript ? " " : ""}${transcript}`,
+      );
+      setNotice("Dictation added to your draft");
+    } else setNotice("Recording discarded");
+    setRecording(false);
+    setWordsHeard(0);
+    (confirm ? textarea.current : voiceButton.current)?.focus();
+  };
+  return (
+    <section
+      className={`cc-composer ${className}`}
+      aria-label="Chat composer"
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && recording) {
+          event.preventDefault();
+          finishVoice(false);
+        }
+      }}
+    >
+      <style>{css}</style>
+      <div
+        className="cc-card"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) textarea.current?.focus();
+        }}
+      >
+        <div className="cc-input-area">
+          {recording ? (
+            <div
+              className="cc-transcript"
+              aria-label="Live transcript"
+              aria-live="polite"
+            >
+              {words.slice(0, wordsHeard).map((word, index) => (
+                <span key={index}>{word} </span>
+              ))}
+              {wordsHeard === 0 && <span>Listening…</span>}
+            </div>
+          ) : (
+            <textarea
+              ref={textarea}
+              aria-label="Message"
+              placeholder={placeholder}
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+              onKeyDown={(event) => {
+                if (
+                  event.key === "Enter" &&
+                  !event.shiftKey &&
+                  !event.nativeEvent.isComposing
+                ) {
+                  event.preventDefault();
+                  send();
+                }
+              }}
+            />
+          )}
+        </div>
+        {files.length > 0 && (
+          <div className="cc-attachments">
+            {files.map((file, index) => (
+              <span key={`${file.name}-${index}`}>
+                {file.name}
+                <button
+                  type="button"
+                  aria-label={`Remove ${file.name}`}
+                  onClick={() =>
+                    setFiles((old) => old.filter((_, i) => i !== index))
+                  }
+                >
+                  <Glyph name="close" />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+        <input
+          ref={fileInput}
+          type="file"
+          multiple
+          hidden
+          onChange={(event) => {
+            setFiles((old) => [
+              ...old,
+              ...Array.from(event.target.files ?? []),
+            ]);
+            event.target.value = "";
+          }}
+        />
+        <div className="cc-toolbar">
+          <button
+            type="button"
+            className="cc-icon-button"
+            aria-label="Attach files"
+            onClick={() => (onAttach ? onAttach() : fileInput.current?.click())}
+          >
+            <Glyph name="plus" />
+          </button>
+          <Picker
+            label="Choose model"
+            items={models.map((model) => ({
+              id: model.id,
+              label: model.name,
+              description: model.description,
+              selected: model.id === selectedModel?.id,
+              icon: model.logo ?? <Glyph name="bolt" />,
+            }))}
+            onPick={(id) => {
+              const model = models.find((item) => item.id === id);
+              if (model) {
+                setModelId(id);
+                onModelChange?.(model);
+                setNotice(`${model.name} selected`);
+              }
+            }}
+          >
+            <span>{selectedModel?.logo ?? <Glyph name="bolt" />}</span>
+            <span>{selectedModel?.name ?? "Auto"}</span>
+            <Glyph name="down" />
+          </Picker>
+          <div className="cc-toolbar-space" />
+          {recording ? (
+            <div className="cc-recording-controls">
+              <span className="cc-audio" aria-hidden="true">
+                {Array.from({ length: 12 }, (_, index) => (
+                  <i
+                    key={index}
+                    style={{
+                      animationDelay: `${index * -70}ms`,
+                      height: `${5 + ((index * 7) % 15)}px`,
+                    }}
+                  />
+                ))}
+              </span>
+              <span className="cc-recording-label">Demo dictation</span>
+              <button
+                type="button"
+                className="cc-icon-button"
+                aria-label="Discard recording"
+                onClick={() => finishVoice(false)}
+              >
+                <Glyph name="close" />
+              </button>
+              <button
+                type="button"
+                className="cc-send"
+                aria-label="Use dictation"
+                onClick={() => finishVoice(true)}
+              >
+                <Glyph name="check" />
+              </button>
+            </div>
+          ) : (
+            <>
+              <button
+                type="button"
+                className={`cc-approval ${approval}`}
+                aria-busy={approval === "loading"}
+                disabled={approval !== "idle"}
+                onClick={requestApproval}
+              >
+                <Glyph name={approval === "granted" ? "bolt" : "hand"} />
+                <span>
+                  {approval === "loading"
+                    ? "Requesting approval…"
+                    : approval === "granted"
+                      ? "Unrestricted access"
+                      : "Request approval"}
+                </span>
+              </button>
+              <button
+                type="button"
+                ref={voiceButton}
+                className="cc-icon-button"
+                aria-label="Start voice input"
+                onClick={() => {
+                  setRecording(true);
+                  setWordsHeard(0);
+                }}
+              >
+                <Glyph name="mic" />
+              </button>
+              <button
+                type="button"
+                className="cc-send"
+                aria-label="Send message"
+                disabled={!message.trim()}
+                onClick={send}
+              >
+                <Glyph name="arrow" />
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+      <div className="cc-bottom-row">
+        {folders.length > 0 && (
+          <Picker
+            label="Choose folder"
+            className="cc-folders"
+            items={folders.map((name) => ({
+              id: name,
+              label: name,
+              selected: name === currentFolder,
+              icon: <Glyph name="folder" />,
+            }))}
+            onPick={(name) => {
+              const next = name === currentFolder ? null : name;
+              setCurrentFolder(next);
+              onFolderChange?.(next);
+              setNotice(next ? `Working in ${next}` : "Left the folder");
+            }}
+          >
+            <Glyph name="folder" />
+            <span className="cc-folder-name" title={currentFolder ?? undefined}>
+              {currentFolder ?? "Work in a folder"}
+            </span>
+            <Glyph name="down" />
+          </Picker>
+        )}
+        {apps.length > 0 && (
+          <Picker
+            label="Connect apps"
+            className="cc-apps"
+            align="right"
+            multiple
+            items={apps.map((app) => ({
+              id: app.id,
+              label: app.name,
+              description: connections.includes(app.id)
+                ? "Connected"
+                : "Not connected",
+              selected: connections.includes(app.id),
+              icon: <AppMark app={app} />,
+            }))}
+            onPick={(id) => {
+              const next = connections.includes(id)
+                ? connections.filter((item) => item !== id)
+                : [...connections, id];
+              setConnections(next);
+              onAppsChange?.(next);
+              setNotice(
+                `${apps.find((app) => app.id === id)?.name ?? id} ${next.includes(id) ? "connected" : "disconnected"}`,
+              );
+            }}
+          >
+            <span className="cc-app-logos">
+              {apps.slice(0, 3).map((app) => (
+                <AppMark key={app.id} app={app} />
+              ))}
+            </span>
+            <span>Connect apps</span>
+            <Glyph name="down" />
+          </Picker>
+        )}
+      </div>
+      {approvalError && (
+        <p role="alert" className="cc-error">
+          {approvalError}
+        </p>
+      )}
+      <p role="status" className="cc-notice" aria-live="polite">
+        {notice}
+      </p>
+    </section>
+  );
+}
+
+const css = `
+.cc-composer{--cc-ink:rgba(0,0,0,.88);--cc-muted:rgba(0,0,0,.45);--cc-bg:#fff;--cc-edge:rgba(0,0,0,.08);--cc-hover:rgba(0,0,0,.04);--cc-focus:#5587e9;--cc-shadow:0 0 0 .5px rgba(0,0,0,.08),0 1px 1px -1px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.05);width:100%;max-width:680px;min-width:0;font:400 13px/20px Inter,system-ui,sans-serif;color:var(--cc-ink);container-type:inline-size;text-align:left;isolation:isolate}
+:where(.dark,[data-theme=dark]) .cc-composer{--cc-ink:rgba(255,255,255,.88);--cc-muted:rgba(255,255,255,.45);--cc-bg:#252527;--cc-edge:rgba(255,255,255,.08);--cc-hover:rgba(255,255,255,.06);--cc-shadow:0 0 0 .5px rgba(255,255,255,.1),0 1px 3px #0002;color-scheme:dark}
+.cc-composer *{box-sizing:border-box}.cc-composer svg{display:block;width:16px;height:16px;flex:none}.cc-composer button,.cc-composer textarea{font:inherit;color:inherit}.cc-composer button{cursor:pointer}.cc-composer button:disabled{cursor:default}.cc-composer :focus-visible{outline:2px solid var(--cc-focus);outline-offset:3px}.cc-card{background:var(--cc-bg);border-radius:18px;box-shadow:var(--cc-shadow);padding:18px 15px 12px;position:relative;cursor:text;transition:box-shadow .2s}.cc-input-area{min-height:94px;padding:0 6px}.cc-input-area textarea{width:100%;min-height:94px;max-height:220px;resize:none;background:none;border:0;outline:none;padding:0;line-height:1.65;display:block;caret-color:var(--cc-ink)}.cc-input-area textarea:focus-visible{outline:none}.cc-input-area textarea::placeholder{color:var(--cc-muted)}.cc-toolbar{display:flex;align-items:center;gap:5px;margin-top:12px;min-width:0;cursor:default}.cc-toolbar-space{flex:1;min-width:3px}.cc-icon-button,.cc-send{display:grid;place-items:center;border:0;background:none;border-radius:8px;width:30px;height:30px;padding:0;flex:none;color:var(--cc-muted)!important;transition:background .16s,transform .16s}.cc-icon-button:hover{background:var(--cc-hover);color:var(--cc-ink)!important}.cc-icon-button:active,.cc-send:active{transform:scale(.94)}.cc-send{background:var(--cc-ink);color:var(--cc-bg)!important;border-radius:50%;width:29px;height:29px}.cc-send:disabled{background:var(--cc-hover);color:var(--cc-muted)!important;opacity:.65}.cc-approval{display:flex;align-items:center;gap:5px;padding:5px 8px;font-size:11px!important;border:0;background:none;border-radius:7px;white-space:nowrap;color:var(--cc-muted)!important;transition:background .2s,color .2s}.cc-approval:hover{background:var(--cc-hover)}.cc-approval svg{width:14px;height:14px}.cc-approval.loading svg{animation:cc-wave .6s ease-in-out infinite}.cc-approval.granted{background:var(--cc-hover);color:var(--cc-ink)!important;animation:cc-appear .25s both}.cc-bottom-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 6px 0;min-width:0}.cc-picker{position:relative;min-width:0}.cc-picker-trigger{display:flex;align-items:center;gap:6px;border:0;border-radius:7px;background:none;padding:5px 7px;font-size:12px!important;white-space:nowrap;min-width:0;color:var(--cc-muted)!important;max-width:100%}.cc-picker-trigger:hover,.cc-picker-trigger[aria-expanded=true]{background:var(--cc-hover);color:var(--cc-ink)!important}.cc-picker-trigger>span:first-child>svg{width:14px;height:14px}.cc-picker-trigger>svg:last-child{width:12px;height:12px;opacity:.65}.cc-folders{flex:1;min-width:0}.cc-folder-name{overflow:hidden;text-overflow:ellipsis}.cc-apps{margin-left:auto;flex:none}.cc-menu{position:absolute;bottom:calc(100% + 9px);left:0;width:max-content;min-width:190px;max-width:min(280px,calc(100cqw - 20px));max-height:280px;overflow:auto;background:var(--cc-bg);border:1px solid var(--cc-edge);box-shadow:var(--cc-shadow),0 10px 30px #0002;border-radius:12px;padding:5px;z-index:30;outline:none!important;animation:cc-menu-in .18s cubic-bezier(.22,1,.36,1);transform-origin:bottom left;cursor:default}.cc-picker[data-align=right] .cc-menu{left:auto;right:0;transform-origin:bottom right}.cc-picker[data-below=true] .cc-menu{bottom:auto;top:calc(100% + 9px);transform-origin:top left}.cc-picker[data-below=true][data-align=right] .cc-menu{transform-origin:top right}.cc-menu-heading{display:block;padding:5px 8px;font-size:10px;color:var(--cc-muted)}.cc-menu-row{display:flex;align-items:center;gap:9px;padding:8px;border-radius:7px;cursor:pointer;min-height:34px;transition:background .12s}.cc-menu-row[data-highlighted=true]{background:var(--cc-hover)}.cc-menu-row>span:not(.cc-app-mark){flex:1;min-width:0}.cc-menu-row strong{display:block;font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis}.cc-menu-row small{display:block;color:var(--cc-muted);font-size:10px;margin-top:1px}.cc-menu-row>svg:last-child{width:13px;height:13px}.cc-menu-row>svg:first-child{color:var(--cc-muted)}.cc-menu-empty{font-size:11px;padding:8px;color:var(--cc-muted)}.cc-app-logos{display:flex;align-items:center;gap:3px;margin-right:2px}.cc-app-mark{display:grid;place-items:center;width:17px;height:17px;flex:none;border-radius:4px}.cc-app-mark>svg,.cc-app-mark>img{width:15px;height:15px}.cc-attachments{display:flex;flex-wrap:wrap;gap:5px;margin:8px 5px}.cc-attachments>span{display:flex;align-items:center;gap:6px;font-size:11px;background:var(--cc-hover);border:1px solid var(--cc-edge);padding:3px 6px;border-radius:5px;max-width:100%;overflow-wrap:anywhere}.cc-attachments button{border:0;background:none;padding:2px}.cc-attachments svg{width:12px;height:12px}.cc-transcript{min-height:94px;color:var(--cc-muted);line-height:1.65}.cc-transcript>span{animation:cc-appear .25s both}.cc-recording-controls{display:flex;align-items:center;gap:6px;min-width:0}.cc-recording-label{font-size:10px;color:var(--cc-muted);white-space:nowrap}.cc-audio{display:flex;align-items:center;gap:2px;height:22px;overflow:hidden;color:var(--cc-muted);margin-right:5px}.cc-audio i{width:2px;border-radius:2px;background:currentColor;animation:cc-audio .7s ease-in-out infinite alternate}.cc-error{color:#d36169;font-size:11px;margin:9px 6px 0}.cc-notice{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0}
+@container(max-width:430px){.cc-card{padding:14px 10px 10px}.cc-toolbar{gap:2px}.cc-picker-trigger{padding:5px;font-size:11px!important;gap:4px}.cc-approval{font-size:10px!important;gap:3px;padding:5px}.cc-approval svg{width:12px;height:12px}.cc-icon-button{width:26px}.cc-bottom-row{gap:8px;padding:10px 0 0}.cc-app-logos{gap:0}.cc-app-mark{width:14px;height:14px}.cc-app-mark>svg{width:13px;height:13px}.cc-recording-label{display:none}}
+@container(max-width:330px){.cc-approval>span{max-width:74px;overflow:hidden;text-overflow:ellipsis}.cc-app-logos .cc-app-mark:nth-child(n+2){display:none}.cc-toolbar .cc-picker-trigger>span:first-child{display:none}.cc-audio{max-width:35px}}
+@keyframes cc-wave{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(15deg)}}@keyframes cc-appear{from{opacity:0;filter:blur(2px)}to{opacity:1;filter:blur(0)}}@keyframes cc-menu-in{from{opacity:0;transform:translateY(3px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes cc-audio{from{transform:scaleY(.35)}to{transform:scaleY(1)}}@media(prefers-reduced-motion:reduce){.cc-composer *{animation:none!important;transition:none!important}}
+`;
 
 export default ChatComposer;

@@ -267,100 +267,311 @@ const studioCSS = `
 export type PromptTemplate = {
   id: string;
   title: string;
-  category: string;
+  category?: string;
+  tone?: string;
   body: string;
+  variables?: Record<string, { description?: string; default?: string }>;
 };
-export function PromptLibrary({
-  title = "Prompt library",
-  templates = [
-    {
-      id: "meeting",
-      title: "Summarize a meeting",
-      category: "Notes",
-      body: "Summarize this meeting for {audience} in under {length}.",
-    },
-    {
-      id: "error",
-      title: "Explain an error",
-      category: "Debug",
-      body: "Explain this {language} error in plain words: {error}.",
-    },
-    {
-      id: "launch",
-      title: "Write a launch post",
-      category: "Writing",
-      body: "Write a concise launch post for {product}, aimed at {audience}.",
-    },
-  ],
-  onUse,
-  className,
-}: StudioProps & {
+export type PromptLibraryProps = {
   templates?: PromptTemplate[];
-  onUse?: (prompt: string) => void;
-}) {
+  value?: string;
+  defaultValue?: string;
+  onSelect?: (id: string) => void;
+  onUse?: (
+    prompt: string,
+    template: PromptTemplate,
+    values: Record<string, string>,
+  ) => void;
+  onCopy?: (prompt: string) => void;
+  title?: string;
+  useLabel?: string;
+  className?: string;
+};
+const promptExamples: PromptTemplate[] = [
+  {
+    id: "meeting",
+    title: "Summarize a meeting",
+    category: "Notes",
+    body: "Summarize the meeting below for {audience} in under {length}.",
+    variables: { length: { default: "150 words" } },
+  },
+  {
+    id: "error",
+    title: "Explain an error",
+    category: "Debug",
+    body: "Explain this {language} error in plain words: {error}.",
+  },
+  {
+    id: "launch",
+    title: "Write a launch post",
+    category: "Writing",
+    body: "Write a concise launch post for {product}, aimed at {audience}.",
+  },
+];
+export function PromptLibrary({
+  templates = promptExamples,
+  value,
+  defaultValue,
+  onSelect,
+  onUse,
+  onCopy,
+  title = "Prompts",
+  useLabel = "Use prompt",
+  className = "",
+}: PromptLibraryProps) {
+  const [internal, setInternal] = React.useState(
+    defaultValue ?? templates[0]?.id,
+  );
+  const selectedId = value ?? internal;
+  const selected =
+    templates.find((template) => template.id === selectedId) ??
+    (value === undefined ? templates[0] : undefined);
   const [query, setQuery] = React.useState("");
-  const [selected, setSelected] = React.useState(templates[0]);
-  const [values, setValues] = React.useState<Record<string, string>>({});
-  const { copy, status } = UI.useCopy();
-  const vars = [...new Set(selected?.body.match(/\{[^}]+\}/g) ?? [])];
+  const [saved, setSaved] = React.useState<
+    Record<string, Record<string, string>>
+  >({});
+  const [announcement, setAnnouncement] = React.useState("");
+  const [error, setError] = React.useState("");
+  const [copied, setCopied] = React.useState<string>();
+  const fields = React.useRef<HTMLDivElement>(null);
+  const list = React.useRef<HTMLDivElement>(null);
+  const id = React.useId();
+  const variables = [
+    ...new Set(
+      Array.from(
+        selected?.body.matchAll(/\{([\w-]+)\}/g) ?? [],
+        (match) => match[1],
+      ),
+    ),
+  ];
+  const values = Object.fromEntries(
+    variables.map((name) => [
+      name,
+      saved[selected!.id]?.[name] ?? selected!.variables?.[name]?.default ?? "",
+    ]),
+  );
+  const missing = variables.filter((name) => !values[name].trim());
   const result =
     selected?.body.replace(
-      /\{([^}]+)\}/g,
-      (_, key) => values[key] || `{${key}}`,
+      /\{([\w-]+)\}/g,
+      (token, name: string) => values[name] || token,
     ) ?? "";
+  const visible = templates.filter((template) =>
+    `${template.title} ${template.category ?? ""}`
+      .toLowerCase()
+      .includes(query.trim().toLowerCase()),
+  );
+  const choose = (template: PromptTemplate, focus = false) => {
+    if (value === undefined) setInternal(template.id);
+    onSelect?.(template.id);
+    setError("");
+    setAnnouncement(`Selected ${template.title}.`);
+    if (focus)
+      list.current
+        ?.querySelectorAll<HTMLButtonElement>('[role="option"]')
+        [visible.indexOf(template)]?.focus();
+  };
+  const use = () => {
+    if (!selected) return;
+    if (missing.length) {
+      setAnnouncement(
+        `Fill ${missing.length} remaining variable${missing.length === 1 ? "" : "s"}.`,
+      );
+      fields.current
+        ?.querySelectorAll<HTMLInputElement>("input")
+        [variables.indexOf(missing[0])]?.focus();
+      return;
+    }
+    try {
+      onUse?.(result, selected, values);
+      setAnnouncement("Prompt used.");
+      setError("");
+    } catch (failure) {
+      setError(
+        failure instanceof Error
+          ? failure.message
+          : "Could not use this prompt.",
+      );
+    }
+  };
+  const copy = async () => {
+    setError("");
+    try {
+      if (!navigator.clipboard?.writeText)
+        throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(result);
+      setCopied(result);
+      setAnnouncement("Prompt copied.");
+      onCopy?.(result);
+    } catch {
+      setError(
+        "Could not copy automatically. Select and copy the prompt below.",
+      );
+    }
+  };
   return (
-    <UI.Panel title={title} className={className}>
-      <UI.Field
-        label="Search templates"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <div className="st-split">
-        <div>
-          {templates
-            .filter((x) => x.title.toLowerCase().includes(query.toLowerCase()))
-            .map((x) => (
-              <UI.Row
-                key={x.id}
-                title={x.title}
-                detail={x.category}
-                onClick={() => {
-                  setSelected(x);
-                  setValues({});
+    <div
+      className={`plb-root ${className}`}
+      style={{ width: "100%", maxWidth: 640 }}
+    >
+      <style>{`.plb-root{container:plb/inline-size}.plb-layout{display:grid;grid-template-columns:180px minmax(0,1fr);gap:14px}.plb-options{display:flex;flex-direction:column;gap:3px}.plb-option{width:100%;border:0;background:none;color:var(--st-fg);text-align:left;padding:10px;border-radius:7px}.plb-option[aria-selected=true]{background:var(--st-soft)}.plb-option strong{display:block;font-size:12px}.plb-root .st-code{white-space:pre-wrap;user-select:text}.plb-root .st-tile{padding:14px}.plb-root button[aria-disabled=true]{opacity:.5}.plb-root .st-field{margin:10px 0}@container plb(max-width:540px){.plb-layout{grid-template-columns:1fr}.plb-options{max-height:180px;overflow:auto}}`}</style>
+      <UI.Panel title={title}>
+        <UI.Field
+          label="Search templates"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              event.preventDefault();
+              setQuery("");
+            }
+            if (event.key === "ArrowDown" && visible[0]) {
+              event.preventDefault();
+              choose(visible[0], true);
+            }
+          }}
+        />
+        <div className="plb-layout">
+          <div
+            ref={list}
+            className="plb-options"
+            role="listbox"
+            aria-label={title}
+          >
+            {visible.map((template, index) => (
+              <button
+                type="button"
+                key={template.id}
+                className="plb-option"
+                role="option"
+                aria-selected={template.id === selected?.id}
+                tabIndex={
+                  template.id === selected?.id ||
+                  (!visible.some((item) => item.id === selected?.id) &&
+                    index === 0)
+                    ? 0
+                    : -1
+                }
+                onClick={() => choose(template)}
+                onKeyDown={(event) => {
+                  let next = index;
+                  if (event.key === "ArrowDown")
+                    next = Math.min(visible.length - 1, index + 1);
+                  else if (event.key === "ArrowUp")
+                    next = Math.max(0, index - 1);
+                  else if (event.key === "Home") next = 0;
+                  else if (event.key === "End") next = visible.length - 1;
+                  else return;
+                  event.preventDefault();
+                  choose(visible[next], true);
                 }}
-              />
+              >
+                <strong>{template.title}</strong>
+                {template.category && <small>{template.category}</small>}
+              </button>
             ))}
-        </div>
-        {selected && (
-          <div className="st-tile">
-            <strong>{selected.title}</strong>
-            {vars.map((v) => {
-              const key = v.slice(1, -1);
-              return (
-                <UI.Field
-                  key={key}
-                  label={key}
-                  value={values[key] ?? ""}
-                  onChange={(e) =>
-                    setValues((s) => ({ ...s, [key]: e.target.value }))
-                  }
-                />
-              );
-            })}
-            <pre className="st-code">{result}</pre>
-            <div className="st-actions">
-              <UI.Button onClick={() => copy(result)}>
-                {status === "Copied" ? "Copied ✓" : "Copy prompt"}
-              </UI.Button>
-              <UI.Button primary onClick={() => onUse?.(result)}>
-                Use prompt
-              </UI.Button>
-            </div>
+            {!visible.length && (
+              <p className="st-muted">No matching templates</p>
+            )}
           </div>
+          {selected ? (
+            <div className="st-tile" ref={fields}>
+              <strong>{selected.title}</strong>
+              {variables.map((name, index) => (
+                <div key={name}>
+                  <UI.Field
+                    label={name}
+                    value={values[name]}
+                    aria-describedby={
+                      selected.variables?.[name]?.description
+                        ? `${id}-description-${index}`
+                        : undefined
+                    }
+                    onChange={(event) => {
+                      const text = event.target.value;
+                      setSaved((current) => ({
+                        ...current,
+                        [selected.id]: {
+                          ...current[selected.id],
+                          [name]: text,
+                        },
+                      }));
+                      setAnnouncement(
+                        !variables.some(
+                          (key) => !(key === name ? text : values[key]).trim(),
+                        )
+                          ? "All variables filled. Ready to use."
+                          : "",
+                      );
+                    }}
+                    onKeyDown={(event) => {
+                      if (
+                        event.key !== "Enter" ||
+                        event.nativeEvent.isComposing
+                      )
+                        return;
+                      event.preventDefault();
+                      const next = variables.findIndex(
+                        (key, position) =>
+                          position > index && !values[key].trim(),
+                      );
+                      if (next >= 0)
+                        fields.current
+                          ?.querySelectorAll<HTMLInputElement>("input")
+                          [next]?.focus();
+                      else use();
+                    }}
+                  />
+                  {selected.variables?.[name]?.description && (
+                    <small id={`${id}-description-${index}`}>
+                      {selected.variables[name].description}
+                    </small>
+                  )}
+                </div>
+              ))}
+              <pre
+                className="st-code"
+                tabIndex={0}
+                aria-label="Assembled prompt"
+              >
+                {result}
+              </pre>
+              <small>
+                {missing.length
+                  ? `${missing.length} variable${missing.length === 1 ? "" : "s"} remaining`
+                  : "Ready to use"}{" "}
+                · ~{Math.ceil(result.length / 4)} tokens
+              </small>
+              <div className="st-actions">
+                <UI.Button onClick={() => void copy()}>
+                  {copied === result ? "Copied ✓" : "Copy prompt"}
+                </UI.Button>
+                <UI.Button
+                  primary
+                  aria-disabled={missing.length > 0}
+                  onClick={use}
+                >
+                  {useLabel}
+                </UI.Button>
+              </div>
+            </div>
+          ) : (
+            <UI.Empty>No template selected</UI.Empty>
+          )}
+        </div>
+        {error && (
+          <p role="alert" style={{ color: "var(--st-red)" }}>
+            {error}
+          </p>
         )}
-      </div>
-    </UI.Panel>
+        <span role="status" className="st-status">
+          {announcement}
+        </span>
+      </UI.Panel>
+    </div>
   );
 }
-
-export default PromptLibrary;
+export default Demo;
+export function Demo() {
+  return <PromptLibrary />;
+}
