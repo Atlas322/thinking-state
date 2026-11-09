@@ -1,0 +1,3007 @@
+{
+  "elements": [
+    {
+      "attrs": [
+        [
+          "aria-label",
+          "Agent handoff relay"
+        ],
+        [
+          "style",
+          "--ho-count: 3;"
+        ]
+      ],
+      "classes": "ho-root ",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "1030px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "8px 0px 0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 1369.390625,
+        "height": 1030,
+        "left": 33,
+        "right": 357,
+        "top": 339.390625,
+        "width": 324,
+        "x": 33,
+        "y": 339.390625
+      },
+      "tag": "SECTION"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ho-lines",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "1030px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "rgb(130, 188, 255)",
+        "strokeWidth": "1.5px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 1369.390625,
+        "height": 1030,
+        "left": 33,
+        "right": 357,
+        "top": 339.390625,
+        "width": 324,
+        "x": 33,
+        "y": 339.390625
+      },
+      "tag": "svg"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-layout",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "32px",
+        "height": "1022px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 1369.390625,
+        "height": 1022,
+        "left": 33,
+        "right": 357,
+        "top": 347.390625,
+        "width": 324,
+        "x": 33,
+        "y": 347.390625
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-stages",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "contents",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "16px",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 8px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "style",
+          "order: 0;"
+        ]
+      ],
+      "classes": "ho-stage",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "146px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 493.390625,
+        "height": 146,
+        "left": 33,
+        "right": 357,
+        "top": 347.390625,
+        "width": 324,
+        "x": 33,
+        "y": 347.390625
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-label",
+          "Researcher"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-agent  ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "14px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 10px 16px -6px",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "146px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "14px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 493.390625,
+        "height": 146,
+        "left": 33,
+        "right": 357,
+        "top": 347.390625,
+        "width": 324,
+        "x": 33,
+        "y": 347.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-agent-head",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "9px",
+        "height": "30px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 391.390625,
+        "height": 30,
+        "left": 47,
+        "right": 343,
+        "top": 361.390625,
+        "width": 296,
+        "x": 47,
+        "y": 361.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-avatar claude",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(214, 149, 118)",
+        "borderRadius": "7px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 0.5px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(214, 149, 118)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "26px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "26px"
+      },
+      "rect": {
+        "bottom": 389.390625,
+        "height": 26,
+        "left": 47,
+        "right": 73,
+        "top": 363.390625,
+        "width": 26,
+        "x": 47,
+        "y": 363.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-identity",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "30px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "159.406px"
+      },
+      "rect": {
+        "bottom": 391.390625,
+        "height": 30,
+        "left": 82,
+        "right": 241.40625,
+        "top": 361.390625,
+        "width": 159.40625,
+        "x": 82,
+        "y": 361.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-cost",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "25.6797px"
+      },
+      "rect": {
+        "bottom": 386.390625,
+        "height": 20,
+        "left": 250.40625,
+        "right": 276.0859375,
+        "top": 366.390625,
+        "width": 25.6796875,
+        "x": 250.40625,
+        "y": 366.390625
+      },
+      "tag": "SPAN",
+      "text": "$1.31"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-agent-state working",
+      "css": {
+        "backgroundColor": "rgba(77, 148, 213, 0.118)",
+        "border": "0px none rgb(129, 180, 233)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "color": "rgb(129, 180, 233)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "4px",
+        "height": "18px",
+        "lineHeight": "18px",
+        "margin": "0px",
+        "padding": "3px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "57.9141px"
+      },
+      "rect": {
+        "bottom": 385.390625,
+        "height": 18,
+        "left": 285.0859375,
+        "right": 343,
+        "top": 367.390625,
+        "width": 57.9140625,
+        "x": 285.0859375,
+        "y": 367.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-description",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flow-root",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "36px",
+        "lineHeight": "18px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 437.390625,
+        "height": 36,
+        "left": 47,
+        "right": 343,
+        "top": 401.390625,
+        "width": 296,
+        "x": 47,
+        "y": 401.390625
+      },
+      "tag": "SPAN",
+      "text": "Finds the sources, pulls the facts and decides the angle."
+    },
+    {
+      "attrs": [],
+      "classes": "ho-current-task",
+      "css": {
+        "backgroundColor": "rgb(246, 246, 247)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "8px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "32px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "6px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 479.390625,
+        "height": 32,
+        "left": 47,
+        "right": 343,
+        "top": 447.390625,
+        "width": 296,
+        "x": 47,
+        "y": 447.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ho-task-icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(117, 183, 184)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(117, 183, 184)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "10.3125px"
+      },
+      "rect": {
+        "bottom": 473.390625,
+        "height": 20,
+        "left": 53,
+        "right": 63.3125,
+        "top": 453.390625,
+        "width": 10.3125,
+        "x": 53,
+        "y": 453.390625
+      },
+      "tag": "SPAN",
+      "text": "✦"
+    },
+    {
+      "attrs": [
+        [
+          "style",
+          "order: 2;"
+        ]
+      ],
+      "classes": "ho-stage",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "146px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 931.390625,
+        "height": 146,
+        "left": 33,
+        "right": 357,
+        "top": 785.390625,
+        "width": 324,
+        "x": 33,
+        "y": 785.390625
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-label",
+          "Writer"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-agent  ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "14px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 10px 16px -6px",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "146px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "14px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 931.390625,
+        "height": 146,
+        "left": 33,
+        "right": 357,
+        "top": 785.390625,
+        "width": 324,
+        "x": 33,
+        "y": 785.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-agent-head",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "9px",
+        "height": "30px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 829.390625,
+        "height": 30,
+        "left": 47,
+        "right": 343,
+        "top": 799.390625,
+        "width": 296,
+        "x": 47,
+        "y": 799.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-avatar openai",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "7px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 0.5px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "26px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "26px"
+      },
+      "rect": {
+        "bottom": 827.390625,
+        "height": 26,
+        "left": 47,
+        "right": 73,
+        "top": 801.390625,
+        "width": 26,
+        "x": 47,
+        "y": 801.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-identity",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "30px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "190.203px"
+      },
+      "rect": {
+        "bottom": 829.390625,
+        "height": 30,
+        "left": 82,
+        "right": 272.203125,
+        "top": 799.390625,
+        "width": 190.203125,
+        "x": 82,
+        "y": 799.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-cost",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "29.4922px"
+      },
+      "rect": {
+        "bottom": 824.390625,
+        "height": 20,
+        "left": 281.203125,
+        "right": 310.6953125,
+        "top": 804.390625,
+        "width": 29.4921875,
+        "x": 281.203125,
+        "y": 804.390625
+      },
+      "tag": "SPAN",
+      "text": "$0.57"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-agent-state ",
+      "css": {
+        "backgroundColor": "rgb(246, 246, 247)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "4px",
+        "height": "18px",
+        "lineHeight": "18px",
+        "margin": "0px",
+        "padding": "3px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "23.3047px"
+      },
+      "rect": {
+        "bottom": 823.390625,
+        "height": 18,
+        "left": 319.6953125,
+        "right": 343,
+        "top": 805.390625,
+        "width": 23.3046875,
+        "x": 319.6953125,
+        "y": 805.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-description",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flow-root",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "36px",
+        "lineHeight": "18px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 875.390625,
+        "height": 36,
+        "left": 47,
+        "right": 343,
+        "top": 839.390625,
+        "width": 296,
+        "x": 47,
+        "y": 839.390625
+      },
+      "tag": "SPAN",
+      "text": "Turns the brief into a first draft in the team’s voice."
+    },
+    {
+      "attrs": [],
+      "classes": "ho-current-task",
+      "css": {
+        "backgroundColor": "rgb(246, 246, 247)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "8px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "32px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "6px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 917.390625,
+        "height": 32,
+        "left": 47,
+        "right": 343,
+        "top": 885.390625,
+        "width": 296,
+        "x": 47,
+        "y": 885.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "style",
+          "order: 4;"
+        ]
+      ],
+      "classes": "ho-stage",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "146px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 1369.390625,
+        "height": 146,
+        "left": 33,
+        "right": 357,
+        "top": 1223.390625,
+        "width": 324,
+        "x": 33,
+        "y": 1223.390625
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-label",
+          "Reviewer"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-agent  ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "14px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 10px 16px -6px",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "height": "146px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "14px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "324px"
+      },
+      "rect": {
+        "bottom": 1369.390625,
+        "height": 146,
+        "left": 33,
+        "right": 357,
+        "top": 1223.390625,
+        "width": 324,
+        "x": 33,
+        "y": 1223.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-agent-head",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "9px",
+        "height": "30px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 1267.390625,
+        "height": 30,
+        "left": 47,
+        "right": 343,
+        "top": 1237.390625,
+        "width": 296,
+        "x": 47,
+        "y": 1237.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-avatar gemini",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(138, 175, 255)",
+        "borderRadius": "7px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 0.5px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(138, 175, 255)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "26px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "26px"
+      },
+      "rect": {
+        "bottom": 1265.390625,
+        "height": 26,
+        "left": 47,
+        "right": 73,
+        "top": 1239.390625,
+        "width": 26,
+        "x": 47,
+        "y": 1239.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-identity",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "30px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "189.359px"
+      },
+      "rect": {
+        "bottom": 1267.390625,
+        "height": 30,
+        "left": 82,
+        "right": 271.359375,
+        "top": 1237.390625,
+        "width": 189.359375,
+        "x": 82,
+        "y": 1237.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-cost",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "30.3359px"
+      },
+      "rect": {
+        "bottom": 1262.390625,
+        "height": 20,
+        "left": 280.359375,
+        "right": 310.6953125,
+        "top": 1242.390625,
+        "width": 30.3359375,
+        "x": 280.359375,
+        "y": 1242.390625
+      },
+      "tag": "SPAN",
+      "text": "$0.30"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-agent-state ",
+      "css": {
+        "backgroundColor": "rgb(246, 246, 247)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "4px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "4px",
+        "height": "18px",
+        "lineHeight": "18px",
+        "margin": "0px",
+        "padding": "3px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "23.3047px"
+      },
+      "rect": {
+        "bottom": 1261.390625,
+        "height": 18,
+        "left": 319.6953125,
+        "right": 343,
+        "top": 1243.390625,
+        "width": 23.3046875,
+        "x": 319.6953125,
+        "y": 1243.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-description",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flow-root",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "36px",
+        "lineHeight": "18px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 1313.390625,
+        "height": 36,
+        "left": 47,
+        "right": 343,
+        "top": 1277.390625,
+        "width": 296,
+        "x": 47,
+        "y": 1277.390625
+      },
+      "tag": "SPAN",
+      "text": "Checks every claim against its source before it ships."
+    },
+    {
+      "attrs": [],
+      "classes": "ho-current-task",
+      "css": {
+        "backgroundColor": "rgb(246, 246, 247)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "8px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "32px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "6px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 1355.390625,
+        "height": 32,
+        "left": 47,
+        "right": 343,
+        "top": 1323.390625,
+        "width": 296,
+        "x": 47,
+        "y": 1323.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-columns",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "contents",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "16px",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "72px calc(16.6667% + 8px) 0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "style",
+          "order: 1;"
+        ]
+      ],
+      "classes": "ho-column",
+      "css": {
+        "backgroundColor": "rgb(246, 246, 247)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "14px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "228px",
+        "lineHeight": "20px",
+        "margin": "0px 14px",
+        "padding": "4px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 753.390625,
+        "height": 228,
+        "left": 47,
+        "right": 343,
+        "top": 525.390625,
+        "width": 296,
+        "x": 47,
+        "y": 525.390625
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-avatar claude",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(214, 149, 118)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 0.5px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(214, 149, 118)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "9px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "16px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 552.390625,
+        "height": 16,
+        "left": 59,
+        "right": 75,
+        "top": 536.390625,
+        "width": 16,
+        "x": 59,
+        "y": 536.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-avatar openai",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 0.5px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(133, 133, 138)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "9px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "16px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 552.390625,
+        "height": 16,
+        "left": 163.078125,
+        "right": 179.078125,
+        "top": 536.390625,
+        "width": 16,
+        "x": 163.078125,
+        "y": 536.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "list"
+        ],
+        [
+          "aria-label",
+          "Researcher to Writer handoffs"
+        ]
+      ],
+      "classes": "ho-cards",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "height": "260px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "1px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 819.390625,
+        "height": 260,
+        "left": 51,
+        "right": 339,
+        "top": 559.390625,
+        "width": 288,
+        "x": 51,
+        "y": 559.390625
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "listitem"
+        ],
+        [
+          "draggable",
+          "true"
+        ]
+      ],
+      "classes": "ho-card ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(229, 229, 232) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 642.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 560.390625,
+        "width": 288,
+        "x": 51,
+        "y": 560.390625
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-card-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "3px",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 642.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 560.390625,
+        "width": 288,
+        "x": 51,
+        "y": 560.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "18px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 587.390625,
+        "height": 18,
+        "left": 60,
+        "right": 330,
+        "top": 569.390625,
+        "width": 270,
+        "x": 60,
+        "y": 569.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ho-task-icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(117, 183, 184)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(117, 183, 184)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "10.3125px"
+      },
+      "rect": {
+        "bottom": 588.390625,
+        "height": 20,
+        "left": 60,
+        "right": 70.3125,
+        "top": 568.390625,
+        "width": 10.3125,
+        "x": 60,
+        "y": 568.390625
+      },
+      "tag": "SPAN",
+      "text": "✦"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-summary",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "17px",
+        "lineHeight": "17px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 607.390625,
+        "height": 17,
+        "left": 60,
+        "right": 330,
+        "top": 590.390625,
+        "width": 270,
+        "x": 60,
+        "y": 590.390625
+      },
+      "tag": "SPAN",
+      "text": "50 good replies, refund-policy.md"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-state ",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "23px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "3px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 633.390625,
+        "height": 23,
+        "left": 60,
+        "right": 330,
+        "top": 610.390625,
+        "width": 270,
+        "x": 60,
+        "y": 610.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "listitem"
+        ],
+        [
+          "draggable",
+          "true"
+        ]
+      ],
+      "classes": "ho-card ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(229, 229, 232) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 728.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 646.390625,
+        "width": 288,
+        "x": 51,
+        "y": 646.390625
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-card-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "3px",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 728.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 646.390625,
+        "width": 288,
+        "x": 51,
+        "y": 646.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "18px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 673.390625,
+        "height": 18,
+        "left": 60,
+        "right": 330,
+        "top": 655.390625,
+        "width": 270,
+        "x": 60,
+        "y": 655.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ho-task-icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(117, 183, 184)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(117, 183, 184)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "10.3125px"
+      },
+      "rect": {
+        "bottom": 674.390625,
+        "height": 20,
+        "left": 60,
+        "right": 70.3125,
+        "top": 654.390625,
+        "width": 10.3125,
+        "x": 60,
+        "y": 654.390625
+      },
+      "tag": "SPAN",
+      "text": "✦"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-summary",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "17px",
+        "lineHeight": "17px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 693.390625,
+        "height": 17,
+        "left": 60,
+        "right": 330,
+        "top": 676.390625,
+        "width": 270,
+        "x": 60,
+        "y": 676.390625
+      },
+      "tag": "SPAN",
+      "text": "endpoints.yaml, 3 examples, Writing guidelines"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-state ",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "23px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "3px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 719.390625,
+        "height": 23,
+        "left": 60,
+        "right": 330,
+        "top": 696.390625,
+        "width": 270,
+        "x": 60,
+        "y": 696.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "listitem"
+        ],
+        [
+          "draggable",
+          "true"
+        ]
+      ],
+      "classes": "ho-card ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(229, 229, 232) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 814.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 732.390625,
+        "width": 288,
+        "x": 51,
+        "y": 732.390625
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-card-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "3px",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 814.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 732.390625,
+        "width": 288,
+        "x": 51,
+        "y": 732.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "18px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 759.390625,
+        "height": 18,
+        "left": 60,
+        "right": 330,
+        "top": 741.390625,
+        "width": 270,
+        "x": 60,
+        "y": 741.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ho-task-icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(117, 183, 184)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(117, 183, 184)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "10.3125px"
+      },
+      "rect": {
+        "bottom": 760.390625,
+        "height": 20,
+        "left": 60,
+        "right": 70.3125,
+        "top": 740.390625,
+        "width": 10.3125,
+        "x": 60,
+        "y": 740.390625
+      },
+      "tag": "SPAN",
+      "text": "✦"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-summary",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "17px",
+        "lineHeight": "17px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 779.390625,
+        "height": 17,
+        "left": 60,
+        "right": 330,
+        "top": 762.390625,
+        "width": 270,
+        "x": 60,
+        "y": 762.390625
+      },
+      "tag": "SPAN",
+      "text": "Launch brief"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-state warning",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "23px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "3px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 805.390625,
+        "height": 23,
+        "left": 60,
+        "right": 330,
+        "top": 782.390625,
+        "width": 270,
+        "x": 60,
+        "y": 782.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "style",
+          "order: 3;"
+        ]
+      ],
+      "classes": "ho-column",
+      "css": {
+        "backgroundColor": "rgb(246, 246, 247)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "14px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "228px",
+        "lineHeight": "20px",
+        "margin": "0px 14px",
+        "padding": "4px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "296px"
+      },
+      "rect": {
+        "bottom": 1191.390625,
+        "height": 228,
+        "left": 47,
+        "right": 343,
+        "top": 963.390625,
+        "width": 296,
+        "x": 47,
+        "y": 963.390625
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-avatar openai",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 0.5px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(133, 133, 138)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "9px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "16px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 990.390625,
+        "height": 16,
+        "left": 59,
+        "right": 75,
+        "top": 974.390625,
+        "width": 16,
+        "x": 59,
+        "y": 974.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-avatar gemini",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(138, 175, 255)",
+        "borderRadius": "4px",
+        "boxShadow": "rgba(16, 16, 24, 0.08) 0px 0px 0px 0.5px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(138, 175, 255)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "9px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "16px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 990.390625,
+        "height": 16,
+        "left": 135.296875,
+        "right": 151.296875,
+        "top": 974.390625,
+        "width": 16,
+        "x": 135.296875,
+        "y": 974.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "list"
+        ],
+        [
+          "aria-label",
+          "Writer to Reviewer handoffs"
+        ]
+      ],
+      "classes": "ho-cards",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "height": "260px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "1px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 1257.390625,
+        "height": 260,
+        "left": 51,
+        "right": 339,
+        "top": 997.390625,
+        "width": 288,
+        "x": 51,
+        "y": 997.390625
+      },
+      "tag": "DIV"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "listitem"
+        ],
+        [
+          "draggable",
+          "true"
+        ]
+      ],
+      "classes": "ho-card ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(229, 229, 232) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 1080.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 998.390625,
+        "width": 288,
+        "x": 51,
+        "y": 998.390625
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-card-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "3px",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 1080.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 998.390625,
+        "width": 288,
+        "x": 51,
+        "y": 998.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "18px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1025.390625,
+        "height": 18,
+        "left": 60,
+        "right": 330,
+        "top": 1007.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1007.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ho-task-icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(117, 183, 184)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(117, 183, 184)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "10.3125px"
+      },
+      "rect": {
+        "bottom": 1026.390625,
+        "height": 20,
+        "left": 60,
+        "right": 70.3125,
+        "top": 1006.390625,
+        "width": 10.3125,
+        "x": 60,
+        "y": 1006.390625
+      },
+      "tag": "SPAN",
+      "text": "✦"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-summary",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "17px",
+        "lineHeight": "17px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1045.390625,
+        "height": 17,
+        "left": 60,
+        "right": 330,
+        "top": 1028.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1028.390625
+      },
+      "tag": "SPAN",
+      "text": "Macro draft, Tone: warm"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-state ",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "23px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "3px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1071.390625,
+        "height": 23,
+        "left": 60,
+        "right": 330,
+        "top": 1048.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1048.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "listitem"
+        ],
+        [
+          "draggable",
+          "true"
+        ]
+      ],
+      "classes": "ho-card ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(229, 229, 232) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 1166.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 1084.390625,
+        "width": 288,
+        "x": 51,
+        "y": 1084.390625
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-card-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "3px",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 1166.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 1084.390625,
+        "width": 288,
+        "x": 51,
+        "y": 1084.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "18px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1111.390625,
+        "height": 18,
+        "left": 60,
+        "right": 330,
+        "top": 1093.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1093.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ho-task-icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(117, 183, 184)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(117, 183, 184)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "10.3125px"
+      },
+      "rect": {
+        "bottom": 1112.390625,
+        "height": 20,
+        "left": 60,
+        "right": 70.3125,
+        "top": 1092.390625,
+        "width": 10.3125,
+        "x": 60,
+        "y": 1092.390625
+      },
+      "tag": "SPAN",
+      "text": "✦"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-summary",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "17px",
+        "lineHeight": "17px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1131.390625,
+        "height": 17,
+        "left": 60,
+        "right": 330,
+        "top": 1114.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1114.390625
+      },
+      "tag": "SPAN",
+      "text": "Draft v2, 3 examples"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-state ",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "23px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "3px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1157.390625,
+        "height": 23,
+        "left": 60,
+        "right": 330,
+        "top": 1134.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1134.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "listitem"
+        ],
+        [
+          "draggable",
+          "true"
+        ]
+      ],
+      "classes": "ho-card ",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "rgb(229, 229, 232) 0px 0px 0px 1px, rgba(16, 16, 24, 0.04) 0px 1px 2px 0px",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 1252.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 1170.390625,
+        "width": 288,
+        "x": 51,
+        "y": 1170.390625
+      },
+      "tag": "ARTICLE"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "aria-expanded",
+          "false"
+        ]
+      ],
+      "classes": "ho-card-toggle",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "10px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "3px",
+        "height": "82px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "9px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "288px"
+      },
+      "rect": {
+        "bottom": 1252.390625,
+        "height": 82,
+        "left": 51,
+        "right": 339,
+        "top": 1170.390625,
+        "width": 288,
+        "x": 51,
+        "y": 1170.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-title",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "height": "18px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1197.390625,
+        "height": 18,
+        "left": 60,
+        "right": 330,
+        "top": 1179.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1179.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ho-task-icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(117, 183, 184)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(117, 183, 184)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "10.3125px"
+      },
+      "rect": {
+        "bottom": 1198.390625,
+        "height": 20,
+        "left": 60,
+        "right": 70.3125,
+        "top": 1178.390625,
+        "width": 10.3125,
+        "x": 60,
+        "y": 1178.390625
+      },
+      "tag": "SPAN",
+      "text": "✦"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-summary",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "17px",
+        "lineHeight": "17px",
+        "margin": "0px",
+        "padding": "0px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1217.390625,
+        "height": 17,
+        "left": 60,
+        "right": 330,
+        "top": 1200.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1200.390625
+      },
+      "tag": "SPAN",
+      "text": "Email draft"
+    },
+    {
+      "attrs": [],
+      "classes": "ho-card-state warning",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(133, 133, 138)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(133, 133, 138)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "height": "23px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "3px 0px 0px 22px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "270px"
+      },
+      "rect": {
+        "bottom": 1243.390625,
+        "height": 23,
+        "left": 60,
+        "right": 330,
+        "top": 1220.390625,
+        "width": 270,
+        "x": 60,
+        "y": 1220.390625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "role",
+          "status"
+        ],
+        [
+          "aria-live",
+          "polite"
+        ]
+      ],
+      "classes": "ho-live",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(39, 39, 42)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(39, 39, 42)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "height": "1px",
+        "lineHeight": "20px",
+        "margin": "13px 0px",
+        "padding": "0px",
+        "position": "absolute",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "1px"
+      },
+      "rect": {
+        "bottom": 1383.390625,
+        "height": 1,
+        "left": 33,
+        "right": 34,
+        "top": 1382.390625,
+        "width": 1,
+        "x": 33,
+        "y": 1382.390625
+      },
+      "tag": "P",
+      "text": ""
+    }
+  ],
+  "url": "http://127.0.0.1:5173/#/agent-handoff",
+  "viewport": [
+    390,
+    900
+  ]
+}

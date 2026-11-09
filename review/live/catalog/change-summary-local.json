@@ -1,0 +1,377 @@
+{
+  "controls": [],
+  "metrics": [
+    {
+      "cls": "ui-csc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 587.1875,
+        "height": 188,
+        "left": 609,
+        "right": 1089,
+        "top": 399.1875,
+        "width": 480,
+        "x": 609,
+        "y": 399.1875
+      },
+      "tag": "SECTION",
+      "text": "What's changedThis weekRevenueUp 12.8% to $42,800Active usersUp 8.2% to 12,450ChurnDown 0.4% to 2.1%"
+    },
+    {
+      "cls": "ui-csc__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20px",
+        "padding": "0px 16px"
+      },
+      "rect": {
+        "bottom": 443.1875,
+        "height": 44,
+        "left": 609,
+        "right": 1089,
+        "top": 399.1875,
+        "width": 480,
+        "x": 609,
+        "y": 399.1875
+      },
+      "tag": "HEADER",
+      "text": "What's changedThis week"
+    },
+    {
+      "cls": "ui-csc__title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 431.1875,
+        "height": 20,
+        "left": 625,
+        "right": 750.4296875,
+        "top": 411.1875,
+        "width": 125.4296875,
+        "x": 625,
+        "y": 411.1875
+      },
+      "tag": "SPAN",
+      "text": "What's changed"
+    },
+    {
+      "cls": "ui-csc__icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 429.1875,
+        "height": 16,
+        "left": 625,
+        "right": 641,
+        "top": 413.1875,
+        "width": 16,
+        "x": 625,
+        "y": 413.1875
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-csc__title-text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 431.1875,
+        "height": 20,
+        "left": 649,
+        "right": 750.4296875,
+        "top": 411.1875,
+        "width": 101.4296875,
+        "x": 649,
+        "y": 411.1875
+      },
+      "tag": "SPAN",
+      "text": "What's changed"
+    },
+    {
+      "cls": "ui-csc__period",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 429.1875,
+        "height": 16,
+        "left": 1015.359375,
+        "right": 1073,
+        "top": 413.1875,
+        "width": 57.640625,
+        "x": 1015.359375,
+        "y": 413.1875
+      },
+      "tag": "SPAN",
+      "text": "This week"
+    },
+    {
+      "cls": "ui-csc__list",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 587.1875,
+        "height": 144,
+        "left": 609,
+        "right": 1089,
+        "top": 443.1875,
+        "width": 480,
+        "x": 609,
+        "y": 443.1875
+      },
+      "tag": "DL",
+      "text": "RevenueUp 12.8% to $42,800Active usersUp 8.2% to 12,450ChurnDown 0.4% to 2.1%"
+    },
+    {
+      "cls": "ui-csc__row",
+      "css": {
+        "animationDuration": "0.52s",
+        "animationName": "ui-csc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "16px",
+        "lineHeight": "20px",
+        "padding": "0px 16px"
+      },
+      "rect": {
+        "bottom": 495.1875,
+        "height": 48,
+        "left": 609,
+        "right": 1089,
+        "top": 447.1875,
+        "width": 480,
+        "x": 609,
+        "y": 447.1875
+      },
+      "tag": "DIV",
+      "text": "RevenueUp 12.8% to $42,800"
+    },
+    {
+      "cls": "ui-csc__label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 481.4375,
+        "height": 20,
+        "left": 625,
+        "right": 797.796875,
+        "top": 461.4375,
+        "width": 172.796875,
+        "x": 625,
+        "y": 461.4375
+      },
+      "tag": "DT",
+      "text": "Revenue"
+    },
+    {
+      "cls": "ui-csc__change",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 481.4375,
+        "height": 20,
+        "left": 813.796875,
+        "right": 1073,
+        "top": 461.4375,
+        "width": 259.203125,
+        "x": 813.796875,
+        "y": 461.4375
+      },
+      "tag": "DD",
+      "text": "Up 12.8% to $42,800"
+    },
+    {
+      "cls": "ui-csc__trend",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(26, 154, 82, 0.08)",
+        "border": "0px none rgb(26, 154, 82)",
+        "borderRadius": "5px",
+        "color": "rgb(26, 154, 82)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 481.4375,
+        "height": 20,
+        "left": 813.796875,
+        "right": 833.796875,
+        "top": 461.4375,
+        "width": 20,
+        "x": 813.796875,
+        "y": 461.4375
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-csc__text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flow-root",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 481.4375,
+        "height": 20,
+        "left": 841.796875,
+        "right": 972.3671875,
+        "top": 461.4375,
+        "width": 130.5703125,
+        "x": 841.796875,
+        "y": 461.4375
+      },
+      "tag": "SPAN",
+      "text": "Up 12.8% to $42,800"
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M2.5 4h4M2.5 8h8M6.5 12h7M9.5 4h1\"></path></svg>",
+    "<svg viewBox=\"0 0 12 12\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 9.5v-7M3 5.5l3-3 3 3\"></path></svg>",
+    "<svg viewBox=\"0 0 12 12\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 9.5v-7M3 5.5l3-3 3 3\"></path></svg>",
+    "<svg viewBox=\"0 0 12 12\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 2.5v7M3 6.5l3 3 3-3\"></path></svg>"
+  ],
+  "url": "http://127.0.0.1:5173/#/change-summary",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- complementary:\n  - button \"Component Studio home\":\n    - text: s\n    - generic: ·\n    - generic: componentstudio\n    - generic: \"01\"\n  - textbox \"Search components\":\n    - /placeholder: Find a component…\n  - generic: /\n  - button \"▦ All components 90\":\n    - generic: ▦\n    - text: All components\n    - generic: \"90\"\n  - button \"Favorites 0\":\n    - text: Favorites\n    - generic: \"0\"\n  - navigation \"Components\":\n    - generic: ⌘\n    - text: Agents\n    - generic: \"43\"\n    - button \"Agent Checkpoints\":\n      - generic: Agent Checkpoints\n    - button \"Agent Cursors\":\n      - generic: Agent Cursors\n    - button \"Agent Findings\":\n      - generic: Agent Findings\n    - button \"Agent Fleet\":\n      - generic: Agent Fleet\n    - button \"Agent Graph\":\n      - generic: Agent Graph\n    - button \"Agent Handoff\":\n      - generic: Agent Handoff\n    - button \"Agent Inbox\":\n      - generic: Agent Inbox\n    - button \"Agent Lanes\":\n      - generic: Agent Lanes\n    - button \"Agent Ledger\":\n      - generic: Agent Ledger\n    - button \"Agent Monitor\":\n      - generic: Agent Monitor\n    - button \"Agent Plan\":\n      - generic: Agent Plan\n    - button \"Agent Queue\":\n      - generic: Agent Queue\n    - button \"Agent Recap\":\n      - generic: Agent Recap\n    - button \"Agent Steering\":\n      - generic: Agent Steering\n    - button \"Agent Trail\":\n      - generic: Agent Trail\n    - button \"Agent Tree\":\n      - generic: Agent Tree\n    - button \"Approval Card\":\n      - generic: Approval Card\n    - button \"Approval Gates\":\n      - generic: Approval Gates\n    - button \"Autonomy Dial\":\n      - generic: Autonomy Dial\n    - button \"Away Summary\":\n      - generic: Away Summary\n    - button \"Collaboration Stream\":\n      - generic: Collaboration Stream\n    - button \"Conflict Radar\":\n      - generic: Conflict Radar\n    - button \"Context Map\":\n      - generic: Context Map\n    - button \"Context Window\":\n      - generic: Context Window\n    - button \"Cost Waterfall\":\n      - generic: Cost Waterfall\n    - button \"Decision Card\":\n      - generic: Decision Card\n    - button \"Decision Tree\":\n      - generic: Decision Tree\n    - button \"Delegate Board\":\n      - generic: Delegate Board\n    - button \"Fallback Chain\":\n      - generic: Fallback Chain\n    - button \"Fan-out Grid\":\n      - generic: Fan-out Grid\n    - button \"Inline Diff\":\n      - generic: Inline Diff\n    - button \"Judge Bracket\":\n      - generic: Judge Bracket\n    - button \"Memory Panel\":\n      - generic: Memory Panel\n    - button \"Parallel Attempts\":\n      - generic: Parallel Attempts\n    - button \"Permission Request\":\n      - generic: Permission Request\n    - button \"Plan vs Actual\":\n      - generic: Plan vs Actual\n    - button \"Review Center\":\n      - generic: Review Center\n    - button \"Root Cause Tree\":\n      - generic: Root Cause Tree\n    - button \"Running Now\":\n      - generic: Running Now\n    - button \"Scheduled Runs\":\n      - generic: Scheduled Runs\n    - button \"Tool Access Map\":\n      - generic: Tool Access Map\n    - button \"Tool Call Card\":\n      - generic: Tool Call Card\n    - button \"Trace Waterfall\":\n      - generic: Trace Waterfall\n    - generic: ◌\n    - text: Chat\n    - generic: \"10\"\n    - button \"AI Answer\":\n      - generic: AI Answer\n    - button \"Chat Composer\":\n      - generic: Chat Composer\n    - button \"Cited Answer\":\n      - generic: Cited Answer\n    - button \"Comment Thread\":\n      - generic: Comment Thread\n    - button \"Comments Panel\":\n      - generic: Comments Panel\n    - button \"Message Actions\":\n      - generic: Message Actions\n    - button \"Model Picker\":\n      - generic: Model Picker\n    - button \"Thinking Loader\":\n      - generic: Thinking Loader\n    - button \"Thinking State\":\n      - generic: Thinking State\n    - button \"Writing Assistant\":\n      - generic: Writing Assistant\n    - generic: ⊞\n    - text: Inputs\n    - generic: \"15\"\n    - button \"Billing Schedule\":\n      - generic: Billing Schedule\n    - button \"Checkbox\":\n      - generic: Checkbox\n    - button \"Combobox\":\n      - generic: Combobox\n    - button \"Date Range Picker\":\n      - generic: Date Range Picker\n    - button \"Dropzone\":\n      - generic: Dropzone\n    - button \"Filter Menu\":\n      - generic: Filter Menu\n    - button \"Integration Settings\":\n      - generic: Integration Settings\n    - button \"OTP Input\":\n      - generic: OTP Input\n    - button \"Prompt Library\":\n      - generic: Prompt Library\n    - button \"Select\":\n      - generic: Select\n    - button \"Stepper Form\":\n      - generic: Stepper Form\n    - button \"Switch\":\n      - generic: Switch\n    - button \"Tag Input\":\n      - generic: Tag Input\n    - button \"Text Area\":\n      - generic: Text Area\n    - button \"Text Field\":\n      - generic: Text Field\n    - generic: ▤\n    - text: Data display\n    - generic: \"7\"\n    - button \"Breakdown Chart\":\n      - generic: Breakdown Chart\n    - button \"Change Summary\":\n      - generic: Change Summary\n    - button \"Compact Breakdown\":\n      - generic: Compact Breakdown\n    - button \"Data Table\":\n      - generic: Data Table\n    - button \"Experiment Card\":\n      - generic: Experiment Card\n    - button \"KPI Chart\":\n      - generic: KPI Chart\n    - button \"Usage Meter\":\n      - generic: Usage Meter\n    - generic: ↗\n    - text: Navigation\n    - generic: \"4\"\n    - button \"Command Menu\":\n      - generic: Command Menu\n    - button \"Integration Picker\":\n      - generic: Integration Picker\n    - button \"Profile Menu\":\n      - generic: Profile Menu\n    - button \"Segmented Control\":\n      - generic: Segmented Control\n    - generic: ◉\n    - text: Feedback\n    - generic: \"5\"\n    - button \"Decision Inbox\":\n      - generic: Decision Inbox\n    - button \"Notification Stack\":\n      - generic: Notification Stack\n    - button \"Progress Tracker\":\n      - generic: Progress Tracker\n    - button \"Setup Guide\":\n      - generic: Setup Guide\n    - button \"Toaster\":\n      - generic: Toaster\n    - generic: ▢\n    - text: Cards\n    - generic: \"4\"\n    - button \"Email Draft\":\n      - generic: Email Draft\n    - button \"Project Card\":\n      - generic: Project Card\n    - button \"Smart Recommendation\":\n      - generic: Smart Recommendation\n    - button \"Tips Panel\":\n      - generic: Tips Panel\n    - generic: ↵\n    - text: Buttons\n    - generic: \"2\"\n    - button \"Button\":\n      - generic: Button\n    - button \"Reaction Bar\":\n      - generic: Reaction Bar\n  - link \"Take the library with you All source files · ZIP download ↗\":\n    - /url: /component-library.zip\n    - strong: Take the library with you\n    - generic: All source files · ZIP download\n    - generic: ↗\n  - generic: 90 components. Yours to build with.\n- banner:\n  - button \"Library\"\n  - generic: /\n  - generic: Data display\n  - generic: /\n  - strong: Change Summary\n  - link \"GitHub ↗\":\n    - /url: https://github.com/Atlas322/thinking-state\n  - button \"Switch to dark theme\":\n- main:\n  - text: DATA DISPLAY\n  - generic: /\n  - text: COMPONENT 25\n  - heading \"Change Summary\" [level=1]\n  - button \"Add to favorites\":\n  - paragraph: What moved since last time – one metric per row with a colored trend\n  - generic: Original · MIT license\n  - generic: React 19\n  - generic: TypeScript\n  - generic: Self-contained\n  - region \"Change Summary showcase\":\n    - tablist \"Component view\":\n      - tab \"◉ Preview\" [selected]:\n        - generic: ◉\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n      - tab \"↗ Usage\":\n        - generic: ↗\n        - text: Usage\n    - group \"Component style\":\n      - button \"Clean\" [pressed]\n      - button \"Classic\"\n    - button \"Use narrow preview\":\n      - generic: ▯\n    - button \"Replay component\":\n    - tabpanel \"◉ Preview\":\n      - region \"What's changed\":\n        - generic \"What's changed\"\n        - generic \"This week\"\n        - term: Revenue\n        - definition:\n          - generic \"Up 12.8% to $42,800\"\n        - term: Active users\n        - definition:\n          - generic \"Up 8.2% to 12,450\"\n        - term: Churn\n        - definition:\n          - generic \"Down 0.4% to 2.1%\"\n    - generic: Interactive preview — try it out\n    - generic: No backend connected\n  - strong: Make it part of your project.\n  - paragraph: Copy the source, or give an AI assistant the complete prompt.\n  - button \"Download component file\":\n  - button \"Copy code\":\n    - text: Copy code\n  - button \"✦ Copy prompt\":\n    - generic: ✦\n    - text: Copy prompt\n  - status\n  - heading \"Copy. Paste. Build.\" [level=3]\n  - list:\n    - text: Copy the code or download the\n    - code: .tsx\n    - text: file.\n    - listitem: Add it to your React 19 project. Styles are already included.\n    - listitem: Pass your data and connect the callbacks to your application.\n  - button \"See usage example\":\n    - text: See usage example\n  - heading \"From the open-source collection\" [level=3]\n  - paragraph: The original affectUI component under the MIT license, with a local working example. The license notice is included when you copy or download the code.\n  - link \"View original reference ↗\":\n    - /url: https://www.affectui.com/components/change-summary\n  - heading \"Keep exploring\" [level=2]\n  - button \"View all 90\":\n    - text: View all 90\n  - button \"▤ Data display Breakdown Chart ↗\":\n    - generic: ▤\n    - generic: Data display\n    - strong: Breakdown Chart\n    - generic: ↗\n  - button \"▤ Data display Compact Breakdown ↗\":\n    - generic: ▤\n    - generic: Data display\n    - strong: Compact Breakdown\n    - generic: ↗\n  - button \"▤ Data display Data Table ↗\":\n    - generic: ▤\n    - generic: Data display\n    - strong: Data Table\n    - generic: ↗\n  - generic: Component Studio · Built to be used.\n  - link \"Source repository ↗\":\n    - /url: https://github.com/Atlas322/thinking-state"
+}

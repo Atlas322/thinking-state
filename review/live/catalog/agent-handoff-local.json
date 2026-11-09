@@ -1,0 +1,1035 @@
+{
+  "controls": [
+    {
+      "expanded": "false",
+      "label": "Researcher",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "ResearcherOpus 5.5$1.31WorkingFinds the sources, pulls the facts and decides the angle.Reply to churned teamReading the last conversations",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": "Writer",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "WriterGPT-5$0.57IdleTurns the brief into a first draft in the team’s voice.Ready for a task",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": "Reviewer",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "ReviewerGemini Pro$0.30IdleChecks every claim against its source before it ships.Ready for a task",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Support macro for refunds50 good replies, refund-policy.mdLooks good",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "API release notesendpoints.yaml, 3 examples, Writing guidelinesLooks good",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Onboarding emailLaunch brief1 item left behind",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Support macro for refundsMacro draft, Tone: warmLooks good",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "API release notesDraft v2, 3 examplesLooks good",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Onboarding emailEmail draft1 item left behind",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ho-root ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "8px 0px 0px"
+      },
+      "rect": {
+        "bottom": 794.28125,
+        "height": 452,
+        "left": 489,
+        "right": 1209,
+        "top": 342.28125,
+        "width": 720,
+        "x": 489,
+        "y": 342.28125
+      },
+      "tag": "SECTION",
+      "text": "\n.ho-root{--ho-ink:rgba(0,0,0,.61);--ho-muted:rgba(0,0,0,.45);--ho-card:#fff;--ho-panel:#f4f4f5;--ho-line:#efeeee;--ho-link:#0060e2;--ho-strong:#000;--ho-title:"
+    },
+    {
+      "cls": "ho-lines",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 794.28125,
+        "height": 452,
+        "left": 489,
+        "right": 1209,
+        "top": 342.28125,
+        "width": 720,
+        "x": 489,
+        "y": 342.28125
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ho-connector",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 566.28125,
+        "height": 72,
+        "left": 609,
+        "right": 714.99609375,
+        "top": 494.28125,
+        "width": 105.99609375,
+        "x": 609,
+        "y": 494.28125
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "cls": "ho-lines ho-dots",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 794.28125,
+        "height": 452,
+        "left": 489,
+        "right": 1209,
+        "top": 342.28125,
+        "width": 720,
+        "x": 489,
+        "y": 342.28125
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ho-layout",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 794.28125,
+        "height": 444,
+        "left": 489,
+        "right": 1209,
+        "top": 350.28125,
+        "width": 720,
+        "x": 489,
+        "y": 350.28125
+      },
+      "tag": "DIV",
+      "text": "ResearcherOpus 5.5$1.31WorkingFinds the sources, pulls the facts and decides the angle.Reply to churned teamReading the last conversationsWriterGPT-5$0.57IdleTu"
+    },
+    {
+      "cls": "ho-stages",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "16px",
+        "lineHeight": "20px",
+        "padding": "0px 8px"
+      },
+      "rect": {
+        "bottom": 494.28125,
+        "height": 144,
+        "left": 489,
+        "right": 1209,
+        "top": 350.28125,
+        "width": 720,
+        "x": 489,
+        "y": 350.28125
+      },
+      "tag": "DIV",
+      "text": "ResearcherOpus 5.5$1.31WorkingFinds the sources, pulls the facts and decides the angle.Reply to churned teamReading the last conversationsWriterGPT-5$0.57IdleTu"
+    },
+    {
+      "cls": "ho-stage",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 494.28125,
+        "height": 144,
+        "left": 497,
+        "right": 721,
+        "top": 350.28125,
+        "width": 224,
+        "x": 497,
+        "y": 350.28125
+      },
+      "tag": "DIV",
+      "text": "ResearcherOpus 5.5$1.31WorkingFinds the sources, pulls the facts and decides the angle.Reply to churned teamReading the last conversations"
+    },
+    {
+      "cls": "ho-agent  ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "14px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "lineHeight": "20px",
+        "padding": "14px 14px 12px"
+      },
+      "rect": {
+        "bottom": 494.28125,
+        "height": 144,
+        "left": 497,
+        "right": 721,
+        "top": 350.28125,
+        "width": 224,
+        "x": 497,
+        "y": 350.28125
+      },
+      "tag": "BUTTON",
+      "text": "ResearcherOpus 5.5$1.31WorkingFinds the sources, pulls the facts and decides the angle.Reply to churned teamReading the last conversations"
+    },
+    {
+      "cls": "ho-agent-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 394.28125,
+        "height": 30,
+        "left": 511,
+        "right": 707,
+        "top": 364.28125,
+        "width": 196,
+        "x": 511,
+        "y": 364.28125
+      },
+      "tag": "SPAN",
+      "text": "ResearcherOpus 5.5$1.31Working"
+    },
+    {
+      "cls": "ho-avatar claude",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(28, 28, 31)",
+        "borderRadius": "7px",
+        "color": "rgb(28, 28, 31)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 392.28125,
+        "height": 26,
+        "left": 511,
+        "right": 537,
+        "top": 366.28125,
+        "width": 26,
+        "x": 511,
+        "y": 366.28125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ho-identity",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 394.28125,
+        "height": 30,
+        "left": 545,
+        "right": 645.3203125,
+        "top": 364.28125,
+        "width": 100.3203125,
+        "x": 545,
+        "y": 364.28125
+      },
+      "tag": "SPAN",
+      "text": "ResearcherOpus 5.5"
+    },
+    {
+      "cls": "ho-cost",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 389.28125,
+        "height": 20,
+        "left": 653.3203125,
+        "right": 679,
+        "top": 369.28125,
+        "width": 25.6796875,
+        "x": 653.3203125,
+        "y": 369.28125
+      },
+      "tag": "SPAN",
+      "text": "$1.31"
+    },
+    {
+      "cls": "ho-agent-state working",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "color(srgb 0 0.376471 0.886275 / 0.08)",
+        "border": "0px none rgb(0, 96, 226)",
+        "borderRadius": "4px",
+        "color": "rgb(0, 96, 226)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "0px",
+        "fontWeight": "500",
+        "gap": "4px",
+        "lineHeight": "18px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 388.28125,
+        "height": 18,
+        "left": 687,
+        "right": 707,
+        "top": 370.28125,
+        "width": 20,
+        "x": 687,
+        "y": 370.28125
+      },
+      "tag": "SPAN",
+      "text": "Working"
+    },
+    {
+      "cls": "ho-spinner",
+      "css": {
+        "animationDuration": "0.9s",
+        "animationName": "ho-spin",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 96, 226)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 96, 226)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "0px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "18px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 387.73443603515625,
+        "height": 16.9063720703125,
+        "left": 686.5468139648438,
+        "right": 703.4531860351562,
+        "top": 370.82806396484375,
+        "width": 16.9063720703125,
+        "x": 686.5468139648438,
+        "y": 370.82806396484375
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ho-description",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flow-root",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "18px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 440.28125,
+        "height": 36,
+        "left": 511,
+        "right": 707,
+        "top": 404.28125,
+        "width": 196,
+        "x": 511,
+        "y": 404.28125
+      },
+      "tag": "SPAN",
+      "text": "Finds the sources, pulls the facts and decides the angle."
+    },
+    {
+      "cls": "ho-current-task",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(244, 244, 245)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 9px"
+      },
+      "rect": {
+        "bottom": 482.28125,
+        "height": 32,
+        "left": 511,
+        "right": 707,
+        "top": 450.28125,
+        "width": 196,
+        "x": 511,
+        "y": 450.28125
+      },
+      "tag": "SPAN",
+      "text": "Reply to churned teamReading the last conversations"
+    },
+    {
+      "cls": "ho-task-logo",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 475.28125,
+        "height": 18,
+        "left": 520,
+        "right": 534,
+        "top": 457.28125,
+        "width": 14,
+        "x": 520,
+        "y": 457.28125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ho-avatar openai",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "7px",
+        "color": "rgb(0, 0, 0)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 392.28125,
+        "height": 26,
+        "left": 751,
+        "right": 777,
+        "top": 366.28125,
+        "width": 26,
+        "x": 751,
+        "y": 366.28125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ho-agent-state ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.024)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "4px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "none",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "0px",
+        "fontWeight": "500",
+        "gap": "4px",
+        "lineHeight": "18px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "SPAN",
+      "text": "Idle"
+    },
+    {
+      "cls": "ho-avatar gemini",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(28, 28, 31)",
+        "borderRadius": "7px",
+        "color": "rgb(28, 28, 31)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 392.28125,
+        "height": 26,
+        "left": 991,
+        "right": 1017,
+        "top": 366.28125,
+        "width": 26,
+        "x": 991,
+        "y": 366.28125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ho-columns",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "16px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 794.28125,
+        "height": 228,
+        "left": 616.9921875,
+        "right": 1081.0078125,
+        "top": 566.28125,
+        "width": 464.015625,
+        "x": 616.9921875,
+        "y": 566.28125
+      },
+      "tag": "DIV",
+      "text": "ResearcherWriter3Support macro for refunds50 good replies, refund-policy.mdLooks goodAPI release notesendpoints.yaml, 3 examples, Writing guidelinesLooks goodOn"
+    },
+    {
+      "cls": "ho-column",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(244, 244, 245)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "14px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "4px"
+      },
+      "rect": {
+        "bottom": 794.28125,
+        "height": 228,
+        "left": 616.9921875,
+        "right": 841,
+        "top": 566.28125,
+        "width": 224.0078125,
+        "x": 616.9921875,
+        "y": 566.28125
+      },
+      "tag": "DIV",
+      "text": "ResearcherWriter3Support macro for refunds50 good replies, refund-policy.mdLooks goodAPI release notesendpoints.yaml, 3 examples, Writing guidelinesLooks goodOn"
+    },
+    {
+      "cls": "ho-arrow",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 591.28125,
+        "height": 12,
+        "left": 719.625,
+        "right": 731.625,
+        "top": 579.28125,
+        "width": 12,
+        "x": 719.625,
+        "y": 579.28125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ho-cards",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px 0px 22px"
+      },
+      "rect": {
+        "bottom": 790.28125,
+        "height": 190,
+        "left": 620.9921875,
+        "right": 837,
+        "top": 600.28125,
+        "width": 216.0078125,
+        "x": 620.9921875,
+        "y": 600.28125
+      },
+      "tag": "DIV",
+      "text": "Support macro for refunds50 good replies, refund-policy.mdLooks goodAPI release notesendpoints.yaml, 3 examples, Writing guidelinesLooks goodOnboarding emailLau"
+    },
+    {
+      "cls": "ho-card ",
+      "css": {
+        "animationDuration": "0.42s",
+        "animationName": "ho-arrive",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 680.2420043945312,
+        "height": 82,
+        "left": 620.9921875,
+        "right": 837,
+        "top": 598.2420043945312,
+        "width": 216.0078125,
+        "x": 620.9921875,
+        "y": 598.2420043945312
+      },
+      "tag": "ARTICLE",
+      "text": "Support macro for refunds50 good replies, refund-policy.mdLooks good"
+    },
+    {
+      "cls": "ho-card-toggle",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "3px",
+        "lineHeight": "20px",
+        "padding": "9px 12px 9px 10px"
+      },
+      "rect": {
+        "bottom": 680.2420043945312,
+        "height": 82,
+        "left": 620.9921875,
+        "right": 837,
+        "top": 598.2420043945312,
+        "width": 216.0078125,
+        "x": 620.9921875,
+        "y": 598.2420043945312
+      },
+      "tag": "BUTTON",
+      "text": "Support macro for refunds50 good replies, refund-policy.mdLooks good"
+    },
+    {
+      "cls": "ho-card-title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 625.2420043945312,
+        "height": 18,
+        "left": 630.9921875,
+        "right": 825,
+        "top": 607.2420043945312,
+        "width": 194.0078125,
+        "x": 630.9921875,
+        "y": 607.2420043945312
+      },
+      "tag": "SPAN",
+      "text": "Support macro for refunds"
+    },
+    {
+      "cls": "ho-card-summary",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "color": "rgb(85, 85, 92)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "17px",
+        "padding": "0px 0px 0px 22px"
+      },
+      "rect": {
+        "bottom": 645.2420043945312,
+        "height": 17,
+        "left": 630.9921875,
+        "right": 825,
+        "top": 628.2420043945312,
+        "width": 194.0078125,
+        "x": 630.9921875,
+        "y": 628.2420043945312
+      },
+      "tag": "SPAN",
+      "text": "50 good replies, refund-policy.md"
+    },
+    {
+      "cls": "ho-card-state ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "3px 0px 0px 22px"
+      },
+      "rect": {
+        "bottom": 671.2420043945312,
+        "height": 23,
+        "left": 630.9921875,
+        "right": 825,
+        "top": 648.2420043945312,
+        "width": 194.0078125,
+        "x": 630.9921875,
+        "y": 648.2420043945312
+      },
+      "tag": "SPAN",
+      "text": "Looks good"
+    },
+    {
+      "cls": "ho-card-state warning",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(85, 85, 92)",
+        "borderRadius": "0px",
+        "color": "rgb(85, 85, 92)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "3px 0px 0px 22px"
+      },
+      "rect": {
+        "bottom": 843.2420043945312,
+        "height": 23,
+        "left": 630.9921875,
+        "right": 825,
+        "top": 820.2420043945312,
+        "width": 194.0078125,
+        "x": 630.9921875,
+        "y": 820.2420043945312
+      },
+      "tag": "SPAN",
+      "text": "1 item left behind"
+    },
+    {
+      "cls": "ho-live",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 808.28125,
+        "height": 1,
+        "left": 489,
+        "right": 490,
+        "top": 807.28125,
+        "width": 1,
+        "x": 489,
+        "y": 807.28125
+      },
+      "tag": "P",
+      "text": ""
+    }
+  ],
+  "svg": [
+    "<svg class=\"ho-lines\" aria-hidden=\"true\"><g><path class=\"ho-connector\" d=\"M120,152 V178 Q120,188 130,188 H215.99609375 Q225.99609375,188 225.99609375,198 V224\"></path></g><g><path class=\"ho-connector\" d=\"M253.99609375,224 V198 Q253.99609375,188 263.99609375,188 H350 Q360,188 360,178 V152\"></path></g><g><path class=\"ho-connector\" d=\"M360,152 V178 Q360,188 370,188 H456.00390625 Q466.00390625,188 466.00390625,198 V224\"></path></g><g><path class=\"ho-connector\" d=\"M494.00390625,224 V198 Q494.00390625,188 504.00390625,188 H590 Q600,188 600,178 V152\"></path></g></svg>",
+    "<svg class=\"ho-lines ho-dots\" aria-hidden=\"true\"><g><circle cx=\"120\" cy=\"152\" r=\"3.25\"></circle><circle cx=\"225.99609375\" cy=\"224\" r=\"3.25\"></circle></g><g><circle cx=\"253.99609375\" cy=\"224\" r=\"3.25\"></circle><circle cx=\"360\" cy=\"152\" r=\"3.25\"></circle></g><g><circle cx=\"360\" cy=\"152\" r=\"3.25\"></circle><circle cx=\"466.00390625\" cy=\"224\" r=\"3.25\"></circle></g><g><circle cx=\"494.00390625\" cy=\"224\" r=\"3.25\"></circle><circle cx=\"600\" cy=\"152\" r=\"3.25\"></circle></g></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"#d97757\" style=\"display: block; stroke: none;\"><path d=\"m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z\"></path></svg>",
+    "<svg class=\"ho-spinner\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"6\" r=\"4.25\" stroke=\"currentColor\" stroke-opacity=\".25\" stroke-width=\"1.5\"></circle><path d=\"M6 1.75A4.25 4.25 0 0 1 10.25 6\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>",
+    "<svg viewBox=\"0 0 49.883 49.877\" fill=\"none\" aria-hidden=\"true\"><g transform=\"translate(0 0)\"><path d=\"M18.3549 10.4784C15.4713 10.4784 13.1157 8.12279 13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V10.4784H18.3549Z\" fill=\"#36C5F0\"></path><path d=\"M18.3575 13.12C21.2411 13.12 23.5967 15.4756 23.5967 18.3592C23.5967 21.2428 21.2411 23.5984 18.3575 23.5984H5.2392C2.35561 23.5984 0 21.2428 0 18.3592C0 15.4756 2.35561 13.12 5.2392 13.12H18.3575Z\" fill=\"#36C5F0\"></path></g><g transform=\"translate(26.28 0)\"><path d=\"M13.1244 18.3592C13.1244 15.4756 15.48 13.12 18.3636 13.12C21.2472 13.12 23.6028 15.4756 23.6028 18.3592C23.6028 21.2428 21.2472 23.5984 18.3636 23.5984H13.1244V18.3592Z\" fill=\"#2EB67D\"></path><path d=\"M10.4785 18.3575C10.4785 21.2411 8.12286 23.5967 5.23927 23.5967C2.35568 23.5967 7.4362e-05 21.2411 7.4362e-05 18.3575V5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0C8.12286 0 10.4785 2.35561 10.4785 5.2392V18.3575Z\" fill=\"#2EB67D\"></path></g><g transform=\"translate(0 26.28)\"><path d=\"M10.4784 5.2392C10.4784 8.12279 8.12279 10.4784 5.2392 10.4784C2.35561 10.4784 0 8.12279 0 5.2392C0 2.35561 2.35561 0 5.2392 0H10.4784V5.2392Z\" fill=\"#E01E5A\"></path><path d=\"M13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V18.3575C23.5941 21.2411 21.2385 23.5967 18.3549 23.5967C15.4713 23.5967 13.1157 21.2411 13.1157 18.3575V5.2392Z\" fill=\"#E01E5A\"></path></g><g transform=\"translate(26.28 26.28)\"><path d=\"M5.23927 13.1157C8.12286 13.1157 10.4785 15.4713 10.4785 18.3549C10.4785 21.2385 8.12286 23.5941 5.23927 23.5941C2.35568 23.5941 7.4362e-05 21.2385 7.4362e-05 18.3549V13.1157H5.23927Z\" fill=\"#ECB22E\"></path><path d=\"M5.23927 10.4784C2.35568 10.4784 7.4362e-05 8.12279 7.4362e-05 5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0H18.3576C21.2412 0 23.5968 2.35561 23.5968 5.2392C23.5968 8.12279 21.2412 10.4784 18.3576 10.4784H5.23927Z\" fill=\"#ECB22E\"></path></g></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"currentColor\" style=\"display: block; stroke: none;\"><path d=\"M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"url(#_r_5q_)\" style=\"display: block; stroke: none;\"><defs><linearGradient id=\"_r_5q_\" x1=\"0\" y1=\"24\" x2=\"24\" y2=\"0\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#1C7DFF\"></stop><stop offset=\"0.52\" stop-color=\"#1C69FF\"></stop><stop offset=\"1\" stop-color=\"#B04DFF\"></stop></linearGradient></defs><path d=\"M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"#d97757\" style=\"display: block; stroke: none;\"><path d=\"m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z\"></path></svg>",
+    "<svg viewBox=\"0 0 12 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2 6h7M7 3.5 9.5 6 7 8.5\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"currentColor\" style=\"display: block; stroke: none;\"><path d=\"M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z\"></path></svg>",
+    "<svg viewBox=\"0 0 49.883 49.877\" fill=\"none\" aria-hidden=\"true\"><g transform=\"translate(0 0)\"><path d=\"M18.3549 10.4784C15.4713 10.4784 13.1157 8.12279 13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V10.4784H18.3549Z\" fill=\"#36C5F0\"></path><path d=\"M18.3575 13.12C21.2411 13.12 23.5967 15.4756 23.5967 18.3592C23.5967 21.2428 21.2411 23.5984 18.3575 23.5984H5.2392C2.35561 23.5984 0 21.2428 0 18.3592C0 15.4756 2.35561 13.12 5.2392 13.12H18.3575Z\" fill=\"#36C5F0\"></path></g><g transform=\"translate(26.28 0)\"><path d=\"M13.1244 18.3592C13.1244 15.4756 15.48 13.12 18.3636 13.12C21.2472 13.12 23.6028 15.4756 23.6028 18.3592C23.6028 21.2428 21.2472 23.5984 18.3636 23.5984H13.1244V18.3592Z\" fill=\"#2EB67D\"></path><path d=\"M10.4785 18.3575C10.4785 21.2411 8.12286 23.5967 5.23927 23.5967C2.35568 23.5967 7.4362e-05 21.2411 7.4362e-05 18.3575V5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0C8.12286 0 10.4785 2.35561 10.4785 5.2392V18.3575Z\" fill=\"#2EB67D\"></path></g><g transform=\"translate(0 26.28)\"><path d=\"M10.4784 5.2392C10.4784 8.12279 8.12279 10.4784 5.2392 10.4784C2.35561 10.4784 0 8.12279 0 5.2392C0 2.35561 2.35561 0 5.2392 0H10.4784V5.2392Z\" fill=\"#E01E5A\"></path><path d=\"M13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V18.3575C23.5941 21.2411 21.2385 23.5967 18.3549 23.5967C15.4713 23.5967 13.1157 21.2411 13.1157 18.3575V5.2392Z\" fill=\"#E01E5A\"></path></g><g transform=\"translate(26.28 26.28)\"><path d=\"M5.23927 13.1157C8.12286 13.1157 10.4785 15.4713 10.4785 18.3549C10.4785 21.2385 8.12286 23.5941 5.23927 23.5941C2.35568 23.5941 7.4362e-05 21.2385 7.4362e-05 18.3549V13.1157H5.23927Z\" fill=\"#ECB22E\"></path><path d=\"M5.23927 10.4784C2.35568 10.4784 7.4362e-05 8.12279 7.4362e-05 5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0H18.3576C21.2412 0 23.5968 2.35561 23.5968 5.2392C23.5968 8.12279 21.2412 10.4784 18.3576 10.4784H5.23927Z\" fill=\"#ECB22E\"></path></g></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"currentColor\" style=\"display: block; stroke: none;\"><path d=\"M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z\"></path></svg>",
+    "<svg viewBox=\"0 0 12 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2 6h7M7 3.5 9.5 6 7 8.5\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"url(#_r_5u_)\" style=\"display: block; stroke: none;\"><defs><linearGradient id=\"_r_5u_\" x1=\"0\" y1=\"24\" x2=\"24\" y2=\"0\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#1C7DFF\"></stop><stop offset=\"0.52\" stop-color=\"#1C69FF\"></stop><stop offset=\"1\" stop-color=\"#B04DFF\"></stop></linearGradient></defs><path d=\"M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81\"></path></svg>",
+    "<svg viewBox=\"0 0 49.883 49.877\" fill=\"none\" aria-hidden=\"true\"><g transform=\"translate(0 0)\"><path d=\"M18.3549 10.4784C15.4713 10.4784 13.1157 8.12279 13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V10.4784H18.3549Z\" fill=\"#36C5F0\"></path><path d=\"M18.3575 13.12C21.2411 13.12 23.5967 15.4756 23.5967 18.3592C23.5967 21.2428 21.2411 23.5984 18.3575 23.5984H5.2392C2.35561 23.5984 0 21.2428 0 18.3592C0 15.4756 2.35561 13.12 5.2392 13.12H18.3575Z\" fill=\"#36C5F0\"></path></g><g transform=\"translate(26.28 0)\"><path d=\"M13.1244 18.3592C13.1244 15.4756 15.48 13.12 18.3636 13.12C21.2472 13.12 23.6028 15.4756 23.6028 18.3592C23.6028 21.2428 21.2472 23.5984 18.3636 23.5984H13.1244V18.3592Z\" fill=\"#2EB67D\"></path><path d=\"M10.4785 18.3575C10.4785 21.2411 8.12286 23.5967 5.23927 23.5967C2.35568 23.5967 7.4362e-05 21.2411 7.4362e-05 18.3575V5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0C8.12286 0 10.4785 2.35561 10.4785 5.2392V18.3575Z\" fill=\"#2EB67D\"></path></g><g transform=\"translate(0 26.28)\"><path d=\"M10.4784 5.2392C10.4784 8.12279 8.12279 10.4784 5.2392 10.4784C2.35561 10.4784 0 8.12279 0 5.2392C0 2.35561 2.35561 0 5.2392 0H10.4784V5.2392Z\" fill=\"#E01E5A\"></path><path d=\"M13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V18.3575C23.5941 21.2411 21.2385 23.5967 18.3549 23.5967C15.4713 23.5967 13.1157 21.2411 13.1157 18.3575V5.2392Z\" fill=\"#E01E5A\"></path></g><g transform=\"translate(26.28 26.28)\"><path d=\"M5.23927 13.1157C8.12286 13.1157 10.4785 15.4713 10.4785 18.3549C10.4785 21.2385 8.12286 23.5941 5.23927 23.5941C2.35568 23.5941 7.4362e-05 21.2385 7.4362e-05 18.3549V13.1157H5.23927Z\" fill=\"#ECB22E\"></path><path d=\"M5.23927 10.4784C2.35568 10.4784 7.4362e-05 8.12279 7.4362e-05 5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0H18.3576C21.2412 0 23.5968 2.35561 23.5968 5.2392C23.5968 8.12279 21.2412 10.4784 18.3576 10.4784H5.23927Z\" fill=\"#ECB22E\"></path></g></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z\"></path></svg>"
+  ],
+  "url": "http://127.0.0.1:5173/#/agent-handoff",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- complementary:\n  - button \"Component Studio home\":\n    - text: s\n    - generic: ·\n    - generic: componentstudio\n    - generic: \"01\"\n  - textbox \"Search components\":\n    - /placeholder: Find a component…\n  - generic: /\n  - button \"▦ All components 90\":\n    - generic: ▦\n    - text: All components\n    - generic: \"90\"\n  - button \"Favorites 0\":\n    - text: Favorites\n    - generic: \"0\"\n  - navigation \"Components\":\n    - generic: ⌘\n    - text: Agents\n    - generic: \"43\"\n    - button \"Agent Checkpoints\":\n      - generic: Agent Checkpoints\n    - button \"Agent Cursors\":\n      - generic: Agent Cursors\n    - button \"Agent Findings\":\n      - generic: Agent Findings\n    - button \"Agent Fleet\":\n      - generic: Agent Fleet\n    - button \"Agent Graph\":\n      - generic: Agent Graph\n    - button \"Agent Handoff\":\n      - generic: Agent Handoff\n    - button \"Agent Inbox\":\n      - generic: Agent Inbox\n    - button \"Agent Lanes\":\n      - generic: Agent Lanes\n    - button \"Agent Ledger\":\n      - generic: Agent Ledger\n    - button \"Agent Monitor\":\n      - generic: Agent Monitor\n    - button \"Agent Plan\":\n      - generic: Agent Plan\n    - button \"Agent Queue\":\n      - generic: Agent Queue\n    - button \"Agent Recap\":\n      - generic: Agent Recap\n    - button \"Agent Steering\":\n      - generic: Agent Steering\n    - button \"Agent Trail\":\n      - generic: Agent Trail\n    - button \"Agent Tree\":\n      - generic: Agent Tree\n    - button \"Approval Card\":\n      - generic: Approval Card\n    - button \"Approval Gates\":\n      - generic: Approval Gates\n    - button \"Autonomy Dial\":\n      - generic: Autonomy Dial\n    - button \"Away Summary\":\n      - generic: Away Summary\n    - button \"Collaboration Stream\":\n      - generic: Collaboration Stream\n    - button \"Conflict Radar\":\n      - generic: Conflict Radar\n    - button \"Context Map\":\n      - generic: Context Map\n    - button \"Context Window\":\n      - generic: Context Window\n    - button \"Cost Waterfall\":\n      - generic: Cost Waterfall\n    - button \"Decision Card\":\n      - generic: Decision Card\n    - button \"Decision Tree\":\n      - generic: Decision Tree\n    - button \"Delegate Board\":\n      - generic: Delegate Board\n    - button \"Fallback Chain\":\n      - generic: Fallback Chain\n    - button \"Fan-out Grid\":\n      - generic: Fan-out Grid\n    - button \"Inline Diff\":\n      - generic: Inline Diff\n    - button \"Judge Bracket\":\n      - generic: Judge Bracket\n    - button \"Memory Panel\":\n      - generic: Memory Panel\n    - button \"Parallel Attempts\":\n      - generic: Parallel Attempts\n    - button \"Permission Request\":\n      - generic: Permission Request\n    - button \"Plan vs Actual\":\n      - generic: Plan vs Actual\n    - button \"Review Center\":\n      - generic: Review Center\n    - button \"Root Cause Tree\":\n      - generic: Root Cause Tree\n    - button \"Running Now\":\n      - generic: Running Now\n    - button \"Scheduled Runs\":\n      - generic: Scheduled Runs\n    - button \"Tool Access Map\":\n      - generic: Tool Access Map\n    - button \"Tool Call Card\":\n      - generic: Tool Call Card\n    - button \"Trace Waterfall\":\n      - generic: Trace Waterfall\n    - generic: ◌\n    - text: Chat\n    - generic: \"10\"\n    - button \"AI Answer\":\n      - generic: AI Answer\n    - button \"Chat Composer\":\n      - generic: Chat Composer\n    - button \"Cited Answer\":\n      - generic: Cited Answer\n    - button \"Comment Thread\":\n      - generic: Comment Thread\n    - button \"Comments Panel\":\n      - generic: Comments Panel\n    - button \"Message Actions\":\n      - generic: Message Actions\n    - button \"Model Picker\":\n      - generic: Model Picker\n    - button \"Thinking Loader\":\n      - generic: Thinking Loader\n    - button \"Thinking State\":\n      - generic: Thinking State\n    - button \"Writing Assistant\":\n      - generic: Writing Assistant\n    - generic: ⊞\n    - text: Inputs\n    - generic: \"15\"\n    - button \"Billing Schedule\":\n      - generic: Billing Schedule\n    - button \"Checkbox\":\n      - generic: Checkbox\n    - button \"Combobox\":\n      - generic: Combobox\n    - button \"Date Range Picker\":\n      - generic: Date Range Picker\n    - button \"Dropzone\":\n      - generic: Dropzone\n    - button \"Filter Menu\":\n      - generic: Filter Menu\n    - button \"Integration Settings\":\n      - generic: Integration Settings\n    - button \"OTP Input\":\n      - generic: OTP Input\n    - button \"Prompt Library\":\n      - generic: Prompt Library\n    - button \"Select\":\n      - generic: Select\n    - button \"Stepper Form\":\n      - generic: Stepper Form\n    - button \"Switch\":\n      - generic: Switch\n    - button \"Tag Input\":\n      - generic: Tag Input\n    - button \"Text Area\":\n      - generic: Text Area\n    - button \"Text Field\":\n      - generic: Text Field\n    - generic: ▤\n    - text: Data display\n    - generic: \"7\"\n    - button \"Breakdown Chart\":\n      - generic: Breakdown Chart\n    - button \"Change Summary\":\n      - generic: Change Summary\n    - button \"Compact Breakdown\":\n      - generic: Compact Breakdown\n    - button \"Data Table\":\n      - generic: Data Table\n    - button \"Experiment Card\":\n      - generic: Experiment Card\n    - button \"KPI Chart\":\n      - generic: KPI Chart\n    - button \"Usage Meter\":\n      - generic: Usage Meter\n    - generic: ↗\n    - text: Navigation\n    - generic: \"4\"\n    - button \"Command Menu\":\n      - generic: Command Menu\n    - button \"Integration Picker\":\n      - generic: Integration Picker\n    - button \"Profile Menu\":\n      - generic: Profile Menu\n    - button \"Segmented Control\":\n      - generic: Segmented Control\n    - generic: ◉\n    - text: Feedback\n    - generic: \"5\"\n    - button \"Decision Inbox\":\n      - generic: Decision Inbox\n    - button \"Notification Stack\":\n      - generic: Notification Stack\n    - button \"Progress Tracker\":\n      - generic: Progress Tracker\n    - button \"Setup Guide\":\n      - generic: Setup Guide\n    - button \"Toaster\":\n      - generic: Toaster\n    - generic: ▢\n    - text: Cards\n    - generic: \"4\"\n    - button \"Email Draft\":\n      - generic: Email Draft\n    - button \"Project Card\":\n      - generic: Project Card\n    - button \"Smart Recommendation\":\n      - generic: Smart Recommendation\n    - button \"Tips Panel\":\n      - generic: Tips Panel\n    - generic: ↵\n    - text: Buttons\n    - generic: \"2\"\n    - button \"Button\":\n      - generic: Button\n    - button \"Reaction Bar\":\n      - generic: Reaction Bar\n  - link \"Take the library with you All source files · ZIP download ↗\":\n    - /url: /component-library.zip\n    - strong: Take the library with you\n    - generic: All source files · ZIP download\n    - generic: ↗\n  - generic: 90 components. Yours to build with.\n- banner:\n  - button \"Library\"\n  - generic: /\n  - generic: Agents\n  - generic: /\n  - strong: Agent Handoff\n  - link \"GitHub ↗\":\n    - /url: https://github.com/Atlas322/thinking-state\n  - button \"Switch to dark theme\":\n- main:\n  - text: AGENTS\n  - generic: /\n  - text: COMPONENT 06\n  - heading \"Agent Handoff\" [level=1]\n  - button \"Add to favorites\":\n  - paragraph: A task passed from agent to agent like a relay – at every handoff what went along to the next one, and what got lost on the way\n  - generic: Independent recreation\n  - generic: React 19\n  - generic: TypeScript\n  - generic: Self-contained\n  - region \"Agent Handoff showcase\":\n    - tablist \"Component view\":\n      - tab \"◉ Preview\" [selected]:\n        - generic: ◉\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n      - tab \"↗ Usage\":\n        - generic: ↗\n        - text: Usage\n    - button \"Use narrow preview\":\n      - generic: ▯\n    - button \"Replay component\":\n    - tabpanel \"◉ Preview\":\n      - region \"Agent handoff relay\":\n        - button \"Researcher\":\n          - strong: Researcher\n          - generic: Opus 5.5\n          - generic: $1.31\n          - text: Working\n          - generic: Finds the sources, pulls the facts and decides the angle.\n          - strong: Reply to churned team\n          - generic: Reading the last conversations\n        - button \"Writer\":\n          - strong: Writer\n          - generic: GPT-5\n          - generic: $0.57\n          - generic: Turns the brief into a first draft in the team’s voice.\n          - generic: Ready for a task\n        - button \"Reviewer\":\n          - strong: Reviewer\n          - generic: Gemini Pro\n          - generic: $0.30\n          - generic: Checks every claim against its source before it ships.\n          - generic: Ready for a task\n        - generic: Researcher\n        - generic: Writer\n        - generic: \"3\"\n        - list \"Researcher to Writer handoffs\":\n          - button \"Support macro for refunds 50 good replies, refund-policy.md Looks good\":\n            - strong: Support macro for refunds\n            - generic: 50 good replies, refund-policy.md\n            - generic: Looks good\n          - button \"API release notes endpoints.yaml, 3 examples, Writing guidelines Looks good\":\n            - strong: API release notes\n            - generic: endpoints.yaml, 3 examples, Writing guidelines\n            - generic: Looks good\n          - button \"Onboarding email Launch brief 1 item left behind\":\n            - strong: Onboarding email\n            - generic: Launch brief\n            - generic: 1 item left behind\n        - generic: Writer\n        - generic: Reviewer\n        - generic: \"3\"\n        - list \"Writer to Reviewer handoffs\":\n          - 'button \"Support macro for refunds Macro draft, Tone: warm Looks good\"':\n            - strong: Support macro for refunds\n            - generic: \"Macro draft, Tone: warm\"\n            - generic: Looks good\n          - button \"API release notes Draft v2, 3 examples Looks good\":\n            - strong: API release notes\n            - generic: Draft v2, 3 examples\n            - generic: Looks good\n          - button \"Onboarding email Email draft 1 item left behind\":\n            - strong: Onboarding email\n            - generic: Email draft\n            - generic: 1 item left behind\n        - status\n    - generic: Interactive preview — try it out\n    - generic: No backend connected\n  - strong: Make it part of your project.\n  - paragraph: Copy the source, or give an AI assistant the complete prompt.\n  - button \"Download component file\":\n  - button \"Copy code\":\n    - text: Copy code\n  - button \"✦ Copy prompt\":\n    - generic: ✦\n    - text: Copy prompt\n  - status\n  - heading \"Copy. Paste. Build.\" [level=3]\n  - list:\n    - text: Copy the code or download the\n    - code: .tsx\n    - text: file.\n    - listitem: Add it to your React 19 project. Styles are already included.\n    - listitem: Pass your data and connect the callbacks to your application.\n  - button \"See usage example\":\n    - text: See usage example\n  - heading \"About this recreation\" [level=3]\n  - paragraph: Independently built from the public preview and documented behavior. Visual details and APIs may differ from affectUI Pro. The code here is fully available to copy and customize.\n  - link \"View original reference ↗\":\n    - /url: https://www.affectui.com/components/agent-handoff\n  - heading \"Keep exploring\" [level=2]\n  - button \"View all 90\":\n    - text: View all 90\n  - button \"⌘ Agents Agent Checkpoints ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Checkpoints\n    - generic: ↗\n  - button \"⌘ Agents Agent Cursors ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Cursors\n    - generic: ↗\n  - button \"⌘ Agents Agent Findings ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Findings\n    - generic: ↗\n  - generic: Component Studio · Built to be used.\n  - link \"Source repository ↗\":\n    - /url: https://github.com/Atlas322/thinking-state"
+}

@@ -1,0 +1,1289 @@
+{
+  "controls": [],
+  "metrics": [
+    {
+      "cls": "ui-fbkc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 889,
+        "height": 352,
+        "left": 474,
+        "right": 1214,
+        "top": 537,
+        "width": 740,
+        "x": 474,
+        "y": 537
+      },
+      "tag": "DIV",
+      "text": "Summarize support ticketWaiting0ms$0Requestopenrouter/autoHubSpot · Ticket #4821openrouter/autoSummarize this ticket for the on-call engineer: what broke, who's"
+    },
+    {
+      "cls": "ui-fbkc__bar",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20px",
+        "padding": "0px 2px"
+      },
+      "rect": {
+        "bottom": 565,
+        "height": 28,
+        "left": 474,
+        "right": 1214,
+        "top": 537,
+        "width": 740,
+        "x": 474,
+        "y": 537
+      },
+      "tag": "HEADER",
+      "text": "Summarize support ticketWaiting0ms$0"
+    },
+    {
+      "cls": "ui-fbkc__title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 561,
+        "height": 20,
+        "left": 476,
+        "right": 1041.7421875,
+        "top": 541,
+        "width": 565.7421875,
+        "x": 476,
+        "y": 541
+      },
+      "tag": "SPAN",
+      "text": "Summarize support ticket"
+    },
+    {
+      "cls": "ui-fbkc__summary",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 559,
+        "height": 16,
+        "left": 1053.7421875,
+        "right": 1212,
+        "top": 543,
+        "width": 158.2578125,
+        "x": 1053.7421875,
+        "y": 543
+      },
+      "tag": "SPAN",
+      "text": "Waiting0ms$0"
+    },
+    {
+      "cls": "ui-fbkc__state",
+      "css": {
+        "animationDuration": "0.3s",
+        "animationName": "ui-fbkc-swap",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 559.8048095703125,
+        "height": 16,
+        "left": 1053.7421875,
+        "right": 1107.8828125,
+        "top": 543.8048095703125,
+        "width": 54.140625,
+        "x": 1053.7421875,
+        "y": 543.8048095703125
+      },
+      "tag": "SPAN",
+      "text": "Waiting"
+    },
+    {
+      "cls": "ui-fbkc__total",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "16px",
+        "padding": "0px 0px 0px 12px"
+      },
+      "rect": {
+        "bottom": 559,
+        "height": 16,
+        "left": 1119.8828125,
+        "right": 1172.515625,
+        "top": 543,
+        "width": 52.6328125,
+        "x": 1119.8828125,
+        "y": 543
+      },
+      "tag": "SPAN",
+      "text": "0ms"
+    },
+    {
+      "cls": "ui-fbkc__card",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(251, 251, 251)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "12px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 889,
+        "height": 314,
+        "left": 474,
+        "right": 1214,
+        "top": 575,
+        "width": 740,
+        "x": 474,
+        "y": 575
+      },
+      "tag": "DIV",
+      "text": "Requestopenrouter/autoHubSpot · Ticket #4821openrouter/autoSummarize this ticket for the on-call engineer: what broke, who's affected and what the customer alre"
+    },
+    {
+      "cls": "ui-fbkc__flow",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "12px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "22px 16px"
+      },
+      "rect": {
+        "bottom": 889,
+        "height": 314,
+        "left": 474,
+        "right": 1214,
+        "top": 575,
+        "width": 740,
+        "x": 474,
+        "y": 575
+      },
+      "tag": "DIV",
+      "text": "Requestopenrouter/autoHubSpot · Ticket #4821openrouter/autoSummarize this ticket for the on-call engineer: what broke, who's affected and what the customer alre"
+    },
+    {
+      "cls": "ui-fbkc__node ui-fbkc__node--from ui-fbkc__hov",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px 8px"
+      },
+      "rect": {
+        "bottom": 758,
+        "height": 52,
+        "left": 490,
+        "right": 630,
+        "top": 706,
+        "width": 140,
+        "x": 490,
+        "y": 706
+      },
+      "tag": "DIV",
+      "text": "Requestopenrouter/autoHubSpot · Ticket #4821openrouter/autoSummarize this ticket for the on-call engineer: what broke, who's affected and what the customer alre"
+    },
+    {
+      "cls": "ui-fbkc__node-icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 96, 226, 0.07)",
+        "border": "0px none rgb(0, 96, 226)",
+        "borderRadius": "7px",
+        "color": "rgb(0, 96, 226)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 744,
+        "height": 24,
+        "left": 498,
+        "right": 522,
+        "top": 720,
+        "width": 24,
+        "x": 498,
+        "y": 720
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-fbkc__node-text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 748,
+        "height": 32,
+        "left": 530,
+        "right": 618.8125,
+        "top": 716,
+        "width": 88.8125,
+        "x": 530,
+        "y": 716
+      },
+      "tag": "SPAN",
+      "text": "Requestopenrouter/auto"
+    },
+    {
+      "cls": "ui-fbkc__node-title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "17px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 733,
+        "height": 17,
+        "left": 530,
+        "right": 618.8125,
+        "top": 716,
+        "width": 88.8125,
+        "x": 530,
+        "y": 716
+      },
+      "tag": "SPAN",
+      "text": "Request"
+    },
+    {
+      "cls": "ui-fbkc__node-sub",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "ui-monospace, \"SF Mono\", Menlo, monospace",
+        "fontSize": "10px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 748,
+        "height": 15,
+        "left": 530,
+        "right": 618.8125,
+        "top": 733,
+        "width": 88.8125,
+        "x": 530,
+        "y": 733
+      },
+      "tag": "SPAN",
+      "text": "openrouter/auto"
+    },
+    {
+      "cls": "ui-fbkc__pop",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "12px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "lineHeight": "20px",
+        "padding": "12px"
+      },
+      "rect": {
+        "bottom": 974.5,
+        "height": 212.5,
+        "left": 490,
+        "right": 770,
+        "top": 762,
+        "width": 280,
+        "x": 490,
+        "y": 762
+      },
+      "tag": "SPAN",
+      "text": "HubSpot · Ticket #4821openrouter/autoSummarize this ticket for the on-call engineer: what broke, who's affected and what the customer already tried.Input1,284 t"
+    },
+    {
+      "cls": "ui-fbkc__pop-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "9px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 807,
+        "height": 33,
+        "left": 502,
+        "right": 758,
+        "top": 774,
+        "width": 256,
+        "x": 502,
+        "y": 774
+      },
+      "tag": "SPAN",
+      "text": "HubSpot · Ticket #4821openrouter/auto"
+    },
+    {
+      "cls": "ui-fbkc__pop-logo",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 804.5,
+        "height": 28,
+        "left": 502,
+        "right": 530,
+        "top": 776.5,
+        "width": 28,
+        "x": 502,
+        "y": 776.5
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-fbkc__pop-who",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 807,
+        "height": 33,
+        "left": 539,
+        "right": 758,
+        "top": 774,
+        "width": 219,
+        "x": 539,
+        "y": 774
+      },
+      "tag": "SPAN",
+      "text": "HubSpot · Ticket #4821openrouter/auto"
+    },
+    {
+      "cls": "ui-fbkc__pop-title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "17px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 791,
+        "height": 17,
+        "left": 539,
+        "right": 758,
+        "top": 774,
+        "width": 219,
+        "x": 539,
+        "y": 774
+      },
+      "tag": "SPAN",
+      "text": "HubSpot · Ticket #4821"
+    },
+    {
+      "cls": "ui-fbkc__pop-sub",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 807,
+        "height": 16,
+        "left": 539,
+        "right": 758,
+        "top": 791,
+        "width": 219,
+        "x": 539,
+        "y": 791
+      },
+      "tag": "SPAN",
+      "text": "openrouter/auto"
+    },
+    {
+      "cls": "ui-fbkc__pop-quote",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(244, 244, 245)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "17px",
+        "padding": "8px 10px"
+      },
+      "rect": {
+        "bottom": 884,
+        "height": 67,
+        "left": 502,
+        "right": 758,
+        "top": 817,
+        "width": 256,
+        "x": 502,
+        "y": 817
+      },
+      "tag": "SPAN",
+      "text": "Summarize this ticket for the on-call engineer: what broke, who's affected and what the customer already tried."
+    },
+    {
+      "cls": "ui-fbkc__pop-rows",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "lineHeight": "20px",
+        "padding": "10px 0px 0px"
+      },
+      "rect": {
+        "bottom": 962.5,
+        "height": 68.5,
+        "left": 502,
+        "right": 758,
+        "top": 894,
+        "width": 256,
+        "x": 502,
+        "y": 894
+      },
+      "tag": "SPAN",
+      "text": "Input1,284 tokensOrderCheapest first, 5s eachTried so far0 of 4"
+    },
+    {
+      "cls": "ui-fbkc__pop-row",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 920.5,
+        "height": 16,
+        "left": 502,
+        "right": 758,
+        "top": 904.5,
+        "width": 256,
+        "x": 502,
+        "y": 904.5
+      },
+      "tag": "SPAN",
+      "text": "Input1,284 tokens"
+    },
+    {
+      "cls": "ui-fbkc__pop-label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 920.5,
+        "height": 16,
+        "left": 502,
+        "right": 530.6875,
+        "top": 904.5,
+        "width": 28.6875,
+        "x": 502,
+        "y": 904.5
+      },
+      "tag": "SPAN",
+      "text": "Input"
+    },
+    {
+      "cls": "ui-fbkc__pop-value",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flow-root",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 920.5,
+        "height": 16,
+        "left": 542.6875,
+        "right": 758,
+        "top": 904.5,
+        "width": 215.3125,
+        "x": 542.6875,
+        "y": 904.5
+      },
+      "tag": "SPAN",
+      "text": "1,284 tokens"
+    },
+    {
+      "cls": "ui-fbkc__links ui-fbkc__links--wide",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 867,
+        "height": 270,
+        "left": 630,
+        "right": 678,
+        "top": 597,
+        "width": 48,
+        "x": 630,
+        "y": 597
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-fbkc__link",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 732,
+        "height": 105,
+        "left": 630,
+        "right": 678,
+        "top": 627,
+        "width": 48,
+        "x": 630,
+        "y": 627
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "cls": "ui-fbkc__links ui-fbkc__links--tree",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "none",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-fbkc__models",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "10px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 867,
+        "height": 270,
+        "left": 678,
+        "right": 1010,
+        "top": 597,
+        "width": 332,
+        "x": 678,
+        "y": 597
+      },
+      "tag": "OL",
+      "text": "1Claude Opus 5.5AWS BedrockWaiting–AWS Bedrockus-east-1WaitingModelClaude Opus 5.5Timeup to 5.0sPrice$5 / $25 per 1M2GPT-6Azure OpenAIWaiting–Azure OpenAISweden"
+    },
+    {
+      "cls": "ui-fbkc__model ui-fbkc__hov",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "7px 10px",
+        "lineHeight": "20px",
+        "padding": "0px 12px 0px 10px"
+      },
+      "rect": {
+        "bottom": 657,
+        "height": 60,
+        "left": 678,
+        "right": 1010,
+        "top": 597,
+        "width": 332,
+        "x": 678,
+        "y": 597
+      },
+      "tag": "LI",
+      "text": "1Claude Opus 5.5AWS BedrockWaiting–AWS Bedrockus-east-1WaitingModelClaude Opus 5.5Timeup to 5.0sPrice$5 / $25 per 1M"
+    },
+    {
+      "cls": "ui-fbkc__logo",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "7px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 640,
+        "height": 26,
+        "left": 688,
+        "right": 714,
+        "top": 614,
+        "width": 26,
+        "x": 688,
+        "y": 614
+      },
+      "tag": "SPAN",
+      "text": "1"
+    },
+    {
+      "cls": "ui-fbkc__mark",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 634,
+        "height": 14,
+        "left": 694,
+        "right": 708,
+        "top": 620,
+        "width": 14,
+        "x": 694,
+        "y": 620
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-fbkc__n",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "7px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "8.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "13px",
+        "padding": "0px 3px"
+      },
+      "rect": {
+        "bottom": 644,
+        "height": 13,
+        "left": 706,
+        "right": 719,
+        "top": 631,
+        "width": 13,
+        "x": 706,
+        "y": 631
+      },
+      "tag": "SPAN",
+      "text": "1"
+    },
+    {
+      "cls": "ui-fbkc__who",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 637.5,
+        "height": 33,
+        "left": 724,
+        "right": 982.25,
+        "top": 604.5,
+        "width": 258.25,
+        "x": 724,
+        "y": 604.5
+      },
+      "tag": "SPAN",
+      "text": "Claude Opus 5.5AWS BedrockWaiting"
+    },
+    {
+      "cls": "ui-fbkc__top",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 621.5,
+        "height": 17,
+        "left": 724,
+        "right": 982.25,
+        "top": 604.5,
+        "width": 258.25,
+        "x": 724,
+        "y": 604.5
+      },
+      "tag": "SPAN",
+      "text": "Claude Opus 5.5AWS Bedrock"
+    },
+    {
+      "cls": "ui-fbkc__name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "17px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 621.5,
+        "height": 17,
+        "left": 724,
+        "right": 822.6328125,
+        "top": 604.5,
+        "width": 98.6328125,
+        "x": 724,
+        "y": 604.5
+      },
+      "tag": "SPAN",
+      "text": "Claude Opus 5.5"
+    },
+    {
+      "cls": "ui-fbkc__provider",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 621.5,
+        "height": 16,
+        "left": 828.6328125,
+        "right": 899.8125,
+        "top": 605.5,
+        "width": 71.1796875,
+        "x": 828.6328125,
+        "y": 605.5
+      },
+      "tag": "SPAN",
+      "text": "AWS Bedrock"
+    },
+    {
+      "cls": "ui-fbkc__status",
+      "css": {
+        "animationDuration": "0.3s",
+        "animationName": "ui-fbkc-swap",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 638.3048095703125,
+        "height": 16,
+        "left": 724,
+        "right": 982.25,
+        "top": 622.3048095703125,
+        "width": 258.25,
+        "x": 724,
+        "y": 622.3048095703125
+      },
+      "tag": "SPAN",
+      "text": "Waiting"
+    },
+    {
+      "cls": "ui-fbkc__meta",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 629.5,
+        "height": 17,
+        "left": 992.25,
+        "right": 998,
+        "top": 612.5,
+        "width": 5.75,
+        "x": 992.25,
+        "y": 612.5
+      },
+      "tag": "SPAN",
+      "text": "–"
+    },
+    {
+      "cls": "ui-fbkc__blocks",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "2px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 649.5,
+        "height": 5,
+        "left": 724,
+        "right": 998,
+        "top": 644.5,
+        "width": 274,
+        "x": 724,
+        "y": 644.5
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-fbkc__pop-badge",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.05)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px 7px"
+      },
+      "rect": {
+        "bottom": 699.5,
+        "height": 20,
+        "left": 918.5859375,
+        "right": 972,
+        "top": 679.5,
+        "width": 53.4140625,
+        "x": 918.5859375,
+        "y": 679.5
+      },
+      "tag": "SPAN",
+      "text": "Waiting"
+    },
+    {
+      "cls": "ui-fbkc__link ui-fbkc__link--out",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 732,
+        "height": 105,
+        "left": 1010,
+        "right": 1058,
+        "top": 627,
+        "width": 48,
+        "x": 1010,
+        "y": 627
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "cls": "ui-fbkc__node ui-fbkc__node--to ui-fbkc__hov",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(249, 249, 250)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px 8px"
+      },
+      "rect": {
+        "bottom": 758,
+        "height": 52,
+        "left": 1058,
+        "right": 1198,
+        "top": 706,
+        "width": 140,
+        "x": 1058,
+        "y": 706
+      },
+      "tag": "DIV",
+      "text": "ResponseWaiting…Slack · #support-escalationsWaiting for an answerPendingTotal time0msTotal cost$0Attempts0 of 4"
+    }
+  ],
+  "svg": [
+    "<svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"6\" r=\"4.6\" stroke=\"currentColor\" stroke-width=\"1.2\"></circle><path d=\"M6 3.6V6l1.6 1\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\"></path></svg>",
+    "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"3.5\" cy=\"3.5\" r=\"1.75\" fill=\"currentColor\" opacity=\"0.45\"></circle><circle cx=\"12.5\" cy=\"8\" r=\"1.75\" fill=\"currentColor\" opacity=\"0.45\"></circle><circle cx=\"3.5\" cy=\"12.5\" r=\"2.25\" fill=\"currentColor\"></circle><path d=\"M5.2 3.5h4.3a3 3 0 0 1 0 6H6.3a1.5 1.5 0 0 0 0 3\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"round\" opacity=\"0.7\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#FF7A59\" aria-hidden=\"true\"><path d=\"M18.164 7.93V5.084a2.198 2.198 0 001.267-1.978v-.067A2.2 2.2 0 0017.238.845h-.067a2.2 2.2 0 00-2.193 2.193v.067a2.196 2.196 0 001.252 1.973l.013.006v2.852a6.22 6.22 0 00-2.969 1.31l.012-.01-7.828-6.095A2.497 2.497 0 104.3 4.656l-.012.006 7.697 5.991a6.176 6.176 0 00-1.038 3.446c0 1.343.425 2.588 1.147 3.607l-.013-.02-2.342 2.343a1.968 1.968 0 00-.58-.095h-.002a2.033 2.033 0 102.033 2.033 1.978 1.978 0 00-.1-.595l.005.014 2.317-2.317a6.247 6.247 0 104.782-11.134l-.036-.005zm-.964 9.378a3.206 3.206 0 113.215-3.207v.002a3.206 3.206 0 01-3.207 3.207z\"></path></svg>",
+    "<svg class=\"ui-fbkc__links ui-fbkc__links--wide\" width=\"48\" height=\"270\" viewBox=\"0 0 48 270\" aria-hidden=\"true\"><g><path class=\"ui-fbkc__link\" data-status=\"waiting\" d=\"M0 135C26.400000000000002 135 21.6 30 48 30\" pathLength=\"1\"></path></g><g><path class=\"ui-fbkc__link\" data-status=\"waiting\" d=\"M0 135C26.400000000000002 135 21.6 100 48 100\" pathLength=\"1\"></path></g><g><path class=\"ui-fbkc__link\" data-status=\"waiting\" d=\"M0 135C26.400000000000002 135 21.6 170 48 170\" pathLength=\"1\"></path></g><g><path class=\"ui-fbkc__link\" data-status=\"waiting\" d=\"M0 135C26.400000000000002 135 21.6 240 48 240\" pathLength=\"1\"></path></g></svg>",
+    "<svg class=\"ui-fbkc__links ui-fbkc__links--tree\" width=\"44\" height=\"270\" viewBox=\"0 0 44 270\" aria-hidden=\"true\"><g><path class=\"ui-fbkc__link\" data-status=\"waiting\" d=\"M20 0V20Q20 30 30 30H42\" pathLength=\"1\"></path></g><g><path class=\"ui-fbkc__link\" data-status=\"waiting\" d=\"M20 0V90Q20 100 30 100H42\" pathLength=\"1\"></path></g><g><path class=\"ui-fbkc__link\" data-status=\"waiting\" d=\"M20 0V160Q20 170 30 170H42\" pathLength=\"1\"></path></g><g><path class=\"ui-fbkc__link\" data-status=\"waiting\" d=\"M20 0V230Q20 240 30 240H42\" pathLength=\"1\"></path></g></svg>",
+    "<svg viewBox=\"0 0 1200 1200\" aria-hidden=\"true\"><path fill=\"#D97757\" d=\"M 233.959793 800.214905 L 468.644287 668.536987 L 472.590637 657.100647 L 468.644287 650.738403 L 457.208069 650.738403 L 417.986633 648.322144 L 283.892639 644.69812 L 167.597321 639.865845 L 54.926208 633.825623 L 26.577238 627.785339 L 3.3e-05 592.751709 L 2.73832 575.27533 L 26.577238 559.248352 L 60.724873 562.228149 L 136.187973 567.382629 L 249.422867 575.194763 L 331.570496 580.026978 L 453.261841 592.671082 L 472.590637 592.671082 L 475.328857 584.859009 L 468.724915 580.026978 L 463.570557 575.194763 L 346.389313 495.785217 L 219.543671 411.865906 L 153.100723 363.543762 L 117.181267 339.060425 L 99.060455 316.107361 L 91.248367 266.01355 L 123.865784 230.093994 L 167.677887 233.073853 L 178.872513 236.053772 L 223.248367 270.201477 L 318.040283 343.570496 L 441.825592 434.738342 L 459.946411 449.798706 L 467.194672 444.64447 L 468.080597 441.020203 L 459.946411 427.409485 L 392.617493 305.718323 L 320.778564 181.932983 L 288.80542 130.630859 L 280.348999 99.865845 C 277.369171 87.221436 275.194641 76.590698 275.194641 63.624268 L 312.322174 13.20813 L 332.8591 6.604126 L 382.389313 13.20813 L 403.248352 31.328979 L 434.013519 101.71814 L 483.865753 212.537048 L 561.181274 363.221497 L 583.812134 407.919434 L 595.892639 449.315491 L 600.40271 461.959839 L 608.214783 461.959839 L 608.214783 454.711609 L 614.577271 369.825623 L 626.335632 265.61084 L 637.771851 131.516846 L 641.718201 93.745117 L 660.402832 48.483276 L 697.530334 24.000122 L 726.52356 37.852417 L 750.362549 72 L 747.060486 94.067139 L 732.886047 186.201416 L 705.100708 330.52356 L 686.979919 427.167847 L 697.530334 427.167847 L 709.61084 415.087341 L 758.496704 350.174561 L 840.644348 247.490051 L 876.885925 206.738342 L 919.167847 161.71814 L 946.308838 140.29541 L 997.61084 140.29541 L 1035.38269 196.429626 L 1018.469849 254.416199 L 965.637634 321.422852 L 921.825562 378.201538 L 859.006714 462.765259 L 819.785278 530.41626 L 823.409424 535.812073 L 832.75177 534.92627 L 974.657776 504.724915 L 1051.328979 490.872559 L 1142.818848 475.167786 L 1184.214844 494.496582 L 1188.724854 514.147644 L 1172.456421 554.335693 L 1074.604126 578.496765 L 959.838989 601.449829 L 788.939636 641.879272 L 786.845764 643.409485 L 789.261841 646.389343 L 866.255127 653.637634 L 899.194702 655.409424 L 979.812134 655.409424 L 1129.932861 666.604187 L 1169.154419 692.537109 L 1192.671265 724.268677 L 1188.724854 748.429688 L 1128.322144 779.194641 L 1046.818848 759.865845 L 856.590759 714.604126 L 791.355774 698.335754 L 782.335693 698.335754 L 782.335693 703.731567 L 836.69812 756.885986 L 936.322205 846.845581 L 1061.073975 962.81897 L 1067.436279 991.490112 L 1051.409424 1014.120911 L 1034.496704 1011.704712 L 924.885986 929.234924 L 882.604126 892.107544 L 786.845764 811.48999 L 780.483276 811.48999 L 780.483276 819.946289 L 802.550415 852.241699 L 919.087341 1027.409424 L 925.127625 1081.127686 L 916.671204 1098.604126 L 886.469849 1109.154419 L 853.288696 1103.114136 L 785.073914 1007.355835 L 714.684631 899.516785 L 657.906067 802.872498 L 650.979858 806.81897 L 617.476624 1167.704834 L 601.771851 1186.147705 L 565.530212 1200 L 535.328857 1177.046997 L 519.302124 1139.919556 L 535.328857 1066.550537 L 554.657776 970.792053 L 570.362488 894.68457 L 584.536926 800.134277 L 592.993347 768.724976 L 592.429626 766.630859 L 585.503479 767.516968 L 514.22821 865.369263 L 405.825531 1011.865906 L 320.053711 1103.677979 L 299.516815 1111.812256 L 263.919525 1093.369263 L 267.221497 1060.429688 L 287.114136 1031.114136 L 405.825531 880.107361 L 477.422913 786.52356 L 523.651062 732.483276 L 523.328918 724.671265 L 520.590698 724.671265 L 205.288605 929.395935 L 149.154434 936.644409 L 124.993355 914.01355 L 127.973183 876.885986 L 139.409409 864.80542 L 234.201385 799.570435 L 233.879227 799.8927 Z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-fbkc-strong, #000);\"><path d=\"M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167zM21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-fbkc-strong, #000);\"><path d=\"M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#F25022\" d=\"M1 1h10.5v10.5H1z\"></path><path fill=\"#7FBA00\" d=\"M12.5 1H23v10.5H12.5z\"></path><path fill=\"#00A4EF\" d=\"M1 12.5h10.5V23H1z\"></path><path fill=\"#FFB900\" d=\"M12.5 12.5H23V23H12.5z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><defs><linearGradient id=\"gm_r_2_\" x1=\"0\" y1=\"24\" x2=\"24\" y2=\"0\" gradientUnits=\"userSpaceOnUse\"><stop stop-color=\"#1C7DFF\"></stop><stop offset=\"0.52\" stop-color=\"#1C69FF\"></stop><stop offset=\"1\" stop-color=\"#B04DFF\"></stop></linearGradient></defs><path fill=\"url(#gm_r_2_)\" d=\"M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#4285F4\" d=\"M23.5 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.45a5.52 5.52 0 0 1-2.39 3.62v3h3.87c2.26-2.08 3.57-5.15 3.57-8.81Z\"></path><path fill=\"#34A853\" d=\"M12 24c3.24 0 5.96-1.07 7.94-2.9l-3.87-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.95H1.27v3.1A12 12 0 0 0 12 24Z\"></path><path fill=\"#FBBC05\" d=\"M5.27 14.3a7.2 7.2 0 0 1 0-4.6V6.6h-4a12 12 0 0 0 0 10.8l4-3.1Z\"></path><path fill=\"#EA4335\" d=\"M12 4.75c1.76 0 3.34.6 4.59 1.8l3.43-3.43A11.5 11.5 0 0 0 12 0 12 12 0 0 0 1.27 6.6l4 3.1C6.22 6.86 8.87 4.75 12 4.75Z\"></path></svg>",
+    "<svg viewBox=\"0 0 33.4 32\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-fbkc-strong, #000);\"><path d=\"M12.8734 20.5407L23.9549 12.3506C24.4982 11.9491 25.2747 12.1057 25.5336 12.7294C26.896 16.0185 26.2873 19.9712 23.5766 22.6851C20.866 25.3989 17.0944 25.9941 13.6471 24.6386L9.88123 26.3843C15.2826 30.0806 21.8416 29.1665 25.9403 25.0601C29.1914 21.8051 30.1983 17.3683 29.2568 13.3673L29.2653 13.3758C27.9 7.49809 29.601 5.14871 33.0853 0.344576C33.1677 0.230667 33.2502 0.116757 33.3327 0L28.7476 4.59055V4.57631L12.8706 20.5436\"></path><path d=\"M10.5867 22.5312C6.70979 18.8234 7.37821 13.0852 10.6862 9.77618C13.1323 7.3271 17.14 6.32755 20.6385 7.79698L24.3959 6.05986C23.719 5.57005 22.8514 5.04322 21.8559 4.67301C17.3562 2.81914 11.969 3.7418 8.31115 7.40114C4.79271 10.9238 3.68626 16.3402 5.58628 20.9621C7.0056 24.4164 4.67893 26.8597 2.3352 29.3259C1.50465 30.2001 0.67126 31.0744 0 31.9999L10.5838 22.534\"></path></svg>",
+    "<svg viewBox=\"0 0 33.4 32\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-fbkc-strong, #000);\"><path d=\"M12.8734 20.5407L23.9549 12.3506C24.4982 11.9491 25.2747 12.1057 25.5336 12.7294C26.896 16.0185 26.2873 19.9712 23.5766 22.6851C20.866 25.3989 17.0944 25.9941 13.6471 24.6386L9.88123 26.3843C15.2826 30.0806 21.8416 29.1665 25.9403 25.0601C29.1914 21.8051 30.1983 17.3683 29.2568 13.3673L29.2653 13.3758C27.9 7.49809 29.601 5.14871 33.0853 0.344576C33.1677 0.230667 33.2502 0.116757 33.3327 0L28.7476 4.59055V4.57631L12.8706 20.5436\"></path><path d=\"M10.5867 22.5312C6.70979 18.8234 7.37821 13.0852 10.6862 9.77618C13.1323 7.3271 17.14 6.32755 20.6385 7.79698L24.3959 6.05986C23.719 5.57005 22.8514 5.04322 21.8559 4.67301C17.3562 2.81914 11.969 3.7418 8.31115 7.40114C4.79271 10.9238 3.68626 16.3402 5.58628 20.9621C7.0056 24.4164 4.67893 26.8597 2.3352 29.3259C1.50465 30.2001 0.67126 31.0744 0 31.9999L10.5838 22.534\"></path></svg>",
+    "<svg class=\"ui-fbkc__links ui-fbkc__links--wide\" width=\"48\" height=\"270\" viewBox=\"0 0 48 270\" aria-hidden=\"true\"><path class=\"ui-fbkc__link ui-fbkc__link--out\" data-status=\"idle\" d=\"M0 30C26.400000000000002 30 21.6 135 48 135\" pathLength=\"1\"></path><path class=\"ui-fbkc__link ui-fbkc__link--out\" data-status=\"idle\" d=\"M0 100C26.400000000000002 100 21.6 135 48 135\" pathLength=\"1\"></path><path class=\"ui-fbkc__link ui-fbkc__link--out\" data-status=\"idle\" d=\"M0 170C26.400000000000002 170 21.6 135 48 135\" pathLength=\"1\"></path><path class=\"ui-fbkc__link ui-fbkc__link--out\" data-status=\"idle\" d=\"M0 240C26.400000000000002 240 21.6 135 48 135\" pathLength=\"1\"></path></svg>",
+    "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3 4.5A1.5 1.5 0 0 1 4.5 3h7A1.5 1.5 0 0 1 13 4.5v5a1.5 1.5 0 0 1-1.5 1.5H8l-3 2.5V11h-.5A1.5 1.5 0 0 1 3 9.5v-5Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linejoin=\"round\"></path><path d=\"M5.75 6.25h4.5M5.75 8.25h2.75\" stroke=\"currentColor\" stroke-width=\"1.3\" stroke-linecap=\"round\"></path></svg>",
+    "<svg viewBox=\"0 0 49.883 49.877\" fill=\"none\" aria-hidden=\"true\"><g transform=\"translate(0 0)\"><path d=\"M18.3549 10.4784C15.4713 10.4784 13.1157 8.12279 13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V10.4784H18.3549Z\" fill=\"#36C5F0\"></path><path d=\"M18.3575 13.12C21.2411 13.12 23.5967 15.4756 23.5967 18.3592C23.5967 21.2428 21.2411 23.5984 18.3575 23.5984H5.2392C2.35561 23.5984 0 21.2428 0 18.3592C0 15.4756 2.35561 13.12 5.2392 13.12H18.3575Z\" fill=\"#36C5F0\"></path></g><g transform=\"translate(26.28 0)\"><path d=\"M13.1244 18.3592C13.1244 15.4756 15.48 13.12 18.3636 13.12C21.2472 13.12 23.6028 15.4756 23.6028 18.3592C23.6028 21.2428 21.2472 23.5984 18.3636 23.5984H13.1244V18.3592Z\" fill=\"#2EB67D\"></path><path d=\"M10.4785 18.3575C10.4785 21.2411 8.12286 23.5967 5.23927 23.5967C2.35568 23.5967 7.4362e-05 21.2411 7.4362e-05 18.3575V5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0C8.12286 0 10.4785 2.35561 10.4785 5.2392V18.3575Z\" fill=\"#2EB67D\"></path></g><g transform=\"translate(0 26.28)\"><path d=\"M10.4784 5.2392C10.4784 8.12279 8.12279 10.4784 5.2392 10.4784C2.35561 10.4784 0 8.12279 0 5.2392C0 2.35561 2.35561 0 5.2392 0H10.4784V5.2392Z\" fill=\"#E01E5A\"></path><path d=\"M13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V18.3575C23.5941 21.2411 21.2385 23.5967 18.3549 23.5967C15.4713 23.5967 13.1157 21.2411 13.1157 18.3575V5.2392Z\" fill=\"#E01E5A\"></path></g><g transform=\"translate(26.28 26.28)\"><path d=\"M5.23927 13.1157C8.12286 13.1157 10.4785 15.4713 10.4785 18.3549C10.4785 21.2385 8.12286 23.5941 5.23927 23.5941C2.35568 23.5941 7.4362e-05 21.2385 7.4362e-05 18.3549V13.1157H5.23927Z\" fill=\"#ECB22E\"></path><path d=\"M5.23927 10.4784C2.35568 10.4784 7.4362e-05 8.12279 7.4362e-05 5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0H18.3576C21.2412 0 23.5968 2.35561 23.5968 5.2392C23.5968 8.12279 21.2412 10.4784 18.3576 10.4784H5.23927Z\" fill=\"#ECB22E\"></path></g></svg>"
+  ],
+  "url": "https://www.affectui.com/components/fallback-chain",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Agents\":\n        - /url: /category/agents\n      - generic: Fallback Chain\n    - heading \"Fallback Chain\" [level=1]\n    - paragraph: One request finding a model that answers, as a small flow diagram – the request branches out to each model in its fallback order, a light runs to the one being tried, failed branches break red, and the one that answers runs on to the response.\n    - link \"Get Pro to install\":\n      - /url: /pricing\n      - generic: Get Pro to install\n    - tablist \"Fallback Chain preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - generic \"Summarize support ticket\"\n    - status:\n      - generic: Waiting\n      - generic \"Time so far\":\n        - text: 0ms\n      - generic \"Cost so far\": $0\n    - generic: Request\n    - generic \"openrouter/auto\"\n    - list \"Models, in the order they're tried\":\n      - generic: \"1\"\n      - generic \"Claude Opus 5.5\"\n      - generic: AWS Bedrock\n      - generic \"Waiting\"\n      - generic: –\n      - generic: \"2\"\n      - generic \"GPT-6\"\n      - generic: Azure OpenAI\n      - generic \"Waiting\"\n      - generic: –\n      - generic: \"3\"\n      - generic \"Gemini 3.8 Pro\"\n      - generic: Google Vertex\n      - generic \"Waiting\"\n      - generic: –\n      - generic: \"4\"\n      - generic \"Grok 4\"\n      - generic: xAI\n      - generic \"Waiting\"\n      - generic: –\n    - generic: Response\n    - generic \"Waiting…\"\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: A request can go to several models, providers or regions and people should see which one answered – and why the others didn't\n      - listitem: Model routers, LLM gateways, retries across providers, uptime and incident views\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: When several models answer the same prompt at once and you compare them – use Parallel Attempts\n      - listitem: When the full timeline of one run matters – use Trace Waterfall\n    - heading \"Installation\" [level=2]\n    - paragraph: Fallback Chain is a Pro component.\n    - strong: Installation is part of Pro\n    - generic: Get Pro to copy the code, install it with the CLI and use it in your projects.\n    - link \"Unlock with Pro\":\n      - /url: /pricing\n      - generic: Unlock with Pro\n    - heading \"Usage\" [level=2]\n    - strong: Usage example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"API reference\" [level=2]\n    - heading \"FallbackChain\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - 'row \"attempts FallbackAttempt[] – The models in the order they''re tried, each with its status: waiting, trying, failed, answered or skipped\"':\n          - cell \"attempts\":\n            - code: attempts\n          - cell \"FallbackAttempt[]\":\n            - code: FallbackAttempt[]\n          - cell \"–\"\n          - 'cell \"The models in the order they''re tried, each with its status: waiting, trying, failed, answered or skipped\"'\n        - row \"title string \\\"Request\\\" What was asked, above the diagram next to the attempt and the running time and cost\":\n          - cell \"title\":\n            - code: title\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Request\\\"\":\n            - code: \"\\\"Request\\\"\"\n          - cell \"What was asked, above the diagram next to the attempt and the running time and cost\"\n        - row \"route string – The route on the request node, e.g. \\\"openrouter/auto\\\"\":\n          - cell \"route\":\n            - code: route\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"The route on the request node, e.g. \\\"openrouter/auto\\\"\"\n        - 'row \"request ChainEnd – Where the request came from – { name, logo, text, details } for its hover card: the source, a preview of the prompt and extra lines\"':\n          - cell \"request\":\n            - code: request\n          - cell \"ChainEnd\":\n            - code: ChainEnd\n          - cell \"–\"\n          - 'cell \"Where the request came from – { name, logo, text, details } for its hover card: the source, a preview of the prompt and extra lines\"'\n        - 'row \"response ChainEnd – Where the answer goes – { name, logo, text, details } for its hover card; the preview shows once a model answered\"':\n          - cell \"response\":\n            - code: response\n          - cell \"ChainEnd\":\n            - code: ChainEnd\n          - cell \"–\"\n          - 'cell \"Where the answer goes – { name, logo, text, details } for its hover card; the preview shows once a model answered\"'\n        - row \"now number – A clock you control for the live timer – without it it follows real time\":\n          - cell \"now\":\n            - code: now\n          - cell \"number\":\n            - code: number\n          - cell \"–\"\n          - cell \"A clock you control for the live timer – without it it follows real time\"\n        - row \"onRetry () => void – Shows a Retry button once every model failed\":\n          - cell \"onRetry\":\n            - code: onRetry\n          - cell \"() => void\":\n            - code: () => void\n          - cell \"–\"\n          - cell \"Shows a Retry button once every model failed\"\n        - row \"className string – Extra class on the root\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Tab Moves through the request, each model and the response – each opens its hover card while focused; then the Retry button once every model failed\":\n          - cell \"Tab\":\n            - generic: Tab\n          - cell \"Moves through the request, each model and the response – each opens its hover card while focused; then the Retry button once every model failed\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: The summary on top is a status region – “Attempt 2 of 4”, “Answered in 8.5s” and failures are announced\n      - listitem: The branches are decoration – the models are an ordered list with each one's provider, status and time\n      - listitem: Hover cards are tooltips tied to their element (aria-describedby), so they're read on focus too\n      - listitem: Every state is written out (“Rate limited · 429”, “Not needed”), not only shown by color\n      - listitem: The running light and the drawing branches stop with reduced motion\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: Below 680px the provider moves into the model's hover card; below 520px the diagram turns into a tree – the request on top, the models branching off one line, the result stays in the line above\n      - listitem: Dark mode built in; colors are CSS variables on .ui-fbkc\n    - heading \"Guides\" [level=2]\n    - link \"How to show tool calls in an AI agent UI Guide How to display an agent's tool calls – one readable line per call, arguments and results on demand, errors with retry – and when to switch to a trace or a graph.\":\n      - /url: /guides/tool-calls-agent-ui\n      - generic: How to show tool calls in an AI agent UI\n      - generic: Guide\n      - generic: How to display an agent's tool calls – one readable line per call, arguments and results on demand, errors with retry – and when to switch to a trace or a graph.\n    - 'link \"Model picker UI: letting users choose an LLM Guide How to design a model picker for an AI product – what to show per model, defaults, reasoning settings, and what happens when a model fails.\"':\n      - /url: /guides/model-picker-ui\n      - generic: \"Model picker UI: letting users choose an LLM\"\n      - generic: Guide\n      - generic: How to design a model picker for an AI product – what to show per model, defaults, reasoning settings, and what happens when a model fails.\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

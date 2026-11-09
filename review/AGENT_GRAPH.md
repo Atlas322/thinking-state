@@ -1,3 +1,19 @@
+# Agent Graph live follow-up — 2026-11-09
+
+Browser access succeeded in this session. The prior screenshot-only sections below are historical.
+
+Live reference/local evidence is in `live/agent-graph-*.json`; all states have explicit viewport, DOM attributes, computed CSS and geometry. At640px, the reference stage is416px plus26px legend; lead center320/208, researcher398/150.7, analyst398/265.3, coder242/265.3, writer242/150.7. The revised demo uses these measured desktop positions. Reference narrow334px stage is600px; local324px labels were checked and none crossed the panel bounds.
+
+Reference and local node cards were opened; Escape restored node focus. Local Enter and narrow Space activation were also checked. Card close receives focus. The current card follows the observed28px icon,13/16px name,11/14px detail,24px close control, latest4 calls and cost footer. The demo's call labels/content remain different.
+
+The old heat-based stroke was wrong for Clean: the live reference uses a constant1.5px stroke regardless of heat. Routes now share8px ports (6px narrow), use one rounded bend where possible, and pulse answers follow the same route backwards. A regression test exposed a crash when an in-flight call's inferred edge disappeared; this is now guarded. Straight/bent port and orthogonality tests also pass. Routing remains best-effort for blocked/collinear paths and is not certified collision-free.
+
+Measured tiles are56/46/34px desktop and42/34/28px narrow, with radius27% of tile size. Typography, panel/node colors and shadows, header and legend were corrected. The source API still retains heatWindow for compatibility. Reference observed default height differs from the public text: desktop stage is0.6×width+32px within observed range, narrow stage600px; this implementation follows the observed samples, but unseen breakpoints require validation.
+
+**Still incomplete:** dynamic six/seven-tool sequence, exact SVG brands and UI badges, pulse tail shape on bends, shine/ripple/exit transitions, per-frame DOM performance, full equal-state responsive/theme/Classic matrix. The screenshot pair has different clock, tool-count and focus states and is not a visual match result. No match certification is made.
+
+---
+
 # Agent Graph: screenshot-based correction
 
 The user supplied both screenshots below. The local screenshot is **before** the latest correction; it is retained as evidence of the discrepancy, not as the final result.

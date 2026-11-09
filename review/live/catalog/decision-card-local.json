@@ -1,0 +1,421 @@
+{
+  "controls": [
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "1Incremental migrationMove one table at a time. Lowest risk.Recommended",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "2Full migrationFaster, but requires a maintenance window.",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "3Keep the existing schemaAdd a compatibility layer instead.",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Answer",
+      "type": "submit"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Later",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "st-ui ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "14px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 790.640625,
+        "height": 426.765625,
+        "left": 509,
+        "right": 1189,
+        "top": 363.875,
+        "width": 680,
+        "x": 509,
+        "y": 363.875
+      },
+      "tag": "SECTION",
+      "text": "\n.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#"
+    },
+    {
+      "cls": "st-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20.15px",
+        "padding": "20px 22px"
+      },
+      "rect": {
+        "bottom": 450.1640625,
+        "height": 85.2890625,
+        "left": 510,
+        "right": 1188,
+        "top": 364.875,
+        "width": 678,
+        "x": 510,
+        "y": 364.875
+      },
+      "tag": "HEADER",
+      "text": "Which approach should I use?The agent needs your direction"
+    },
+    {
+      "cls": "st-content",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "10px 20px 18px"
+      },
+      "rect": {
+        "bottom": 789.640625,
+        "height": 339.4765625,
+        "left": 510,
+        "right": 1188,
+        "top": 450.1640625,
+        "width": 678,
+        "x": 510,
+        "y": 450.1640625
+      },
+      "tag": "DIV",
+      "text": "1Incremental migrationMove one table at a time. Lowest risk.Recommended2Full migrationFaster, but requires a maintenance window.3Keep the existing schemaAdd a c"
+    },
+    {
+      "cls": "st-row st-row-button",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20.15px",
+        "padding": "12px 0px"
+      },
+      "rect": {
+        "bottom": 522.359375,
+        "height": 62.1953125,
+        "left": 530,
+        "right": 1168,
+        "top": 460.1640625,
+        "width": 638,
+        "x": 530,
+        "y": 460.1640625
+      },
+      "tag": "BUTTON",
+      "text": "1Incremental migrationMove one table at a time. Lowest risk.Recommended"
+    },
+    {
+      "cls": "st-key",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "4px",
+        "color": "rgb(130, 130, 135)",
+        "display": "block",
+        "fontFamily": "ui-monospace, monospace",
+        "fontSize": "10px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "normal",
+        "padding": "2px 5px"
+      },
+      "rect": {
+        "bottom": 499.7578125,
+        "height": 18,
+        "left": 530,
+        "right": 548.0234375,
+        "top": 481.7578125,
+        "width": 18.0234375,
+        "x": 530,
+        "y": 481.7578125
+      },
+      "tag": "SPAN",
+      "text": "1"
+    },
+    {
+      "cls": "st-grow",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 509.359375,
+        "height": 37.1953125,
+        "left": 560.0234375,
+        "right": 1072.8359375,
+        "top": 472.1640625,
+        "width": 512.8125,
+        "x": 560.0234375,
+        "y": 472.1640625
+      },
+      "tag": "SPAN",
+      "text": "Incremental migrationMove one table at a time. Lowest risk."
+    },
+    {
+      "cls": "st-row-title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 492.3125,
+        "height": 20.1484375,
+        "left": 560.0234375,
+        "right": 1072.8359375,
+        "top": 472.1640625,
+        "width": 512.8125,
+        "x": 560.0234375,
+        "y": 472.1640625
+      },
+      "tag": "SPAN",
+      "text": "Incremental migration"
+    },
+    {
+      "cls": "st-badge green",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "color(srgb 0.196078 0.584314 0.415686 / 0.09)",
+        "border": "0px none rgb(50, 149, 106)",
+        "borderRadius": "4px",
+        "color": "rgb(50, 149, 106)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "lineHeight": "18px",
+        "padding": "0px 6px"
+      },
+      "rect": {
+        "bottom": 499.7578125,
+        "height": 18,
+        "left": 1084.8359375,
+        "right": 1168,
+        "top": 481.7578125,
+        "width": 83.1640625,
+        "x": 1084.8359375,
+        "y": 481.7578125
+      },
+      "tag": "SPAN",
+      "text": "Recommended"
+    },
+    {
+      "cls": "st-field",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 721.4921875,
+        "height": 62.7421875,
+        "left": 530,
+        "right": 1168,
+        "top": 658.75,
+        "width": 638,
+        "x": 530,
+        "y": 658.75
+      },
+      "tag": "LABEL",
+      "text": "Or write your own"
+    },
+    {
+      "cls": "st-actions",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 771.640625,
+        "height": 34.1484375,
+        "left": 530,
+        "right": 1168,
+        "top": 737.4921875,
+        "width": 638,
+        "x": 530,
+        "y": 737.4921875
+      },
+      "tag": "DIV",
+      "text": "AnswerLater"
+    },
+    {
+      "cls": "st-btn st-primary ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(38, 38, 41)",
+        "border": "1px solid rgb(38, 38, 41)",
+        "borderRadius": "7px",
+        "color": "rgb(255, 255, 255)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20.15px",
+        "padding": "6px 11px"
+      },
+      "rect": {
+        "bottom": 771.640625,
+        "height": 34.1484375,
+        "left": 530,
+        "right": 600.390625,
+        "top": 737.4921875,
+        "width": 70.390625,
+        "x": 530,
+        "y": 737.4921875
+      },
+      "tag": "BUTTON",
+      "text": "Answer"
+    },
+    {
+      "cls": "st-btn  ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "7px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20.15px",
+        "padding": "6px 11px"
+      },
+      "rect": {
+        "bottom": 771.640625,
+        "height": 34.1484375,
+        "left": 608.390625,
+        "right": 663.640625,
+        "top": 737.4921875,
+        "width": 55.25,
+        "x": 608.390625,
+        "y": 737.4921875
+      },
+      "tag": "BUTTON",
+      "text": "Later"
+    }
+  ],
+  "svg": [],
+  "url": "http://127.0.0.1:5173/#/decision-card",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- complementary:\n  - button \"Component Studio home\":\n    - text: s\n    - generic: ·\n    - generic: componentstudio\n    - generic: \"01\"\n  - textbox \"Search components\":\n    - /placeholder: Find a component…\n  - generic: /\n  - button \"▦ All components 90\":\n    - generic: ▦\n    - text: All components\n    - generic: \"90\"\n  - button \"Favorites 0\":\n    - text: Favorites\n    - generic: \"0\"\n  - navigation \"Components\":\n    - generic: ⌘\n    - text: Agents\n    - generic: \"43\"\n    - button \"Agent Checkpoints\":\n      - generic: Agent Checkpoints\n    - button \"Agent Cursors\":\n      - generic: Agent Cursors\n    - button \"Agent Findings\":\n      - generic: Agent Findings\n    - button \"Agent Fleet\":\n      - generic: Agent Fleet\n    - button \"Agent Graph\":\n      - generic: Agent Graph\n    - button \"Agent Handoff\":\n      - generic: Agent Handoff\n    - button \"Agent Inbox\":\n      - generic: Agent Inbox\n    - button \"Agent Lanes\":\n      - generic: Agent Lanes\n    - button \"Agent Ledger\":\n      - generic: Agent Ledger\n    - button \"Agent Monitor\":\n      - generic: Agent Monitor\n    - button \"Agent Plan\":\n      - generic: Agent Plan\n    - button \"Agent Queue\":\n      - generic: Agent Queue\n    - button \"Agent Recap\":\n      - generic: Agent Recap\n    - button \"Agent Steering\":\n      - generic: Agent Steering\n    - button \"Agent Trail\":\n      - generic: Agent Trail\n    - button \"Agent Tree\":\n      - generic: Agent Tree\n    - button \"Approval Card\":\n      - generic: Approval Card\n    - button \"Approval Gates\":\n      - generic: Approval Gates\n    - button \"Autonomy Dial\":\n      - generic: Autonomy Dial\n    - button \"Away Summary\":\n      - generic: Away Summary\n    - button \"Collaboration Stream\":\n      - generic: Collaboration Stream\n    - button \"Conflict Radar\":\n      - generic: Conflict Radar\n    - button \"Context Map\":\n      - generic: Context Map\n    - button \"Context Window\":\n      - generic: Context Window\n    - button \"Cost Waterfall\":\n      - generic: Cost Waterfall\n    - button \"Decision Card\":\n      - generic: Decision Card\n    - button \"Decision Tree\":\n      - generic: Decision Tree\n    - button \"Delegate Board\":\n      - generic: Delegate Board\n    - button \"Fallback Chain\":\n      - generic: Fallback Chain\n    - button \"Fan-out Grid\":\n      - generic: Fan-out Grid\n    - button \"Inline Diff\":\n      - generic: Inline Diff\n    - button \"Judge Bracket\":\n      - generic: Judge Bracket\n    - button \"Memory Panel\":\n      - generic: Memory Panel\n    - button \"Parallel Attempts\":\n      - generic: Parallel Attempts\n    - button \"Permission Request\":\n      - generic: Permission Request\n    - button \"Plan vs Actual\":\n      - generic: Plan vs Actual\n    - button \"Review Center\":\n      - generic: Review Center\n    - button \"Root Cause Tree\":\n      - generic: Root Cause Tree\n    - button \"Running Now\":\n      - generic: Running Now\n    - button \"Scheduled Runs\":\n      - generic: Scheduled Runs\n    - button \"Tool Access Map\":\n      - generic: Tool Access Map\n    - button \"Tool Call Card\":\n      - generic: Tool Call Card\n    - button \"Trace Waterfall\":\n      - generic: Trace Waterfall\n    - generic: ◌\n    - text: Chat\n    - generic: \"10\"\n    - button \"AI Answer\":\n      - generic: AI Answer\n    - button \"Chat Composer\":\n      - generic: Chat Composer\n    - button \"Cited Answer\":\n      - generic: Cited Answer\n    - button \"Comment Thread\":\n      - generic: Comment Thread\n    - button \"Comments Panel\":\n      - generic: Comments Panel\n    - button \"Message Actions\":\n      - generic: Message Actions\n    - button \"Model Picker\":\n      - generic: Model Picker\n    - button \"Thinking Loader\":\n      - generic: Thinking Loader\n    - button \"Thinking State\":\n      - generic: Thinking State\n    - button \"Writing Assistant\":\n      - generic: Writing Assistant\n    - generic: ⊞\n    - text: Inputs\n    - generic: \"15\"\n    - button \"Billing Schedule\":\n      - generic: Billing Schedule\n    - button \"Checkbox\":\n      - generic: Checkbox\n    - button \"Combobox\":\n      - generic: Combobox\n    - button \"Date Range Picker\":\n      - generic: Date Range Picker\n    - button \"Dropzone\":\n      - generic: Dropzone\n    - button \"Filter Menu\":\n      - generic: Filter Menu\n    - button \"Integration Settings\":\n      - generic: Integration Settings\n    - button \"OTP Input\":\n      - generic: OTP Input\n    - button \"Prompt Library\":\n      - generic: Prompt Library\n    - button \"Select\":\n      - generic: Select\n    - button \"Stepper Form\":\n      - generic: Stepper Form\n    - button \"Switch\":\n      - generic: Switch\n    - button \"Tag Input\":\n      - generic: Tag Input\n    - button \"Text Area\":\n      - generic: Text Area\n    - button \"Text Field\":\n      - generic: Text Field\n    - generic: ▤\n    - text: Data display\n    - generic: \"7\"\n    - button \"Breakdown Chart\":\n      - generic: Breakdown Chart\n    - button \"Change Summary\":\n      - generic: Change Summary\n    - button \"Compact Breakdown\":\n      - generic: Compact Breakdown\n    - button \"Data Table\":\n      - generic: Data Table\n    - button \"Experiment Card\":\n      - generic: Experiment Card\n    - button \"KPI Chart\":\n      - generic: KPI Chart\n    - button \"Usage Meter\":\n      - generic: Usage Meter\n    - generic: ↗\n    - text: Navigation\n    - generic: \"4\"\n    - button \"Command Menu\":\n      - generic: Command Menu\n    - button \"Integration Picker\":\n      - generic: Integration Picker\n    - button \"Profile Menu\":\n      - generic: Profile Menu\n    - button \"Segmented Control\":\n      - generic: Segmented Control\n    - generic: ◉\n    - text: Feedback\n    - generic: \"5\"\n    - button \"Decision Inbox\":\n      - generic: Decision Inbox\n    - button \"Notification Stack\":\n      - generic: Notification Stack\n    - button \"Progress Tracker\":\n      - generic: Progress Tracker\n    - button \"Setup Guide\":\n      - generic: Setup Guide\n    - button \"Toaster\":\n      - generic: Toaster\n    - generic: ▢\n    - text: Cards\n    - generic: \"4\"\n    - button \"Email Draft\":\n      - generic: Email Draft\n    - button \"Project Card\":\n      - generic: Project Card\n    - button \"Smart Recommendation\":\n      - generic: Smart Recommendation\n    - button \"Tips Panel\":\n      - generic: Tips Panel\n    - generic: ↵\n    - text: Buttons\n    - generic: \"2\"\n    - button \"Button\":\n      - generic: Button\n    - button \"Reaction Bar\":\n      - generic: Reaction Bar\n  - link \"Take the library with you All source files · ZIP download ↗\":\n    - /url: /component-library.zip\n    - strong: Take the library with you\n    - generic: All source files · ZIP download\n    - generic: ↗\n  - generic: 90 components. Yours to build with.\n- banner:\n  - button \"Library\"\n  - generic: /\n  - generic: Agents\n  - generic: /\n  - strong: Decision Card\n  - link \"GitHub ↗\":\n    - /url: https://github.com/Atlas322/thinking-state\n  - button \"Switch to dark theme\":\n- main:\n  - text: AGENTS\n  - generic: /\n  - text: COMPONENT 41\n  - heading \"Decision Card\" [level=1]\n  - button \"Add to favorites\":\n  - paragraph: \"An agent's question, asked the way Claude asks one – its own card just above the chat composer: numbered options with one Recommended, Approve / Decline for an approval, preview tiles for a pick, and a last row for your own words; a click or 1–5 answers, Later folds it to one line\"\n  - generic: Independent recreation\n  - generic: React 19\n  - generic: TypeScript\n  - generic: Self-contained\n  - region \"Decision Card showcase\":\n    - tablist \"Component view\":\n      - tab \"◉ Preview\" [selected]:\n        - generic: ◉\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n      - tab \"↗ Usage\":\n        - generic: ↗\n        - text: Usage\n    - button \"Use narrow preview\":\n      - generic: ▯\n    - button \"Replay component\":\n    - tabpanel \"◉ Preview\":\n      - strong: Which approach should I use?\n      - paragraph: The agent needs your direction\n      - button \"1 Incremental migration Move one table at a time. Lowest risk. Recommended\":\n        - generic: \"1\"\n        - generic: Incremental migration\n        - generic: Move one table at a time. Lowest risk.\n        - generic: Recommended\n      - button \"2 Full migration Faster, but requires a maintenance window.\":\n        - generic: \"2\"\n        - generic: Full migration\n        - generic: Faster, but requires a maintenance window.\n      - button \"3 Keep the existing schema Add a compatibility layer instead.\":\n        - generic: \"3\"\n        - generic: Keep the existing schema\n        - generic: Add a compatibility layer instead.\n      - generic: Or write your own\n      - textbox \"Or write your own\"\n      - button \"Answer\" [disabled]\n      - button \"Later\"\n    - generic: Interactive preview — try it out\n    - generic: No backend connected\n  - strong: Make it part of your project.\n  - paragraph: Copy the source, or give an AI assistant the complete prompt.\n  - button \"Download component file\":\n  - button \"Copy code\":\n    - text: Copy code\n  - button \"✦ Copy prompt\":\n    - generic: ✦\n    - text: Copy prompt\n  - status\n  - heading \"Copy. Paste. Build.\" [level=3]\n  - list:\n    - text: Copy the code or download the\n    - code: .tsx\n    - text: file.\n    - listitem: Add it to your React 19 project. Styles are already included.\n    - listitem: Pass your data and connect the callbacks to your application.\n  - button \"See usage example\":\n    - text: See usage example\n  - heading \"About this recreation\" [level=3]\n  - paragraph: Independently built from the public preview and documented behavior. Visual details and APIs may differ from affectUI Pro. The code here is fully available to copy and customize.\n  - link \"View original reference ↗\":\n    - /url: https://www.affectui.com/components/decision-card\n  - heading \"Keep exploring\" [level=2]\n  - button \"View all 90\":\n    - text: View all 90\n  - button \"⌘ Agents Agent Checkpoints ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Checkpoints\n    - generic: ↗\n  - button \"⌘ Agents Agent Cursors ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Cursors\n    - generic: ↗\n  - button \"⌘ Agents Agent Findings ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Findings\n    - generic: ↗\n  - generic: Component Studio · Built to be used.\n  - link \"Source repository ↗\":\n    - /url: https://github.com/Atlas322/thinking-state"
+}

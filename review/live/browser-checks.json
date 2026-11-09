@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-09",
+  "graph": {
+    "reference": [
+      "node click opens card",
+      "close receives focus",
+      "Escape returns node focus"
+    ],
+    "local": [
+      "Enter opens dialog",
+      "Space opens dialog at390",
+      "Escape returns node focus",
+      "no label overflow at324px component width"
+    ]
+  },
+  "inbox": {
+    "reference": [
+      "List switch",
+      "CRM expand",
+      "Escape restores CRM focus"
+    ],
+    "local": [
+      "List switch",
+      "CRM expand",
+      "Escape restores CRM focus"
+    ]
+  },
+  "tree": {
+    "reference": [
+      "Researcher branch folds"
+    ]
+  },
+  "handoff": {
+    "reference": [
+      "Reply to churned team expands",
+      "3 user quotes shows reason and Add back"
+    ]
+  },
+  "shell": {
+    "copyCode": true,
+    "copyPrompt": true,
+    "codeTab": true,
+    "usageTab": true,
+    "mobileMenu": true,
+    "zipDownloaded": true,
+    "zipEntries": 241
+  },
+  "fullParity": false
+}

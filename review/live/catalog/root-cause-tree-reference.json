@@ -1,0 +1,936 @@
+{
+  "controls": [],
+  "metrics": [
+    {
+      "cls": "ui-rctc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 894,
+        "height": 488,
+        "left": 504,
+        "right": 1184,
+        "top": 406,
+        "width": 680,
+        "x": 504,
+        "y": 406
+      },
+      "tag": "DIV",
+      "text": "Root causeInvestigating5 hypotheses · 0 ruled outORANDCheckout tests failingcheckout.test.tsFailed4 of 12Coupon ignoredcoupon.ts+1Not checkedSent as amountcoupo"
+    },
+    {
+      "cls": "ui-rctc__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px 2px 14px"
+      },
+      "rect": {
+        "bottom": 440,
+        "height": 34,
+        "left": 504,
+        "right": 1184,
+        "top": 406,
+        "width": 680,
+        "x": 504,
+        "y": 406
+      },
+      "tag": "HEADER",
+      "text": "Root causeInvestigating5 hypotheses · 0 ruled out"
+    },
+    {
+      "cls": "ui-rctc__mark",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 424,
+        "height": 16,
+        "left": 506,
+        "right": 522,
+        "top": 408,
+        "width": 16,
+        "x": 506,
+        "y": 408
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-rctc__title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 426,
+        "height": 20,
+        "left": 530,
+        "right": 599.3125,
+        "top": 406,
+        "width": 69.3125,
+        "x": 530,
+        "y": 406
+      },
+      "tag": "SPAN",
+      "text": "Root cause"
+    },
+    {
+      "cls": "ui-rctc__live",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 143, 245, 0.098)",
+        "border": "0px none rgba(0, 109, 203, 0.95)",
+        "borderRadius": "4px",
+        "color": "rgba(0, 109, 203, 0.95)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "4px",
+        "lineHeight": "16px",
+        "padding": "0px 6px 0px 4px"
+      },
+      "rect": {
+        "bottom": 425,
+        "height": 18,
+        "left": 926.53125,
+        "right": 1018,
+        "top": 407,
+        "width": 91.46875,
+        "x": 926.53125,
+        "y": 407
+      },
+      "tag": "SPAN",
+      "text": "Investigating"
+    },
+    {
+      "cls": "ui-rctc__spin",
+      "css": {
+        "animationDuration": "0.9s",
+        "animationName": "ui-rctc-spin",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 109, 203, 0.95)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 109, 203, 0.95)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 422.7264099121094,
+        "height": 13.45281982421875,
+        "left": 928.8048706054688,
+        "right": 942.2576293945312,
+        "top": 409.2735900878906,
+        "width": 13.4527587890625,
+        "x": 928.8048706054688,
+        "y": 409.2735900878906
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-rctc__sum",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 424,
+        "height": 16,
+        "left": 1026,
+        "right": 1182,
+        "top": 408,
+        "width": 156,
+        "x": 1026,
+        "y": 408
+      },
+      "tag": "SPAN",
+      "text": "5 hypotheses · 0 ruled out"
+    },
+    {
+      "cls": "ui-rctc__tree",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 780,
+        "height": 340,
+        "left": 504,
+        "right": 1184,
+        "top": 440,
+        "width": 680,
+        "x": 504,
+        "y": 440
+      },
+      "tag": "DIV",
+      "text": "ORANDCheckout tests failingcheckout.test.tsFailed4 of 12Coupon ignoredcoupon.ts+1Not checkedSent as amountcoupon.tsNot checkedCart drops ittotal.ts+1Not checked"
+    },
+    {
+      "cls": "ui-rctc__lines",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 780,
+        "height": 340,
+        "left": 504,
+        "right": 1184,
+        "top": 440,
+        "width": 680,
+        "x": 504,
+        "y": 440
+      },
+      "tag": "svg",
+      "text": ""
+    },
+    {
+      "cls": "ui-rctc__line",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 568,
+        "height": 44,
+        "left": 671,
+        "right": 844,
+        "top": 524,
+        "width": 173,
+        "x": 671,
+        "y": 524
+      },
+      "tag": "path",
+      "text": ""
+    },
+    {
+      "cls": "ui-rctc__gate",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "4px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "9.5px",
+        "fontWeight": "600",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px 5px"
+      },
+      "rect": {
+        "bottom": 545.6328125,
+        "height": 16,
+        "left": 831.75,
+        "right": 856.25,
+        "top": 529.6328125,
+        "width": 24.5,
+        "x": 831.75,
+        "y": 529.6328125
+      },
+      "tag": "SPAN",
+      "text": "OR"
+    },
+    {
+      "cls": "ui-rctc__card",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "10px 10px 9px"
+      },
+      "rect": {
+        "bottom": 524,
+        "height": 84,
+        "left": 742,
+        "right": 946,
+        "top": 440,
+        "width": 204,
+        "x": 742,
+        "y": 440
+      },
+      "tag": "DIV",
+      "text": "Checkout tests failingcheckout.test.tsFailed4 of 12"
+    },
+    {
+      "cls": "ui-rctc__card-top",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "7px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 468,
+        "height": 18,
+        "left": 752,
+        "right": 936,
+        "top": 450,
+        "width": 184,
+        "x": 752,
+        "y": 450
+      },
+      "tag": "SPAN",
+      "text": "Checkout tests failing"
+    },
+    {
+      "cls": "ui-rctc__tile",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 468,
+        "height": 18,
+        "left": 752,
+        "right": 770,
+        "top": 450,
+        "width": 18,
+        "x": 752,
+        "y": 450
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-rctc__name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flow-root",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "18px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 468,
+        "height": 18,
+        "left": 777,
+        "right": 911.5390625,
+        "top": 450,
+        "width": 134.5390625,
+        "x": 777,
+        "y": 450
+      },
+      "tag": "SPAN",
+      "text": "Checkout tests failing"
+    },
+    {
+      "cls": "ui-rctc__files",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 492,
+        "height": 18,
+        "left": 752,
+        "right": 936,
+        "top": 474,
+        "width": 184,
+        "x": 752,
+        "y": 474
+      },
+      "tag": "SPAN",
+      "text": "checkout.test.ts"
+    },
+    {
+      "cls": "ui-rctc__file",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.05)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "16px",
+        "padding": "0px 6px 0px 5px"
+      },
+      "rect": {
+        "bottom": 492,
+        "height": 18,
+        "left": 752,
+        "right": 860.921875,
+        "top": 474,
+        "width": 108.921875,
+        "x": 752,
+        "y": 474
+      },
+      "tag": "SPAN",
+      "text": "checkout.test.ts"
+    },
+    {
+      "cls": "ui-rctc__file-name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 491,
+        "height": 16,
+        "left": 772,
+        "right": 854.921875,
+        "top": 475,
+        "width": 82.921875,
+        "x": 772,
+        "y": 475
+      },
+      "tag": "SPAN",
+      "text": "checkout.test.ts"
+    },
+    {
+      "cls": "ui-rctc__meta",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 516,
+        "height": 18,
+        "left": 752,
+        "right": 936,
+        "top": 498,
+        "width": 184,
+        "x": 752,
+        "y": 498
+      },
+      "tag": "SPAN",
+      "text": "Failed4 of 12"
+    },
+    {
+      "cls": "ui-rctc__glyph",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(215, 36, 0, 0.855)",
+        "borderRadius": "0px",
+        "color": "rgba(215, 36, 0, 0.855)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 515,
+        "height": 16,
+        "left": 752,
+        "right": 762,
+        "top": 499,
+        "width": 10,
+        "x": 752,
+        "y": 499
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-rctc__badge",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(245, 43, 0, 0.094)",
+        "border": "0px none rgba(215, 36, 0, 0.855)",
+        "borderRadius": "4px",
+        "color": "rgba(215, 36, 0, 0.855)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10.5px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px 5px"
+      },
+      "rect": {
+        "bottom": 515,
+        "height": 16,
+        "left": 767,
+        "right": 806.875,
+        "top": 499,
+        "width": 39.875,
+        "x": 767,
+        "y": 499
+      },
+      "tag": "SPAN",
+      "text": "Failed"
+    },
+    {
+      "cls": "ui-rctc__detail",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 515,
+        "height": 16,
+        "left": 811.875,
+        "right": 936,
+        "top": 499,
+        "width": 124.125,
+        "x": 811.875,
+        "y": 499
+      },
+      "tag": "SPAN",
+      "text": "4 of 12"
+    },
+    {
+      "cls": "ui-rctc__file-more",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 619,
+        "height": 16,
+        "left": 682.1875,
+        "right": 696.453125,
+        "top": 603,
+        "width": 14.265625,
+        "x": 682.1875,
+        "y": 603
+      },
+      "tag": "SPAN",
+      "text": "+1"
+    },
+    {
+      "cls": "ui-rctc__state",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 643,
+        "height": 16,
+        "left": 615.5,
+        "right": 681.3671875,
+        "top": 627,
+        "width": 65.8671875,
+        "x": 615.5,
+        "y": 627
+      },
+      "tag": "SPAN",
+      "text": "Not checked"
+    },
+    {
+      "cls": "ui-rctc__panel",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "12px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 894,
+        "height": 96,
+        "left": 504,
+        "right": 1184,
+        "top": 798,
+        "width": 680,
+        "x": 504,
+        "y": 798
+      },
+      "tag": "SECTION",
+      "text": "Checkout tests failing5 hypotheses to check.tests/checkout.test.ts"
+    },
+    {
+      "cls": "ui-rctc__panel-in",
+      "css": {
+        "animationDuration": "0.22s",
+        "animationName": "ui-rctc-fade",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "12px 14px"
+      },
+      "rect": {
+        "bottom": 894,
+        "height": 96,
+        "left": 504,
+        "right": 1184,
+        "top": 798,
+        "width": 680,
+        "x": 504,
+        "y": 798
+      },
+      "tag": "DIV",
+      "text": "Checkout tests failing5 hypotheses to check.tests/checkout.test.ts"
+    },
+    {
+      "cls": "ui-rctc__panel-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 830,
+        "height": 20,
+        "left": 518,
+        "right": 1170,
+        "top": 810,
+        "width": 652,
+        "x": 518,
+        "y": 810
+      },
+      "tag": "DIV",
+      "text": "Checkout tests failing"
+    },
+    {
+      "cls": "ui-rctc__panel-name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 830,
+        "height": 20,
+        "left": 542,
+        "right": 676.5390625,
+        "top": 810,
+        "width": 134.5390625,
+        "x": 542,
+        "y": 810
+      },
+      "tag": "SPAN",
+      "text": "Checkout tests failing"
+    },
+    {
+      "cls": "ui-rctc__verdict ui-rctc__verdict--quiet",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12.5px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "18px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 856,
+        "height": 18,
+        "left": 518,
+        "right": 1170,
+        "top": 838,
+        "width": 652,
+        "x": 518,
+        "y": 838
+      },
+      "tag": "P",
+      "text": "5 hypotheses to check."
+    },
+    {
+      "cls": "ui-rctc__panel-files",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 882,
+        "height": 18,
+        "left": 518,
+        "right": 1170,
+        "top": 864,
+        "width": 652,
+        "x": 518,
+        "y": 864
+      },
+      "tag": "UL",
+      "text": "tests/checkout.test.ts"
+    }
+  ],
+  "svg": [
+    "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" aria-hidden=\"true\"><path d=\"M8 5.2v2.3M4 10.5V8.6h8v1.9\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.45\"></path><rect x=\"5.4\" y=\"1.6\" width=\"5.2\" height=\"3.6\" rx=\"1.2\" fill=\"currentColor\"></rect><circle cx=\"4\" cy=\"12.4\" r=\"1.9\" fill=\"currentColor\"></circle><circle cx=\"12\" cy=\"12.4\" r=\"1.9\" fill=\"currentColor\"></circle></svg>",
+    "<svg class=\"ui-rctc__spin\" width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"8.5\" stroke=\"currentColor\" stroke-opacity=\"0.25\" stroke-width=\"3\"></circle><path d=\"M12 3.5A8.5 8.5 0 0 1 20.5 12\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-width=\"3\"></path></svg>",
+    "<svg class=\"ui-rctc__lines\" width=\"680\" height=\"340\" aria-hidden=\"true\"><path class=\"ui-rctc__line\" data-status=\"open\" d=\"M167 128V119.28Q167 111.28 175 111.28H332Q340 111.28 340 103.28V84\" transform=\"translate(0 0)\"></path><path class=\"ui-rctc__line\" data-status=\"open\" d=\"M80.5 256V247.28Q80.5 239.28 88.5 239.28H159Q167 239.28 167 231.28V212\" transform=\"translate(0 0)\"></path><path class=\"ui-rctc__line\" data-status=\"open\" d=\"M253.5 256V247.28Q253.5 239.28 245.5 239.28H175Q167 239.28 167 231.28V212\" transform=\"translate(0 0)\"></path><path class=\"ui-rctc__line\" data-status=\"open\" d=\"M426.5 128V119.28Q426.5 111.28 418.5 111.28H348Q340 111.28 340 103.28V84\" transform=\"translate(0 0)\"></path><path class=\"ui-rctc__line\" data-status=\"open\" d=\"M599.5 128V119.28Q599.5 111.28 591.5 111.28H348Q340 111.28 340 103.28V84\" transform=\"translate(0 0)\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" style=\"color: var(--ui-rctc-strong, #000);\"><rect x=\"2.5\" y=\"3.5\" width=\"19\" height=\"17\" rx=\"4\" stroke=\"currentColor\" stroke-width=\"2\"></rect><path d=\"M7 9.5l3 2.5-3 2.5M12.5 15H17\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
+    "<svg width=\"11\" height=\"11\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.4 1.9c0-.55.45-1 1-1h3.4l2.8 2.8v6.4c0 .55-.45 1-1 1H3.4c-.55 0-1-.45-1-1Z\" fill=\"currentColor\" opacity=\"0.45\"></path><path d=\"M6.8.9v1.9c0 .5.4.9.9.9h1.9Z\" fill=\"currentColor\"></path></svg>",
+    "<svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M13.9248 21H10.0752C5.44476 21 3.12955 21 2.27636 19.4939C1.42317 17.9879 2.60736 15.9914 4.97574 11.9985L6.90057 8.75333C9.17559 4.91778 10.3131 3 12 3C13.6869 3 14.8244 4.91777 17.0994 8.75332L19.0243 11.9985C21.3926 15.9914 22.5768 17.9879 21.7236 19.4939C20.8704 21 18.5552 21 13.9248 21Z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"></path><path d=\"M12 9V13\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-width=\"2.2\"></path><path d=\"M12 16.8V17\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-width=\"2.6\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#635BFF\"></rect><path fill=\"#fff\" transform=\"translate(5 5) scale(0.5833)\" d=\"M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z\"></path></svg>",
+    "<svg width=\"11\" height=\"11\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.4 1.9c0-.55.45-1 1-1h3.4l2.8 2.8v6.4c0 .55-.45 1-1 1H3.4c-.55 0-1-.45-1-1Z\" fill=\"currentColor\" opacity=\"0.45\"></path><path d=\"M6.8.9v1.9c0 .5.4.9.9.9h1.9Z\" fill=\"currentColor\"></path></svg>",
+    "<svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"7\" stroke=\"currentColor\" stroke-width=\"2.4\"></circle></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#635BFF\"></rect><path fill=\"#fff\" transform=\"translate(5 5) scale(0.5833)\" d=\"M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z\"></path></svg>",
+    "<svg width=\"11\" height=\"11\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.4 1.9c0-.55.45-1 1-1h3.4l2.8 2.8v6.4c0 .55-.45 1-1 1H3.4c-.55 0-1-.45-1-1Z\" fill=\"currentColor\" opacity=\"0.45\"></path><path d=\"M6.8.9v1.9c0 .5.4.9.9.9h1.9Z\" fill=\"currentColor\"></path></svg>",
+    "<svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"7\" stroke=\"currentColor\" stroke-width=\"2.4\"></circle></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"color: var(--ui-rctc-strong, #181717);\"><path d=\"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12\"></path></svg>",
+    "<svg width=\"11\" height=\"11\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.4 1.9c0-.55.45-1 1-1h3.4l2.8 2.8v6.4c0 .55-.45 1-1 1H3.4c-.55 0-1-.45-1-1Z\" fill=\"currentColor\" opacity=\"0.45\"></path><path d=\"M6.8.9v1.9c0 .5.4.9.9.9h1.9Z\" fill=\"currentColor\"></path></svg>",
+    "<svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"7\" stroke=\"currentColor\" stroke-width=\"2.4\"></circle></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect width=\"24\" height=\"24\" rx=\"6\" fill=\"#635BFF\"></rect><path fill=\"#fff\" transform=\"translate(5 5) scale(0.5833)\" d=\"M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z\"></path></svg>",
+    "<svg width=\"11\" height=\"11\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.4 1.9c0-.55.45-1 1-1h3.4l2.8 2.8v6.4c0 .55-.45 1-1 1H3.4c-.55 0-1-.45-1-1Z\" fill=\"currentColor\" opacity=\"0.45\"></path><path d=\"M6.8.9v1.9c0 .5.4.9.9.9h1.9Z\" fill=\"currentColor\"></path></svg>",
+    "<svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"7\" stroke=\"currentColor\" stroke-width=\"2.4\"></circle></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" style=\"color: rgb(14, 159, 142);\"><ellipse cx=\"12\" cy=\"5\" rx=\"8\" ry=\"3\" stroke=\"currentColor\" stroke-width=\"2\"></ellipse><path d=\"M20 12C20 13.6569 16.4183 15 12 15C7.58172 15 4 13.6569 4 12\" stroke=\"currentColor\" stroke-width=\"2\"></path><path d=\"M20 5V19C20 20.6569 16.4183 22 12 22C7.58172 22 4 20.6569 4 19V5\" stroke=\"currentColor\" stroke-width=\"2\"></path></svg>",
+    "<svg width=\"11\" height=\"11\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.4 1.9c0-.55.45-1 1-1h3.4l2.8 2.8v6.4c0 .55-.45 1-1 1H3.4c-.55 0-1-.45-1-1Z\" fill=\"currentColor\" opacity=\"0.45\"></path><path d=\"M6.8.9v1.9c0 .5.4.9.9.9h1.9Z\" fill=\"currentColor\"></path></svg>",
+    "<svg width=\"10\" height=\"10\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"7\" stroke=\"currentColor\" stroke-width=\"2.4\"></circle></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\" style=\"color: var(--ui-rctc-strong, #000);\"><rect x=\"2.5\" y=\"3.5\" width=\"19\" height=\"17\" rx=\"4\" stroke=\"currentColor\" stroke-width=\"2\"></rect><path d=\"M7 9.5l3 2.5-3 2.5M12.5 15H17\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
+    "<svg width=\"11\" height=\"11\" viewBox=\"0 0 12 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M2.4 1.9c0-.55.45-1 1-1h3.4l2.8 2.8v6.4c0 .55-.45 1-1 1H3.4c-.55 0-1-.45-1-1Z\" fill=\"currentColor\" opacity=\"0.45\"></path><path d=\"M6.8.9v1.9c0 .5.4.9.9.9h1.9Z\" fill=\"currentColor\"></path></svg>"
+  ],
+  "url": "https://www.affectui.com/components/root-cause-tree",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Agents\":\n        - /url: /category/agents\n      - generic: Root Cause Tree\n    - heading \"Root Cause Tree\" [level=1]\n    - paragraph: How an agent finds out why a run failed, as a fault tree – it checks one hypothesis after another, rules some out, confirms the cause, and the way up to the failure lights up.\n    - link \"Get Pro to install\":\n      - /url: /pricing\n      - generic: Get Pro to install\n    - tablist \"Root Cause Tree preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - generic: Root cause\n    - text: Investigating\n    - generic: 5 hypotheses · 0 ruled out\n    - tree \"Why Checkout tests failing\":\n      - generic \"Any one of these\": OR\n      - generic \"All of these together\": AND\n      - treeitem \"Checkout tests failing, failed\" [level=1] [selected]:\n        - generic \"Checkout tests failing\"\n        - generic \"tests/checkout.test.ts\":\n          - generic: checkout.test.ts\n        - generic: Failed\n        - generic: 4 of 12\n      - treeitem \"Coupon ignored, not checked, all of 2 below\" [level=2]:\n        - generic \"Coupon ignored\"\n        - generic \"app/checkout/coupon.ts app/cart/total.ts\":\n          - generic: coupon.ts\n        - generic: \"+1\"\n        - generic: Not checked\n      - treeitem \"Sent as amount, not checked\" [level=3]:\n        - generic \"Sent as amount\"\n        - generic \"app/checkout/coupon.ts\":\n          - generic: coupon.ts\n        - generic: Not checked\n      - treeitem \"Cart drops it, not checked\" [level=3]:\n        - generic \"Cart drops it\"\n        - generic \"app/cart/total.ts app/cart/use-cart.ts\":\n          - generic: total.ts\n        - generic: \"+1\"\n        - generic: Not checked\n      - treeitem \"Stripe errors, not checked\" [level=2]:\n        - generic \"Stripe errors\"\n        - generic \"logs/stripe.log\":\n          - generic: stripe.log\n        - generic: Not checked\n      - treeitem \"Stale fixtures, not checked\" [level=2]:\n        - generic \"Stale fixtures\"\n        - generic \"fixtures/prices.json\":\n          - generic: prices.json\n        - generic: Not checked\n    - region \"Evidence\":\n      - generic: Checkout tests failing\n      - paragraph: 5 hypotheses to check.\n      - list \"Files\":\n        - listitem \"tests/checkout.test.ts\":\n          - generic: tests/checkout.test.ts\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: Showing how an agent debugs a failed run – every hypothesis it has, which it ruled out and which turned out to be the cause\n      - listitem: \"Postmortems for agent runs: the failure on top, the way down to what really broke, with the proof for each step\"\n      - listitem: Anywhere causes combine – an OR where one is enough, an AND where only several together break it\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: Who started whom in a run – use Agent Tree\n      - listitem: Rewinding a run to an earlier point – use Agent Checkpoints\n      - listitem: A plain list of findings without causes – use Agent Findings\n    - heading \"Installation\" [level=2]\n    - paragraph: Root Cause Tree is a Pro component.\n    - strong: Installation is part of Pro\n    - generic: Get Pro to copy the code, install it with the CLI and use it in your projects.\n    - link \"Unlock with Pro\":\n      - /url: /pricing\n      - generic: Unlock with Pro\n    - heading \"Usage\" [level=2]\n    - strong: Usage example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Examples\" [level=2]\n    - heading \"Read only\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Live, as the agent checks\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"API reference\" [level=2]\n    - heading \"RootCauseTree\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - 'row \"failure Cause & { detail?: string } – The failure on top – its children are the first hypotheses; detail is a short line next to its badge, e.g. \\\"4 of 12\\\"\"':\n          - cell \"failure\":\n            - code: failure\n          - 'cell \"Cause & { detail?: string }\"':\n            - code: \"Cause & { detail?: string }\"\n          - cell \"–\"\n          - cell \"The failure on top – its children are the first hypotheses; detail is a short line next to its badge, e.g. \\\"4 of 12\\\"\"\n        - 'row \"children Cause[] – Per cause: { id, title, icon?, files?, gate?, status?, verdict?, evidence?, at?, children? } – the hypotheses under it, as deep as you need\"':\n          - cell \"children\":\n            - code: children\n          - cell \"Cause[]\":\n            - code: Cause[]\n          - cell \"–\"\n          - 'cell \"Per cause: { id, title, icon?, files?, gate?, status?, verdict?, evidence?, at?, children? } – the hypotheses under it, as deep as you need\"'\n        - 'row \"icon ReactNode – Per cause: a small mark before the title, e.g. the logo of the tool or service it''s about – it turns gray when ruled out\"':\n          - cell \"icon\":\n            - code: icon\n          - cell \"ReactNode\":\n            - code: ReactNode\n          - cell \"–\"\n          - 'cell \"Per cause: a small mark before the title, e.g. the logo of the tool or service it''s about – it turns gray when ruled out\"'\n        - 'row \"files string[] – Per cause: the files it touches – the first shows as a chip on the card, the rest as \\\"+2\\\"; the evidence card lists them all with their full path\"':\n          - cell \"files\":\n            - code: files\n          - cell \"string[]\":\n            - code: string[]\n          - cell \"–\"\n          - 'cell \"Per cause: the files it touches – the first shows as a chip on the card, the rest as \\\"+2\\\"; the evidence card lists them all with their full path\"'\n        - 'row \"gate \\\"or\\\" | \\\"and\\\" \\\"or\\\" Per cause, for its children: or – one of them is enough; and – they only cause it together\"':\n          - cell \"gate\":\n            - code: gate\n          - cell \"\\\"or\\\" | \\\"and\\\"\":\n            - code: \"\\\"or\\\" | \\\"and\\\"\"\n          - cell \"\\\"or\\\"\":\n            - code: \"\\\"or\\\"\"\n          - 'cell \"Per cause, for its children: or – one of them is enough; and – they only cause it together\"'\n        - row \"status \\\"open\\\" | \\\"checking\\\" | \\\"ruled-out\\\" | \\\"confirmed\\\" \\\"open\\\" Per cause – a confirmed one without children is a root cause and lights the way up\":\n          - cell \"status\":\n            - code: status\n          - cell \"\\\"open\\\" | \\\"checking\\\" | \\\"ruled-out\\\" | \\\"confirmed\\\"\":\n            - code: \"\\\"open\\\" | \\\"checking\\\" | \\\"ruled-out\\\" | \\\"confirmed\\\"\"\n          - cell \"\\\"open\\\"\":\n            - code: \"\\\"open\\\"\"\n          - cell \"Per cause – a confirmed one without children is a root cause and lights the way up\"\n        - 'row \"verdict string – Per cause: why it was ruled out or confirmed, in a sentence – shown with its evidence\"':\n          - cell \"verdict\":\n            - code: verdict\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - 'cell \"Per cause: why it was ruled out or confirmed, in a sentence – shown with its evidence\"'\n        - 'row \"evidence { kind, source?, content } – Per cause: the proof – kind is its label (\\\"Log\\\", \\\"Diff\\\", \\\"Tool call\\\"), content the lines, shown as code\"':\n          - cell \"evidence\":\n            - code: evidence\n          - 'cell \"{ kind, source?, content }\"':\n            - code: \"{ kind, source?, content }\"\n          - cell \"–\"\n          - 'cell \"Per cause: the proof – kind is its label (\\\"Log\\\", \\\"Diff\\\", \\\"Tool call\\\"), content the lines, shown as code\"'\n        - 'row \"onAction (cause, action: \\\"fix\\\" | \\\"retry\\\") => void – Fix it or Retry from here was pressed on a root cause – without it, the evidence is read only\"':\n          - cell \"onAction\":\n            - code: onAction\n          - 'cell \"(cause, action: \\\"fix\\\" | \\\"retry\\\") => void\"':\n            - code: \"(cause, action: \\\"fix\\\" | \\\"retry\\\") => void\"\n          - cell \"–\"\n          - cell \"Fix it or Retry from here was pressed on a root cause – without it, the evidence is read only\"\n        - 'row \"formatTime (ms: number) => string 0:42 Formats when a cause was checked (at)\"':\n          - cell \"formatTime\":\n            - code: formatTime\n          - 'cell \"(ms: number) => string\"':\n            - code: \"(ms: number) => string\"\n          - cell \"0:42\":\n            - code: 0:42\n          - cell \"Formats when a cause was checked (at)\"\n        - row \"title string \\\"Root cause\\\" Heading of the bar\":\n          - cell \"title\":\n            - code: title\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Root cause\\\"\":\n            - code: \"\\\"Root cause\\\"\"\n          - cell \"Heading of the bar\"\n        - row \"className string – Extra class on the root\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"↑ or ↓ Up to the parent, down to the first child – narrow, the previous and next row\":\n          - cell \"↑ or ↓\":\n            - generic: ↑\n            - text: or\n            - generic: ↓\n          - cell \"Up to the parent, down to the first child – narrow, the previous and next row\"\n        - row \"← or → Along the row, from one branch into the next – narrow, out to the parent and in to the first child\":\n          - cell \"← or →\":\n            - generic: ←\n            - text: or\n            - generic: →\n          - cell \"Along the row, from one branch into the next – narrow, out to the parent and in to the first child\"\n        - row \"Home or End The failure on top, the last hypothesis\":\n          - cell \"Home or End\":\n            - generic: Home\n            - text: or\n            - generic: End\n          - cell \"The failure on top, the last hypothesis\"\n        - row \"Enter or Space Shows that cause's evidence; again goes back\":\n          - cell \"Enter or Space\":\n            - generic: Enter\n            - text: or\n            - generic: Space\n          - cell \"Shows that cause's evidence; again goes back\"\n        - row \"Tab From the tree on to the evidence – its code scrolls with the arrow keys – and Fix it / Retry from here\":\n          - cell \"Tab\":\n            - generic: Tab\n          - cell \"From the tree on to the evidence – its code scrolls with the arrow keys – and Fix it / Retry from here\"\n        - row \"Esc Back to what the agent works on\":\n          - cell \"Esc\":\n            - generic: Esc\n          - cell \"Back to what the agent works on\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: The hypotheses are a tree with one tab stop; every card says its title, how it stands and, for a split, whether any or all of the ones below cause it\n      - listitem: The evidence under the tree is announced politely when it changes\n      - listitem: \"Status is never color alone: ruled out, confirmed and root cause are words, and ruled-out lines are dashed\"\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: The hypothesis being checked shimmers; one that's ruled out fades back flat with a dashed line, but stays\n      - listitem: The evidence card grows and shrinks with what's in it – short while there's nothing to show, easing to its new height\n      - listitem: When the root cause is confirmed, the way up to the failure draws itself in blue, from the cause up, one step after the other\n      - listitem: With prefers-reduced-motion everything simply appears\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: Every card has a fixed height, so nothing moves when a hypothesis is checked, ruled out or confirmed; the failure's card fits its own title, the hypotheses all share one width – as wide as their longest title needs, growing into spare room – and a title too long for the room ends in “…”, shown whole in the evidence\n      - listitem: The tree lays itself out from its own width; when even the narrowest cards don't fit it becomes an indented list – two rows a card, the gates as chips on the cards\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Notes for AI\" [level=2]\n    - paragraph: Give your coding assistant this summary instead of screenshots.\n    - list:\n      - listitem: Add every hypothesis as soon as the agent has it, as open – then move it through checking to ruled-out or confirmed\n      - listitem: Never remove a ruled-out hypothesis; it shows what was checked\n      - listitem: \"A confirmed cause with children is confirmed only when its gate is met: one child for or, all for and\"\n      - listitem: The blue of the way up is --ui-rctc-path; how far what you didn't pick fades is --ui-rctc-dim\n    - heading \"Related\" [level=2]\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Agent Tree Who started whom – an orchestrator and its sub-agents as a live tree, with status, cost and time on every card, costs rolling up each branch, and branches that fold to one line\":\n        - /url: /components/agent-tree\n        - heading \"Agent Tree\" [level=3]\n        - paragraph: Who started whom – an orchestrator and its sub-agents as a live tree, with status, cost and time on every card, costs rolling up each branch, and branches that fold to one line\n      - button \"Agent Tree is part of Pro – see pricing\":\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Agent Findings A swarm of agents checking something – one calm row per agent with its progress, and their findings sliding into a short feed as they're found\":\n        - /url: /components/agent-findings\n        - heading \"Agent Findings\" [level=3]\n        - paragraph: A swarm of agents checking something – one calm row per agent with its progress, and their findings sliding into a short feed as they're found\n      - button \"Agent Findings is part of Pro – see pricing\":\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Agent Checkpoints An agent's run as a line of checkpoints, like git for agents – rewind to any of them and a new attempt branches out of it, while the one it left fades back but stays\":\n        - /url: /components/agent-checkpoints\n        - heading \"Agent Checkpoints\" [level=3]\n        - paragraph: An agent's run as a line of checkpoints, like git for agents – rewind to any of them and a new attempt branches out of it, while the one it left fades back but stays\n      - button \"Agent Checkpoints is part of Pro – see pricing\":\n    - article:\n      - generic: Agents\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Trace Waterfall Where the time and money of an agent run go – every LLM call, tool call and sub-agent as a bar on a live timeline, with tokens and cost per step, the slowest call marked and branches that fold into their parent\":\n        - /url: /components/trace-waterfall\n        - heading \"Trace Waterfall\" [level=3]\n        - paragraph: Where the time and money of an agent run go – every LLM call, tool call and sub-agent as a bar on a live timeline, with tokens and cost per step, the slowest call marked and branches that fold into their parent\n      - button \"Trace Waterfall is part of Pro – see pricing\":\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

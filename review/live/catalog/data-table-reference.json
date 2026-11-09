@@ -1,0 +1,958 @@
+{
+  "controls": [
+    {
+      "expanded": null,
+      "label": "Undo (⌘ Z)",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Redo (⌘ Shift Z)",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select all rows",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Tool",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Category",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Website",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Renews",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Figma",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Linear",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Vercel",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Framer",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Loom",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Add row",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select all rows",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Figma",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Linear",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Vercel",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Framer",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Select Loom",
+      "role": "checkbox",
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-dtc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 751.25,
+        "height": 332.5,
+        "left": 484,
+        "right": 1204,
+        "top": 418.75,
+        "width": 720,
+        "x": 484,
+        "y": 418.75
+      },
+      "tag": "SECTION",
+      "text": "Design StackToolCategoryWebsiteRenewsFigmaDesignfigma.comMar 12, 2026LinearIssue trackinglinear.appJan 4, 2026VercelHostingvercel.comAug 21, 2026FramerWebsitefr"
+    },
+    {
+      "cls": "ui-dtc__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "12px 12px 12px 16px"
+      },
+      "rect": {
+        "bottom": 470.75,
+        "height": 52,
+        "left": 484,
+        "right": 1204,
+        "top": 418.75,
+        "width": 720,
+        "x": 484,
+        "y": 418.75
+      },
+      "tag": "HEADER",
+      "text": "Design Stack"
+    },
+    {
+      "cls": "ui-dtc__title-icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 453.75,
+        "height": 18,
+        "left": 500,
+        "right": 518,
+        "top": 435.75,
+        "width": 18,
+        "x": 500,
+        "y": 435.75
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-dtc__title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "24px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 456.75,
+        "height": 24,
+        "left": 526,
+        "right": 620.2421875,
+        "top": 432.75,
+        "width": 94.2421875,
+        "x": 526,
+        "y": 432.75
+      },
+      "tag": "H3",
+      "text": "Design Stack"
+    },
+    {
+      "cls": "ui-dtc__tools",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "2px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 458.75,
+        "height": 28,
+        "left": 1134,
+        "right": 1192,
+        "top": 430.75,
+        "width": 58,
+        "x": 1134,
+        "y": 430.75
+      },
+      "tag": "DIV",
+      "text": ""
+    },
+    {
+      "cls": "ui-dtc__tool",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 458.75,
+        "height": 28,
+        "left": 1134,
+        "right": 1162,
+        "top": 430.75,
+        "width": 28,
+        "x": 1134,
+        "y": 430.75
+      },
+      "tag": "BUTTON",
+      "text": ""
+    },
+    {
+      "cls": "ui-dtc__body",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 706.75,
+        "height": 236,
+        "left": 484,
+        "right": 1204,
+        "top": 470.75,
+        "width": 720,
+        "x": 484,
+        "y": 470.75
+      },
+      "tag": "DIV",
+      "text": "ToolCategoryWebsiteRenewsFigmaDesignfigma.comMar 12, 2026LinearIssue trackinglinear.appJan 4, 2026VercelHostingvercel.comAug 21, 2026FramerWebsiteframer.comMay "
+    },
+    {
+      "cls": "ui-dtc__morph",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 706.75,
+        "height": 236,
+        "left": 484,
+        "right": 1204,
+        "top": 470.75,
+        "width": 720,
+        "x": 484,
+        "y": 470.75
+      },
+      "tag": "DIV",
+      "text": "ToolCategoryWebsiteRenewsFigmaDesignfigma.comMar 12, 2026LinearIssue trackinglinear.appJan 4, 2026VercelHostingvercel.comAug 21, 2026FramerWebsiteframer.comMay "
+    },
+    {
+      "cls": "ui-dtc__scroll",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 707,
+        "height": 236.25,
+        "left": 484,
+        "right": 1204,
+        "top": 470.75,
+        "width": 720,
+        "x": 484,
+        "y": 470.75
+      },
+      "tag": "DIV",
+      "text": "ToolCategoryWebsiteRenewsFigmaDesignfigma.comMar 12, 2026LinearIssue trackinglinear.appJan 4, 2026VercelHostingvercel.comAug 21, 2026FramerWebsiteframer.comMay "
+    },
+    {
+      "cls": "ui-dtc__table",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "table",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 707,
+        "height": 236.25,
+        "left": 484,
+        "right": 1204,
+        "top": 470.75,
+        "width": 720,
+        "x": 484,
+        "y": 470.75
+      },
+      "tag": "TABLE",
+      "text": "ToolCategoryWebsiteRenewsFigmaDesignfigma.comMar 12, 2026LinearIssue trackinglinear.appJan 4, 2026VercelHostingvercel.comAug 21, 2026FramerWebsiteframer.comMay "
+    },
+    {
+      "cls": "ui-dtc__select",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "table-cell",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 507,
+        "height": 36,
+        "left": 484,
+        "right": 524,
+        "top": 471,
+        "width": 40,
+        "x": 484,
+        "y": 471
+      },
+      "tag": "TH",
+      "text": ""
+    },
+    {
+      "cls": "ui-dtc__check",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "4px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 496,
+        "height": 14,
+        "left": 497,
+        "right": 511,
+        "top": 482,
+        "width": 14,
+        "x": 497,
+        "y": 482
+      },
+      "tag": "BUTTON",
+      "text": ""
+    },
+    {
+      "cls": "ui-dtc__th",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "16px",
+        "padding": "0px 6px"
+      },
+      "rect": {
+        "bottom": 503,
+        "height": 28,
+        "left": 530,
+        "right": 734,
+        "top": 475,
+        "width": 204,
+        "x": 530,
+        "y": 475
+      },
+      "tag": "BUTTON",
+      "text": "Tool"
+    },
+    {
+      "cls": "ui-dtc__col-icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 496,
+        "height": 14,
+        "left": 536,
+        "right": 550,
+        "top": 482,
+        "width": 14,
+        "x": 536,
+        "y": 482
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-dtc__th-label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 497,
+        "height": 16,
+        "left": 556,
+        "right": 580.421875,
+        "top": 481,
+        "width": 24.421875,
+        "x": 556,
+        "y": 481
+      },
+      "tag": "SPAN",
+      "text": "Tool"
+    },
+    {
+      "cls": "ui-dtc__sort",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 495,
+        "height": 12,
+        "left": 716,
+        "right": 728,
+        "top": 483,
+        "width": 12,
+        "x": 716,
+        "y": 483
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-dtc__name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 537,
+        "height": 20,
+        "left": 536,
+        "right": 728,
+        "top": 517,
+        "width": 192,
+        "x": 536,
+        "y": 517
+      },
+      "tag": "SPAN",
+      "text": "Figma"
+    },
+    {
+      "cls": "ui-dtc__logo",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 535,
+        "height": 16,
+        "left": 536,
+        "right": 552,
+        "top": 519,
+        "width": 16,
+        "x": 536,
+        "y": 519
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-dtc__name-text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 537,
+        "height": 20,
+        "left": 560,
+        "right": 597.921875,
+        "top": 517,
+        "width": 37.921875,
+        "x": 560,
+        "y": 517
+      },
+      "tag": "SPAN",
+      "text": "Figma"
+    },
+    {
+      "cls": "ui-dtc__tag",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(124, 77, 255, 0.09)",
+        "border": "0px none rgb(108, 69, 224)",
+        "borderRadius": "5px",
+        "color": "rgb(108, 69, 224)",
+        "display": "inline-block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px 6px"
+      },
+      "rect": {
+        "bottom": 537.4765625,
+        "height": 20,
+        "left": 752,
+        "right": 803.8515625,
+        "top": 517.4765625,
+        "width": 51.8515625,
+        "x": 752,
+        "y": 517.4765625
+      },
+      "tag": "SPAN",
+      "text": "Design"
+    },
+    {
+      "cls": "ui-dtc__link",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 534.5,
+        "height": 15.5,
+        "left": 939.1953125,
+        "right": 1004.171875,
+        "top": 519,
+        "width": 64.9765625,
+        "x": 939.1953125,
+        "y": 519
+      },
+      "tag": "A",
+      "text": "figma.com"
+    },
+    {
+      "cls": "ui-dtc__text",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "inline",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 534.5,
+        "height": 15.5,
+        "left": 1086.40625,
+        "right": 1171.3984375,
+        "top": 519,
+        "width": 84.9921875,
+        "x": 1086.40625,
+        "y": 519
+      },
+      "tag": "SPAN",
+      "text": "Mar 12, 2026"
+    },
+    {
+      "cls": "ui-dtc__foot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20px",
+        "padding": "8px 16px 8px 8px"
+      },
+      "rect": {
+        "bottom": 751.25,
+        "height": 44.5,
+        "left": 484,
+        "right": 1204,
+        "top": 706.75,
+        "width": 720,
+        "x": 484,
+        "y": 706.75
+      },
+      "tag": "FOOTER",
+      "text": "Add rowDouble-click a cell to edit"
+    },
+    {
+      "cls": "ui-dtc__add",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 10px 0px 8px"
+      },
+      "rect": {
+        "bottom": 743.25,
+        "height": 28,
+        "left": 492,
+        "right": 583.8515625,
+        "top": 715.25,
+        "width": 91.8515625,
+        "x": 492,
+        "y": 715.25
+      },
+      "tag": "BUTTON",
+      "text": "Add row"
+    },
+    {
+      "cls": "ui-dtc__summary",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 737.25,
+        "height": 16,
+        "left": 1042.4296875,
+        "right": 1188,
+        "top": 721.25,
+        "width": 145.5703125,
+        "x": 1042.4296875,
+        "y": 721.25
+      },
+      "tag": "SPAN",
+      "text": "Double-click a cell to edit"
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><rect x=\"2\" y=\"2\" width=\"16\" height=\"16\" rx=\"4.5\" fill=\"#0060e2\"></rect><path d=\"M6 7.5h8M6 10h8M6 12.5h5\" stroke=\"#fff\" stroke-width=\"1.4\" stroke-linecap=\"round\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5.5 3.5 2.5 6.5l3 3M2.5 6.5h7a3.5 3.5 0 0 1 0 7H7\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m10.5 3.5 3 3-3 3M13.5 6.5h-7a3.5 3.5 0 0 0 0 7H9\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 4h10M3 7h10M3 10h10M3 13h6\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M5 9.5l3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M5 9.5l3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6.5 9.5l3-3M7.25 4.75l1-1a2.5 2.5 0 0 1 3.5 3.5l-1 1M8.75 11.25l-1 1a2.5 2.5 0 0 1-3.5-3.5l1-1\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M5 9.5l3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 4.5h10v9H3zM3 7.5h10M6 2.5v3M10 2.5v3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M5 9.5l3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 38 57\" aria-hidden=\"true\"><path d=\"M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0Z\" fill=\"#1ABCFE\"></path><path d=\"M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0Z\" fill=\"#0ACF83\"></path><path d=\"M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19Z\" fill=\"#FF7262\"></path><path d=\"M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z\" fill=\"#F24E1E\"></path><path d=\"M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z\" fill=\"#A259FF\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#5E6AD2\" aria-hidden=\"true\"><path d=\"M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.887 4.18ZM1.817 5.626l16.556 16.556c-.524.33-1.075.62-1.65.866L.951 7.277c.247-.575.537-1.126.866-1.65ZM.322 9.163l14.515 14.515c-.71.172-1.443.282-2.195.322L0 11.358a12 12 0 0 1 .322-2.195Zm-.17 4.862 9.823 9.824a12.02 12.02 0 0 1-9.824-9.824Z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#171717\" class=\"data-table-demo__mono\" aria-hidden=\"true\"><path d=\"M24 22.525H0l12-21.05 12 21.05z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#171717\" class=\"data-table-demo__mono\" aria-hidden=\"true\"><path d=\"M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#625DF5\" aria-hidden=\"true\"><path d=\"M24 10.665h-7.018l6.078-3.509-1.335-2.312-6.078 3.509 3.508-6.077L16.843.94l-3.508 6.077V0h-2.67v7.018L7.156.94 4.844 2.275l3.509 6.077-6.078-3.508L.94 7.156l6.078 3.509H0v2.67h7.017L.94 16.844l1.335 2.313 6.077-3.508-3.509 6.077 2.312 1.335 3.509-6.078V24h2.67v-7.017l3.508 6.077 2.312-1.335-3.509-6.078 6.078 3.509 1.335-2.313-6.077-3.508h7.017v-2.67H24zm-12 4.966a3.645 3.645 0 1 1 0-7.29 3.645 3.645 0 0 1 0 7.29z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M3.5 8h9\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 4h10M3 7h10M3 10h10M3 13h6\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M5 9.5l3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M5 9.5l3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6.5 9.5l3-3M7.25 4.75l1-1a2.5 2.5 0 0 1 3.5 3.5l-1 1M8.75 11.25l-1 1a2.5 2.5 0 0 1-3.5-3.5l1-1\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M5 9.5l3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 4.5h10v9H3zM3 7.5h10M6 2.5v3M10 2.5v3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3.5v9M5 9.5l3 3 3-3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 38 57\" aria-hidden=\"true\"><path d=\"M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0Z\" fill=\"#1ABCFE\"></path><path d=\"M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0Z\" fill=\"#0ACF83\"></path><path d=\"M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19Z\" fill=\"#FF7262\"></path><path d=\"M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z\" fill=\"#F24E1E\"></path><path d=\"M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z\" fill=\"#A259FF\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#5E6AD2\" aria-hidden=\"true\"><path d=\"M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.887 4.18ZM1.817 5.626l16.556 16.556c-.524.33-1.075.62-1.65.866L.951 7.277c.247-.575.537-1.126.866-1.65ZM.322 9.163l14.515 14.515c-.71.172-1.443.282-2.195.322L0 11.358a12 12 0 0 1 .322-2.195Zm-.17 4.862 9.823 9.824a12.02 12.02 0 0 1-9.824-9.824Z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#171717\" class=\"data-table-demo__mono\" aria-hidden=\"true\"><path d=\"M24 22.525H0l12-21.05 12 21.05z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#171717\" class=\"data-table-demo__mono\" aria-hidden=\"true\"><path d=\"M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"m4.5 8.25 2.25 2.25L11.5 5.75\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"#625DF5\" aria-hidden=\"true\"><path d=\"M24 10.665h-7.018l6.078-3.509-1.335-2.312-6.078 3.509 3.508-6.077L16.843.94l-3.508 6.077V0h-2.67v7.018L7.156.94 4.844 2.275l3.509 6.077-6.078-3.508L.94 7.156l6.078 3.509H0v2.67h7.017L.94 16.844l1.335 2.313 6.077-3.508-3.509 6.077 2.312 1.335 3.509-6.078V24h2.67v-7.017l3.508 6.077 2.312-1.335-3.509-6.078 6.078 3.509 1.335-2.313-6.077-3.508h7.017v-2.67H24zm-12 4.966a3.645 3.645 0 1 1 0-7.29 3.645 3.645 0 0 1 0 7.29z\"></path></svg>"
+  ],
+  "url": "https://www.affectui.com/components/data-table",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Data display\":\n        - /url: /category/data-display\n      - generic: Data Table\n    - heading \"Data Table\" [level=1]\n    - paragraph: \"Spreadsheet-style table: select cells and ranges, edit in place, copy and paste, undo and sort.\"\n    - link \"Get Pro to install\":\n      - /url: /pricing\n      - generic: Get Pro to install\n    - tablist \"Data Table preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - region \"Design Stack\":\n      - heading \"Design Stack\" [level=3]\n      - button \"Undo (⌘ Z)\" [disabled]:\n      - button \"Redo (⌘ Shift Z)\" [disabled]:\n      - grid \"Design Stack\":\n        - row \"Select all rows Tool Category Website Renews\":\n          - columnheader \"Select all rows\":\n            - checkbox \"Select all rows\":\n          - columnheader \"Tool\":\n            - button \"Tool\":\n              - generic \"Tool\"\n          - columnheader \"Category\":\n            - button \"Category\":\n              - generic \"Category\"\n          - columnheader \"Website\":\n            - button \"Website\":\n              - generic \"Website\"\n          - columnheader \"Renews\":\n            - button \"Renews\":\n              - generic \"Renews\"\n        - row \"Select Figma Figma Design figma.com Mar 12, 2026\":\n          - gridcell \"Select Figma\":\n            - checkbox \"Select Figma\":\n          - gridcell \"Figma\":\n            - generic \"Figma\"\n          - gridcell \"Design\":\n            - generic \"Design\"\n          - gridcell \"figma.com\":\n            - link \"figma.com\":\n              - /url: https://figma.com\n          - gridcell \"Mar 12, 2026\"\n        - row \"Select Linear Linear Issue tracking linear.app Jan 4, 2026\":\n          - gridcell \"Select Linear\":\n            - checkbox \"Select Linear\":\n          - gridcell \"Linear\":\n            - generic \"Linear\"\n          - gridcell \"Issue tracking\":\n            - generic \"Issue tracking\"\n          - gridcell \"linear.app\":\n            - link \"linear.app\":\n              - /url: https://linear.app\n          - gridcell \"Jan 4, 2026\"\n        - row \"Select Vercel Vercel Hosting vercel.com Aug 21, 2026\":\n          - gridcell \"Select Vercel\":\n            - checkbox \"Select Vercel\":\n          - gridcell \"Vercel\":\n            - generic \"Vercel\"\n          - gridcell \"Hosting\":\n            - generic \"Hosting\"\n          - gridcell \"vercel.com\":\n            - link \"vercel.com\":\n              - /url: https://vercel.com\n          - gridcell \"Aug 21, 2026\"\n        - row \"Select Framer Framer Website framer.com May 2, 2026\":\n          - gridcell \"Select Framer\":\n            - checkbox \"Select Framer\":\n          - gridcell \"Framer\":\n            - generic \"Framer\"\n          - gridcell \"Website\":\n            - generic \"Website\"\n          - gridcell \"framer.com\":\n            - link \"framer.com\":\n              - /url: https://framer.com\n          - gridcell \"May 2, 2026\"\n        - row \"Select Loom Loom Video loom.com Nov 18, 2026\":\n          - gridcell \"Select Loom\":\n            - checkbox \"Select Loom\":\n          - gridcell \"Loom\":\n            - generic \"Loom\"\n          - gridcell \"Video\":\n            - generic \"Video\"\n          - gridcell \"loom.com\":\n            - link \"loom.com\":\n              - /url: https://loom.com\n          - gridcell \"Nov 18, 2026\"\n      - button \"Add row\":\n        - text: Add row\n      - generic: Double-click a cell to edit\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: Small databases people edit in place – tools, vendors, budgets, contacts\n      - listitem: Data that moves to and from Excel or Google Sheets with copy and paste\n      - listitem: Lists where people pick several rows to act on\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: Thousands of rows – add virtualisation, filters and server paging with a grid library\n      - listitem: Editing one record with many fields – a form is clearer\n    - heading \"Installation\" [level=2]\n    - paragraph: Data Table is a Pro component.\n    - strong: Installation is part of Pro\n    - generic: Get Pro to copy the code, install it with the CLI and use it in your projects.\n    - link \"Unlock with Pro\":\n      - /url: /pricing\n      - generic: Unlock with Pro\n    - heading \"Usage\" [level=2]\n    - strong: Usage example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Examples\" [level=2]\n    - heading \"Read only\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"Fixed tag choices and a locked column\" [level=3]\n    - strong: This example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"API reference\" [level=2]\n    - heading \"DataTable\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - row \"title string – Heading in the title row of the card, also the grid's accessible name\":\n          - cell \"title\":\n            - code: title\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Heading in the title row of the card, also the grid's accessible name\"\n        - row \"icon ReactNode – Icon in front of the heading\":\n          - cell \"icon\":\n            - code: icon\n          - cell \"ReactNode\":\n            - code: ReactNode\n          - cell \"–\"\n          - cell \"Icon in front of the heading\"\n        - row \"columns DataColumn[] – key, label, icon, width, type (title, tag, link, number, text), editable, options for tags and format for numbers – numbers default to grouped digits with a real minus sign (12,345,679 · −4,200)\":\n          - cell \"columns\":\n            - code: columns\n          - cell \"DataColumn[]\":\n            - code: DataColumn[]\n          - cell \"–\"\n          - cell \"key, label, icon, width, type (title, tag, link, number, text), editable, options for tags and format for numbers – numbers default to grouped digits with a real minus sign (12,345,679 · −4,200)\"\n        - row \"rows DataRow[] – Starting rows – an id, an optional logo and a value per column key\":\n          - cell \"rows\":\n            - code: rows\n          - cell \"DataRow[]\":\n            - code: DataRow[]\n          - cell \"–\"\n          - cell \"Starting rows – an id, an optional logo and a value per column key\"\n        - 'row \"tagTones Record<string, TagTone> – Tag color per tag text: blue, violet, pink, green, amber or gray\"':\n          - cell \"tagTones\":\n            - code: tagTones\n          - cell \"Record<string, TagTone>\":\n            - code: Record<string, TagTone>\n          - cell \"–\"\n          - 'cell \"Tag color per tag text: blue, violet, pink, green, amber or gray\"'\n        - row \"editable boolean true false keeps selection and copy, but turns off editing, paste, delete and Add row\":\n          - cell \"editable\":\n            - code: editable\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"true\":\n            - code: \"true\"\n          - cell \"false keeps selection and copy, but turns off editing, paste, delete and Add row\"\n        - 'row \"onRowsChange (rows: DataRow[]) => void – Called with all rows after every edit, paste, clear, delete, undo or redo\"':\n          - cell \"onRowsChange\":\n            - code: onRowsChange\n          - 'cell \"(rows: DataRow[]) => void\"':\n            - code: \"(rows: DataRow[]) => void\"\n          - cell \"–\"\n          - cell \"Called with all rows after every edit, paste, clear, delete, undo or redo\"\n        - 'row \"onSelectionChange (ids: string[]) => void – Called with the ids of the checked rows\"':\n          - cell \"onSelectionChange\":\n            - code: onSelectionChange\n          - 'cell \"(ids: string[]) => void\"':\n            - code: \"(ids: string[]) => void\"\n          - cell \"–\"\n          - cell \"Called with the ids of the checked rows\"\n        - row \"className string – Extra class on the card\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the card\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Arrow keys Move the active cell\":\n          - cell \"Arrow keys\":\n            - generic: Arrow keys\n          - cell \"Move the active cell\"\n        - row \"Shift or Arrow keys Grow the selected range\":\n          - cell \"Shift or Arrow keys\":\n            - generic: Shift\n            - text: or\n            - generic: Arrow keys\n          - cell \"Grow the selected range\"\n        - row \"⌘ / Ctrl or Arrow keys Jump to the first or last row or column\":\n          - cell \"⌘ / Ctrl or Arrow keys\":\n            - generic: ⌘ / Ctrl\n            - text: or\n            - generic: Arrow keys\n          - cell \"Jump to the first or last row or column\"\n        - row \"Tab Move to the next cell, Shift + Tab to the previous one\":\n          - cell \"Tab\":\n            - generic: Tab\n          - cell \"Move to the next cell, Shift + Tab to the previous one\"\n        - row \"Enter or F2 Edit the active cell; Enter saves and moves down\":\n          - cell \"Enter or F2\":\n            - generic: Enter\n            - text: or\n            - generic: F2\n          - cell \"Edit the active cell; Enter saves and moves down\"\n        - row \"Any character Start editing with that character\":\n          - cell \"Any character\":\n            - generic: Any character\n          - cell \"Start editing with that character\"\n        - row \"Escape Cancel an edit or collapse the range\":\n          - cell \"Escape\":\n            - generic: Escape\n          - cell \"Cancel an edit or collapse the range\"\n        - row \"Delete or Backspace Clear the selected cells\":\n          - cell \"Delete or Backspace\":\n            - generic: Delete\n            - text: or\n            - generic: Backspace\n          - cell \"Clear the selected cells\"\n        - row \"⌘ / Ctrl or C / X / V Copy, cut and paste – works with Excel and Google Sheets\":\n          - cell \"⌘ / Ctrl or C / X / V\":\n            - generic: ⌘ / Ctrl\n            - text: or\n            - generic: C / X / V\n          - cell \"Copy, cut and paste – works with Excel and Google Sheets\"\n        - row \"⌘ / Ctrl or Z Undo, add Shift to redo\":\n          - cell \"⌘ / Ctrl or Z\":\n            - generic: ⌘ / Ctrl\n            - text: or\n            - generic: Z\n          - cell \"Undo, add Shift to redo\"\n        - row \"⌘ / Ctrl or A Select every cell\":\n          - cell \"⌘ / Ctrl or A\":\n            - generic: ⌘ / Ctrl\n            - text: or\n            - generic: A\n          - cell \"Select every cell\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: The table is a grid with selected cells marked, so screen readers follow the active cell and the range\n      - listitem: Column headers are sort buttons and report the sort direction\n      - listitem: Row checkboxes have labels; the header checkbox shows a mixed state when only some rows are checked\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: Tag picker drops in, sort arrows turn, checkboxes pop – reduced motion turns all of it off\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: The table scrolls sideways inside the card on narrow screens instead of squeezing the columns\n      - listitem: On touch screens the checkboxes grow to 18px with a 36px tap area\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Performance\" [level=2]\n    - list:\n      - listitem: Made for up to a few hundred rows; every edit is one state update and can be undone (last 100 steps)\n    - heading \"Related\" [level=2]\n    - article:\n      - generic: Data display\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"KPI Chart Metric card with a multi-line chart and a tooltip that follows the pointer\":\n        - /url: /components/kpi-chart\n        - heading \"KPI Chart\" [level=3]\n        - paragraph: Metric card with a multi-line chart and a tooltip that follows the pointer\n      - button \"KPI Chart is part of Pro – see pricing\":\n    - article:\n      - generic: Data display\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - link \"Change Summary What moved since last time – one metric per row with a colored trend\":\n        - /url: /components/change-summary\n        - heading \"Change Summary\" [level=3]\n        - paragraph: What moved since last time – one metric per row with a colored trend\n      - button \"Copy to clipboard\":\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

@@ -1,0 +1,1004 @@
+{
+  "controls": [
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Jonas Weberjonas@northwind.io",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Remove Renewal-quote.pdf",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Friendly",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Short",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Formal",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Edit text",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Discard",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Send email",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Jonas Weberjonas@northwind.io",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Remove Renewal-quote.pdf",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Friendly",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Short",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Formal",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Edit text",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-edc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 773.6640625,
+        "height": 317.328125,
+        "left": 583.984375,
+        "right": 1104.015625,
+        "top": 456.3359375,
+        "width": 520.03125,
+        "x": 583.984375,
+        "y": 456.3359375
+      },
+      "tag": "DIV",
+      "text": "SUB-1182Renews in 5 days$8,900Northwind LogisticsToJonas Weberjonas@northwind.ioRenewal-quote.pdfHi Jonas, a heads-up that your Growth plan renews on October 9 "
+    },
+    {
+      "cls": "ui-edc__record",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "12px 16px"
+      },
+      "rect": {
+        "bottom": 526.171875,
+        "height": 69.8359375,
+        "left": 583.984375,
+        "right": 1104.015625,
+        "top": 456.3359375,
+        "width": 520.03125,
+        "x": 583.984375,
+        "y": 456.3359375
+      },
+      "tag": "DIV",
+      "text": "SUB-1182Renews in 5 days$8,900Northwind Logistics"
+    },
+    {
+      "cls": "ui-edc__ref",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 495.3359375,
+        "height": 26,
+        "left": 601.3125,
+        "right": 1086.6875,
+        "top": 469.3359375,
+        "width": 485.375,
+        "x": 601.3125,
+        "y": 469.3359375
+      },
+      "tag": "DIV",
+      "text": "SUB-1182Renews in 5 days$8,900"
+    },
+    {
+      "cls": "ui-edc__id",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "24px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 495.3359375,
+        "height": 26,
+        "left": 601.3125,
+        "right": 675.7578125,
+        "top": 469.3359375,
+        "width": 74.4453125,
+        "x": 601.3125,
+        "y": 469.3359375
+      },
+      "tag": "SPAN",
+      "text": "SUB-1182"
+    },
+    {
+      "cls": "ui-edc__status",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(232, 162, 12, 0.12)",
+        "border": "0px none rgb(180, 122, 6)",
+        "borderRadius": "5px",
+        "color": "rgb(180, 122, 6)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "2px 6px"
+      },
+      "rect": {
+        "bottom": 493.1640625,
+        "height": 21.6640625,
+        "left": 684.421875,
+        "right": 805.3515625,
+        "top": 471.5,
+        "width": 120.9296875,
+        "x": 684.421875,
+        "y": 471.5
+      },
+      "tag": "SPAN",
+      "text": "Renews in 5 days"
+    },
+    {
+      "cls": "ui-edc__amount",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "24px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 495.3359375,
+        "height": 26,
+        "left": 1029.703125,
+        "right": 1086.6875,
+        "top": 469.3359375,
+        "width": 56.984375,
+        "x": 1029.703125,
+        "y": 469.3359375
+      },
+      "tag": "SPAN",
+      "text": "$8,900"
+    },
+    {
+      "cls": "ui-edc__account",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 512.671875,
+        "height": 17.3359375,
+        "left": 601.3125,
+        "right": 1086.6875,
+        "top": 495.3359375,
+        "width": 485.375,
+        "x": 601.3125,
+        "y": 495.3359375
+      },
+      "tag": "SPAN",
+      "text": "Northwind Logistics"
+    },
+    {
+      "cls": "ui-edc__outer",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 721.1796875,
+        "height": 195.0078125,
+        "left": 583.984375,
+        "right": 1104.015625,
+        "top": 526.171875,
+        "width": 520.03125,
+        "x": 583.984375,
+        "y": 526.171875
+      },
+      "tag": "DIV",
+      "text": "ToJonas Weberjonas@northwind.ioRenewal-quote.pdfHi Jonas, a heads-up that your Growth plan renews on October 9 for $8,900 a year. If you'd like to add seats or "
+    },
+    {
+      "cls": "ui-edc__draft",
+      "css": {
+        "animationDuration": "0.32s",
+        "animationName": "ui-edc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 722.3123779296875,
+        "height": 195.48443603515625,
+        "left": 583.984375,
+        "right": 1104.015625,
+        "top": 526.8279418945312,
+        "width": 520.03125,
+        "x": 583.984375,
+        "y": 526.8279418945312
+      },
+      "tag": "DIV",
+      "text": "ToJonas Weberjonas@northwind.ioRenewal-quote.pdfHi Jonas, a heads-up that your Growth plan renews on October 9 for $8,900 a year. If you'd like to add seats or "
+    },
+    {
+      "cls": "ui-edc__meta",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20px",
+        "padding": "10px 12px 10px 16px"
+      },
+      "rect": {
+        "bottom": 579.3123168945312,
+        "height": 52.484375,
+        "left": 583.984375,
+        "right": 1104.015625,
+        "top": 526.8279418945312,
+        "width": 520.03125,
+        "x": 583.984375,
+        "y": 526.8279418945312
+      },
+      "tag": "DIV",
+      "text": "ToJonas Weberjonas@northwind.ioRenewal-quote.pdf"
+    },
+    {
+      "cls": "ui-edc__to",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 567.9841918945312,
+        "height": 30.328125,
+        "left": 601.3125,
+        "right": 894.6953125,
+        "top": 537.6560668945312,
+        "width": 293.3828125,
+        "x": 601.3125,
+        "y": 537.6560668945312
+      },
+      "tag": "DIV",
+      "text": "ToJonas Weberjonas@northwind.io"
+    },
+    {
+      "cls": "ui-edc__label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 563.6560668945312,
+        "height": 21.671875,
+        "left": 601.3125,
+        "right": 617.75,
+        "top": 541.9841918945312,
+        "width": 16.4375,
+        "x": 601.3125,
+        "y": 541.9841918945312
+      },
+      "tag": "SPAN",
+      "text": "To"
+    },
+    {
+      "cls": "ui-edc__recipient",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 6px 0px 10px"
+      },
+      "rect": {
+        "bottom": 567.9841918945312,
+        "height": 30.328125,
+        "left": 626.4140625,
+        "right": 894.6953125,
+        "top": 537.6560668945312,
+        "width": 268.28125,
+        "x": 626.4140625,
+        "y": 537.6560668945312
+      },
+      "tag": "BUTTON",
+      "text": "Jonas Weberjonas@northwind.io"
+    },
+    {
+      "cls": "ui-edc__name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 563.6560668945312,
+        "height": 21.671875,
+        "left": 637.2421875,
+        "right": 725.7578125,
+        "top": 541.9841918945312,
+        "width": 88.515625,
+        "x": 637.2421875,
+        "y": 541.9841918945312
+      },
+      "tag": "SPAN",
+      "text": "Jonas Weber"
+    },
+    {
+      "cls": "ui-edc__email",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 563.6560668945312,
+        "height": 21.671875,
+        "left": 732.2578125,
+        "right": 864.3671875,
+        "top": 541.9841918945312,
+        "width": 132.109375,
+        "x": 732.2578125,
+        "y": 541.9841918945312
+      },
+      "tag": "SPAN",
+      "text": "jonas@northwind.io"
+    },
+    {
+      "cls": "ui-edc__file",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 565.8201293945312,
+        "height": 26,
+        "left": 909.6171875,
+        "right": 1091.015625,
+        "top": 539.8201293945312,
+        "width": 181.3984375,
+        "x": 909.6171875,
+        "y": 539.8201293945312
+      },
+      "tag": "SPAN",
+      "text": "Renewal-quote.pdf"
+    },
+    {
+      "cls": "ui-edc__file-name",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 563.6560668945312,
+        "height": 21.671875,
+        "left": 933.4453125,
+        "right": 1060.6796875,
+        "top": 541.9841918945312,
+        "width": 127.234375,
+        "x": 933.4453125,
+        "y": 541.9841918945312
+      },
+      "tag": "SPAN",
+      "text": "Renewal-quote.pdf"
+    },
+    {
+      "cls": "ui-edc__body",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "14px 16px 2px"
+      },
+      "rect": {
+        "bottom": 661.6561279296875,
+        "height": 82.34381103515625,
+        "left": 583.984375,
+        "right": 1104.015625,
+        "top": 579.3123168945312,
+        "width": 520.03125,
+        "x": 583.984375,
+        "y": 579.3123168945312
+      },
+      "tag": "DIV",
+      "text": "Hi Jonas, a heads-up that your Growth plan renews on October 9 for $8,900 a year. If you'd like to add seats or switch to monthly billing, you can review the qu"
+    },
+    {
+      "cls": "ui-edc__text",
+      "css": {
+        "animationDuration": "0.28s",
+        "animationName": "ui-edc-fade",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "4px 6px"
+      },
+      "rect": {
+        "bottom": 663.8201904296875,
+        "height": 73.67193603515625,
+        "left": 594.8125,
+        "right": 1093.1875,
+        "top": 590.1482543945312,
+        "width": 498.375,
+        "x": 594.8125,
+        "y": 590.1482543945312
+      },
+      "tag": "P",
+      "text": "Hi Jonas, a heads-up that your Growth plan renews on October 9 for $8,900 a year. If you'd like to add seats or switch to monthly billing, you can review the qu"
+    },
+    {
+      "cls": "ui-edc__tune",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20px",
+        "padding": "14px 12px 14px 16px"
+      },
+      "rect": {
+        "bottom": 722.3123779296875,
+        "height": 60.65625,
+        "left": 583.984375,
+        "right": 1104.015625,
+        "top": 661.6561279296875,
+        "width": 520.03125,
+        "x": 583.984375,
+        "y": 661.6561279296875
+      },
+      "tag": "DIV",
+      "text": "FriendlyShortFormal⌘ Enter to send"
+    },
+    {
+      "cls": "ui-edc__tones",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 707.1483154296875,
+        "height": 30.328125,
+        "left": 601.3125,
+        "right": 850.671875,
+        "top": 676.8201904296875,
+        "width": 249.359375,
+        "x": 601.3125,
+        "y": 676.8201904296875
+      },
+      "tag": "DIV",
+      "text": "FriendlyShortFormal"
+    },
+    {
+      "cls": "ui-edc__edit-btn",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 707.1483154296875,
+        "height": 30.328125,
+        "left": 820.34375,
+        "right": 850.671875,
+        "top": 676.8201904296875,
+        "width": 30.328125,
+        "x": 820.34375,
+        "y": 676.8201904296875
+      },
+      "tag": "BUTTON",
+      "text": ""
+    },
+    {
+      "cls": "ui-edc__hint",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.27)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.27)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 700.6483154296875,
+        "height": 17.3359375,
+        "left": 994,
+        "right": 1091.015625,
+        "top": 683.3123779296875,
+        "width": 97.015625,
+        "x": 994,
+        "y": 683.3123779296875
+      },
+      "tag": "SPAN",
+      "text": "⌘ Enter to send"
+    },
+    {
+      "cls": "ui-edc__foot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "10px 10px 10px 16px"
+      },
+      "rect": {
+        "bottom": 773.6640625,
+        "height": 52.484375,
+        "left": 583.984375,
+        "right": 1104.015625,
+        "top": 721.1796875,
+        "width": 520.03125,
+        "x": 583.984375,
+        "y": 721.1796875
+      },
+      "tag": "DIV",
+      "text": "Renewal agentReady for reviewDiscardSend email"
+    },
+    {
+      "cls": "ui-edc__agent",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 758.5078125,
+        "height": 21.671875,
+        "left": 601.3125,
+        "right": 699.125,
+        "top": 736.8359375,
+        "width": 97.8125,
+        "x": 601.3125,
+        "y": 736.8359375
+      },
+      "tag": "SPAN",
+      "text": "Renewal agent"
+    },
+    {
+      "cls": "ui-edc__badge",
+      "css": {
+        "animationDuration": "0.26s",
+        "animationName": "ui-edc-fade",
+        "backgroundColor": "rgba(26, 154, 82, 0.08)",
+        "border": "0px none rgb(26, 154, 82)",
+        "borderRadius": "5px",
+        "color": "rgb(26, 154, 82)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "2px 6px"
+      },
+      "rect": {
+        "bottom": 758.5,
+        "height": 21.6640625,
+        "left": 707.7890625,
+        "right": 825.296875,
+        "top": 736.8359375,
+        "width": 117.5078125,
+        "x": 707.7890625,
+        "y": 736.8359375
+      },
+      "tag": "SPAN",
+      "text": "Ready for review"
+    },
+    {
+      "cls": "ui-edc__buttons",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 762.8359375,
+        "height": 30.328125,
+        "left": 915.609375,
+        "right": 1093.1875,
+        "top": 732.5078125,
+        "width": 177.578125,
+        "x": 915.609375,
+        "y": 732.5078125
+      },
+      "tag": "DIV",
+      "text": "DiscardSend email"
+    },
+    {
+      "cls": "ui-edc__secondary",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 10px"
+      },
+      "rect": {
+        "bottom": 762.8359375,
+        "height": 30.328125,
+        "left": 915.609375,
+        "right": 988.703125,
+        "top": 732.5078125,
+        "width": 73.09375,
+        "x": 915.609375,
+        "y": 732.5078125
+      },
+      "tag": "BUTTON",
+      "text": "Discard"
+    },
+    {
+      "cls": "ui-edc__primary",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.88)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "6px",
+        "color": "rgb(252, 252, 252)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 10px"
+      },
+      "rect": {
+        "bottom": 762.8359375,
+        "height": 30.328125,
+        "left": 997.3671875,
+        "right": 1093.1875,
+        "top": 732.5078125,
+        "width": 95.8203125,
+        "x": 997.3671875,
+        "y": 732.5078125
+      },
+      "tag": "BUTTON",
+      "text": "Send email"
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m8 10 4 4 4-4\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m15.5 7.5-6.4 6.4a1.8 1.8 0 0 0 2.5 2.5l6.7-6.7a3.5 3.5 0 0 0-5-5l-6.9 6.9a5.2 5.2 0 0 0 7.4 7.4l6-6\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M7 7l10 10M17 7 7 17\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M14.5 5.5 18.5 9.5M5 19l1-4L15.5 5.5l4 4L10 19l-5 0Z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m8 10 4 4 4-4\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m15.5 7.5-6.4 6.4a1.8 1.8 0 0 0 2.5 2.5l6.7-6.7a3.5 3.5 0 0 0-5-5l-6.9 6.9a5.2 5.2 0 0 0 7.4 7.4l6-6\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M7 7l10 10M17 7 7 17\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M14.5 5.5 18.5 9.5M5 19l1-4L15.5 5.5l4 4L10 19l-5 0Z\"></path></svg>"
+  ],
+  "url": "https://www.affectui.com/components/email-draft",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Cards\":\n        - /url: /category/cards\n      - generic: Email Draft\n    - heading \"Email Draft\" [level=1]\n    - paragraph: Agent-written email for review – switch recipient and tone, edit inline, remove the attachment, send or discard with undo.\n    - code: $ pnpm dlx shadcn@latest add https://www.affectui.com/r/email-draft-clean.json\n    - button \"Copy to clipboard\":\n    - tablist \"Email Draft preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - generic \"SUB-1182\"\n    - generic \"Renews in 5 days\"\n    - generic: $8,900\n    - generic: Northwind Logistics\n    - generic: To\n    - button \"Jonas Weber jonas@northwind.io\":\n      - generic: Jonas Weber\n      - generic: jonas@northwind.io\n    - generic \"Renewal-quote.pdf\"\n    - button \"Remove Renewal-quote.pdf\":\n    - paragraph:\n      - text: \"Hi Jonas, a heads-up that your Growth plan renews on October 9 for $8,900 a year. If you'd like to add seats or switch to monthly billing, you can review the quote here:\"\n      - link \"Review quote\":\n        - /url: \"#\"\n    - group \"Tone\":\n      - button \"Friendly\" [pressed]\n      - button \"Short\"\n      - button \"Formal\"\n      - button \"Edit text\":\n    - generic: ⌘ Enter to send\n    - generic \"Renewal agent\"\n    - generic: Ready for review\n    - button \"Discard\"\n    - button \"Send email\"\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: Human-in-the-loop flows where an agent drafts an email and someone approves it – renewals, reminders, follow-ups\n      - listitem: Inboxes or task lists of pending outreach, one card per record\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: Writing long emails from scratch – use a full editor\n      - listitem: Messages that go out without review – then a simple activity row is enough\n    - heading \"Installation\" [level=2]\n    - paragraph: Add Email Draft with the shadcn CLI – your project needs a components.json, see Installation in the docs – or copy the file by hand.\n    - paragraph: Requires React 19.\n    - tablist \"Installation method\":\n      - tab \"CLI\" [selected]\n      - tab \"Manual\"\n    - tablist \"Package manager\":\n      - tab \"pnpm\" [selected]\n      - tab \"npm\"\n      - tab \"yarn\"\n      - tab \"bun\"\n    - button \"Copy\":\n      - text: Copy\n    - code: pnpm dlx shadcn@latest add https://www.affectui.com/r/email-draft-clean.json\n    - heading \"Usage\" [level=2]\n    - text: example.tsx\n    - button \"Copy\":\n      - text: Copy\n    - code:\n      - generic: \"import { EmailDraft } from \\\"@/components/ui/email-draft-clean\\\";\"\n      - generic: \"export function RenewalReview() {\"\n      - generic: return (\n      - generic: <EmailDraft\n      - generic: reference=\"SUB-1182\"\n      - generic: account=\"Northwind Logistics\"\n      - generic: amount=\"$8,900\"\n      - generic: status=\"Renews in 5 days\"\n      - generic: agent=\"Renewal agent\"\n      - generic: \"contacts={[{ name: \\\"Jonas Weber\\\", email: \\\"jonas@northwind.io\\\" }]}\"\n      - generic: attachment=\"Renewal-quote.pdf\"\n      - generic: \"link={{ label: \\\"Review quote\\\", href: \\\"/quotes/1182\\\" }}\"\n      - generic: \"onSend={(email) => api.send(email)}\"\n      - generic: />\n      - generic: );\n      - generic: \"}\"\n    - heading \"API reference\" [level=2]\n    - heading \"EmailDraft\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - row \"reference string \\\"SUB-1182\\\" Reference of the record the email is about\":\n          - cell \"reference\":\n            - code: reference\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"SUB-1182\\\"\":\n            - code: \"\\\"SUB-1182\\\"\"\n          - cell \"Reference of the record the email is about\"\n        - row \"account string \\\"Northwind Logistics\\\" Account or company under the reference\":\n          - cell \"account\":\n            - code: account\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Northwind Logistics\\\"\":\n            - code: \"\\\"Northwind Logistics\\\"\"\n          - cell \"Account or company under the reference\"\n        - row \"amount string \\\"$8,900\\\" Amount on the right\":\n          - cell \"amount\":\n            - code: amount\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"$8,900\\\"\":\n            - code: \"\\\"$8,900\\\"\"\n          - cell \"Amount on the right\"\n        - row \"status string \\\"Renews in 5 days\\\" Status chip next to the reference\":\n          - cell \"status\":\n            - code: status\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Renews in 5 days\\\"\":\n            - code: \"\\\"Renews in 5 days\\\"\"\n          - cell \"Status chip next to the reference\"\n        - row \"agent string \\\"Renewal agent\\\" Who wrote the draft, shown in the last row of the card\":\n          - cell \"agent\":\n            - code: agent\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Renewal agent\\\"\":\n            - code: \"\\\"Renewal agent\\\"\"\n          - cell \"Who wrote the draft, shown in the last row of the card\"\n        - row \"contacts DraftContact[] – People the email can go to – the first is preselected\":\n          - cell \"contacts\":\n            - code: contacts\n          - cell \"DraftContact[]\":\n            - code: DraftContact[]\n          - cell \"–\"\n          - cell \"People the email can go to – the first is preselected\"\n        - row \"attachment string | null – File name of the attachment; it can be removed and added back\":\n          - cell \"attachment\":\n            - code: attachment\n          - cell \"string | null\":\n            - code: string | null\n          - cell \"–\"\n          - cell \"File name of the attachment; it can be removed and added back\"\n        - 'row \"tones DraftTone[] – Text variants { id, label, body(contact) } – Friendly, Short and Formal by default\"':\n          - cell \"tones\":\n            - code: tones\n          - cell \"DraftTone[]\":\n            - code: DraftTone[]\n          - cell \"–\"\n          - 'cell \"Text variants { id, label, body(contact) } – Friendly, Short and Formal by default\"'\n        - 'row \"link { label, href } – Link appended to the email text\"':\n          - cell \"link\":\n            - code: link\n          - 'cell \"{ label, href }\"':\n            - code: \"{ label, href }\"\n          - cell \"–\"\n          - cell \"Link appended to the email text\"\n        - 'row \"onSend ({ to, body, attachment }) => void – Called after Send with the final email\"':\n          - cell \"onSend\":\n            - code: onSend\n          - 'cell \"({ to, body, attachment }) => void\"':\n            - code: \"({ to, body, attachment }) => void\"\n          - cell \"–\"\n          - cell \"Called after Send with the final email\"\n        - row \"onDiscard () => void – Called when the draft is discarded\":\n          - cell \"onDiscard\":\n            - code: onDiscard\n          - cell \"() => void\":\n            - code: () => void\n          - cell \"–\"\n          - cell \"Called when the draft is discarded\"\n        - row \"className string – Extra class on the root\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"⌘ or Enter Sends the email while editing\":\n          - cell \"⌘ or Enter\":\n            - generic: ⌘\n            - text: or\n            - generic: Enter\n          - cell \"Sends the email while editing\"\n        - row \"Esc Leaves editing, or closes the recipient menu\":\n          - cell \"Esc\":\n            - generic: Esc\n          - cell \"Leaves editing, or closes the recipient menu\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: The recipient is a button that opens a listbox; tones are toggle buttons with aria-pressed\n      - listitem: The text is a plain paragraph; clicking it or the pencil swaps in a labelled text field\n      - listitem: Sent and discarded states are announced as a status with an Undo button\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: Switching tone fades the new text in; the recipient menu scales in from its corner\n      - listitem: Sending shows a spinner, then the email folds into a one-line receipt – only the content glides to its new height, the last row stays put\n      - listitem: With prefers-reduced-motion changes happen instantly\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: Fills its container up to 480px; on narrow screens the email address, the shortcut hint and the agent name hide\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Guides\" [level=2]\n    - 'link \"Approval UI for AI agents: what to show before an agent acts Guide How to design the approval step for AI agent actions – what the card must show, risk levels, timeouts, batching many requests, and undo after approval.\"':\n      - /url: /guides/approval-ui-ai-agents\n      - generic: \"Approval UI for AI agents: what to show before an agent acts\"\n      - generic: Guide\n      - generic: How to design the approval step for AI agent actions – what the card must show, risk levels, timeouts, batching many requests, and undo after approval.\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

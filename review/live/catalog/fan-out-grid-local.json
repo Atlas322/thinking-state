@@ -1,0 +1,1097 @@
+{
+  "controls": [
+    {
+      "expanded": null,
+      "label": "Lead 1: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 2: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 3: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 4: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 5: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 6: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 7: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 8: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 9: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 10: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 11: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 12: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 13: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 14: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 15: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 16: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 17: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 18: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 19: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 20: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 21: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 22: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 23: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 24: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 25: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 26: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 27: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 28: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 29: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 30: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 31: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 32: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 33: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 34: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 35: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 36: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 37: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 38: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 39: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 40: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 41: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 42: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 43: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 44: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 45: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 46: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 47: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 48: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 49: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 50: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 51: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 52: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 53: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 54: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 55: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 56: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 57: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 58: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 59: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 60: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 61: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 62: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 63: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 64: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 65: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 66: done",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 67: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 68: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 69: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 70: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 71: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 72: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 73: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 74: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 75: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 76: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 77: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 78: running",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 79: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 80: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 81: failed",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 82: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 83: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 84: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 85: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 86: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 87: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 88: failed",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 89: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 90: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 91: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 92: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 93: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 94: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 95: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": "Lead 96: queued",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": null
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Retry failed",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Advance demo",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "st-ui ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "14px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 997.453125,
+        "height": 655.171875,
+        "left": 509,
+        "right": 1189,
+        "top": 342.28125,
+        "width": 680,
+        "x": 509,
+        "y": 342.28125
+      },
+      "tag": "SECTION",
+      "text": "\n.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#"
+    },
+    {
+      "cls": "st-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20.15px",
+        "padding": "20px 22px"
+      },
+      "rect": {
+        "bottom": 428.5703125,
+        "height": 85.2890625,
+        "left": 510,
+        "right": 1188,
+        "top": 343.28125,
+        "width": 678,
+        "x": 510,
+        "y": 343.28125
+      },
+      "tag": "HEADER",
+      "text": "Enrich 96 leads16 parallel workers66/96"
+    },
+    {
+      "cls": "st-badge ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(247, 247, 248)",
+        "border": "0px none rgb(130, 130, 135)",
+        "borderRadius": "4px",
+        "color": "rgb(130, 130, 135)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "lineHeight": "18px",
+        "padding": "0px 6px"
+      },
+      "rect": {
+        "bottom": 394.421875,
+        "height": 18,
+        "left": 1125.578125,
+        "right": 1166,
+        "top": 376.421875,
+        "width": 40.421875,
+        "x": 1125.578125,
+        "y": 376.421875
+      },
+      "tag": "SPAN",
+      "text": "66/96"
+    },
+    {
+      "cls": "st-content",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "10px 20px 18px"
+      },
+      "rect": {
+        "bottom": 996.453125,
+        "height": 567.8828125,
+        "left": 510,
+        "right": 1188,
+        "top": 428.5703125,
+        "width": 678,
+        "x": 510,
+        "y": 428.5703125
+      },
+      "tag": "DIV",
+      "text": "donerunningfailedqueuedRetry failedAdvance demo"
+    },
+    {
+      "cls": "st-meter",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(235, 235, 237)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "10px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 443.5703125,
+        "height": 5,
+        "left": 530,
+        "right": 1168,
+        "top": 438.5703125,
+        "width": 638,
+        "x": 530,
+        "y": 438.5703125
+      },
+      "tag": "DIV",
+      "text": ""
+    },
+    {
+      "cls": "st-grid-cells",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 885.2578125,
+        "height": 423.6875,
+        "left": 530,
+        "right": 1168,
+        "top": 461.5703125,
+        "width": 638,
+        "x": 530,
+        "y": 461.5703125
+      },
+      "tag": "DIV",
+      "text": ""
+    },
+    {
+      "cls": "st-actions",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 928.3046875,
+        "height": 25.046875,
+        "left": 530,
+        "right": 1168,
+        "top": 903.2578125,
+        "width": 638,
+        "x": 530,
+        "y": 903.2578125
+      },
+      "tag": "DIV",
+      "text": "donerunningfailedqueued"
+    },
+    {
+      "cls": "st-chip",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(247, 247, 248)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "5px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "7px",
+        "lineHeight": "17.05px",
+        "padding": "3px 7px"
+      },
+      "rect": {
+        "bottom": 928.3046875,
+        "height": 25.046875,
+        "left": 530,
+        "right": 586.25,
+        "top": 903.2578125,
+        "width": 56.25,
+        "x": 530,
+        "y": 903.2578125
+      },
+      "tag": "SPAN",
+      "text": "done"
+    },
+    {
+      "cls": "st-dot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(154, 200, 177)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "50%",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "17.05px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 919.28125,
+        "height": 7,
+        "left": 538,
+        "right": 545,
+        "top": 912.28125,
+        "width": 7,
+        "x": 538,
+        "y": 912.28125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "st-btn  ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "7px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20.15px",
+        "padding": "6px 11px"
+      },
+      "rect": {
+        "bottom": 978.453125,
+        "height": 34.1484375,
+        "left": 530,
+        "right": 623.8125,
+        "top": 944.3046875,
+        "width": 93.8125,
+        "x": 530,
+        "y": 944.3046875
+      },
+      "tag": "BUTTON",
+      "text": "Retry failed"
+    }
+  ],
+  "svg": [],
+  "url": "http://127.0.0.1:5173/#/fan-out-grid",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- complementary:\n  - button \"Component Studio home\":\n    - text: s\n    - generic: ·\n    - generic: componentstudio\n    - generic: \"01\"\n  - textbox \"Search components\":\n    - /placeholder: Find a component…\n  - generic: /\n  - button \"▦ All components 90\":\n    - generic: ▦\n    - text: All components\n    - generic: \"90\"\n  - button \"Favorites 0\":\n    - text: Favorites\n    - generic: \"0\"\n  - navigation \"Components\":\n    - generic: ⌘\n    - text: Agents\n    - generic: \"43\"\n    - button \"Agent Checkpoints\":\n      - generic: Agent Checkpoints\n    - button \"Agent Cursors\":\n      - generic: Agent Cursors\n    - button \"Agent Findings\":\n      - generic: Agent Findings\n    - button \"Agent Fleet\":\n      - generic: Agent Fleet\n    - button \"Agent Graph\":\n      - generic: Agent Graph\n    - button \"Agent Handoff\":\n      - generic: Agent Handoff\n    - button \"Agent Inbox\":\n      - generic: Agent Inbox\n    - button \"Agent Lanes\":\n      - generic: Agent Lanes\n    - button \"Agent Ledger\":\n      - generic: Agent Ledger\n    - button \"Agent Monitor\":\n      - generic: Agent Monitor\n    - button \"Agent Plan\":\n      - generic: Agent Plan\n    - button \"Agent Queue\":\n      - generic: Agent Queue\n    - button \"Agent Recap\":\n      - generic: Agent Recap\n    - button \"Agent Steering\":\n      - generic: Agent Steering\n    - button \"Agent Trail\":\n      - generic: Agent Trail\n    - button \"Agent Tree\":\n      - generic: Agent Tree\n    - button \"Approval Card\":\n      - generic: Approval Card\n    - button \"Approval Gates\":\n      - generic: Approval Gates\n    - button \"Autonomy Dial\":\n      - generic: Autonomy Dial\n    - button \"Away Summary\":\n      - generic: Away Summary\n    - button \"Collaboration Stream\":\n      - generic: Collaboration Stream\n    - button \"Conflict Radar\":\n      - generic: Conflict Radar\n    - button \"Context Map\":\n      - generic: Context Map\n    - button \"Context Window\":\n      - generic: Context Window\n    - button \"Cost Waterfall\":\n      - generic: Cost Waterfall\n    - button \"Decision Card\":\n      - generic: Decision Card\n    - button \"Decision Tree\":\n      - generic: Decision Tree\n    - button \"Delegate Board\":\n      - generic: Delegate Board\n    - button \"Fallback Chain\":\n      - generic: Fallback Chain\n    - button \"Fan-out Grid\":\n      - generic: Fan-out Grid\n    - button \"Inline Diff\":\n      - generic: Inline Diff\n    - button \"Judge Bracket\":\n      - generic: Judge Bracket\n    - button \"Memory Panel\":\n      - generic: Memory Panel\n    - button \"Parallel Attempts\":\n      - generic: Parallel Attempts\n    - button \"Permission Request\":\n      - generic: Permission Request\n    - button \"Plan vs Actual\":\n      - generic: Plan vs Actual\n    - button \"Review Center\":\n      - generic: Review Center\n    - button \"Root Cause Tree\":\n      - generic: Root Cause Tree\n    - button \"Running Now\":\n      - generic: Running Now\n    - button \"Scheduled Runs\":\n      - generic: Scheduled Runs\n    - button \"Tool Access Map\":\n      - generic: Tool Access Map\n    - button \"Tool Call Card\":\n      - generic: Tool Call Card\n    - button \"Trace Waterfall\":\n      - generic: Trace Waterfall\n    - generic: ◌\n    - text: Chat\n    - generic: \"10\"\n    - button \"AI Answer\":\n      - generic: AI Answer\n    - button \"Chat Composer\":\n      - generic: Chat Composer\n    - button \"Cited Answer\":\n      - generic: Cited Answer\n    - button \"Comment Thread\":\n      - generic: Comment Thread\n    - button \"Comments Panel\":\n      - generic: Comments Panel\n    - button \"Message Actions\":\n      - generic: Message Actions\n    - button \"Model Picker\":\n      - generic: Model Picker\n    - button \"Thinking Loader\":\n      - generic: Thinking Loader\n    - button \"Thinking State\":\n      - generic: Thinking State\n    - button \"Writing Assistant\":\n      - generic: Writing Assistant\n    - generic: ⊞\n    - text: Inputs\n    - generic: \"15\"\n    - button \"Billing Schedule\":\n      - generic: Billing Schedule\n    - button \"Checkbox\":\n      - generic: Checkbox\n    - button \"Combobox\":\n      - generic: Combobox\n    - button \"Date Range Picker\":\n      - generic: Date Range Picker\n    - button \"Dropzone\":\n      - generic: Dropzone\n    - button \"Filter Menu\":\n      - generic: Filter Menu\n    - button \"Integration Settings\":\n      - generic: Integration Settings\n    - button \"OTP Input\":\n      - generic: OTP Input\n    - button \"Prompt Library\":\n      - generic: Prompt Library\n    - button \"Select\":\n      - generic: Select\n    - button \"Stepper Form\":\n      - generic: Stepper Form\n    - button \"Switch\":\n      - generic: Switch\n    - button \"Tag Input\":\n      - generic: Tag Input\n    - button \"Text Area\":\n      - generic: Text Area\n    - button \"Text Field\":\n      - generic: Text Field\n    - generic: ▤\n    - text: Data display\n    - generic: \"7\"\n    - button \"Breakdown Chart\":\n      - generic: Breakdown Chart\n    - button \"Change Summary\":\n      - generic: Change Summary\n    - button \"Compact Breakdown\":\n      - generic: Compact Breakdown\n    - button \"Data Table\":\n      - generic: Data Table\n    - button \"Experiment Card\":\n      - generic: Experiment Card\n    - button \"KPI Chart\":\n      - generic: KPI Chart\n    - button \"Usage Meter\":\n      - generic: Usage Meter\n    - generic: ↗\n    - text: Navigation\n    - generic: \"4\"\n    - button \"Command Menu\":\n      - generic: Command Menu\n    - button \"Integration Picker\":\n      - generic: Integration Picker\n    - button \"Profile Menu\":\n      - generic: Profile Menu\n    - button \"Segmented Control\":\n      - generic: Segmented Control\n    - generic: ◉\n    - text: Feedback\n    - generic: \"5\"\n    - button \"Decision Inbox\":\n      - generic: Decision Inbox\n    - button \"Notification Stack\":\n      - generic: Notification Stack\n    - button \"Progress Tracker\":\n      - generic: Progress Tracker\n    - button \"Setup Guide\":\n      - generic: Setup Guide\n    - button \"Toaster\":\n      - generic: Toaster\n    - generic: ▢\n    - text: Cards\n    - generic: \"4\"\n    - button \"Email Draft\":\n      - generic: Email Draft\n    - button \"Project Card\":\n      - generic: Project Card\n    - button \"Smart Recommendation\":\n      - generic: Smart Recommendation\n    - button \"Tips Panel\":\n      - generic: Tips Panel\n    - generic: ↵\n    - text: Buttons\n    - generic: \"2\"\n    - button \"Button\":\n      - generic: Button\n    - button \"Reaction Bar\":\n      - generic: Reaction Bar\n  - link \"Take the library with you All source files · ZIP download ↗\":\n    - /url: /component-library.zip\n    - strong: Take the library with you\n    - generic: All source files · ZIP download\n    - generic: ↗\n  - generic: 90 components. Yours to build with.\n- banner:\n  - button \"Library\"\n  - generic: /\n  - generic: Agents\n  - generic: /\n  - strong: Fan-out Grid\n  - link \"GitHub ↗\":\n    - /url: https://github.com/Atlas322/thinking-state\n  - button \"Switch to dark theme\":\n- main:\n  - text: AGENTS\n  - generic: /\n  - text: COMPONENT 49\n  - heading \"Fan-out Grid\" [level=1]\n  - button \"Add to favorites\":\n  - paragraph: One agent hands a big job to many workers – every task a cell on a live grid that fills in as they get through it, with retries, failures, cost and the time left, and the details of any task on hover\n  - generic: Independent recreation\n  - generic: React 19\n  - generic: TypeScript\n  - generic: Self-contained\n  - region \"Fan-out Grid showcase\":\n    - tablist \"Component view\":\n      - tab \"◉ Preview\" [selected]:\n        - generic: ◉\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n      - tab \"↗ Usage\":\n        - generic: ↗\n        - text: Usage\n    - button \"Use narrow preview\":\n      - generic: ▯\n    - button \"Replay component\":\n    - tabpanel \"◉ Preview\":\n      - strong: Enrich 96 leads\n      - paragraph: 16 parallel workers\n      - generic: 66/96\n      - progressbar \"Progress\"\n      - 'button \"Lead 1: done\"'\n      - 'button \"Lead 2: done\"'\n      - 'button \"Lead 3: done\"'\n      - 'button \"Lead 4: done\"'\n      - 'button \"Lead 5: done\"'\n      - 'button \"Lead 6: done\"'\n      - 'button \"Lead 7: done\"'\n      - 'button \"Lead 8: done\"'\n      - 'button \"Lead 9: done\"'\n      - 'button \"Lead 10: done\"'\n      - 'button \"Lead 11: done\"'\n      - 'button \"Lead 12: done\"'\n      - 'button \"Lead 13: done\"'\n      - 'button \"Lead 14: done\"'\n      - 'button \"Lead 15: done\"'\n      - 'button \"Lead 16: done\"'\n      - 'button \"Lead 17: done\"'\n      - 'button \"Lead 18: done\"'\n      - 'button \"Lead 19: done\"'\n      - 'button \"Lead 20: done\"'\n      - 'button \"Lead 21: done\"'\n      - 'button \"Lead 22: done\"'\n      - 'button \"Lead 23: done\"'\n      - 'button \"Lead 24: done\"'\n      - 'button \"Lead 25: done\"'\n      - 'button \"Lead 26: done\"'\n      - 'button \"Lead 27: done\"'\n      - 'button \"Lead 28: done\"'\n      - 'button \"Lead 29: done\"'\n      - 'button \"Lead 30: done\"'\n      - 'button \"Lead 31: done\"'\n      - 'button \"Lead 32: done\"'\n      - 'button \"Lead 33: done\"'\n      - 'button \"Lead 34: done\"'\n      - 'button \"Lead 35: done\"'\n      - 'button \"Lead 36: done\"'\n      - 'button \"Lead 37: done\"'\n      - 'button \"Lead 38: done\"'\n      - 'button \"Lead 39: done\"'\n      - 'button \"Lead 40: done\"'\n      - 'button \"Lead 41: done\"'\n      - 'button \"Lead 42: done\"'\n      - 'button \"Lead 43: done\"'\n      - 'button \"Lead 44: done\"'\n      - 'button \"Lead 45: done\"'\n      - 'button \"Lead 46: done\"'\n      - 'button \"Lead 47: done\"'\n      - 'button \"Lead 48: done\"'\n      - 'button \"Lead 49: done\"'\n      - 'button \"Lead 50: done\"'\n      - 'button \"Lead 51: done\"'\n      - 'button \"Lead 52: done\"'\n      - 'button \"Lead 53: done\"'\n      - 'button \"Lead 54: done\"'\n      - 'button \"Lead 55: done\"'\n      - 'button \"Lead 56: done\"'\n      - 'button \"Lead 57: done\"'\n      - 'button \"Lead 58: done\"'\n      - 'button \"Lead 59: done\"'\n      - 'button \"Lead 60: done\"'\n      - 'button \"Lead 61: done\"'\n      - 'button \"Lead 62: done\"'\n      - 'button \"Lead 63: done\"'\n      - 'button \"Lead 64: done\"'\n      - 'button \"Lead 65: done\"'\n      - 'button \"Lead 66: done\"'\n      - 'button \"Lead 67: running\"'\n      - 'button \"Lead 68: running\"'\n      - 'button \"Lead 69: running\"'\n      - 'button \"Lead 70: running\"'\n      - 'button \"Lead 71: running\"'\n      - 'button \"Lead 72: running\"'\n      - 'button \"Lead 73: running\"'\n      - 'button \"Lead 74: running\"'\n      - 'button \"Lead 75: running\"'\n      - 'button \"Lead 76: running\"'\n      - 'button \"Lead 77: running\"'\n      - 'button \"Lead 78: running\"'\n      - 'button \"Lead 79: queued\"'\n      - 'button \"Lead 80: queued\"'\n      - 'button \"Lead 81: failed\"'\n      - 'button \"Lead 82: queued\"'\n      - 'button \"Lead 83: queued\"'\n      - 'button \"Lead 84: queued\"'\n      - 'button \"Lead 85: queued\"'\n      - 'button \"Lead 86: queued\"'\n      - 'button \"Lead 87: queued\"'\n      - 'button \"Lead 88: failed\"'\n      - 'button \"Lead 89: queued\"'\n      - 'button \"Lead 90: queued\"'\n      - 'button \"Lead 91: queued\"'\n      - 'button \"Lead 92: queued\"'\n      - 'button \"Lead 93: queued\"'\n      - 'button \"Lead 94: queued\"'\n      - 'button \"Lead 95: queued\"'\n      - 'button \"Lead 96: queued\"'\n      - generic: done\n      - generic: running\n      - generic: failed\n      - generic: queued\n      - button \"Retry failed\"\n      - button \"Advance demo\"\n    - generic: Interactive preview — try it out\n    - generic: No backend connected\n  - strong: Make it part of your project.\n  - paragraph: Copy the source, or give an AI assistant the complete prompt.\n  - button \"Download component file\":\n  - button \"Copy code\":\n    - text: Copy code\n  - button \"✦ Copy prompt\":\n    - generic: ✦\n    - text: Copy prompt\n  - status\n  - heading \"Copy. Paste. Build.\" [level=3]\n  - list:\n    - text: Copy the code or download the\n    - code: .tsx\n    - text: file.\n    - listitem: Add it to your React 19 project. Styles are already included.\n    - listitem: Pass your data and connect the callbacks to your application.\n  - button \"See usage example\":\n    - text: See usage example\n  - heading \"About this recreation\" [level=3]\n  - paragraph: Independently built from the public preview and documented behavior. Visual details and APIs may differ from affectUI Pro. The code here is fully available to copy and customize.\n  - link \"View original reference ↗\":\n    - /url: https://www.affectui.com/components/fan-out-grid\n  - heading \"Keep exploring\" [level=2]\n  - button \"View all 90\":\n    - text: View all 90\n  - button \"⌘ Agents Agent Checkpoints ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Checkpoints\n    - generic: ↗\n  - button \"⌘ Agents Agent Cursors ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Cursors\n    - generic: ↗\n  - button \"⌘ Agents Agent Findings ↗\":\n    - generic: ⌘\n    - generic: Agents\n    - strong: Agent Findings\n    - generic: ↗\n  - generic: Component Studio · Built to be used.\n  - link \"Source repository ↗\":\n    - /url: https://github.com/Atlas322/thinking-state"
+}

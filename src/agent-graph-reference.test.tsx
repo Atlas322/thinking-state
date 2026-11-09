@@ -119,3 +119,61 @@ it.each([320, 640])("reserves label room inside both panel edges at %ipx without
     expect(button.getAttribute("aria-label")).toContain("A long tool name");
   }
 });
+
+
+describe("Agent Graph orthogonal routing", () => {
+  it("removes an inferred connector safely while its last call is still travelling", () => {
+    const view = render(<AgentGraph nodes={nodes} calls={pending} now={10000} />);
+    advanceFrame(200);
+    expect(view.container.querySelectorAll(".agg-pulse")).toHaveLength(1);
+    view.rerender(<AgentGraph nodes={nodes} calls={[]} now={10000} />);
+    expect(view.container.querySelectorAll(".agg-link")).toHaveLength(0);
+    expect(view.container.querySelectorAll(".agg-pulse")).toHaveLength(0);
+  });
+
+  it.each([320, 640])("separates straight and bent links sharing a node side at %ipx", (width) => {
+    reducedMotion = true;
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({ width } as DOMRect);
+    const view = render(<AgentGraph now={10000} height={400} nodes={[
+      { id: "a", name: "Lead", kind: "agent", position: { x: .2, y: .2 } },
+      { id: "b", name: "Straight", kind: "tool", position: { x: .2, y: .8 } },
+      { id: "c", name: "Branch", kind: "tool", position: { x: .8, y: .5 } },
+    ]} edges={[["a", "b"], ["a", "c"]]} />);
+    const paths = [...view.container.querySelectorAll<SVGPathElement>(".agg-link")];
+    const starts = paths.map(path => path.getAttribute("d")!.match(/^M([^,]+),([^ LQ]+)/)!.slice(1).map(Number));
+    expect(Math.abs(starts[0][0] - starts[1][0])).toBe(width < 520 ? 6 : 8);
+    for (const path of paths) {
+      // Every straight segment must remain horizontal or vertical even if the
+      // two ends of a straight link receive different port offsets.
+      const commands = [...path.getAttribute("d")!.matchAll(/([MLQ])([^MLQ]+)/g)];
+      let current: number[] = [];
+      for (const [, command, raw] of commands) {
+        const values = raw.trim().split(/[ ,]+/).map(Number);
+        if (command === "L") expect(Math.min(Math.abs(current[0] - values[0]), Math.abs(current[1] - values[1]))).toBeLessThan(.0001);
+        current = values.slice(-2);
+      }
+    }
+  });
+
+  it("chooses the other orthogonal turn when the first passes through an unrelated tile", () => {
+    reducedMotion = true;
+    const view = render(<AgentGraph now={10000} height={400} nodes={[
+      { id: "a", name: "Start", kind: "agent", position: { x: .2, y: .2 } },
+      { id: "b", name: "Obstacle", kind: "tool", position: { x: .2, y: .5 } },
+      { id: "c", name: "End", kind: "tool", position: { x: .8, y: .8 } },
+    ]} edges={[["a", "c"]]} />);
+    const path = view.container.querySelector(".agg-link")!.getAttribute("d")!;
+    const first = path.match(/^M([^,]+),([^ LQ]+) L([^,]+),([^ LQ]+)/)!.slice(1).map(Number);
+    expect(first[3]).toBe(first[1]);
+    expect(first[2]).toBeGreaterThan(first[0]);
+    expect(path.match(/Q/g)).toHaveLength(1);
+  });
+
+  it("keeps Clean link thickness uniform and counts incoming calls in node labels", () => {
+    reducedMotion = true;
+    const calls = Array.from({ length: 12 }, (_, i) => ({ id: `call-${i}`, from: "top", to: "bottom", at: 9000, status: "ok" as const }));
+    const view = render(<AgentGraph nodes={nodes} calls={calls} now={10000} />);
+    expect(view.container.querySelector(".agg-link")?.getAttribute("stroke-width")).toBe("1.5");
+    expect(view.container.querySelector('[data-node-id="bottom"]')?.getAttribute("aria-label")).toContain("12 calls in the last minute");
+  });
+});

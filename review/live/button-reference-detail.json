@@ -1,0 +1,1782 @@
+{
+  "elements": [
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "ghost"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "28px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Cancel"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "SPAN",
+      "text": "Cancel"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "secondary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-icon-left",
+          "true"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "28px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px 0px 8px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "16px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Upload"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "SPAN",
+      "text": "Upload"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "primary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-icon-right",
+          "true"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0.88)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "6px",
+        "boxShadow": "none",
+        "color": "rgb(252, 252, 252)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "28px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 8px 0px 10px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Send"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(252, 252, 252)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "auto",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "auto"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "SPAN",
+      "text": "Send"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(252, 252, 252)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "16px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "16px"
+      },
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "primary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0.88)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "6px",
+        "boxShadow": "none",
+        "color": "rgb(252, 252, 252)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "107.126px"
+      },
+      "rect": {
+        "bottom": 520.21875,
+        "height": 32.1953125,
+        "left": 638.59375,
+        "right": 761.7890625,
+        "top": 488.0234375,
+        "width": 123.1953125,
+        "x": 638.59375,
+        "y": 488.0234375
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Save changes"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(252, 252, 252)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "87.1264px"
+      },
+      "rect": {
+        "bottom": 515.6171875,
+        "height": 23,
+        "left": 650.09375,
+        "right": 750.2890625,
+        "top": 492.6171875,
+        "width": 100.1953125,
+        "x": 650.09375,
+        "y": 492.6171875
+      },
+      "tag": "SPAN",
+      "text": "Save changes"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "secondary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "87.337px"
+      },
+      "rect": {
+        "bottom": 520.21875,
+        "height": 32.1953125,
+        "left": 771.7890625,
+        "right": 872.2265625,
+        "top": 488.0234375,
+        "width": 100.4375,
+        "x": 771.7890625,
+        "y": 488.0234375
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Secondary"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "67.337px"
+      },
+      "rect": {
+        "bottom": 515.6171875,
+        "height": 23,
+        "left": 783.2890625,
+        "right": 860.7265625,
+        "top": 492.6171875,
+        "width": 77.4375,
+        "x": 783.2890625,
+        "y": 492.6171875
+      },
+      "tag": "SPAN",
+      "text": "Secondary"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "ghost"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "56.8207px"
+      },
+      "rect": {
+        "bottom": 520.21875,
+        "height": 32.1953125,
+        "left": 882.2265625,
+        "right": 947.5703125,
+        "top": 488.0234375,
+        "width": 65.34375,
+        "x": 882.2265625,
+        "y": 488.0234375
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Ghost"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "36.8207px"
+      },
+      "rect": {
+        "bottom": 515.6171875,
+        "height": 23,
+        "left": 893.7265625,
+        "right": 936.0703125,
+        "top": 492.6171875,
+        "width": 42.34375,
+        "x": 893.7265625,
+        "y": 492.6171875
+      },
+      "tag": "SPAN",
+      "text": "Ghost"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "destructive"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-icon-left",
+          "true"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgba(229, 72, 77, 0.08)",
+        "border": "0px none rgb(229, 72, 77)",
+        "borderRadius": "6px",
+        "boxShadow": "none",
+        "color": "rgb(229, 72, 77)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px 0px 8px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "79.8573px"
+      },
+      "rect": {
+        "bottom": 520.21875,
+        "height": 32.1953125,
+        "left": 957.5703125,
+        "right": 1049.40625,
+        "top": 488.0234375,
+        "width": 91.8359375,
+        "x": 957.5703125,
+        "y": 488.0234375
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(229, 72, 77)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(229, 72, 77)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "15.9986px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "15.9986px"
+      },
+      "rect": {
+        "bottom": 513.3203125,
+        "height": 18.3984375,
+        "left": 966.765625,
+        "right": 985.1640625,
+        "top": 494.921875,
+        "width": 18.3984375,
+        "x": 966.765625,
+        "y": 494.921875
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Delete"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(229, 72, 77)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(229, 72, 77)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "39.8641px"
+      },
+      "rect": {
+        "bottom": 515.6171875,
+        "height": 23,
+        "left": 992.0625,
+        "right": 1037.90625,
+        "top": 492.6171875,
+        "width": 45.84375,
+        "x": 992.0625,
+        "y": 492.6171875
+      },
+      "tag": "SPAN",
+      "text": "Delete"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "secondary"
+        ],
+        [
+          "data-size",
+          "sm"
+        ],
+        [
+          "data-icon-left",
+          "true"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "4px",
+        "height": "23.9946px",
+        "lineHeight": "16px",
+        "margin": "0px",
+        "padding": "0px 8px 0px 6px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "83.1182px"
+      },
+      "rect": {
+        "bottom": 602.984375,
+        "height": 27.59375,
+        "left": 675.7578125,
+        "right": 771.34375,
+        "top": 575.390625,
+        "width": 95.5859375,
+        "x": 675.7578125,
+        "y": 575.390625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "13.9946px",
+        "lineHeight": "16px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "13.9946px"
+      },
+      "rect": {
+        "bottom": 597.234375,
+        "height": 16.09375,
+        "left": 682.65625,
+        "right": 698.75,
+        "top": 581.140625,
+        "width": 16.09375,
+        "x": 682.65625,
+        "y": 581.140625
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Add item"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "15.9986px",
+        "lineHeight": "16px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "51.1345px"
+      },
+      "rect": {
+        "bottom": 598.3828125,
+        "height": 18.3984375,
+        "left": 703.34375,
+        "right": 762.1484375,
+        "top": 579.984375,
+        "width": 58.8046875,
+        "x": 703.34375,
+        "y": 579.984375
+      },
+      "tag": "SPAN",
+      "text": "Add item"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "primary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-icon-right",
+          "true"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0.88)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "6px",
+        "boxShadow": "none",
+        "color": "rgb(252, 252, 252)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 8px 0px 10px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "96.1821px"
+      },
+      "rect": {
+        "bottom": 605.28125,
+        "height": 32.1953125,
+        "left": 781.34375,
+        "right": 891.953125,
+        "top": 573.0859375,
+        "width": 110.609375,
+        "x": 781.34375,
+        "y": 573.0859375
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Continue"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(252, 252, 252)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "56.1889px"
+      },
+      "rect": {
+        "bottom": 600.6796875,
+        "height": 23,
+        "left": 792.84375,
+        "right": 857.4609375,
+        "top": 577.6796875,
+        "width": 64.6171875,
+        "x": 792.84375,
+        "y": 577.6796875
+      },
+      "tag": "SPAN",
+      "text": "Continue"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(252, 252, 252)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(252, 252, 252)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "15.9986px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "15.9986px"
+      },
+      "rect": {
+        "bottom": 598.3828125,
+        "height": 18.3984375,
+        "left": 864.359375,
+        "right": 882.7578125,
+        "top": 579.984375,
+        "width": 18.3984375,
+        "x": 864.359375,
+        "y": 579.984375
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "ghost"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-icon-only",
+          "true"
+        ],
+        [
+          "aria-label",
+          "More options"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "27.9959px"
+      },
+      "rect": {
+        "bottom": 605.28125,
+        "height": 32.1953125,
+        "left": 901.953125,
+        "right": 934.1484375,
+        "top": 573.0859375,
+        "width": 32.1953125,
+        "x": 901.953125,
+        "y": 573.0859375
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "15.9986px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "15.9986px"
+      },
+      "rect": {
+        "bottom": 598.3828125,
+        "height": 18.3984375,
+        "left": 908.8515625,
+        "right": 927.25,
+        "top": 579.984375,
+        "width": 18.3984375,
+        "x": 908.8515625,
+        "y": 579.984375
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "secondary"
+        ],
+        [
+          "data-size",
+          "lg"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "31.9973px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 12px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "59.2052px"
+      },
+      "rect": {
+        "bottom": 607.5859375,
+        "height": 36.796875,
+        "left": 944.1484375,
+        "right": 1012.234375,
+        "top": 570.7890625,
+        "width": 68.0859375,
+        "x": 944.1484375,
+        "y": 570.7890625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Large"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "35.2106px"
+      },
+      "rect": {
+        "bottom": 600.6875,
+        "height": 23,
+        "left": 957.9453125,
+        "right": 998.4375,
+        "top": 577.6875,
+        "width": 40.4921875,
+        "x": 957.9453125,
+        "y": 577.6875
+      },
+      "tag": "SPAN",
+      "text": "Large"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "secondary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-icon-left",
+          "true"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px 0px 8px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "97.7514px"
+      },
+      "rect": {
+        "bottom": 690.3515625,
+        "height": 32.1953125,
+        "left": 652.6328125,
+        "right": 765.046875,
+        "top": 658.15625,
+        "width": 112.4140625,
+        "x": 652.6328125,
+        "y": 658.15625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "15.9986px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "15.9986px"
+      },
+      "rect": {
+        "bottom": 683.453125,
+        "height": 18.3984375,
+        "left": 661.828125,
+        "right": 680.2265625,
+        "top": 665.0546875,
+        "width": 18.3984375,
+        "x": 661.828125,
+        "y": 665.0546875
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Copy link"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "57.7582px"
+      },
+      "rect": {
+        "bottom": 685.75,
+        "height": 23,
+        "left": 687.125,
+        "right": 753.546875,
+        "top": 662.75,
+        "width": 66.421875,
+        "x": 687.125,
+        "y": 662.75
+      },
+      "tag": "SPAN",
+      "text": "Copy link"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "secondary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-icon-only",
+          "true"
+        ],
+        [
+          "aria-label",
+          "Copy"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "27.9959px"
+      },
+      "rect": {
+        "bottom": 690.3515625,
+        "height": 32.1953125,
+        "left": 775.046875,
+        "right": 807.2421875,
+        "top": 658.15625,
+        "width": 32.1953125,
+        "x": 775.046875,
+        "y": 658.15625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "15.9986px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "15.9986px"
+      },
+      "rect": {
+        "bottom": 683.453125,
+        "height": 18.3984375,
+        "left": 781.9453125,
+        "right": 800.34375,
+        "top": 665.0546875,
+        "width": 18.3984375,
+        "x": 781.9453125,
+        "y": 665.0546875
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "secondary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "data-icon-left",
+          "true"
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px 0px 8px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "106.95px"
+      },
+      "rect": {
+        "bottom": 690.3515625,
+        "height": 32.1953125,
+        "left": 817.2421875,
+        "right": 940.234375,
+        "top": 658.15625,
+        "width": 122.9921875,
+        "x": 817.2421875,
+        "y": 658.15625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "aria-hidden",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc__icon",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "15.9986px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "static",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "15.9986px"
+      },
+      "rect": {
+        "bottom": 683.453125,
+        "height": 18.3984375,
+        "left": 826.4375,
+        "right": 844.8359375,
+        "top": 665.0546875,
+        "width": 18.3984375,
+        "x": 826.4375,
+        "y": 665.0546875
+      },
+      "tag": "SPAN"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Upload file"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "66.9565px"
+      },
+      "rect": {
+        "bottom": 685.75,
+        "height": 23,
+        "left": 851.734375,
+        "right": 928.734375,
+        "top": 662.75,
+        "width": 77,
+        "x": 851.734375,
+        "y": 662.75
+      },
+      "tag": "SPAN",
+      "text": "Upload file"
+    },
+    {
+      "attrs": [
+        [
+          "type",
+          "button"
+        ],
+        [
+          "data-variant",
+          "secondary"
+        ],
+        [
+          "data-size",
+          "md"
+        ],
+        [
+          "disabled",
+          ""
+        ],
+        [
+          "data-ready",
+          "true"
+        ]
+      ],
+      "classes": "ui-buttonc",
+      "css": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "boxShadow": "rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.1) 0px 1px 1px -1px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "height": "27.9959px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px 10px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "74.0285px"
+      },
+      "rect": {
+        "bottom": 690.3515625,
+        "height": 32.1953125,
+        "left": 950.234375,
+        "right": 1035.3671875,
+        "top": 658.15625,
+        "width": 85.1328125,
+        "x": 950.234375,
+        "y": 658.15625
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "attrs": [
+        [
+          "data-text",
+          "Disabled"
+        ],
+        [
+          "dir",
+          "auto"
+        ]
+      ],
+      "classes": "ui-buttonc__label",
+      "css": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "boxShadow": "none",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": "20px",
+        "lineHeight": "20px",
+        "margin": "0px",
+        "padding": "0px",
+        "position": "relative",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "width": "54.0285px"
+      },
+      "rect": {
+        "bottom": 685.75,
+        "height": 23,
+        "left": 961.734375,
+        "right": 1023.8671875,
+        "top": 662.75,
+        "width": 62.1328125,
+        "x": 961.734375,
+        "y": 662.75
+      },
+      "tag": "SPAN",
+      "text": "Disabled"
+    }
+  ],
+  "url": "https://www.affectui.com/components/button",
+  "viewport": [
+    1440,
+    1000
+  ]
+}

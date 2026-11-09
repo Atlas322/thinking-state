@@ -1,0 +1,383 @@
+{
+  "controls": [
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": "checkbox"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": "checkbox"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": "checkbox"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "INPUT",
+      "text": "",
+      "type": "checkbox"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Open project →",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "st-ui ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "14px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 792.765625,
+        "height": 450.484375,
+        "left": 509,
+        "right": 1189,
+        "top": 342.28125,
+        "width": 680,
+        "x": 509,
+        "y": 342.28125
+      },
+      "tag": "SECTION",
+      "text": "\n.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#"
+    },
+    {
+      "cls": "st-head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20.15px",
+        "padding": "20px 22px"
+      },
+      "rect": {
+        "bottom": 428.5703125,
+        "height": 85.2890625,
+        "left": 510,
+        "right": 1188,
+        "top": 343.28125,
+        "width": 678,
+        "x": 510,
+        "y": 343.28125
+      },
+      "tag": "HEADER",
+      "text": "Onboarding flowProduct design · due FridayIn progress"
+    },
+    {
+      "cls": "st-badge blue",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "color(srgb 0.329412 0.490196 0.929412 / 0.09)",
+        "border": "0px none rgb(84, 125, 237)",
+        "borderRadius": "4px",
+        "color": "rgb(84, 125, 237)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "400",
+        "gap": "5px",
+        "lineHeight": "18px",
+        "padding": "0px 6px"
+      },
+      "rect": {
+        "bottom": 394.421875,
+        "height": 18,
+        "left": 1100.7578125,
+        "right": 1166,
+        "top": 376.421875,
+        "width": 65.2421875,
+        "x": 1100.7578125,
+        "y": 376.421875
+      },
+      "tag": "SPAN",
+      "text": "In progress"
+    },
+    {
+      "cls": "st-content",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "10px 20px 18px"
+      },
+      "rect": {
+        "bottom": 791.765625,
+        "height": 363.1953125,
+        "left": 510,
+        "right": 1188,
+        "top": 428.5703125,
+        "width": 678,
+        "x": 510,
+        "y": 428.5703125
+      },
+      "tag": "DIV",
+      "text": "2 of 4 tasks completeWelcome screenMaWorkspace setupJoInvite teammatesMaFinal reviewLeMC · JW · LHOpen project →"
+    },
+    {
+      "cls": "st-meter",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(235, 235, 237)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "10px",
+        "color": "rgb(38, 38, 41)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 461.5703125,
+        "height": 5,
+        "left": 530,
+        "right": 1168,
+        "top": 456.5703125,
+        "width": 638,
+        "x": 530,
+        "y": 456.5703125
+      },
+      "tag": "DIV",
+      "text": ""
+    },
+    {
+      "cls": "st-row",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "12px",
+        "lineHeight": "20.15px",
+        "padding": "12px 0px"
+      },
+      "rect": {
+        "bottom": 549.6171875,
+        "height": 58,
+        "left": 530,
+        "right": 1168,
+        "top": 491.6171875,
+        "width": 638,
+        "x": 530,
+        "y": 491.6171875
+      },
+      "tag": "LABEL",
+      "text": "Welcome screenMa"
+    },
+    {
+      "cls": "st-check",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 527.6171875,
+        "height": 15,
+        "left": 534,
+        "right": 549,
+        "top": 512.6171875,
+        "width": 15,
+        "x": 534,
+        "y": 512.6171875
+      },
+      "tag": "INPUT",
+      "text": ""
+    },
+    {
+      "cls": "st-grow",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(130, 130, 135)",
+        "borderRadius": "0px",
+        "color": "rgb(130, 130, 135)",
+        "display": "block",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 530.1875,
+        "height": 20.1484375,
+        "left": 564,
+        "right": 1126,
+        "top": 510.0390625,
+        "width": 562,
+        "x": 564,
+        "y": 510.0390625
+      },
+      "tag": "SPAN",
+      "text": "Welcome screen"
+    },
+    {
+      "cls": "st-avatar",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(247, 247, 248)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "8px",
+        "color": "rgb(38, 38, 41)",
+        "display": "grid",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "600",
+        "gap": "normal",
+        "lineHeight": "17.05px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 535.1171875,
+        "height": 30,
+        "left": 1138,
+        "right": 1168,
+        "top": 505.1171875,
+        "width": 30,
+        "x": 1138,
+        "y": 505.1171875
+      },
+      "tag": "SPAN",
+      "text": "Ma"
+    },
+    {
+      "cls": "st-actions",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(38, 38, 41)",
+        "borderRadius": "0px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20.15px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 773.765625,
+        "height": 34.1484375,
+        "left": 530,
+        "right": 1168,
+        "top": 739.6171875,
+        "width": 638,
+        "x": 530,
+        "y": 739.6171875
+      },
+      "tag": "DIV",
+      "text": "MC · JW · LHOpen project →"
+    },
+    {
+      "cls": "st-btn  ",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "1px solid rgb(235, 235, 237)",
+        "borderRadius": "7px",
+        "color": "rgb(38, 38, 41)",
+        "display": "flex",
+        "fontFamily": "Inter, system-ui, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "6px",
+        "lineHeight": "20.15px",
+        "padding": "6px 11px"
+      },
+      "rect": {
+        "bottom": 773.765625,
+        "height": 34.1484375,
+        "left": 1048.984375,
+        "right": 1168,
+        "top": 739.6171875,
+        "width": 119.015625,
+        "x": 1048.984375,
+        "y": 739.6171875
+      },
+      "tag": "BUTTON",
+      "text": "Open project →"
+    }
+  ],
+  "svg": [],
+  "url": "http://127.0.0.1:5173/#/project-card",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- complementary:\n  - button \"Component Studio home\":\n    - text: s\n    - generic: ·\n    - generic: componentstudio\n    - generic: \"01\"\n  - textbox \"Search components\":\n    - /placeholder: Find a component…\n  - generic: /\n  - button \"▦ All components 90\":\n    - generic: ▦\n    - text: All components\n    - generic: \"90\"\n  - button \"Favorites 0\":\n    - text: Favorites\n    - generic: \"0\"\n  - navigation \"Components\":\n    - generic: ⌘\n    - text: Agents\n    - generic: \"43\"\n    - button \"Agent Checkpoints\":\n      - generic: Agent Checkpoints\n    - button \"Agent Cursors\":\n      - generic: Agent Cursors\n    - button \"Agent Findings\":\n      - generic: Agent Findings\n    - button \"Agent Fleet\":\n      - generic: Agent Fleet\n    - button \"Agent Graph\":\n      - generic: Agent Graph\n    - button \"Agent Handoff\":\n      - generic: Agent Handoff\n    - button \"Agent Inbox\":\n      - generic: Agent Inbox\n    - button \"Agent Lanes\":\n      - generic: Agent Lanes\n    - button \"Agent Ledger\":\n      - generic: Agent Ledger\n    - button \"Agent Monitor\":\n      - generic: Agent Monitor\n    - button \"Agent Plan\":\n      - generic: Agent Plan\n    - button \"Agent Queue\":\n      - generic: Agent Queue\n    - button \"Agent Recap\":\n      - generic: Agent Recap\n    - button \"Agent Steering\":\n      - generic: Agent Steering\n    - button \"Agent Trail\":\n      - generic: Agent Trail\n    - button \"Agent Tree\":\n      - generic: Agent Tree\n    - button \"Approval Card\":\n      - generic: Approval Card\n    - button \"Approval Gates\":\n      - generic: Approval Gates\n    - button \"Autonomy Dial\":\n      - generic: Autonomy Dial\n    - button \"Away Summary\":\n      - generic: Away Summary\n    - button \"Collaboration Stream\":\n      - generic: Collaboration Stream\n    - button \"Conflict Radar\":\n      - generic: Conflict Radar\n    - button \"Context Map\":\n      - generic: Context Map\n    - button \"Context Window\":\n      - generic: Context Window\n    - button \"Cost Waterfall\":\n      - generic: Cost Waterfall\n    - button \"Decision Card\":\n      - generic: Decision Card\n    - button \"Decision Tree\":\n      - generic: Decision Tree\n    - button \"Delegate Board\":\n      - generic: Delegate Board\n    - button \"Fallback Chain\":\n      - generic: Fallback Chain\n    - button \"Fan-out Grid\":\n      - generic: Fan-out Grid\n    - button \"Inline Diff\":\n      - generic: Inline Diff\n    - button \"Judge Bracket\":\n      - generic: Judge Bracket\n    - button \"Memory Panel\":\n      - generic: Memory Panel\n    - button \"Parallel Attempts\":\n      - generic: Parallel Attempts\n    - button \"Permission Request\":\n      - generic: Permission Request\n    - button \"Plan vs Actual\":\n      - generic: Plan vs Actual\n    - button \"Review Center\":\n      - generic: Review Center\n    - button \"Root Cause Tree\":\n      - generic: Root Cause Tree\n    - button \"Running Now\":\n      - generic: Running Now\n    - button \"Scheduled Runs\":\n      - generic: Scheduled Runs\n    - button \"Tool Access Map\":\n      - generic: Tool Access Map\n    - button \"Tool Call Card\":\n      - generic: Tool Call Card\n    - button \"Trace Waterfall\":\n      - generic: Trace Waterfall\n    - generic: ◌\n    - text: Chat\n    - generic: \"10\"\n    - button \"AI Answer\":\n      - generic: AI Answer\n    - button \"Chat Composer\":\n      - generic: Chat Composer\n    - button \"Cited Answer\":\n      - generic: Cited Answer\n    - button \"Comment Thread\":\n      - generic: Comment Thread\n    - button \"Comments Panel\":\n      - generic: Comments Panel\n    - button \"Message Actions\":\n      - generic: Message Actions\n    - button \"Model Picker\":\n      - generic: Model Picker\n    - button \"Thinking Loader\":\n      - generic: Thinking Loader\n    - button \"Thinking State\":\n      - generic: Thinking State\n    - button \"Writing Assistant\":\n      - generic: Writing Assistant\n    - generic: ⊞\n    - text: Inputs\n    - generic: \"15\"\n    - button \"Billing Schedule\":\n      - generic: Billing Schedule\n    - button \"Checkbox\":\n      - generic: Checkbox\n    - button \"Combobox\":\n      - generic: Combobox\n    - button \"Date Range Picker\":\n      - generic: Date Range Picker\n    - button \"Dropzone\":\n      - generic: Dropzone\n    - button \"Filter Menu\":\n      - generic: Filter Menu\n    - button \"Integration Settings\":\n      - generic: Integration Settings\n    - button \"OTP Input\":\n      - generic: OTP Input\n    - button \"Prompt Library\":\n      - generic: Prompt Library\n    - button \"Select\":\n      - generic: Select\n    - button \"Stepper Form\":\n      - generic: Stepper Form\n    - button \"Switch\":\n      - generic: Switch\n    - button \"Tag Input\":\n      - generic: Tag Input\n    - button \"Text Area\":\n      - generic: Text Area\n    - button \"Text Field\":\n      - generic: Text Field\n    - generic: ▤\n    - text: Data display\n    - generic: \"7\"\n    - button \"Breakdown Chart\":\n      - generic: Breakdown Chart\n    - button \"Change Summary\":\n      - generic: Change Summary\n    - button \"Compact Breakdown\":\n      - generic: Compact Breakdown\n    - button \"Data Table\":\n      - generic: Data Table\n    - button \"Experiment Card\":\n      - generic: Experiment Card\n    - button \"KPI Chart\":\n      - generic: KPI Chart\n    - button \"Usage Meter\":\n      - generic: Usage Meter\n    - generic: ↗\n    - text: Navigation\n    - generic: \"4\"\n    - button \"Command Menu\":\n      - generic: Command Menu\n    - button \"Integration Picker\":\n      - generic: Integration Picker\n    - button \"Profile Menu\":\n      - generic: Profile Menu\n    - button \"Segmented Control\":\n      - generic: Segmented Control\n    - generic: ◉\n    - text: Feedback\n    - generic: \"5\"\n    - button \"Decision Inbox\":\n      - generic: Decision Inbox\n    - button \"Notification Stack\":\n      - generic: Notification Stack\n    - button \"Progress Tracker\":\n      - generic: Progress Tracker\n    - button \"Setup Guide\":\n      - generic: Setup Guide\n    - button \"Toaster\":\n      - generic: Toaster\n    - generic: ▢\n    - text: Cards\n    - generic: \"4\"\n    - button \"Email Draft\":\n      - generic: Email Draft\n    - button \"Project Card\":\n      - generic: Project Card\n    - button \"Smart Recommendation\":\n      - generic: Smart Recommendation\n    - button \"Tips Panel\":\n      - generic: Tips Panel\n    - generic: ↵\n    - text: Buttons\n    - generic: \"2\"\n    - button \"Button\":\n      - generic: Button\n    - button \"Reaction Bar\":\n      - generic: Reaction Bar\n  - link \"Take the library with you All source files · ZIP download ↗\":\n    - /url: /component-library.zip\n    - strong: Take the library with you\n    - generic: All source files · ZIP download\n    - generic: ↗\n  - generic: 90 components. Yours to build with.\n- banner:\n  - button \"Library\"\n  - generic: /\n  - generic: Cards\n  - generic: /\n  - strong: Project Card\n  - link \"GitHub ↗\":\n    - /url: https://github.com/Atlas322/thinking-state\n  - button \"Switch to dark theme\":\n- main:\n  - text: CARDS\n  - generic: /\n  - text: COMPONENT 66\n  - heading \"Project Card\" [level=1]\n  - button \"Add to favorites\":\n  - paragraph: A two-line project summary that quietly unfolds on hover – a progress ring with one segment per subtask, a people filter and a status picker, all linked by hover\n  - generic: Independent recreation\n  - generic: React 19\n  - generic: TypeScript\n  - generic: Self-contained\n  - region \"Project Card showcase\":\n    - tablist \"Component view\":\n      - tab \"◉ Preview\" [selected]:\n        - generic: ◉\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n      - tab \"↗ Usage\":\n        - generic: ↗\n        - text: Usage\n    - button \"Use narrow preview\":\n      - generic: ▯\n    - button \"Replay component\":\n    - tabpanel \"◉ Preview\":\n      - strong: Onboarding flow\n      - paragraph: Product design · due Friday\n      - generic: In progress\n      - progressbar \"Progress\"\n      - generic: 2 of 4 tasks complete\n      - checkbox \"Welcome screen Ma\" [checked]\n      - generic: Welcome screen\n      - generic: Ma\n      - checkbox \"Workspace setup Jo\" [checked]\n      - generic: Workspace setup\n      - generic: Jo\n      - checkbox \"Invite teammates Ma\"\n      - generic: Invite teammates\n      - generic: Ma\n      - checkbox \"Final review Le\"\n      - generic: Final review\n      - generic: Le\n      - generic: MC · JW · LH\n      - button \"Open project →\"\n    - generic: Interactive preview — try it out\n    - generic: No backend connected\n  - strong: Make it part of your project.\n  - paragraph: Copy the source, or give an AI assistant the complete prompt.\n  - button \"Download component file\":\n  - button \"Copy code\":\n    - text: Copy code\n  - button \"✦ Copy prompt\":\n    - generic: ✦\n    - text: Copy prompt\n  - status\n  - heading \"Copy. Paste. Build.\" [level=3]\n  - list:\n    - text: Copy the code or download the\n    - code: .tsx\n    - text: file.\n    - listitem: Add it to your React 19 project. Styles are already included.\n    - listitem: Pass your data and connect the callbacks to your application.\n  - button \"See usage example\":\n    - text: See usage example\n  - heading \"About this recreation\" [level=3]\n  - paragraph: Independently built from the public preview and documented behavior. Visual details and APIs may differ from affectUI Pro. The code here is fully available to copy and customize.\n  - link \"View original reference ↗\":\n    - /url: https://www.affectui.com/components/project-card\n  - heading \"Keep exploring\" [level=2]\n  - button \"View all 90\":\n    - text: View all 90\n  - button \"▢ Cards Email Draft ↗\":\n    - generic: ▢\n    - generic: Cards\n    - strong: Email Draft\n    - generic: ↗\n  - button \"▢ Cards Smart Recommendation ↗\":\n    - generic: ▢\n    - generic: Cards\n    - strong: Smart Recommendation\n    - generic: ↗\n  - button \"▢ Cards Tips Panel ↗\":\n    - generic: ▢\n    - generic: Cards\n    - strong: Tips Panel\n    - generic: ↗\n  - generic: Component Studio · Built to be used.\n  - link \"Source repository ↗\":\n    - /url: https://github.com/Atlas322/thinking-state"
+}

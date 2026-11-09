@@ -1,0 +1,362 @@
+[
+  {
+    "href": "/components/ai-answer",
+    "name": "AI Answer"
+  },
+  {
+    "href": "/components/chat-composer",
+    "name": "Chat Composer"
+  },
+  {
+    "href": "/components/thinking-state",
+    "name": "Thinking State"
+  },
+  {
+    "href": "/components/writing-assistant",
+    "name": "Writing Assistant"
+  },
+  {
+    "href": "/components/thinking-loader",
+    "name": "Thinking Loader"
+  },
+  {
+    "href": "/components/checkbox",
+    "name": "Checkbox"
+  },
+  {
+    "href": "/components/select",
+    "name": "Select"
+  },
+  {
+    "href": "/components/switch",
+    "name": "Switch"
+  },
+  {
+    "href": "/components/tag-input",
+    "name": "Tag Input"
+  },
+  {
+    "href": "/components/text-area",
+    "name": "Text Area"
+  },
+  {
+    "href": "/components/text-field",
+    "name": "Text Field"
+  },
+  {
+    "href": "/components/combobox",
+    "name": "Combobox"
+  },
+  {
+    "href": "/components/command-menu",
+    "name": "Command Menu"
+  },
+  {
+    "href": "/components/date-range-picker",
+    "name": "Date Range Picker"
+  },
+  {
+    "href": "/components/dropzone",
+    "name": "Dropzone"
+  },
+  {
+    "href": "/components/otp-input",
+    "name": "OTP Input"
+  },
+  {
+    "href": "/components/segmented-control",
+    "name": "Segmented Control"
+  },
+  {
+    "href": "/components/stepper-form",
+    "name": "Stepper Form"
+  },
+  {
+    "href": "/components/toaster",
+    "name": "Toaster"
+  },
+  {
+    "href": "/components/usage-meter",
+    "name": "Usage Meter"
+  },
+  {
+    "href": "/components/agent-checkpoints",
+    "name": "Agent Checkpoints"
+  },
+  {
+    "href": "/components/agent-cursors",
+    "name": "Agent Cursors"
+  },
+  {
+    "href": "/components/agent-findings",
+    "name": "Agent Findings"
+  },
+  {
+    "href": "/components/agent-fleet",
+    "name": "Agent Fleet"
+  },
+  {
+    "href": "/components/agent-graph",
+    "name": "Agent Graph"
+  },
+  {
+    "href": "/components/agent-handoff",
+    "name": "Agent Handoff"
+  },
+  {
+    "href": "/components/agent-inbox",
+    "name": "Agent Inbox"
+  },
+  {
+    "href": "/components/agent-lanes",
+    "name": "Agent Lanes"
+  },
+  {
+    "href": "/components/agent-ledger",
+    "name": "Agent Ledger"
+  },
+  {
+    "href": "/components/agent-monitor",
+    "name": "Agent Monitor"
+  },
+  {
+    "href": "/components/agent-queue",
+    "name": "Agent Queue"
+  },
+  {
+    "href": "/components/agent-recap",
+    "name": "Agent Recap"
+  },
+  {
+    "href": "/components/agent-steering",
+    "name": "Agent Steering"
+  },
+  {
+    "href": "/components/agent-trail",
+    "name": "Agent Trail"
+  },
+  {
+    "href": "/components/agent-tree",
+    "name": "Agent Tree"
+  },
+  {
+    "href": "/components/approval-gates",
+    "name": "Approval Gates"
+  },
+  {
+    "href": "/components/autonomy-dial",
+    "name": "Autonomy Dial"
+  },
+  {
+    "href": "/components/away-summary",
+    "name": "Away Summary"
+  },
+  {
+    "href": "/components/cited-answer",
+    "name": "Cited Answer"
+  },
+  {
+    "href": "/components/collaboration-stream",
+    "name": "Collaboration Stream"
+  },
+  {
+    "href": "/components/compact-breakdown",
+    "name": "Compact Breakdown"
+  },
+  {
+    "href": "/components/conflict-radar",
+    "name": "Conflict Radar"
+  },
+  {
+    "href": "/components/context-map",
+    "name": "Context Map"
+  },
+  {
+    "href": "/components/context-window",
+    "name": "Context Window"
+  },
+  {
+    "href": "/components/cost-waterfall",
+    "name": "Cost Waterfall"
+  },
+  {
+    "href": "/components/decision-card",
+    "name": "Decision Card"
+  },
+  {
+    "href": "/components/decision-tree",
+    "name": "Decision Tree"
+  },
+  {
+    "href": "/components/delegate-board",
+    "name": "Delegate Board"
+  },
+  {
+    "href": "/components/experiment-card",
+    "name": "Experiment Card"
+  },
+  {
+    "href": "/components/fallback-chain",
+    "name": "Fallback Chain"
+  },
+  {
+    "href": "/components/fan-out-grid",
+    "name": "Fan-out Grid"
+  },
+  {
+    "href": "/components/integration-picker",
+    "name": "Integration Picker"
+  },
+  {
+    "href": "/components/integration-settings",
+    "name": "Integration Settings"
+  },
+  {
+    "href": "/components/judge-bracket",
+    "name": "Judge Bracket"
+  },
+  {
+    "href": "/components/kpi-chart",
+    "name": "KPI Chart"
+  },
+  {
+    "href": "/components/memory-panel",
+    "name": "Memory Panel"
+  },
+  {
+    "href": "/components/message-actions",
+    "name": "Message Actions"
+  },
+  {
+    "href": "/components/model-picker",
+    "name": "Model Picker"
+  },
+  {
+    "href": "/components/parallel-attempts",
+    "name": "Parallel Attempts"
+  },
+  {
+    "href": "/components/permission-request",
+    "name": "Permission Request"
+  },
+  {
+    "href": "/components/plan-vs-actual",
+    "name": "Plan vs Actual"
+  },
+  {
+    "href": "/components/profile-menu",
+    "name": "Profile Menu"
+  },
+  {
+    "href": "/components/project-card",
+    "name": "Project Card"
+  },
+  {
+    "href": "/components/prompt-library",
+    "name": "Prompt Library"
+  },
+  {
+    "href": "/components/review-center",
+    "name": "Review Center"
+  },
+  {
+    "href": "/components/root-cause-tree",
+    "name": "Root Cause Tree"
+  },
+  {
+    "href": "/components/running-now",
+    "name": "Running Now"
+  },
+  {
+    "href": "/components/scheduled-runs",
+    "name": "Scheduled Runs"
+  },
+  {
+    "href": "/components/tips-panel",
+    "name": "Tips Panel"
+  },
+  {
+    "href": "/components/tool-access-map",
+    "name": "Tool Access Map"
+  },
+  {
+    "href": "/components/tool-call-card",
+    "name": "Tool Call Card"
+  },
+  {
+    "href": "/components/trace-waterfall",
+    "name": "Trace Waterfall"
+  },
+  {
+    "href": "/components/approval-card",
+    "name": "Approval Card"
+  },
+  {
+    "href": "/components/breakdown-chart",
+    "name": "Breakdown Chart"
+  },
+  {
+    "href": "/components/button",
+    "name": "Button"
+  },
+  {
+    "href": "/components/data-table",
+    "name": "Data Table"
+  },
+  {
+    "href": "/components/filter-menu",
+    "name": "Filter Menu"
+  },
+  {
+    "href": "/components/reaction-bar",
+    "name": "Reaction Bar"
+  },
+  {
+    "href": "/components/smart-recommendation",
+    "name": "Smart Recommendation"
+  },
+  {
+    "href": "/components/agent-plan",
+    "name": "Agent Plan"
+  },
+  {
+    "href": "/components/billing-schedule",
+    "name": "Billing Schedule"
+  },
+  {
+    "href": "/components/change-summary",
+    "name": "Change Summary"
+  },
+  {
+    "href": "/components/comments-panel",
+    "name": "Comments Panel"
+  },
+  {
+    "href": "/components/email-draft",
+    "name": "Email Draft"
+  },
+  {
+    "href": "/components/progress-tracker",
+    "name": "Progress Tracker"
+  },
+  {
+    "href": "/components/comment-thread",
+    "name": "Comment Thread"
+  },
+  {
+    "href": "/components/inline-diff",
+    "name": "Inline Diff"
+  },
+  {
+    "href": "/components/setup-guide",
+    "name": "Setup Guide"
+  },
+  {
+    "href": "/components/decision-inbox",
+    "name": "Decision Inbox"
+  },
+  {
+    "href": "/components/notification-stack",
+    "name": "Notification Stack"
+  }
+]

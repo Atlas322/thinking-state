@@ -1,0 +1,987 @@
+{
+  "controls": [
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Task count",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Status",
+      "type": "button"
+    },
+    {
+      "expanded": "false",
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Priority",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Backlog: 26 tasks",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Todo: 36 tasks",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "In progress: 34 tasks",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "In review: 13 tasks",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Done: 96 tasks",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": "Canceled: 7 tasks",
+      "role": null,
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Urgent",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "High",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Medium",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "Low",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": null,
+      "tag": "BUTTON",
+      "text": "None",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-bcc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "10px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 1043.5,
+        "height": 649.5,
+        "left": 564,
+        "right": 1124,
+        "top": 394,
+        "width": 560,
+        "x": 564,
+        "y": 394
+      },
+      "tag": "SECTION",
+      "text": "Sprint 24212 tasksMeasureTask countSliceStatusSegmentPriority100806040200StatusTask countUrgentHighMediumLowNoneBacklog2636683Todo361712115In progress34191275In"
+    },
+    {
+      "cls": "ui-bcc__head",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "2px 12px",
+        "lineHeight": "20px",
+        "padding": "14px 16px 0px"
+      },
+      "rect": {
+        "bottom": 432,
+        "height": 38,
+        "left": 564,
+        "right": 1124,
+        "top": 394,
+        "width": 560,
+        "x": 564,
+        "y": 394
+      },
+      "tag": "HEADER",
+      "text": "Sprint 24212 tasks"
+    },
+    {
+      "cls": "ui-bcc__title",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "0px",
+        "color": "rgb(0, 0, 0)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "24px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 432,
+        "height": 24,
+        "left": 580,
+        "right": 1033.6328125,
+        "top": 408,
+        "width": 453.6328125,
+        "x": 580,
+        "y": 408
+      },
+      "tag": "SPAN",
+      "text": "Sprint 24"
+    },
+    {
+      "cls": "ui-bcc__total",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 432,
+        "height": 24,
+        "left": 1045.6328125,
+        "right": 1108,
+        "top": 408,
+        "width": 62.3671875,
+        "x": 1045.6328125,
+        "y": 408
+      },
+      "tag": "SPAN",
+      "text": "212 tasks"
+    },
+    {
+      "cls": "ui-bcc__controls",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "12px 16px 0px"
+      },
+      "rect": {
+        "bottom": 492,
+        "height": 60,
+        "left": 564,
+        "right": 1124,
+        "top": 432,
+        "width": 560,
+        "x": 564,
+        "y": 432
+      },
+      "tag": "DIV",
+      "text": "MeasureTask countSliceStatusSegmentPriority"
+    },
+    {
+      "cls": "ui-bcc__select",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 492,
+        "height": 48,
+        "left": 580,
+        "right": 750.6640625,
+        "top": 444,
+        "width": 170.6640625,
+        "x": 580,
+        "y": 444
+      },
+      "tag": "DIV",
+      "text": "MeasureTask count"
+    },
+    {
+      "cls": "ui-bcc__select-label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px 0px 0px 2px"
+      },
+      "rect": {
+        "bottom": 460,
+        "height": 16,
+        "left": 580,
+        "right": 750.6640625,
+        "top": 444,
+        "width": 170.6640625,
+        "x": 580,
+        "y": 444
+      },
+      "tag": "SPAN",
+      "text": "Measure"
+    },
+    {
+      "cls": "ui-bcc__select-btn",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "border": "0px none rgb(0, 0, 0)",
+        "borderRadius": "6px",
+        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px 6px 0px 10px"
+      },
+      "rect": {
+        "bottom": 492,
+        "height": 28,
+        "left": 580,
+        "right": 750.6640625,
+        "top": 464,
+        "width": 170.6640625,
+        "x": 580,
+        "y": 464
+      },
+      "tag": "BUTTON",
+      "text": "Task count"
+    },
+    {
+      "cls": "ui-bcc__chart",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "20px 16px 10px"
+      },
+      "rect": {
+        "bottom": 750,
+        "height": 258,
+        "left": 564,
+        "right": 1124,
+        "top": 492,
+        "width": 560,
+        "x": 564,
+        "y": 492
+      },
+      "tag": "DIV",
+      "text": "100806040200"
+    },
+    {
+      "cls": "ui-bcc__plot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 708,
+        "height": 196,
+        "left": 580,
+        "right": 1080,
+        "top": 512,
+        "width": 500,
+        "x": 580,
+        "y": 512
+      },
+      "tag": "DIV",
+      "text": "100806040200"
+    },
+    {
+      "cls": "ui-bcc__grid",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 512,
+        "height": 0.5,
+        "left": 580,
+        "right": 1080,
+        "top": 511.5,
+        "width": 500,
+        "x": 580,
+        "y": 511.5
+      },
+      "tag": "SPAN",
+      "text": "100"
+    },
+    {
+      "cls": "ui-bcc__tick",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 520,
+        "height": 16,
+        "left": 1084,
+        "right": 1108,
+        "top": 504,
+        "width": 24,
+        "x": 1084,
+        "y": 504
+      },
+      "tag": "SPAN",
+      "text": "100"
+    },
+    {
+      "cls": "ui-bcc__bars",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 708,
+        "height": 196,
+        "left": 580,
+        "right": 1080,
+        "top": 512,
+        "width": 500,
+        "x": 580,
+        "y": 512
+      },
+      "tag": "DIV",
+      "text": ""
+    },
+    {
+      "cls": "ui-bcc__col",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 708,
+        "height": 196,
+        "left": 580,
+        "right": 660,
+        "top": 512,
+        "width": 80,
+        "x": 580,
+        "y": 512
+      },
+      "tag": "BUTTON",
+      "text": ""
+    },
+    {
+      "cls": "ui-bcc__rest",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.035)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "3px 3px 0px 0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 657.046875,
+        "height": 145.046875,
+        "left": 614,
+        "right": 626,
+        "top": 512,
+        "width": 12,
+        "x": 614,
+        "y": 512
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-bcc__bar",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "3px 3px 0px 0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "1px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 708,
+        "height": 50.953125,
+        "left": 614,
+        "right": 626,
+        "top": 657.046875,
+        "width": 12,
+        "x": 614,
+        "y": 657.046875
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-bcc__seg",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(229, 72, 77)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 708,
+        "height": 5.421875,
+        "left": 614,
+        "right": 626,
+        "top": 702.578125,
+        "width": 12,
+        "x": 614,
+        "y": 702.578125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-bcc__xaxis",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "4px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 740,
+        "height": 24,
+        "left": 580,
+        "right": 1080,
+        "top": 716,
+        "width": 500,
+        "x": 580,
+        "y": 716
+      },
+      "tag": "DIV",
+      "text": ""
+    },
+    {
+      "cls": "ui-bcc__xlabel",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 740,
+        "height": 24,
+        "left": 580,
+        "right": 660,
+        "top": 716,
+        "width": 80,
+        "x": 580,
+        "y": 716
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-bcc__morph",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 999,
+        "height": 249,
+        "left": 564,
+        "right": 1124,
+        "top": 750,
+        "width": 560,
+        "x": 564,
+        "y": 750
+      },
+      "tag": "DIV",
+      "text": "StatusTask countUrgentHighMediumLowNoneBacklog2636683Todo361712115In progress34191275In review1301642Done96714232527Canceled701312"
+    },
+    {
+      "cls": "ui-bcc__table-wrap",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 998.5,
+        "height": 248.5,
+        "left": 564,
+        "right": 1124,
+        "top": 750,
+        "width": 560,
+        "x": 564,
+        "y": 750
+      },
+      "tag": "DIV",
+      "text": "StatusTask countUrgentHighMediumLowNoneBacklog2636683Todo361712115In progress34191275In review1301642Done96714232527Canceled701312"
+    },
+    {
+      "cls": "ui-bcc__table",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "table",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 998.5,
+        "height": 248,
+        "left": 564,
+        "right": 1124,
+        "top": 750.5,
+        "width": 560,
+        "x": 564,
+        "y": 750.5
+      },
+      "tag": "TABLE",
+      "text": "StatusTask countUrgentHighMediumLowNoneBacklog2636683Todo361712115In progress34191275In review1301642Done96714232527Canceled701312"
+    },
+    {
+      "cls": "ui-bcc__th-seg",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "inline-flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 774.125,
+        "height": 16,
+        "left": 784.921875,
+        "right": 843.40625,
+        "top": 758.125,
+        "width": 58.484375,
+        "x": 784.921875,
+        "y": 758.125
+      },
+      "tag": "SPAN",
+      "text": "Urgent"
+    },
+    {
+      "cls": "ui-bcc__swatch",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgb(229, 72, 77)",
+        "border": "0px none rgba(0, 0, 0, 0.45)",
+        "borderRadius": "2px",
+        "color": "rgba(0, 0, 0, 0.45)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "10px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 770.125,
+        "height": 8,
+        "left": 784.921875,
+        "right": 792.921875,
+        "top": 762.125,
+        "width": 8,
+        "x": 784.921875,
+        "y": 762.125
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-bcc__row-label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "inline-flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 808.75,
+        "height": 20,
+        "left": 580,
+        "right": 653.2890625,
+        "top": 788.75,
+        "width": 73.2890625,
+        "x": 580,
+        "y": 788.75
+      },
+      "tag": "SPAN",
+      "text": "Backlog"
+    },
+    {
+      "cls": "ui-bcc__foot",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "8px"
+      },
+      "rect": {
+        "bottom": 1043.5,
+        "height": 44.5,
+        "left": 564,
+        "right": 1124,
+        "top": 999,
+        "width": 560,
+        "x": 564,
+        "y": 999
+      },
+      "tag": "FOOTER",
+      "text": "UrgentHighMediumLowNone"
+    },
+    {
+      "cls": "ui-bcc__legend",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "gap": "2px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 1035.5,
+        "height": 28,
+        "left": 572,
+        "right": 896.40625,
+        "top": 1007.5,
+        "width": 324.40625,
+        "x": 572,
+        "y": 1007.5
+      },
+      "tag": "DIV",
+      "text": "UrgentHighMediumLowNone"
+    },
+    {
+      "cls": "ui-bcc__chip",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "16px",
+        "padding": "0px 8px"
+      },
+      "rect": {
+        "bottom": 1035.5,
+        "height": 28,
+        "left": 572,
+        "right": 641.0859375,
+        "top": 1007.5,
+        "width": 69.0859375,
+        "x": 572,
+        "y": 1007.5
+      },
+      "tag": "BUTTON",
+      "text": "Urgent"
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m4.5 6.25 3.5 3.5 3.5-3.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m4.5 6.25 3.5 3.5 3.5-3.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m4.5 6.25 3.5 3.5 3.5-3.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#bdbdbd\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.5 9.5 4 3.5h8l1.5 6M2.5 9.5v3h11v-3M2.5 9.5H6l.8 1.5h2.4l.8-1.5h3.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#8c8c8c\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"10\" height=\"10\" rx=\"2.5\"></rect></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#80b0f1\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"5.5\"></circle><path d=\"M8 5v3l2 1.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#5b5bd6\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8Z\"></path><circle cx=\"8\" cy=\"8\" r=\"1.8\"></circle></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#3c85e9\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"2.5\" y=\"2.5\" width=\"11\" height=\"11\" rx=\"3\" fill=\"#3c85e9\" stroke=\"none\"></rect><path d=\"m5.5 8.2 1.8 1.8 3.3-3.6\" stroke=\"#fff\" stroke-width=\"1.3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#d4d4d4\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"5.5\"></circle><path d=\"m4.2 11.8 7.6-7.6\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#bdbdbd\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.5 9.5 4 3.5h8l1.5 6M2.5 9.5v3h11v-3M2.5 9.5H6l.8 1.5h2.4l.8-1.5h3.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#8c8c8c\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"10\" height=\"10\" rx=\"2.5\"></rect></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#80b0f1\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"5.5\"></circle><path d=\"M8 5v3l2 1.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#5b5bd6\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8Z\"></path><circle cx=\"8\" cy=\"8\" r=\"1.8\"></circle></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#3c85e9\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"2.5\" y=\"2.5\" width=\"11\" height=\"11\" rx=\"3\" fill=\"#3c85e9\" stroke=\"none\"></rect><path d=\"m5.5 8.2 1.8 1.8 3.3-3.6\" stroke=\"#fff\" stroke-width=\"1.3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#d4d4d4\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"5.5\"></circle><path d=\"m4.2 11.8 7.6-7.6\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#bdbdbd\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2.5 9.5 4 3.5h8l1.5 6M2.5 9.5v3h11v-3M2.5 9.5H6l.8 1.5h2.4l.8-1.5h3.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#8c8c8c\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"10\" height=\"10\" rx=\"2.5\"></rect></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#80b0f1\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"5.5\"></circle><path d=\"M8 5v3l2 1.5\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#5b5bd6\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8Z\"></path><circle cx=\"8\" cy=\"8\" r=\"1.8\"></circle></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#3c85e9\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"2.5\" y=\"2.5\" width=\"11\" height=\"11\" rx=\"3\" fill=\"#3c85e9\" stroke=\"none\"></rect><path d=\"m5.5 8.2 1.8 1.8 3.3-3.6\" stroke=\"#fff\" stroke-width=\"1.3\"></path></svg>",
+    "<svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"#d4d4d4\" stroke-width=\"1.1\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"5.5\"></circle><path d=\"m4.2 11.8 7.6-7.6\"></path></svg>"
+  ],
+  "url": "https://www.affectui.com/components/breakdown-chart",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Data display\":\n        - /url: /category/data-display\n      - generic: Breakdown Chart\n    - heading \"Breakdown Chart\" [level=1]\n    - paragraph: Stacked bar chart with measure, slice and segment pickers, a hover breakdown and a linked table.\n    - link \"Get Pro to install\":\n      - /url: /pricing\n      - generic: Get Pro to install\n    - tablist \"Breakdown Chart preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - region \"Sprint 24\":\n      - generic \"Sprint 24\"\n      - strong: \"212\"\n      - text: tasks\n      - generic: Measure\n      - button \"Measure\":\n        - generic: Task count\n      - generic: Slice\n      - button \"Slice\":\n        - generic: Status\n      - generic: Segment\n      - button \"Segment\":\n        - generic: Priority\n      - generic: \"100\"\n      - generic: \"80\"\n      - generic: \"60\"\n      - generic: \"40\"\n      - generic: \"20\"\n      - generic: \"0\"\n      - 'button \"Backlog: 26 tasks\"'\n      - 'button \"Todo: 36 tasks\"'\n      - 'button \"In progress: 34 tasks\"'\n      - 'button \"In review: 13 tasks\"'\n      - 'button \"Done: 96 tasks\"'\n      - 'button \"Canceled: 7 tasks\"'\n      - generic \"Backlog\":\n      - generic \"Todo\":\n      - generic \"In progress\":\n      - generic \"In review\":\n      - generic \"Done\":\n      - generic \"Canceled\":\n      - table:\n        - rowgroup:\n          - row \"Status Task count Urgent High Medium Low None\":\n            - columnheader \"Status\"\n            - columnheader \"Task count\"\n            - columnheader \"Urgent\":\n              - generic \"Urgent\":\n                - generic: Urgent\n            - columnheader \"High\":\n              - generic \"High\":\n                - generic: High\n            - columnheader \"Medium\":\n              - generic \"Medium\":\n                - generic: Medium\n            - columnheader \"Low\":\n              - generic \"Low\":\n                - generic: Low\n            - columnheader \"None\":\n              - generic \"None\":\n                - generic: None\n        - rowgroup:\n          - row \"Backlog 26 3 6 6 8 3\":\n            - rowheader \"Backlog\":\n              - generic \"Backlog\":\n                - generic: Backlog\n            - cell \"26\"\n            - cell \"3\"\n            - cell \"6\"\n            - cell \"6\"\n            - cell \"8\"\n            - cell \"3\"\n          - row \"Todo 36 1 7 12 11 5\":\n            - rowheader \"Todo\":\n              - generic \"Todo\":\n                - generic: Todo\n            - cell \"36\"\n            - cell \"1\"\n            - cell \"7\"\n            - cell \"12\"\n            - cell \"11\"\n            - cell \"5\"\n          - row \"In progress 34 1 9 12 7 5\":\n            - rowheader \"In progress\":\n              - generic \"In progress\":\n                - generic: In progress\n            - cell \"34\"\n            - cell \"1\"\n            - cell \"9\"\n            - cell \"12\"\n            - cell \"7\"\n            - cell \"5\"\n          - row \"In review 13 0 1 6 4 2\":\n            - rowheader \"In review\":\n              - generic \"In review\":\n                - generic: In review\n            - cell \"13\"\n            - cell \"0\"\n            - cell \"1\"\n            - cell \"6\"\n            - cell \"4\"\n            - cell \"2\"\n          - row \"Done 96 7 14 23 25 27\":\n            - rowheader \"Done\":\n              - generic \"Done\":\n                - generic: Done\n            - cell \"96\"\n            - cell \"7\"\n            - cell \"14\"\n            - cell \"23\"\n            - cell \"25\"\n            - cell \"27\"\n          - row \"Canceled 7 0 1 3 1 2\":\n            - rowheader \"Canceled\":\n              - generic \"Canceled\":\n                - generic: Canceled\n            - cell \"7\"\n            - cell \"0\"\n            - cell \"1\"\n            - cell \"3\"\n            - cell \"1\"\n            - cell \"2\"\n      - group \"Priority – click to show or hide\":\n        - button \"Urgent\" [pressed]:\n          - generic: Urgent\n        - button \"High\" [pressed]:\n          - generic: High\n        - button \"Medium\" [pressed]:\n          - generic: Medium\n        - button \"Low\" [pressed]:\n          - generic: Low\n        - button \"None\" [pressed]:\n          - generic: None\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: Showing how a set of records splits up – tasks by status and priority, tickets by team, orders by region\n      - listitem: Reports where people want to switch the view themselves without leaving the page\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: Values over time – use the KPI Chart\n      - listitem: More than about twelve bars or eight segments – the bars and the legend get hard to read\n    - heading \"Installation\" [level=2]\n    - paragraph: Breakdown Chart is a Pro component.\n    - strong: Installation is part of Pro\n    - generic: Get Pro to copy the code, install it with the CLI and use it in your projects.\n    - link \"Unlock with Pro\":\n      - /url: /pricing\n      - generic: Unlock with Pro\n    - heading \"Usage\" [level=2]\n    - strong: Usage example is part of Pro\n    - link \"Get Pro\":\n      - /url: /pricing\n      - generic: Get Pro\n    - heading \"API reference\" [level=2]\n    - heading \"BreakdownChart\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - row \"records BreakdownRecord[] – Flat records – one per task, ticket or order – with a field per dimension\":\n          - cell \"records\":\n            - code: records\n          - cell \"BreakdownRecord[]\":\n            - code: BreakdownRecord[]\n          - cell \"–\"\n          - cell \"Flat records – one per task, ticket or order – with a field per dimension\"\n        - row \"dimensions Dimension[] – key, label, values in order, optional colors and icons per value\":\n          - cell \"dimensions\":\n            - code: dimensions\n          - cell \"Dimension[]\":\n            - code: Dimension[]\n          - cell \"–\"\n          - cell \"key, label, values in order, optional colors and icons per value\"\n        - row \"measures Measure[] – key, label, unit and the field to sum – without a field records are counted\":\n          - cell \"measures\":\n            - code: measures\n          - cell \"Measure[]\":\n            - code: Measure[]\n          - cell \"–\"\n          - cell \"key, label, unit and the field to sum – without a field records are counted\"\n        - row \"title string \\\"Workload\\\" Heading at the top of the card\":\n          - cell \"title\":\n            - code: title\n          - cell \"string\":\n            - code: string\n          - cell \"\\\"Workload\\\"\":\n            - code: \"\\\"Workload\\\"\"\n          - cell \"Heading at the top of the card\"\n        - row \"defaultMeasure string – Measure shown first\":\n          - cell \"defaultMeasure\":\n            - code: defaultMeasure\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Measure shown first\"\n        - row \"defaultSlice string – Dimension along the bars\":\n          - cell \"defaultSlice\":\n            - code: defaultSlice\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Dimension along the bars\"\n        - row \"defaultSegment string – Dimension that stacks the bars, or \\\"none\\\"\":\n          - cell \"defaultSegment\":\n            - code: defaultSegment\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Dimension that stacks the bars, or \\\"none\\\"\"\n        - row \"className string – Extra class on the card\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the card\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Tab Move through the pickers, the bars and the legend\":\n          - cell \"Tab\":\n            - generic: Tab\n          - cell \"Move through the pickers, the bars and the legend\"\n        - row \"↑ or ↓ Move through an open picker\":\n          - cell \"↑ or ↓\":\n            - generic: ↑\n            - text: or\n            - generic: ↓\n          - cell \"Move through an open picker\"\n        - row \"Escape Close a picker\":\n          - cell \"Escape\":\n            - generic: Escape\n          - cell \"Close a picker\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: Each bar is a button that reads its slice and total; focusing it shows the breakdown\n      - listitem: The table repeats every number, so nothing depends on color or hover\n      - listitem: Legend entries are toggle buttons with a pressed state\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: Bars grow and re-stack smoothly when the measure, slice or segment changes\n      - listitem: Hovering dims the other bars and highlights the matching table row; reduced motion turns transitions off\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Related\" [level=2]\n    - article:\n      - generic: Data display\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"KPI Chart Metric card with a multi-line chart and a tooltip that follows the pointer\":\n        - /url: /components/kpi-chart\n        - heading \"KPI Chart\" [level=3]\n        - paragraph: Metric card with a multi-line chart and a tooltip that follows the pointer\n      - button \"KPI Chart is part of Pro – see pricing\":\n    - article:\n      - generic: Data display\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - 'link \"Data Table Spreadsheet-style table: select cells and ranges, edit in place, copy and paste, undo and sort\"':\n        - /url: /components/data-table\n        - heading \"Data Table\" [level=3]\n        - paragraph: \"Spreadsheet-style table: select cells and ranges, edit in place, copy and paste, undo and sort\"\n      - button \"Data Table is part of Pro – see pricing\":\n    - article:\n      - generic: Data display\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - link \"Change Summary What moved since last time – one metric per row with a colored trend\":\n        - /url: /components/change-summary\n        - heading \"Change Summary\" [level=3]\n        - paragraph: What moved since last time – one metric per row with a colored trend\n      - button \"Copy to clipboard\":\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

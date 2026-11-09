@@ -415,7 +415,7 @@ describe("Graph data and inspection", () => {
     fireEvent.click(node);
     expect(onSelect).toHaveBeenCalledWith(nodes[1]);
     expect(
-      within(screen.getByRole("dialog")).getByText("Find pricing"),
+      within(screen.getByRole("dialog")).getByText(/Find pricing/),
     ).toBeTruthy();
     expect(document.activeElement).toBe(
       screen.getByRole("button", { name: "Close Researcher details" }),
@@ -462,7 +462,7 @@ describe("Graph data and inspection", () => {
       0,
     );
   });
-  it("expires link heat and keeps an empty graph usable", () => {
+  it("expires call counts while Clean links stay uniform and an empty graph stays usable", () => {
     const view = render(<AgentGraph nodes={nodes} calls={calls} now={10000} />);
     expect(
       Number(
@@ -472,7 +472,7 @@ describe("Graph data and inspection", () => {
     view.rerender(<AgentGraph nodes={nodes} calls={calls} now={100000} />);
     expect(
       view.container.querySelector(".agg-link")!.getAttribute("stroke-width"),
-    ).toBe("1.25");
+    ).toBe("1.5");
     expect(screen.getByText("0 calls/min")).toBeTruthy();
     view.rerender(<AgentGraph nodes={[]} calls={calls} now={100000} />);
     expect(screen.getByText("No agents connected")).toBeTruthy();

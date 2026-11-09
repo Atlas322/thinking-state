@@ -1,0 +1,389 @@
+{
+  "controls": [
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "Overview",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "Analytics",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "Reports",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "Notifications3",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "List",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "Board",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "Calendar",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "Monthly",
+      "type": "button"
+    },
+    {
+      "expanded": null,
+      "label": null,
+      "role": "radio",
+      "tag": "BUTTON",
+      "text": "YearlySave 20%",
+      "type": "button"
+    }
+  ],
+  "metrics": [
+    {
+      "cls": "ui-segc",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 529.5,
+        "height": 36,
+        "left": 640,
+        "right": 1018,
+        "top": 493.5,
+        "width": 378,
+        "x": 640,
+        "y": 493.5
+      },
+      "tag": "DIV",
+      "text": "OverviewAnalyticsReportsNotifications3"
+    },
+    {
+      "cls": "ui-segc__scroller",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "8px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "4px"
+      },
+      "rect": {
+        "bottom": 529.5,
+        "height": 36,
+        "left": 640,
+        "right": 1018,
+        "top": 493.5,
+        "width": 378,
+        "x": 640,
+        "y": 493.5
+      },
+      "tag": "DIV",
+      "text": "OverviewAnalyticsReportsNotifications3"
+    },
+    {
+      "cls": "ui-segc__track",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "8px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 525.5,
+        "height": 28,
+        "left": 644,
+        "right": 1014,
+        "top": 497.5,
+        "width": 370,
+        "x": 644,
+        "y": 497.5
+      },
+      "tag": "DIV",
+      "text": "OverviewAnalyticsReportsNotifications3"
+    },
+    {
+      "cls": "ui-segc__pill",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0.06)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 525.5,
+        "height": 28,
+        "left": 644,
+        "right": 723,
+        "top": 497.5,
+        "width": 79,
+        "x": 644,
+        "y": 497.5
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-segc__opt",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "6px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px 10px"
+      },
+      "rect": {
+        "bottom": 525.5,
+        "height": 28,
+        "left": 644,
+        "right": 723,
+        "top": 497.5,
+        "width": 79,
+        "x": 644,
+        "y": 497.5
+      },
+      "tag": "BUTTON",
+      "text": "Overview"
+    },
+    {
+      "cls": "ui-segc__content",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "6px",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 521.5,
+        "height": 20,
+        "left": 654,
+        "right": 713.0078125,
+        "top": 501.5,
+        "width": 59.0078125,
+        "x": 654,
+        "y": 501.5
+      },
+      "tag": "SPAN",
+      "text": "Overview"
+    },
+    {
+      "cls": "ui-segc__label",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "display": "block",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "20px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 521.5,
+        "height": 20,
+        "left": 654,
+        "right": 713.0078125,
+        "top": 501.5,
+        "width": 59.0078125,
+        "x": 654,
+        "y": 501.5
+      },
+      "tag": "SPAN",
+      "text": "Overview"
+    },
+    {
+      "cls": "ui-segc__count",
+      "css": {
+        "animationDuration": "0.2s",
+        "animationName": "ui-segc-in",
+        "backgroundColor": "rgba(0, 0, 0, 0.06)",
+        "border": "0px none rgba(0, 0, 0, 0.61)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 0, 0, 0.61)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px 4px"
+      },
+      "rect": {
+        "bottom": 519.6865234375,
+        "height": 16.000030517578125,
+        "left": 988.0078125,
+        "right": 1004.0078125,
+        "top": 503.6864929199219,
+        "width": 16,
+        "x": 988.0078125,
+        "y": 503.6864929199219
+      },
+      "tag": "SPAN",
+      "text": "3"
+    },
+    {
+      "cls": "ui-segc__icon",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgba(0, 0, 0, 0.447)",
+        "borderRadius": "0px",
+        "color": "rgba(0, 0, 0, 0.447)",
+        "display": "grid",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px"
+      },
+      "rect": {
+        "bottom": 601,
+        "height": 14,
+        "left": 653.8203125,
+        "right": 667.8203125,
+        "top": 587,
+        "width": 14,
+        "x": 653.8203125,
+        "y": 587
+      },
+      "tag": "SPAN",
+      "text": ""
+    },
+    {
+      "cls": "ui-segc__badge",
+      "css": {
+        "animationDuration": "0s",
+        "animationName": "none",
+        "backgroundColor": "rgba(0, 96, 226, 0.08)",
+        "border": "0px none rgba(0, 96, 226, 0.765)",
+        "borderRadius": "5px",
+        "color": "rgba(0, 96, 226, 0.765)",
+        "display": "flex",
+        "fontFamily": "Inter, InterVariable, ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "lineHeight": "16px",
+        "padding": "0px 6px"
+      },
+      "rect": {
+        "bottom": 688.5,
+        "height": 18,
+        "left": 766.3203125,
+        "right": 831.8125,
+        "top": 670.5,
+        "width": 65.4921875,
+        "x": 766.3203125,
+        "y": 670.5
+      },
+      "tag": "SPAN",
+      "text": "Save 20%"
+    }
+  ],
+  "svg": [
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM15 4h4a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z\"></path></svg>",
+    "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3v3M16 3v3M4 9.5h16M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z\"></path></svg>"
+  ],
+  "url": "https://www.affectui.com/components/segmented-control",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "snapshot": "- region \"Notifications (F8)\":\n  - list\n  - status\n  - alert\n- link \"Skip to content\":\n  - /url: \"#content\"\n- complementary:\n  - link \"affectUI home\":\n    - /url: /\n    - generic: affectUI\n  - button \"Hide sidebar\":\n  - combobox \"Search components\"\n  - generic: ⌘\n  - generic: K\n  - navigation \"Primary\":\n    - link \"Library\":\n      - /url: /components\n      - text: Library\n    - link \"Docs\":\n      - /url: /docs\n      - text: Docs\n    - button \"Expand Docs\":\n    - link \"Pricing\":\n      - /url: /pricing\n      - text: Pricing\n  - navigation \"Library\":\n    - button \"Style Clean\":\n      - generic: Style\n      - generic: Clean\n    - link \"Components\":\n      - /url: /components\n      - text: Components\n    - generic: \"90\"\n    - button \"Collapse Components\" [expanded]:\n    - link \"AI Answer Pro\":\n      - /url: /components/ai-answer\n      - text: AI Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Chat Composer Pro\":\n      - /url: /components/chat-composer\n      - text: Chat Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking State Pro\":\n      - /url: /components/thinking-state\n      - text: Thinking State\n      - img \"Pro\":\n        - text: Pro\n    - link \"Writing Assistant Pro\":\n      - /url: /components/writing-assistant\n      - text: Writing Assistant\n      - img \"Pro\":\n        - text: Pro\n    - link \"Thinking Loader\":\n      - /url: /components/thinking-loader\n    - link \"Checkbox\":\n      - /url: /components/checkbox\n    - link \"Select\":\n      - /url: /components/select\n    - link \"Switch\":\n      - /url: /components/switch\n    - link \"Tag Input\":\n      - /url: /components/tag-input\n    - link \"Text Area\":\n      - /url: /components/text-area\n    - link \"Text Field\":\n      - /url: /components/text-field\n    - link \"Combobox Pro\":\n      - /url: /components/combobox\n      - text: Combobox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Command Menu Pro\":\n      - /url: /components/command-menu\n      - text: Command Menu\n      - img \"Pro\":\n        - text: Pro\n    - link \"Date Range Picker Pro\":\n      - /url: /components/date-range-picker\n      - text: Date Range Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Dropzone Pro\":\n      - /url: /components/dropzone\n      - text: Dropzone\n      - img \"Pro\":\n        - text: Pro\n    - link \"OTP Input\":\n      - /url: /components/otp-input\n    - link \"Segmented Control\":\n      - /url: /components/segmented-control\n    - link \"Stepper Form Pro\":\n      - /url: /components/stepper-form\n      - text: Stepper Form\n      - img \"Pro\":\n        - text: Pro\n    - link \"Toaster Pro\":\n      - /url: /components/toaster\n      - text: Toaster\n      - img \"Pro\":\n        - text: Pro\n    - link \"Usage Meter Pro\":\n      - /url: /components/usage-meter\n      - text: Usage Meter\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Checkpoints Pro\":\n      - /url: /components/agent-checkpoints\n      - text: Agent Checkpoints\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Cursors Pro\":\n      - /url: /components/agent-cursors\n      - text: Agent Cursors\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Findings Pro\":\n      - /url: /components/agent-findings\n      - text: Agent Findings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Fleet Pro\":\n      - /url: /components/agent-fleet\n      - text: Agent Fleet\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Graph Pro\":\n      - /url: /components/agent-graph\n      - text: Agent Graph\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Handoff Pro\":\n      - /url: /components/agent-handoff\n      - text: Agent Handoff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Inbox Pro\":\n      - /url: /components/agent-inbox\n      - text: Agent Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Lanes Pro\":\n      - /url: /components/agent-lanes\n      - text: Agent Lanes\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Ledger Pro\":\n      - /url: /components/agent-ledger\n      - text: Agent Ledger\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Monitor Pro\":\n      - /url: /components/agent-monitor\n      - text: Agent Monitor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Queue Pro\":\n      - /url: /components/agent-queue\n      - text: Agent Queue\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Recap Pro\":\n      - /url: /components/agent-recap\n      - text: Agent Recap\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Steering Pro\":\n      - /url: /components/agent-steering\n      - text: Agent Steering\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Trail Pro\":\n      - /url: /components/agent-trail\n      - text: Agent Trail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Tree Pro\":\n      - /url: /components/agent-tree\n      - text: Agent Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Gates Pro\":\n      - /url: /components/approval-gates\n      - text: Approval Gates\n      - img \"Pro\":\n        - text: Pro\n    - link \"Autonomy Dial Pro\":\n      - /url: /components/autonomy-dial\n      - text: Autonomy Dial\n      - img \"Pro\":\n        - text: Pro\n    - link \"Away Summary Pro\":\n      - /url: /components/away-summary\n      - text: Away Summary\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cited Answer Pro\":\n      - /url: /components/cited-answer\n      - text: Cited Answer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Collaboration Stream Pro\":\n      - /url: /components/collaboration-stream\n      - text: Collaboration Stream\n      - img \"Pro\":\n        - text: Pro\n    - link \"Compact Breakdown Pro\":\n      - /url: /components/compact-breakdown\n      - text: Compact Breakdown\n      - img \"Pro\":\n        - text: Pro\n    - link \"Conflict Radar Pro\":\n      - /url: /components/conflict-radar\n      - text: Conflict Radar\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Map Pro\":\n      - /url: /components/context-map\n      - text: Context Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Context Window Pro\":\n      - /url: /components/context-window\n      - text: Context Window\n      - img \"Pro\":\n        - text: Pro\n    - link \"Cost Waterfall Pro\":\n      - /url: /components/cost-waterfall\n      - text: Cost Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Card Pro\":\n      - /url: /components/decision-card\n      - text: Decision Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Tree Pro\":\n      - /url: /components/decision-tree\n      - text: Decision Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Delegate Board Pro\":\n      - /url: /components/delegate-board\n      - text: Delegate Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Experiment Card Pro\":\n      - /url: /components/experiment-card\n      - text: Experiment Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fallback Chain Pro\":\n      - /url: /components/fallback-chain\n      - text: Fallback Chain\n      - img \"Pro\":\n        - text: Pro\n    - link \"Fan-out Grid Pro\":\n      - /url: /components/fan-out-grid\n      - text: Fan-out Grid\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Picker Pro\":\n      - /url: /components/integration-picker\n      - text: Integration Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Settings Pro\":\n      - /url: /components/integration-settings\n      - text: Integration Settings\n      - img \"Pro\":\n        - text: Pro\n    - link \"Judge Bracket Pro\":\n      - /url: /components/judge-bracket\n      - text: Judge Bracket\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Chart Pro\":\n      - /url: /components/kpi-chart\n      - text: KPI Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Memory Panel Pro\":\n      - /url: /components/memory-panel\n      - text: Memory Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Message Actions\":\n      - /url: /components/message-actions\n    - link \"Model Picker Pro\":\n      - /url: /components/model-picker\n      - text: Model Picker\n      - img \"Pro\":\n        - text: Pro\n    - link \"Parallel Attempts Pro\":\n      - /url: /components/parallel-attempts\n      - text: Parallel Attempts\n      - img \"Pro\":\n        - text: Pro\n    - link \"Permission Request Pro\":\n      - /url: /components/permission-request\n      - text: Permission Request\n      - img \"Pro\":\n        - text: Pro\n    - link \"Plan vs Actual Pro\":\n      - /url: /components/plan-vs-actual\n      - text: Plan vs Actual\n      - img \"Pro\":\n        - text: Pro\n    - link \"Profile Menu\":\n      - /url: /components/profile-menu\n    - link \"Project Card Pro\":\n      - /url: /components/project-card\n      - text: Project Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Prompt Library Pro\":\n      - /url: /components/prompt-library\n      - text: Prompt Library\n      - img \"Pro\":\n        - text: Pro\n    - link \"Review Center Pro\":\n      - /url: /components/review-center\n      - text: Review Center\n      - img \"Pro\":\n        - text: Pro\n    - link \"Root Cause Tree Pro\":\n      - /url: /components/root-cause-tree\n      - text: Root Cause Tree\n      - img \"Pro\":\n        - text: Pro\n    - link \"Running Now Pro\":\n      - /url: /components/running-now\n      - text: Running Now\n      - img \"Pro\":\n        - text: Pro\n    - link \"Scheduled Runs Pro\":\n      - /url: /components/scheduled-runs\n      - text: Scheduled Runs\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tips Panel\":\n      - /url: /components/tips-panel\n    - link \"Tool Access Map Pro\":\n      - /url: /components/tool-access-map\n      - text: Tool Access Map\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tool Call Card\":\n      - /url: /components/tool-call-card\n    - link \"Trace Waterfall Pro\":\n      - /url: /components/trace-waterfall\n      - text: Trace Waterfall\n      - img \"Pro\":\n        - text: Pro\n    - link \"Approval Card Pro\":\n      - /url: /components/approval-card\n      - text: Approval Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Breakdown Chart Pro\":\n      - /url: /components/breakdown-chart\n      - text: Breakdown Chart\n      - img \"Pro\":\n        - text: Pro\n    - link \"Button\":\n      - /url: /components/button\n    - link \"Data Table Pro\":\n      - /url: /components/data-table\n      - text: Data Table\n      - img \"Pro\":\n        - text: Pro\n    - link \"Filter Menu\":\n      - /url: /components/filter-menu\n    - link \"Reaction Bar\":\n      - /url: /components/reaction-bar\n    - link \"Smart Recommendation\":\n      - /url: /components/smart-recommendation\n    - link \"Agent Plan Pro\":\n      - /url: /components/agent-plan\n      - text: Agent Plan\n      - img \"Pro\":\n        - text: Pro\n    - link \"Billing Schedule Pro\":\n      - /url: /components/billing-schedule\n      - text: Billing Schedule\n      - img \"Pro\":\n        - text: Pro\n    - link \"Change Summary\":\n      - /url: /components/change-summary\n    - link \"Comments Panel Pro\":\n      - /url: /components/comments-panel\n      - text: Comments Panel\n      - img \"Pro\":\n        - text: Pro\n    - link \"Email Draft\":\n      - /url: /components/email-draft\n    - link \"Progress Tracker\":\n      - /url: /components/progress-tracker\n    - link \"Comment Thread\":\n      - /url: /components/comment-thread\n    - link \"Inline Diff Pro\":\n      - /url: /components/inline-diff\n      - text: Inline Diff\n      - img \"Pro\":\n        - text: Pro\n    - link \"Setup Guide Pro\":\n      - /url: /components/setup-guide\n      - text: Setup Guide\n      - img \"Pro\":\n        - text: Pro\n    - link \"Decision Inbox\":\n      - /url: /components/decision-inbox\n    - link \"Notification Stack\":\n      - /url: /components/notification-stack\n    - link \"Screens\":\n      - /url: /screens\n      - text: Screens\n    - generic: \"33\"\n    - button \"Collapse Screens\" [expanded]:\n    - link \"App Shell Flat Pro\":\n      - /url: /screens/app-shell-flat\n      - text: App Shell Flat\n      - img \"Pro\":\n        - text: Pro\n    - link \"App Shell Inset Pro\":\n      - /url: /screens/app-shell\n      - text: App Shell Inset\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Start Pro\":\n      - /url: /screens/assistant-home\n      - text: AI Chat / Start\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Overview Pro\":\n      - /url: /screens/assistant-overview\n      - text: AI Chat / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Agents Pro\":\n      - /url: /screens/agent-chat\n      - text: AI Chat / Agents\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Double Sidebar Pro\":\n      - /url: /screens/agent-chat-rail\n      - text: AI Chat / Double Sidebar\n      - img \"Pro\":\n        - text: Pro\n    - link \"AI Chat / Run Pro\":\n      - /url: /screens/agent-run\n      - text: AI Chat / Run\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Overview Pro\":\n      - /url: /screens/files\n      - text: Folders / Overview\n      - img \"Pro\":\n        - text: Pro\n    - link \"Folders / Detail Pro\":\n      - /url: /screens/folder\n      - text: Folders / Detail\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integrations Pro\":\n      - /url: /screens/integrations\n      - text: Integrations\n      - img \"Pro\":\n        - text: Pro\n    - link \"CRM Pro\":\n      - /url: /screens/crm\n      - text: CRM\n      - img \"Pro\":\n        - text: Pro\n    - link \"Kanban Board Pro\":\n      - /url: /screens/kanban\n      - text: Kanban Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Workflow Builder Pro\":\n      - /url: /screens/workflow-builder\n      - text: Workflow Builder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Orchestration Pro\":\n      - /url: /screens/agent-orchestration\n      - text: Agent / Orchestration\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Thread Pro\":\n      - /url: /screens/agent-thread\n      - text: Agent / Thread\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Inbox Pro\":\n      - /url: /screens/inbox\n      - text: Agent / Inbox\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Tasks Pro\":\n      - /url: /screens/agent-tasks\n      - text: Agent / Tasks\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Memory Pro\":\n      - /url: /screens/agent-memory\n      - text: Agent / Memory\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Permissions Pro\":\n      - /url: /screens/agent-permissions\n      - text: Agent / Permissions\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Usage Pro\":\n      - /url: /screens/agent-usage\n      - text: Agent / Usage\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent / Activity Pro\":\n      - /url: /screens/agent-activity\n      - text: Agent / Activity\n      - img \"Pro\":\n        - text: Pro\n    - link \"Analytics Pro\":\n      - /url: /screens/analytics\n      - text: Analytics\n      - img \"Pro\":\n        - text: Pro\n    - link \"Onboarding Pro\":\n      - /url: /screens/onboarding\n      - text: Onboarding\n      - img \"Pro\":\n        - text: Pro\n    - link \"Evals Pro\":\n      - /url: /screens/evals\n      - text: Evals\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Preferences Pro\":\n      - /url: /screens/settings-preferences\n      - text: Settings / Preferences\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Notifications Pro\":\n      - /url: /screens/settings-notifications\n      - text: Settings / Notifications\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Privacy Pro\":\n      - /url: /screens/settings-privacy\n      - text: Settings / Privacy\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Billing Pro\":\n      - /url: /screens/settings-subscription\n      - text: Settings / Billing\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / General Pro\":\n      - /url: /screens/settings-general\n      - text: Settings / General\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Profile Pro\":\n      - /url: /screens/settings-profile\n      - text: Settings / Profile\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Teams Pro\":\n      - /url: /screens/settings-members\n      - text: Settings / Teams\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Models Pro\":\n      - /url: /screens/settings-models\n      - text: Settings / Models\n      - img \"Pro\":\n        - text: Pro\n    - link \"Settings / Security Pro\":\n      - /url: /screens/settings-security\n      - text: Settings / Security\n      - img \"Pro\":\n        - text: Pro\n    - link \"Blocks\":\n      - /url: /blocks\n      - text: Blocks\n    - generic: \"14\"\n    - button \"Collapse Blocks\" [expanded]:\n    - link \"Client Context Pro\":\n      - /url: /blocks/client-context\n      - text: Client Context\n      - img \"Pro\":\n        - text: Pro\n    - link \"Invoice & Credit Note Pro\":\n      - /url: /blocks/invoice-credit\n      - text: Invoice & Credit Note\n      - img \"Pro\":\n        - text: Pro\n    - link \"Logo Marquee\":\n      - /url: /blocks/logo-marquee\n    - link \"Metrics Dashboard Pro\":\n      - /url: /blocks/metrics-dashboard\n      - text: Metrics Dashboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Pricing Plans Pro\":\n      - /url: /blocks/pricing-plans\n      - text: Pricing Plans\n      - img \"Pro\":\n        - text: Pro\n    - link \"Task Board Pro\":\n      - /url: /blocks/task-board\n      - text: Task Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Testimonial Wall\":\n      - /url: /blocks/testimonial-wall\n    - link \"App Directory Pro\":\n      - /url: /blocks/app-directory\n      - text: App Directory\n      - img \"Pro\":\n        - text: Pro\n    - link \"KPI Board Pro\":\n      - /url: /blocks/kpi-board\n      - text: KPI Board\n      - img \"Pro\":\n        - text: Pro\n    - link \"Run Inspector Pro\":\n      - /url: /blocks/run-inspector\n      - text: Run Inspector\n      - img \"Pro\":\n        - text: Pro\n    - link \"Agent Gallery Pro\":\n      - /url: /blocks/agent-gallery\n      - text: Agent Gallery\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Control Pro\":\n      - /url: /blocks/mission-control\n      - text: Mission Control\n      - img \"Pro\":\n        - text: Pro\n    - link \"Mission Timeline Pro\":\n      - /url: /blocks/mission-timeline\n      - text: Mission Timeline\n      - img \"Pro\":\n        - text: Pro\n    - link \"Live Session Pro\":\n      - /url: /blocks/live-session\n      - text: Live Session\n      - img \"Pro\":\n        - text: Pro\n    - link \"Illustrations\":\n      - /url: /illustrations\n      - text: Illustrations\n    - generic: \"26\"\n    - button \"Collapse Illustrations\" [expanded]:\n    - link \"Cover Flow\":\n      - /url: /illustrations/cover-flow\n    - link \"Frost Cloud\":\n      - /url: /illustrations/frost-cloud\n    - link \"Glow Cloud\":\n      - /url: /illustrations/glow-cloud\n    - link \"Glow Keyboard Pro\":\n      - /url: /illustrations/glow-keyboard\n      - text: Glow Keyboard\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Beam\":\n      - /url: /illustrations/integration-beam\n    - link \"Logo Cluster\":\n      - /url: /illustrations/logo-cluster\n    - link \"Model Wheel\":\n      - /url: /illustrations/model-wheel\n    - link \"Project Flow Pro\":\n      - /url: /illustrations/project-flow\n      - text: Project Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"DACH Region\":\n      - /url: /illustrations/region-dach\n    - link \"Empty Calendar\":\n      - /url: /illustrations/empty-calendar\n    - link \"Inspect Agent Card Pro\":\n      - /url: /illustrations/inspect-agent-card\n      - text: Inspect Agent Card\n      - img \"Pro\":\n        - text: Pro\n    - link \"Inspect Composer Pro\":\n      - /url: /illustrations/inspect-composer\n      - text: Inspect Composer\n      - img \"Pro\":\n        - text: Pro\n    - link \"Integration Flow Pro\":\n      - /url: /illustrations/integration-flow\n      - text: Integration Flow\n      - img \"Pro\":\n        - text: Pro\n    - link \"Voice Orb Pro\":\n      - /url: /illustrations/voice-orb\n      - text: Voice Orb\n      - img \"Pro\":\n        - text: Pro\n    - link \"Tab Overload\":\n      - /url: /illustrations/tab-overload\n    - link \"World Map Continental Pro\":\n      - /url: /illustrations/world-map\n      - text: World Map Continental\n      - img \"Pro\":\n        - text: Pro\n    - link \"Ghosted Chat\":\n      - /url: /illustrations/ghosted-chat\n    - link \"Lead Sourcing\":\n      - /url: /illustrations/lead-sourcing\n    - link \"Enrichment Orbit\":\n      - /url: /illustrations/enrichment-orbit\n    - link \"Outreach Branches Pro\":\n      - /url: /illustrations/outreach-branches\n      - text: Outreach Branches\n      - img \"Pro\":\n        - text: Pro\n    - link \"Glass Folder Pro\":\n      - /url: /illustrations/glass-folder\n      - text: Glass Folder\n      - img \"Pro\":\n        - text: Pro\n    - link \"Side Folder\":\n      - /url: /illustrations/side-folder\n    - link \"Team Invite\":\n      - /url: /illustrations/team-invite\n    - link \"Layer Stack\":\n      - /url: /illustrations/layer-stack\n    - link \"Agent Team\":\n      - /url: /illustrations/agent-team\n    - link \"Integration Grid\":\n      - /url: /illustrations/integration-grid\n    - link \"Motion\":\n      - /url: /motion\n      - text: Motion\n    - generic: \"8\"\n    - button \"Collapse Motion\" [expanded]:\n    - link \"Blur Crossfade Pro\":\n      - /url: /motion/blur-crossfade\n      - text: Blur Crossfade\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Floor Pro\":\n      - /url: /motion/gradient-floor\n      - text: Gradient Floor\n      - img \"Pro\":\n        - text: Pro\n    - link \"Gradient Text Pro\":\n      - /url: /motion/gradient-text\n      - text: Gradient Text\n      - img \"Pro\":\n        - text: Pro\n    - link \"Grid Background\":\n      - /url: /motion/grid-background\n    - link \"Number Ticker\":\n      - /url: /motion/number-ticker\n    - link \"Shimmer Loader\":\n      - /url: /motion/shimmer-loader\n    - link \"Text Reveal\":\n      - /url: /motion/text-reveal\n    - link \"Tilt Card Pro\":\n      - /url: /motion/tilt-card\n      - text: Tilt Card\n      - img \"Pro\":\n        - text: Pro\n- main:\n  - radiogroup \"Theme\":\n    - radio \"Light theme\" [checked]:\n    - radio \"Dark theme\":\n  - link \"affectUI on GitHub, 570 stars\":\n    - /url: https://github.com/flohoeller/affectui\n    - generic: \"570\"\n  - link \"Get Pro\":\n    - /url: /pricing\n    - generic: Get Pro\n  - link \"Log In\":\n    - /url: /login\n  - article:\n    - navigation \"Breadcrumb\":\n      - link \"Components\":\n        - /url: /components\n      - link \"Navigation\":\n        - /url: /category/navigation\n      - generic: Segmented Control\n    - heading \"Segmented Control\" [level=1]\n    - paragraph: Switch between two to six options – a raised pill or underline that glides, stretches a little and can be dragged across, with icons, counts and badges.\n    - code: $ pnpm dlx shadcn@latest add https://www.affectui.com/r/segmented-control-clean.json\n    - button \"Copy to clipboard\":\n    - tablist \"Segmented Control preview\":\n      - tab \"Preview\" [selected]:\n        - text: Preview\n      - tab \"Code\":\n        - text: Code\n    - radiogroup \"Component style\":\n      - radio \"Classic style\":\n        - text: Classic style\n      - radio \"Clean style\" [checked]:\n        - text: Clean style\n    - radiogroup \"Preview theme\":\n      - radio \"Light theme\" [checked]:\n        - text: Light\n      - radio \"Dark theme\":\n        - text: Dark\n    - button \"Reset preview\":\n      - text: Reset preview\n    - generic: Copy prompt\n    - group \"Copy prompt and open in an AI tool\":\n      - button \"Copy prompt and open in Claude\":\n        - text: Claude\n      - button \"Copy prompt and open in ChatGPT / Codex\":\n        - text: ChatGPT / Codex\n      - button \"Copy prompt and open in Cursor\":\n        - text: Cursor\n      - button \"Copy prompt and open in v0\":\n        - text: v0\n      - link \"Connect the affectUI MCP server\":\n        - /url: /docs/ai\n        - text: MCP Connect the MCP server\n    - button \"Copy\":\n      - text: Copy\n    - generic: Dashboard\n    - radiogroup \"Dashboard\":\n      - radio \"Overview\" [checked]:\n        - generic: Overview\n      - radio \"Analytics\":\n        - generic: Analytics\n      - radio \"Reports\":\n        - generic: Reports\n      - radio \"Notifications 3\":\n        - generic: Notifications\n        - generic: \"3\"\n    - generic: Layout\n    - radiogroup \"Layout\":\n      - radio \"List\":\n        - generic: List\n      - radio \"Board\" [checked]:\n        - generic: Board\n      - radio \"Calendar\":\n        - generic: Calendar\n    - generic: Billing\n    - radiogroup \"Billing\":\n      - radio \"Monthly\":\n        - generic: Monthly\n      - radio \"Yearly Save 20%\" [checked]:\n        - generic: Yearly\n        - generic: Save 20%\n    - heading \"When to use\" [level=2]\n    - list:\n      - listitem: Switching between two to six views of the same content – sections of a dashboard, list / board / calendar, monthly / yearly\n      - listitem: A choice that applies right away and where every option should stay visible\n    - heading \"When not to use\" [level=2]\n    - list:\n      - listitem: More than six options or long labels – use a select or a menu\n      - listitem: Choices that are confirmed with a Save button inside a form – radio buttons read clearer there\n      - listitem: Turning one thing on or off – that's a switch\n    - heading \"Installation\" [level=2]\n    - paragraph: Add Segmented Control with the shadcn CLI – your project needs a components.json, see Installation in the docs – or copy the file by hand.\n    - paragraph: Requires React 19.\n    - tablist \"Installation method\":\n      - tab \"CLI\" [selected]\n      - tab \"Manual\"\n    - tablist \"Package manager\":\n      - tab \"pnpm\" [selected]\n      - tab \"npm\"\n      - tab \"yarn\"\n      - tab \"bun\"\n    - button \"Copy\":\n      - text: Copy\n    - code: pnpm dlx shadcn@latest add https://www.affectui.com/r/segmented-control-clean.json\n    - heading \"Usage\" [level=2]\n    - text: example.tsx\n    - button \"Copy\":\n      - text: Copy\n    - code:\n      - generic: \"import { SegmentedControl } from \\\"@/components/ui/segmented-control-clean\\\";\"\n      - generic: \"export function DashboardTabs() {\"\n      - generic: const [section, setSection] = useState(\"overview\");\n      - generic: return (\n      - generic: <SegmentedControl\n      - generic: aria-label=\"Dashboard section\"\n      - generic: kind=\"tabs\"\n      - generic: \"value={section}\"\n      - generic: \"onChange={setSection}\"\n      - generic: \"options={[\"\n      - generic: \"{ value: \\\"overview\\\", label: \\\"Overview\\\", controls: \\\"panel-overview\\\" },\"\n      - generic: \"{ value: \\\"analytics\\\", label: \\\"Analytics\\\", controls: \\\"panel-analytics\\\" },\"\n      - generic: \"{ value: \\\"reports\\\", label: \\\"Reports\\\", controls: \\\"panel-reports\\\" },\"\n      - generic: \"{ value: \\\"notifications\\\", label: \\\"Notifications\\\", count: unread, controls: \\\"panel-notifications\\\" },\"\n      - generic: \"]}\"\n      - generic: />\n      - generic: );\n      - generic: \"}\"\n    - heading \"Examples\" [level=2]\n    - heading \"Compact view switch with icons\" [level=3]\n    - text: example.tsx\n    - button \"Copy\":\n      - text: Copy\n    - code:\n      - generic: <SegmentedControl\n      - generic: size=\"sm\"\n      - generic: variant=\"tray\"\n      - generic: aria-label=\"Layout\"\n      - generic: defaultValue=\"board\"\n      - generic: \"options={[\"\n      - generic: \"{ value: \\\"list\\\", label: \\\"List\\\", icon: <ListIcon /> },\"\n      - generic: \"{ value: \\\"board\\\", label: \\\"Board\\\", icon: <BoardIcon /> },\"\n      - generic: \"{ value: \\\"calendar\\\", label: \\\"Calendar\\\", icon: <CalendarIcon /> },\"\n      - generic: \"]}\"\n      - generic: />\n    - heading \"Underline with a badge\" [level=3]\n    - text: example.tsx\n    - button \"Copy\":\n      - text: Copy\n    - code:\n      - generic: <SegmentedControl\n      - generic: variant=\"underline\"\n      - generic: aria-label=\"Billing period\"\n      - generic: \"value={period}\"\n      - generic: \"onChange={setPeriod}\"\n      - generic: \"options={[\"\n      - generic: \"{ value: \\\"monthly\\\", label: \\\"Monthly\\\" },\"\n      - generic: \"{ value: \\\"yearly\\\", label: \\\"Yearly\\\", badge: \\\"Save 20%\\\" },\"\n      - generic: \"]}\"\n      - generic: />\n    - heading \"API reference\" [level=2]\n    - heading \"SegmentedControl\" [level=3]\n    - table:\n      - rowgroup:\n        - row \"Prop Type Default Description\":\n          - columnheader \"Prop\"\n          - columnheader \"Type\"\n          - columnheader \"Default\"\n          - columnheader \"Description\"\n      - rowgroup:\n        - 'row \"options SegmentOption[] – { value, label?, icon?, count?, badge?, disabled?, ariaLabel?, controls? } – two to six work best; give icon-only options an ariaLabel\"':\n          - cell \"options\":\n            - code: options\n          - cell \"SegmentOption[]\":\n            - code: SegmentOption[]\n          - cell \"–\"\n          - 'cell \"{ value, label?, icon?, count?, badge?, disabled?, ariaLabel?, controls? } – two to six work best; give icon-only options an ariaLabel\"'\n        - row \"value string – Controlled value\":\n          - cell \"value\":\n            - code: value\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Controlled value\"\n        - row \"defaultValue string first enabled option Starting value when uncontrolled\":\n          - cell \"defaultValue\":\n            - code: defaultValue\n          - cell \"string\":\n            - code: string\n          - cell \"first enabled option\":\n            - code: first enabled option\n          - cell \"Starting value when uncontrolled\"\n        - 'row \"onChange (value: string) => void – Called with the new value – on click, while dragging the indicator and on arrow keys\"':\n          - cell \"onChange\":\n            - code: onChange\n          - 'cell \"(value: string) => void\"':\n            - code: \"(value: string) => void\"\n          - cell \"–\"\n          - cell \"Called with the new value – on click, while dragging the indicator and on arrow keys\"\n        - row \"size \\\"sm\\\" | \\\"md\\\" | \\\"lg\\\" \\\"md\\\" 24, 28 or 32px tall (40px+ on touch screens); md is 13px text with 4px 10px padding\":\n          - cell \"size\":\n            - code: size\n          - cell \"\\\"sm\\\" | \\\"md\\\" | \\\"lg\\\"\":\n            - code: \"\\\"sm\\\" | \\\"md\\\" | \\\"lg\\\"\"\n          - cell \"\\\"md\\\"\":\n            - code: \"\\\"md\\\"\"\n          - cell \"24, 28 or 32px tall (40px+ on touch screens); md is 13px text with 4px 10px padding\"\n        - row \"variant \\\"buttons\\\" | \\\"tray\\\" | \\\"underline\\\" \\\"buttons\\\" Separate chips with a hairline whose light-gray fill slides to the active one, a compact light-gray track with a white raised pill, or text tabs on a hairline with a sliding line\":\n          - cell \"variant\":\n            - code: variant\n          - cell \"\\\"buttons\\\" | \\\"tray\\\" | \\\"underline\\\"\":\n            - code: \"\\\"buttons\\\" | \\\"tray\\\" | \\\"underline\\\"\"\n          - cell \"\\\"buttons\\\"\":\n            - code: \"\\\"buttons\\\"\"\n          - cell \"Separate chips with a hairline whose light-gray fill slides to the active one, a compact light-gray track with a white raised pill, or text tabs on a hairline with a sliding line\"\n        - row \"fullWidth boolean false Fills its container with equal segments, each as wide as the widest one needs\":\n          - cell \"fullWidth\":\n            - code: fullWidth\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"false\":\n            - code: \"false\"\n          - cell \"Fills its container with equal segments, each as wide as the widest one needs\"\n        - row \"kind \\\"radio\\\" | \\\"tabs\\\" \\\"radio\\\" A radiogroup, or a tablist that switches panels (pair with controls on each option)\":\n          - cell \"kind\":\n            - code: kind\n          - cell \"\\\"radio\\\" | \\\"tabs\\\"\":\n            - code: \"\\\"radio\\\" | \\\"tabs\\\"\"\n          - cell \"\\\"radio\\\"\":\n            - code: \"\\\"radio\\\"\"\n          - cell \"A radiogroup, or a tablist that switches panels (pair with controls on each option)\"\n        - row \"disabled boolean false Disables the whole control\":\n          - cell \"disabled\":\n            - code: disabled\n          - cell \"boolean\":\n            - code: boolean\n          - cell \"false\":\n            - code: \"false\"\n          - cell \"Disables the whole control\"\n        - row \"aria-label string – Names the group – or use aria-labelledby\":\n          - cell \"aria-label\":\n            - code: aria-label\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Names the group – or use aria-labelledby\"\n        - row \"className string – Extra class on the root\":\n          - cell \"className\":\n            - code: className\n          - cell \"string\":\n            - code: string\n          - cell \"–\"\n          - cell \"Extra class on the root\"\n    - heading \"Keyboard interactions\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Tab Focuses the active option (one tab stop for the whole control)\":\n          - cell \"Tab\":\n            - generic: Tab\n          - cell \"Focuses the active option (one tab stop for the whole control)\"\n        - row \"← or → Moves to and selects the previous or next option, wrapping around; ↑ ↓ too as a radiogroup\":\n          - cell \"← or →\":\n            - generic: ←\n            - text: or\n            - generic: →\n          - cell \"Moves to and selects the previous or next option, wrapping around; ↑ ↓ too as a radiogroup\"\n        - row \"Home or End Selects the first or last option\":\n          - cell \"Home or End\":\n            - generic: Home\n            - text: or\n            - generic: End\n          - cell \"Selects the first or last option\"\n        - row \"↵ Selects the focused option (Space works too)\":\n          - cell \"↵\":\n            - generic: ↵\n          - cell \"Selects the focused option (Space works too)\"\n    - heading \"Accessibility\" [level=2]\n    - list:\n      - listitem: A radiogroup with radios (aria-checked), or a tablist with tabs (aria-selected, aria-controls) with kind=\"tabs\"\n      - listitem: \"Roving tabindex: only the active option is in the tab order; disabled options are skipped by the arrow keys\"\n      - listitem: Labels are read once; counts and badges are part of the name\n      - listitem: Visible focus ring on the focused option\n    - heading \"Motion\" [level=2]\n    - list:\n      - listitem: The indicator slides to the picked option in about 200ms; the edge facing the target leads a touch – short and crisp, no bounce\n      - listitem: Labels keep one weight and only change color, so neighbours never shift; hover washes fade in and out in 90ms\n      - listitem: When a label or count changes, the option and the whole control morph to the new width and the indicator follows; a new count blurs in\n      - listitem: Pressing gives the indicator a little (scale 0.97); dragging it across the options selects as you go\n      - listitem: With prefers-reduced-motion everything switches instantly\n    - heading \"Responsive behavior\" [level=2]\n    - list:\n      - listitem: If it doesn't fit, it scrolls sideways with soft edges on the sides that hide options and keeps the active one in view\n      - listitem: \"Touch screens: options are at least 40px tall; a tap picks on lift, so swiping to scroll never picks by accident\"\n      - listitem: \"Dark mode built in: switches when an ancestor (usually <html>) has the class dark or data-theme=\\\"dark\\\"\"\n    - heading \"Related\" [level=2]\n    - article:\n      - generic: Inputs\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - link \"Date Range Picker Presets and two calendars with a hover preview, comparison with the previous period or year, full keyboard control\":\n        - /url: /components/date-range-picker\n        - heading \"Date Range Picker\" [level=3]\n        - paragraph: Presets and two calendars with a hover preview, comparison with the previous period or year, full keyboard control\n      - button \"Date Range Picker is part of Pro – see pricing\":\n    - article:\n      - generic: Inputs\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - link \"Filter Menu Grouped filters with removable chips, collapsible checkbox groups, Clear all and full keyboard control\":\n        - /url: /components/filter-menu\n        - heading \"Filter Menu\" [level=3]\n        - paragraph: Grouped filters with removable chips, collapsible checkbox groups, Clear all and full keyboard control\n      - button \"Copy to clipboard\":\n    - article:\n      - generic: Data display\n      - generic \"Comes in Classic and Clean\": 2 styles\n      - generic: Pro\n      - 'link \"Data Table Spreadsheet-style table: select cells and ranges, edit in place, copy and paste, undo and sort\"':\n        - /url: /components/data-table\n        - heading \"Data Table\" [level=3]\n        - paragraph: \"Spreadsheet-style table: select cells and ranges, edit in place, copy and paste, undo and sort\"\n      - button \"Data Table is part of Pro – see pricing\":\n    - generic: affectUI · 90 components · 33 screens · 14 blocks · 26 illustrations · 8 motion effects\n- contentinfo:\n  - link \"affectUI\":\n    - /url: /\n    - generic: affectUI\n  - paragraph: Agent-ready React UI for AI products – one file each, no dependencies.\n  - link \"affectUI on X\":\n    - /url: https://x.com/affectui\n  - navigation \"Footer\":\n    - generic: Site\n    - link \"Home\":\n      - /url: /\n    - link \"Components\":\n      - /url: /components\n    - link \"Screens\":\n      - /url: /screens\n    - link \"Blocks\":\n      - /url: /blocks\n    - link \"Illustrations\":\n      - /url: /illustrations\n    - link \"Motion\":\n      - /url: /motion\n    - link \"Pricing\":\n      - /url: /pricing\n    - generic: Docs\n    - link \"Introduction\":\n      - /url: /docs\n    - link \"Installation\":\n      - /url: /docs/installation\n    - link \"Accessibility\":\n      - /url: /docs/accessibility\n    - link \"Guides\":\n      - /url: /guides\n    - link \"Compare\":\n      - /url: /compare\n    - generic: Legal & Account\n    - link \"Account\":\n      - /url: /account\n    - link \"License\":\n      - /url: /license\n    - link \"Terms\":\n      - /url: /terms\n    - link \"Privacy\":\n      - /url: /privacy\n    - link \"Refund\":\n      - /url: /refund\n    - link \"Imprint\":\n      - /url: /imprint\n    - button \"Cookie settings\"\n    - link \"Contact\":\n      - /url: /contact\n  - paragraph:\n    - text: Created by\n    - link \"Flo\":\n      - /url: https://x.com/flohoeller"
+}

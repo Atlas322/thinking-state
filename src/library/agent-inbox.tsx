@@ -116,56 +116,25 @@ const sampleTasks: AgentTask[] = [
 
 function Glyph({ name, className = "" }: { name: string; className?: string }) {
   const paths: Record<string, React.ReactNode> = {
-    spark: (
-      <path
-        d="M8 1.5 9.8 6.2 14.5 8l-4.7 1.8L8 14.5 6.2 9.8 1.5 8l4.7-1.8Z"
-        fill="currentColor"
-        stroke="none"
-      />
-    ),
-    search: (
-      <>
-        <circle cx="6.5" cy="6.5" r="3.8" />
-        <path d="m9.3 9.3 3.5 3.5" />
-      </>
-    ),
-    tool: (
-      <path d="m9.2 2 .1 3.2 2.3 1.6 2-1.4a4.3 4.3 0 0 1-5.7 5l-4 4-1.6-1.6 4-4A4.3 4.3 0 0 1 9.2 2Z" />
-    ),
-    board: (
-      <>
-        <rect x="2" y="3" width="4" height="10" rx="1" />
-        <rect x="10" y="3" width="4" height="7" rx="1" />
-      </>
-    ),
-    list: <path d="M3 4h10M3 8h10M3 12h10" />,
-    down: <path d="m5 6 3 3 3-3" />,
-    warning: (
-      <>
-        <path d="m8 2 6 11H2Z" />
-        <path d="M8 6v3m0 2v.2" />
-      </>
-    ),
-    error: (
-      <>
-        <circle cx="8" cy="8" r="5" />
-        <path d="M8 5v3m0 2v.2" />
-      </>
-    ),
+    spark: <><path d="M7 1.2c.4 2.9 1.9 4.4 4.8 4.8-2.9.4-4.4 1.9-4.8 4.8C6.6 7.9 5.1 6.4 2.2 6 5.1 5.6 6.6 4.1 7 1.2Z" fill="currentColor" stroke="none" /><circle cx="11.6" cy="11.4" r="1.1" fill="currentColor" stroke="none" opacity=".55" /></>,
+    search: <><circle cx="5.2" cy="5.2" r="3.3" /><path d="m7.7 7.7 2.6 2.6" /></>,
+    tool: <path d="M7.6 1.6a2.6 2.6 0 0 0-2.4 3.5L1.7 8.6a1.1 1.1 0 0 0 1.6 1.6l3.5-3.5a2.6 2.6 0 0 0 3.5-2.4l-1.5 1.1-1.5-.4-.4-1.5 1.1-1.5c-.1 0-.3-.4-.4-.4Z" />,
+    board: <><rect x="1.8" y="2.2" width="3.2" height="9.6" rx="1" /><rect x="8.9" y="2.2" width="3.2" height="6.4" rx="1" /></>,
+    list: <path d="M2.2 3.6h9.6M2.2 7h9.6M2.2 10.4h9.6" />,
+    warning: <><path d="m8 2 6 11H2Z" /><path d="M8 6v3m0 2v.2" /></>,
+    error: <><circle cx="6" cy="6" r="4.8" fill="currentColor" stroke="none" /><path d="M6 3.6v2.8M6 8.3v.1" stroke="#fff" strokeWidth="1.5" /></>,
+    spinner: <><circle cx="6" cy="6" r="4.6" strokeOpacity=".25" strokeWidth="1.6" /><path d="M6 1.4a4.6 4.6 0 0 1 4.6 4.6" strokeWidth="1.6" /></>,
+    dot: <circle cx="6" cy="6" r="3.4" fill="currentColor" stroke="none" />,
     check: <path d="m3 8 3 3 7-7" />,
-    open: (
-      <>
-        <path d="M9 2h5v5m0-5-8 8M6 3H2v11h11v-4" />
-      </>
-    ),
   };
+  const size = ["search", "tool", "error", "spinner", "dot"].includes(name) ? 12 : name === "warning" || name === "check" ? 16 : 14;
   return (
     <svg
       className={className}
-      viewBox="0 0 16 16"
+      viewBox={`0 0 ${size} ${size}`}
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.25"
+      strokeWidth="1.2"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -222,6 +191,7 @@ export function AgentInbox({
   const mode = view ?? localView;
   const root = React.useRef<HTMLElement>(null);
   const previousRects = React.useRef(new Map<string, DOMRect>());
+  const focusAfterAction = React.useRef<string | null>(null);
   const id = React.useId();
   React.useEffect(() => {
     if (!hasClock) return;
@@ -251,6 +221,12 @@ export function AgentInbox({
         );
     });
     previousRects.current = next;
+    if (focusAfterAction.current) {
+      Array.from(root.current?.querySelectorAll<HTMLElement>("[data-task]") ?? [])
+        .find((element) => element.dataset.task === focusAfterAction.current)
+        ?.querySelector<HTMLButtonElement>(".ai-inbox-toggle")?.focus();
+      focusAfterAction.current = null;
+    }
   }, [rows, mode, expanded]);
   const changeView = (next: "board" | "list") => {
     setLocalView(next);
@@ -284,6 +260,7 @@ export function AgentInbox({
           elapsed: undefined,
           elapsedSeconds: undefined,
         };
+    if (root.current?.contains(document.activeElement)) focusAfterAction.current = task.id;
     setNow(timestamp);
     setOverrides((old) => new Map(old).set(task.id, { source, task: next }));
     setExpanded(null);
@@ -328,9 +305,8 @@ export function AgentInbox({
           onClick={() => setExpanded(open ? null : task.id)}
         >
           <span className="ai-inbox-title">
-            <Glyph name="spark" />
-            <strong>{task.title}</strong>
-            <Glyph name="down" className="ai-inbox-chevron" />
+            <span className="ai-inbox-mark"><Glyph name="spark" /></span>
+            <strong dir="auto" title={task.title}>{task.title}</strong>
           </span>
           {task.description && <span className="ai-inbox-description">{task.description}</span>}
           <span className="ai-inbox-meta">
@@ -340,13 +316,7 @@ export function AgentInbox({
               ) : task.status === "failed" ? (
                 <Glyph name="error" />
               ) : (
-                <i
-                  className={
-                    task.status === "running"
-                      ? "ai-inbox-spinner"
-                      : "ai-inbox-dot"
-                  }
-                />
+                <Glyph name={task.status === "running" ? "spinner" : "dot"} className={task.status === "running" ? "ai-inbox-spinner" : "ai-inbox-dot"} />
               )}
               {task.status === "waiting"
                 ? `Waiting for you · ${duration}`
@@ -354,6 +324,7 @@ export function AgentInbox({
                   ? "Failed"
                   : duration}
             </span>
+            <span className="ai-inbox-counters">
             {task.sources != null && <span className="ai-inbox-count" title={`${task.sources} sources`}>
               <Glyph name="search" />
               {task.sources}
@@ -362,12 +333,12 @@ export function AgentInbox({
               <Glyph name="tool" />
               {task.tools}
             </span>}
+            </span>
           </span>
         </button>
         {open && (
           <div id={detailId} className="ai-inbox-details">
             <span className="ai-inbox-agent">
-              <Glyph name="spark" />
               {task.agent}
             </span>
             {!!task.steps?.length && <ol>
@@ -397,12 +368,11 @@ export function AgentInbox({
                   className="ai-inbox-primary"
                   onClick={() => act(task, "retry")}
                 >
-                  ↻ Retry
+                  Retry
                 </button>
               ) : onOpen ? (
-                <button type="button" onClick={() => act(task, "open")}>
-                  <Glyph name="open" />
-                  Open task
+                <button type="button" aria-label="Open task" onClick={() => act(task, "open")}>
+                  Open
                 </button>
               ) : null}
             </div>
@@ -431,7 +401,7 @@ export function AgentInbox({
       <header className="ai-inbox-header">
         <span>
           <span>Agents</span>
-          <b>/</b>
+          <b aria-hidden="true">/</b>
           <strong>{title}</strong>
         </span>
         <div className="ai-inbox-header-actions">
@@ -499,12 +469,22 @@ export function AgentInbox({
   );
 }
 
+// Values measured from the public Clean preview; independently authored styles.
 const css = `
-.ai-inbox-header-actions{display:flex;align-items:center;gap:8px}.ai-inbox-header-action{border:1px solid var(--in-line);background:var(--in-card);border-radius:7px;padding:5px 9px;white-space:nowrap}.ai-inbox-header-action:hover{border-color:var(--in-muted)}.ai-inbox-title+.ai-inbox-meta{margin-top:12px}
-.ai-inbox{--in-fg:#242424;--in-muted:#888;--in-card:#fff;--in-group:#f0f0f0;--in-line:#e5e5e5;--in-blue:#788fdb;--in-green:#6abc96;--in-amber:#c69e5b;--in-red:#d66c72;color:var(--in-fg);font:400 13px/1.5 Inter,system-ui,sans-serif;width:100%;max-width:720px;container-type:inline-size;isolation:isolate;text-align:left}
-:where(.dark,[data-theme=dark]) .ai-inbox{--in-fg:#e9e9e9;--in-muted:#929292;--in-card:#202022;--in-group:#19191b;--in-line:#303033;color-scheme:dark}
-.ai-inbox *{box-sizing:border-box}.ai-inbox button{font:inherit;color:inherit;cursor:pointer}.ai-inbox button:focus-visible{outline:2px solid var(--in-blue);outline-offset:3px}.ai-inbox svg{width:13px;height:13px;flex:none}.ai-inbox-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 12px;padding:0 2px;min-height:32px}.ai-inbox-header>span{display:flex;align-items:center;gap:12px}.ai-inbox-header>span>span{color:var(--in-muted)}.ai-inbox-header b{font-weight:400;opacity:.35}.ai-inbox-header strong{font-weight:500}.ai-inbox-switch{display:flex;background:var(--in-group);padding:3px;border-radius:9px;border:1px solid var(--in-line)}.ai-inbox-switch button{border:0;border-radius:5px;background:none;color:var(--in-muted);padding:3px 8px;display:flex;align-items:center;gap:5px;font-size:12px}.ai-inbox-switch [aria-checked=true]{background:var(--in-card);color:var(--in-fg);box-shadow:0 1px 3px #0002}.ai-inbox-groups{display:grid;gap:9px;align-items:start}.ai-inbox-board{grid-template-columns:repeat(3,minmax(0,1fr))}.ai-inbox-list{grid-template-columns:1fr}.ai-inbox-group{min-width:0;background:var(--in-group);padding:3px;border-radius:13px}.ai-inbox-group>header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.55px;color:var(--in-muted)}.ai-inbox-group>header>svg{color:var(--in-blue);width:12px;height:12px}.ai-inbox-group>header small{font-size:10px;line-height:17px;min-width:19px;text-align:center;border-radius:4px;background:var(--in-line);letter-spacing:0}.ai-inbox-cards{display:grid;gap:4px}.ai-inbox-card{border:1px solid var(--in-line);border-radius:10px;background:var(--in-card);overflow:hidden;min-width:0;transition:border-color .18s;box-shadow:0 1px 2px #00000004}.ai-inbox-card:hover{border-color:color-mix(in srgb,var(--in-muted) 45%,var(--in-line))}.ai-inbox-toggle{width:100%;display:block;text-align:left;padding:11px 12px 12px;border:0;background:none}.ai-inbox-title{display:flex;align-items:center;gap:8px}.ai-inbox-title strong{font-size:13px;line-height:20px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.ai-inbox-title>svg:first-child{width:12px;height:12px;color:var(--in-blue)}.ai-inbox-card.waiting .ai-inbox-title>svg:first-child{color:var(--in-amber)}.ai-inbox-card.failed .ai-inbox-title>svg:first-child{color:var(--in-red)}.ai-inbox-card.done .ai-inbox-title>svg:first-child{color:var(--in-green)}.ai-inbox-chevron{margin-left:auto;color:var(--in-muted);opacity:0;transition:transform .2s,opacity .2s}.ai-inbox-card:hover .ai-inbox-chevron,.ai-inbox-toggle:focus-visible .ai-inbox-chevron,.ai-inbox-card.expanded .ai-inbox-chevron{opacity:1}.ai-inbox-card.expanded .ai-inbox-chevron{transform:rotate(180deg)}.ai-inbox-description{font-size:13px;line-height:19px;color:var(--in-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:5px 0 12px}.ai-inbox-meta{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--in-muted);font-variant-numeric:tabular-nums}.ai-inbox-status{display:flex;align-items:center;gap:6px;margin-right:auto;min-width:0}.ai-inbox-status>svg{width:12px;height:12px;color:var(--in-amber)}.ai-inbox-card.failed .ai-inbox-status>svg{color:var(--in-red)}.ai-inbox-count{display:flex;align-items:center;gap:4px;font-size:10px;white-space:nowrap}.ai-inbox-count svg{width:12px;height:12px;opacity:.8}.ai-inbox-count+.ai-inbox-count{padding-left:7px;border-left:1px solid var(--in-line)}.ai-inbox-spinner{width:8px;height:8px;border:1.5px solid color-mix(in srgb,var(--in-blue) 25%,transparent);border-top-color:var(--in-blue);border-radius:50%;animation:in-spin 1s linear infinite;flex:none}.ai-inbox-dot{width:6px;height:6px;border-radius:50%;background:var(--in-green);flex:none}.ai-inbox-details{padding:0 12px 12px;animation:in-open .2s ease-out}.ai-inbox-agent{display:flex;align-items:center;gap:6px;color:var(--in-muted);font-size:10px;border-top:1px solid var(--in-line);padding-top:12px}.ai-inbox-details ol{list-style:none;margin:14px 0;padding:0}.ai-inbox-details li{position:relative;display:flex;flex-direction:column;gap:2px;padding:0 0 12px 14px;margin-left:3px;border-left:1px solid var(--in-line);font-size:11px;line-height:17px}.ai-inbox-details li:last-child{border-color:transparent;padding-bottom:0}.ai-inbox-details li:before{content:'';position:absolute;left:-3px;top:6px;width:5px;height:5px;border-radius:50%;background:var(--in-muted);box-shadow:0 0 0 3px var(--in-card)}.ai-inbox-details time{font-size:10px;color:var(--in-muted)}.ai-inbox-actions{display:flex;gap:6px}.ai-inbox-actions button{display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid var(--in-line);background:none;border-radius:5px;padding:5px 9px;font-size:11px;transition:opacity .15s}.ai-inbox-actions button:hover{opacity:.7}.ai-inbox-actions button.ai-inbox-primary{background:var(--in-fg);border-color:var(--in-fg);color:var(--in-card)}.ai-inbox-empty{font-size:11px;padding:14px;text-align:center;color:var(--in-muted);margin:0}.ai-inbox-footer{display:flex;justify-content:space-between;gap:12px;color:var(--in-muted);font-size:10px;padding:12px 3px 0}.ai-inbox-footer b{font-weight:400;padding:0 5px;opacity:.6}.ai-inbox-notice{font-size:11px;line-height:18px;color:var(--in-muted);margin:10px 3px 0}.ai-inbox-notice:empty{display:none}.ai-inbox-list .ai-inbox-title strong{font-size:13px}.ai-inbox-list .ai-inbox-description{-webkit-line-clamp:1;margin-left:20px}.ai-inbox-list .ai-inbox-details li{flex-direction:row;justify-content:space-between}.ai-inbox-list .ai-inbox-meta{margin-left:20px}.ai-inbox-list .ai-inbox-chevron{opacity:1}.ai-inbox-list .ai-inbox-group>header{justify-content:flex-start}.ai-inbox-list .ai-inbox-group>header small{margin-left:auto}.ai-inbox-list .ai-inbox-description{margin-bottom:8px}
-@container(max-width:619px){.ai-inbox-board{grid-template-columns:1fr}.ai-inbox-switch{display:none}.ai-inbox-description{-webkit-line-clamp:2}.ai-inbox-group>header{justify-content:flex-start}.ai-inbox-group>header small{margin-left:auto}.ai-inbox-chevron{opacity:1}.ai-inbox-details li{flex-direction:row;justify-content:space-between;gap:12px}.ai-inbox-details time{white-space:nowrap}}
+.ai-inbox{--in-fg:#1c1c1f;--in-text:#55555c;--in-muted:#8e8e96;--in-slash:#b4b4bb;--in-card:#fff;--in-group:#f4f4f5;--in-line:#e9e9ec;--in-count:#1010180f;--in-blue:#2f6bff;--in-green:#22a05a;--in-amber:#e7ab50;--in-red:#e5484d;color:var(--in-text);font:400 13px/20px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;width:100%;max-width:720px;container-type:inline-size;isolation:isolate;text-align:left}
+:where(.dark,[data-theme=dark]) .ai-inbox{--in-fg:#ededed;--in-text:#b6b6bd;--in-muted:#85858d;--in-card:#1e1e21;--in-group:#161618;--in-line:#2c2c31;--in-count:#ffffff12;--in-slash:#5c5c63;--in-blue:#5b8cff;--in-green:#3ecf8e;--in-red:#ff6b66;color-scheme:dark}
+.ai-inbox *{box-sizing:border-box}.ai-inbox button{font:inherit;color:inherit;cursor:pointer}.ai-inbox button:focus-visible{outline:2px solid var(--in-blue);outline-offset:3px}.ai-inbox svg{width:14px;height:14px;flex:none}
+.ai-inbox-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:0 2px;min-height:32px}.ai-inbox-header>span{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--in-fg);min-width:0}.ai-inbox-header>span>span{color:var(--in-muted);font-weight:400}.ai-inbox-header b{font-weight:500;color:var(--in-slash)}.ai-inbox-header strong{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ai-inbox-header-actions{display:flex;align-items:center;gap:8px}.ai-inbox-header-action{border:0;background:var(--in-card);box-shadow:inset 0 0 0 1px var(--in-line);border-radius:8px;padding:0 12px;height:28px;white-space:nowrap}
+.ai-inbox-switch{display:flex;gap:2px;background:var(--in-group);padding:3px;border-radius:10px}.ai-inbox-switch button{border:0;border-radius:7px;background:none;color:var(--in-muted);padding:0 10px;height:26px;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500}.ai-inbox-switch svg{width:13px;height:13px}.ai-inbox-switch [aria-checked=true]{background:var(--in-card);color:var(--in-fg);box-shadow:0 1px 2px #10101814,0 0 0 1px #1010180a}
+.ai-inbox-groups{display:grid;gap:8px;align-items:start}.ai-inbox-board{grid-template-columns:repeat(3,minmax(0,1fr))}.ai-inbox-list{grid-template-columns:1fr}.ai-inbox-group{min-width:0;background:var(--in-group);padding:4px;border-radius:14px}.ai-inbox-group>header{display:grid;grid-template-columns:20px 1fr auto;align-items:center;height:34px;padding:0 8px 0 10px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.55px;color:var(--in-muted)}.ai-inbox-group>header>svg{color:var(--in-blue);width:14px;height:14px}.ai-inbox-group>header small{display:grid;place-items:center;font-size:11px;font-weight:500;line-height:20px;min-width:20px;height:18px;padding:0 5px;border-radius:6px;background:var(--in-count);color:var(--in-text);letter-spacing:0}
+.ai-inbox-cards{display:grid;gap:6px}.ai-inbox-card{position:relative;border:0;border-radius:10px;background:var(--in-card);overflow:hidden;min-width:0;transition:box-shadow .18s;box-shadow:0 0 0 1px var(--in-line),0 1px 2px #1010180a}.ai-inbox-card:hover,.ai-inbox-card.expanded{box-shadow:0 0 0 1px color-mix(in srgb,var(--in-muted) 22%,var(--in-line)),0 6px 18px -8px #0004}.ai-inbox-toggle{width:100%;display:grid;gap:6px;text-align:left;padding:12px 14px 12px 12px;border:0;border-radius:10px;background:none}.ai-inbox-title{display:flex;align-items:center;gap:10px;min-width:0}.ai-inbox-title strong{font-size:14px;line-height:20px;font-weight:500;color:var(--in-fg);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.ai-inbox-mark{display:grid;place-items:center;width:16px;height:20px;flex:none;color:var(--in-blue)}.ai-inbox-card.waiting .ai-inbox-mark{color:var(--in-amber)}.ai-inbox-card.failed .ai-inbox-mark{color:var(--in-red)}.ai-inbox-card.done .ai-inbox-mark{color:var(--in-green)}
+
+.ai-inbox-description{font-size:13px;line-height:19px;color:var(--in-text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0}.ai-inbox-meta{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;margin:4px 0 0;font-size:12.5px;line-height:20px;color:var(--in-text);font-variant-numeric:tabular-nums}.ai-inbox-status{display:flex;align-items:center;gap:8px;min-width:0}.ai-inbox-status>svg{width:12px;height:12px;color:var(--in-amber)}.ai-inbox-card.failed .ai-inbox-status>svg{color:var(--in-red)}.ai-inbox-counters{display:flex;margin-left:auto;color:var(--in-muted);font-size:12px}.ai-inbox-count{display:flex;align-items:center;gap:5px;padding:0 9px;white-space:nowrap}.ai-inbox-count:last-child{padding-right:0}.ai-inbox-count svg{width:12px;height:12px}.ai-inbox-count+.ai-inbox-count{border-left:1px solid var(--in-line)}.ai-inbox-status>.ai-inbox-spinner{color:var(--in-blue);animation:in-spin .9s linear infinite}.ai-inbox-status>.ai-inbox-dot{color:var(--in-green)}
+
+.ai-inbox-details{margin:0 14px 0 12px;padding:10px 0 12px;border-top:1px solid var(--in-line);animation:in-open .2s ease-out}.ai-inbox-agent{display:block;color:var(--in-muted);font-size:12px;line-height:20px}.ai-inbox-details ol{list-style:none;display:grid;gap:5px;margin:6px 0 0;padding:0 0 0 12px;position:relative}.ai-inbox-details li{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:10px;font-size:12.5px;line-height:18px}.ai-inbox-details li:before{content:'';position:absolute;left:-12px;top:7px;width:4px;height:4px;border-radius:50%;background:var(--in-muted)}.ai-inbox-details li:not(:last-child):after{content:'';position:absolute;left:-10.5px;top:13px;bottom:-4px;border-left:1px solid var(--in-line)}.ai-inbox-details time{font-size:12.5px;color:var(--in-muted);white-space:nowrap}.ai-inbox-actions{display:flex;gap:6px;margin:10px 0 0}.ai-inbox-actions button{display:flex;align-items:center;justify-content:center;gap:4px;border:0;box-shadow:inset 0 0 0 1px var(--in-line);background:var(--in-card);color:var(--in-fg);border-radius:8px;padding:0 12px;height:28px;font-size:12.5px;font-weight:500;transition:opacity .15s}.ai-inbox-actions button:hover{opacity:.7}.ai-inbox-actions button.ai-inbox-primary{background:var(--in-fg);box-shadow:none;color:var(--in-card)}.ai-inbox-empty{font-size:12px;padding:14px;text-align:center;color:var(--in-muted);margin:0}
+.ai-inbox-footer,.ai-inbox-notice{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;padding:0}.ai-inbox-notice:empty{display:none}
+.ai-inbox-list .ai-inbox-description,.ai-inbox-list .ai-inbox-meta{padding-left:26px}.ai-inbox-list .ai-inbox-meta{gap:10px}.ai-inbox-list .ai-inbox-group>header{grid-template-columns:20px auto 1fr;gap:4px}.ai-inbox-list .ai-inbox-group>header small{justify-self:end}
+@container(max-width:619px){.ai-inbox-board{grid-template-columns:1fr}.ai-inbox-switch{display:none}.ai-inbox-group>header{grid-template-columns:20px auto 1fr;gap:4px}.ai-inbox-group>header small{justify-self:end}.ai-inbox-header{min-height:20px}.ai-inbox .ai-inbox-description,.ai-inbox .ai-inbox-meta{padding-left:0}.ai-inbox-meta{gap:2px 10px}}
 @keyframes in-spin{to{transform:rotate(360deg)}}@keyframes in-open{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){.ai-inbox *{animation:none!important;transition:none!important}}
 `;
 

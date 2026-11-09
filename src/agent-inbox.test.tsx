@@ -115,6 +115,16 @@ describe("Agent Inbox documented integration", () => {
     expect(screen.queryByRole("button", { name: "Approve" })).toBeNull();
   });
 
+  it.each(["Approve", "Reject", "Retry"])("keeps keyboard focus on the task after fallback %s", (label) => {
+    render(<AgentInbox tasks={[task({ status: label === "Retry" ? "failed" : "waiting" })]} />);
+    fireEvent.click(toggle());
+    const action = screen.getByRole("button", { name: new RegExp(label) });
+    action.focus();
+    fireEvent.click(action);
+    expect(document.activeElement).toBe(toggle());
+    expect(toggle().getAttribute("aria-expanded")).toBe("false");
+  });
+
   it("supports keyboard layout selection and waits for controlled view updates", () => {
     const onViewChange = vi.fn();
     const view = render(<AgentInbox tasks={[]} view="board" onViewChange={onViewChange} />);
