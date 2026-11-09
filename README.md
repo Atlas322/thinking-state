@@ -89,9 +89,11 @@ Service variables (Railway → service → Variables):
 | `NOTIFY_EMAIL_TO` | Recipient(s), comma-separated |
 | `NOTIFY_EMAIL_FROM` | Sender, e.g. `Deploys <deploys@thinkstate.site>` (domain must be verified in Resend) |
 | `NOTIFY_STATUSES` | Statuses to email, default `SUCCESS,FAILED,CRASHED` |
+| `NOTIFY_TEST_COOLDOWN_MS` | Min interval between website test-button emails, default 30000 |
 | `NOTIFY_ON_START` | Set to `false` to disable the startup self-report (default on) |
 
-On every successful deploy the new container also emails on its own (using Railway's
+The topbar "Test notification" button calls `POST /api/notify-test`, which emails the
+configured recipient (rate limited). On every successful deploy the new container also emails on its own (using Railway's
 `RAILWAY_GIT_*` / `RAILWAY_DEPLOYMENT_ID` variables, deduplicated via Resend's Idempotency-Key),
 so `SUCCESS` mails need no webhook. For `FAILED`/`CRASHED` mails add the webhook:
 Railway → Project Settings → Webhooks → URL `https://www.thinkstate.site/api/railway-webhook`,

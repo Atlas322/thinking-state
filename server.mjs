@@ -52,7 +52,7 @@ const summarize = (p) => {
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 const sendEmail = async (s, raw, idempotencyKey) => {
-  const emoji = s.status === "SUCCESS" ? "✅" : s.status === "FAILED" ? "❌" : s.status === "CRASHED" ? "💥" : "ℹ️";
+  const emoji = s.status === "SUCCESS" ? "✅" : s.status === "FAILED" ? "❌" : s.status === "CRASHED" ? "💥" : s.status === "TEST" ? "🔔" : "ℹ️";
   const subject = `${emoji} ${s.service || "service"} deploy ${s.status}${s.commit ? ` (${s.commit})` : ""}`;
   const rows = [
     ["Project", s.project], ["Environment", s.environment], ["Service", s.service],
@@ -79,8 +79,38 @@ const sendEmail = async (s, raw, idempotencyKey) => {
 
 const json = (res, code, obj) => { res.writeHead(code, { "Content-Type": "application/json" }); res.end(JSON.stringify(obj)); };
 
+const TEST_PATH = "/api/notify-test";
+const TEST_COOLDOWN_MS = Number(process.env.NOTIFY_TEST_COOLDOWN_MS) || 30_000;
+let lastTestAt = 0;
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, "http://localhost");
+  if (url.pathname === TEST_PATH) {
+    if (req.method !== "POST") return json(res, 405, { error: "method not allowed" });
+    if (!RESEND_API_KEY || EMAIL_TO.length === 0) return json(res, 503, { ok: false, error: "email not configured" });
+    const wait = lastTestAt + TEST_COOLDOWN_MS - Date.now();
+    if (wait > 0) return json(res, 429, { ok: false, error: `try again in ${Math.ceil(wait / 1000)}s` });
+    lastTestAt = Date.now();
+    const e = process.env;
+    const s = {
+      status: "TEST",
+      project: e.RAILWAY_PROJECT_NAME || "", environment: e.RAILWAY_ENVIRONMENT_NAME || "",
+      service: e.RAILWAY_SERVICE_NAME || "", branch: e.RAILWAY_GIT_BRANCH || "",
+      commit: (e.RAILWAY_GIT_COMMIT_SHA || "").slice(0, 7), author: e.RAILWAY_GIT_AUTHOR || "",
+      message: "Manual test from the website notification button",
+      deploymentId: e.RAILWAY_DEPLOYMENT_ID || "", timestamp: new Date().toISOString(),
+      url: e.RAILWAY_PUBLIC_DOMAIN ? `https://${e.RAILWAY_PUBLIC_DOMAIN}` : "",
+    };
+    const meta = { ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress, userAgent: req.headers["user-agent"] };
+    try {
+      const out = await sendEmail(s, { source: "notify-test", request: meta }, null);
+      console.log("[notify-test] email sent", out);
+      return json(res, 200, { ok: true, to: EMAIL_TO, id: JSON.parse(out).id });
+    } catch (err) {
+      console.error("[notify-test] email failed", err.message);
+      return json(res, 502, { ok: false, error: err.message });
+    }
+  }
   if (url.pathname === WEBHOOK_PATH) {
     if (req.method !== "POST") return json(res, 405, { error: "method not allowed" });
     const auth = req.headers.authorization || "";
