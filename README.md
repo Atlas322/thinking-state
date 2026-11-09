@@ -4,6 +4,8 @@ A searchable, copyable React component library covering all **90 components** li
 
 **23 components use the original MIT source**, with Clean and Classic styles. **67 are independent recreations** of public previews and documented behavior. They are not affectUI Pro source, and they do not all match the original appearance or API. See [VISUAL_REVIEW.md](./VISUAL_REVIEW.md) for the actual browser comparison and remaining differences.
 
+The [architecture audit](./ARCHITECTURE_AUDIT.md) verifies how affectUI uses the shadcn registry and records the implementation gaps. The 67 independent recreations should not be treated as exact substitutes for affectUI Pro.
+
 ## Start locally
 
 Use Node.js 22.12+.
