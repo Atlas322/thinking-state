@@ -51,13 +51,13 @@ const summarize = (p) => {
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-const sendEmail = async (s, raw) => {
+const sendEmail = async (s, raw, idempotencyKey) => {
   const emoji = s.status === "SUCCESS" ? "✅" : s.status === "FAILED" ? "❌" : s.status === "CRASHED" ? "💥" : "ℹ️";
   const subject = `${emoji} ${s.service || "service"} deploy ${s.status}${s.commit ? ` (${s.commit})` : ""}`;
   const rows = [
     ["Project", s.project], ["Environment", s.environment], ["Service", s.service],
     ["Status", s.status], ["Branch", s.branch], ["Commit", s.commit],
-    ["Author", s.author], ["Message", s.message], ["Deployment", s.deploymentId], ["Time", s.timestamp],
+    ["Author", s.author], ["Message", s.message], ["URL", s.url], ["Deployment", s.deploymentId], ["Time", s.timestamp],
   ].filter(([, v]) => v);
   const text = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
   const html = `<h2>${esc(subject)}</h2><table>${rows
@@ -65,7 +65,11 @@ const sendEmail = async (s, raw) => {
     <details><summary>Raw payload</summary><pre>${esc(JSON.stringify(raw, null, 2))}</pre></details>`;
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+      ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
+    },
     body: JSON.stringify({ from: EMAIL_FROM, to: EMAIL_TO, subject, text, html }),
   });
   const body = await res.text();
@@ -103,4 +107,34 @@ const server = http.createServer(async (req, res) => {
   return handler(req, res, { public: "dist", rewrites: [{ source: "**", destination: "/index.html" }] });
 });
 
-server.listen(PORT, "0.0.0.0", () => console.log(`listening on ${PORT}, webhook at ${WEBHOOK_PATH}`));
+// Self-report: a fresh container with a RAILWAY_DEPLOYMENT_ID means a deploy just
+// succeeded. Resend's Idempotency-Key (deployment id) stops duplicates on restarts.
+const notifyStartup = async () => {
+  const e = process.env;
+  if (e.NOTIFY_ON_START === "false" || !e.RAILWAY_DEPLOYMENT_ID) return;
+  if (!STATUSES.has("SUCCESS") || !RESEND_API_KEY || EMAIL_TO.length === 0) return;
+  const s = {
+    status: "SUCCESS",
+    project: e.RAILWAY_PROJECT_NAME || "",
+    environment: e.RAILWAY_ENVIRONMENT_NAME || "",
+    service: e.RAILWAY_SERVICE_NAME || "",
+    branch: e.RAILWAY_GIT_BRANCH || "",
+    commit: (e.RAILWAY_GIT_COMMIT_SHA || "").slice(0, 7),
+    author: e.RAILWAY_GIT_AUTHOR || "",
+    message: e.RAILWAY_GIT_COMMIT_MESSAGE || "",
+    deploymentId: e.RAILWAY_DEPLOYMENT_ID,
+    timestamp: new Date().toISOString(),
+    url: e.RAILWAY_PUBLIC_DOMAIN ? `https://${e.RAILWAY_PUBLIC_DOMAIN}` : "",
+  };
+  try {
+    const out = await sendEmail(s, { source: "startup", env: s }, `deploy-${e.RAILWAY_DEPLOYMENT_ID}`);
+    console.log("[startup] deploy email sent", s.commit, out);
+  } catch (err) {
+    console.error("[startup] deploy email failed", err.message);
+  }
+};
+
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`listening on ${PORT}, webhook at ${WEBHOOK_PATH}`);
+  setTimeout(notifyStartup, 3000);
+});
