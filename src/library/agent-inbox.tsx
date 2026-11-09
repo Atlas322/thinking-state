@@ -6,20 +6,27 @@ import * as React from "react";
 export type AgentTask = {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   agent: string;
   status: "waiting" | "running" | "done" | "failed";
-  elapsedSeconds: number;
-  sources: number;
-  tools: number;
-  steps: { label: string; time: string }[];
+  /** Unix timestamp in milliseconds; running and waiting clocks tick from it. */
+  startedAt?: number;
+  /** Finished duration in milliseconds. */
+  elapsed?: number;
+  /** @deprecated Use startedAt or elapsed. Retained for existing consumers. */
+  elapsedSeconds?: number;
+  sources?: number;
+  tools?: number;
+  steps?: { label: string; time?: string }[];
 };
+export type AgentInboxView = "board" | "list";
 export type AgentInboxProps = {
   tasks?: AgentTask[];
   title?: string;
-  view?: "board" | "list";
-  defaultView?: "board" | "list";
-  onViewChange?: (view: "board" | "list") => void;
+  action?: { label: string; onClick: () => void };
+  view?: AgentInboxView;
+  defaultView?: AgentInboxView;
+  onViewChange?: (view: AgentInboxView) => void;
   onApprove?: (task: AgentTask) => void;
   onReject?: (task: AgentTask) => void;
   onRetry?: (task: AgentTask) => void;
@@ -169,12 +176,22 @@ function Glyph({ name, className = "" }: { name: string; className?: string }) {
 }
 
 function elapsed(seconds: number) {
+  seconds = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
   return `${Math.floor(seconds / 60)}m ${String(seconds % 60).padStart(2, "0")}s`;
+}
+
+function durationMs(task: AgentTask, now: number, mountedAt: number) {
+  const active = task.status === "running" || task.status === "waiting";
+  if (active && task.startedAt != null) return Math.max(0, now - task.startedAt);
+  if (task.elapsed != null) return task.elapsed;
+  return (task.elapsedSeconds ?? 0) * 1000 +
+    (active && task.elapsedSeconds != null ? Math.max(0, now - mountedAt) : 0);
 }
 
 export function AgentInbox({
   tasks,
   title = "Agent inbox",
+  action,
   view,
   defaultView = "board",
   onViewChange,
@@ -184,20 +201,34 @@ export function AgentInbox({
   onOpen,
   className = "",
 }: AgentInboxProps) {
-  const [localTasks, setLocalTasks] = React.useState<AgentTask[]>(sampleTasks);
+  const [overrides, setOverrides] = React.useState<
+    Map<string, { source: AgentTask; task: AgentTask }>
+  >(() => new Map());
   const [localView, setLocalView] = React.useState(defaultView);
   const [expanded, setExpanded] = React.useState<string | null>(null);
-  const [seconds, setSeconds] = React.useState(0);
+  const [mountedAt] = React.useState(Date.now);
+  const [now, setNow] = React.useState(Date.now);
   const [notice, setNotice] = React.useState("");
-  const rows = tasks ?? localTasks;
+  const sourceRows = tasks ?? sampleTasks;
+  const rows = React.useMemo(() => sourceRows.map((task) => {
+      const override = overrides.get(task.id);
+      // A new task object from the owner supersedes any local demonstration action.
+      return override?.source === task ? override.task : task;
+    }), [sourceRows, overrides]);
+  const hasClock = rows.some((task) =>
+    (task.status === "running" || task.status === "waiting") &&
+    (task.startedAt != null || task.elapsedSeconds != null),
+  );
   const mode = view ?? localView;
   const root = React.useRef<HTMLElement>(null);
   const previousRects = React.useRef(new Map<string, DOMRect>());
   const id = React.useId();
   React.useEffect(() => {
-    const timer = window.setInterval(() => setSeconds((s) => s + 1), 1000);
+    if (!hasClock) return;
+    setNow(Date.now());
+    const timer = window.setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [hasClock]);
   React.useLayoutEffect(() => {
     const reduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -239,23 +270,22 @@ export function AgentInbox({
       handler(task);
       return;
     }
-    if (action === "open") {
-      setNotice(`${task.title}: ${task.description}`);
-      return;
-    }
-    if (tasks) {
-      setNotice(
-        `Connect on${action[0].toUpperCase() + action.slice(1)} to update this task.`,
-      );
-      return;
-    }
-    setLocalTasks((old) =>
-      old.map((t) =>
-        t.id === task.id
-          ? { ...t, status: action === "reject" ? "failed" : "running" }
-          : t,
-      ),
-    );
+    if (action === "open") return;
+    const timestamp = Date.now();
+    const source = sourceRows.find((row) => row.id === task.id)!;
+    const next: AgentTask = action === "reject"
+      ? { ...task, status: "failed", elapsed: durationMs(task, timestamp, mountedAt) }
+      : {
+          ...task,
+          status: "running",
+          startedAt: action === "retry"
+            ? timestamp
+            : task.startedAt ?? timestamp - durationMs(task, timestamp, mountedAt),
+          elapsed: undefined,
+          elapsedSeconds: undefined,
+        };
+    setNow(timestamp);
+    setOverrides((old) => new Map(old).set(task.id, { source, task: next }));
     setExpanded(null);
     setNotice(
       `${task.title}: ${action === "reject" ? "rejected" : action === "retry" ? "retrying" : "approved"}.`,
@@ -283,10 +313,7 @@ export function AgentInbox({
   function card(task: AgentTask) {
     const open = expanded === task.id;
     const detailId = `${id}-${task.id}`;
-    const duration = elapsed(
-      task.elapsedSeconds +
-        (task.status === "running" || task.status === "waiting" ? seconds : 0),
-    );
+    const duration = elapsed(durationMs(task, now, mountedAt) / 1000);
     return (
       <article
         className={`ai-inbox-card ${task.status} ${open ? "expanded" : ""}`}
@@ -305,7 +332,7 @@ export function AgentInbox({
             <strong>{task.title}</strong>
             <Glyph name="down" className="ai-inbox-chevron" />
           </span>
-          <span className="ai-inbox-description">{task.description}</span>
+          {task.description && <span className="ai-inbox-description">{task.description}</span>}
           <span className="ai-inbox-meta">
             <span className="ai-inbox-status">
               {task.status === "waiting" ? (
@@ -327,14 +354,14 @@ export function AgentInbox({
                   ? "Failed"
                   : duration}
             </span>
-            <span className="ai-inbox-count" title={`${task.sources} sources`}>
+            {task.sources != null && <span className="ai-inbox-count" title={`${task.sources} sources`}>
               <Glyph name="search" />
               {task.sources}
-            </span>
-            <span className="ai-inbox-count" title={`${task.tools} tool calls`}>
+            </span>}
+            {task.tools != null && <span className="ai-inbox-count" title={`${task.tools} tool calls`}>
               <Glyph name="tool" />
               {task.tools}
-            </span>
+            </span>}
           </span>
         </button>
         {open && (
@@ -343,39 +370,41 @@ export function AgentInbox({
               <Glyph name="spark" />
               {task.agent}
             </span>
-            <ol>
+            {!!task.steps?.length && <ol>
               {task.steps.map((step, index) => (
                 <li key={index}>
                   <span>{step.label}</span>
-                  <time>{step.time}</time>
+                  {step.time && <time>{step.time}</time>}
                 </li>
               ))}
-            </ol>
+            </ol>}
             <div className="ai-inbox-actions">
               {task.status === "waiting" ? (
                 <>
                   <button
+                    type="button"
                     className="ai-inbox-primary"
                     onClick={() => act(task, "approve")}
                   >
                     <Glyph name="check" />
                     Approve
                   </button>
-                  <button onClick={() => act(task, "reject")}>Reject</button>
+                  <button type="button" onClick={() => act(task, "reject")}>Reject</button>
                 </>
               ) : task.status === "failed" ? (
                 <button
+                  type="button"
                   className="ai-inbox-primary"
                   onClick={() => act(task, "retry")}
                 >
                   ↻ Retry
                 </button>
-              ) : (
-                <button onClick={() => act(task, "open")}>
+              ) : onOpen ? (
+                <button type="button" onClick={() => act(task, "open")}>
                   <Glyph name="open" />
                   Open task
                 </button>
-              )}
+              ) : null}
             </div>
           </div>
         )}
@@ -389,10 +418,9 @@ export function AgentInbox({
       aria-label={title}
       onKeyDown={(event) => {
         if (event.key === "Escape" && expanded) {
-          root.current
-            ?.querySelector<HTMLElement>(
-              `[data-task="${CSS.escape(expanded)}"] .ai-inbox-toggle`,
-            )
+          Array.from(root.current?.querySelectorAll<HTMLElement>("[data-task]") ?? [])
+            .find((element) => element.dataset.task === expanded)
+            ?.querySelector<HTMLElement>(".ai-inbox-toggle")
             ?.focus();
           setExpanded(null);
           event.stopPropagation();
@@ -406,6 +434,8 @@ export function AgentInbox({
           <b>/</b>
           <strong>{title}</strong>
         </span>
+        <div className="ai-inbox-header-actions">
+        {action && <button className="ai-inbox-header-action" type="button" onClick={action.onClick}>{action.label}</button>}
         <div
           className="ai-inbox-switch"
           role="radiogroup"
@@ -417,12 +447,21 @@ export function AgentInbox({
               key={v}
               role="radio"
               aria-checked={mode === v}
+              tabIndex={mode === v ? 0 : -1}
               onClick={() => changeView(v)}
+              onKeyDown={(event) => {
+                if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
+                event.preventDefault();
+                const next = event.key === "Home" ? "board" : event.key === "End" ? "list" : v === "board" ? "list" : "board";
+                changeView(next);
+                event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("button")[next === "board" ? 0 : 1]?.focus();
+              }}
             >
               <Glyph name={v} />
               {v === "board" ? "Board" : "List"}
             </button>
           ))}
+        </div>
         </div>
       </header>
       <div className={`ai-inbox-groups ai-inbox-${mode}`}>
@@ -461,6 +500,7 @@ export function AgentInbox({
 }
 
 const css = `
+.ai-inbox-header-actions{display:flex;align-items:center;gap:8px}.ai-inbox-header-action{border:1px solid var(--in-line);background:var(--in-card);border-radius:7px;padding:5px 9px;white-space:nowrap}.ai-inbox-header-action:hover{border-color:var(--in-muted)}.ai-inbox-title+.ai-inbox-meta{margin-top:12px}
 .ai-inbox{--in-fg:#242424;--in-muted:#888;--in-card:#fff;--in-group:#f0f0f0;--in-line:#e5e5e5;--in-blue:#788fdb;--in-green:#6abc96;--in-amber:#c69e5b;--in-red:#d66c72;color:var(--in-fg);font:400 13px/1.5 Inter,system-ui,sans-serif;width:100%;max-width:720px;container-type:inline-size;isolation:isolate;text-align:left}
 :where(.dark,[data-theme=dark]) .ai-inbox{--in-fg:#e9e9e9;--in-muted:#929292;--in-card:#202022;--in-group:#19191b;--in-line:#303033;color-scheme:dark}
 .ai-inbox *{box-sizing:border-box}.ai-inbox button{font:inherit;color:inherit;cursor:pointer}.ai-inbox button:focus-visible{outline:2px solid var(--in-blue);outline-offset:3px}.ai-inbox svg{width:13px;height:13px;flex:none}.ai-inbox-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 12px;padding:0 2px;min-height:32px}.ai-inbox-header>span{display:flex;align-items:center;gap:12px}.ai-inbox-header>span>span{color:var(--in-muted)}.ai-inbox-header b{font-weight:400;opacity:.35}.ai-inbox-header strong{font-weight:500}.ai-inbox-switch{display:flex;background:var(--in-group);padding:3px;border-radius:9px;border:1px solid var(--in-line)}.ai-inbox-switch button{border:0;border-radius:5px;background:none;color:var(--in-muted);padding:3px 8px;display:flex;align-items:center;gap:5px;font-size:12px}.ai-inbox-switch [aria-checked=true]{background:var(--in-card);color:var(--in-fg);box-shadow:0 1px 3px #0002}.ai-inbox-groups{display:grid;gap:9px;align-items:start}.ai-inbox-board{grid-template-columns:repeat(3,minmax(0,1fr))}.ai-inbox-list{grid-template-columns:1fr}.ai-inbox-group{min-width:0;background:var(--in-group);padding:3px;border-radius:13px}.ai-inbox-group>header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.55px;color:var(--in-muted)}.ai-inbox-group>header>svg{color:var(--in-blue);width:12px;height:12px}.ai-inbox-group>header small{font-size:10px;line-height:17px;min-width:19px;text-align:center;border-radius:4px;background:var(--in-line);letter-spacing:0}.ai-inbox-cards{display:grid;gap:4px}.ai-inbox-card{border:1px solid var(--in-line);border-radius:10px;background:var(--in-card);overflow:hidden;min-width:0;transition:border-color .18s;box-shadow:0 1px 2px #00000004}.ai-inbox-card:hover{border-color:color-mix(in srgb,var(--in-muted) 45%,var(--in-line))}.ai-inbox-toggle{width:100%;display:block;text-align:left;padding:11px 12px 12px;border:0;background:none}.ai-inbox-title{display:flex;align-items:center;gap:8px}.ai-inbox-title strong{font-size:13px;line-height:20px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.ai-inbox-title>svg:first-child{width:12px;height:12px;color:var(--in-blue)}.ai-inbox-card.waiting .ai-inbox-title>svg:first-child{color:var(--in-amber)}.ai-inbox-card.failed .ai-inbox-title>svg:first-child{color:var(--in-red)}.ai-inbox-card.done .ai-inbox-title>svg:first-child{color:var(--in-green)}.ai-inbox-chevron{margin-left:auto;color:var(--in-muted);opacity:0;transition:transform .2s,opacity .2s}.ai-inbox-card:hover .ai-inbox-chevron,.ai-inbox-toggle:focus-visible .ai-inbox-chevron,.ai-inbox-card.expanded .ai-inbox-chevron{opacity:1}.ai-inbox-card.expanded .ai-inbox-chevron{transform:rotate(180deg)}.ai-inbox-description{font-size:13px;line-height:19px;color:var(--in-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:5px 0 12px}.ai-inbox-meta{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--in-muted);font-variant-numeric:tabular-nums}.ai-inbox-status{display:flex;align-items:center;gap:6px;margin-right:auto;min-width:0}.ai-inbox-status>svg{width:12px;height:12px;color:var(--in-amber)}.ai-inbox-card.failed .ai-inbox-status>svg{color:var(--in-red)}.ai-inbox-count{display:flex;align-items:center;gap:4px;font-size:10px;white-space:nowrap}.ai-inbox-count svg{width:12px;height:12px;opacity:.8}.ai-inbox-count+.ai-inbox-count{padding-left:7px;border-left:1px solid var(--in-line)}.ai-inbox-spinner{width:8px;height:8px;border:1.5px solid color-mix(in srgb,var(--in-blue) 25%,transparent);border-top-color:var(--in-blue);border-radius:50%;animation:in-spin 1s linear infinite;flex:none}.ai-inbox-dot{width:6px;height:6px;border-radius:50%;background:var(--in-green);flex:none}.ai-inbox-details{padding:0 12px 12px;animation:in-open .2s ease-out}.ai-inbox-agent{display:flex;align-items:center;gap:6px;color:var(--in-muted);font-size:10px;border-top:1px solid var(--in-line);padding-top:12px}.ai-inbox-details ol{list-style:none;margin:14px 0;padding:0}.ai-inbox-details li{position:relative;display:flex;flex-direction:column;gap:2px;padding:0 0 12px 14px;margin-left:3px;border-left:1px solid var(--in-line);font-size:11px;line-height:17px}.ai-inbox-details li:last-child{border-color:transparent;padding-bottom:0}.ai-inbox-details li:before{content:'';position:absolute;left:-3px;top:6px;width:5px;height:5px;border-radius:50%;background:var(--in-muted);box-shadow:0 0 0 3px var(--in-card)}.ai-inbox-details time{font-size:10px;color:var(--in-muted)}.ai-inbox-actions{display:flex;gap:6px}.ai-inbox-actions button{display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid var(--in-line);background:none;border-radius:5px;padding:5px 9px;font-size:11px;transition:opacity .15s}.ai-inbox-actions button:hover{opacity:.7}.ai-inbox-actions button.ai-inbox-primary{background:var(--in-fg);border-color:var(--in-fg);color:var(--in-card)}.ai-inbox-empty{font-size:11px;padding:14px;text-align:center;color:var(--in-muted);margin:0}.ai-inbox-footer{display:flex;justify-content:space-between;gap:12px;color:var(--in-muted);font-size:10px;padding:12px 3px 0}.ai-inbox-footer b{font-weight:400;padding:0 5px;opacity:.6}.ai-inbox-notice{font-size:11px;line-height:18px;color:var(--in-muted);margin:10px 3px 0}.ai-inbox-notice:empty{display:none}.ai-inbox-list .ai-inbox-title strong{font-size:13px}.ai-inbox-list .ai-inbox-description{-webkit-line-clamp:1;margin-left:20px}.ai-inbox-list .ai-inbox-details li{flex-direction:row;justify-content:space-between}.ai-inbox-list .ai-inbox-meta{margin-left:20px}.ai-inbox-list .ai-inbox-chevron{opacity:1}.ai-inbox-list .ai-inbox-group>header{justify-content:flex-start}.ai-inbox-list .ai-inbox-group>header small{margin-left:auto}.ai-inbox-list .ai-inbox-description{margin-bottom:8px}

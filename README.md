@@ -6,7 +6,7 @@ A searchable, copyable React component library covering all **90 components** li
 
 The [architecture audit](./ARCHITECTURE_AUDIT.md) verifies how affectUI uses the shadcn registry and records the implementation gaps. The 67 independent recreations should not be treated as exact substitutes for affectUI Pro.
 
-[COMPONENT_REVIEW.md](./COMPONENT_REVIEW.md) tracks each of the 90 components separately. Ten independent components have been substantially rebuilt in the latest pass. Agent Graph was revised from the user's reference screenshots; the new render still awaits a screenshot comparison. Browser permissions currently block both the reference site and local preview, so the full visual audit is unfinished.
+[COMPONENT_REVIEW.md](./COMPONENT_REVIEW.md) tracks each of the 90 components separately. Ten independent components were substantially rebuilt, with a later cached-reference review correcting Agent Inbox integration and Agent Graph edge cases. Agent Graph was revised from the user's reference screenshots; the new render still awaits a screenshot comparison. Browser permissions currently block both the reference site and local preview, so the full visual audit is unfinished.
 
 ## Start locally
 
@@ -32,7 +32,18 @@ Requires React 19 and TypeScript. No Tailwind, icon package, or animation librar
 import { AgentInbox } from "./components/agent-inbox";
 
 export function Dashboard() {
-  return <AgentInbox defaultView="board" />;
+  return (
+    <AgentInbox
+      defaultView="board"
+      tasks={[{
+        id: "review",
+        title: "Review release notes",
+        agent: "Writer",
+        status: "done",
+        elapsed: 80_000,
+      }]}
+    />
+  );
 }
 ```
 
