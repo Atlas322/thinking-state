@@ -337,7 +337,7 @@ export default function App() {
           className={`overview-link ${route === "overview" ? "active" : ""}`}
           onClick={() => navigate("overview")}
         >
-          <span>▦</span> All components <span className="count">90</span>
+          <span>▦</span> All components <span className="count">{catalog.length}</span>
         </button>
         <button
           className={`favorites-filter ${favoriteOnly ? "active" : ""}`}
@@ -401,7 +401,7 @@ export default function App() {
         </a>
         <div className="sidebar-footer">
           <span className="live-dot" />
-          90 components. Yours to build with.
+          {catalog.length} components. Yours to build with.
         </div>
       </aside>
       <div className="workspace">
@@ -461,12 +461,12 @@ export default function App() {
                   <span>A better starting point.</span>
                 </h1>
                 <p>
-                  90 interactive components for agents, conversations, and the
+                  {catalog.length} interactive components for agents, conversations, and the
                   rest of your product. Explore, copy, and make them yours.
                 </p>
                 <div className="collection-stats">
                   <span>
-                    <strong>90</strong> components
+                    <strong>{catalog.length}</strong> components
                   </span>
                   <span>
                     <strong>23</strong> MIT originals
@@ -804,7 +804,7 @@ export default function App() {
                     className="text-button"
                     onClick={() => navigate("overview")}
                   >
-                    View all 90 <Icon name="arrow" />
+                    View all {catalog.length} <Icon name="arrow" />
                   </button>
                 </div>
                 <div className="related-grid">
