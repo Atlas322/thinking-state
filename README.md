@@ -1,72 +1,61 @@
-# Thinking State
+# Component Studio
 
-A standalone React + TypeScript recreation of the public [affectUI Thinking State preview](https://www.affectui.com/components/thinking-state), with a runnable Vite demo.
+A searchable, copyable React component library covering all **90 components** listed on [affectUI](https://www.affectui.com/components). The app includes a categorized menu, live previews, light/dark themes, favorites, source code, usage examples, and **Copy prompt**.
 
-This is an independently written implementation based on the visible preview and documented behavior. It does not contain affectUI's paid source code and is not an official affectUI distribution. It aims for a close visual match; it is not a byte-for-byte or guaranteed pixel-perfect copy.
+**23 components use the original MIT source**, with Clean and Classic styles. **67 are independent recreations** of public previews and documented behavior. They are not affectUI Pro source, and they do not all match the original appearance or API. See [VISUAL_REVIEW.md](./VISUAL_REVIEW.md) for the actual browser comparison and remaining differences.
 
-## Run
+## Start locally
 
-Requires Node.js 22.12+ or a supported newer release.
+Use Node.js 22.12+.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. The demo has light/dark themes, Clean/Classic styles, replay, and an optional loop.
+Open the local address printed by Vite. The default page is Thinking State; use the left menu or `/` to search. On small screens, open the menu with the top-left button. Each component has a direct `#/component-name` URL.
+
+## Copy into your project
+
+- **Copy code** copies the complete standalone `.tsx` file, including styles.
+- **Copy prompt** copies installation instructions, usage, and the full source. Paste it into ChatGPT, Codex, Claude, Cursor, or another coding assistant. The recipient does not need access to this private repository.
+- **Download component** saves the selected file.
+- **Take the library with you** downloads all 114 source variants and their usage examples as a ZIP.
+
+Requires React 19 and TypeScript. No Tailwind, icon package, or animation library is required. Inter is optional. All copied components support a `.dark` or `data-theme="dark"` ancestor. Source files live in `src/library`; usage examples are shown in the app and included in the ZIP.
+
+```tsx
+import { AgentInbox } from "./components/agent-inbox";
+
+export function Dashboard() {
+  return <AgentInbox defaultView="board" />;
+}
+```
+
+Named exports accept application data and callbacks. Default exports render a working example. Review the exported TypeScript prop types before integrating: the independent implementations can have different APIs from affectUI. UI demos do not execute real searches, run agents, approve production changes, or send messages. Connect their callbacks to your application.
+
+When copying an original MIT component, retain the license notice included at the top of its file. Attribution and details are in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
+
+## Validate and build
 
 ```sh
-npm run typecheck
 npm test
+npm run check:copy
 npm run build
 npm run preview
 ```
 
-## Use in another React project
+`check:copy` creates a temporary standalone copy of all 114 variants and compiles each with its usage example. The test suite renders every variant and exercises key state changes and callbacks. GitHub Actions runs these checks on pushes and pull requests.
 
-Copy `src/components/thinking-state.tsx` and `src/components/thinking-state.css` together into your project. The component imports its stylesheet and has no runtime dependency beyond React. The demo bundles Inter locally through `@fontsource/inter`; the component falls back to system fonts when Inter is unavailable.
+`npm run package:library` regenerates `public/component-library.zip`. This also runs before development and production builds, so downloaded files stay aligned with the preview source. ZIP packaging uses Node's built-in libraries; no extra tooling is required.
 
-```tsx
-import { ThinkingState, type ThinkingStep } from './components/thinking-state';
+## Structure
 
-const steps: ThinkingStep[] = [
-  {
-    kind: 'search',
-    label: 'Searching',
-    sources: [{ label: 'Example', href: 'https://example.com' }],
-    moreSources: [{ label: 'React', href: 'https://react.dev' }],
-  },
-  { kind: 'step', label: 'Reading the sources' },
-  { kind: 'step', label: 'Preparing an answer' },
-];
+- `src/library/` — 114 standalone component files, including 24 Classic variants.
+- `src/catalog.json` — 90 entries with category, provenance, export name, and usage.
+- `src/registry.ts` — lazy preview/source loading and complete prompt generation.
+- `src/App.tsx` and `src/demo.css` — browsing and copy interface.
+- `src/components/` — the initial two-file Thinking State implementation, kept for compatibility.
+- `scripts/` — reproducible ZIP packaging and isolated copy validation.
 
-export function AssistantMessage() {
-  return <ThinkingState steps={steps} onDone={(seconds) => console.log(seconds)} />;
-}
-```
-
-| Prop | Default | Purpose |
-| --- | --- | --- |
-| `steps` | required | Ordered search/action rows |
-| `stepMs` | `1300` | Time per step in milliseconds |
-| `doneLabel` | `Finished thinking` | Completion row text |
-| `loop` | `false` | Replay after a 2.6 second pause |
-| `collapseOnDone` | `false` | Fold the timeline on completion |
-| `onDone` | — | Receives elapsed whole seconds once per run |
-| `className` | — | Extra root CSS class |
-| `variant` | `clean` | `clean` or `classic` appearance |
-
-A step has `kind`, `label`, optional `completedLabel`, `sources`, and `moreSources`. A source has a `label` and optional `href`, `tooltip`, and `icon` (React node). If no tooltip is supplied, the link's hostname and path are shown. The default search label changes from “Searching” to “Searched” when that step finishes.
-
-Use `.dark` or `data-theme="dark"` on an ancestor for dark mode. Override the `--thinking-*` CSS variables for custom colors. Change the component's React `key` to start a fresh run. Changes to the step count, interval, or loop setting also restart its clock; changing an inline callback does not.
-
-## Behavior and accessibility
-
-- Live timer, staggered source chips, shimmering active text, animated timeline, and completion check.
-- Header and additional sources are real buttons with `aria-expanded` and `aria-controls`.
-- Collapsed content is inert and hidden from assistive technology.
-- Sources support keyboard focus and tooltips; newly revealed steps use a polite live region.
-- `prefers-reduced-motion` disables decorative animation while retaining the timed progression.
-- No external network requests are made by the component. Links open only when clicked.
-
-This is a timed presentation component. It does not execute searches or connect to an AI service; connect your application data separately when using it in a real product.
+The app loads the selected component on demand. The surrounding Component Studio interface is a custom catalog; it is not a clone of affectUI's entire website.

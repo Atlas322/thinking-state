@@ -7,3 +7,6 @@ dist/
 !.env.example
 playwright-report/
 test-results/
+
+/public/component-library.zip
+/work/
