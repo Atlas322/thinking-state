@@ -74,3 +74,21 @@ npm run preview
 - `scripts/` — reproducible ZIP packaging and isolated copy validation.
 
 The app loads the selected component on demand. The surrounding Component Studio interface is a custom catalog; it is not a clone of affectUI's entire website.
+
+## Deploy notifications (Railway → Resend)
+
+`server.mjs` serves `dist/` and exposes `POST /api/railway-webhook`. Railway calls it on
+deployment status changes and the server emails a summary through Resend.
+
+Service variables (Railway → service → Variables):
+
+| Variable | Purpose |
+|----------|---------|
+| `WEBHOOK_TOKEN` | Shared secret; Railway sends it as `Authorization: Bearer <token>` |
+| `RESEND_API_KEY` | Resend API key (`re_...`) |
+| `NOTIFY_EMAIL_TO` | Recipient(s), comma-separated |
+| `NOTIFY_EMAIL_FROM` | Sender, e.g. `Deploys <deploys@thinkstate.site>` (domain must be verified in Resend) |
+| `NOTIFY_STATUSES` | Statuses to email, default `SUCCESS,FAILED,CRASHED` |
+
+Railway → Project Settings → Webhooks → URL `https://www.thinkstate.site/api/railway-webhook`,
+header `Authorization: Bearer <WEBHOOK_TOKEN>`, events: deployment status changes.
