@@ -6,6 +6,8 @@ A searchable, copyable React component library covering all **90 components** li
 
 The [architecture audit](./ARCHITECTURE_AUDIT.md) verifies how affectUI uses the shadcn registry and records the implementation gaps. The 67 independent recreations should not be treated as exact substitutes for affectUI Pro.
 
+[COMPONENT_REVIEW.md](./COMPONENT_REVIEW.md) tracks each of the 90 components separately. Ten independent components have been substantially rebuilt in the latest pass. Agent Graph was revised from the user's reference screenshots; the new render still awaits a screenshot comparison. Browser permissions currently block both the reference site and local preview, so the full visual audit is unfinished.
+
 ## Start locally
 
 Use Node.js 22.12+.

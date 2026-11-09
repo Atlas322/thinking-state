@@ -1,364 +1,429 @@
 "use client";
-
 import * as React from "react";
 
-/** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+// Simple Icons brand paths (CC0): v16.37.0, OpenAI v14.0.0.
+const providerPaths = {
+  claude:
+    "m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z",
+  openai:
+    "M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z",
+  googlegemini:
+    "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81",
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
-};
-
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
-
-export function ContextMap({
-  title = "Context window",
-  items = [
-    { id: "system", title: "System prompt", value: 12000, color: "#a2b9ec" },
-    { id: "tools", title: "Tools", value: 18000, color: "#b5a7d8" },
-    { id: "memory", title: "Memory", value: 8000, color: "#a3c8ba" },
-    { id: "files", title: "Files", value: 38000, color: "#dbc49b" },
-    { id: "chat", title: "Conversation", value: 54000, color: "#9cb8cf" },
-    { id: "results", title: "Tool results", value: 22000, color: "#c4b2b9" },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [compacted, setCompacted] = React.useState(false);
-  const [selected, setSelected] = React.useState<StudioItem>();
-  const total = items.reduce(
-    (s, x) => s + (x.value ?? 0) * (compacted && x.id === "chat" ? 0.25 : 1),
-    0,
-  );
+function ProviderMark({ model = "" }: { model?: string }) {
+  const brand = /GPT|OpenAI/i.test(model)
+    ? "openai"
+    : /Gemini/i.test(model)
+      ? "googlegemini"
+      : "claude";
   return (
-    <UI.Panel
-      title={title}
-      subtitle={`${Math.round(total / 1000)}k / 200k tokens`}
-      className={className}
-      aside={
-        <UI.Button
-          disabled={compacted}
-          onClick={() => {
-            setCompacted(true);
-            onAction?.("compact");
-          }}
-        >
-          {compacted ? "Compacted ✓" : "Compact"}
-        </UI.Button>
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill={
+        brand === "claude"
+          ? "#d97757"
+          : brand === "googlegemini"
+            ? "#4f65ff"
+            : "currentColor"
       }
+      style={{ width: "1em", height: "1em", display: "block", stroke: "none" }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 5,
-          minHeight: 230,
-          margin: "18px 0",
-        }}
-      >
-        {items.map((x) => (
-          <button
-            key={x.id}
-            className="st-tile"
-            style={{
-              width: `${Math.max(20, ((x.value ?? 0) / 200000) * 100 * 2)}%`,
-              flexGrow: x.value,
-              background: x.color,
-              color: "#29303d",
-              padding: 12,
-              border: 0,
-              transition: "flex-grow .5s,width .5s",
-            }}
-            onClick={() => {
-              setSelected(x);
-              onAction?.("select", x);
-            }}
-          >
-            <strong>{x.title}</strong>
-            <small style={{ color: "#394354" }}>
-              {Math.round(
-                ((x.value ?? 0) * (compacted && x.id === "chat" ? 0.25 : 1)) /
-                  1000,
-              )}
-              k tokens
-            </small>
-          </button>
-        ))}
-        <div
-          className="st-tile"
-          style={{
-            flexGrow: 200000 - total,
-            borderStyle: "dashed",
-            minWidth: 70,
-          }}
-        >
-          <small>Free space</small>
-          <strong>{Math.round((200000 - total) / 1000)}k</strong>
-        </div>
-      </div>
-      {selected && (
-        <UI.Row
-          title={selected.title}
-          detail={`${selected.value?.toLocaleString()} tokens before compaction`}
-        >
-          <UI.Badge>{Math.round((selected.value ?? 0) / 2000)}%</UI.Badge>
-        </UI.Row>
-      )}
-    </UI.Panel>
+      <path d={providerPaths[brand]} />
+    </svg>
   );
 }
 
+export type ContextBlock = {
+  id: string;
+  label: string;
+  kind: "system" | "tools" | "memory" | "file" | "chat" | "result" | "summary";
+  tokens: number;
+  detail?: string;
+  icon?: React.ReactNode;
+  items?: { label: string; icon?: React.ReactNode }[];
+};
+export type ContextAgent = {
+  id: string;
+  name: string;
+  limit: number;
+  model?: string;
+  modelIcon?: React.ReactNode;
+};
+export type ContextCompaction = {
+  before: ContextBlock[];
+  summarized?: string[];
+  dropped?: string[];
+  summary?: string;
+};
+export type ContextMapProps = {
+  blocks?: ContextBlock[];
+  limit?: number;
+  model?: string;
+  modelIcon?: React.ReactNode;
+  agents?: ContextAgent[];
+  agent?: string;
+  onAgentChange?: (id: string) => void;
+  compaction?: ContextCompaction | null;
+  view?: "before" | "after";
+  onViewChange?: (view: "before" | "after") => void;
+  status?: string;
+  onSelect?: (block: ContextBlock | null) => void;
+  title?: string;
+  className?: string;
+};
+const defaults: ContextBlock[] = [
+  { id: "system", label: "System prompt", kind: "system", tokens: 6200 },
+  {
+    id: "tools",
+    label: "Tool definitions",
+    kind: "tools",
+    tokens: 14800,
+    items: [
+      { label: "search_web" },
+      { label: "read_file" },
+      { label: "run_tests" },
+    ],
+  },
+  { id: "memory", label: "Project memory", kind: "memory", tokens: 9400 },
+  {
+    id: "spec",
+    label: "checkout.spec.ts",
+    kind: "file",
+    tokens: 8200,
+    detail: "Read at 0:09",
+  },
+  { id: "payment", label: "payment.ts", kind: "file", tokens: 17600 },
+  { id: "chat", label: "Chat", kind: "chat", tokens: 10300 },
+];
+const compactNumber = (value: number) =>
+  value >= 1000000
+    ? `${(value / 1000000).toFixed(value % 1000000 ? 1 : 0)}m`
+    : value >= 1000
+      ? `${(value / 1000).toFixed(value % 1000 ? 1 : 0)}k`
+      : String(Math.round(value));
+const kinds = {
+  system: "System prompt",
+  tools: "Tools",
+  memory: "Memory",
+  file: "File",
+  chat: "Chat",
+  result: "Tool results",
+  summary: "Summary",
+};
+type Tile = {
+  id: string;
+  block: ContextBlock | null;
+  tokens: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+/** Ordered, area-proportional binary treemap. IDs remain stable across layouts. */
+function layout(
+  entries: { id: string; block: ContextBlock | null; tokens: number }[],
+  x = 0,
+  y = 0,
+  width = 100,
+  height = 100,
+  aspect = 2.2,
+): Tile[] {
+  if (!entries.length) return [];
+  if (entries.length === 1) return [{ ...entries[0], x, y, width, height }];
+  const total = entries.reduce((sum, item) => sum + item.tokens, 0);
+  if (total <= 0) return [];
+  let subtotal = 0,
+    split = 1,
+    best = Infinity;
+  for (let i = 0; i < entries.length - 1; i++) {
+    subtotal += entries[i].tokens;
+    const distance = Math.abs(total / 2 - subtotal);
+    if (distance < best) {
+      best = distance;
+      split = i + 1;
+    }
+  }
+  const first = entries.slice(0, split),
+    second = entries.slice(split),
+    ratio = first.reduce((sum, item) => sum + item.tokens, 0) / total;
+  if (width * aspect >= height)
+    return [
+      ...layout(first, x, y, width * ratio, height, aspect),
+      ...layout(
+        second,
+        x + width * ratio,
+        y,
+        width * (1 - ratio),
+        height,
+        aspect,
+      ),
+    ];
+  return [
+    ...layout(first, x, y, width, height * ratio, aspect),
+    ...layout(
+      second,
+      x,
+      y + height * ratio,
+      width,
+      height * (1 - ratio),
+      aspect,
+    ),
+  ];
+}
+export function ContextMap({
+  blocks = defaults,
+  limit = 200000,
+  model = "Checkout fixer",
+  modelIcon,
+  agents = [],
+  agent,
+  onAgentChange,
+  compaction = null,
+  view,
+  onViewChange,
+  status,
+  onSelect,
+  title = "Context",
+  className = "",
+}: ContextMapProps) {
+  const [localView, setLocalView] = React.useState<"before" | "after">("after");
+  const [localAgent, setLocalAgent] = React.useState(agent ?? agents[0]?.id);
+  const [pinned, setPinned] = React.useState<string | null>(null);
+  const [hovered, setHovered] = React.useState<string | null>(null);
+  const [aspect, setAspect] = React.useState(2.2);
+  const map = React.useRef<HTMLDivElement>(null);
+  const selectedAgent = agents.find(
+    (item) => item.id === (agent ?? localAgent),
+  );
+  const capacity = Math.max(1, selectedAgent?.limit ?? limit);
+  const currentView = view ?? localView;
+  const visible =
+    compaction && currentView === "before" ? compaction.before : blocks;
+  const sanitized = visible
+    .map((block) => ({
+      ...block,
+      tokens: Number.isFinite(block.tokens) ? Math.max(0, block.tokens) : 0,
+    }))
+    .filter((block) => block.tokens > 0);
+  const used = sanitized.reduce((sum, block) => sum + block.tokens, 0);
+  const free = Math.max(0, capacity - used);
+  const entries = [
+    ...sanitized.map((block) => ({
+      id: block.id,
+      block,
+      tokens: block.tokens,
+    })),
+    ...(free > 0 ? [{ id: "__free", block: null, tokens: free }] : []),
+  ];
+  const tiles = layout(entries, 0, 0, 100, 100, aspect);
+  const selected = tiles.find((tile) => tile.id === (pinned ?? hovered));
+  const percent = Math.round((used / capacity) * 100);
+  const beforeTotal =
+    compaction?.before.reduce(
+      (sum, block) => sum + Math.max(0, block.tokens),
+      0,
+    ) ?? 0;
+  React.useLayoutEffect(() => {
+    const element = map.current;
+    if (!element) return;
+    const measure = () => {
+      const rect = element.getBoundingClientRect();
+      if (rect.height > 0) setAspect(rect.width / rect.height);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  React.useEffect(() => {
+    if (pinned && !entries.some((item) => item.id === pinned)) setPinned(null);
+  }, [pinned, entries]);
+  const changeView = (next: "before" | "after") => {
+    setLocalView(next);
+    onViewChange?.(next);
+  };
+  return (
+    <section
+      className={`cmp-map-root ${className}`}
+      aria-label={title}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") {
+          setPinned(null);
+          setHovered(null);
+        }
+      }}
+    >
+      <style>{css}</style>
+      <header className="cmp-header">
+        <span className="cmp-title">
+          <span aria-hidden="true">▦</span>
+          {title}
+        </span>
+        <span className="cmp-model">
+          {selectedAgent?.modelIcon ?? modelIcon ?? (
+            <span className="cmp-maker" aria-hidden="true">
+              <ProviderMark model={selectedAgent?.model ?? model} />
+            </span>
+          )}
+          {agents.length ? (
+            <select
+              aria-label="Select context agent"
+              value={selectedAgent?.id ?? ""}
+              onChange={(event) => {
+                setLocalAgent(event.target.value);
+                onAgentChange?.(event.target.value);
+                setPinned(null);
+              }}
+            >
+              {agents.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <span>{model}</span>
+          )}
+          <small>{compactNumber(capacity)}</small>
+        </span>
+        <span className="cmp-count" data-warning={percent >= 85}>
+          <strong>{compactNumber(used)}</strong>
+          <span>/ {compactNumber(capacity)}</span>
+          <b>{percent}%</b>
+        </span>
+        {status && <span className="cmp-status">{status}</span>}
+        {compaction && (
+          <span className="cmp-view" role="group" aria-label="Compaction view">
+            {(["before", "after"] as const).map((mode) => (
+              <button
+                key={mode}
+                aria-pressed={mode === currentView}
+                onClick={() => changeView(mode)}
+              >
+                {mode === "before" ? "Before" : "After"}
+              </button>
+            ))}
+          </span>
+        )}
+      </header>
+      <div
+        ref={map}
+        className="cmp-map"
+        role="list"
+        aria-label={`${title} blocks`}
+        onPointerLeave={() => setHovered(null)}
+      >
+        {tiles.map((tile) => (
+          <div
+            key={tile.id}
+            role="listitem"
+            className={`cmp-tile ${tile.block?.kind ?? "free"}`}
+            style={{
+              left: `${tile.x}%`,
+              top: `${tile.y}%`,
+              width: `${tile.width}%`,
+              height: `${tile.height}%`,
+            }}
+          >
+            <button
+              aria-label={`${tile.block?.label ?? "Free space"}, ${tile.block ? kinds[tile.block.kind] : "available"}, ${tile.tokens.toLocaleString()} tokens`}
+              aria-pressed={pinned === tile.id}
+              onPointerEnter={() => setHovered(tile.id)}
+              onFocus={() => setHovered(tile.id)}
+              onBlur={() => setHovered(null)}
+              onClick={() => {
+                setPinned(pinned === tile.id ? null : tile.id);
+                onSelect?.(tile.block);
+              }}
+            >
+              <span className="cmp-tile-label">
+                {tile.block?.icon}
+                {tile.block?.label ?? "Free"}
+              </span>
+              <small>
+                {compactNumber(tile.tokens)}
+                {tile.width > 20 && tile.block
+                  ? ` · ${kinds[tile.block.kind]}`
+                  : ""}
+              </small>
+            </button>
+          </div>
+        ))}
+      </div>
+      <footer className="cmp-footer">
+        {compaction ? (
+          <>
+            <span>
+              {compactNumber(
+                Math.max(
+                  0,
+                  beforeTotal -
+                    blocks.reduce(
+                      (sum, item) => sum + Math.max(0, item.tokens),
+                      0,
+                    ),
+                ),
+              )}{" "}
+              tokens freed
+            </span>
+            <span>
+              {compaction.summarized?.length ?? 0} summarized <b>·</b>{" "}
+              {compaction.dropped?.length ?? 0} dropped
+              {compaction.summary ? ` · ${compaction.summary}` : ""}
+            </span>
+          </>
+        ) : (
+          <span>
+            Not compacted yet – once it is, compare before and after here.
+          </span>
+        )}
+      </footer>
+      {selected && (
+        <aside
+          className="cmp-detail"
+          role={pinned ? "dialog" : "tooltip"}
+          aria-label={`${selected.block?.label ?? "Free space"} details`}
+        >
+          <header>
+            <span>{selected.block?.icon}</span>
+            <strong>{selected.block?.label ?? "Free space"}</strong>
+            {pinned && (
+              <button
+                aria-label="Unpin details"
+                onClick={() => {
+                  setPinned(null);
+                  setHovered(null);
+                }}
+              >
+                ×
+              </button>
+            )}
+          </header>
+          <p>
+            {selected.tokens.toLocaleString()} tokens{" "}
+            <span>
+              · {((selected.tokens / capacity) * 100).toFixed(1)}% of the window
+            </span>
+          </p>
+          {selected.block?.detail && <p>{selected.block.detail}</p>}
+          {selected.block?.items && (
+            <ul>
+              {selected.block.items.map((item, index) => (
+                <li key={index}>
+                  {item.icon}
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          )}
+        </aside>
+      )}
+    </section>
+  );
+}
+const css = `
+.cmp-map-root{--cmp-ink:#303033;--cmp-muted:#838387;--cmp-surface:#fff;--cmp-line:#e5e5e8;width:100%;max-width:920px;color:var(--cmp-ink);font:400 13px/20px Inter,system-ui,sans-serif;position:relative;container:cmp / inline-size;text-align:left;isolation:isolate}:where(.dark,[data-theme=dark]) .cmp-map-root{--cmp-ink:#e2e2e5;--cmp-muted:#85858c;--cmp-surface:#202022;--cmp-line:#303034;color-scheme:dark}.cmp-map-root *{box-sizing:border-box}.cmp-map-root button,.cmp-map-root select{font:inherit;color:inherit;cursor:pointer}.cmp-map-root :focus-visible{outline:2px solid #82bcff;outline-offset:2px}.cmp-header{display:flex;align-items:center;gap:10px;padding:0 0 15px;flex-wrap:wrap}.cmp-title{display:flex;align-items:center;gap:7px;font-weight:500}.cmp-title>span{color:#82bcff}.cmp-model{display:flex;align-items:center;gap:7px;background:color-mix(in srgb,var(--cmp-ink) 3%,transparent);border:1px solid var(--cmp-line);border-radius:8px;padding:3px 7px;color:var(--cmp-muted);max-width:240px;min-width:0}.cmp-model>span:not(.cmp-maker){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cmp-maker{color:#cf9073;font-size:18px;line-height:18px}.cmp-model>svg,.cmp-model>img{width:16px;height:16px}.cmp-model small{font-size:11px;line-height:17px;background:color-mix(in srgb,var(--cmp-ink) 5%,transparent);border-radius:3px;padding:0 5px;color:var(--cmp-ink);flex:none}.cmp-model select{border:0;outline:none;background:none;max-width:140px;font-size:12px;min-width:0}.cmp-model option{background:var(--cmp-surface)}.cmp-count{margin-left:auto;display:flex;gap:4px;font-size:12px;white-space:nowrap;color:var(--cmp-muted)}.cmp-count strong{font-weight:400;color:var(--cmp-ink);background:linear-gradient(110deg,var(--cmp-muted),var(--cmp-ink),var(--cmp-muted));background-size:220% 100%;background-clip:text;color:transparent;animation:cmp-shine 3s linear infinite}.cmp-count b{font-weight:400;color:var(--cmp-ink);margin-left:8px}.cmp-count[data-warning=true] b{color:#ce9863}.cmp-view{display:flex;gap:2px;border:1px solid var(--cmp-line);border-radius:6px;padding:2px}.cmp-view button{font-size:10px;border:0;background:none;color:var(--cmp-muted);padding:2px 6px;border-radius:3px}.cmp-view [aria-pressed=true]{background:color-mix(in srgb,var(--cmp-ink) 8%,transparent);color:var(--cmp-ink)}.cmp-status{font-size:10px;color:var(--cmp-muted)}.cmp-map{height:300px;width:100%;position:relative;border-radius:9px;isolation:isolate}.cmp-tile{position:absolute;padding:2px;transition:left .65s cubic-bezier(.22,1,.36,1),top .65s cubic-bezier(.22,1,.36,1),width .65s cubic-bezier(.22,1,.36,1),height .65s cubic-bezier(.22,1,.36,1);min-width:0;min-height:0;--tile-bg:rgba(130,130,140,.1);--tile-edge:rgba(140,140,150,.3);--tile-ink:var(--cmp-ink);animation:cmp-in .3s both}.cmp-tile button{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:2px;width:100%;height:100%;padding:7px 9px;border:1px solid var(--tile-edge);border-radius:8px;background:var(--tile-bg);color:var(--tile-ink);overflow:hidden;text-align:left;container-type:size;transition:filter .15s,box-shadow .15s}.cmp-tile button:hover,.cmp-tile button[aria-pressed=true]{filter:brightness(1.1);box-shadow:inset 0 0 0 1px var(--tile-edge)}.cmp-tile-label{display:flex;align-items:center;gap:5px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;font-size:12px}.cmp-tile-label svg,.cmp-tile-label img{width:13px;height:13px;display:inline-block;vertical-align:middle;margin-right:4px}.cmp-tile small{font-size:11px;opacity:.65;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}.cmp-tile.tools{--tile-bg:#39a4bc1c;--tile-edge:#4699ac55;--tile-ink:#4696ad}.cmp-tile.memory{--tile-bg:#7a65da24;--tile-edge:#8675c558;--tile-ink:#8b7cc4}.cmp-tile.file{--tile-bg:#4c7cdc24;--tile-edge:#6b91d455;--tile-ink:#628cc9}.cmp-tile.chat{--tile-bg:#b364ca20;--tile-edge:#ae72bb55;--tile-ink:#a274b6}.cmp-tile.result{--tile-bg:#48ae9222;--tile-edge:#61a18e55;--tile-ink:#4f9f86}.cmp-tile.summary{--tile-bg:#54ac6322;--tile-edge:#6aa77555;--tile-ink:#579666}.cmp-tile.free{--tile-ink:var(--cmp-muted)}.cmp-tile.free button{border:1px dashed var(--cmp-line);box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--cmp-ink) 2%,transparent);background:repeating-linear-gradient(135deg,transparent 0 12px,color-mix(in srgb,var(--cmp-ink) 1.3%,transparent) 12px 13px)}:where(.dark,[data-theme=dark]) .cmp-tile.tools{--tile-ink:#80c8dc}:where(.dark,[data-theme=dark]) .cmp-tile.memory{--tile-ink:#b1a4f1}:where(.dark,[data-theme=dark]) .cmp-tile.file{--tile-ink:#9bbdf0}:where(.dark,[data-theme=dark]) .cmp-tile.chat{--tile-ink:#c3a1df}:where(.dark,[data-theme=dark]) .cmp-tile.result{--tile-ink:#8eceb9}:where(.dark,[data-theme=dark]) .cmp-tile.summary{--tile-ink:#96d0a1}.cmp-footer{display:flex;align-items:center;gap:8px;padding:12px 2px 0;margin-top:5px;border-top:1px solid var(--cmp-line);font-size:10px;color:var(--cmp-muted);min-height:32px;flex-wrap:wrap}.cmp-footer b{font-weight:400;padding:0 5px}.cmp-detail{position:absolute;z-index:10;bottom:45px;left:50%;transform:translateX(-50%);width:280px;max-width:calc(100% - 24px);background:var(--cmp-surface);border:1px solid var(--cmp-line);border-radius:10px;box-shadow:0 8px 30px #0002;padding:13px;animation:cmp-in .15s both}.cmp-detail[role=tooltip]{pointer-events:none}.cmp-detail header{display:flex;align-items:center;gap:6px}.cmp-detail strong{font-size:12px;font-weight:500}.cmp-detail header button{margin-left:auto;border:0;background:none;font-size:18px;color:var(--cmp-muted);padding:0 2px}.cmp-detail p{font-size:11px;color:var(--cmp-ink);margin:7px 0 0;line-height:1.6}.cmp-detail p span{color:var(--cmp-muted)}.cmp-detail ul{list-style:none;padding:8px 0 0;margin:0;display:grid;gap:6px;font-size:11px;color:var(--cmp-muted)}.cmp-detail li{display:flex;align-items:center;gap:6px}.cmp-detail svg,.cmp-detail img{width:14px;height:14px}
+@container cmp (max-width:480px){.cmp-map{height:230px}.cmp-count{flex-basis:100%;margin-left:0}.cmp-header{gap:7px;padding-bottom:12px}.cmp-model{max-width:190px}.cmp-view{margin-left:auto}.cmp-tile button{padding:5px 6px}.cmp-tile-label{font-size:11px}.cmp-tile small{font-size:10px}}@container(width < 48px){.cmp-tile-label,.cmp-tile small{visibility:hidden}}@container(height < 25px){.cmp-tile-label,.cmp-tile small{visibility:hidden}}@keyframes cmp-shine{to{background-position:-220% 0}}@keyframes cmp-in{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){.cmp-map-root *{animation:none!important;transition:none!important}.cmp-count strong{background:none;color:var(--cmp-ink)}}
+`;
 export default ContextMap;

@@ -1,395 +1,648 @@
 "use client";
-
 import * as React from "react";
 
-/** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+// Simple Icons brand paths (CC0): v16.37.0, OpenAI v14.0.0.
+const providerPaths = {
+  claude:
+    "m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z",
+  openai:
+    "M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z",
+  googlegemini:
+    "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81",
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
-};
-
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
-
-export function TraceWaterfall({
-  title = "Run trace",
-  items = [
-    {
-      id: "root",
-      title: "Orchestrator",
-      detail: "Launch the pricing page",
-      status: "running",
-      value: 0,
-      cost: 1,
-    },
-    {
-      id: "plan",
-      title: "Plan the launch",
-      detail: "Reasoning · 4,120 tokens",
-      status: "done",
-      value: 5,
-      cost: 0.28,
-    },
-    {
-      id: "search",
-      title: "web_search",
-      detail: "Compare pricing",
-      status: "done",
-      value: 33,
-      cost: 0.18,
-    },
-    {
-      id: "draft",
-      title: "Draft copy",
-      detail: "Writing agent",
-      status: "running",
-      value: 52,
-      cost: 0.36,
-    },
-    {
-      id: "review",
-      title: "Review",
-      detail: "Queued",
-      status: "queued",
-      value: 88,
-      cost: 0.12,
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [selected, setSelected] = React.useState<StudioItem>();
-  const seconds = UI.useClock();
+function ProviderMark({ model = "" }: { model?: string }) {
+  const brand = /GPT|OpenAI/i.test(model)
+    ? "openai"
+    : /Gemini/i.test(model)
+      ? "googlegemini"
+      : "claude";
   return (
-    <UI.Panel
-      title={title}
-      subtitle={`Live trace · ${seconds}s elapsed`}
-      className={className}
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill={
+        brand === "claude"
+          ? "#d97757"
+          : brand === "googlegemini"
+            ? "#4f65ff"
+            : "currentColor"
+      }
+      style={{ width: "1em", height: "1em", display: "block", stroke: "none" }}
     >
-      <div className="st-row">
-        <small style={{ width: 125 }}>SPAN</small>
-        <div
-          className="st-grow"
-          style={{ display: "flex", justifyContent: "space-between" }}
-        >
-          {["0", "10s", "20s", "30s"].map((v) => (
-            <small key={v}>{v}</small>
-          ))}
-        </div>
-      </div>
-      {items.map((x, i) => (
-        <button
-          key={x.id}
-          className="st-row st-row-button"
-          onClick={() => {
-            setSelected(x);
-            onAction?.("inspect", x);
-          }}
-        >
-          <span style={{ width: 125, paddingLeft: i ? 12 : 0, fontSize: 11 }}>
-            {i ? "↳ " : ""}
-            {x.title}
-          </span>
-          <span
-            className="st-grow"
-            style={{
-              height: 22,
-              position: "relative",
-              background: "var(--st-soft)",
-            }}
-          >
-            <span
-              style={{
-                position: "absolute",
-                left: `${x.value ?? 0}%`,
-                width: `${Math.min(100 - (x.value ?? 0), (x.cost ?? 0.2) * 100)}%`,
-                height: "100%",
-                background:
-                  x.status === "queued"
-                    ? "var(--st-line)"
-                    : i % 2
-                      ? "#a9bce4"
-                      : "#a394c5",
-                borderRadius: 3,
-                opacity: 0.8,
-              }}
-            />
-          </span>
-        </button>
-      ))}
-      {selected && (
-        <div className="st-tile" style={{ marginTop: 14 }}>
-          <UI.Row title={selected.title}>
-            <UI.Badge tone={selected.status}>{selected.status}</UI.Badge>
-          </UI.Row>
-          <pre className="st-code">
-            {JSON.stringify(
-              {
-                span: selected.id,
-                detail: selected.detail,
-                status: selected.status,
-              },
-              null,
-              2,
-            )}
-          </pre>
-        </div>
-      )}
-    </UI.Panel>
+      <path d={providerPaths[brand]} />
+    </svg>
   );
 }
 
+export type TraceSpan = {
+  id: string;
+  name: string;
+  kind: "agent" | "subagent" | "llm" | "tool";
+  status: "running" | "done" | "failed";
+  start: number;
+  end?: number;
+  detail?: string;
+  icon?: React.ReactNode;
+  model?: string;
+  tokensIn?: number;
+  tokensOut?: number;
+  cost?: number;
+  input?: string;
+  output?: string;
+  error?: string;
+  children?: TraceSpan[];
+};
+export type TraceWaterfallProps = {
+  root?: TraceSpan;
+  now?: number;
+  startedAt?: number;
+  collapsed?: string[];
+  defaultCollapsed?: string[];
+  onCollapsedChange?: (ids: string[]) => void;
+  openId?: string | null;
+  defaultOpenId?: string | null;
+  onOpenChange?: (id: string | null, span?: TraceSpan) => void;
+  markSlowest?: boolean;
+  minRange?: number;
+  formatCost?: (value: number) => string;
+  title?: string;
+  className?: string;
+};
+type Row = { span: TraceSpan; depth: number; parent?: string };
+const allSpans = (span: TraceSpan): TraceSpan[] => [
+  span,
+  ...(span.children ?? []).flatMap(allSpans),
+];
+const aggregate = (
+  span: TraceSpan,
+  key: "cost" | "tokensIn" | "tokensOut",
+): number =>
+  Math.max(0, span[key] ?? 0) +
+  (span.children ?? []).reduce((sum, child) => sum + aggregate(child, key), 0);
+const money = (value: number) =>
+  `$${value < 0.01 ? value.toFixed(3) : value.toFixed(2)}`;
+const duration = (value: number) =>
+  value >= 60000
+    ? `${Math.floor(value / 60000)}m ${Math.floor((value % 60000) / 1000)}s`
+    : value >= 1000
+      ? `${Number((value / 1000).toFixed(1))}s`
+      : `${Math.round(value)}ms`;
+const short = (value: number) =>
+  value >= 1000 ? `${Number((value / 1000).toFixed(1))}k` : String(value);
+function example(): TraceSpan {
+  return {
+    id: "run",
+    name: "Orchestrator",
+    detail: "Opus 5.5",
+    kind: "agent",
+    status: "running",
+    start: 0,
+    input: "Launch the new pricing page by Friday",
+    children: [
+      {
+        id: "plan",
+        name: "Plan the launch",
+        detail: "Opus 5.5",
+        model: "Opus 5.5",
+        kind: "llm",
+        status: "done",
+        start: 900,
+        end: 7800,
+        tokensIn: 3240,
+        tokensOut: 880,
+        cost: 0.115,
+        input: "Plan the launch of the new pricing page",
+        output:
+          "Research competitors, write the three plans, build and test checkout.",
+      },
+      {
+        id: "research",
+        name: "Researcher",
+        detail: "Sonnet 5.5",
+        kind: "subagent",
+        status: "running",
+        start: 8100,
+        children: [
+          {
+            id: "linear",
+            name: "web_search",
+            detail: "Linear pricing",
+            kind: "tool",
+            status: "done",
+            start: 9000,
+            end: 14400,
+            cost: 0.005,
+            tokensIn: 1800,
+            tokensOut: 2800,
+            output: "Retrieved the pricing plans and feature comparison.",
+          },
+          {
+            id: "notion",
+            name: "web_search",
+            detail: "Notion pricing",
+            kind: "tool",
+            status: "done",
+            start: 9300,
+            end: 16500,
+            cost: 0.005,
+            tokensIn: 2100,
+            tokensOut: 3200,
+          },
+          {
+            id: "query",
+            name: "Query plan usage",
+            detail: "Postgres",
+            kind: "tool",
+            status: "done",
+            start: 9700,
+            end: 13200,
+            tokensIn: 800,
+            tokensOut: 4200,
+          },
+          {
+            id: "reviews",
+            name: "Read G2 reviews",
+            detail: "120 reviews",
+            kind: "tool",
+            status: "running",
+            start: 14800,
+          },
+        ],
+      },
+      {
+        id: "writer",
+        name: "Writer",
+        detail: "Sonnet 5.5",
+        kind: "subagent",
+        status: "running",
+        start: 11100,
+        children: [
+          {
+            id: "voice",
+            name: "Read brand voice",
+            detail: "Notion",
+            kind: "tool",
+            status: "done",
+            start: 11700,
+            end: 15300,
+            tokensIn: 1200,
+            tokensOut: 4200,
+          },
+          {
+            id: "figma",
+            name: "Read pricing frames",
+            detail: "Figma",
+            kind: "tool",
+            status: "done",
+            start: 12000,
+            end: 17100,
+            tokensIn: 1800,
+            tokensOut: 3900,
+          },
+          {
+            id: "copy",
+            name: "Draft plan copy",
+            detail: "Sonnet 5.5",
+            kind: "llm",
+            status: "running",
+            start: 17800,
+            cost: 0.035,
+            tokensIn: 1800,
+            tokensOut: 900,
+          },
+        ],
+      },
+      {
+        id: "coder",
+        name: "Coder",
+        detail: "GPT-6 Sol",
+        kind: "subagent",
+        status: "running",
+        start: 15400,
+        children: [
+          {
+            id: "branch",
+            name: "Create branch",
+            detail: "GitHub",
+            kind: "tool",
+            status: "done",
+            start: 16000,
+            end: 18100,
+            tokensIn: 80,
+            tokensOut: 100,
+          },
+          {
+            id: "build",
+            name: "Write pricing page",
+            detail: "GPT-6 Sol",
+            kind: "llm",
+            status: "running",
+            start: 18400,
+            cost: 0.07,
+            tokensIn: 800,
+            tokensOut: 900,
+          },
+        ],
+      },
+    ],
+  };
+}
+
+export function TraceWaterfall({
+  root,
+  now,
+  startedAt,
+  collapsed,
+  defaultCollapsed = [],
+  onCollapsedChange,
+  openId,
+  defaultOpenId = null,
+  onOpenChange,
+  markSlowest = true,
+  minRange = 10000,
+  formatCost = money,
+  title = "Trace",
+  className = "",
+}: TraceWaterfallProps) {
+  const [demo] = React.useState(example),
+    data = root ?? demo;
+  const all = allSpans(data);
+  const live = all.some((span) => span.status === "running");
+  const maxKnown = Math.max(0, ...all.map((span) => span.end ?? span.start));
+  const epoch = React.useRef(Date.now() - (root ? maxKnown : 23000));
+  const [clock, setClock] = React.useState(
+    () => Date.now() - (startedAt ?? epoch.current),
+  );
+  const time = now ?? (live ? clock : maxKnown);
+  const [folded, setFolded] = React.useState(defaultCollapsed);
+  const hidden = collapsed ?? folded;
+  const [open, setOpen] = React.useState<string | null>(defaultOpenId);
+  const activeId = openId === undefined ? open : openId;
+  const selected = all.find((span) => span.id === activeId);
+  const [focus, setFocus] = React.useState(data.id);
+  const rows = React.useMemo(() => {
+    const result: Row[] = [];
+    const walk = (span: TraceSpan, depth: number, parent?: string) => {
+      result.push({ span, depth, parent });
+      if (!hidden.includes(span.id))
+        span.children?.forEach((child) => walk(child, depth + 1, span.id));
+    };
+    walk(data, 0);
+    return result;
+  }, [data, hidden]);
+  const rowRefs = React.useRef(new Map<string, HTMLDivElement>());
+  const popup = React.useRef<HTMLDivElement>(null);
+  const longest = Math.max(Math.max(1, minRange), time, maxKnown);
+  const tickSize =
+    longest <= 30000
+      ? 10000
+      : longest <= 120000
+        ? 30000
+        : longest <= 600000
+          ? 60000
+          : Math.pow(10, Math.floor(Math.log10(longest))) / 2;
+  const range = Math.ceil(longest / tickSize) * tickSize;
+  const ticks = Array.from(
+    { length: Math.floor(range / tickSize) + 1 },
+    (_, index) => index * tickSize,
+  );
+  const finished = all.filter(
+    (span) =>
+      (span.kind === "llm" || span.kind === "tool") && span.end !== undefined,
+  );
+  const slowest = finished.reduce<TraceSpan | undefined>(
+    (best, span) =>
+      !best || span.end! - span.start > best.end! - best.start ? span : best,
+    undefined,
+  );
+  const totalDuration = Math.max(0, (data.end ?? time) - data.start);
+  React.useEffect(() => {
+    if (now !== undefined || !live) return;
+    const tick = () => setClock(Date.now() - (startedAt ?? epoch.current));
+    tick();
+    const timer = setInterval(tick, 100);
+    return () => clearInterval(timer);
+  }, [now, live, startedAt]);
+  React.useEffect(() => {
+    if (!rows.some((row) => row.span.id === focus))
+      setFocus(rows[0]?.span.id ?? data.id);
+  }, [rows, focus, data.id]);
+  React.useEffect(() => {
+    if (selected)
+      popup.current?.querySelector<HTMLButtonElement>("button")?.focus();
+  }, [selected?.id]);
+  const fold = (span: TraceSpan) => {
+    const next = hidden.includes(span.id)
+      ? hidden.filter((value) => value !== span.id)
+      : [...hidden, span.id];
+    setFolded(next);
+    onCollapsedChange?.(next);
+  };
+  const openSpan = (span: TraceSpan | null) => {
+    const next = span?.id ?? null;
+    setOpen(next);
+    if (span) onOpenChange?.(next, span);
+    else onOpenChange?.(null);
+    if (!span && activeId) rowRefs.current.get(activeId)?.focus();
+  };
+  const move = (index: number) => {
+    const next = rows[Math.max(0, Math.min(rows.length - 1, index))];
+    if (next) {
+      setFocus(next.span.id);
+      rowRefs.current.get(next.span.id)?.focus();
+    }
+  };
+  const key = (event: React.KeyboardEvent, index: number, row: Row) => {
+    if (
+      [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+        "Home",
+        "End",
+        "Enter",
+        " ",
+      ].includes(event.key)
+    )
+      event.preventDefault();
+    if (event.key === "ArrowDown") move(index + 1);
+    if (event.key === "ArrowUp") move(index - 1);
+    if (event.key === "Home") move(0);
+    if (event.key === "End") move(rows.length - 1);
+    if (event.key === "ArrowRight" && row.span.children?.length) {
+      if (hidden.includes(row.span.id)) fold(row.span);
+      else move(index + 1);
+    }
+    if (event.key === "ArrowLeft") {
+      if (row.span.children?.length && !hidden.includes(row.span.id))
+        fold(row.span);
+      else if (row.parent)
+        move(rows.findIndex((item) => item.span.id === row.parent));
+    }
+    if (event.key === "Enter" || event.key === " ")
+      openSpan(activeId === row.span.id ? null : row.span);
+    if (event.key === "Escape") openSpan(null);
+  };
+  const detailTop = selected
+    ? Math.min(
+        130 +
+          Math.max(
+            0,
+            rows.findIndex((row) => row.span.id === selected.id),
+          ) *
+            31,
+        Math.max(130, rows.length * 31 - 100),
+      )
+    : 130;
+  return (
+    <section className={`trw-root ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="trw-header">
+        <span className="trw-title">
+          <i aria-hidden="true">✦</i>
+          {title}
+        </span>
+        <span className="trw-description">{data.input ?? data.name}</span>
+        <span className={`trw-state ${data.status}`} role="status">
+          {data.status === "running"
+            ? "• Live"
+            : data.status === "failed"
+              ? "Failed"
+              : "✓ Done"}
+        </span>
+      </header>
+      <dl className="trw-totals">
+        {[
+          ["Duration", duration(totalDuration)],
+          ["Cost", formatCost(aggregate(data, "cost"))],
+          [
+            "Tokens",
+            short(aggregate(data, "tokensIn") + aggregate(data, "tokensOut")),
+          ],
+          [
+            "LLM calls",
+            String(all.filter((span) => span.kind === "llm").length),
+          ],
+          [
+            "Tool calls",
+            String(all.filter((span) => span.kind === "tool").length),
+          ],
+          [
+            "Errors",
+            String(all.filter((span) => span.status === "failed").length),
+          ],
+        ].map(([label, value]) => (
+          <div key={label}>
+            <dt>{label}</dt>
+            <dd
+              className={
+                live && ["Duration", "Cost", "Tokens"].includes(label)
+                  ? "trw-shimmer"
+                  : ""
+              }
+            >
+              {value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <div className="trw-axis" aria-hidden="true">
+        <span>Span</span>
+        <div>
+          {ticks.map((tick) => (
+            <span key={tick} style={{ left: `${(tick / range) * 100}%` }}>
+              {duration(tick)}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="trw-rows" role="tree" aria-label="Trace spans">
+        {rows.map((row, index) => {
+          const span = row.span;
+          const end = span.end ?? time;
+          const spanDuration = Math.max(0, end - span.start);
+          const cost = aggregate(span, "cost");
+          const left = Math.max(0, Math.min(100, (span.start / range) * 100));
+          const width = Math.max(
+            0.6,
+            Math.min(100 - left, (spanDuration / range) * 100),
+          );
+          return (
+            <div
+              key={span.id}
+              ref={(element) => {
+                if (element) rowRefs.current.set(span.id, element);
+                else rowRefs.current.delete(span.id);
+              }}
+              role="treeitem"
+              aria-level={row.depth + 1}
+              aria-expanded={
+                span.children?.length ? !hidden.includes(span.id) : undefined
+              }
+              aria-label={`${span.name}, ${span.kind}, ${span.status}, ${duration(spanDuration)}, ${formatCost(cost)}`}
+              tabIndex={focus === span.id ? 0 : -1}
+              className={`trw-row ${activeId === span.id ? "selected" : ""}`}
+              onFocus={() => setFocus(span.id)}
+              onKeyDown={(event) => key(event, index, row)}
+              onClick={() => openSpan(activeId === span.id ? null : span)}
+            >
+              <div
+                className="trw-name"
+                style={{ paddingLeft: 12 + row.depth * 16 }}
+              >
+                {row.depth > 0 && (
+                  <span
+                    className="trw-indent"
+                    style={{ left: row.depth * 16 - 1 }}
+                    aria-hidden="true"
+                  />
+                )}
+                {span.children?.length ? (
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    aria-label={`${hidden.includes(span.id) ? "Expand" : "Collapse"} ${span.name}`}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      fold(span);
+                      setFocus(span.id);
+                      rowRefs.current.get(span.id)?.focus();
+                    }}
+                  >
+                    <svg
+                      viewBox="0 0 16 16"
+                      style={{
+                        transform: hidden.includes(span.id)
+                          ? "rotate(-90deg)"
+                          : undefined,
+                      }}
+                    >
+                      <path d="m5 6 3 3 3-3" />
+                    </svg>
+                  </button>
+                ) : (
+                  <span className="trw-spacer" />
+                )}
+                <span className={`trw-icon ${span.kind}`}>
+                  {span.icon ??
+                    (span.kind === "tool" ? (
+                      <svg viewBox="0 0 16 16">
+                        <circle cx="6.5" cy="6.5" r="4" />
+                        <path d="m10 10 3 3" />
+                      </svg>
+                    ) : (
+                      <ProviderMark model={span.model ?? span.detail} />
+                    ))}
+                </span>
+                <strong>{span.name}</strong>
+                {span.detail && <small>{span.detail}</small>}
+                {span.status === "running" && (
+                  <i className="trw-spinner" aria-hidden="true" />
+                )}
+              </div>
+              <div className="trw-timeline">
+                {ticks.map((tick) => (
+                  <i
+                    key={tick}
+                    className="trw-grid-line"
+                    style={{ left: `${(tick / range) * 100}%` }}
+                    aria-hidden="true"
+                  />
+                ))}
+                {live && (
+                  <i
+                    className="trw-now"
+                    style={{ left: `${Math.min(100, (time / range) * 100)}%` }}
+                    aria-hidden="true"
+                  />
+                )}
+                <span
+                  className={`trw-bar ${span.kind} ${span.status}`}
+                  style={{ left: `${left}%`, width: `${width}%` }}
+                >
+                  {hidden.includes(span.id) &&
+                    span.children?.map((child) => (
+                      <i
+                        key={child.id}
+                        style={{
+                          left: `${Math.max(0, ((child.start - span.start) / Math.max(1, spanDuration)) * 100)}%`,
+                        }}
+                      />
+                    ))}
+                </span>
+                <span
+                  className="trw-value"
+                  style={{ left: `${Math.min(100, left + width)}%` }}
+                >
+                  {duration(spanDuration)}
+                  {cost > 0 ? ` · ${formatCost(cost)}` : ""}
+                  {markSlowest && slowest?.id === span.id && <b>Slowest</b>}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {selected && (
+        <div
+          ref={popup}
+          className="trw-detail"
+          role="dialog"
+          aria-label={selected.name}
+          style={{ top: detailTop }}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              event.preventDefault();
+              openSpan(null);
+            }
+          }}
+        >
+          <header>
+            <span className={`trw-kind-dot ${selected.kind}`} />
+            <strong>{selected.name}</strong>
+            <button
+              aria-label="Close span details"
+              onClick={() => openSpan(null)}
+            >
+              ×
+            </button>
+          </header>
+          <p>
+            {selected.kind} <span>·</span> {selected.status} <span>·</span>{" "}
+            {duration(Math.max(0, (selected.end ?? time) - selected.start))}
+          </p>
+          <dl>
+            <div>
+              <dt>Cost</dt>
+              <dd>{formatCost(aggregate(selected, "cost"))}</dd>
+            </div>
+            <div>
+              <dt>Input tokens</dt>
+              <dd>{aggregate(selected, "tokensIn").toLocaleString()}</dd>
+            </div>
+            <div>
+              <dt>Output tokens</dt>
+              <dd>{aggregate(selected, "tokensOut").toLocaleString()}</dd>
+            </div>
+          </dl>
+          {selected.model && <p>{selected.model}</p>}
+          {(["input", "output", "error"] as const).map((field) =>
+            selected[field] ? (
+              <div className={`trw-preview ${field}`} key={field}>
+                <h4>{field}</h4>
+                <pre>{selected[field]}</pre>
+              </div>
+            ) : null,
+          )}
+        </div>
+      )}
+    </section>
+  );
+}
+const css = `
+.trw-root{--trw-bg:#fff;--trw-ink:#29292c;--trw-muted:#88888e;--trw-line:#e9e9eb;--trw-hover:#f7f7f8;--trw-agent:#88889820;--trw-agent-edge:#88889840;--trw-llm:#8e7be62b;--trw-llm-edge:#8e7be655;--trw-tool:#39a4b123;--trw-tool-edge:#39a4b14f;width:100%;max-width:950px;border:1px solid var(--trw-line);border-radius:12px;background:var(--trw-bg);color:var(--trw-ink);font:400 12px/18px Inter,system-ui,sans-serif;position:relative;container:trw / inline-size;text-align:left;isolation:isolate}:where(.dark,[data-theme=dark]) .trw-root{--trw-bg:#202022;--trw-ink:#e4e4e7;--trw-muted:#85858b;--trw-line:#2b2b2f;--trw-hover:#242427;color-scheme:dark}.trw-root *{box-sizing:border-box}.trw-root button{font:inherit;color:inherit;cursor:pointer}.trw-root :focus-visible{outline:2px solid #82bcff;outline-offset:-2px}.trw-root svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.trw-header{display:flex;align-items:center;gap:9px;padding:13px 17px;border-bottom:1px solid var(--trw-line);min-width:0}.trw-title{display:flex;gap:10px;align-items:center;font-size:12px;font-weight:500;white-space:nowrap}.trw-title i{font-size:14px;font-style:normal;color:#80b4ee}.trw-description{color:var(--trw-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}.trw-state{font-size:10px;line-height:18px;white-space:nowrap;padding:0 6px;border-radius:4px;color:#6896c5;background:#5e9cdb18;margin-left:auto}.trw-state.done{color:#62aa87;background:#62aa8718}.trw-state.failed{color:#d07882;background:#d0788218}.trw-totals{display:grid;grid-template-columns:repeat(6,1fr);padding:13px 8px;margin:0;border-bottom:1px solid var(--trw-line)}.trw-totals>div{padding:0 13px;border-left:1px solid var(--trw-line)}.trw-totals>div:first-child{border-left:0}.trw-totals dt{font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:var(--trw-muted);white-space:nowrap}.trw-totals dd{font-size:14px;line-height:21px;margin:4px 0 0;font-variant-numeric:tabular-nums}.trw-axis{display:grid;grid-template-columns:34% 1fr;height:30px;border-bottom:1px solid var(--trw-line);font-size:10px;color:var(--trw-muted)}.trw-axis>span{padding:6px 15px;text-transform:uppercase;font-size:9px;letter-spacing:.7px}.trw-axis>div{position:relative;margin-right:40px;border-left:1px solid var(--trw-line)}.trw-axis>div>span{position:absolute;top:6px;transform:translateX(4px);white-space:nowrap}.trw-axis>div>span:last-child{transform:translateX(-100%)}.trw-rows{padding:3px 0 12px;overflow:hidden;border-radius:0 0 12px 12px}.trw-row{display:grid;grid-template-columns:34% 1fr;min-height:31px;cursor:pointer;outline:none;animation:trw-row-in .2s both}.trw-row:hover,.trw-row.selected{background:var(--trw-hover)}.trw-name{display:flex;align-items:center;gap:7px;min-width:0;padding:6px 10px 6px 12px;position:relative}.trw-name strong{font-size:11px;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0;max-width:75%}.trw-name small{font-size:10px;color:var(--trw-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.trw-name>button{border:0;background:none;padding:0;width:10px;height:16px;flex:none;color:var(--trw-muted)}.trw-name>button svg{transition:transform .2s;width:10px}.trw-spacer{width:10px;flex:none}.trw-indent{position:absolute;top:0;bottom:0;width:1px;background:var(--trw-line)}.trw-icon{width:12px;height:14px;display:grid;place-items:center;flex:none;color:#d59373}.trw-icon svg,.trw-icon img{max-width:12px;max-height:12px}.trw-icon.tool{color:#72a8b3}.trw-spinner{margin-left:auto;flex:none;width:8px;height:8px;border:1px solid #81afdf44;border-top-color:#81afdf;border-radius:50%;animation:trw-spin 1s linear infinite}.trw-timeline{position:relative;min-width:0;border-left:1px solid var(--trw-line);margin-right:40px}.trw-grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--trw-line);pointer-events:none}.trw-now{position:absolute;top:-2px;bottom:-2px;width:1px;background:#679ddd88;pointer-events:none;z-index:2;transition:left .2s linear}.trw-row:first-child .trw-now:before{content:'';position:absolute;top:-6px;left:-2px;width:5px;height:5px;border-radius:50%;background:#8ab8f2}.trw-bar{position:absolute;top:11px;height:13px;border-radius:3px;background:var(--trw-agent);border:1px solid var(--trw-agent-edge);transition:left .4s,width .4s;min-width:2px;overflow:hidden}.trw-bar.llm{background:var(--trw-llm);border-color:var(--trw-llm-edge)}.trw-bar.tool{background:var(--trw-tool);border-color:var(--trw-tool-edge)}.trw-bar.failed{background:#c45c6d24;border-color:#c45c6d55}.trw-bar.running:after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 20%,#ffffff0b 50%,transparent 80%);background-size:220% 100%;animation:trw-shine 2.5s linear infinite}.trw-bar>i{position:absolute;top:1px;bottom:1px;width:2px;background:var(--trw-muted);opacity:.45}.trw-value{position:absolute;top:7px;padding-left:5px;white-space:nowrap;font-size:10px;color:var(--trw-muted);font-variant-numeric:tabular-nums;line-height:20px;transition:left .4s;pointer-events:none}.trw-value b{font-size:8px;text-transform:uppercase;letter-spacing:.3px;color:#c9945d;background:#a56b2918;padding:1px 4px;border-radius:2px;margin-left:7px;font-weight:500}.trw-shimmer{background:linear-gradient(100deg,var(--trw-muted),var(--trw-ink),var(--trw-muted));background-size:220% 100%;background-clip:text;color:transparent;animation:trw-shine 3s linear infinite}.trw-detail{position:absolute;right:16px;width:310px;max-width:calc(100% - 32px);max-height:390px;overflow:auto;padding:15px;background:var(--trw-bg);border:1px solid var(--trw-line);border-radius:10px;box-shadow:0 10px 35px #0003;z-index:20;animation:trw-pop .18s both}.trw-detail header{display:flex;gap:7px;align-items:center}.trw-detail header strong{font-weight:500;font-size:12px}.trw-detail header button{margin-left:auto;font-size:20px;line-height:20px;padding:0 3px;border:0;background:none;color:var(--trw-muted)}.trw-detail>p{font-size:10px;color:var(--trw-muted);margin:8px 0}.trw-detail>p span{padding:0 4px}.trw-detail dl{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--trw-line);padding:10px 0;margin:12px 0}.trw-detail dt{font-size:9px;color:var(--trw-muted)}.trw-detail dd{margin:3px 0 0;font-size:11px}.trw-preview h4{margin:10px 0 5px;text-transform:capitalize;font-size:10px;font-weight:500}.trw-preview pre{background:var(--trw-hover);padding:9px;border-radius:5px;font:10px/1.7 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--trw-muted);margin:0}.trw-preview.error pre{color:#d07882}.trw-kind-dot{width:7px;height:7px;border-radius:2px;background:#9797a7}.trw-kind-dot.llm{background:#a292df}.trw-kind-dot.tool{background:#6cabb3}
+@container trw (max-width:559px){.trw-totals{grid-template-columns:repeat(3,1fr);gap:12px 0}.trw-totals>div:nth-child(4){border-left:0}.trw-header{padding:12px}.trw-description{font-size:10px}.trw-axis{grid-template-columns:1fr;height:25px}.trw-axis>span{display:none}.trw-axis>div{margin:0 90px 0 15px;border:0}.trw-row{grid-template-columns:1fr;min-height:55px}.trw-name{padding-top:5px;padding-bottom:2px}.trw-name strong{max-width:68%}.trw-timeline{margin:0 90px 0 15px;min-height:25px;border-left:0}.trw-bar{top:4px;height:12px}.trw-value{top:0;font-size:9px}.trw-now,.trw-grid-line{top:-20px}.trw-row:first-child .trw-now:before{display:none}.trw-value b{display:none}.trw-detail{top:110px!important;right:12px;max-width:calc(100% - 24px)}}@container trw (max-width:359px){.trw-name small{display:none}.trw-description{display:none}.trw-totals>div{padding:0 9px}.trw-totals dt{font-size:8px}}
+@keyframes trw-shine{to{background-position:-220% 0}}@keyframes trw-spin{to{transform:rotate(360deg)}}@keyframes trw-row-in{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}@keyframes trw-pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}@media(prefers-reduced-motion:reduce){.trw-root *{animation:none!important;transition:none!important}.trw-shimmer{background:none;color:var(--trw-ink)}}
+`;
 export default TraceWaterfall;

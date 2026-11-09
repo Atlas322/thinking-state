@@ -37,6 +37,23 @@ for (const entry of catalog) {
 add("catalog.json", JSON.stringify(catalog, null, 2));
 add("LICENSE.affectui", fs.readFileSync(path.join(root, "LICENSE.affectui")));
 add(
+  "LICENSE.simple-icons",
+  fs.readFileSync(path.join(root, "LICENSE.simple-icons")),
+);
+add(
+  "COMPONENT_REVIEW.md",
+  fs.readFileSync(path.join(root, "COMPONENT_REVIEW.md")),
+);
+for (const file of [
+  "ARCHITECTURE_AUDIT.md",
+  "VISUAL_REVIEW.md",
+  "MIT_SOURCE_VERIFICATION.json",
+  "REFERENCE_API_AUDIT.csv",
+  "review/AGENT_GRAPH.md",
+  "review/agent-graph-reference.png",
+  "review/agent-graph-before.png",
+]) add(file, fs.readFileSync(path.join(root, file)));
+add(
   "THIRD_PARTY_NOTICES.md",
   fs.readFileSync(path.join(root, "THIRD_PARTY_NOTICES.md")),
 );

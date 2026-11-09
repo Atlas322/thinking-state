@@ -1,0 +1,282 @@
+{
+  "method": "Normalized TypeScript AST of original statements; appended demo excluded. Whitespace-only JSX and parentheses are normalized.",
+  "upstreamCommit": "d690056c08395f7d1a00d26cd4f5144d2b609386",
+  "records": [
+    {
+      "component": "Button",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "39a743d2733743d23d03eddf9a7d5a5e50efd88f88b94b3217bb1bf970db3134"
+    },
+    {
+      "component": "Button",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "93f06d467ff3205add3f2501696ca133c9b7b1c47c93fbc50cf37e126786dbdc"
+    },
+    {
+      "component": "Change Summary",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "20dcfa69d926013cb5390ab68ac3a7745309aafca7ec464d9dbd0f55fb5d5437"
+    },
+    {
+      "component": "Change Summary",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "05427a39baacc28609f57db72132a78602e19c1ceef5e9eb1f088c72b077e420"
+    },
+    {
+      "component": "Checkbox",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "cb1899ffe289996be381ad8f358c6ca6ee591279e3a0be1e1be46f37a896a971"
+    },
+    {
+      "component": "Checkbox",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "151bffa07e7de6b8dde19732eeb8edf92b086901caa497afe3b8153d7fd12125"
+    },
+    {
+      "component": "Comment Thread",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "f652518f4dcd57c67e0e1e05e7d76d71de75c080d0ee4812c2b43cc7227666db"
+    },
+    {
+      "component": "Comment Thread",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "228f878978b34399480f6f7315705598ce34b2c41feb8d099797997462c16528"
+    },
+    {
+      "component": "Decision Inbox",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "2f7c1092ad029c923f0313a9f9fc5bab8ebfd7999c04dc889e543267627269b4"
+    },
+    {
+      "component": "Decision Inbox",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "edbd6c8088bddefa4dd529ada131100132f0a822780650e79944ba39ed0493fb"
+    },
+    {
+      "component": "Email Draft",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "467ac20a76d3d97c2a29078a330c314605e7be9c950a71836174a466c324c8f7"
+    },
+    {
+      "component": "Email Draft",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "30e1e70efd490b3ba29e4e0fef25e520e41f12de1be1b5929d0162c22d7968cc"
+    },
+    {
+      "component": "Filter Menu",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "a16e38fdd3d48416e87c1a12a9bde8c5c6f88902683bb326162e47012c2241f2"
+    },
+    {
+      "component": "Filter Menu",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "69002acd2dc7548063edd9589ae41a404c7ebcbe419c23da340b8a2889152d2a"
+    },
+    {
+      "component": "Message Actions",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "4722e727f01fe9d492bee1dfe67dcbf6799ceb50342c78e20a052143d5c4ec3d"
+    },
+    {
+      "component": "Message Actions",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "f9bc5dd739084a23708f9ed5ca65c92c99f44f3e30e329e9407e1546bd741bce"
+    },
+    {
+      "component": "Notification Stack",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "6ba18add0b08a974ba9e40466d38594edaf5e6cdd3428ab23c08b3a625ad7f3a"
+    },
+    {
+      "component": "Notification Stack",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "c8c2321e41103fccf79d9daeb00df664decbce1c8383f6d2272d74a41ee1d91f"
+    },
+    {
+      "component": "OTP Input",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "2793976891fd718645fd50fb4a868b6e398e47155bc675aabe04bdb017a1efc3"
+    },
+    {
+      "component": "OTP Input",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "0a4a66cf6f660358068313caf82ff9e1409a0edfc0831aa1c0637dd48a6886ca"
+    },
+    {
+      "component": "Profile Menu",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "6e394040a814ac151ca377459ea0d5eb6837a633b1e338b5748c26cdb7fbebe6"
+    },
+    {
+      "component": "Profile Menu",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "5fb46fa48464615559c15933a2c85c01e68edee66a398db10b98e6256808eedf"
+    },
+    {
+      "component": "Progress Tracker",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "e9f340f0ff134e0b3c7178b8ee7017c59dbbfc1007997d545f7f4b56abbcec85"
+    },
+    {
+      "component": "Progress Tracker",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "3a7846e32fb71bd8a3fdb74fd29eb68d144bc9298727acc1073f888d26cb31a4"
+    },
+    {
+      "component": "Reaction Bar",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "3b00181d2f388f8e44c9ba85dab900cfd450917e4423c2acd025737b2961422c"
+    },
+    {
+      "component": "Reaction Bar",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "4c3cb9a10bfbf15ffe80d86d0c92c38cb8acc8ce973f82e8f072afe59ef28c79"
+    },
+    {
+      "component": "Segmented Control",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "dd3e6775f9ad4db59ae13704d0695e705a41b79d6be59a6e5614135442b4c3ce"
+    },
+    {
+      "component": "Segmented Control",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "fb945599c7d99ff39d5ea098000740fe27dbfe346509c5a014e5bbf208e833dd"
+    },
+    {
+      "component": "Select",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "a11d80beafeda16656f2760959ce65d6567f496dc9f6e29db41dd5d5792db543"
+    },
+    {
+      "component": "Select",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "1082c10948ac075e866f9c24d3f6338f8d60cbed064edae2717756c57b5c2eaf"
+    },
+    {
+      "component": "Smart Recommendation",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "5c6bc98da28e4f0084c19130d98480ece9c1a0d3f41e3232e1c80b2d4a57595f"
+    },
+    {
+      "component": "Smart Recommendation",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "852d8f83e147871aec9ced86be1d931ef4cce4f48ccb622cf3d308a801174e72"
+    },
+    {
+      "component": "Switch",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "01e90aa98e83936edc05ed35f6e71f181d47c4a3b69c51c4ac0644454431e38c"
+    },
+    {
+      "component": "Switch",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "cca04cce125a9a7de1d04dd4ae9466a414cb4366fc331e33b525054fb79e5260"
+    },
+    {
+      "component": "Tag Input",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "95081efb008f0c8544a3218be8fd70103e2ee835c2731f1bbb9fc9d69e190b67"
+    },
+    {
+      "component": "Tag Input",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "4431074314500a7ff5e6ab76a67ada7b6ad7ee9078891a9e8f9ba64bd0f66fd6"
+    },
+    {
+      "component": "Text Area",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "4fc5f173eee216722702c3b89b34d32bc595677240ace83dd655dc5c19ef0f52"
+    },
+    {
+      "component": "Text Area",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "c6390841925d8d2d44fec4b4b46c7bec8299657adbcae60eb171bf8c485c125b"
+    },
+    {
+      "component": "Text Field",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "ef8a8e578bb3cd7978755c34bebdc53519769ae5e9f0e7756780afa979ca9df4"
+    },
+    {
+      "component": "Text Field",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "7ea7d83ac051481a4193b965fe836c99b1b8d015a609f611521998ca70ca8688"
+    },
+    {
+      "component": "Thinking Loader",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "0dd42f7500e39c0cfc22f57acf2cef16f3ee0f03123ba43a3e5e103aec6ff0d4"
+    },
+    {
+      "component": "Thinking Loader",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "b7404d5cc662e6c390d2f00582060547d595a37ef56ef4f5971a0bb36d2e7c44"
+    },
+    {
+      "component": "Tips Panel",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "b110bf9de8eb15901e2e6d7915f016032e5f20ecb3c0dd31f43f5eefc9c2fa68"
+    },
+    {
+      "component": "Tips Panel",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "326d6c3333ee7a9265aa1fb9bee2e64a24911281eebd77fcb66f4036ef30d21e"
+    },
+    {
+      "component": "Tool Call Card",
+      "style": "clean",
+      "match": true,
+      "referenceHash": "c25e56509ad496d74983ee173e31028c0d5f54b14f2d9deb0822621efe2793f8"
+    },
+    {
+      "component": "Tool Call Card",
+      "style": "classic",
+      "match": true,
+      "referenceHash": "f1d57e37f844d3641d82274e6aa4720902a7117855cbf2c61d8bdd424de81573"
+    }
+  ]
+}

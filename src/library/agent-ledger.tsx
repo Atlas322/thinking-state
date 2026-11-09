@@ -264,87 +264,273 @@ const studioCSS = `
 .st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
 `;
 
+export type LedgerEntry = {
+  id: string;
+  action: string;
+  target?: string;
+  system: string;
+  icon?: React.ReactNode;
+  at: number;
+  change?: [React.ReactNode, React.ReactNode];
+  detail?: React.ReactNode;
+  reversible?: boolean;
+  dependsOn?: string[];
+};
+export type AgentLedgerProps = {
+  entries?: LedgerEntry[];
+  agent?: string;
+  now?: number;
+  undone?: string[];
+  defaultUndone?: string[];
+  onUndo?: (ids: string[]) => void | Promise<void>;
+  onRedo?: (ids: string[]) => void | Promise<void>;
+  pointAt?: string | null;
+  title?: string;
+  className?: string;
+};
+
+/** Dependency traversal follows ids, never the current display order. Cycles terminate. */
+function ledgerDependents(entries: LedgerEntry[], id: string) {
+  const affected = new Set([id]);
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const entry of entries) {
+      if (
+        !affected.has(entry.id) &&
+        entry.dependsOn?.some((parent) => affected.has(parent))
+      ) {
+        affected.add(entry.id);
+        changed = true;
+      }
+    }
+  }
+  return affected;
+}
 export function AgentLedger({
-  title = "Changes made",
-  items = [
-    {
-      id: "price",
-      title: "Changed plan price",
-      detail: "Stripe · Pro plan",
-      tags: ["$29 / month", "$34 / month"],
-    },
-    {
-      id: "deals",
-      title: "Updated 212 renewal deals",
-      detail: "CRM · depends on plan price",
-      tags: ["$29 per seat", "$34 per seat"],
-    },
-    {
-      id: "email",
-      title: "Sent customer update",
-      detail: "Email · cannot be unsent",
-      status: "irreversible",
-      tags: ["Draft", "Sent to 3,812 customers"],
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [undone, setUndone] = React.useState<string[]>([]);
-  const [hover, setHover] = React.useState<string>();
+  entries = [],
+  agent,
+  now,
+  undone,
+  defaultUndone = [],
+  onUndo,
+  onRedo,
+  pointAt,
+  title = "Ledger",
+  className = "",
+}: AgentLedgerProps) {
+  const [internal, setInternal] = React.useState(defaultUndone);
+  const removed = undone ?? internal;
+  const [hover, setHover] = React.useState<string | null>(null);
+  const [clock, setClock] = React.useState(Date.now);
+  const [busy, setBusy] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [announcement, setAnnouncement] = React.useState("");
+  const locked = React.useRef(false);
+  const mounted = React.useRef(true);
+  React.useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  React.useEffect(() => {
+    if (now !== undefined) return;
+    const timer = window.setInterval(() => setClock(Date.now()), 10000);
+    return () => window.clearInterval(timer);
+  }, [now]);
+  const active = pointAt === undefined ? hover : pointAt;
+  const affected = active
+    ? ledgerDependents(entries, active)
+    : new Set<string>();
+  const sorted = [...entries].sort((a, b) => b.at - a.at);
+  const titleId = React.useId();
+  const perform = async (entry: LedgerEntry, redo: boolean) => {
+    if (locked.current || entry.reversible === false) return;
+    if (redo && entry.dependsOn?.some((id) => removed.includes(id))) return;
+    const chain = ledgerDependents(entries, entry.id);
+    const ids = entries
+      .filter(
+        (value) =>
+          chain.has(value.id) &&
+          value.reversible !== false &&
+          removed.includes(value.id) === redo,
+      )
+      .map((value) => value.id);
+    if (!ids.length) return;
+    locked.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      await (redo ? onRedo : onUndo)?.(ids);
+      if (!mounted.current) return;
+      if (undone === undefined)
+        setInternal((current) =>
+          redo
+            ? current.filter((id) => !ids.includes(id))
+            : [...new Set([...current, ...ids])],
+        );
+      setAnnouncement(
+        `${redo ? "Restored" : "Undid"} ${ids.length} change${ids.length === 1 ? "" : "s"}.`,
+      );
+    } catch (failure) {
+      if (mounted.current)
+        setError(
+          failure instanceof Error
+            ? failure.message
+            : "Could not update these changes. Try again.",
+        );
+    } finally {
+      locked.current = false;
+      if (mounted.current) setBusy(false);
+    }
+  };
+  const relative = (at: number) => {
+    const seconds = Math.max(0, Math.floor(((now ?? clock) - at) / 1000));
+    return seconds < 60
+      ? "Just now"
+      : seconds < 3600
+        ? `${Math.floor(seconds / 60)}m ago`
+        : seconds < 86400
+          ? `${Math.floor(seconds / 3600)}h ago`
+          : `${Math.floor(seconds / 86400)}d ago`;
+  };
   return (
-    <UI.Panel
-      title={title}
-      subtitle="Launch agent · every change accounted for"
-      className={className}
-    >
-      {items.map((x, i) => (
-        <div
-          key={x.id}
+    <div className={`ldg-root ${className}`} style={{ width: "100%" }}>
+      <style>{`.ldg-root{container:ldg/inline-size}.ldg-list{list-style:none;padding:0;margin:0}.ldg-entry{padding:12px 0;border-bottom:1px solid var(--st-line);transition:opacity .2s,background .2s}.ldg-entry:last-child{border:0}.ldg-entry[data-undone=true]{opacity:.55}.ldg-entry[data-undone=true] .ldg-title{text-decoration:line-through}.ldg-entry[data-affected=true]{background:color-mix(in srgb,var(--st-accent) 7%,transparent)}.ldg-main{display:flex;align-items:center;gap:10px}.ldg-main>div{flex:1;min-width:0}.ldg-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 0 40px;font-size:11px}.ldg-main .st-btn{flex:none}.ldg-change{display:flex;gap:8px;flex-wrap:wrap}.ldg-main strong{overflow-wrap:anywhere}.ldg-main button[aria-disabled=true]{opacity:.5;cursor:not-allowed}@container ldg(max-width:480px){.ldg-meta{margin-left:0}.ldg-main{gap:7px}}@media(prefers-reduced-motion:reduce){.ldg-entry{transition:none}}`}</style>
+      <UI.Panel title={title} subtitle={agent}>
+        <span
+          id={titleId}
           style={{
-            opacity: undone.includes(x.id) ? 0.45 : 1,
-            background:
-              hover === items[0]?.id && i > 0
-                ? "var(--st-soft)"
-                : "transparent",
+            position: "absolute",
+            width: 1,
+            height: 1,
+            overflow: "hidden",
+            clipPath: "inset(50%)",
           }}
         >
-          <UI.Row title={x.title} detail={x.detail}>
-            <UI.Button
-              disabled={x.status === "irreversible"}
-              onMouseEnter={() => setHover(x.id)}
-              onMouseLeave={() => setHover(undefined)}
-              onClick={() => {
-                const ids = items
-                  .slice(i)
-                  .filter((v) => v.status !== "irreversible")
-                  .map((v) => v.id);
-                setUndone((s) =>
-                  s.includes(x.id)
-                    ? s.filter((v) => !ids.includes(v))
-                    : [...new Set([...s, ...ids])],
-                );
-                onAction?.(undone.includes(x.id) ? "redo" : "undo", x);
-              }}
-            >
-              {undone.includes(x.id) ? "Redo" : "Undo"}
-            </UI.Button>
-          </UI.Row>
-          <div
-            className="st-actions"
-            style={{ margin: "0 0 12px", fontSize: 11 }}
-          >
-            <s className="st-muted">{x.tags?.[0]}</s>
-            <span>→</span>
-            <span style={{ color: "var(--st-green)" }}>{x.tags?.[1]}</span>
-          </div>
-        </div>
-      ))}
-      <small>
-        Undoing a change also undoes later reversible changes that depend on it.
-      </small>
-    </UI.Panel>
+          {title}
+        </span>
+        <ol className="ldg-list" aria-labelledby={titleId} aria-busy={busy}>
+          {sorted.map((entry) => {
+            const isUndone = removed.includes(entry.id);
+            const dependencyUndone = entry.dependsOn?.some((id) =>
+              removed.includes(id),
+            );
+            const dependents = entries.filter(
+              (value) =>
+                value.id !== entry.id &&
+                ledgerDependents(entries, entry.id).has(value.id) &&
+                value.reversible !== false &&
+                !removed.includes(value.id),
+            );
+            return (
+              <li
+                key={entry.id}
+                className="ldg-entry"
+                data-undone={isUndone}
+                data-affected={affected.has(entry.id)}
+              >
+                <div className="ldg-main">
+                  <span aria-hidden="true">
+                    {entry.icon ?? <UI.Avatar name={entry.system} />}
+                  </span>
+                  <div>
+                    <strong className="ldg-title">{entry.action}</strong>
+                    {entry.target && <small>{entry.target}</small>}
+                  </div>
+                  {entry.reversible === false ? (
+                    <UI.Badge tone={affected.has(entry.id) ? "amber" : ""}>
+                      Can't undo
+                    </UI.Badge>
+                  ) : (
+                    <UI.Button
+                      aria-label={`${isUndone ? "Redo" : "Undo"} ${entry.action}${!isUndone && dependents.length ? ` and ${dependents.length} dependent changes` : ""}`}
+                      aria-disabled={busy || (isUndone && !!dependencyUndone)}
+                      title={
+                        isUndone && dependencyUndone
+                          ? "Restore the dependency first"
+                          : undefined
+                      }
+                      onMouseEnter={() => setHover(entry.id)}
+                      onMouseLeave={() => setHover(null)}
+                      onFocus={() => setHover(entry.id)}
+                      onBlur={() => setHover(null)}
+                      onClick={() => void perform(entry, isUndone)}
+                    >
+                      {isUndone ? "Redo" : "Undo"}
+                    </UI.Button>
+                  )}
+                </div>
+                <div className="ldg-meta">
+                  {entry.change && (
+                    <span className="ldg-change">
+                      <s>{entry.change[0]}</s>
+                      <span aria-label="to">→</span>
+                      <span>{entry.change[1]}</span>
+                    </span>
+                  )}
+                  {entry.detail && <span>{entry.detail}</span>}
+                  <small>
+                    {entry.system} · {relative(entry.at)}
+                  </small>
+                  {affected.has(entry.id) &&
+                    entry.id !== active &&
+                    entry.reversible !== false &&
+                    !isUndone && <UI.Badge tone="blue">Also undone</UI.Badge>}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+        {!entries.length && <UI.Empty>No changes yet</UI.Empty>}
+        {error && (
+          <p role="alert" style={{ color: "var(--st-red)" }}>
+            {error}
+          </p>
+        )}
+        <span role="status" className="st-status">
+          {announcement}
+        </span>
+      </UI.Panel>
+    </div>
   );
 }
-
-export default AgentLedger;
+export default Demo;
+export function Demo() {
+  const now = React.useRef(Date.now()).current;
+  return (
+    <AgentLedger
+      agent="Launch agent"
+      entries={[
+        {
+          id: "price",
+          action: "Changed price",
+          target: "Pro plan",
+          system: "Stripe",
+          at: now - 120000,
+          change: ["$29 / month", "$34 / month"],
+        },
+        {
+          id: "deals",
+          action: "Updated 212 deals",
+          target: "Renewals in Q4",
+          system: "HubSpot",
+          at: now - 60000,
+          change: ["$29 per seat", "$34 per seat"],
+          dependsOn: ["price"],
+        },
+        {
+          id: "email",
+          action: "Sent email",
+          target: "3,812 customers",
+          system: "HubSpot",
+          at: now,
+          detail: "New price and the code LAUNCH20",
+          dependsOn: ["price"],
+          reversible: false,
+        },
+      ]}
+    />
+  );
+}

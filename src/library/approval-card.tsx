@@ -264,101 +264,336 @@ const studioCSS = `
 .st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
 `;
 
+export type ApprovalStatus = "pending" | "approved" | "denied";
+export type ApprovalCardProps = {
+  title?: string;
+  description?: React.ReactNode;
+  risk?: "low" | "medium" | "high";
+  icon?: React.ReactNode;
+  details?: { label: string; value: React.ReactNode }[];
+  preview?: React.ReactNode;
+  children?: React.ReactNode;
+  status?: ApprovalStatus;
+  defaultStatus?: ApprovalStatus;
+  onApprove?: (details: { always: boolean }) => void | Promise<void>;
+  onDeny?: (details: { reason: "user" | "timeout" }) => void;
+  onEdit?: () => void;
+  expiresIn?: number;
+  onExpire?: () => void;
+  allowAlways?: boolean;
+  alwaysLabel?: string;
+  approveLabel?: string;
+  denyLabel?: string;
+  editLabel?: string;
+  shortcuts?: boolean;
+  label?: React.ReactNode;
+  actions?: "tray" | "card";
+  className?: string;
+};
+
 export function ApprovalCard({
   title = "Send campaign email",
   description = "October product update · Newsletter",
-  onAction,
-  className,
-}: StudioProps & { description?: string }) {
-  const [state, setState] = React.useState("pending");
+  risk,
+  icon = "◇",
+  details,
+  preview,
+  children,
+  status,
+  defaultStatus = "pending",
+  onApprove,
+  onDeny,
+  onEdit,
+  expiresIn,
+  onExpire,
+  allowAlways = true,
+  alwaysLabel = "Always allow this action",
+  approveLabel = "Approve",
+  denyLabel = "Deny",
+  editLabel = "Edit",
+  shortcuts = true,
+  label,
+  actions = "tray",
+  className = "",
+}: ApprovalCardProps) {
+  const [internal, setInternal] = React.useState<ApprovalStatus>(defaultStatus);
+  const state = status ?? internal;
   const [always, setAlways] = React.useState(false);
-  const [reason, setReason] = React.useState("");
   const [busy, setBusy] = React.useState(false);
-  const answer = async (value: string) => {
-    setBusy(true);
+  const [error, setError] = React.useState("");
+  const [hovered, setHovered] = React.useState(false);
+  const [focused, setFocused] = React.useState(false);
+  const [remaining, setRemaining] = React.useState(expiresIn);
+  const locked = React.useRef(false);
+  const expired = React.useRef(false);
+  const mounted = React.useRef(true);
+  const root = React.useRef<HTMLDivElement>(null);
+  const resolved = React.useRef<HTMLDivElement>(null);
+  const hadFocus = React.useRef(false);
+  const id = React.useId();
+  React.useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  React.useEffect(() => {
+    setRemaining(expiresIn);
+    expired.current = false;
+    if (state === "pending") {
+      setError("");
+      setAlways(false);
+    } else if (
+      hadFocus.current ||
+      root.current?.contains(document.activeElement)
+    )
+      resolved.current?.focus();
+    hadFocus.current = false;
+  }, [state, expiresIn]);
+  React.useEffect(() => {
+    if (
+      state !== "pending" ||
+      expiresIn == null ||
+      hovered ||
+      focused ||
+      busy ||
+      expired.current
+    )
+      return;
+    const timer = window.setInterval(
+      () => setRemaining((value) => Math.max(0, (value ?? expiresIn) - 1)),
+      1000,
+    );
+    return () => window.clearInterval(timer);
+  }, [state, expiresIn, hovered, focused, busy]);
+  const finish = (next: ApprovalStatus) => {
+    hadFocus.current = !!root.current?.contains(document.activeElement);
+    if (status === undefined) setInternal(next);
+  };
+  const deny = (reason: "user" | "timeout") => {
+    if (locked.current || state !== "pending") return;
     try {
-      await onAction?.(value, {
-        id: "approval",
-        title,
-        detail: reason,
-        tags: always ? ["always"] : [],
-      });
-      setState(value);
+      if (reason === "timeout") onExpire?.();
+      onDeny?.({ reason });
+      finish("denied");
+    } catch (failure) {
+      setError(
+        failure instanceof Error
+          ? failure.message
+          : "Could not deny this request. Try again.",
+      );
+    }
+  };
+  const denyRef = React.useRef(deny);
+  denyRef.current = deny;
+  React.useEffect(() => {
+    if (state === "pending" && remaining === 0 && !expired.current && !busy) {
+      expired.current = true;
+      denyRef.current("timeout");
+    }
+  }, [remaining, state, busy]);
+  const approve = async () => {
+    if (locked.current || state !== "pending") return;
+    locked.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      await onApprove?.({ always });
+      if (mounted.current) finish("approved");
+    } catch (failure) {
+      if (mounted.current)
+        setError(
+          failure instanceof Error
+            ? failure.message
+            : "Approval failed. Try again.",
+        );
     } finally {
-      setBusy(false);
+      locked.current = false;
+      if (mounted.current) setBusy(false);
     }
   };
   return (
-    <UI.Panel
-      title={
-        state === "pending"
-          ? "Approval needed"
-          : state === "approved"
-            ? "Action approved"
-            : "Action declined"
-      }
-      className={className}
-      aside={
-        <UI.Badge tone={state === "pending" ? "amber" : "green"}>
-          {state === "pending" ? "Medium risk" : state}
-        </UI.Badge>
-      }
+    <div
+      ref={root}
+      className={`apv-root ${className}`}
+      role="group"
+      aria-labelledby={`${id}-title`}
+      aria-describedby={`${id}-description${remaining == null ? "" : ` ${id}-expiry`}`}
+      aria-busy={busy}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null))
+          setFocused(false);
+      }}
+      onKeyDown={(event) => {
+        if (state !== "pending") return;
+        if (event.key === "Escape") {
+          event.preventDefault();
+          deny("user");
+        }
+        if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+          event.preventDefault();
+          void approve();
+        }
+      }}
     >
-      {state === "pending" ? (
-        <>
-          <h3>{title}</h3>
-          <p className="st-muted">{description}</p>
-          <div className="st-tile">
-            {[
-              ["To", "Customers — EU (42)"],
-              ["Subject", "What’s new in October"],
-              ["When", "When approved"],
-            ].map(([a, v]) => (
-              <UI.Row key={a} title={a}>
-                <span>{v}</span>
-              </UI.Row>
-            ))}
+      <style>{`.apv-root{width:100%;max-width:460px;container:apv/inline-size}.apv-root .st-ui{max-width:none}.apv-heading{display:flex;gap:12px;align-items:center;margin:14px 0}.apv-heading>span{font-size:22px}.apv-heading h3{margin:0;font-size:14px}.apv-heading p{margin:3px 0 0;color:var(--st-muted);font-size:12px}.apv-footer{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px -20px -18px;padding:14px 20px;background:var(--st-soft);border-radius:0 0 14px 14px}.apv-footer[data-placement=card]{margin:14px 0 0;padding:0;background:none}.apv-footer .st-actions{margin:0;margin-left:auto}.apv-footer .st-key{font-size:9px}.apv-root .st-btn[aria-disabled=true]{cursor:wait;opacity:.6}.apv-resolved{display:flex;gap:10px;align-items:center;padding:15px 0}.apv-resolved small{margin-top:3px}.apv-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}@container apv(max-width:400px){.apv-footer .st-actions{width:100%;display:flex}.apv-footer .st-btn{flex:1}.apv-footer kbd{display:none}.apv-heading{gap:8px}}@media(pointer:coarse){.apv-footer kbd{display:none}}`}</style>
+      <UI.Panel>
+        {label && <small style={{ marginTop: 12 }}>{label}</small>}
+        {state === "pending" ? (
+          <>
+            <div className="apv-heading">
+              <span aria-hidden="true">{icon}</span>
+              <div className="st-grow">
+                <h3 id={`${id}-title`}>{title}</h3>
+                <div id={`${id}-description`}>{description}</div>
+              </div>
+              {risk && (
+                <UI.Badge
+                  tone={
+                    risk === "high" ? "red" : risk === "medium" ? "amber" : ""
+                  }
+                >
+                  {risk} risk
+                </UI.Badge>
+              )}
+            </div>
+            {(preview ?? children) && <div>{preview ?? children}</div>}
+            {!!details?.length && (
+              <div className="st-tile">
+                {details.map((detail, index) => (
+                  <UI.Row key={`${detail.label}-${index}`} title={detail.label}>
+                    <span style={{ overflowWrap: "anywhere", minWidth: 0 }}>
+                      {detail.value}
+                    </span>
+                  </UI.Row>
+                ))}
+              </div>
+            )}
+            {allowAlways && (
+              <label className="st-checkline">
+                <input
+                  type="checkbox"
+                  checked={always}
+                  aria-disabled={busy}
+                  onChange={(event) => {
+                    if (!busy) setAlways(event.target.checked);
+                  }}
+                />
+                {alwaysLabel}
+              </label>
+            )}
+            {error && (
+              <p role="alert" style={{ color: "var(--st-red)" }}>
+                {error}
+              </p>
+            )}
+            <div className="apv-footer" data-placement={actions}>
+              {remaining != null && (
+                <>
+                  <span id={`${id}-expiry`} className="apv-hidden">
+                    Expires in {remaining} seconds unless approved. Paused while
+                    hovered or focused.
+                  </span>
+                  <small
+                    aria-hidden="true"
+                    style={{
+                      color: remaining <= 10 ? "var(--st-amber)" : undefined,
+                    }}
+                  >
+                    Expires in {Math.floor(remaining / 60)}:
+                    {String(remaining % 60).padStart(2, "0")}
+                  </small>
+                </>
+              )}
+              <div className="st-actions">
+                {onEdit && (
+                  <UI.Button
+                    aria-disabled={busy}
+                    onClick={() => {
+                      if (!busy) onEdit();
+                    }}
+                  >
+                    {editLabel}
+                  </UI.Button>
+                )}
+                <UI.Button
+                  aria-disabled={busy}
+                  aria-keyshortcuts="Escape"
+                  onClick={() => deny("user")}
+                >
+                  {denyLabel}
+                  {shortcuts && (
+                    <kbd className="st-key" aria-hidden="true">
+                      Esc
+                    </kbd>
+                  )}
+                </UI.Button>
+                <UI.Button
+                  primary
+                  aria-disabled={busy}
+                  aria-keyshortcuts="Meta+Enter Control+Enter"
+                  onClick={() => void approve()}
+                >
+                  {busy ? "Approving…" : approveLabel}
+                  {shortcuts && !busy && (
+                    <kbd className="st-key" aria-hidden="true">
+                      ⌘↵
+                    </kbd>
+                  )}
+                </UI.Button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div ref={resolved} tabIndex={-1} className="apv-resolved">
+            <span aria-hidden="true">{state === "approved" ? "✓" : "×"}</span>
+            <div>
+              <strong id={`${id}-title`}>{title}</strong>
+              <small id={`${id}-description`}>
+                {state === "approved" ? "Approved" : "Denied"}
+              </small>
+            </div>
           </div>
-          <label className="st-checkline">
-            <input
-              type="checkbox"
-              checked={always}
-              onChange={(e) => setAlways(e.target.checked)}
-            />
-            Remember this choice for similar requests
-          </label>
-          <UI.Field
-            label="Reason (optional)"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-          />
-          <div className="st-actions">
-            <UI.Button
-              primary
-              disabled={busy}
-              onClick={() => answer("approved")}
-            >
-              Approve
-            </UI.Button>
-            <UI.Button disabled={busy} onClick={() => answer("declined")}>
-              Decline
-            </UI.Button>
-          </div>
-        </>
-      ) : (
-        <UI.Row
-          title={title}
-          detail={
-            state === "approved"
-              ? "Ready for your application to execute."
-              : "The action will not proceed."
-          }
-        >
-          <UI.Button onClick={() => setState("pending")}>Reset</UI.Button>
-        </UI.Row>
-      )}
-    </UI.Panel>
+        )}
+        <span className="apv-hidden" role="status">
+          {state !== "pending"
+            ? `${state === "approved" ? "Approved" : "Denied"}: ${title}`
+            : ""}
+        </span>
+      </UI.Panel>
+    </div>
   );
 }
 
-export default ApprovalCard;
+export default Demo;
+export function Demo() {
+  const [key, setKey] = React.useState(0);
+  return (
+    <div style={{ width: "100%", maxWidth: 460 }}>
+      <ApprovalCard
+        key={key}
+        risk="medium"
+        expiresIn={60}
+        label="Step 4 · gmail.send"
+        details={[
+          { label: "To", value: "Customers – EU (42)" },
+          { label: "Subject", value: "What's new in October" },
+          { label: "Send", value: "When approved" },
+        ]}
+        onApprove={() =>
+          new Promise((resolve) => window.setTimeout(resolve, 700))
+        }
+      />
+      <button
+        type="button"
+        onClick={() => setKey((value) => value + 1)}
+        style={{ marginTop: 14 }}
+      >
+        Reset demo
+      </button>
+    </div>
+  );
+}

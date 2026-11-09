@@ -42,7 +42,7 @@
     "pro": true,
     "description": "Agents and the tools they call as a living network – a pulse along the link for every call and its answer, busy links growing thicker, agents that breathe while they work and turn amber when they need you",
     "exportName": "AgentGraph",
-    "usage": "import { AgentGraph } from \"./agent-graph\";\n\nexport default function App() {\n  return <AgentGraph />;\n}"
+    "usage": "import { AgentGraph, GraphBrandIcon, type GraphNode, type GraphCall } from \"./agent-graph\";\n\nconst nodes: GraphNode[] = [\n  { id: \"lead\", name: \"Orchestrator\", kind: \"agent\", lead: true, status: \"working\", icon: <GraphBrandIcon brand=\"claude\" /> },\n  { id: \"search\", name: \"Web search\", kind: \"tool\", icon: <GraphBrandIcon brand=\"search\" /> },\n];\n\nexport default function App() {\n  // Stream calls from your application; stable IDs connect requests to responses.\n  const calls: GraphCall[] = [];\n  return <AgentGraph nodes={nodes} calls={calls} edges={[[\"lead\", \"search\"]]} />;\n}"
   },
   {
     "slug": "agent-handoff",
@@ -51,7 +51,7 @@
     "pro": true,
     "description": "A task passed from agent to agent like a relay – at every handoff what went along to the next one, and what got lost on the way",
     "exportName": "AgentHandoff",
-    "usage": "import { AgentHandoff } from \"./agent-handoff\";\n\nexport default function App() {\n  return <AgentHandoff />;\n}"
+    "usage": "// The example owns its task/handoff state and connects assignment and restore callbacks.\nimport Example from \"./agent-handoff\";\n\nexport default function App() { return <Example />; }"
   },
   {
     "slug": "agent-inbox",
@@ -78,7 +78,7 @@
     "pro": true,
     "description": "Everything an agent changed in your systems, each change with an undo – before and after per row, and pointing at Undo shows what builds on it: what would be undone too, and what can't be taken back",
     "exportName": "AgentLedger",
-    "usage": "import { AgentLedger } from \"./agent-ledger\";\n\nexport default function App() {\n  return <AgentLedger />;\n}"
+    "usage": "import { AgentLedger, type LedgerEntry } from \"./agent-ledger\";\n\nconst entries: LedgerEntry[] = [\n  { id: \"price\", action: \"Changed price\", system: \"Billing\", at: Date.now() - 60000, change: [\"$29\", \"$34\"] },\n  { id: \"deals\", action: \"Updated deals\", system: \"CRM\", at: Date.now(), dependsOn: [\"price\"] },\n];\n\nexport default function App() {\n  return <AgentLedger entries={entries} agent=\"Launch agent\"\n    onUndo={ids => console.info(\"Connect your undo handler\", ids)}\n    onRedo={ids => console.info(\"Connect your redo handler\", ids)} />;\n}"
   },
   {
     "slug": "agent-monitor",
@@ -141,7 +141,7 @@
     "pro": true,
     "description": "Who started whom – an orchestrator and its sub-agents as a live tree, with status, cost and time on every card, costs rolling up each branch, and branches that fold to one line",
     "exportName": "AgentTree",
-    "usage": "import { AgentTree } from \"./agent-tree\";\n\nexport default function App() {\n  return <AgentTree />;\n}"
+    "usage": "import { AgentTree, type TreeAgent } from \"./agent-tree\";\n\nconst root: TreeAgent = {\n  id: \"lead\", name: \"Orchestrator\", task: \"Launch the pricing page\",\n  status: \"running\", cost: 0.42, started: Date.now() - 80000,\n  children: [{ id: \"build\", name: \"Coder\", task: \"Build the page\",\n    status: \"waiting\", ask: \"Deploy the preview?\", cost: 0.18, started: Date.now() - 60000 }],\n};\n\nexport default function App() {\n  return <AgentTree root={root}\n    onSelect={(agent) => console.log(\"Open log\", agent.id)}\n    onResolve={(agent, action) => console.log(\"Update your run\", agent.id, action)} />;\n}"
   },
   {
     "slug": "ai-answer",
@@ -159,7 +159,7 @@
     "pro": true,
     "description": "An agent asks before it acts – risk badge, preview, Approve and Deny with shortcuts, a pausing countdown, and a smooth morph into a resolved row",
     "exportName": "ApprovalCard",
-    "usage": "import { ApprovalCard } from \"./approval-card\";\n\nexport default function App() {\n  return <ApprovalCard />;\n}"
+    "usage": "import { ApprovalCard } from \"./approval-card\";\n\nexport default function App() {\n  return <ApprovalCard title=\"Send campaign email\" risk=\"medium\"\n    details={[{ label: \"To\", value: \"Customers – EU (42)\" }]}\n    expiresIn={60}\n    onApprove={async ({ always }) => { console.info(\"Connect your approval handler\", { always }); }}\n    onDeny={({ reason }) => console.info(\"Denied\", reason)} />;\n}"
   },
   {
     "slug": "approval-gates",
@@ -231,7 +231,7 @@
     "pro": true,
     "description": "Prompt composer with model picker, voice input, app connections and approval request",
     "exportName": "ChatComposer",
-    "usage": "import { ChatComposer } from \"./chat-composer\";\n\nexport default function App() {\n  return <ChatComposer />;\n}"
+    "usage": "import { ChatComposer } from \"./chat-composer\";\n\nexport default function App() {\n  return <ChatComposer\n    placeholder=\"Start by typing...\"\n    onSend={(message, { model }) => console.log({ message, model })}\n    onFolderChange={(folder) => console.log({ folder })}\n    onAppsChange={(connected) => console.log({ connected })}\n  />;\n}"
   },
   {
     "slug": "checkbox",
@@ -321,7 +321,7 @@
     "pro": true,
     "description": "What fills an agent's context window, as a living treemap – system prompt, tools, memory, every file, the chat and tool results as tiles that glide as it grows, the free space dashed, and compaction squeezing old turns into a summary",
     "exportName": "ContextMap",
-    "usage": "import { ContextMap } from \"./context-map\";\n\nexport default function App() {\n  return <ContextMap />;\n}"
+    "usage": "import { ContextMap, type ContextBlock } from \"./context-map\";\n\nconst before: ContextBlock[] = [\n  { id: \"system\", label: \"System prompt\", kind: \"system\", tokens: 6200 },\n  { id: \"chat\", label: \"Conversation\", kind: \"chat\", tokens: 41000 },\n];\nconst blocks: ContextBlock[] = [before[0],\n  { id: \"summary\", label: \"Conversation summary\", kind: \"summary\", tokens: 8200 },\n];\nexport default function App() {\n  return <ContextMap blocks={blocks} limit={200000} model=\"Opus 5.5\"\n    compaction={{ before, summarized: [\"chat\"], summary: \"Conversation summary\" }}\n    onSelect={(block) => console.log(block)} />;\n}"
   },
   {
     "slug": "context-window",
@@ -402,7 +402,7 @@
     "pro": true,
     "description": "Drag files in and watch them upload – fanning documents, colored type badges, progress with time left, errors with retry",
     "exportName": "Dropzone",
-    "usage": "import { Dropzone } from \"./dropzone\";\n\nexport default function App() {\n  return <Dropzone />;\n}"
+    "usage": "import { Dropzone } from \"./dropzone\";\n\nexport default function App() {\n  // Without onUpload, progress is a local simulation. Supply your uploader for real files.\n  return <Dropzone accept={[\".pdf\", \".png\", \".jpg\"]} maxSize={25 * 1024 * 1024}\n    onChange={items => console.info(\"Files\", items)} />;\n}"
   },
   {
     "slug": "email-draft",
@@ -600,7 +600,7 @@
     "pro": true,
     "description": "Saved prompt templates with variables – type straight into the sentence, watch the finished prompt assemble below, and use it once every variable is filled",
     "exportName": "PromptLibrary",
-    "usage": "import { PromptLibrary } from \"./prompt-library\";\n\nexport default function App() {\n  return <PromptLibrary />;\n}"
+    "usage": "import { PromptLibrary } from \"./prompt-library\";\n\nexport default function App() {\n  return <PromptLibrary templates={[\n    { id: \"summary\", title: \"Summarize a meeting\", category: \"Notes\",\n      body: \"Summarize this meeting for {audience} in {length}.\",\n      variables: { length: { default: \"150 words\" } } },\n  ]} onUse={(prompt, template, values) => console.info(\"Ready to send\", prompt, template.id, values)} />;\n}"
   },
   {
     "slug": "reaction-bar",
@@ -789,7 +789,7 @@
     "pro": true,
     "description": "Where the time and money of an agent run go – every LLM call, tool call and sub-agent as a bar on a live timeline, with tokens and cost per step, the slowest call marked and branches that fold into their parent",
     "exportName": "TraceWaterfall",
-    "usage": "import { TraceWaterfall } from \"./trace-waterfall\";\n\nexport default function App() {\n  return <TraceWaterfall />;\n}"
+    "usage": "import { TraceWaterfall, type TraceSpan } from \"./trace-waterfall\";\n\nconst root: TraceSpan = {\n  id: \"run\", name: \"Orchestrator\", kind: \"agent\", status: \"done\", start: 0, end: 10000,\n  children: [{ id: \"plan\", name: \"Plan the launch\", kind: \"llm\", status: \"done\",\n    start: 900, end: 7800, tokensIn: 3240, tokensOut: 880, cost: 0.115,\n    input: \"Plan the launch\", output: \"Research, write, build, and test.\" }],\n};\nexport default function App() {\n  return <TraceWaterfall root={root} onOpenChange={(id, span) => console.log({ id, span })} />;\n}"
   },
   {
     "slug": "usage-meter",

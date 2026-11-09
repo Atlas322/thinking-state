@@ -23,3 +23,9 @@ A later attempt to revisit affectui.com was blocked by a saved browser permissio
 ## Reuse verification
 
 All 114 standalone source variants and their usage examples compile independently. Every variant is rendered in the automated suite. Browser checks additionally cover navigation, theme/preview controls, source and prompt copying, and downloads. The ZIP is generated from the same source files as the live previews.
+
+## Subsequent individual review
+
+See [COMPONENT_REVIEW.md](./COMPONENT_REVIEW.md) for all 90 entries. Ten independent components were rebuilt from public documentation; four additionally used cached official demo frames. Agent Graph was revised again after the user supplied screenshots demonstrating incorrect icons, node shapes, connector routing and layout. Those concrete findings are recorded in [review/AGENT_GRAPH.md](./review/AGENT_GRAPH.md).
+
+No post-change browser screenshot was obtained for these ten components. The reference site remained denied by the browser origin gate after renewed user authorization. Local preview access was also denied. The screenshot audit remains unfinished; passing 164 automated tests, 114 standalone copy compilations and the production build does not close it.
