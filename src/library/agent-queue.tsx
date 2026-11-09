@@ -3,353 +3,458 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type QueueJobKind = "llm" | "tool" | "agent" | "human";
+
+export type QueueJob = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  name: string;
+  kind: QueueJobKind;
+  status: "queued" | "running" | "done" | "failed";
+  enqueuedAt: number;
+  priority?: "high" | "normal" | "low";
+  startedAt?: number;
+  endedAt?: number;
+  worker?: string;
+  /** 0–1 while running. */
+  progress?: number;
+  /** Expected run time in ms. */
+  estimate?: number;
+  attempt?: number;
 };
-export type StudioProps = {
+
+export type QueueWorker = { id: string; name: string; icon?: "claude" | "openai" | "gemini" | React.ReactNode };
+
+export type AgentQueueProps = {
+  jobs?: QueueJob[];
+  workers?: QueueWorker[];
+  now?: number;
+  rateLimits?: { from: number; until: number; label?: string }[];
+  paused?: boolean;
+  onPausedChange?: (paused: boolean) => void;
+  onConcurrencyChange?: (workers: number) => void;
+  minConcurrency?: number;
+  maxConcurrency?: number;
+  backpressure?: number;
+  window?: number;
+  totals?: { done?: number; failed?: number };
   title?: string;
-  items?: StudioItem[];
+  name?: string;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const Claude = (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M5 2.2l6 11.6M11 2.2 5 13.8M2.2 5l11.6 6M13.8 5 2.2 11" stroke="#d97757" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+const OpenAI = (
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.1">
+    <path d="M6.2 2.3a3 3 0 0 1 4.9 1.6 3 3 0 0 1 2.5 4.4 3 3 0 0 1-2.4 4.5 3 3 0 0 1-5 .9 3 3 0 0 1-3.7-3.1 3 3 0 0 1-.3-5.3 3 3 0 0 1 4-3Z" />
+    <path d="M6 4.8v5.4l4.5 2.4M10 3.6 5.4 6.2v5.2M3 6.2l4.6 2.6 4.6-2.6M13 9.8 8.4 7.2 3.8 9.8" />
+  </svg>
+);
+const Gemini = (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M8 1c.5 3.7 3.3 6.5 7 7-3.7.5-6.5 3.3-7 7-.5-3.7-3.3-6.5-7-7 3.7-.5 6.5-3.3 7-7Z" fill="#3b7cf6" />
+  </svg>
+);
+const workerIcon = (i: QueueWorker["icon"]) => (i === "openai" ? OpenAI : i === "gemini" ? Gemini : i === "claude" || !i ? Claude : i);
+
+const kindIcon: Record<QueueJobKind, React.ReactNode> = {
+  llm: (
+    <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
+      <path d="m4 12 6-6M9 4l.5-1.5L10 4l1.5.5L10 5l-.5 1.5L9 5l-1.5-.5ZM12.5 8.5l.3-.8.3.8.8.3-.8.3-.3.8-.3-.8-.8-.3Z" />
+    </svg>
+  ),
+  tool: (
+    <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+      <circle cx="7" cy="7" r="3.5" />
+      <path d="m10 10 3 3" />
+    </svg>
+  ),
+  agent: (
+    <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3">
+      <ellipse cx="8" cy="4.5" rx="4.5" ry="2" />
+      <path d="M3.5 4.5v7c0 1.1 2 2 4.5 2s4.5-.9 4.5-2v-7M3.5 8c0 1.1 2 2 4.5 2s4.5-.9 4.5-2" />
+    </svg>
+  ),
+  human: (
+    <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3">
+      <circle cx="8" cy="5.5" r="2.5" />
+      <path d="M3 13.5c.8-2.4 2.7-3.5 5-3.5s4.2 1.1 5 3.5" />
+    </svg>
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultWorkers: QueueWorker[] = [
+  { id: "w1", name: "Sonnet 5.5", icon: "claude" },
+  { id: "w2", name: "GPT-6 Sol", icon: "openai" },
+  { id: "w3", name: "Gemini 3.8 Flash", icon: "gemini" },
+  { id: "w4", name: "Haiku 5", icon: "claude" },
+];
+
+const names: [string, QueueJobKind][] = [
+  ["Extract invoice fields #2215", "llm"],
+  ["Search docs: refunds", "tool"],
+  ["Embed 240 docs", "agent"],
+  ["Classify support emails", "llm"],
+  ["Triage new GitHub issues", "llm"],
+  ["Run eval suite", "agent"],
+  ["Score lead – Tailspin", "llm"],
+  ["Draft reply – Hooli", "llm"],
+  ["Summarize ticket #4964", "llm"],
+  ["Lookup CRM: Initech", "tool"],
+  ["Review refund over $500", "human"],
+];
+
+/** Demo depth curve (96 samples, one per second). */
+const seedDepth = Array.from({ length: 96 }, (_, i) => {
+  const base = 6 + 5 * Math.sin(i / 6) + 3 * Math.sin(i / 2.3);
+  const bump = i > 60 && i < 75 ? (i - 60) * 1.2 : i >= 75 && i < 85 ? (85 - i) * 1.6 : 0;
+  return Math.max(0, Math.round(base + bump));
+});
+
+function useDemo(enabled: boolean, workers: QueueWorker[], concurrency: number, paused: boolean) {
+  const seq = React.useRef(0);
+  const make = (status: QueueJob["status"], t: number, extra: Partial<QueueJob> = {}): QueueJob => {
+    const [n, k] = names[seq.current % names.length];
+    seq.current++;
+    return { id: `j${seq.current}`, name: n, kind: k, status, enqueuedAt: t, estimate: 4000 + ((seq.current * 1300) % 5000), ...extra };
+  };
+  const [state, setState] = React.useState(() => {
+    const t = Date.now();
+    const jobs: QueueJob[] = [];
+    for (let i = 0; i < 12; i++) jobs.push(make("queued", t - 6000 + i * 400));
+    workers.slice(0, concurrency).forEach((w, i) =>
+      jobs.push({ ...make("running", t - 9000), name: names[6 + i][0], kind: "llm", worker: w.id, startedAt: t - 3000, progress: 0.15 + i * 0.12 }),
+    );
+    return { jobs, done: 137, failed: 3, depth: seedDepth, limitedUntil: t + 3000, t };
+  });
+
+  React.useEffect(() => {
+    if (!enabled) return;
+    const id = window.setInterval(() => {
+      setState((s) => {
+        const t = Date.now();
+        const limited = t < s.limitedUntil;
+        let { done, failed } = s;
+        let jobs = s.jobs.map((j) => {
+          if (j.status !== "running" || limited || paused) return j;
+          const p = Math.min(1, (j.progress ?? 0) + 250 / (j.estimate ?? 5000));
+          return { ...j, progress: p };
+        });
+        jobs = jobs.filter((j) => {
+          if (j.status === "running" && (j.progress ?? 0) >= 1) {
+            if (Math.random() < 0.04) failed++;
+            else done++;
+            return false;
+          }
+          return true;
+        });
+        if (!limited && !paused) {
+          const active = workers.slice(0, concurrency);
+          for (const w of active) {
+            if (!jobs.some((j) => j.status === "running" && j.worker === w.id)) {
+              const next = jobs.find((j) => j.status === "queued");
+              if (next) jobs = jobs.map((j) => (j === next ? { ...j, status: "running", worker: w.id, startedAt: t, progress: 0 } : j));
+            }
+          }
+        }
+        const waitingN = jobs.filter((j) => j.status === "queued").length;
+        if (Math.random() < (waitingN > 14 ? 0.03 : 0.1)) jobs = [...jobs, make("queued", t)];
+        let limitedUntil = s.limitedUntil;
+        if (t - s.limitedUntil > 22000) limitedUntil = t + 6000;
+        const tick = t - s.t >= 1000;
+        const depth = tick ? [...s.depth.slice(1), jobs.filter((j) => j.status === "queued").length] : s.depth;
+        return { jobs, done, failed, depth, limitedUntil, t: tick ? t : s.t };
+      });
+    }, 250);
+    return () => window.clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, concurrency, paused]);
+  return state;
+}
 
 export function AgentQueue({
-  title = "Work queue",
-  items = [
-    { id: "1", title: "Summarize ticket #4821" },
-    { id: "2", title: "Embed 240 documents" },
-    { id: "3", title: "Draft reply — Acme" },
-    { id: "4", title: "Classify new leads" },
-    { id: "5", title: "Prepare weekly report" },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [jobs, setJobs] = React.useState(items);
-  const [done, setDone] = React.useState<StudioItem[]>([]);
-  const [paused, setPaused] = React.useState(false);
-  const [progress, setProgress] = React.useState(0);
+  jobs: jobsProp,
+  workers = defaultWorkers,
+  now,
+  rateLimits,
+  paused: pausedProp,
+  onPausedChange,
+  onConcurrencyChange,
+  minConcurrency = 1,
+  maxConcurrency = 8,
+  backpressure = 12,
+  totals,
+  title = "Queue",
+  name = "agent-jobs",
+  className = "",
+}: AgentQueueProps) {
+  const [pausedState, setPaused] = React.useState(false);
+  const paused = pausedProp ?? pausedState;
+  const [concurrency, setConcurrency] = React.useState(Math.min(workers.length, 4));
+  const demo = useDemo(jobsProp === undefined, workers, concurrency, paused);
+  const [clock, setClock] = React.useState(() => Date.now());
   React.useEffect(() => {
-    if (paused || !jobs.length) return;
-    const id = window.setInterval(
-      () => setProgress((v) => Math.min(100, v + 10)),
-      400,
-    );
+    const id = window.setInterval(() => setClock(Date.now()), 500);
     return () => window.clearInterval(id);
-  }, [paused, jobs.length]);
-  React.useEffect(() => {
-    if (progress < 100) return;
-    const timer = window.setTimeout(() => {
-      setDone((s) => [...s, ...jobs.slice(0, 2)]);
-      setJobs((s) => s.slice(2));
-      setProgress(0);
-    }, 350);
-    return () => window.clearTimeout(timer);
-  }, [progress, jobs]);
+  }, []);
+
+  const t = now ?? clock;
+  const jobs = jobsProp ?? demo.jobs;
+  const queued = jobs.filter((j) => j.status === "queued").sort((a, b) => (a.priority === "high" ? -1 : 0) - (b.priority === "high" ? -1 : 0) || a.enqueuedAt - b.enqueuedAt);
+  const running = jobs.filter((j) => j.status === "running");
+  const done = totals?.done ?? (jobsProp ? jobs.filter((j) => j.status === "done").length : demo.done);
+  const failed = totals?.failed ?? (jobsProp ? jobs.filter((j) => j.status === "failed").length : demo.failed);
+  const activeLimit = jobsProp ? rateLimits?.find((r) => t >= r.from && t < r.until) : t < demo.limitedUntil ? { until: demo.limitedUntil, from: 0 } : undefined;
+  const limited = !!activeLimit;
+  const p95 = Math.max(0, ...queued.map((j) => t - j.enqueuedAt)) / 1000;
+  const depth = jobsProp ? [queued.length] : demo.depth;
+  const max = Math.max(24, Math.ceil(Math.max(...depth) / 12) * 12);
+  const slots = workers.slice(0, concurrency);
+
+  const W = 700;
+  const H = 112;
+  const step = depth.length > 1 ? W / (depth.length - 1) : W;
+  const pts = depth.map((d, i) => [i * step, H - (d / max) * H] as const);
+  const line = pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`).join("");
+  const area = `${line}L${W} ${H}L0 ${H}Z`;
+  const limitBands = jobsProp ? [] : [[16, 26], [52, 70], [88, 96]];
+
+  const setP = (p: boolean) => {
+    setPaused(p);
+    onPausedChange?.(p);
+  };
+  const setC = (n: number) => {
+    const v = Math.max(minConcurrency, Math.min(maxConcurrency, Math.min(workers.length, n)));
+    setConcurrency(v);
+    onConcurrencyChange?.(v);
+  };
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="2 workers · first in, first out"
-      className={className}
-      aside={
-        <UI.Badge tone={paused ? "waiting" : "blue"}>
-          {paused ? "Rate limited" : jobs.length + " queued"}
-        </UI.Badge>
-      }
-    >
-      <div className="st-columns">
-        {jobs.slice(0, 2).map((x, i) => (
-          <div className="st-tile" key={x.id}>
-            <small>Worker {i + 1}</small>
-            <h4>{x.title}</h4>
-            <UI.Meter value={progress} />
-            <small style={{ marginTop: 8 }}>{progress}%</small>
+    <section className={`ui-agqc agq ${className}`}>
+      <style>{css}</style>
+      <header className="agq-bar">
+        <svg className="agq-logo" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M2.5 4h11M2.5 8h11M2.5 12h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+        <strong>{title}</strong>
+        <span className="agq-muted">{name}</span>
+        {limited && (
+          <span className="agq-limit" role="status">
+            <i />
+            Rate limited · {Math.max(0, Math.ceil((activeLimit!.until - t) / 1000))}s
+          </span>
+        )}
+        {paused && !limited && <span className="agq-limit agq-paused-pill">Paused</span>}
+        <span className="agq-ctl">
+          <button type="button" className="agq-pause" aria-pressed={paused} onClick={() => setP(!paused)}>
+            {paused ? (
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /></svg>
+            ) : (
+              <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="3" width="3" height="10" rx=".8" fill="none" stroke="currentColor" strokeWidth="1.3" /><rect x="9.5" y="3" width="3" height="10" rx=".8" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
+            )}
+            {paused ? "Resume" : "Pause"}
+          </button>
+          <span className="agq-step">
+            <button type="button" aria-label="Fewer workers" onClick={() => setC(concurrency - 1)}>
+              <svg viewBox="0 0 16 16"><path d="M3.5 8h9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+            </button>
+            <output aria-live="polite">{concurrency}</output>
+            <button type="button" aria-label="More workers" onClick={() => setC(concurrency + 1)}>
+              <svg viewBox="0 0 16 16"><path d="M3.5 8h9M8 3.5v9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+            </button>
+          </span>
+        </span>
+      </header>
+
+      <div className="agq-stats">
+        <div className={queued.length > backpressure ? "is-warn" : ""}>
+          <span>Waiting</span>
+          <b>{queued.length}</b>
+        </div>
+        <div>
+          <span>Running</span>
+          <b>
+            {running.length}
+            <small>/{concurrency}</small>
+          </b>
+        </div>
+        <div>
+          <span>Throughput</span>
+          <b>
+            {limited || paused ? 0 : 74}
+            <small>/min</small>
+          </b>
+        </div>
+        <div>
+          <span>Wait p95</span>
+          <b>
+            {Math.round(Math.max(p95, 1))}
+            <small>s</small>
+          </b>
+        </div>
+      </div>
+
+      <div className="agq-flow">
+        <div className="agq-col agq-q">
+          <div className="agq-h">
+            Queue <b>{queued.length}</b>
           </div>
-        ))}
+          <ol className="agq-list">
+            {queued.slice(0, 3).map((j) => (
+              <li key={j.id} className={`agq-job agq-${j.kind}`}>
+                <span className="agq-kind">{kindIcon[j.kind]}</span>
+                <span className="agq-jn">{j.name}</span>
+                <span className="agq-age">{Math.max(0, (t - j.enqueuedAt) / 1000).toFixed(1)}s</span>
+              </li>
+            ))}
+          </ol>
+          <div className="agq-rest" aria-label={`${Math.max(0, queued.length - 3)} more waiting`}>
+            {queued.slice(3).map((j) => (
+              <i key={j.id} className={`agq-${j.kind}`} />
+            ))}
+          </div>
+        </div>
+
+        <div className="agq-col agq-w">
+          <div className="agq-h">
+            Workers{" "}
+            <b>
+              {running.length}/{concurrency}
+            </b>
+          </div>
+          {slots.map((w) => {
+            const j = running.find((r) => r.worker === w.id);
+            return (
+              <div key={w.id} className="agq-worker">
+                <span className="agq-wi">{workerIcon(w.icon)}</span>
+                <span className="agq-wn">{w.name}</span>
+                <span className={`agq-rail ${limited || paused ? "is-held" : ""}`}>
+                  {j && (
+                    <span className={`agq-run agq-${j.kind}`}>
+                      <span className="agq-fill" style={{ width: `${Math.round((j.progress ?? 0) * 100)}%` }} />
+                      <span className="agq-kind">{kindIcon[j.kind]}</span>
+                      <span className="agq-jn">{j.name}</span>
+                      <span className="agq-age">
+                        {limited || paused ? "Paused" : `${Math.max(0, (t - (j.startedAt ?? t)) / 1000).toFixed(1)}s`}
+                      </span>
+                    </span>
+                  )}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="agq-col agq-out">
+          <div className="agq-box">
+            <span className="agq-bh">
+              <i className="agq-ok">
+                <svg viewBox="0 0 16 16"><path d="m4 8.5 2.5 2.5L12 5.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
+              </i>
+              Done
+            </span>
+            <b>{done}</b>
+          </div>
+          <div className="agq-box">
+            <span className="agq-bh">
+              <i className="agq-bad">
+                <svg viewBox="0 0 16 16"><path d="m5 5 6 6M11 5l-6 6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
+              </i>
+              Failed
+            </span>
+            <b className="agq-red">{failed}</b>
+          </div>
+        </div>
       </div>
-      {jobs.slice(2).map((x) => (
-        <UI.Row key={x.id} title={x.title}>
-          <UI.Badge>Queued</UI.Badge>
-        </UI.Row>
-      ))}
-      {!jobs.length && <UI.Empty>Queue cleared</UI.Empty>}
-      <UI.Detail title={`Done · ${done.length}`}>
-        {done.map((x) => (
-          <UI.Row key={x.id} title={x.title}>
-            <UI.Badge tone="green">Done</UI.Badge>
-          </UI.Row>
-        ))}
-      </UI.Detail>
-      <div className="st-actions">
-        <UI.Button onClick={() => setPaused((s) => !s)}>
-          {paused ? "Resume workers" : "Pause workers"}
-        </UI.Button>
-        <UI.Button
-          onClick={() => {
-            const x = {
-              id: Date.now().toString(),
-              title: "New background job",
-            };
-            setJobs((s) => [...s, x]);
-            onAction?.("enqueue", x);
-          }}
-        >
-          + Add job
-        </UI.Button>
+
+      <div className="agq-chart">
+        <div className="agq-h">Queue depth</div>
+        <div className="agq-plot">
+          <span className="agq-y" style={{ top: 0 }}>{max}</span>
+          <span className="agq-y" style={{ top: "50%" }}>{max / 2}</span>
+          <span className="agq-y" style={{ top: "100%" }}>0</span>
+          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`Queue depth: ${queued.length} waiting now, peak ${Math.max(...depth)}`}>
+            {limitBands.map(([a, b]) => (
+              <rect key={a} x={a * step} width={(b - a) * step} y="0" height={H} className="agq-band" />
+            ))}
+            <line x1="0" x2={W} y1={H - (backpressure / max) * H} y2={H - (backpressure / max) * H} className="agq-bp" />
+            <path d={area} className="agq-area" />
+            <path d={line} className="agq-line" vectorEffect="non-scaling-stroke" />
+          </svg>
+          <i className="agq-head" style={{ top: `${(pts[pts.length - 1][1] / H) * 100}%` }} />
+        </div>
+        <div className="agq-axis">
+          <span>{Math.round(depth.length)}s ago</span>
+          <span>now</span>
+        </div>
       </div>
-    </UI.Panel>
+    </section>
   );
 }
+
+const css = `
+.agq{--agq-bg:#fff;--agq-fg:#18181b;--agq-muted:#71717a;--agq-faint:#a1a1aa;--agq-line:#ececef;--agq-soft:#fafafa;--agq-llm-bg:#eef0ff;--agq-llm-edge:#c9cdfb;--agq-llm:#6366f1;--agq-tool-bg:#e9f8f5;--agq-tool:#0f9f8a;--agq-agent-bg:#eff1f4;--agq-agent:#64748b;--agq-human-bg:#eaf2ff;--agq-human:#3b82f6;--agq-amber:#c2410c;--agq-amber-bg:#fff4e5;--agq-red:#dc2626;--agq-green:#16a34a;container-type:inline-size;width:100%;max-width:760px;background:var(--agq-bg);color:var(--agq-fg);border:1px solid var(--agq-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .agq{--agq-bg:#1b1b1e;--agq-fg:#ececef;--agq-muted:#a1a1aa;--agq-faint:#6b6b73;--agq-line:#2c2c31;--agq-soft:#202024;--agq-llm-bg:#26264a;--agq-llm-edge:#3d3f7a;--agq-llm:#a5b4fc;--agq-tool-bg:#16332e;--agq-tool:#5eead4;--agq-agent-bg:#262a31;--agq-agent:#94a3b8;--agq-human-bg:#1c2a44;--agq-human:#93c5fd;--agq-amber:#fdba74;--agq-amber-bg:#3a2a14;--agq-red:#f87171;--agq-green:#4ade80;color-scheme:dark}
+.agq *{box-sizing:border-box}.agq button{font:inherit;color:inherit;cursor:pointer}
+.agq-bar{display:flex;align-items:center;gap:8px;padding:11px 12px 11px 16px;border-bottom:1px solid var(--agq-line);flex-wrap:wrap}
+.agq-logo{width:15px;height:15px;color:#3b82f6}.agq-bar strong{font-weight:500}.agq-muted{color:var(--agq-muted)}
+.agq-limit{display:inline-flex;align-items:center;gap:6px;margin-left:4px;padding:1px 7px;border-radius:5px;background:var(--agq-amber-bg);color:var(--agq-amber);font-size:12.5px;font-variant-numeric:tabular-nums}
+.agq-limit i{width:5px;height:5px;border-radius:50%;background:currentColor}
+.agq-ctl{margin-left:auto;display:flex;gap:6px}
+.agq-pause{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 10px;border:1px solid var(--agq-line);border-radius:7px;background:var(--agq-bg)}
+.agq-pause svg{width:14px;height:14px}.agq-pause:hover{background:var(--agq-soft)}
+.agq-step{display:inline-flex;align-items:center;height:30px;border:1px solid var(--agq-line);border-radius:7px}
+.agq-step button{display:grid;place-items:center;width:28px;height:28px;border:0;background:none;color:var(--agq-muted)}.agq-step button:hover{color:var(--agq-fg)}
+.agq-step svg{width:14px;height:14px}.agq-step output{min-width:16px;text-align:center;font-variant-numeric:tabular-nums}
+.agq-stats{display:grid;grid-template-columns:repeat(4,1fr);padding:14px 0 13px;border-bottom:1px solid var(--agq-line)}
+.agq-stats div{padding:0 22px;display:flex;flex-direction:column;gap:3px}.agq-stats div+div{border-left:1px solid var(--agq-line)}
+.agq-stats span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--agq-muted)}
+.agq-stats b{font-weight:400;font-size:16px;font-variant-numeric:tabular-nums}.agq-stats small{font-size:14px;color:var(--agq-muted)}
+.agq-stats .is-warn b{color:var(--agq-amber)}
+.agq-flow{display:grid;grid-template-columns:198px minmax(0,1fr) 92px;gap:22px;padding:14px 16px 16px;border-bottom:1px solid var(--agq-line)}
+.agq-h{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--agq-muted);margin-bottom:9px}.agq-h b{margin-left:4px;font-size:13px;letter-spacing:0;color:var(--agq-fg);font-weight:500}
+.agq-list{list-style:none;margin:0 0 4px;padding:0;display:flex;flex-direction:column;gap:4px}
+.agq-job{display:flex;align-items:center;gap:7px;height:28px;padding:0 8px 0 5px;border:1px solid var(--agq-line);border-radius:6px;background:var(--agq-bg);font-size:12.5px;animation:agq-drop .35s both}
+.agq-kind{display:grid;place-items:center;width:18px;height:18px;border-radius:4px;flex:none}.agq-kind svg{width:12px;height:12px}
+.agq-llm .agq-kind{background:var(--agq-llm-bg);color:var(--agq-llm)}.agq-tool .agq-kind{background:var(--agq-tool-bg);color:var(--agq-tool)}.agq-agent .agq-kind{background:var(--agq-agent-bg);color:var(--agq-agent)}.agq-human .agq-kind{background:var(--agq-human-bg);color:var(--agq-human)}
+.agq-jn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agq-age{color:var(--agq-muted);font-size:12.5px;font-variant-numeric:tabular-nums}
+.agq-rest{display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px;min-height:80px;padding:10px;border:1px solid var(--agq-line);border-radius:6px;background:var(--agq-soft)}
+.agq-rest i{width:12px;height:12px;border-radius:3px;background:var(--agq-llm-edge);opacity:.8}.agq-rest i.agq-tool{background:color-mix(in srgb,var(--agq-tool) 40%,transparent)}.agq-rest i.agq-agent{background:color-mix(in srgb,var(--agq-agent) 35%,transparent)}.agq-rest i.agq-human{background:color-mix(in srgb,var(--agq-human) 40%,transparent)}
+.agq-w{display:flex;flex-direction:column;gap:0}
+.agq-worker{display:grid;grid-template-columns:18px 104px minmax(0,1fr);align-items:center;gap:8px;height:42px;padding:0 4px 0 10px;margin-bottom:4px;border:1px solid var(--agq-line);border-radius:7px;background:var(--agq-soft)}
+.agq-wi{display:grid;place-items:center}.agq-wi svg{width:14px;height:14px}.agq-wn{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agq-rail{position:relative;height:32px;min-width:0}
+.agq-run{position:absolute;inset:0;display:flex;align-items:center;gap:7px;padding:0 8px 0 7px;border:1px solid var(--agq-line);border-radius:6px;background:var(--agq-bg);font-size:12.5px;overflow:hidden;animation:agq-in .35s both}
+.agq-fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--agq-llm-bg) 90%,transparent));box-shadow:inset -2px 0 0 color-mix(in srgb,var(--agq-llm-edge) 70%,transparent);transition:width .25s linear}
+.agq-run>*:not(.agq-fill){position:relative}
+.agq-rail.is-held .agq-fill{background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--agq-amber-bg) 90%,transparent));box-shadow:inset -2px 0 0 color-mix(in srgb,var(--agq-amber) 35%,transparent)}
+.agq-out{display:flex;flex-direction:column;gap:8px}
+.agq-box{flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:12px 12px 10px;border:1px solid var(--agq-line);border-radius:7px;background:var(--agq-soft)}
+.agq-bh{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--agq-muted)}
+.agq-bh i{display:grid;place-items:center;width:18px;height:18px;border-radius:4px}.agq-bh svg{width:12px;height:12px}
+.agq-ok{background:color-mix(in srgb,var(--agq-green) 14%,transparent);color:var(--agq-green)}.agq-bad{background:color-mix(in srgb,var(--agq-red) 12%,transparent);color:var(--agq-red)}
+.agq-box b{font-weight:400;font-size:20px;font-variant-numeric:tabular-nums}.agq-red{color:var(--agq-red)}
+.agq-chart{padding:14px 16px 12px}
+.agq-plot{position:relative;height:112px;margin-left:26px}
+.agq-plot svg{display:block;width:100%;height:100%;overflow:visible}
+.agq-y{position:absolute;left:-26px;transform:translateY(-50%);font-size:12px;color:var(--agq-muted)}
+.agq-band{fill:color-mix(in srgb,var(--agq-amber) 7%,transparent)}
+.agq-bp{stroke:var(--agq-faint);stroke-dasharray:3 3;stroke-width:1;vector-effect:non-scaling-stroke}
+.agq-area{fill:color-mix(in srgb,var(--agq-llm) 12%,transparent)}
+.agq-line{fill:none;stroke:var(--agq-llm);stroke-width:1.2}
+.agq-head{position:absolute;right:-3px;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--agq-llm);transition:top .3s}
+.agq-axis{display:flex;justify-content:space-between;margin:6px 0 0 26px;font-size:12px;color:var(--agq-muted)}
+.agq :focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+@keyframes agq-drop{from{opacity:0;transform:translateY(-6px)}}
+@keyframes agq-in{from{opacity:0;transform:translateX(-8px)}}
+@container (max-width:600px){.agq-flow{grid-template-columns:1fr}.agq-out{flex-direction:row}.agq-worker{grid-template-columns:20px minmax(0,1fr)}.agq-wn{display:none}.agq-stats{grid-template-columns:repeat(2,1fr);row-gap:12px}.agq-stats div:nth-child(3){border-left:0}}
+@container (max-width:440px){.agq-ctl{margin-left:0;width:100%}}
+@media(prefers-reduced-motion:reduce){.agq *{animation:none!important;transition:none!important}}
+`;
 
 export default AgentQueue;

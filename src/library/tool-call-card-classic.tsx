@@ -1041,15 +1041,94 @@ const css = /* css */ `
 `;
 
 /** Working example; use the named ToolCallCard export in your application. */
+function DemoToolIcon({ children }: { children: ReactNode }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {children}
+    </svg>
+  );
+}
+
+const demoSearchIcon = (
+  <DemoToolIcon>
+    <circle cx="11" cy="11" r="7" />
+    <path d="m20 20-3.5-3.5" />
+  </DemoToolIcon>
+);
+const demoPageIcon = (
+  <DemoToolIcon>
+    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" />
+    <path d="M14 3v5h5M9 13h6M9 17h6" />
+  </DemoToolIcon>
+);
+const demoDbIcon = (
+  <DemoToolIcon>
+    <ellipse cx="12" cy="5" rx="8" ry="3" />
+    <path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" />
+  </DemoToolIcon>
+);
+
 export default function Demo() {
   return (
-    <ToolCallCard
-      name="search_web"
-      summary="Searched for team offsite venues in Lisbon"
-      status="success"
-      duration={1240}
-      args={{ query: "Lisbon offsite venues", limit: 5 }}
-      result={{ count: 5, sources: ["Visit Lisbon", "Local guide"] }}
-    />
+    <div style={{ width: "100%", maxWidth: 460, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16 }}>
+      <div
+        style={{
+          alignSelf: "flex-end",
+          maxWidth: "88%",
+          padding: "10px 14px",
+          borderRadius: 16,
+          background: "rgba(0,0,0,0.04)",
+          fontSize: 14,
+          lineHeight: 1.45,
+        }}
+      >
+        Compare CRM pricing for our 10-person team and check open deals.
+      </div>
+      <ToolCallGroup duration={5000}>
+        <ToolCallCard
+          name="search_web"
+          icon={demoSearchIcon}
+          summary="Searched the web for 'CRM pricing 2026'"
+          status="success"
+          duration={1500}
+          args={{ query: "CRM pricing 2026 small sales team", max_results: 5 }}
+          result={{
+            results: [
+              { title: "HubSpot Sales Hub pricing", url: "https://www.hubspot.com/pricing/sales", price_per_seat: 90 },
+              { title: "Pipedrive plans and pricing", url: "https://www.pipedrive.com/en/pricing", price_per_seat: 49 },
+              { title: "Attio pricing", url: "https://attio.com/pricing", price_per_seat: 59 },
+              { title: "Salesforce Starter Suite", url: "https://www.salesforce.com/sales/pricing", price_per_seat: 25 },
+              { title: "Close CRM pricing", url: "https://www.close.com/pricing", price_per_seat: 49 },
+            ],
+            total: 5,
+            cached: false,
+          }}
+        />
+        <ToolCallCard
+          name="fetch_page"
+          icon={demoPageIcon}
+          summary="Read hubspot.com/pricing"
+          status="success"
+          duration={1000}
+          args={{ url: "https://www.hubspot.com/pricing/sales", timeout_ms: 8000 }}
+          result={{ status: 200, title: "Sales Hub Pricing", words: 2140 }}
+        />
+        <ToolCallCard
+          name="crm.list_deals"
+          icon={demoDbIcon}
+          summary="Found 4 open deals in negotiation"
+          status="success"
+          duration={1200}
+          args={{ stage: "negotiation", owner: "me", limit: 10 }}
+          result={{
+            count: 4,
+            deals: [
+              { name: "Northwind", value: 18400 },
+              { name: "Globex", value: 9600 },
+            ],
+          }}
+        />
+      </ToolCallGroup>
+    </div>
   );
 }

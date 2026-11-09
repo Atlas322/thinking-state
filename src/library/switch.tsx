@@ -205,20 +205,24 @@ const css = /* css */ `
 
 /** Working example; use the named Switch export in your application. */
 export default function Demo() {
+  const rows = [
+    { label: "Daily digest", description: "Approvals waiting, runs that finished or failed", on: true },
+    { label: "Weekly usage report", description: "Credits spent and the busiest agents, every Monday", on: false },
+    { label: "Hold pushes at night", description: "Mobile pushes wait until morning", on: true },
+    { label: "Sound on new messages", description: "Needs the desktop app", on: false, disabled: true },
+  ];
   return (
-    <div style={{ display: "grid", gap: 24 }}>
-      <Switch
-        label="Enable notifications"
-        description="Stay up to date with your team."
-        defaultChecked
-        placement="end"
-      />
-      <Switch
-        label="Quiet hours"
-        description="Pause alerts outside your working hours."
-        placement="end"
-      />
-      <Switch label="Show completed tasks" size="sm" />
+    <div style={{ width: "100%", maxWidth: 400, margin: "0 auto", display: "grid", gap: 16 }}>
+      <div style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, boxShadow: "0 1px 2px rgba(0,0,0,0.04)", padding: "4px 16px" }}>
+        {rows.map((r, i) => (
+          <div key={r.label} style={{ padding: "12px 0", borderTop: i ? "1px solid rgba(0,0,0,0.06)" : undefined }}>
+            <Switch placement="end" label={r.label} description={r.description} defaultChecked={r.on} disabled={r.disabled} />
+          </div>
+        ))}
+      </div>
+      <div style={{ paddingLeft: 4 }}>
+        <Switch size="sm" label="Compact rows" />
+      </div>
     </div>
   );
 }

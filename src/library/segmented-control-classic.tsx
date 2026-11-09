@@ -692,26 +692,60 @@ const css = /* css */ `
 import * as React from "react";
 
 /** Working example; use the named SegmentedControl export in your application. */
+const demoIcon = (d: string) => (
+  <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d={d} />
+  </svg>
+);
+const ListIcon = () => demoIcon("M6 4h7M6 8h7M6 12h7M3 4h.01M3 8h.01M3 12h.01");
+const BoardIcon = () => demoIcon("M3 3h4v10H3zM9 3h4v6H9z");
+const CalendarIcon = () => demoIcon("M3 4.5h10v8.5H3zM3 7h10M6 3v3M10 3v3");
+
+const demoLabel: React.CSSProperties = { margin: "0 0 8px", fontSize: 13, color: "#6b6b6b" };
+const demoRule: React.CSSProperties = { height: 1, background: "rgba(0,0,0,.08)", margin: "20px 0" };
+
 export default function Demo() {
-  const [note, setNote] = React.useState("");
+  const [section, setSection] = React.useState("overview");
+  const [period, setPeriod] = React.useState("yearly");
   return (
-    <div style={{ display: "grid", gap: 24 }}>
+    <div style={{ width: "100%", maxWidth: 440, padding: 20, borderRadius: 12, border: "1px solid rgba(0,0,0,.08)", background: "#fff", boxSizing: "border-box" }}>
+      <p id="sc-demo-dashboard" style={demoLabel}>Dashboard</p>
       <SegmentedControl
+        aria-labelledby="sc-demo-dashboard"
+        value={section}
+        onChange={setSection}
         options={[
           { value: "overview", label: "Overview" },
-          { value: "activity", label: "Activity", count: 12 },
-          { value: "settings", label: "Settings" },
+          { value: "analytics", label: "Analytics" },
+          { value: "reports", label: "Reports" },
+          { value: "notifications", label: "Notifications", count: 3 },
         ]}
-        onChange={setNote}
       />
+      <div style={demoRule} />
+      <p id="sc-demo-layout" style={demoLabel}>Layout</p>
       <SegmentedControl
+        size="sm"
         variant="tray"
+        aria-labelledby="sc-demo-layout"
+        defaultValue="board"
         options={[
-          { value: "month", label: "Monthly" },
-          { value: "year", label: "Yearly", badge: "Save 20%" },
+          { value: "list", label: "List", icon: <ListIcon /> },
+          { value: "board", label: "Board", icon: <BoardIcon /> },
+          { value: "calendar", label: "Calendar", icon: <CalendarIcon /> },
         ]}
       />
-      <p role="status">{note ? `Selected: ${note}` : "Switch between views"}</p>
+      <div style={demoRule} />
+      <p id="sc-demo-billing" style={demoLabel}>Billing</p>
+      <SegmentedControl
+        variant="underline"
+        aria-labelledby="sc-demo-billing"
+        value={period}
+        onChange={setPeriod}
+        options={[
+          { value: "monthly", label: "Monthly" },
+          { value: "yearly", label: "Yearly", badge: "Save 20%" },
+        ]}
+      />
     </div>
   );
 }

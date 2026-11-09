@@ -3,368 +3,388 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type CostStep = {
   id: string;
-  title: string;
+  name: string;
+  kind: "llm" | "tool" | "agent";
+  status: "running" | "done" | "failed";
+  model?: string;
   detail?: string;
-  status?: string;
-  value?: number;
+  icon?: React.ReactNode;
+  tokensIn?: number;
+  tokensOut?: number;
   cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  duration?: number;
+  input?: string;
+  output?: string;
+  error?: string;
+  children?: CostStep[];
 };
-export type StudioProps = {
+
+export type CostMode = "cost" | "tokens";
+
+export type CostWaterfallProps = {
+  steps?: CostStep[];
+  task?: string;
   title?: string;
-  items?: StudioItem[];
+  status?: "running" | "done" | "failed";
+  mode?: CostMode;
+  defaultMode?: CostMode;
+  onModeChange?: (mode: CostMode) => void;
+  collapsed?: string[];
+  defaultCollapsed?: string[];
+  onCollapsedChange?: (collapsed: string[]) => void;
+  openId?: string | null;
+  defaultOpenId?: string | null;
+  onOpenChange?: (id: string | null, step?: CostStep) => void;
+  maxHeight?: number;
+  formatCost?: (amount: number) => string;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
+const defaultSteps: CostStep[] = [
+  { id: "plan", name: "Plan the report", kind: "llm", status: "done", model: "Opus 5.5", tokensIn: 4100, tokensOut: 960, cost: 0.04, duration: 3000, input: "Plan a report on LLM API prices in 2026.", output: "1. Gather list prices 2. Compare cache discounts 3. Write" },
+  {
+    id: "research", name: "Researcher", kind: "agent", status: "done", model: "Gemini 3.8 Flash", duration: 8500,
+    children: [
+      { id: "ws1", name: "web_search", kind: "tool", status: "done", detail: "API prices 2026", cost: 0.01, duration: 1300 },
+      { id: "ws2", name: "web_search", kind: "tool", status: "done", detail: "cache discounts", cost: 0.01, duration: 1100 },
+      { id: "fp", name: "fetch_pages", kind: "tool", status: "done", detail: "9 pages", duration: 2100 },
+      { id: "sum", name: "Summarize sources", kind: "llm", status: "done", model: "Gemini 3.8 Flash", tokensIn: 38400, tokensOut: 1300, cost: 0.01, duration: 3600 },
+    ],
   },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
+  { id: "write", name: "Write the report", kind: "llm", status: "done", model: "Opus 5.5", tokensIn: 21800, tokensOut: 5600, cost: 0.25, duration: 7500 },
+  {
+    id: "review", name: "Reviewer", kind: "agent", status: "done", model: "Haiku 5.5", duration: 3300,
+    children: [
+      { id: "facts", name: "Check facts", kind: "llm", status: "done", model: "Haiku 5.5", tokensIn: 26000, tokensOut: 700, cost: 0.03, duration: 2000 },
+      { id: "links", name: "check_links", kind: "tool", status: "failed", detail: "31 links", duration: 1100, error: "3 links returned 404" },
+    ],
   },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+  { id: "apply", name: "Apply review", kind: "llm", status: "done", model: "Sonnet 5.5", tokensIn: 24500, tokensOut: 1900, cost: 0.1, duration: 2800 },
+  { id: "save", name: "Save report", kind: "tool", status: "running", detail: "Notion", duration: 438 },
+];
+
+type Totals = { cost: number; tin: number; tout: number };
+const sum = (s: CostStep): Totals =>
+  s.children?.length
+    ? s.children.reduce(
+        (a, c) => {
+          const t = sum(c);
+          return { cost: a.cost + t.cost, tin: a.tin + t.tin, tout: a.tout + t.tout };
+        },
+        { cost: 0, tin: 0, tout: 0 },
+      )
+    : { cost: s.cost ?? 0, tin: s.tokensIn ?? 0, tout: s.tokensOut ?? 0 };
+
+const fmtTok = (n: number) => (n >= 10000 ? `${(n / 1000).toFixed(1)}k` : n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`);
+const fmtTokShort = (n: number) => (n >= 100000 ? `${Math.round(n / 1000)}k` : fmtTok(n));
+const fmtTime = (ms?: number) => (ms == null ? "–" : ms < 1000 ? `${Math.round(ms)}ms` : `${(ms / 1000).toFixed(1)}s`);
+const dollars = (n: number) => `$${n.toFixed(2)}`;
+
+const Ico = {
+  anthropic: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><g stroke="#d97757" strokeWidth="1.5" strokeLinecap="round"><path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4" /></g></svg>
+  ),
+  gemini: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1c.5 3.6 3.4 6.5 7 7-3.6.5-6.5 3.4-7 7-.5-3.6-3.4-6.5-7-7 3.6-.5 6.5-3.4 7-7Z" fill="#3b82f6" /></svg>
+  ),
+  globe: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="#3b82f6" strokeWidth="1.2"><circle cx="8" cy="8" r="5.5" /><path d="M2.5 8h11M8 2.5c-2.4 3-2.4 8 0 11M8 2.5c2.4 3 2.4 8 0 11" /></g></svg>
+  ),
+  notion: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" /><path d="M5.5 11V5h1l3 6h1V5" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>
+  ),
+  tool: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2.5a3 3 0 0 0-2.8 4L2.8 11a1.2 1.2 0 0 0 1.7 1.7L9 8.3a3 3 0 0 0 4-3.6l-1.8 1.7-1.6-.4-.4-1.6Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+function iconFor(s: CostStep): React.ReactNode {
+  if (s.icon) return s.icon;
+  const m = (s.model ?? s.detail ?? "").toLowerCase();
+  if (/opus|sonnet|haiku|claude/.test(m)) return Ico.anthropic;
+  if (/gemini/.test(m)) return Ico.gemini;
+  if (/notion/.test(m)) return Ico.notion;
+  if (/search|fetch|link/.test(s.name)) return Ico.globe;
+  return Ico.tool;
+}
 
 export function CostWaterfall({
+  steps = defaultSteps,
+  task = "Report on LLM API prices in 2026",
   title = "Run cost",
-  items = [
-    {
-      id: "plan",
-      title: "Plan the launch",
-      detail: "Reasoning model · 4,120 tokens",
-      cost: 0.115,
-      value: 4120,
+  status,
+  mode: modeIn,
+  defaultMode = "cost",
+  onModeChange,
+  collapsed: collapsedIn,
+  defaultCollapsed = ["research"],
+  onCollapsedChange,
+  openId: openIn,
+  defaultOpenId = null,
+  onOpenChange,
+  maxHeight,
+  formatCost = dollars,
+  className = "",
+}: CostWaterfallProps) {
+  const [modeLocal, setModeLocal] = React.useState<CostMode>(defaultMode);
+  const mode = modeIn ?? modeLocal;
+  const [colLocal, setColLocal] = React.useState<string[]>(defaultCollapsed);
+  const collapsed = collapsedIn ?? colLocal;
+  const [openLocal, setOpenLocal] = React.useState<string | null>(defaultOpenId);
+  const openId = openIn !== undefined ? openIn : openLocal;
+
+  const setMode = (m: CostMode) => {
+    if (modeIn === undefined) setModeLocal(m);
+    onModeChange?.(m);
+  };
+  const toggleCol = (id: string) => {
+    const next = collapsed.includes(id) ? collapsed.filter((x) => x !== id) : [...collapsed, id];
+    if (collapsedIn === undefined) setColLocal(next);
+    onCollapsedChange?.(next);
+  };
+  const toggleOpen = (s: CostStep) => {
+    const next = openId === s.id ? null : s.id;
+    if (openIn === undefined) setOpenLocal(next);
+    onOpenChange?.(next, next ? s : undefined);
+  };
+
+  const total = steps.reduce(
+    (a, s) => {
+      const t = sum(s);
+      return { cost: a.cost + t.cost, tin: a.tin + t.tin, tout: a.tout + t.tout };
     },
-    {
-      id: "search",
-      title: "Web search",
-      detail: "6 queries · 1,800 tokens",
-      cost: 0.038,
-      value: 1800,
-    },
-    {
-      id: "write",
-      title: "Draft the copy",
-      detail: "Writing model · 8,420 tokens",
-      cost: 0.284,
-      value: 8420,
-    },
-    {
-      id: "review",
-      title: "Review output",
-      detail: "Reasoning model · 3,200 tokens",
-      cost: 0.092,
-      value: 3200,
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [metric, setMetric] = React.useState("Cost");
-  const [selected, setSelected] = React.useState<StudioItem>();
-  const total = items.reduce(
-    (s, x) => s + (metric === "Cost" ? (x.cost ?? 0) : (x.value ?? 0)),
-    0,
+    { cost: 0, tin: 0, tout: 0 },
   );
-  let offset = 0;
+  const running = status ? status === "running" : JSON.stringify(steps).includes('"running"');
+  const failedRun = status === "failed";
+
+  // most expensive top-level step
+  const top = steps.reduce<CostStep | null>((best, s) => (!best || sum(s).cost > sum(best).cost ? s : best), null);
+
+  const val = (t: Totals) => (mode === "cost" ? t.cost : t.tin + t.tout);
+  const grand = mode === "cost" ? total.cost : total.tin + total.tout;
+  const stepSize = mode === "cost" ? 0.2 : 50000;
+  const axisMax = Math.max(stepSize, Math.ceil((grand * 1.08) / stepSize) * stepSize);
+  const ticks = Array.from({ length: Math.round(axisMax / stepSize) }, (_, i) => i * stepSize);
+
+  type Row = { s: CostStep; depth: number; start: number; t: Totals };
+  const rows: Row[] = [];
+  let acc = 0;
+  const walk = (list: CostStep[], depth: number) => {
+    for (const s of list) {
+      const t = sum(s);
+      const start = acc;
+      rows.push({ s, depth, start, t });
+      if (s.children?.length) {
+        if (collapsed.includes(s.id)) acc += val(t);
+        else walk(s.children, depth + 1);
+      } else acc += val(t);
+    }
+  };
+  walk(steps, 0);
+
+  const pct = (v: number) => `${(v / axisMax) * 100}%`;
+
   return (
-    <UI.Panel title={title} className={className}>
-      <UI.Tabs
-        values={["Cost", "Tokens"]}
-        value={metric}
-        onChange={setMetric}
-      />
-      <div className="st-big">
-        {metric === "Cost" ? "$" + total.toFixed(3) : total.toLocaleString()}
-      </div>
-      <small>Total across {items.length} calls</small>
-      <div style={{ marginTop: 20 }}>
-        {items.map((x) => {
-          const value = metric === "Cost" ? (x.cost ?? 0) : (x.value ?? 0);
-          const left = (offset / Math.max(1, total)) * 100;
-          offset += value;
-          return (
-            <button
-              className="st-row st-row-button"
-              key={x.id}
-              onClick={() => {
-                setSelected(x);
-                onAction?.("inspect", x);
-              }}
-            >
-              <span style={{ width: 110, fontSize: 11 }}>{x.title}</span>
-              <div
-                className="st-grow"
-                style={{
-                  height: 20,
-                  position: "relative",
-                  background: "var(--st-soft)",
-                }}
-              >
-                <span
-                  style={{
-                    position: "absolute",
-                    left: `${left}%`,
-                    width: `${(value / Math.max(1, total)) * 100}%`,
-                    height: 20,
-                    background: "var(--st-accent)",
-                    borderRadius: 3,
-                  }}
-                />
-              </div>
-              <small>
-                {metric === "Cost" ? "$" + value.toFixed(3) : value}
-              </small>
+    <section className={`cw ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="cw-bar">
+        <svg className="cw-spark" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M6 1.5 7.2 5 10.5 6 7.2 7 6 10.5 4.8 7 1.5 6 4.8 5ZM12 9l.7 1.8 1.8.7-1.8.7L12 14l-.7-1.8-1.8-.7 1.8-.7Z" fill="currentColor" />
+        </svg>
+        <strong>{title}</strong>
+        <span className="cw-task">{task}</span>
+        <div className="cw-seg" role="tablist" aria-label="Measure">
+          {(["cost", "tokens"] as const).map((m) => (
+            <button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => setMode(m)}>
+              {m === "cost" ? "Cost" : "Tokens"}
             </button>
+          ))}
+        </div>
+        <span className={`cw-state ${running ? "live" : failedRun ? "fail" : "done"}`}>
+          <i />
+          {running ? "Live" : failedRun ? "Failed" : "Done"}
+        </span>
+      </header>
+      <div className="cw-stats">
+        <div>
+          <span className="cw-k">Total cost</span>
+          <span className="cw-v">{formatCost(total.cost)}</span>
+        </div>
+        <div>
+          <span className="cw-k">Total tokens</span>
+          <span className="cw-v">
+            {fmtTokShort(total.tin + total.tout)}
+            <small>
+              {fmtTokShort(total.tin)} in · {fmtTok(total.tout)} out
+            </small>
+          </span>
+        </div>
+        <div>
+          <span className="cw-k">Most expensive</span>
+          <span className="cw-v cw-v-name">
+            {top?.name}
+            <small>{top ? formatCost(sum(top).cost) : ""}</small>
+          </span>
+        </div>
+      </div>
+      <div className="cw-table" style={maxHeight ? { maxHeight, overflowY: "auto" } : undefined}>
+        <div className="cw-row cw-th">
+          <span className="cw-name">Step</span>
+          <span className="cw-chart">
+            {ticks.map((t) => (
+              <span key={t} className="cw-tick" style={{ left: pct(t) }}>
+                {mode === "cost" ? `$${t === 0 ? "0" : t.toFixed(2)}` : t === 0 ? "0" : `${t / 1000}k`}
+              </span>
+            ))}
+          </span>
+          <span className="cw-num">In</span>
+          <span className="cw-num">Out</span>
+          <span className="cw-num">Cost</span>
+          <span className="cw-num">Time</span>
+        </div>
+        {rows.map(({ s, depth, start, t }) => {
+          const hasKids = !!s.children?.length;
+          const folded = hasKids && collapsed.includes(s.id);
+          const own = val(t);
+          const isTop = top?.id === s.id;
+          const open = openId === s.id;
+          return (
+            <React.Fragment key={s.id}>
+              <div className={`cw-row cw-${s.status} ${hasKids ? "cw-parent" : ""} ${open ? "open" : ""}`}>
+                <span className="cw-name" style={{ paddingLeft: 14 + depth * 14 }}>
+                  {hasKids ? (
+                    <button
+                      type="button"
+                      className="cw-caret"
+                      aria-expanded={!folded}
+                      aria-label={`${folded ? "Open" : "Fold"} ${s.name}`}
+                      onClick={() => toggleCol(s.id)}
+                    >
+                      <svg viewBox="0 0 16 16" aria-hidden="true" style={{ transform: folded ? "none" : "rotate(90deg)" }}>
+                        <path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <span className="cw-caret" />
+                  )}
+                  <span className="cw-ico">{iconFor(s)}</span>
+                  <button type="button" className="cw-label" aria-expanded={open} onClick={() => toggleOpen(s)}>
+                    <span className="cw-n">{s.name}</span>
+                    <span className="cw-m">{s.model ?? s.detail}</span>
+                  </button>
+                  {folded && <span className="cw-tag">+{s.children!.length}</span>}
+                  {isTop && <span className="cw-tag cw-top">TOP</span>}
+                  {s.status === "failed" && (
+                    <svg className="cw-warn" viewBox="0 0 16 16" aria-label="Failed">
+                      <path d="M8 2.5 14 13H2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+                      <path d="M8 6.5v3M8 11.2v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+                    </svg>
+                  )}
+                  {s.status === "running" && <span className="cw-spin" aria-label="Running" />}
+                </span>
+                <span className="cw-chart">
+                  {ticks.map((tk) => (
+                    <span key={tk} className="cw-grid" style={{ left: pct(tk) }} />
+                  ))}
+                  <span
+                    className={`cw-b ${own === 0 ? "zero" : ""} ${hasKids && !folded ? "group" : ""}`}
+                    style={{ left: pct(start), width: own === 0 ? 1 : `max(4px, ${pct(own)})` }}
+                  />
+                </span>
+                <span className="cw-num">{t.tin ? fmtTok(t.tin) : "–"}</span>
+                <span className="cw-num">{t.tout ? fmtTok(t.tout) : "–"}</span>
+                <span className="cw-num cw-cost">{t.cost ? formatCost(t.cost) : "–"}</span>
+                <span className="cw-num cw-time">{fmtTime(s.duration)}</span>
+              </div>
+              {open && (
+                <div className="cw-detail">
+                  {s.error && <p className="cw-err">{s.error}</p>}
+                  {s.input && (
+                    <p>
+                      <b>Input</b> {s.input}
+                    </p>
+                  )}
+                  {s.output && (
+                    <p>
+                      <b>Output</b> {s.output}
+                    </p>
+                  )}
+                  {!s.error && !s.input && !s.output && <p className="cw-faint">No details recorded.</p>}
+                </div>
+              )}
+            </React.Fragment>
           );
         })}
       </div>
-      {selected && (
-        <pre className="st-code">
-          {selected.title}\n{selected.detail}\nCost: ${selected.cost}
-        </pre>
-      )}
-    </UI.Panel>
+    </section>
   );
 }
+
+const css = `
+.cw{--cw-bg:#fff;--cw-fg:#18181b;--cw-muted:#71717a;--cw-faint:#a1a1aa;--cw-line:#ececef;--cw-soft:#f4f4f5;--cw-bar:#ecebfa;--cw-bar-b:#c9c6ee;--cw-accent:#3b82f6;--cw-red:#e5484d;--cw-top-bg:#fdf0d5;--cw-top-fg:#c2690c;width:100%;max-width:758px;background:var(--cw-bg);color:var(--cw-fg);border:1px solid var(--cw-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 13.5px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cw{--cw-bg:#1b1b1e;--cw-fg:#ececef;--cw-muted:#a1a1aa;--cw-faint:#71717a;--cw-line:#2e2e33;--cw-soft:#26262b;--cw-bar:#2c2a4a;--cw-bar-b:#5a55a0;--cw-accent:#6aa3ff;--cw-top-bg:#3d2a10;--cw-top-fg:#f2a54a;color-scheme:dark}
+.cw *{box-sizing:border-box}.cw button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+.cw-bar{display:flex;align-items:center;gap:8px;padding:10px 12px 10px 18px;border-bottom:1px solid var(--cw-line)}
+.cw-spark{width:14px;height:14px;color:var(--cw-accent);flex:none}
+.cw-bar strong{font-weight:500;font-size:14px}
+.cw-task{flex:1;min-width:0;color:var(--cw-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+.cw-seg{display:flex;padding:2px;border-radius:8px;background:var(--cw-soft)}
+.cw-seg button{height:24px;padding:0 10px;border-radius:6px;font-size:13px;color:var(--cw-muted)}
+.cw-seg button[aria-selected=true]{background:var(--cw-bg);color:var(--cw-fg);box-shadow:0 0 0 1px var(--cw-line),0 1px 2px #0000000d}
+.cw-state{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border-radius:5px;font-size:12.5px}
+.cw-state i{width:5px;height:5px;border-radius:50%;background:currentColor}
+.cw-state.live{background:color-mix(in srgb,var(--cw-accent) 12%,transparent);color:var(--cw-accent)}
+.cw-state.live i{animation:cw-pulse 1.4s ease-in-out infinite}
+.cw-state.done{background:var(--cw-soft);color:var(--cw-muted)}.cw-state.fail{background:color-mix(in srgb,var(--cw-red) 12%,transparent);color:var(--cw-red)}
+.cw-stats{display:grid;grid-template-columns:1fr 1fr 1.4fr;border-bottom:1px solid var(--cw-line)}
+.cw-stats>div{display:flex;flex-direction:column;gap:6px;padding:12px 22px 14px}
+.cw-stats>div+div{border-left:1px solid var(--cw-line)}
+.cw-k{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--cw-muted)}
+.cw-v{font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:8px;white-space:nowrap}
+.cw-v small{font-size:12px;font-weight:400;color:var(--cw-muted)}
+.cw-row{display:grid;grid-template-columns:250px minmax(120px,1fr) 52px 48px 58px 58px;align-items:center;height:32px}
+.cw-th{height:30px;border-bottom:1px solid var(--cw-line);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--cw-muted)}
+.cw-th .cw-name{padding-left:16px}
+.cw-th .cw-chart{text-transform:none;letter-spacing:0;font-size:12.5px}
+.cw-tick{position:absolute;top:50%;transform:translateY(-50%);padding-left:6px;border-left:1px solid var(--cw-line);height:30px;line-height:30px}
+.cw-name{display:flex;align-items:center;gap:6px;min-width:0;padding-right:10px;height:100%;border-right:1px solid var(--cw-line)}
+.cw-th .cw-name{border-right:0}
+.cw-caret{display:grid;place-items:center;width:12px;height:12px;flex:none;color:var(--cw-faint)}
+.cw-caret svg{width:12px;height:12px;transition:transform .15s}
+.cw-ico{display:grid;place-items:center;width:14px;height:14px;flex:none}.cw-ico svg{width:14px;height:14px}
+.cw-label{display:flex;align-items:baseline;gap:6px;min-width:0;text-align:left}
+.cw-n{white-space:nowrap;font-weight:400;color:var(--cw-fg)}
+.cw-m{font-size:12.5px;color:var(--cw-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.cw-tag{flex:none;font-size:10.5px;padding:1px 4px;border-radius:4px;background:var(--cw-soft);color:var(--cw-muted)}
+.cw-top{background:var(--cw-top-bg);color:var(--cw-top-fg);letter-spacing:.02em}
+.cw-warn{width:13px;height:13px;color:var(--cw-red);margin-left:auto;flex:none}
+.cw-spin{margin-left:auto;width:10px;height:10px;border-radius:50%;border:1.5px solid var(--cw-line);border-top-color:var(--cw-accent);animation:cw-spin .8s linear infinite;flex:none}
+.cw-chart{position:relative;height:100%}
+.cw-grid{position:absolute;top:0;bottom:0;width:1px;background:var(--cw-line)}
+.cw-b{position:absolute;top:50%;height:12px;transform:translateY(-50%);border-radius:3px;background:var(--cw-bar);border:1px solid var(--cw-bar-b);transition:left .3s,width .3s}
+.cw-b.group{background:var(--cw-soft);border-color:var(--cw-line)}
+.cw-b.zero{background:none;border:0;border-left:1px solid var(--cw-faint);border-radius:0}
+.cw-failed .cw-b.zero{border-left-color:var(--cw-red)}
+.cw-running .cw-b{animation:cw-pulse 1.4s ease-in-out infinite}
+.cw-num{text-align:right;padding-right:16px;font-variant-numeric:tabular-nums;color:var(--cw-muted);white-space:nowrap}
+.cw-th .cw-num{padding-right:16px}
+.cw-cost{color:var(--cw-fg)}.cw-th .cw-cost{color:var(--cw-muted)}
+.cw-failed .cw-time{color:var(--cw-red)}
+.cw-row:not(.cw-th):hover{background:color-mix(in srgb,var(--cw-soft) 60%,transparent)}
+.cw-row.open{background:var(--cw-soft)}
+.cw-detail{padding:8px 18px 12px 44px;border-top:1px solid var(--cw-line);border-bottom:1px solid var(--cw-line);font-size:12.5px;color:var(--cw-muted);animation:cw-in .18s both}
+.cw-detail p{margin:4px 0}.cw-detail b{font-weight:500;color:var(--cw-fg);margin-right:6px}
+.cw-err{color:var(--cw-red)}.cw-faint{color:var(--cw-faint)}
+.cw :focus-visible{outline:2px solid var(--cw-accent);outline-offset:2px;border-radius:4px}
+@keyframes cw-spin{to{transform:rotate(360deg)}}
+@keyframes cw-pulse{50%{opacity:.45}}
+@keyframes cw-in{from{opacity:0}}
+@media(max-width:700px){.cw-row{grid-template-columns:minmax(0,1fr) 90px 54px 50px}.cw-row>.cw-num:nth-child(3),.cw-row>.cw-num:nth-child(4){display:none}.cw-stats{grid-template-columns:1fr 1fr}.cw-stats>div:nth-child(3){display:none}.cw-task{display:none}}
+@media(prefers-reduced-motion:reduce){.cw *{animation:none!important;transition:none!important}}
+`;
 
 export default CostWaterfall;

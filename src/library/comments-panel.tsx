@@ -3,366 +3,235 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type CommentAuthor = { name: string; avatar?: string; color?: string };
+export type PanelComment = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  author: CommentAuthor;
+  /** Date, epoch ms, or a ready label like "2min ago". */
+  createdAt: Date | number | string;
+  text: string;
 };
-export type StudioProps = {
+
+export type CommentsPanelProps = {
+  comments?: PanelComment[];
+  currentUser?: CommentAuthor;
+  onRunEdit?: (comment: PanelComment) => Promise<void> | void;
+  onAdd?: (comment: PanelComment) => void;
+  onClose?: () => void;
   title?: string;
-  items?: StudioItem[];
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+type Filter = "all" | "questions" | "edits";
+
+const ago = (m: number) => Date.now() - m * 60000;
+const defaultComments: PanelComment[] = [
+  { id: "1", author: { name: "Mara Lindqvist", color: "#c08457" }, createdAt: ago(2), text: "/edit Rename every “customers” to “members” on the pricing page." },
+  { id: "2", author: { name: "Jonas Weber", color: "#5b6b7a" }, createdAt: ago(5), text: "Should we mention the launch discount in the hero too?" },
+  { id: "3", author: { name: "Lena Hart", color: "#b0877a" }, createdAt: ago(11), text: "The new illustrations look great on mobile." },
+  { id: "4", author: { name: "Theo Brandt", color: "#6d7f62" }, createdAt: ago(18), text: "/edit Shorten every FAQ answer to two sentences." },
+  { id: "5", author: { name: "Sofia Marin", color: "#9a6a8e" }, createdAt: ago(26), text: "Can we ship this before Friday?" },
+];
+
+const isEdit = (t: string) => /^\/edit\b/i.test(t.trim());
+const isQuestion = (t: string) => !isEdit(t) && t.trim().endsWith("?");
+const when = (c: PanelComment["createdAt"]) => {
+  if (typeof c === "string") return c;
+  const m = Math.max(0, Math.round((Date.now() - new Date(c).getTime()) / 60000));
+  if (m < 1) return "now";
+  if (m < 60) return `${m}min ago`;
+  const h = Math.round(m / 60);
+  return h < 24 ? `${h}h ago` : `${Math.round(h / 24)}d ago`;
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
-
-export function CommentsPanel({
-  title = "Comments",
-  items = [
-    {
-      id: "1",
-      title: "Maya Chen",
-      detail: "Could we make the title more direct?",
-      status: "open",
-    },
-    {
-      id: "2",
-      title: "Assistant",
-      detail: "I shortened the opening paragraph and updated the examples.",
-      status: "resolved",
-    },
-    {
-      id: "3",
-      title: "Jonas Weber",
-      detail: "The new flow looks good. Ready for review.",
-      status: "open",
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [comments, setComments] = React.useState(items);
-  const [filter, setFilter] = React.useState("Open");
-  const [text, setText] = React.useState("");
-  return (
-    <UI.Panel
-      title={title}
-      className={className}
-      aside={
-        <UI.Badge>
-          {comments.filter((x) => x.status === "open").length} open
-        </UI.Badge>
-      }
-    >
-      <UI.Tabs
-        values={["Open", "Resolved", "All"]}
-        value={filter}
-        onChange={setFilter}
-      />
-      {comments
-        .filter((x) => filter === "All" || x.status === filter.toLowerCase())
-        .map((x) => (
-          <div key={x.id} style={{ margin: "16px 0" }}>
-            <UI.Row title={x.title} icon={<UI.Avatar name={x.title} />}>
-              <UI.Button
-                onClick={() => {
-                  setComments((s) =>
-                    s.map((v) =>
-                      v.id === x.id
-                        ? {
-                            ...v,
-                            status: v.status === "open" ? "resolved" : "open",
-                          }
-                        : v,
-                    ),
-                  );
-                  onAction?.(x.status === "open" ? "resolve" : "reopen", x);
-                }}
-              >
-                {x.status === "open" ? "Resolve" : "Reopen"}
-              </UI.Button>
-            </UI.Row>
-            <p className="st-prose">{x.detail}</p>
-          </div>
-        ))}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (!text.trim()) return;
-          const x = {
-            id: Date.now().toString(),
-            title: "You",
-            detail: text,
-            status: "open",
-          };
-          setComments((s) => [...s, x]);
-          onAction?.(text.startsWith("/edit") ? "edit-command" : "comment", x);
-          setText("");
-          setFilter("Open");
-        }}
-      >
-        <label className="st-field">
-          <span>Add a comment</span>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Leave feedback or try /edit…"
-          />
-        </label>
-        <UI.Button type="submit" primary disabled={!text.trim()}>
-          Post comment
-        </UI.Button>
-      </form>
-    </UI.Panel>
+function Avatar({ a, size = 20 }: { a: CommentAuthor; size?: number }) {
+  return a.avatar ? (
+    <img className="cp-av" src={a.avatar} alt="" width={size} height={size} />
+  ) : (
+    <span className="cp-av" style={{ width: size, height: size, background: a.color ?? "#8b8b93" }} aria-hidden="true">
+      {a.name[0]}
+    </span>
   );
 }
+
+export function CommentsPanel({
+  comments = defaultComments,
+  currentUser = { name: "You", color: "#a07a5f" },
+  onRunEdit,
+  onAdd,
+  onClose = () => {},
+  title = "Comments",
+  className = "",
+}: CommentsPanelProps) {
+  const [list, setList] = React.useState(comments);
+  const [filter, setFilter] = React.useState<Filter>("all");
+  const [newest, setNewest] = React.useState(true);
+  const [menu, setMenu] = React.useState(false);
+  const [draft, setDraft] = React.useState("");
+  const [state, setState] = React.useState<Record<string, "running" | "done">>({});
+  React.useEffect(() => setList(comments), [comments]);
+
+  const edits = list.filter((c) => isEdit(c.text)).length;
+  const shown = list
+    .filter((c) => (filter === "edits" ? isEdit(c.text) : filter === "questions" ? isQuestion(c.text) : true))
+    .slice()
+    .sort((a, b) => {
+      const ta = typeof a.createdAt === "string" ? 0 : new Date(a.createdAt).getTime();
+      const tb = typeof b.createdAt === "string" ? 0 : new Date(b.createdAt).getTime();
+      return newest ? tb - ta : ta - tb;
+    });
+
+  const run = async (c: PanelComment) => {
+    setState((s) => ({ ...s, [c.id]: "running" }));
+    try {
+      await (onRunEdit ? onRunEdit(c) : new Promise((r) => setTimeout(r, 900)));
+    } finally {
+      setState((s) => ({ ...s, [c.id]: "done" }));
+    }
+  };
+  const send = () => {
+    const text = draft.trim();
+    if (!text) return;
+    const c: PanelComment = { id: `c${Date.now()}`, author: currentUser, createdAt: Date.now(), text };
+    setList((l) => [c, ...l]);
+    setDraft("");
+    onAdd?.(c);
+  };
+
+  const tabs: [Filter, string, number?][] = [
+    ["all", "All"],
+    ["questions", "Questions"],
+    ["edits", "Edits", edits],
+  ];
+
+  return (
+    <section className={`cp ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="cp-head">
+        <h3>{title}</h3>
+        {onClose && (
+          <button type="button" className="cp-icon" aria-label="Close comments" onClick={onClose}>
+            <svg viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+          </button>
+        )}
+      </header>
+      <div className="cp-bar">
+        <div className="cp-tabs" role="tablist" aria-label="Filter comments">
+          {tabs.map(([id, label, n]) => (
+            <button key={id} type="button" role="tab" aria-selected={filter === id} onClick={() => setFilter(id)}>
+              {label}
+              {n ? <span className="cp-n">{n}</span> : null}
+            </button>
+          ))}
+        </div>
+        <div className="cp-sort">
+          <button type="button" className="cp-icon" aria-label="Sort" aria-expanded={menu} onClick={() => setMenu((m) => !m)}>
+            <svg viewBox="0 0 16 16"><path d="M3 4.5h10M5 8h6M7 11.5h2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+          </button>
+          {menu && (
+            <div className="cp-menu" role="menu">
+              {[true, false].map((v) => (
+                <button key={String(v)} type="button" role="menuitemradio" aria-checked={newest === v} onClick={() => { setNewest(v); setMenu(false); }}>
+                  {v ? "Newest first" : "Oldest first"}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      <ol className="cp-list">
+        {shown.map((c) => {
+          const edit = isEdit(c.text);
+          const st = state[c.id];
+          return (
+            <li key={c.id} className="cp-item">
+              <div className="cp-meta">
+                <Avatar a={c.author} />
+                <strong>{c.author.name}</strong>
+                <time>{when(c.createdAt)}</time>
+              </div>
+              <p className="cp-text">
+                {edit ? (
+                  <>
+                    <span className="cp-cmd">/Edit</span>
+                    {c.text.trim().slice(5)}
+                  </>
+                ) : (
+                  c.text
+                )}
+              </p>
+              {edit && (
+                <button type="button" className={`cp-run ${st ?? ""}`} disabled={!!st} onClick={() => run(c)}>
+                  {st === "running" ? (
+                    <span className="cp-spin" aria-hidden="true" />
+                  ) : st === "done" ? (
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+                  ) : (
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5Z" fill="currentColor" /></svg>
+                  )}
+                  {st === "running" ? "Running…" : st === "done" ? "Applied" : "Run edit"}
+                </button>
+              )}
+            </li>
+          );
+        })}
+        {shown.length === 0 && <li className="cp-empty">Nothing here yet</li>}
+      </ol>
+      <form
+        className="cp-compose"
+        onSubmit={(e) => {
+          e.preventDefault();
+          send();
+        }}
+      >
+        <Avatar a={currentUser} />
+        <input value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Add a comment or /edit..." aria-label="Add a comment" />
+        <button type="submit" className="cp-send" aria-label="Send" disabled={!draft.trim()}>
+          <svg viewBox="0 0 16 16"><path d="M8 12.5v-9m-4 4 4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+      </form>
+    </section>
+  );
+}
+
+const css = `
+.cp{--cp-bg:#fff;--cp-fg:#18181b;--cp-muted:#71717a;--cp-faint:#a1a1aa;--cp-line:#ececef;--cp-chip:#f1f1f3;--cp-accent:#3b82f6;width:100%;max-width:400px;display:flex;flex-direction:column;background:var(--cp-bg);color:var(--cp-fg);border:1px solid var(--cp-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cp{--cp-bg:#1b1b1e;--cp-fg:#ececef;--cp-muted:#a1a1aa;--cp-faint:#71717a;--cp-line:#2e2e33;--cp-chip:#2a2a2f;color-scheme:dark}
+.cp *{box-sizing:border-box}.cp button,.cp input{font:inherit;color:inherit}.cp button{cursor:pointer}
+.cp-head{display:flex;align-items:center;justify-content:space-between;padding:14px 12px 0 16px}
+.cp-head h3{margin:0;font-size:15px;font-weight:500}
+.cp-icon{display:grid;place-items:center;width:26px;height:26px;border:0;border-radius:6px;background:none;color:var(--cp-muted)}
+.cp-icon:hover{background:var(--cp-chip);color:var(--cp-fg)}.cp-icon svg{width:15px;height:15px}
+.cp-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 12px 12px 16px;border-bottom:1px solid var(--cp-line)}
+.cp-tabs{display:flex;gap:8px}
+.cp-tabs button{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 9px;border:1px solid var(--cp-line);border-radius:7px;background:var(--cp-bg);font-size:14px;color:var(--cp-muted)}
+.cp-tabs button[aria-selected=true]{background:var(--cp-chip);border-color:var(--cp-chip);color:var(--cp-fg);font-weight:500}
+.cp-n{display:inline-grid;place-items:center;min-width:16px;height:16px;padding:0 4px;border-radius:4px;background:var(--cp-chip);font-size:11px;color:var(--cp-muted)}
+.cp-sort{position:relative}
+.cp-menu{position:absolute;right:0;top:30px;z-index:2;min-width:140px;padding:4px;border:1px solid var(--cp-line);border-radius:9px;background:var(--cp-bg);box-shadow:0 8px 24px #0000001a;animation:cp-in .15s both}
+.cp-menu button{display:block;width:100%;padding:6px 8px;border:0;border-radius:6px;background:none;text-align:left;font-size:13px}
+.cp-menu button:hover,.cp-menu button[aria-checked=true]{background:var(--cp-chip)}
+.cp-list{list-style:none;margin:0;padding:0;max-height:250px;overflow:auto}
+.cp-item{padding:12px 16px 14px;border-bottom:1px solid var(--cp-line);animation:cp-in .25s both}
+.cp-meta{display:flex;align-items:center;gap:8px}
+.cp-meta strong{font-weight:500;font-size:14px}.cp-meta time{margin-left:auto;font-size:12px;color:var(--cp-faint)}
+.cp-av{display:inline-grid;place-items:center;flex:none;border-radius:50%;color:#fff;font-size:10px;font-weight:600;object-fit:cover}
+.cp-text{margin:6px 0 0 28px;font-size:14px;line-height:1.45}
+.cp-cmd{color:var(--cp-muted)}
+.cp-run{display:inline-flex;align-items:center;gap:8px;margin:10px 0 0 28px;height:30px;padding:0 10px 0 12px;border:0;border-radius:7px;background:var(--cp-bg);box-shadow:0 0 0 1px var(--cp-line),0 1px 2px #0000000d;font-size:14px;font-weight:500}
+.cp-run svg{width:13px;height:13px;color:var(--cp-muted)}.cp-run.done svg{color:#16a34a}.cp-run:disabled{cursor:default;color:var(--cp-muted)}
+.cp-spin{width:12px;height:12px;border:1.5px solid var(--cp-line);border-top-color:var(--cp-muted);border-radius:50%;animation:cp-spin .7s linear infinite}
+.cp-empty{padding:24px 16px;text-align:center;color:var(--cp-faint);font-size:13px}
+.cp-compose{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 16px;border-top:1px solid var(--cp-line)}
+.cp-compose input{flex:1;min-width:0;height:28px;border:0;background:none;outline:none;font-size:14px}
+.cp-compose input::placeholder{color:var(--cp-faint)}
+.cp-send{display:grid;place-items:center;width:28px;height:28px;border:0;border-radius:7px;background:var(--cp-fg);color:var(--cp-bg)}
+.cp-send:disabled{background:#c4c4c9;color:#fff;cursor:default}.cp-send svg{width:14px;height:14px}
+.cp :focus-visible{outline:2px solid var(--cp-accent);outline-offset:2px}
+@keyframes cp-in{from{opacity:0;transform:translateY(-3px)}}@keyframes cp-spin{to{transform:rotate(1turn)}}
+@media(max-width:380px){.cp-tabs button{padding:0 7px;font-size:13px}.cp-text,.cp-run{margin-left:0}}
+@media(prefers-reduced-motion:reduce){.cp *{animation:none!important;transition:none!important}}
+`;
 
 export default CommentsPanel;

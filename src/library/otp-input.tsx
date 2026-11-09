@@ -878,23 +878,73 @@ const css = /* css */ `
 
 import * as React from "react";
 
+const DEMO_CODE = "482913";
+
+const demoCss = `
+.otp-demo-card { width: 100%; max-width: 400px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05); font-family: inherit; color: #171717; overflow: hidden; }
+.otp-demo-body { padding: 28px 24px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.otp-demo-icon { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05); color: #525252; margin-bottom: 20px; }
+.otp-demo-title { margin: 0; font-size: 15px; font-weight: 500; line-height: 22px; }
+.otp-demo-sub { margin: 2px 0 22px; font-size: 13px; color: #737373; }
+.otp-demo-sub b { color: #171717; font-weight: 400; }
+.otp-demo-foot { border-top: 1px solid rgba(0,0,0,0.07); padding: 10px; text-align: center; font-size: 12px; color: #737373; font-variant-numeric: tabular-nums; }
+.otp-demo-foot b { color: #171717; font-weight: 400; }
+:where(.dark, [data-theme="dark"]) .otp-demo-card { background: #1c1c1e; color: #ededed; box-shadow: 0 0 0 1px rgba(255,255,255,0.1); }
+:where(.dark, [data-theme="dark"]) .otp-demo-icon { color: #a3a3a3; box-shadow: 0 0 0 1px rgba(255,255,255,0.12); }
+:where(.dark, [data-theme="dark"]) .otp-demo-sub b, :where(.dark, [data-theme="dark"]) .otp-demo-foot b { color: #ededed; }
+:where(.dark, [data-theme="dark"]) .otp-demo-foot { border-top-color: rgba(255,255,255,0.08); }
+`;
+
 /** Working example; use the named OtpInput export in your application. */
 export default function Demo() {
-  const [note, setNote] = React.useState("");
+  const [code, setCode] = React.useState("");
+  const [status, setStatus] = React.useState<OtpStatus>("idle");
+  const [triesLeft, setTriesLeft] = React.useState(3);
+
+  function verify(value: string) {
+    setStatus("verifying");
+    window.setTimeout(() => {
+      if (value === DEMO_CODE) {
+        setStatus("success");
+      } else {
+        setTriesLeft((n) => Math.max(0, n - 1));
+        setStatus("error");
+      }
+    }, 900);
+  }
+
   return (
-    <div>
-      <h3 style={{ marginBottom: 8 }}>Check your inbox</h3>
-      <p style={{ color: "#888", marginBottom: 24 }}>
-        Enter the six-digit code. Try 123456.
-      </p>
-      <OtpInput
-        separator
-        status={note === "123456" ? "success" : note ? "error" : "idle"}
-        onComplete={setNote}
-        errorMessage="Try 123456 in this demo."
-        clearOnError
-        onChange={() => setNote("")}
-      />
+    <div className="otp-demo-card">
+      <style>{demoCss}</style>
+      <div className="otp-demo-body">
+        <span className="otp-demo-icon" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3">
+            <rect x="2" y="3.5" width="12" height="9" rx="1.5" />
+            <path d="M2.5 4.5 8 8.5l5.5-4" />
+          </svg>
+        </span>
+        <h3 className="otp-demo-title">Check your email</h3>
+        <p className="otp-demo-sub">
+          We sent a code to <b>maya@acme.com</b>
+        </p>
+        <OtpInput
+          value={code}
+          onChange={(next) => {
+            setCode(next);
+            if (status === "error" && next) setStatus("idle");
+          }}
+          onComplete={verify}
+          status={status}
+          errorMessage={`That code didn't work. ${triesLeft} tries left.`}
+          separator
+          align="center"
+          onResend={() => setTriesLeft(3)}
+          resendIn={20}
+        />
+      </div>
+      <div className="otp-demo-foot">
+        Demo code: <b>482 913</b>
+      </div>
     </div>
   );
 }

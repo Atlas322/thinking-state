@@ -3,392 +3,459 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+
+export type DateRange = { start: Date; end: Date };
+export type CompareMode = "off" | "previous" | "year";
+export type DateRangePreset = { id: string; label: string; range: (today: Date) => DateRange };
+
+export type DateRangePickerProps = {
+  value?: DateRange;
+  defaultValue?: DateRange;
+  onChange?: (range: DateRange, compare: DateRange | null, mode: CompareMode) => void;
+  presets?: DateRangePreset[];
+  compare?: boolean;
+  defaultCompare?: CompareMode;
+  weekStartsOn?: 0 | 1;
+  min?: Date;
+  max?: Date;
+  defaultOpen?: boolean;
+  today?: Date;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
+const DAY = 86_400_000;
+const strip = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const same = (a?: Date | null, b?: Date | null) => !!a && !!b && a.getTime() === b.getTime();
+const diffDays = (a: Date, b: Date) => Math.round((strip(b).getTime() - strip(a).getTime()) / DAY);
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const short = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+const fmtRange = (r: DateRange) =>
+  r.start.getFullYear() === r.end.getFullYear()
+    ? same(r.start, r.end)
+      ? `${short(r.start)}, ${r.start.getFullYear()}`
+      : `${short(r.start)} – ${short(r.end)}, ${r.end.getFullYear()}`
+    : `${short(r.start)}, ${r.start.getFullYear()} – ${short(r.end)}, ${r.end.getFullYear()}`;
+
+export const defaultPresets: DateRangePreset[] = [
+  { id: "today", label: "Today", range: (t) => ({ start: t, end: t }) },
+  { id: "yesterday", label: "Yesterday", range: (t) => ({ start: addDays(t, -1), end: addDays(t, -1) }) },
+  { id: "7d", label: "Last 7 days", range: (t) => ({ start: addDays(t, -6), end: t }) },
+  { id: "30d", label: "Last 30 days", range: (t) => ({ start: addDays(t, -29), end: t }) },
+  { id: "90d", label: "Last 90 days", range: (t) => ({ start: addDays(t, -89), end: t }) },
+  { id: "month", label: "This month", range: (t) => ({ start: new Date(t.getFullYear(), t.getMonth(), 1), end: t }) },
+  {
+    id: "lastmonth",
+    label: "Last month",
+    range: (t) => ({ start: new Date(t.getFullYear(), t.getMonth() - 1, 1), end: new Date(t.getFullYear(), t.getMonth(), 0) }),
   },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
+  { id: "quarter", label: "This quarter", range: (t) => ({ start: new Date(t.getFullYear(), Math.floor(t.getMonth() / 3) * 3, 1), end: t }) },
+  { id: "ytd", label: "Year to date", range: (t) => ({ start: new Date(t.getFullYear(), 0, 1), end: t }) },
+];
+
+const compareRange = (r: DateRange, mode: CompareMode): DateRange | null => {
+  if (mode === "off") return null;
+  if (mode === "year")
+    return {
+      start: new Date(r.start.getFullYear() - 1, r.start.getMonth(), r.start.getDate()),
+      end: new Date(r.end.getFullYear() - 1, r.end.getMonth(), r.end.getDate()),
     };
-    return { status, copy };
-  },
+  const len = diffDays(r.start, r.end) + 1;
+  return { start: addDays(r.start, -len), end: addDays(r.start, -1) };
 };
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
 
 export function DateRangePicker({
-  title = "Date range",
+  value,
+  defaultValue,
   onChange,
-  className,
-}: StudioProps & {
-  onChange?: (range: { start: string; end: string }) => void;
-}) {
-  const [month, setMonth] = React.useState(new Date().getMonth());
-  const [year, setYear] = React.useState(new Date().getFullYear());
-  const [start, setStart] = React.useState("");
-  const [end, setEnd] = React.useState("");
-  const [hover, setHover] = React.useState("");
-  const iso = (d: Date) =>
-    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  const choose = (value: string) => {
-    if (!start || end) {
-      setStart(value);
-      setEnd("");
-    } else {
-      setStart(value < start ? value : start);
-      setEnd(value < start ? start : value);
+  presets = defaultPresets,
+  compare = true,
+  defaultCompare = "previous",
+  weekStartsOn = 1,
+  min,
+  max,
+  defaultOpen = false,
+  today: todayProp,
+  className = "",
+}: DateRangePickerProps) {
+  const today = React.useMemo(() => strip(todayProp ?? new Date()), [todayProp]);
+  const maxDay = max ? strip(max) : today;
+  const minDay = min ? strip(min) : undefined;
+  const [inner, setInner] = React.useState<DateRange>(() => defaultValue ?? { start: addDays(today, -29), end: today });
+  const applied = value ?? inner;
+  const [mode, setMode] = React.useState<CompareMode>(defaultCompare);
+  const [appliedMode, setAppliedMode] = React.useState<CompareMode>(defaultCompare);
+  const [open, setOpen] = React.useState(defaultOpen);
+  const [draft, setDraft] = React.useState<{ start: Date; end: Date | null }>(applied);
+  const [hover, setHover] = React.useState<Date | null>(null);
+  const [focusDay, setFocusDay] = React.useState<Date>(applied.end);
+  const [view, setView] = React.useState(() => new Date(applied.end.getFullYear(), applied.end.getMonth() - 1, 1));
+  const [dir, setDir] = React.useState(0);
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const panelRef = React.useRef<HTMLDivElement>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const id = React.useId();
+
+  const openPanel = () => {
+    setDraft(applied);
+    setMode(appliedMode);
+    setFocusDay(applied.end);
+    setView(new Date(applied.end.getFullYear(), applied.end.getMonth() - 1, 1));
+    setOpen(true);
+  };
+  const close = (refocus = true) => {
+    setOpen(false);
+    setHover(null);
+    if (refocus) triggerRef.current?.focus();
+  };
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) close(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  });
+
+  const disabled = (d: Date) => d > maxDay || (!!minDay && d < minDay);
+
+  const pick = (d: Date) => {
+    if (disabled(d)) return;
+    if (draft.end) setDraft({ start: d, end: null });
+    else setDraft(d < draft.start ? { start: d, end: draft.start } : { start: draft.start, end: d });
+    setFocusDay(d);
+  };
+
+  const shown: DateRange = draft.end
+    ? { start: draft.start, end: draft.end }
+    : hover
+      ? hover < draft.start
+        ? { start: hover, end: draft.start }
+        : { start: draft.start, end: hover }
+      : { start: draft.start, end: draft.start };
+  const previewing = !draft.end;
+  const cmp = draft.end ? compareRange(shown, mode) : null;
+  const activePreset = draft.end
+    ? presets.find((p) => {
+        const r = p.range(today);
+        return same(strip(r.start), shown.start) && same(strip(r.end), shown.end);
+      })?.id
+    : undefined;
+
+  const moveView = (n: number) => {
+    setDir(n);
+    setView((v) => new Date(v.getFullYear(), v.getMonth() + n, 1));
+  };
+
+  const moveFocus = (d: Date) => {
+    setFocusDay(d);
+    const first = view;
+    const lastOfSecond = new Date(view.getFullYear(), view.getMonth() + 2, 0);
+    if (d < first) moveView(-1);
+    else if (d > lastOfSecond) moveView(1);
+  };
+
+  React.useEffect(() => {
+    if (!open) return;
+    const el = panelRef.current?.querySelector<HTMLButtonElement>(`[data-day="${focusDay.getTime()}"]`);
+    if (el && panelRef.current?.contains(document.activeElement) && document.activeElement?.hasAttribute("data-day")) el.focus();
+  }, [focusDay, open, view]);
+
+  const onGridKey = (e: React.KeyboardEvent) => {
+    const map: Record<string, () => Date> = {
+      ArrowLeft: () => addDays(focusDay, -1),
+      ArrowRight: () => addDays(focusDay, 1),
+      ArrowUp: () => addDays(focusDay, -7),
+      ArrowDown: () => addDays(focusDay, 7),
+      PageUp: () => new Date(focusDay.getFullYear(), focusDay.getMonth() - 1, focusDay.getDate()),
+      PageDown: () => new Date(focusDay.getFullYear(), focusDay.getMonth() + 1, focusDay.getDate()),
+      Home: () => addDays(focusDay, -((focusDay.getDay() - weekStartsOn + 7) % 7)),
+      End: () => addDays(focusDay, 6 - ((focusDay.getDay() - weekStartsOn + 7) % 7)),
+    };
+    if (map[e.key]) {
+      e.preventDefault();
+      const d = map[e.key]();
+      moveFocus(d);
+      if (!draft.end) setHover(d);
     }
   };
-  const shift = (n: number) => {
-    const d = new Date(year, month + n, 1);
-    setMonth(d.getMonth());
-    setYear(d.getFullYear());
-  };
-  const preset = (days: number) => {
-    const to = new Date(),
-      from = new Date();
-    from.setDate(to.getDate() - days + 1);
-    setStart(iso(from));
-    setEnd(iso(to));
-    setMonth(from.getMonth());
-    setYear(from.getFullYear());
-  };
-  return (
-    <UI.Panel
-      title={title}
-      className={className}
-      aside={
-        <div style={{ display: "flex", gap: 4 }}>
-          <UI.Button aria-label="Previous month" onClick={() => shift(-1)}>
-            ‹
-          </UI.Button>
-          <UI.Button aria-label="Next month" onClick={() => shift(1)}>
-            ›
-          </UI.Button>
+
+  const weekdays = Array.from({ length: 7 }, (_, i) =>
+    ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][(i + weekStartsOn) % 7],
+  );
+
+  const inR = (d: Date, r: DateRange | null) => !!r && d >= r.start && d <= r.end;
+
+  const renderMonth = (m: Date, side: "left" | "right") => {
+    const first = new Date(m.getFullYear(), m.getMonth(), 1);
+    const lead = (first.getDay() - weekStartsOn + 7) % 7;
+    const days = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
+    const cells: (Date | null)[] = [...Array(lead).fill(null), ...Array.from({ length: days }, (_, i) => new Date(m.getFullYear(), m.getMonth(), i + 1))];
+    while (cells.length % 7) cells.push(null);
+    const weeks = Array.from({ length: cells.length / 7 }, (_, i) => cells.slice(i * 7, i * 7 + 7));
+    const labelId = `${id}-${m.getFullYear()}-${m.getMonth()}`;
+    return (
+      <div className="drp-month" key={`${m.getFullYear()}-${m.getMonth()}`} style={{ ["--drp-dir" as string]: dir }}>
+        <div className="drp-mhead">
+          {side === "left" ? (
+            <button type="button" className="drp-nav" aria-label="Previous month" onClick={() => moveView(-1)}>
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
+            </button>
+          ) : (
+            <span className="drp-nav-sp" />
+          )}
+          <span id={labelId} aria-live="polite">
+            {MONTHS[m.getMonth()]} {m.getFullYear()}
+          </span>
+          {side === "right" ? (
+            <button type="button" className="drp-nav" aria-label="Next month" onClick={() => moveView(1)}>
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" /></svg>
+            </button>
+          ) : (
+            <span className="drp-nav-sp" />
+          )}
         </div>
-      }
-    >
-      <div className="st-actions">
-        {[7, 30, 90].map((n) => (
-          <UI.Button key={n} onClick={() => preset(n)}>
-            Last {n} days
-          </UI.Button>
-        ))}
-      </div>
-      <div className="st-columns">
-        {[0, 1].map((offset) => {
-          const d = new Date(year, month + offset, 1);
-          const count = new Date(
-            d.getFullYear(),
-            d.getMonth() + 1,
-            0,
-          ).getDate();
-          return (
-            <div key={offset}>
-              <h4>
-                {d.toLocaleDateString("en", { month: "long", year: "numeric" })}
-              </h4>
-              <div className="st-calendar">
-                {["S", "M", "T", "W", "T", "F", "S"].map((v, i) => (
-                  <small key={i}>{v}</small>
-                ))}
-                {Array.from({ length: d.getDay() }, (_, i) => (
-                  <span key={"blank" + i} />
-                ))}
-                {Array.from({ length: count }, (_, i) => {
-                  const value = iso(
-                    new Date(d.getFullYear(), d.getMonth(), i + 1),
-                  );
+        <table className="drp-grid" role="grid" aria-labelledby={labelId} onKeyDown={onGridKey}>
+          <thead>
+            <tr>
+              {weekdays.map((w) => (
+                <th key={w} scope="col" abbr={w}>{w}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {weeks.map((w, wi) => (
+              <tr key={wi}>
+                {w.map((d, di) => {
+                  if (!d) return <td key={di} />;
+                  const inBand = inR(d, shown);
+                  const isStart = same(d, shown.start);
+                  const isEnd = same(d, shown.end);
+                  const prev = w[di - 1];
+                  const next = w[di + 1];
+                  const bandL = inBand && (isStart || !prev || di === 0);
+                  const bandR = inBand && (isEnd || !next || di === 6);
+                  const inCmp = inR(d, cmp);
+                  const cmpL = inCmp && (same(d, cmp!.start) || !prev || di === 0);
+                  const cmpR = inCmp && (same(d, cmp!.end) || !next || di === 6);
+                  const off = disabled(d);
+                  const focus = same(d, focusDay);
                   return (
-                    <button
-                      key={i}
-                      aria-label={value}
-                      aria-pressed={value === start || value === end}
-                      className={
-                        value === start || value === end
-                          ? "selected"
-                          : start && value > start && value < (end || hover)
-                            ? "inrange"
-                            : ""
-                      }
-                      onMouseEnter={() => setHover(value)}
-                      onFocus={() => setHover(value)}
-                      onClick={() => choose(value)}
+                    <td
+                      key={di}
+                      className={[
+                        inBand && "band",
+                        bandL && "bl",
+                        bandR && "br",
+                        previewing && "pv",
+                        inCmp && !inBand && "cmp",
+                        cmpL && "cl",
+                        cmpR && "cr",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
                     >
-                      {i + 1}
-                    </button>
+                      <button
+                        type="button"
+                        data-day={d.getTime()}
+                        tabIndex={focus ? 0 : -1}
+                        className={`drp-day ${isStart || isEnd ? "end" : ""} ${off ? "off" : ""}`}
+                        aria-label={d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
+                        aria-selected={inBand}
+                        aria-disabled={off || undefined}
+                        aria-current={same(d, today) ? "date" : undefined}
+                        onClick={() => pick(d)}
+                        onMouseEnter={() => !draft.end && !off && setHover(d)}
+                        onFocus={() => setFocusDay(d)}
+                      >
+                        {d.getDate()}
+                        {same(d, today) && <i className="drp-today" />}
+                      </button>
+                    </td>
                   );
                 })}
-              </div>
-            </div>
-          );
-        })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <UI.Row
-        title={
-          start
-            ? `${start} → ${end || "Choose end date"}`
-            : "Select a start and end date"
-        }
+    );
+  };
+
+  const second = new Date(view.getFullYear(), view.getMonth() + 1, 1);
+  const days = diffDays(shown.start, shown.end) + 1;
+
+  return (
+    <div ref={rootRef} className={`drp ${className}`}>
+      <style>{css}</style>
+      <button
+        ref={triggerRef}
+        type="button"
+        className="drp-trigger"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => (open ? close() : openPanel())}
       >
-        <UI.Button
-          primary
-          disabled={!start || !end}
-          onClick={() => onChange?.({ start, end })}
+        <svg className="drp-cal" viewBox="0 0 16 16" aria-hidden="true">
+          <rect x="2.5" y="3.5" width="11" height="10" rx="1.6" />
+          <path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" />
+        </svg>
+        {fmtRange(applied)}
+        <svg className="drp-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m5 6.5 3 3 3-3" /></svg>
+      </button>
+
+      {open && (
+        <div
+          ref={panelRef}
+          className="drp-panel"
+          role="dialog"
+          aria-label="Choose a date range"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              e.preventDefault();
+              close();
+            }
+          }}
         >
-          Apply
-        </UI.Button>
-      </UI.Row>
-    </UI.Panel>
+          <div className="drp-main">
+            <div className="drp-presets" role="tablist" aria-label="Presets">
+              {presets.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={activePreset === p.id}
+                  className={activePreset === p.id ? "on" : ""}
+                  onClick={() => {
+                    const r = p.range(today);
+                    const next = { start: strip(r.start), end: strip(r.end) };
+                    setDraft(next);
+                    setFocusDay(next.end);
+                    setView(new Date(next.end.getFullYear(), next.end.getMonth() - 1, 1));
+                  }}
+                >
+                  {p.label}
+                </button>
+              ))}
+              <span className={`drp-custom ${draft.end && !activePreset ? "on" : ""}`}>Custom</span>
+            </div>
+            <div className="drp-months" onMouseLeave={() => setHover(null)}>
+              {renderMonth(view, "left")}
+              {renderMonth(second, "right")}
+            </div>
+          </div>
+          <div className="drp-foot">
+            <div className="drp-sum">
+              <div className="drp-range">
+                <strong>{fmtRange(shown)}</strong>
+                <span>{days} {days === 1 ? "day" : "days"}</span>
+              </div>
+              {compare && (
+                <div className="drp-compare" role="radiogroup" aria-label="Compare">
+                  <span className="drp-clabel">Compare</span>
+                  {(
+                    [
+                      ["off", "Off"],
+                      ["previous", "Previous period"],
+                      ["year", "Previous year"],
+                    ] as [CompareMode, string][]
+                  ).map(([m, l]) => (
+                    <button key={m} type="button" role="radio" aria-checked={mode === m} className={mode === m ? "on" : ""} onClick={() => setMode(m)}>
+                      {l}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="drp-actions">
+              <button type="button" className="drp-btn" onClick={() => close()}>Cancel</button>
+              <button
+                type="button"
+                className="drp-btn primary"
+                disabled={!draft.end}
+                onClick={() => {
+                  const r = { start: draft.start, end: draft.end ?? draft.start };
+                  if (value === undefined) setInner(r);
+                  setAppliedMode(mode);
+                  onChange?.(r, compareRange(r, mode), mode);
+                  close();
+                }}
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
-export default DateRangePicker;
+const css = `
+.drp{--drp-bg:#fff;--drp-fg:#18181b;--drp-muted:#71717a;--drp-faint:#b4b4bb;--drp-line:#ececef;--drp-soft:#f4f4f5;--drp-band:#ececee;--drp-band-pv:#f4f4f6;--drp-end:#18181b;--drp-end-fg:#fff;--drp-blue:#3b82f6;--drp-cmp:#e6effd;position:relative;display:inline-block;color:var(--drp-fg);font:400 14px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .drp{--drp-bg:#1b1b1e;--drp-fg:#ececef;--drp-muted:#a1a1aa;--drp-faint:#5c5c63;--drp-line:#2e2e33;--drp-soft:#26262a;--drp-band:#2c2c31;--drp-band-pv:#242428;--drp-end:#ececef;--drp-end-fg:#18181b;--drp-cmp:#1c2a40;color-scheme:dark}
+.drp *{box-sizing:border-box}.drp button{font:inherit;color:inherit;cursor:pointer}
+.drp-trigger{display:inline-flex;align-items:center;gap:9px;height:32px;padding:0 10px;border:1px solid var(--drp-line);border-radius:8px;background:var(--drp-bg);box-shadow:0 1px 2px #00000008;font-size:14px!important;white-space:nowrap}
+.drp-trigger:hover{border-color:color-mix(in srgb,var(--drp-fg) 18%,var(--drp-line))}
+.drp-cal{width:14px;height:14px;fill:none;stroke:var(--drp-muted);stroke-width:1.2;stroke-linecap:round}
+.drp-chev{width:13px;height:13px;margin-left:6px;fill:none;stroke:var(--drp-muted);stroke-width:1.4;stroke-linecap:round;transition:transform .15s}
+.drp-trigger[aria-expanded=true] .drp-chev{transform:rotate(180deg)}
+.drp-panel{position:absolute;z-index:30;top:calc(100% + 6px);left:0;width:var(--ui-drpc-panel-width,min(652px,calc(100vw - 32px)));border:1px solid var(--drp-line);border-radius:10px;background:var(--drp-bg);box-shadow:0 12px 32px #0000001a,0 1px 3px #0000000a;transform-origin:top left;animation:drp-in .16s ease-out;overflow:hidden}
+.drp-main{display:grid;grid-template-columns:140px minmax(0,1fr)}
+.drp-presets{display:flex;flex-direction:column;gap:0;padding:4px;border-right:1px solid var(--drp-line)}
+.drp-presets button,.drp-custom{display:block;width:100%;height:30px;padding:0 10px;border:0;border-radius:6px;background:none;text-align:left;font-size:14px;color:var(--drp-fg);line-height:30px;white-space:nowrap}
+.drp-presets button:hover{background:var(--drp-soft)}
+.drp-presets button.on{background:var(--drp-soft);font-weight:500}
+.drp-custom{color:var(--drp-faint)}.drp-custom.on{color:var(--drp-fg);background:var(--drp-soft)}
+.drp-months{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:10px 20px 14px}
+.drp-month{min-width:0;animation:drp-slide .22s ease-out}
+.drp-mhead{display:flex;align-items:center;justify-content:space-between;height:28px;margin-bottom:6px;font-weight:500}
+.drp-nav,.drp-nav-sp{width:24px;height:24px}
+.drp-nav{display:grid;place-items:center;padding:0;border:0;border-radius:6px;background:none;color:var(--drp-muted)}.drp-nav:hover{background:var(--drp-soft);color:var(--drp-fg)}
+.drp-nav svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+.drp-grid{width:100%;border-collapse:separate;border-spacing:0 6px;table-layout:fixed;margin-top:-6px}
+.drp-grid th{height:22px;font-size:10.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--drp-muted)}
+.drp-grid td{padding:0;height:28px;text-align:center}
+.drp-grid td.band{background:var(--drp-band)}.drp-grid td.band.pv{background:var(--drp-band-pv)}
+.drp-grid td.cmp{background:var(--drp-cmp)}
+.drp-grid td.bl,.drp-grid td.cl{border-top-left-radius:6px;border-bottom-left-radius:6px}
+.drp-grid td.br,.drp-grid td.cr{border-top-right-radius:6px;border-bottom-right-radius:6px}
+.drp-grid td.cmp.cl{box-shadow:inset 1px 0 0 var(--drp-blue)}.drp-grid td.cmp.cr{box-shadow:inset -1px 0 0 var(--drp-blue)}
+.drp-day{position:relative;display:inline-grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:6px;background:none;font-size:14px;font-variant-numeric:tabular-nums;transition:background .12s,color .12s}
+.drp-day:hover{background:color-mix(in srgb,var(--drp-fg) 8%,transparent)}
+.drp-day.end{background:var(--drp-end);color:var(--drp-end-fg)!important;font-weight:500}
+.drp-day.off{color:var(--drp-faint)!important;cursor:default}.drp-day.off:hover{background:none}
+.drp-today{position:absolute;bottom:2px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--drp-blue)}
+.drp-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:12px 10px 10px 14px;border-top:1px solid var(--drp-line)}
+.drp-range{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.drp-range strong{font-weight:500}.drp-range span{font-size:12.5px;color:var(--drp-muted)}
+.drp-compare{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.drp-clabel{font-size:13px;color:var(--drp-muted);margin-right:4px}
+.drp-compare button{height:28px;padding:0 9px;border:1px solid transparent;border-radius:6px;background:none;color:var(--drp-muted);font-size:14px}
+.drp-compare button:hover{color:var(--drp-fg)}
+.drp-compare button.on{background:var(--drp-soft);color:var(--drp-fg);border-color:var(--drp-line)}
+.drp-compare button:not(.on){border-color:var(--drp-line)}
+.drp-compare button:not(.on){border-color:transparent;box-shadow:inset 0 0 0 1px var(--drp-line)}
+.drp-actions{display:flex;gap:6px;flex:none}
+.drp-btn{height:30px;padding:0 10px;border:1px solid var(--drp-line);border-radius:7px;background:var(--drp-bg);font-weight:450}
+.drp-btn:hover{background:var(--drp-soft)}
+.drp-btn.primary{background:var(--drp-end);border-color:var(--drp-end);color:var(--drp-end-fg)!important}
+.drp-btn:disabled{opacity:.45;cursor:not-allowed}
+.drp :focus-visible{outline:2px solid var(--drp-blue);outline-offset:1px}
+@keyframes drp-in{from{opacity:0;transform:scale(.97)}}
+@keyframes drp-slide{from{opacity:.4;transform:translateX(calc(var(--drp-dir,0) * 10px))}}
+@media(max-width:600px){.drp-main{grid-template-columns:1fr}.drp-presets{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--drp-line)}.drp-presets button,.drp-custom{width:auto;flex:none}.drp-months{grid-template-columns:1fr;padding:10px 12px}.drp-month:first-child{display:none}.drp-month:last-child .drp-mhead .drp-nav-sp{display:none}.drp-foot{flex-direction:column;align-items:stretch}.drp-actions{justify-content:flex-end}}
+@media(pointer:coarse){.drp-grid td{height:40px}.drp-day{width:40px;height:40px}.drp-btn{height:40px}}
+@media(prefers-reduced-motion:reduce){.drp *{animation:none!important;transition:none!important}}
+`;
+
+export function Demo() {
+  return (
+    <div style={{ width: "100%", maxWidth: 652, minHeight: 440 }}>
+      <DateRangePicker defaultCompare="off" />
+    </div>
+  );
+}
+
+export default Demo;

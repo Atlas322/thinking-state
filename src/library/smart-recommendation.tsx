@@ -631,24 +631,24 @@ const css = /* css */ `
 /** Working example; use the named SmartRecommendation export in your application. */
 export default function Demo() {
   return (
-    <SmartRecommendation
-      title="A better way to sync"
-      defaultOpen
-      options={[
-        {
-          id: "incremental",
-          label: "Incremental sync",
-          reason:
-            "Only changed records will be synced. Save time on every run.",
-          signal: 3,
-        },
-        {
-          id: "full",
-          label: "Full sync",
-          reason: "Rebuild the complete dataset from the source.",
-          signal: 1,
-        },
-      ]}
-    />
+    <div style={{ width: 440, maxWidth: "100%", margin: "0 auto" }}>
+      <SmartRecommendation
+        options={[
+          {
+            id: "incremental",
+            label: "Incremental sync",
+            reason: (
+              <>
+                Only 4% of rows changed since yesterday – switching to{" "}
+                <strong style={{ fontWeight: 500, color: "inherit" }}>Incremental sync</strong> saves about 40 minutes.
+              </>
+            ),
+            signal: 3,
+          },
+          { id: "full", label: "Full refresh", reason: "Rebuilds every table from the source – slow, but always exact.", signal: 1 },
+          { id: "scheduled", label: "Nightly sync", reason: "Runs once at 2:00 when nobody is working.", signal: 2 },
+        ]}
+      />
+    </div>
   );
 }

@@ -3,384 +3,376 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type LaneAgent = {
   id: string;
+  name: string;
+  model?: string;
+  avatar?: React.ReactNode;
+};
+
+export type LaneTool = "notion" | "slack" | "figma" | "github" | "stripe";
+
+export type LaneTask = {
+  id: string;
+  agentId: string;
   title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  status: "done" | "running" | "waiting" | "failed";
+  start: number;
+  end?: number;
+  handoffTo?: string;
+  ask?: string;
+  summary?: string;
+  tools?: LaneTool[];
 };
-export type StudioProps = {
+
+export type AgentLanesProps = {
+  agents?: LaneAgent[];
+  tasks?: LaneTask[];
+  /** Visible window in ms. */
+  span?: number;
+  now?: number;
   title?: string;
-  items?: StudioItem[];
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
+  onApprove?: (task: LaneTask) => void;
+  onReject?: (task: LaneTask) => void;
+  onOpen?: (task: LaneTask) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const MIN = 60_000;
+
+const logo = {
+  claude: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      {[0, 30, 60, 90, 120, 150].map((r) => (
+        <rect key={r} x="7.3" y="1.5" width="1.4" height="13" rx=".7" fill="#d97757" transform={`rotate(${r} 8 8)`} />
+      ))}
+    </svg>
+  ),
+  openai: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      {[0, 60, 120, 180, 240, 300].map((r) => (
+        <path key={r} d="M8 2.2a2.6 2.6 0 0 1 2.6 2.6v3.4" fill="none" stroke="currentColor" strokeWidth="1.15" transform={`rotate(${r} 8 8)`} />
+      ))}
+    </svg>
+  ),
+  gemini: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 1c.5 3.6 3.4 6.5 7 7-3.6.5-6.5 3.4-7 7-.5-3.6-3.4-6.5-7-7 3.6-.5 6.5-3.4 7-7Z" fill="#3b82f6" />
+    </svg>
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const toolIcon: Record<LaneTool, React.ReactNode> = {
+  notion: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="13" height="13" rx="2" fill="#fff" stroke="#111" strokeWidth="1.3" />
+      <path d="M5.2 11.5v-7h1l3.6 7h1v-7" fill="none" stroke="#111" strokeWidth="1.3" />
+    </svg>
+  ),
+  slack: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="1" y="6" width="6" height="2.6" rx="1.3" fill="#36c5f0" />
+      <rect x="6" y="1" width="2.6" height="6" rx="1.3" fill="#2eb67d" />
+      <rect x="9" y="7.4" width="6" height="2.6" rx="1.3" fill="#ecb22e" />
+      <rect x="7.4" y="9" width="2.6" height="6" rx="1.3" fill="#e01e5a" />
+    </svg>
+  ),
+  figma: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="4" y="1" width="4" height="4.6" rx="2" fill="#f24e1e" />
+      <rect x="8" y="1" width="4" height="4.6" rx="2" fill="#ff7262" />
+      <rect x="4" y="5.6" width="4" height="4.6" rx="2" fill="#a259ff" />
+      <circle cx="10" cy="7.9" r="2" fill="#1abcfe" />
+      <rect x="4" y="10.2" width="4" height="4.6" rx="2" fill="#0acf83" />
+    </svg>
+  ),
+  github: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path fill="currentColor" d="M8 .8a7.2 7.2 0 0 0-2.3 14c.4.1.5-.2.5-.4v-1.3c-2 .4-2.4-.9-2.4-.9-.3-.8-.8-1-.8-1-.7-.5 0-.5 0-.5.7 0 1.1.8 1.1.8.6 1.1 1.7.8 2.1.6 0-.5.3-.8.5-1-1.6-.2-3.3-.8-3.3-3.6 0-.8.3-1.4.7-1.9 0-.2-.3-.9.1-1.9 0 0 .6-.2 2 .7a7 7 0 0 1 3.6 0c1.4-.9 2-.7 2-.7.4 1 .1 1.7.1 1.9.5.5.7 1.1.7 1.9 0 2.8-1.7 3.4-3.3 3.6.3.2.5.7.5 1.3v2c0 .2.1.5.5.4A7.2 7.2 0 0 0 8 .8Z" />
+    </svg>
+  ),
+  stripe: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="1" y="1" width="14" height="14" rx="3" fill="#635bff" />
+      <path d="M10.2 5.6c-.6-.3-1.3-.5-2-.5-.8 0-1.3.3-1.3.8 0 1.3 3.6.7 3.6 3.1 0 1.3-1.1 2-2.6 2-.8 0-1.6-.2-2.3-.6" fill="none" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  ),
+};
+
+const defaultAgents: LaneAgent[] = [
+  { id: "researcher", name: "Researcher", model: "Opus 5.5", avatar: logo.claude },
+  { id: "writer", name: "Writer", model: "Sonnet 5.5", avatar: logo.claude },
+  { id: "reviewer", name: "Reviewer", model: "GPT-6 Sol", avatar: logo.openai },
+  { id: "ops", name: "Ops", model: "Gemini 3.8 Flash", avatar: logo.gemini },
+];
+
+const demoTasks = (t: number): LaneTask[] => [
+  { id: "t1", agentId: "researcher", title: "Competitor pricing", status: "done", start: t - 31.6 * MIN, end: t - 21.5 * MIN, handoffTo: "t3", summary: "Pricing pages of 6 competitors, compared per seat." },
+  { id: "t2", agentId: "researcher", title: "Customer interviews", status: "running", start: t - 14 * MIN, tools: ["notion", "slack"], summary: "Tagging quotes from 18 interviews." },
+  { id: "t3", agentId: "writer", title: "Draft pricing page", status: "done", start: t - 20 * MIN, end: t - 1.6 * MIN, handoffTo: "t5", tools: ["figma", "notion"], summary: "Three tiers, copy and layout in Figma." },
+  { id: "t4", agentId: "reviewer", title: "PR #482 billing", status: "done", start: t - 31.2 * MIN, end: t - 24 * MIN, summary: "Approved with two comments." },
+  { id: "t5", agentId: "reviewer", title: "Review pricing copy", status: "running", start: t - 0.8 * MIN, tools: ["figma"], summary: "Checking tone and numbers." },
+  { id: "t6", agentId: "ops", title: "Sync CRM", status: "failed", start: t - 30.6 * MIN, end: t - 26 * MIN, summary: "HubSpot token expired." },
+  { id: "t7", agentId: "ops", title: "Rotate API keys", status: "waiting", start: t - 17 * MIN, tools: ["stripe", "github"], ask: "Rotate the live Stripe key and update the GitHub secret?" },
+];
+
+const ago = (ms: number) => {
+  const m = Math.round(ms / MIN);
+  return m <= 0 ? "just now" : `${m} min ago`;
+};
 
 export function AgentLanes({
-  title = "Agent room",
-  items = [
-    {
-      id: "research",
-      title: "Researcher",
-      detail: "Compare competitors",
-      status: "done",
-      value: 34,
-    },
-    {
-      id: "writer",
-      title: "Writer",
-      detail: "Draft launch copy",
-      status: "running",
-      value: 63,
-    },
-    {
-      id: "coder",
-      title: "Coder",
-      detail: "Deploy preview",
-      status: "waiting",
-      value: 82,
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [approved, setApproved] = React.useState<string[]>([]);
-  const [selected, setSelected] = React.useState<StudioItem>();
+  agents = defaultAgents,
+  tasks: tasksProp,
+  span = 30 * MIN,
+  now: nowProp,
+  title = "Agents",
+  className = "",
+  onApprove,
+  onReject,
+  onOpen,
+}: AgentLanesProps) {
+  const [mountedAt] = React.useState(() => Date.now());
+  const [clock, setClock] = React.useState(mountedAt);
+  React.useEffect(() => {
+    if (nowProp !== undefined) return;
+    const id = window.setInterval(() => setClock(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, [nowProp]);
+  const now = nowProp ?? clock;
+
+  const [local, setLocal] = React.useState<LaneTask[]>(() => tasksProp ?? demoTasks(mountedAt));
+  React.useEffect(() => {
+    if (tasksProp) setLocal(tasksProp);
+  }, [tasksProp]);
+  const tasks = local;
+
+  const [openId, setOpenId] = React.useState<string | null>(null);
+  const blockRefs = React.useRef<Record<string, HTMLButtonElement | null>>({});
+
+  const from = now - span;
+  const x = (t: number) => ((t - from) / span) * 100;
+  const endOf = (t: LaneTask) => (t.end === undefined || t.status === "running" || t.status === "waiting" ? now : t.end);
+
+  const running = tasks.filter((t) => t.status === "running").length;
+  const waiting = tasks.filter((t) => t.status === "waiting").length;
+  const laneIndex = (id: string) => agents.findIndex((a) => a.id === id);
+  const ticks = [25, 20, 15, 10, 5].map((m) => m * MIN).filter((m) => m < span);
+  const ROW = 50;
+
+  const decide = (task: LaneTask, ok: boolean) => {
+    if (ok) onApprove?.(task);
+    else onReject?.(task);
+    if (!(ok ? onApprove : onReject)) {
+      setLocal((ts) =>
+        ts.map((t) => (t.id === task.id ? { ...t, status: ok ? "running" : "failed", end: ok ? undefined : now } : t)),
+      );
+    }
+    setOpenId(null);
+    blockRefs.current[task.id]?.focus();
+  };
+
+  const curves = tasks
+    .filter((t) => t.handoffTo)
+    .map((t) => {
+      const to = tasks.find((n) => n.id === t.handoffTo);
+      if (!to) return null;
+      const a = laneIndex(t.agentId);
+      const b = laneIndex(to.agentId);
+      if (a < 0 || b < 0) return null;
+      const x1 = x(endOf(t));
+      const x2 = x(to.start);
+      const y1 = a * ROW + ROW / 2;
+      const y2 = b * ROW + ROW / 2;
+      const live = to.status === "running";
+      return { id: t.id, d: `M${x1} ${y1} C${x1 + 1.5} ${y1}, ${x2 - 1.5} ${y2}, ${x2} ${y2}`, live };
+    })
+    .filter(Boolean) as { id: string; d: string; live: boolean }[];
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="Every agent, on one timeline"
-      className={className}
-    >
-      <div className="st-row">
-        <small style={{ width: 100 }}>AGENT</small>
-        <div
-          className="st-grow"
-          style={{ display: "flex", justifyContent: "space-between" }}
-        >
-          {["0:00", "0:30", "1:00", "Now"].map((v) => (
-            <small key={v}>{v}</small>
-          ))}
+    <section className={`al ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="al-bar">
+        <svg className="al-spark" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M6.5 2c.4 2.6 1.9 4.1 4.5 4.5-2.6.4-4.1 1.9-4.5 4.5C6.1 8.4 4.6 6.9 2 6.5 4.6 6.1 6.1 4.6 6.5 2Z" fill="currentColor" />
+          <circle cx="12.5" cy="12.5" r="1.2" fill="currentColor" opacity=".6" />
+        </svg>
+        <strong>{title}</strong>
+        <span className="al-stat"><i className="al-dot run" />{running} running</span>
+        {waiting > 0 && (
+          <span className="al-stat warn"><i className="al-dot warn" />{waiting} needs you</span>
+        )}
+        <span className="al-span">Last {Math.round(span / MIN)}m</span>
+      </header>
+
+      <div className="al-grid">
+        <div className="al-names">
+          {agents.map((a) => {
+            const mine = tasks.filter((t) => t.agentId === a.id);
+            const needs = mine.some((t) => t.status === "waiting");
+            const busy = mine.some((t) => t.status === "running");
+            return (
+              <div className="al-agent" key={a.id}>
+                <span className="al-avatar">
+                  {a.avatar ?? a.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                </span>
+                <span className="al-who">
+                  <span className="al-name">
+                    {a.name}
+                    {needs ? <span className="al-tag warn">Needs you</span> : !busy ? <span className="al-tag">Idle</span> : null}
+                  </span>
+                  {a.model && <span className="al-model">{a.model}</span>}
+                </span>
+              </div>
+            );
+          })}
         </div>
-      </div>
-      {items.map((x, i) => (
-        <div key={x.id} className="st-row">
-          <span style={{ width: 100 }}>
-            <strong>{x.title}</strong>
-            <small>{approved.includes(x.id) ? "running" : x.status}</small>
-          </span>
-          <div
-            className="st-grow"
-            style={{
-              height: 42,
-              position: "relative",
-              borderRight: "1px dashed var(--st-accent)",
-            }}
-          >
-            <button
-              type="button"
-              className="st-tile"
-              style={{
-                position: "absolute",
-                left: `${i * 10}%`,
-                width: `${Math.max(20, (x.value ?? 50) - i * 10)}%`,
-                padding: "8px",
-                fontSize: 10,
-                background:
-                  "color-mix(in srgb,var(--st-accent) 10%,var(--st-bg))",
-              }}
-              onClick={() => {
-                setSelected(x);
-                onAction?.("open", x);
-              }}
-            >
-              {x.detail}
-            </button>
+
+        <div className="al-track">
+          <div className="al-ticks" aria-hidden="true">
+            {ticks.map((m) => (
+              <span key={m} style={{ left: `${100 - (m / span) * 100}%` }}>−{Math.round(m / MIN)}m</span>
+            ))}
+            <span className="al-now">now</span>
+          </div>
+          <div className="al-lanes" style={{ height: agents.length * ROW }}>
+            {ticks.map((m) => (
+              <i key={m} className="al-vline" style={{ left: `${100 - (m / span) * 100}%` }} />
+            ))}
+            <svg className="al-curves" viewBox={`0 0 100 ${agents.length * ROW}`} preserveAspectRatio="none" aria-hidden="true">
+              {curves.map((c) => (
+                <path key={c.id} d={c.d} className={c.live ? "live" : ""} vectorEffect="non-scaling-stroke" />
+              ))}
+            </svg>
+            {agents.map((a, i) => (
+              <ul className="al-lane" key={a.id} aria-label={a.name} style={{ top: i * ROW, height: ROW }}>
+                {tasks
+                  .filter((t) => t.agentId === a.id && endOf(t) > from)
+                  .map((t) => {
+                    const left = x(t.start);
+                    const right = x(endOf(t));
+                    const open = openId === t.id;
+                    return (
+                      <li key={t.id} className="al-li" style={{ left: `${left}%`, width: `${Math.max(1.4, right - left)}%` }}>
+                        <button
+                          type="button"
+                          ref={(el) => {
+                            blockRefs.current[t.id] = el;
+                          }}
+                          className={`al-block ${t.status} ${left < 0 ? "clip" : ""}`}
+                          aria-label={`${a.name}: ${t.title}, ${t.status === "waiting" ? "needs you" : t.status}, started ${ago(now - t.start)}`}
+                          aria-expanded={t.status === "waiting" ? open : undefined}
+                          onClick={() => setOpenId(open ? null : t.id)}
+                        >
+                          {t.tools?.map((tool) => (
+                            <span key={tool} className="al-tool">{toolIcon[tool]}</span>
+                          ))}
+                          <span className="al-title">{t.title}</span>
+                          {t.status === "waiting" && (
+                            <span className="al-flag">
+                              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5 11 10.5H1Z" fill="currentColor" /></svg>
+                              Needs you
+                            </span>
+                          )}
+                        </button>
+                        {open && (
+                          <div
+                            className={`al-pop ${i >= agents.length - 2 ? "up" : ""}`}
+                            role={t.status === "waiting" ? "dialog" : "tooltip"}
+                            aria-label={t.title}
+                            onKeyDown={(e) => {
+                              if (e.key === "Escape") {
+                                setOpenId(null);
+                                blockRefs.current[t.id]?.focus();
+                              }
+                            }}
+                          >
+                            <strong>{t.title}</strong>
+                            <p>{t.status === "waiting" ? t.ask ?? "Approve this step?" : t.summary ?? t.status}</p>
+                            {t.status === "waiting" ? (
+                              <div className="al-pop-actions">
+                                <button type="button" className="al-btn" onClick={() => decide(t, false)}>Reject</button>
+                                <button type="button" className="al-btn primary" autoFocus onClick={() => decide(t, true)}>Approve</button>
+                              </div>
+                            ) : (
+                              onOpen && (
+                                <button type="button" className="al-link" onClick={() => onOpen(t)}>Open</button>
+                              )
+                            )}
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })}
+              </ul>
+            ))}
           </div>
         </div>
-      ))}
-      {selected && (
-        <div className="st-tile" style={{ marginTop: 12 }}>
-          <strong>
-            {selected.title} · {selected.detail}
-          </strong>
-          {selected.status === "waiting" && !approved.includes(selected.id) ? (
-            <div className="st-actions">
-              <UI.Button
-                primary
-                onClick={() => {
-                  setApproved((s) => [...s, selected.id]);
-                  onAction?.("approve", selected);
-                }}
-              >
-                Approve step
-              </UI.Button>
-              <UI.Button
-                onClick={() => {
-                  onAction?.("reject", selected);
-                  setSelected(undefined);
-                }}
-              >
-                Reject
-              </UI.Button>
-            </div>
-          ) : (
-            <p className="st-status">
-              {approved.includes(selected.id) ? "Approved" : selected.status}
-            </p>
-          )}
-        </div>
-      )}
-    </UI.Panel>
+      </div>
+      <p className="al-sr" aria-live="polite">{waiting} task{waiting === 1 ? "" : "s"} need you</p>
+    </section>
   );
 }
+
+const css = `
+.al{--al-bg:#fff;--al-fg:#18181b;--al-muted:#71717a;--al-faint:#a1a1aa;--al-line:#ececef;--al-chip:#f0f0f2;--al-done:#efefef;--al-blue:#3b82f6;--al-blue-bg:#e3effd;--al-blue-fg:#4a8fe0;--al-warn:#d9480f;--al-warn-bg:#fdebd6;--al-red-bg:#fde4e4;--al-red:#e5484d;width:100%;max-width:760px;background:var(--al-bg);color:var(--al-fg);border:1px solid var(--al-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
+:where(.dark,[data-theme=dark]) .al{--al-bg:#1b1b1e;--al-fg:#ececef;--al-muted:#a1a1aa;--al-faint:#71717a;--al-line:#2e2e33;--al-chip:#2a2a2f;--al-done:#2a2a2e;--al-blue-bg:#1d2b40;--al-blue-fg:#7fb0f5;--al-warn:#f0883e;--al-warn-bg:#3a2717;--al-red-bg:#3a1e20;color-scheme:dark}
+.al *{box-sizing:border-box}.al button{font:inherit;color:inherit;cursor:pointer}
+.al-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--al-line)}
+.al-spark{width:16px;height:16px;color:var(--al-blue);margin-right:2px}
+.al-bar strong{font-size:14px;font-weight:500}
+.al-stat{display:inline-flex;align-items:center;gap:6px;color:var(--al-muted);font-size:13px;margin-left:2px}.al-stat.warn{color:var(--al-warn)}
+.al-dot{width:6px;height:6px;border-radius:50%;background:var(--al-blue)}.al-dot.warn{background:var(--al-warn)}
+.al-dot.run{animation:al-pulse 1.8s ease-in-out infinite}
+.al-span{margin-left:auto;padding:2px 9px;border-radius:6px;background:var(--al-chip);font-size:12px;color:var(--al-fg)}
+.al-grid{display:grid;grid-template-columns:176px minmax(0,1fr);padding:8px 16px 12px}
+.al-names{padding-top:26px}
+.al-agent{display:flex;align-items:center;gap:10px;height:50px}
+.al-avatar{display:grid;place-items:center;width:26px;height:26px;flex:none;border-radius:7px;background:#fff;border:1px solid var(--al-line);box-shadow:0 1px 2px #0000000f;color:#111;font-size:11px;font-weight:600}
+.al-avatar svg{width:15px;height:15px}
+.al-who{display:flex;flex-direction:column;min-width:0}
+.al-name{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:450;white-space:nowrap}
+.al-model{color:var(--al-muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.al-tag{padding:0 5px;border-radius:4px;background:var(--al-chip);color:var(--al-muted);font-size:11px;line-height:17px;font-weight:400}
+.al-tag.warn{background:var(--al-warn-bg);color:var(--al-warn)}
+.al-track{position:relative;min-width:0}
+.al-ticks{position:relative;height:26px;font-size:11px;color:var(--al-faint)}
+.al-ticks span{position:absolute;top:4px;transform:translateX(-50%);white-space:nowrap}
+.al-ticks .al-now{right:0;left:auto;transform:none;top:2px;padding:0 5px;border-radius:4px;background:var(--al-blue-bg);color:var(--al-blue);font-weight:500;line-height:16px}
+.al-lanes{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 22px);mask-image:linear-gradient(90deg,transparent,#000 22px)}
+.al-vline{position:absolute;top:0;bottom:0;border-left:1px dashed var(--al-line)}
+.al-lane{position:absolute;left:0;right:0;margin:0;padding:0;list-style:none;border-bottom:1px solid var(--al-line)}
+.al-lane:first-of-type{border-bottom-color:transparent}
+.al-li{position:absolute;top:10px;height:30px;transition:left 1s linear,width 1s linear}
+.al-block{display:flex;align-items:center;gap:6px;width:100%;height:100%;padding:0 8px;border:0;border-radius:6px;background:var(--al-done);color:var(--al-muted);font-size:13px;text-align:left;overflow:hidden;white-space:nowrap;transition:filter .15s}
+.al-block:hover{filter:brightness(.97)}
+.al-block.running{background:linear-gradient(90deg,color-mix(in srgb,var(--al-blue-bg) 60%,var(--al-bg)),var(--al-blue-bg));color:var(--al-blue-fg);box-shadow:inset -2px 0 0 var(--al-blue);background-size:200% 100%;animation:al-shimmer 2.4s linear infinite}
+.al-block.waiting{background:var(--al-warn-bg);color:var(--al-warn)}
+.al-block.failed{background:var(--al-red-bg);color:var(--al-red)}
+.al-title{overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
+.al-tool{display:grid;place-items:center;width:14px;height:14px;flex:none;color:var(--al-fg)}.al-tool svg{width:13px;height:13px}
+.al-flag{display:inline-flex;align-items:center;gap:5px;margin-left:auto;margin-right:-4px;padding:0 7px;height:22px;border-radius:5px;background:var(--al-bg);font-size:12px;color:var(--al-warn);box-shadow:0 1px 2px #0000000f}
+.al-flag svg{width:10px;height:10px;animation:al-pulse 1.6s ease-in-out infinite}
+.al-curves{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.al-curves path{fill:none;stroke:var(--al-faint);stroke-width:1;stroke-dasharray:3 3}
+.al-curves path.live{stroke:var(--al-blue);animation:al-flow 1s linear infinite}
+.al-pop{position:absolute;z-index:3;top:36px;right:0;width:250px;padding:12px;border:1px solid var(--al-line);border-radius:10px;background:var(--al-bg);box-shadow:0 8px 28px #0000001f;color:var(--al-fg);white-space:normal;animation:al-in .16s ease-out}
+.al-pop.up{top:auto;bottom:36px}
+.al-pop strong{font-weight:500}.al-pop p{margin:4px 0 10px;color:var(--al-muted)}
+.al-pop-actions{display:flex;justify-content:flex-end;gap:6px}
+.al-btn{height:28px;padding:0 11px;border-radius:7px;border:1px solid var(--al-line);background:var(--al-bg);font-weight:500}
+.al-btn.primary{background:var(--al-fg);color:var(--al-bg)!important;border-color:var(--al-fg)}
+.al-link{border:0;background:none;padding:0;color:var(--al-blue)!important}
+.al-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
+.al :focus-visible{outline:2px solid var(--al-blue);outline-offset:2px}
+.al-lanes:has(:focus-visible){-webkit-mask-image:none;mask-image:none}
+@keyframes al-pulse{50%{opacity:.35}}
+@keyframes al-shimmer{from{background-position:100% 0}to{background-position:-100% 0}}
+@keyframes al-flow{to{stroke-dashoffset:-6}}
+@keyframes al-in{from{opacity:0;transform:translateY(-3px)}}
+@media(max-width:520px){.al-grid{grid-template-columns:40px minmax(0,1fr);padding:8px 10px 10px}.al-who{display:none}.al-bar{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.al *{animation:none!important;transition:none!important}}
+`;
 
 export default AgentLanes;

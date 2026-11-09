@@ -378,26 +378,29 @@ const css = /* css */ `
 `;
 
 /** Working example; use the named TipsPanel export in your application. */
+const demoTips: Tip[] = [
+  { id: "invite", title: "Invite your team", description: "Work on projects together and keep feedback in one place.", action: "Invite", doneLabel: "Invited" },
+  { id: "search", title: "Quick search", description: <>Press <Kbd>⌘K</Kbd> to jump to any page, project or setting.</>, action: "Try it", doneLabel: "Tried" },
+  { id: "digest", title: "Weekly digest", description: "Get a short summary of what changed every Monday morning.", action: "Turn on", doneLabel: "On" },
+  { id: "slack", title: "Connect Slack", description: "Post an update to a channel when something needs your attention.", action: "Connect", doneLabel: "Connected" },
+  { id: "mobile", title: "Mobile app", description: "Check activity and approve requests while you're on the go.", action: "Get the app", doneLabel: "Link sent" },
+  { id: "pro", title: "Ready for Pro?", description: "Unlimited projects, priority support and advanced analytics.", action: "See plans", primary: true, doneLabel: "Opened" },
+  { id: "dark", title: "Dark mode", description: "Switch the theme or follow your system setting automatically.", action: "Switch", doneLabel: "Switched" },
+  { id: "api", title: "API keys", description: "Automate your workflow and pull data into your own tools.", action: "Create key", doneLabel: "Created" },
+  { id: "export", title: "Export data", description: "Download every project as CSV whenever you need a copy.", action: "Export", doneLabel: "Exported" },
+];
+
 export default function Demo() {
+  const [open, setOpen] = useState(true);
+  if (!open)
+    return (
+      <button type="button" onClick={() => setOpen(true)} style={{ padding: "6px 12px", borderRadius: 8, border: "1px solid rgba(0,0,0,.12)", background: "#fff", font: "inherit", cursor: "pointer" }}>
+        Show tips
+      </button>
+    );
   return (
-    <TipsPanel
-      tips={[
-        {
-          id: "1",
-          title: "Work faster with shortcuts",
-          description: "Press / to jump to search.",
-          action: "Got it",
-          doneLabel: "Noted",
-          primary: true,
-        },
-        {
-          id: "2",
-          title: "Keep your tools connected",
-          description: "Bring your files and conversations into one place.",
-          action: "Connect",
-          doneLabel: "Connected",
-        },
-      ]}
-    />
+    <div style={{ width: "100%", maxWidth: 720 }}>
+      <TipsPanel tips={demoTips} onClose={() => setOpen(false)} />
+    </div>
   );
 }

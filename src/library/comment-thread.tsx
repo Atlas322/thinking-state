@@ -762,27 +762,55 @@ img.ui-ctc__avatar { box-shadow: 0 0 0 0.5px var(--ui-ctc-avatar-ring); }
 `;
 
 /** Working example; use the named CommentThread export in your application. */
+const atlas = { name: "Atlas", avatar: <AssistantMark />, assistant: true };
+
 export default function Demo() {
   return (
+    <div style={{ width: "100%", maxWidth: 420, height: 382, display: "flex", flexDirection: "column" }}>
+    <style>{`.demo-ct{flex:1;min-height:0;display:flex;flex-direction:column}.demo-ct [class*="__morph"]{flex:1}`}</style>
     <CommentThread
-      title="Launch notes"
+      className="demo-ct"
+      title="Comment"
       currentUser={{ name: "You" }}
+      assistant={atlas}
+      onClose={() => {}}
+      onReply={(text) =>
+        text.includes("@Atlas")
+          ? new Promise((resolve) =>
+              setTimeout(
+                () =>
+                  resolve({
+                    id: String(Date.now()),
+                    author: atlas,
+                    createdAt: Date.now(),
+                    text: "Done – the pricing page now says “members” everywhere.",
+                  }),
+                1600,
+              ),
+            )
+          : undefined
+      }
       messages={[
         {
           id: "1",
-          author: { name: "Maya Chen" },
-          createdAt: Date.now() - 120000,
-          text: "Can we simplify the first paragraph?",
+          author: { name: "Lena Lindqvist" },
+          createdAt: Date.now() - 3 * 60000,
+          text: "/edit Rename every “customers” to “members” on the pricing page.",
         },
         {
           id: "2",
-          author: { name: "Assistant", assistant: true },
-          createdAt: Date.now() - 30000,
-          text: "I shortened the opening and kept the important details.",
-          status: "Updated the draft",
-          details: ["Removed repeated phrases", "Kept the launch date"],
+          author: atlas,
+          createdAt: Date.now() - 60000,
+          text: "",
+          status: "Edit completed",
+          details: [
+            "Renamed 12 mentions in 3 sections",
+            "Kept “customer support” as it is",
+            "Left the legal pages untouched",
+          ],
         },
       ]}
     />
+    </div>
   );
 }

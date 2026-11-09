@@ -3,371 +3,375 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type RunLogo = "github" | "notion" | "slack" | "linear" | "drive" | React.ReactNode;
+export type RunStat = { icon: "file" | "pr" | "check" | "comment" | "link"; value: number };
+export type ScheduledTask = {
   id: string;
   title: string;
+  usage: number;
+  agent?: string;
   detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  logo?: RunLogo;
+  stats?: RunStat[];
+  at?: { day: number; session: number };
 };
-export type StudioProps = {
+export type ScheduledPart = { task: ScheduledTask; day: number; session: number; usage: number; part: number; parts: number };
+export type RunAgent = { name: string; logo?: React.ReactNode };
+
+export type ScheduledRunsProps = {
+  tasks?: ScheduledTask[];
+  days?: (string | { name: string; date?: string | number })[];
+  sessions?: string[];
+  now?: { day: number; session: number };
+  limit?: number;
+  minPiece?: number;
+  agents?: RunAgent[];
+  defaultMode?: "auto" | "manual";
+  autoRun?: boolean | number;
   title?: string;
-  items?: StudioItem[];
+  note?: string;
+  onScheduled?: (parts: ScheduledPart[]) => void;
+  onPlace?: (task: ScheduledTask, parts: ScheduledPart[]) => void;
+  onMove?: (part: ScheduledPart, to: { day: number; session: number }) => void;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const s = { fill: "none", stroke: "currentColor", strokeWidth: 1.3, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+const statIcons: Record<RunStat["icon"], React.ReactNode> = {
+  file: <svg viewBox="0 0 16 16" {...s}><path d="M4 2h5l3 3v9H4Z M9 2v3h3" /></svg>,
+  pr: <svg viewBox="0 0 16 16" {...s}><circle cx="4.5" cy="3.5" r="1.5" /><circle cx="4.5" cy="12.5" r="1.5" /><circle cx="11.5" cy="12.5" r="1.5" /><path d="M4.5 5v6M11.5 11V6.5a2 2 0 0 0-2-2H7m1.5-1.5L7 4.5 8.5 6" /></svg>,
+  check: <svg viewBox="0 0 16 16" {...s}><circle cx="8" cy="8" r="5.5" /><path d="m5.6 8.2 1.7 1.6 3.1-3.2" /></svg>,
+  comment: <svg viewBox="0 0 16 16" {...s}><path d="M2.5 3.5h11v7.5H6l-3.5 2.5Z" /></svg>,
+  link: <svg viewBox="0 0 16 16" {...s}><path d="M6.5 9.5 9.5 6.5M7 4.5l1-1a2.5 2.5 0 0 1 3.5 3.5l-1 1M9 11.5l-1 1A2.5 2.5 0 0 1 4.5 9l1-1" /></svg>,
+};
+const logos: Record<string, React.ReactNode> = {
+  github: <svg viewBox="0 0 16 16"><path d="M8 1.3a6.7 6.7 0 0 0-2.1 13c.3 0 .5-.2.5-.4v-1.3c-1.9.4-2.3-.8-2.3-.8-.3-.8-.8-1-.8-1-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.6.7 2 .5 0-.4.2-.7.4-.9-1.5-.2-3-.7-3-3.3 0-.7.2-1.3.7-1.8-.1-.2-.3-.9 0-1.8 0 0 .6-.2 1.9.7a6.4 6.4 0 0 1 3.4 0c1.3-.9 1.8-.7 1.8-.7.4.9.2 1.6.1 1.8.4.5.7 1.1.7 1.8 0 2.6-1.6 3.1-3 3.3.2.2.4.6.4 1.2v1.8c0 .2.2.4.5.4A6.7 6.7 0 0 0 8 1.3Z" fill="currentColor" /></svg>,
+  notion: <svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" /><path d="M5.5 11V5h1l3.5 6h.5V5" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>,
+  slack: <svg viewBox="0 0 16 16"><rect x="1" y="6" width="7" height="2.6" rx="1.3" fill="#36c5f0" /><rect x="8" y="1" width="2.6" height="7" rx="1.3" fill="#2eb67d" /><rect x="8" y="8" width="7" height="2.6" rx="1.3" fill="#ecb22e" /><rect x="5.4" y="8" width="2.6" height="7" rx="1.3" fill="#e01e5a" /></svg>,
+  linear: <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="#5e6ad2" /><path d="M3 9.5 6.5 13M2.4 7l6.6 6.6M3.2 4.6l8.2 8.2" stroke="#fff" strokeWidth="1" /></svg>,
+  drive: <svg viewBox="0 0 16 16"><path d="M5.6 2h4.8l4.6 8h-4.8Z" fill="#fbbc04" /><path d="M5.6 2 1 10l2.4 4 4.6-8Z" fill="#34a853" /><path d="M3.4 14h9.2l2.4-4H5.8Z" fill="#4285f4" /></svg>,
+};
+const agentLogos: Record<string, React.ReactNode> = {
+  "Claude Code": <svg viewBox="0 0 16 16"><path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M4.6 2.2l6.8 11.6M11.4 2.2 4.6 13.8M2.2 4.6l11.6 6.8M13.8 4.6 2.2 11.4" stroke="#d97757" strokeWidth="1.2" strokeLinecap="round" /></svg>,
+  Codex: <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="5.6" /><path d="M8 2.4v4.2l3.6 2.1M13.6 8l-3.6 2.1-3.6-2.1M8 13.6V9.4L4.4 7.3M2.4 8l3.6-2.1L9.6 8" /></svg>,
+  "Gemini CLI": <svg viewBox="0 0 16 16"><path d="M8 1c.6 3.6 3.4 6.4 7 7-3.6.6-6.4 3.4-7 7-.6-3.6-3.4-6.4-7-7 3.6-.6 6.4-3.4 7-7Z" fill="#3b7bf6" /></svg>,
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultTasks: ScheduledTask[] = [
+  { id: "react", title: "Upgrade to React 19", agent: "Claude Code", detail: "Bump every package and fix the breaking changes across the app", logo: "github", usage: 30, stats: [{ icon: "file", value: 48 }, { icon: "pr", value: 1 }], at: { day: 0, session: 0 } },
+  { id: "triage", title: "Triage 120 open issues", agent: "Codex", detail: "Label, size and route every issue older than 30 days", logo: "linear", usage: 25, stats: [{ icon: "check", value: 120 }], at: { day: 1, session: 0 } },
+  { id: "ship", title: "Ship the v3.0 release", agent: "Claude Code", detail: "Changelog, tag and publish to npm", logo: "github", usage: 60, stats: [{ icon: "pr", value: 14 }, { icon: "file", value: 22 }], at: { day: 2, session: 0 } },
+  { id: "q4", title: "Q4 metrics report", agent: "Claude Code", detail: "Signups, churn and revenue by plan", logo: "drive", usage: 40, stats: [{ icon: "file", value: 6 }, { icon: "comment", value: 3 }], at: { day: 0, session: 1 } },
+  { id: "help", title: "Rebuild help center search", agent: "Gemini CLI", detail: "Index 340 articles with the new embeddings", logo: "notion", usage: 20, stats: [{ icon: "file", value: 340 }, { icon: "link", value: 50 }], at: { day: 1, session: 2 } },
+  { id: "oauth", title: "Migrate auth to OAuth 2.1", agent: "Claude Code", detail: "Move every login to PKCE and keep the old tokens working", logo: "github", usage: 140, stats: [{ icon: "file", value: 63 }, { icon: "check", value: 210 }] },
+  { id: "apiref", title: "Public API reference", agent: "Codex", detail: "Every endpoint with a curl and an SDK example", logo: "notion", usage: 45, stats: [{ icon: "file", value: 38 }, { icon: "link", value: 52 }] },
+  { id: "flaky", title: "Fix the flaky checkout suite", agent: "Claude Code", detail: "Find why 12 tests fail one run in twenty and fix them", logo: "github", usage: 35, stats: [{ icon: "check", value: 12 }, { icon: "pr", value: 1 }] },
+  { id: "themes", title: "Support themes for October", agent: "Gemini CLI", detail: "Cluster 480 tickets into themes, with quotes for each", logo: "slack", usage: 25, stats: [{ icon: "comment", value: 480 }] },
+  { id: "billing", title: "Split billing into a service", agent: "Claude Code", detail: "Move invoices, usage and webhooks out of the monolith", logo: "linear", usage: 90, stats: [{ icon: "file", value: 112 }, { icon: "pr", value: 3 }] },
+  { id: "changelog", title: "November changelog", agent: "Gemini CLI", detail: "Everything merged since November 1, grouped for skimmers", logo: "notion", usage: 20, stats: [{ icon: "pr", value: 46 }] },
+];
 
-export function ScheduledRuns({
-  title = "Scheduled runs",
-  items = [
-    {
-      id: "metrics",
-      title: "Weekly metrics report",
-      value: 40,
-      detail: "Monday",
-    },
-    {
-      id: "auth",
-      title: "Migrate auth to OAuth",
-      value: 140,
-      detail: "Wednesday",
-    },
-    { id: "tests", title: "Fix checkout tests", value: 35, detail: "Friday" },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const [tasks, setTasks] = React.useState(items);
-  const [drag, setDrag] = React.useState<string>();
+type Placed = { task: ScheduledTask; day: number; session: number; usage: number; part: number; parts: number; booked: boolean };
+
+function Card({ t, usage, part, parts, past, dim, chip, onKey, draggable, onDragStart }: {
+  t: ScheduledTask; usage: number; part?: number; parts?: number; past?: boolean; dim?: boolean; chip?: boolean;
+  onKey?: (e: React.KeyboardEvent) => void; draggable?: boolean; onDragStart?: (e: React.DragEvent) => void;
+}) {
+  const [open, setOpen] = React.useState(false);
   return (
-    <UI.Panel
-      title={title}
-      subtitle="Plan your agent work across the week"
-      className={className}
+    <div
+      role="button"
+      tabIndex={0}
+      className={`sr-card${past ? " is-past" : ""}${dim ? " is-dim" : ""}${chip ? " is-chip" : ""}`}
+      aria-label={`${t.title}, ${usage}%${parts && parts > 1 ? `, part ${part} of ${parts}` : ""}${past ? ", past – can't move" : ""}`}
+      aria-expanded={open}
+      draggable={draggable && !past}
+      onDragStart={onDragStart}
+      onClick={() => setOpen(!open)}
+      onKeyDown={(e) => { if (e.key === "Enter") setOpen(!open); if (e.key === "Escape") setOpen(false); onKey?.(e); }}
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5,minmax(0,1fr))",
-          gap: 6,
-          margin: "18px 0",
-          overflowX: "auto",
-        }}
-      >
-        {days.map((day) => {
-          const assigned = tasks.filter((x) => x.detail === day);
-          const usage = assigned.reduce((s, x) => s + (x.value ?? 0), 0);
-          return (
-            <div
-              className="st-tile"
-              style={{ padding: 10, minHeight: 180, minWidth: 85 }}
-              key={day}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={() => {
-                setTasks((s) =>
-                  s.map((x) => (x.id === drag ? { ...x, detail: day } : x)),
-                );
-                onAction?.("schedule", { id: drag ?? "", title: day });
-              }}
-            >
-              <small>{day.slice(0, 3).toUpperCase()}</small>
-              <UI.Meter value={(usage / 180) * 100} />
-              <small>{usage}/180 min</small>
-              {assigned.map((x) => (
-                <div
-                  key={x.id}
-                  className="st-chip"
-                  draggable
-                  onDragStart={() => setDrag(x.id)}
-                  style={{
-                    fontSize: 10,
-                    marginTop: 12,
-                    whiteSpace: "normal",
-                    cursor: "grab",
-                  }}
-                >
-                  {x.title}
-                </div>
-              ))}
-            </div>
-          );
-        })}
+      <div className="sr-c-top">
+        <span className="sr-logo">{typeof t.logo === "string" || !t.logo ? logos[(t.logo as string) ?? "github"] : t.logo}</span>
+        <strong>{t.title}</strong>
       </div>
-      {tasks.map((x) => (
-        <UI.Row key={x.id} title={x.title} detail={`${x.value} minutes`}>
-          <select
-            aria-label={`Schedule ${x.title}`}
-            value={x.detail}
-            style={{ width: 130 }}
-            onChange={(e) => {
-              setTasks((s) =>
-                s.map((v) =>
-                  v.id === x.id ? { ...v, detail: e.target.value } : v,
-                ),
-              );
-              onAction?.("schedule", { ...x, detail: e.target.value });
-            }}
-          >
-            {days.map((d) => (
-              <option key={d}>{d}</option>
-            ))}
-          </select>
-        </UI.Row>
-      ))}
-      <small>
-        Drag tasks between days or use the schedule fields. Dates are sample
-        planning slots.
-      </small>
-    </UI.Panel>
+      <div className="sr-c-sub">{t.agent}{t.detail ? ` · ${t.detail}` : ""}</div>
+      <div className="sr-c-foot">
+        {t.stats?.map((st, i) => <span key={i} className="sr-stat">{statIcons[st.icon]}{st.value}</span>)}
+        <span className="sr-use">{parts && parts > 1 ? `${part}/${parts} · ` : ""}{usage}%</span>
+      </div>
+      {open && (
+        <div className="sr-details">
+          <p>{t.detail}</p>
+          <span>{t.agent} · {t.usage}% of a session{parts && parts > 1 ? ` · split in ${parts}` : ""}</span>
+        </div>
+      )}
+    </div>
   );
 }
+
+export function ScheduledRuns({
+  tasks = defaultTasks,
+  days = [{ name: "Tue", date: 27 }, { name: "Wed", date: 28 }, { name: "Thu", date: 29 }],
+  sessions = ["07:00", "12:00", "17:00"],
+  now = { day: 0, session: 1 },
+  limit = 100,
+  minPiece = 15,
+  agents,
+  defaultMode = "auto",
+  autoRun = false,
+  title = "This week",
+  note = "5-hour sessions",
+  onScheduled,
+  onPlace,
+  onMove,
+  className = "",
+}: ScheduledRunsProps) {
+  const initial = (): Placed[] => tasks.filter((t) => t.at).map((t) => ({ task: t, day: t.at!.day, session: t.at!.session, usage: t.usage, part: 1, parts: 1, booked: true }));
+  const [placed, setPlaced] = React.useState<Placed[]>(initial);
+  const [mode, setMode] = React.useState<"auto" | "manual">(defaultMode);
+  const [agent, setAgent] = React.useState<string | null>(null);
+  const [over, setOver] = React.useState<string | null>(null);
+  const [live, setLive] = React.useState("");
+  const drag = React.useRef<{ kind: "stack"; id: string } | { kind: "part"; index: number } | null>(null);
+
+  const agentList: RunAgent[] = agents ?? Array.from(new Set(tasks.map((t) => t.agent).filter(Boolean) as string[])).map((name) => ({ name, logo: agentLogos[name] }));
+  const stack = tasks.filter((t) => !placed.some((p) => p.task.id === t.id));
+  const isPast = (d: number, ss: number) => d < now.day || (d === now.day && ss < now.session);
+  const used = (d: number, ss: number, list = placed) => list.filter((p) => p.day === d && p.session === ss).reduce((n, p) => n + p.usage, 0);
+  const slots = React.useMemo(() => {
+    const out: { day: number; session: number }[] = [];
+    days.forEach((_, d) => sessions.forEach((__, ss) => { if (!isPast(d, ss)) out.push({ day: d, session: ss }); }));
+    return out.sort((a, b) => a.day - b.day || a.session - b.session);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [days.length, sessions.length, now.day, now.session]);
+
+  const fit = (t: ScheduledTask, list: Placed[], from?: { day: number; session: number }): Placed[] | null => {
+    let left = t.usage;
+    const parts: Omit<Placed, "parts">[] = [];
+    const start = from ? slots.findIndex((x) => x.day === from.day && x.session === from.session) : 0;
+    if (start < 0) return null;
+    for (const sl of slots.slice(start)) {
+      const room = limit - used(sl.day, sl.session, [...list, ...(parts as Placed[])]);
+      if (room < Math.min(minPiece, left)) { if (from && parts.length === 0) return null; continue; }
+      let take = Math.min(room, left);
+      if (left - take > 0 && left - take < minPiece) take = left - minPiece;
+      if (take < Math.min(minPiece, left)) continue;
+      parts.push({ task: t, day: sl.day, session: sl.session, usage: take, part: parts.length + 1, booked: false });
+      left -= take;
+      if (left <= 0) break;
+    }
+    if (left > 0) return null;
+    return parts.map((p) => ({ ...p, parts: parts.length }));
+  };
+
+  const autoSort = React.useCallback(() => {
+    setPlaced((cur) => {
+      let list = cur;
+      const rest = tasks.filter((t) => !cur.some((p) => p.task.id === t.id));
+      for (const t of rest) {
+        const parts = fit(t, list);
+        if (parts) list = [...list, ...parts];
+      }
+      onScheduled?.(list.map(({ booked: _b, ...p }) => p));
+      return list;
+    });
+    setLive("Stack sorted into the week");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tasks, slots, limit, minPiece]);
+
+  const switchMode = (m: "auto" | "manual") => {
+    setMode(m);
+    if (m === "auto") autoSort();
+    else setPlaced((cur) => cur.filter((p) => p.booked));
+  };
+
+  React.useEffect(() => {
+    if (!autoRun || mode !== "auto") return;
+    const t = window.setTimeout(autoSort, typeof autoRun === "number" ? autoRun : 800);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const drop = (d: number, ss: number) => {
+    const g = drag.current;
+    drag.current = null;
+    setOver(null);
+    if (!g || isPast(d, ss)) return;
+    if (g.kind === "stack") {
+      const t = tasks.find((x) => x.id === g.id);
+      if (!t) return;
+      const parts = fit(t, placed, { day: d, session: ss });
+      if (!parts) { setLive(`No room for ${t.title} there`); return; }
+      const next = [...placed, ...parts.map((p) => ({ ...p, booked: true }))];
+      setPlaced(next);
+      onPlace?.(t, parts);
+      setLive(`${t.title} placed`);
+    } else {
+      const p = placed[g.index];
+      if (!p || used(d, ss) + p.usage > limit) { setLive("No room there"); return; }
+      const next = placed.map((x, i) => (i === g.index ? { ...x, day: d, session: ss, booked: true } : x));
+      setPlaced(next);
+      onMove?.(p, { day: d, session: ss });
+      setLive(`${p.task.title} moved`);
+    }
+  };
+
+  const dayName = (x: (typeof days)[number]) => (typeof x === "string" ? { name: x, date: undefined } : x);
+  const nowTop = now.session;
+
+  return (
+    <section className={`sr ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="sr-head">
+        <h3>{title}{note && <small>{note}</small>}</h3>
+        <div className="sr-tools">
+          <span className={`sr-agents${agent ? " is-fanned" : ""}`}>
+            {agentList.map((a) => (
+              <button key={a.name} type="button" aria-pressed={agent === a.name} aria-label={a.name} title={a.name} onClick={() => setAgent(agent === a.name ? null : a.name)}>
+                {a.logo ?? a.name[0]}
+                {agent === a.name && <span>{a.name}</span>}
+              </button>
+            ))}
+          </span>
+          <span className="sr-count">{tasks.length} tasks</span>
+          <div
+            className="sr-mode"
+            role="radiogroup"
+            aria-label="Scheduling mode"
+            onKeyDown={(e) => { if (e.key === "ArrowLeft" || e.key === "ArrowRight") switchMode(mode === "auto" ? "manual" : "auto"); }}
+          >
+            {(["auto", "manual"] as const).map((m) => (
+              <button key={m} type="button" role="radio" aria-checked={mode === m} tabIndex={mode === m ? 0 : -1} onClick={() => switchMode(m)}>
+                {m === "auto" && <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 1.5 7.2 5 10.5 6 7.2 7 6 10.5 4.8 7 1.5 6 4.8 5ZM12 9l.7 1.8 1.8.7-1.8.7L12 14l-.7-1.8-1.8-.7 1.8-.7Z" fill="currentColor" /></svg>}
+                {m === "auto" ? "Auto" : "Manual"}
+              </button>
+            ))}
+          </div>
+        </div>
+      </header>
+      <div className="sr-body">
+        <div className="sr-stack">
+          <div className="sr-stack-h">To schedule<span>{stack.length}</span></div>
+          <div className="sr-stack-list">
+            {stack.length === 0 && <p className="sr-empty">Everything's scheduled</p>}
+            {stack.map((t) => (
+              <Card
+                key={t.id}
+                t={t}
+                usage={t.usage}
+                dim={!!agent && t.agent !== agent}
+                draggable
+                onDragStart={(e) => { drag.current = { kind: "stack", id: t.id }; e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", t.id); }}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="sr-week" role="grid" aria-label="Week" style={{ gridTemplateColumns: `40px repeat(${days.length}, minmax(120px, 1fr))` }}>
+          <span />
+          {days.map((x, d) => {
+            const n = dayName(x);
+            return <div key={d} role="columnheader" className="sr-day">{n.name.toUpperCase()} <b>{n.date}</b></div>;
+          })}
+          {sessions.map((label, ss) => (
+            <React.Fragment key={ss}>
+              <div role="rowheader" className="sr-time">{label}</div>
+              {days.map((_, d) => {
+                const past = isPast(d, ss);
+                const u = used(d, ss);
+                const k = `${d}-${ss}`;
+                const items = placed.map((p, i) => ({ p, i })).filter(({ p }) => p.day === d && p.session === ss);
+                return (
+                  <div
+                    key={k}
+                    role="gridcell"
+                    className={`sr-cell${past ? " is-past" : ""}${over === k ? (past ? " is-no" : " is-over") : ""}${d === now.day && ss === nowTop ? " is-now" : ""}`}
+                    onDragOver={(e) => { e.preventDefault(); setOver(k); }}
+                    onDragLeave={() => setOver((o) => (o === k ? null : o))}
+                    onDrop={(e) => { e.preventDefault(); drop(d, ss); }}
+                  >
+                    {d === now.day && ss === nowTop && <span className="sr-now" aria-hidden="true" />}
+                    <div className="sr-cell-cards">
+                      {items.map(({ p, i }) => (
+                        <Card
+                          key={`${p.task.id}-${p.part}`}
+                          t={p.task}
+                          usage={p.usage}
+                          part={p.part}
+                          parts={p.parts}
+                          past={past}
+                          dim={!!agent && p.task.agent !== agent}
+                          chip={!p.booked || items.length > 1}
+                          draggable
+                          onDragStart={(e) => { drag.current = { kind: "part", index: i }; e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", p.task.id); }}
+                        />
+                      ))}
+                    </div>
+                    <span className="sr-fill" aria-hidden="true"><span style={{ width: `${Math.min(100, (u / limit) * 100)}%` }} /></span>
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+      <div className="sr-live" aria-live="polite">{live}</div>
+    </section>
+  );
+}
+
+const css = `
+.sr{--sr-bg:#fff;--sr-fg:#18181b;--sr-muted:#71717a;--sr-faint:#a1a1aa;--sr-line:#ececef;--sr-well:#f4f4f5;--sr-red:#e5484d;--sr-blue:#3b82f6;width:100%;max-width:820px;color:var(--sr-fg);font:400 12px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .sr{--sr-bg:#1f1f23;--sr-fg:#ececef;--sr-muted:#a1a1aa;--sr-faint:#71717a;--sr-line:#2e2e33;--sr-well:#18181b;color-scheme:dark}
+.sr *{box-sizing:border-box}.sr button{font:inherit;color:inherit;cursor:pointer}
+.sr-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sr h3{margin:0;font-size:15px;font-weight:500;display:flex;align-items:baseline;gap:8px}.sr h3 small{font-size:12.5px;font-weight:400;color:var(--sr-muted)}
+.sr-tools{display:flex;align-items:center;gap:12px}
+.sr-agents{display:flex;align-items:center;height:26px;padding:0 4px;border:1px solid var(--sr-line);border-radius:7px;background:var(--sr-bg)}
+.sr-agents button{display:flex;align-items:center;gap:5px;height:20px;margin-left:-3px;padding:0 2px;border:0;border-radius:5px;background:none;transition:margin .2s,opacity .2s}
+.sr-agents button:first-child{margin-left:0}.sr-agents button svg{width:13px;height:13px}
+.sr-agents.is-fanned button{margin-left:2px}.sr-agents.is-fanned button[aria-pressed=false]{opacity:.45}
+.sr-agents button span{font-size:11.5px;white-space:nowrap;animation:sr-in .2s both}
+.sr-count{color:var(--sr-muted);font-size:12.5px}
+.sr-mode{display:flex;padding:2px;border-radius:7px;background:var(--sr-well)}
+.sr-mode button{display:flex;align-items:center;gap:5px;height:24px;padding:0 10px;border:0;border-radius:5px;background:none;font-size:12.5px!important;color:var(--sr-muted)!important}
+.sr-mode button svg{width:11px;height:11px}
+.sr-mode button[aria-checked=true]{background:var(--sr-bg);color:var(--sr-fg)!important;box-shadow:0 1px 2px #00000014}
+.sr-body{display:grid;grid-template-columns:220px minmax(0,1fr);gap:10px;align-items:start}
+.sr-stack{background:var(--sr-well);border-radius:8px;padding:4px}
+.sr-stack-h{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 6px 8px;font-size:12px;color:var(--sr-muted)}
+.sr-stack-h span{min-width:18px;height:17px;padding:0 5px;display:grid;place-items:center;border-radius:4px;background:#e4e4e7;color:var(--sr-fg);font-size:11px}
+:where(.dark,[data-theme=dark]) .sr-stack-h span{background:#2e2e33}
+.sr-stack-list{display:flex;flex-direction:column;gap:8px}
+.sr-empty{margin:10px 8px;color:var(--sr-faint)}
+.sr-card{position:relative;padding:7px 9px 6px;background:var(--sr-bg);border-radius:6px;box-shadow:0 0 0 1px var(--sr-line),0 1px 2px #0000000a;cursor:grab;transition:opacity .2s,box-shadow .15s;animation:sr-in .3s both;outline:0}
+.sr-card:hover{box-shadow:0 0 0 1px color-mix(in srgb,var(--sr-fg) 18%,transparent),0 2px 6px #00000010}
+.sr-card:focus-visible{box-shadow:0 0 0 2px var(--sr-blue)}
+.sr-card.is-dim{opacity:.35}.sr-card.is-past{opacity:.5;cursor:default}
+.sr-c-top{display:flex;align-items:center;gap:7px;min-width:0}
+.sr-c-top strong{font-weight:500;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-logo{display:grid;place-items:center;width:13px;flex:none}.sr-logo svg{width:12px;height:12px}
+.sr-c-sub{margin:3px 0 0 20px;font-size:11px;color:var(--sr-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-c-foot{display:flex;align-items:center;gap:10px;margin:4px 0 0 20px;font-size:11px;color:var(--sr-muted)}
+.sr-stat{display:flex;align-items:center;gap:4px}.sr-stat svg{width:11px;height:11px}
+.sr-use{margin-left:auto;padding:0 5px;border-radius:4px;background:var(--sr-well);color:var(--sr-fg);font-variant-numeric:tabular-nums}
+.sr-details{margin:8px 0 2px;padding-top:7px;border-top:1px solid var(--sr-line);font-size:11.5px}.sr-details p{margin:0 0 4px;color:var(--sr-fg);line-height:1.45}.sr-details span{color:var(--sr-muted)}
+.sr-week{display:grid;gap:4px;overflow-x:auto}
+.sr-day{height:24px;display:flex;align-items:center;gap:4px;padding:0 8px;border-radius:5px;background:var(--sr-well);font-size:11.5px;letter-spacing:.04em;color:var(--sr-muted)}.sr-day b{font-weight:500;color:var(--sr-fg);letter-spacing:0;font-size:12.5px}
+.sr-time{padding-top:6px;font-size:11px;color:var(--sr-faint)}
+.sr-cell{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-width:0;min-height:150px;padding:3px;border-radius:6px;background:var(--sr-well);transition:background .15s,box-shadow .15s}
+.sr-cell.is-over{box-shadow:inset 0 0 0 1.5px var(--sr-blue);background:color-mix(in srgb,var(--sr-blue) 6%,var(--sr-well))}
+.sr-cell.is-no{background:repeating-linear-gradient(135deg,var(--sr-well) 0 6px,color-mix(in srgb,var(--sr-fg) 6%,var(--sr-well)) 6px 7px)}
+.sr-cell-cards{display:flex;flex-direction:column;gap:4px;min-width:0}.sr-cell .sr-card{min-width:0;overflow:hidden}
+.sr-fill{display:block;height:3px;margin:8px 5px 3px;border-radius:2px;background:color-mix(in srgb,var(--sr-fg) 7%,transparent);overflow:hidden}
+.sr-fill span{display:block;height:100%;border-radius:2px;background:var(--sr-faint);transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.sr-now{position:absolute;left:0;right:0;top:-3px;height:2px;background:var(--sr-red);z-index:2}
+.sr-now::before{content:"";position:absolute;left:-3px;top:-2px;width:6px;height:6px;border-radius:50%;background:var(--sr-red)}
+.sr-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sr :focus-visible{outline:2px solid var(--sr-blue);outline-offset:2px}
+@keyframes sr-in{from{opacity:0;transform:translateY(-3px) scale(.98)}}
+@media(max-width:720px){.sr-body{grid-template-columns:1fr}.sr-head{flex-wrap:wrap}.sr-agents{display:none}}
+@media(prefers-reduced-motion:reduce){.sr *{animation:none!important;transition:none!important}}
+`;
 
 export default ScheduledRuns;

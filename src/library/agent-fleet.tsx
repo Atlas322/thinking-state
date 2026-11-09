@@ -3,361 +3,301 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type FleetStatus = "queued" | "running" | "waiting" | "done" | "failed" | "stopped";
+export type FleetTool = "github" | "notion" | "slack" | "figma" | "linear" | "zendesk";
+export type FleetStep = { title: string; status?: FleetStatus; tool?: FleetTool; took?: string };
+
+export type FleetAgent = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
+  name: string;
+  task: string;
+  model?: string;
+  avatar?: "anthropic" | "openai" | "gemini" | React.ReactNode;
+  tools?: FleetTool[];
+  status: FleetStatus;
+  steps?: FleetStep[];
   cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  /** Elapsed seconds. */
+  took?: number;
+  ask?: string;
+  error?: string;
+  children?: FleetAgent[];
 };
-export type StudioProps = {
+
+export type AgentFleetProps = {
+  agents?: FleetAgent[];
+  open?: string | null;
+  defaultOpen?: string | null;
+  onOpenChange?: (id: string | null) => void;
+  onResolve?: (agent: FleetAgent, action: "approve" | "reject" | "retry" | "dismiss") => void;
+  onSelect?: (agent: FleetAgent) => void;
   title?: string;
-  items?: StudioItem[];
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
+const steps3: FleetStep[] = [{ title: "a" }, { title: "b" }, { title: "c" }];
+
+const defaultAgents: FleetAgent[] = [
+  {
+    id: "launch", name: "Launch lead", model: "Opus 5.5", avatar: "anthropic", tools: ["slack", "notion", "github"],
+    status: "running", task: "Launch the new pricing page by Friday", took: 850,
+    children: [
+      { id: "l1", name: "Copy", model: "Sonnet 5.5", avatar: "anthropic", tools: ["notion"], status: "running", task: "Write the pricing page copy", cost: 0.42, took: 380, steps: steps3 },
+      { id: "l2", name: "Design", model: "Opus 5.5", avatar: "anthropic", tools: ["figma"], status: "waiting", task: "Pick the hero layout", cost: 0.88, took: 420, ask: "Which hero layout?" },
+      { id: "l3", name: "Build", model: "Sonnet 5.5", avatar: "anthropic", tools: ["github"], status: "running", task: "Ship the page behind a flag", cost: 0.75, took: 600 },
+    ],
   },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
+  {
+    id: "support", name: "Support lead", model: "Sonnet 5.5", avatar: "anthropic", tools: ["zendesk", "slack"],
+    status: "running", task: "Answer the 48 open tickets in the queue", took: 1570,
+    children: [
+      { id: "s1", name: "Billing", model: "Sonnet 5.5", avatar: "anthropic", status: "running", task: "Billing tickets", cost: 0.3, took: 600 },
+      { id: "s2", name: "Bugs", model: "Sonnet 5.5", avatar: "anthropic", status: "running", task: "Bug reports", cost: 0.33, took: 700 },
+      { id: "s3", name: "Access", model: "Sonnet 5.5", avatar: "anthropic", status: "done", task: "Access requests", cost: 0.2, took: 300 },
+      { id: "s4", name: "Refunds", model: "Sonnet 5.5", avatar: "anthropic", status: "done", task: "Refunds", cost: 0.3, took: 400 },
+    ],
   },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
+  {
+    id: "release", name: "Release manager", model: "GPT-6 Sol", avatar: "openai", tools: ["github", "slack"],
+    status: "running", task: "Ship version 2.4 to the App Store", cost: 0.33, took: 2290,
+    children: [
+      { id: "r1", name: "Changelog", model: "Sonnet 5.5", avatar: "anthropic", tools: ["github", "notion"], status: "done", task: "Write the release notes from 42 commits", cost: 0.09, took: 240, steps: steps3 },
+      { id: "r2", name: "iOS build", model: "GPT-6 Mini", avatar: "openai", tools: ["github"], status: "failed", task: "Sign and upload the iOS build", cost: 0.06, took: 180, error: "Signing certificate expired" },
+      { id: "r3", name: "Screenshots", model: "Gemini 3.8 Flash", avatar: "gemini", tools: ["figma"], status: "done", task: "Render the store screenshots in 8 languages", cost: 0.15, took: 480, steps: steps3 },
+    ],
   },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
+  {
+    id: "market", name: "Market analyst", model: "Gemini 3.8 Pro", avatar: "gemini", tools: ["notion", "slack"],
+    status: "done", task: "Write the weekly competitor report", took: 2520,
+    children: [
+      { id: "m1", name: "Collect", status: "done", task: "Collect", cost: 0.3, avatar: "gemini" },
+      { id: "m2", name: "Compare", status: "done", task: "Compare", cost: 0.3, avatar: "gemini" },
+      { id: "m3", name: "Write", status: "done", task: "Write", cost: 0.22, avatar: "gemini" },
+      { id: "m4", name: "Chart", status: "done", task: "Chart", cost: 0, avatar: "gemini" },
+    ],
   },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+];
+
+const avatars: Record<string, React.ReactNode> = {
+  anthropic: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M4.6 2.2l6.8 11.6M11.4 2.2 4.6 13.8M2.2 4.6l11.6 6.8M13.8 4.6 2.2 11.4" stroke="#d97757" strokeWidth="1.1" strokeLinecap="round" /></svg>
+  ),
+  openai: (
+    <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="5.6" /><path d="M8 2.4v4.2l3.6 2.1M13.6 8l-3.6 2.1-3.6-2.1M8 13.6V9.4L4.4 7.3M2.4 8l3.6-2.1L9.6 8" /></svg>
+  ),
+  gemini: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1c.6 3.6 3.4 6.4 7 7-3.6.6-6.4 3.4-7 7-.6-3.6-3.4-6.4-7-7 3.6-.6 6.4-3.4 7-7Z" fill="#3b7bf6" /></svg>
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const toolMarks: Record<FleetTool, React.ReactNode> = {
+  github: <svg viewBox="0 0 16 16"><path d="M8 1.3a6.7 6.7 0 0 0-2.1 13c.3 0 .5-.2.5-.4v-1.3c-1.9.4-2.3-.8-2.3-.8-.3-.8-.8-1-.8-1-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.6.7 2 .5 0-.4.2-.7.4-.9-1.5-.2-3-.7-3-3.3 0-.7.2-1.3.7-1.8-.1-.2-.3-.9 0-1.8 0 0 .6-.2 1.9.7a6.4 6.4 0 0 1 3.4 0c1.3-.9 1.8-.7 1.8-.7.4.9.2 1.6.1 1.8.4.5.7 1.1.7 1.8 0 2.6-1.6 3.1-3 3.3.2.2.4.6.4 1.2v1.8c0 .2.2.4.5.4A6.7 6.7 0 0 0 8 1.3Z" fill="currentColor" /></svg>,
+  notion: <svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" /><path d="M5.5 11V5h1l3.5 6h.5V5" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>,
+  slack: <svg viewBox="0 0 16 16"><rect x="1" y="6" width="7" height="2.6" rx="1.3" fill="#36c5f0" /><rect x="8" y="1" width="2.6" height="7" rx="1.3" fill="#2eb67d" /><rect x="8" y="8" width="7" height="2.6" rx="1.3" fill="#ecb22e" /><rect x="5.4" y="8" width="2.6" height="7" rx="1.3" fill="#e01e5a" /></svg>,
+  figma: <svg viewBox="0 0 16 16"><circle cx="10" cy="8" r="2.3" fill="#1abcfe" /><path d="M5.7 1.5h2.3v4.6H5.7a2.3 2.3 0 0 1 0-4.6Z" fill="#f24e1e" /><path d="M8 1.5h2.3a2.3 2.3 0 0 1 0 4.6H8Z" fill="#ff7262" /><path d="M5.7 5.7H8v4.6H5.7a2.3 2.3 0 0 1 0-4.6Z" fill="#a259ff" /><path d="M5.7 10.3H8v2.3a2.3 2.3 0 1 1-2.3-2.3Z" fill="#0acf83" /></svg>,
+  linear: <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#5e6ad2" /></svg>,
+  zendesk: <svg viewBox="0 0 16 16"><path d="M2 3h6L2 12Zm6 0a3 3 0 0 1-6 0M14 13H8l6-9Zm-6 0a3 3 0 0 1 6 0" fill="#e2593e" /></svg>,
+};
 
-export function AgentFleet({
-  title = "Agent fleet",
-  items = [
-    {
-      id: "launch",
-      title: "Launch lead",
-      detail: "Ship the new pricing page",
-      status: "running",
-      cost: 0.42,
-      children: [
-        {
-          id: "research",
-          title: "Researcher",
-          detail: "Compare five competitors",
-          status: "done",
-        },
-        {
-          id: "writer",
-          title: "Writer",
-          detail: "Review the final copy",
-          status: "waiting",
-        },
-      ],
-    },
-    {
-      id: "support",
-      title: "Support lead",
-      detail: "Answer the open tickets",
-      status: "running",
-      cost: 0.12,
-      children: [
-        {
-          id: "triage",
-          title: "Triage",
-          detail: "18 tickets reviewed",
-          status: "done",
-        },
-        {
-          id: "reply",
-          title: "Responder",
-          detail: "Drafting replies",
-          status: "running",
-        },
-      ],
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [selected, setSelected] = React.useState(items[0]?.id);
-  const item = items.find((x) => x.id === selected);
+const fmtTime = (s = 0) => `${Math.floor(s / 60)}m ${String(Math.round(s % 60)).padStart(2, "0")}s`;
+const fmtCost = (n: number) => `$${n.toFixed(2)}`;
+const branchCost = (a: FleetAgent): number => (a.cost ?? 0) + (a.children ?? []).reduce((n, c) => n + branchCost(c), 0);
+
+function Pill({ status }: { status: FleetStatus }) {
+  const label = { queued: "Queued", running: "Running", waiting: "Needs you", done: "Done", failed: "Failed", stopped: "Stopped" }[status];
   return (
-    <UI.Panel
-      title={title}
-      className={className}
-      aside={<UI.Badge tone="blue">{items.length} active</UI.Badge>}
-    >
-      <div className="st-columns">
-        {items.map((x) => (
-          <button
-            type="button"
-            key={x.id}
-            className={`st-tile ${selected === x.id ? "active" : ""}`}
-            onClick={() => {
-              setSelected(x.id);
-              onAction?.("select", x);
-            }}
-          >
-            <UI.Avatar name={x.title} />
-            <h4>{x.title}</h4>
-            <p>{x.detail}</p>
-            <UI.Badge tone={x.status}>{x.status}</UI.Badge>
-            <small style={{ marginTop: 12 }}>
-              {x.children?.length ?? 0} sub-agents · ${x.cost?.toFixed(2)}
-            </small>
-          </button>
-        ))}
-      </div>
-      {item && (
-        <div className="st-branch">
-          {item.children?.map((x) => (
-            <UI.Row
-              key={x.id}
-              title={x.title}
-              detail={x.detail}
-              icon={<UI.Avatar name={x.title} />}
-            >
-              <UI.Badge tone={x.status}>{x.status}</UI.Badge>
-            </UI.Row>
-          ))}
-        </div>
-      )}
-    </UI.Panel>
+    <span className={`af-pill af-${status}`}>
+      {status === "running" && <span className="af-spin" aria-hidden="true" />}
+      {status === "done" && <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>}
+      {status === "failed" && <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5 14 13H2Z M8 6.5v3 M8 11.3v.2" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round" /></svg>}
+      {label}
+    </span>
   );
 }
+
+function Head({ a }: { a: FleetAgent }) {
+  const av = typeof a.avatar === "string" || !a.avatar ? avatars[(a.avatar as string) ?? "anthropic"] : a.avatar;
+  return (
+    <div className="af-head">
+      <span className="af-av">{av}</span>
+      <span className="af-name">
+        <strong>{a.name}</strong>
+        {a.model && <small>{a.model}</small>}
+      </span>
+      <Pill status={a.status} />
+    </div>
+  );
+}
+
+function Task({ a }: { a: FleetAgent }) {
+  return (
+    <div className="af-task">
+      {a.tools && a.tools.length > 0 && (
+        <span className="af-tools">{a.tools.map((t) => <span key={t} className="af-tool">{toolMarks[t]}</span>)}</span>
+      )}
+      <span className="af-task-t">{a.task}</span>
+    </div>
+  );
+}
+
+function summary(a: FleetAgent) {
+  const c = a.children ?? [];
+  const waiting = c.filter((x) => x.status === "waiting").length;
+  const failed = c.filter((x) => x.status === "failed").length;
+  const running = c.filter((x) => x.status === "running").length;
+  if (waiting) return { kind: "wait", text: `${waiting} needs you` };
+  if (failed) return { kind: "fail", text: `${failed} failed` };
+  if (running) return { kind: "run", text: `${running}/${c.length} running` };
+  return { kind: "done", text: `All ${c.filter((x) => x.cost).length} done` };
+}
+
+export function AgentFleet({
+  agents = defaultAgents,
+  open,
+  defaultOpen,
+  onOpenChange,
+  onResolve,
+  onSelect,
+  title = "Fleet",
+  className = "",
+}: AgentFleetProps) {
+  const [inner, setInner] = React.useState<string | null>(defaultOpen === undefined ? agents.find((a) => a.id === "release")?.id ?? agents[0]?.id ?? null : defaultOpen);
+  const openId = open !== undefined ? open : inner;
+  const setOpen = (id: string | null) => {
+    if (open === undefined) setInner(id);
+    onOpenChange?.(id);
+  };
+  const opened = agents.find((a) => a.id === openId) ?? null;
+  const subs = agents.reduce((n, a) => n + (a.children?.length ?? 0), 0);
+  const all = agents.flatMap((a) => [a, ...(a.children ?? [])]);
+  const running = all.filter((a) => a.status === "running").length;
+  const needs = all.filter((a) => a.status === "waiting").length;
+  const total = agents.reduce((n, a) => n + branchCost(a), 0);
+  const kids = opened?.children ?? [];
+
+  return (
+    <section className={`af ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="af-bar">
+        <span className="af-title">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 1.5 7.2 5 10.5 6 7.2 7 6 10.5 4.8 7 1.5 6 4.8 5ZM12 9l.7 1.8 1.8.7-1.8.7L12 14l-.7-1.8-1.8-.7 1.8-.7Z" fill="currentColor" /></svg>
+          {title}
+        </span>
+        <span className="af-stats">
+          <span>{agents.length} agents / {subs} sub-agents</span>
+          <span>{running} running</span>
+          {needs > 0 && <span>{needs} needs you</span>}
+          <strong>{fmtCost(total)}</strong>
+        </span>
+      </header>
+      <div className="af-grid">
+        <div className="af-col">
+          {agents.map((a) => {
+            const s = summary(a);
+            const isOpen = a.id === openId;
+            return (
+              <button
+                key={a.id}
+                type="button"
+                className={`af-card${isOpen ? " is-open" : opened ? " is-dim" : ""}`}
+                aria-expanded={isOpen}
+                onClick={() => setOpen(isOpen ? null : a.id)}
+              >
+                <Head a={a} />
+                <Task a={a} />
+                <div className="af-foot">
+                  <span className={`af-sum af-sum-${s.kind}`}>
+                    <span className="af-dot" aria-hidden="true" />
+                    {s.text}
+                  </span>
+                  <span className="af-meta"><strong>{fmtCost(branchCost(a))}</strong> · {fmtTime(a.took)}</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        {opened && kids.length > 0 && (
+          <div className="af-tree" style={{ marginTop: Math.max(0, agents.indexOf(opened) * 96 + 44 - (kids.length * 96 - 8) / 2) }}>
+            <div className="af-kids">
+              {kids.map((k) => (
+                <div
+                  key={k.id}
+                  className={`af-card af-kid af-k-${k.status}`}
+                  role={onSelect ? "button" : undefined}
+                  tabIndex={onSelect ? 0 : undefined}
+                  onClick={() => onSelect?.(k)}
+                >
+                  <Head a={k} />
+                  <Task a={k} />
+                  <div className="af-foot">
+                    <span className="af-meta"><strong>{fmtCost(k.cost ?? 0)}</strong> · {fmtTime(k.took)}</span>
+                    {k.status === "failed" || k.status === "waiting" ? (
+                      <button
+                        type="button"
+                        className="af-resolve"
+                        onClick={(e) => { e.stopPropagation(); onResolve?.(k, k.status === "failed" ? "retry" : "approve"); }}
+                      >
+                        {k.status === "failed" ? "Resolve" : "Answer"}
+                      </button>
+                    ) : k.steps?.length ? (
+                      <span className="af-tasks">{k.steps.length} tasks</span>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+const css = `
+.af{--af-bg:#fff;--af-fg:#18181b;--af-muted:#71717a;--af-faint:#a1a1aa;--af-line:#ececef;--af-chip:#f4f4f5;--af-blue:#3b82f6;--af-blue-bg:#eaf2ff;--af-green:#16a34a;--af-green-bg:#e9f8ee;--af-red:#e5484d;--af-red-bg:#fdecec;--af-amber:#d97706;--af-amber-bg:#fff4e0;--af-conn:#93b8f5;width:100%;max-width:590px;color:var(--af-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .af{--af-bg:#1b1b1e;--af-fg:#ececef;--af-muted:#a1a1aa;--af-faint:#71717a;--af-line:#2e2e33;--af-chip:#2a2a2f;--af-blue-bg:#1d2a44;--af-green-bg:#16301f;--af-red-bg:#3a1c1e;--af-amber-bg:#3a2a12;--af-conn:#3f5f99;color-scheme:dark}
+.af *{box-sizing:border-box}.af button{font:inherit;color:inherit;cursor:pointer}
+.af-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px 12px}
+.af-title{display:flex;align-items:center;gap:8px;font-weight:500;font-size:14px}.af-title svg{width:14px;height:14px;color:var(--af-blue)}
+.af-stats{display:flex;gap:10px;align-items:center;color:var(--af-muted);font-size:12.5px}.af-stats strong{color:var(--af-fg);font-weight:500;margin-left:10px}
+.af-grid{display:flex;align-items:flex-start}
+.af-col{display:flex;flex-direction:column;gap:8px;width:290px;flex:none}
+.af-card{display:block;width:100%;text-align:left;background:var(--af-bg);border:1px solid var(--af-line);border-radius:8px;padding:9px 10px 8px;box-shadow:0 1px 2px #0000000a;transition:opacity .2s,border-color .15s}
+.af-card:hover{border-color:color-mix(in srgb,var(--af-fg) 18%,transparent)}
+.af-card.is-dim{opacity:.45}.af-card.is-dim:hover{opacity:.8}
+.af-head{display:flex;align-items:flex-start;gap:8px}
+.af-av{display:grid;place-items:center;width:22px;height:22px;flex:none;margin-top:3px;color:var(--af-fg)}.af-av svg{width:15px;height:15px}
+.af-name{display:flex;flex-direction:column;min-width:0;flex:1}.af-name strong{font-weight:500;font-size:13px}.af-name small{font-size:11px;color:var(--af-faint)}
+.af-pill{display:inline-flex;align-items:center;gap:4px;height:18px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;flex:none}
+.af-pill svg{width:10px;height:10px}
+.af-running{color:var(--af-blue);background:var(--af-blue-bg)}.af-done{color:var(--af-green);background:var(--af-green-bg)}.af-failed{color:var(--af-red);background:var(--af-red-bg)}.af-waiting{color:var(--af-amber);background:var(--af-amber-bg)}.af-queued,.af-stopped{color:var(--af-muted);background:var(--af-chip)}
+.af-spin{width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;border-right-color:transparent;animation:af-spin 1s linear infinite}
+.af-task{display:flex;align-items:center;gap:7px;margin:5px 0 7px;min-width:0;font-size:12.5px}
+.af-tools{display:flex;flex:none}.af-tool{display:grid;place-items:center;width:13px;height:13px;margin-right:-2px}.af-tool svg{width:12px;height:12px;color:var(--af-fg)}
+.af-task-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--af-fg)}
+.af-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--af-muted);min-height:20px}
+.af-sum{display:flex;align-items:center;gap:6px}
+.af-dot{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--af-faint)}
+.af-sum-fail .af-dot{background:var(--af-faint);border-color:var(--af-faint)}.af-sum-done .af-dot{background:var(--af-faint)}
+.af-meta strong{color:var(--af-fg);font-weight:500}
+.af-tasks{color:var(--af-muted)}
+.af-resolve{height:20px;padding:0 8px;border:1px solid var(--af-line);border-radius:5px;background:var(--af-bg);font-size:11px!important;font-weight:500}
+.af-resolve:hover{background:var(--af-chip)}
+.af-tree{position:relative;flex:none;width:294px;padding-left:54px;animation:af-in .25s both}
+.af-kids{position:relative;display:flex;flex-direction:column;gap:8px}
+.af-kids::before{content:"";position:absolute;left:-26px;top:22px;bottom:22px;border-left:1.5px solid var(--af-conn)}
+.af-kid{position:relative}
+.af-kid::before{content:"";position:absolute;left:-27px;top:21px;width:27px;border-top:1.5px solid var(--af-conn)}
+.af-tree::before{content:"";position:absolute;left:0;top:var(--af-y,50%);width:28px;border-top:1.5px solid var(--af-conn)}
+.af-tree::after{content:"";position:absolute;left:-4px;top:calc(50% - 4px);width:7px;height:7px;border-radius:50%;background:var(--af-bg);border:1.5px solid var(--af-conn)}
+.af-kid .af-task{margin:5px 0 7px}
+.af-kid.af-k-queued,.af-kid.af-k-stopped{opacity:.55}
+.af :focus-visible{outline:2px solid var(--af-blue);outline-offset:2px}
+@keyframes af-spin{to{transform:rotate(360deg)}}
+@keyframes af-in{from{opacity:0;transform:translateX(-6px)}}
+@media(max-width:640px){.af-grid{flex-direction:column}.af-col{width:100%}.af-tree{margin:12px 0 0;padding-left:28px;width:100%}.af-tree::before,.af-tree::after{display:none}.af-stats span:nth-child(2),.af-stats span:nth-child(3){display:none}}
+@media(prefers-reduced-motion:reduce){.af *,.af *::before{animation:none!important;transition:none!important}}
+`;
 
 export default AgentFleet;

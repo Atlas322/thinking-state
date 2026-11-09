@@ -493,38 +493,35 @@ const css = /* css */ `
 :where(.dark, [data-theme="dark"]) .ui-ns__btn:hover { background: #313135; }
 `;
 
-import * as React from "react";
 
 /** Working example; use the named NotificationStack export in your application. */
 export default function Demo() {
-  const [, setNote] = React.useState("");
   return (
     <NotificationStack
       notices={[
         {
-          id: "1",
+          id: "dark-mode",
           badge: "New",
-          title: "Your workspace, connected",
-          text: "Bring your tools together and give your team a single place to work.",
+          title: "Dark mode is here",
+          text: "Every screen now follows your system theme – or pick one yourself in settings.",
           pattern: "orbit",
-          action: {
-            label: "Explore",
-            onClick: () => setNote("Explore selected"),
-          },
+          action: { label: "Try it", onClick: () => {} },
         },
         {
-          id: "2",
-          badge: "Tip",
-          title: "Make room for focus",
-          text: "Try quiet hours to keep distractions out of your day.",
+          id: "maintenance",
+          badge: "Notice",
+          title: "Scheduled maintenance",
+          text: "We'll be offline on Sunday from 02:00 to 03:00 UTC. Your data stays safe.",
           pattern: "grid",
+          action: { label: "View status", href: "#status", external: true },
         },
         {
-          id: "3",
-          badge: "Update",
-          title: "All caught up",
-          text: "Your projects are synced and ready.",
+          id: "invite",
+          badge: "Invite",
+          title: "Mara invited you to Design Ops",
+          text: "Join the workspace to see shared projects, files and comments.",
           pattern: "rays",
+          action: { label: "Accept invite", onClick: () => {} },
         },
       ]}
     />

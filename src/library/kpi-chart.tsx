@@ -3,387 +3,213 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
+
+export type KpiSeries = { label: string; color: string; values: number[] };
+
+export type KPIChartProps = {
   title?: string;
-  items?: StudioItem[];
+  value?: string;
+  delta?: number;
+  labels?: string[];
+  tooltipLabels?: string[];
+  series?: KpiSeries[];
+  format?: (n: number) => string;
+  footer?: string;
+  defaultIndex?: number;
+  emptyText?: string;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const compact = (n: number) => {
+  const a = Math.abs(n);
+  const s = a >= 1e6 ? `${+(a / 1e6).toFixed(1)}M` : a >= 1e3 ? `${+(a / 1e3).toFixed(1)}k` : `${Math.round(a)}`;
+  return `${n < 0 ? "-" : ""}$${s}`;
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const days = ["Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7", "Mar 8", "Mar 9"];
+const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+const defaultSeries: KpiSeries[] = [
+  { label: "Organic", color: "#3b82f6", values: [4200, 4600, 3900, 4500, 5100, 4900, 5800] },
+  { label: "Paid ads", color: "#ec4899", values: [3600, 3300, 4300, 4600, 3900, 4300, 4100] },
+  { label: "Referral", color: "#8b5cf6", values: [1800, 2300, 2000, 1500, 2400, 2200, 2700] },
+  { label: "Email", color: "#10b981", values: [1200, 1100, 1700, 2100, 1600, 1300, 1500] },
+  { label: "Direct", color: "#a1a1aa", values: [600, 900, 700, 800, 1000, 1400, 1100] },
+];
+
+const niceMax = (v: number) => {
+  if (v <= 0) return 1;
+  const step = Math.pow(10, Math.floor(Math.log10(v)));
+  const m = [1, 1.5, 2, 3, 4, 5, 6, 8, 10].find((k) => k * step >= v) ?? 10;
+  return m * step;
+};
 
 export function KPIChart({
   title = "Revenue",
-  series = [
-    {
-      name: "Organic",
-      values: [32, 41, 38, 52, 48, 60, 58, 72, 65, 81, 74, 96],
-      color: "#7294e0",
-    },
-    {
-      name: "Paid ads",
-      values: [20, 24, 22, 29, 31, 28, 36, 32, 40, 35, 39, 44],
-      color: "#b593c8",
-    },
-  ],
-  className,
-}: StudioProps & {
-  series?: { name: string; values: number[]; color: string }[];
-}) {
-  const [visible, setVisible] = React.useState(series.map((x) => x.name));
-  const [point, setPoint] = React.useState<number>();
+  value = "$96.4k",
+  delta = 7900,
+  labels = days,
+  tooltipLabels = days.map((d, i) => `${weekdays[i]}, ${d}`),
+  series = defaultSeries,
+  format = compact,
+  footer = "Top 5 channels",
+  defaultIndex,
+  emptyText = "No data yet",
+  className = "",
+}: KPIChartProps) {
+  const [hover, setHover] = React.useState<number | null>(null);
+  const svgRef = React.useRef<SVGSVGElement>(null);
+  const idx = hover ?? defaultIndex ?? null;
+
+  const W = 400;
+  const H = 140;
+  const n = labels.length;
+  const all = series.flatMap((s) => s.values);
+  const empty = !all.length || all.every((v) => !v);
+  const max = niceMax(Math.max(0, ...all));
+  const x = (i: number) => (n <= 1 ? W / 2 : (i / (n - 1)) * W);
+  const y = (v: number) => H - (v / max) * H;
+  const ticks = [max, max / 2, 0];
+  const path = (vals: number[]) => vals.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join("");
+
+  const pick = (clientX: number) => {
+    const r = svgRef.current?.getBoundingClientRect();
+    if (!r || n < 1) return;
+    const p = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+    setHover(Math.round(p * (n - 1)));
+  };
+
+  const axisIdx = n > 2 ? [0, Math.floor((n - 1) / 2), n - 1] : labels.map((_, i) => i);
+  const sortedAt = (i: number) => [...series].sort((a, b) => (b.values[i] ?? 0) - (a.values[i] ?? 0));
+
   return (
-    <UI.Panel
-      title={title}
-      className={className}
-      aside={<UI.Badge tone="green">↗ 12.8%</UI.Badge>}
-    >
-      <div className="st-big">$96.4k</div>
-      <small>Compared with the previous period</small>
-      <div style={{ position: "relative", height: 180, marginTop: 22 }}>
-        <svg
-          viewBox="0 0 500 160"
-          style={{ width: "100%", height: "100%" }}
-          role="img"
-          aria-label="Monthly revenue by channel"
-        >
-          {[25, 65, 105, 145].map((y) => (
-            <path
-              key={y}
-              d={`M0 ${y}H500`}
-              stroke="var(--st-line)"
-              strokeDasharray="3 4"
-            />
-          ))}
-          {series
-            .filter((x) => visible.includes(x.name))
-            .map((s) => (
-              <polyline
-                key={s.name}
-                fill="none"
-                stroke={s.color}
-                strokeWidth={2.5}
-                points={s.values
-                  .map(
-                    (v, i) =>
-                      `${(i / Math.max(1, s.values.length - 1)) * 500},${150 - (v / Math.max(1, ...series.flatMap((x) => x.values))) * 130}`,
-                  )
-                  .join(" ")}
-              />
-            ))}
-          {point !== undefined && (
-            <path
-              d={`M${(point / 11) * 500} 0V160`}
-              stroke="var(--st-muted)"
-              strokeDasharray="3 3"
-            />
+    <section className={`kpc ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <div className="kpc-body">
+        <div className="kpc-title">{title}</div>
+        <div className="kpc-value">
+          <span>{value}</span>
+          {delta !== undefined && (
+            <span className={`kpc-delta${delta < 0 ? " is-down" : ""}`}>
+              {delta < 0 ? "" : "+"}
+              {format(delta)}
+            </span>
           )}
-        </svg>
-        <div style={{ position: "absolute", inset: 0, display: "flex" }}>
-          {Array.from({ length: 12 }, (_, i) => (
-            <button
-              key={i}
-              aria-label={`Month ${i + 1} revenue`}
-              style={{ flex: 1, background: "transparent", border: 0 }}
-              onMouseEnter={() => setPoint(i)}
-              onFocus={() => setPoint(i)}
-              onClick={() => setPoint(i)}
-            />
-          ))}
         </div>
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <small>Jan</small>
-        <small>Apr</small>
-        <small>Aug</small>
-        <small>Dec</small>
-      </div>
-      <div className="st-actions">
-        {series.map((s) => (
-          <UI.Button
-            key={s.name}
-            aria-pressed={visible.includes(s.name)}
-            onClick={() =>
-              setVisible((v) =>
-                v.includes(s.name)
-                  ? v.filter((n) => n !== s.name)
-                  : [...v, s.name],
-              )
-            }
-          >
-            <span
-              className="st-dot"
-              style={{
-                background: s.color,
-                opacity: visible.includes(s.name) ? 1 : 0.3,
+        <div className="kpc-chart">
+          <div className="kpc-y" aria-hidden="true">
+            {ticks.map((t) => (
+              <span key={t}>{format(t)}</span>
+            ))}
+          </div>
+          <div className="kpc-plot">
+            <svg
+              ref={svgRef}
+              viewBox={`0 0 ${W} ${H}`}
+              preserveAspectRatio="none"
+              role="img"
+              aria-label={`${title} by ${series.map((s) => s.label).join(", ")}`}
+              tabIndex={0}
+              onMouseMove={(e) => pick(e.clientX)}
+              onMouseLeave={() => setHover(null)}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowRight") setHover(Math.min(n - 1, (idx ?? -1) + 1));
+                if (e.key === "ArrowLeft") setHover(Math.max(0, (idx ?? n) - 1));
+                if (e.key === "Escape") setHover(null);
               }}
-            />
-            {s.name}
-          </UI.Button>
-        ))}
-      </div>
-      {point !== undefined && (
-        <div className="st-code">
-          Month {point + 1}:{" "}
-          {series
-            .map((s) => `${s.name} $${s.values[point % s.values.length]}k`)
-            .join(" · ")}
+              onBlur={() => setHover(null)}
+            >
+              {ticks.map((t) => (
+                <line key={t} className="kpc-grid" x1="0" x2={W} y1={y(t)} y2={y(t)} vectorEffect="non-scaling-stroke" />
+              ))}
+              {!empty &&
+                series.map((s) => (
+                  <path
+                    key={s.label}
+                    d={path(s.values)}
+                    fill="none"
+                    stroke={s.color}
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                    className={`kpc-line${idx !== null ? " is-active" : ""}`}
+                  />
+                ))}
+              {idx !== null && !empty && <line className="kpc-cross" x1={x(idx)} x2={x(idx)} y1="0" y2={H} vectorEffect="non-scaling-stroke" />}
+            </svg>
+            {idx !== null &&
+              !empty &&
+              series.map((s) => (
+                <span
+                  key={s.label}
+                  className="kpc-dot"
+                  style={{ left: `${(x(idx) / W) * 100}%`, top: `${(y(s.values[idx] ?? 0) / H) * 100}%`, background: s.color }}
+                />
+              ))}
+            {empty && <div className="kpc-empty">{emptyText}</div>}
+            {idx !== null && !empty && (
+              <div
+                className={`kpc-tip${idx > (n - 1) / 2 ? " is-left" : ""}`}
+                style={{ left: `${(x(idx) / W) * 100}%` }}
+                role="status"
+              >
+                <div className="kpc-tip-h">{tooltipLabels[idx] ?? labels[idx]}</div>
+                {sortedAt(idx).map((s) => (
+                  <div key={s.label} className="kpc-tip-row">
+                    <i style={{ background: s.color }} />
+                    <span>{s.label}</span>
+                    <b>{format(s.values[idx] ?? 0)}</b>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="kpc-x" aria-hidden="true">
+              {axisIdx.map((i) => (
+                <span key={i} style={{ left: `${(x(i) / W) * 100}%` }} className={i === 0 ? "is-first" : i === n - 1 ? "is-last" : ""}>
+                  {labels[i]}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
-      )}
-    </UI.Panel>
+      </div>
+      {footer && <footer className="kpc-foot">{footer}</footer>}
+    </section>
   );
 }
+
+const css = `
+.kpc{--kpc-bg:#fff;--kpc-fg:#18181b;--kpc-muted:#71717a;--kpc-faint:#a1a1aa;--kpc-line:#ececef;--kpc-grid:#f0f0f2;--kpc-up:#16a34a;--kpc-up-bg:#e9f8ee;--kpc-down:#dc2626;--kpc-down-bg:#fdecec;width:100%;max-width:440px;background:var(--kpc-bg);color:var(--kpc-fg);border:1px solid var(--kpc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:visible}
+:where(.dark,[data-theme=dark]) .kpc{--kpc-bg:#1b1b1e;--kpc-fg:#ececef;--kpc-muted:#a1a1aa;--kpc-faint:#71717a;--kpc-line:#2e2e33;--kpc-grid:#26262b;--kpc-up:#4ade80;--kpc-up-bg:#16301f;--kpc-down:#f87171;--kpc-down-bg:#3a1d1f;color-scheme:dark}
+.kpc *{box-sizing:border-box}
+.kpc-body{padding:16px 16px 12px}
+.kpc-title{font-size:15px;font-weight:500}
+.kpc-value{display:flex;align-items:center;gap:8px;margin-top:4px}
+.kpc-value>span:first-child{font-size:24px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpc-delta{height:20px;padding:0 5px;border-radius:5px;background:var(--kpc-up-bg);color:var(--kpc-up);font-size:12px;font-weight:500;line-height:20px}
+.kpc-delta.is-down{background:var(--kpc-down-bg);color:var(--kpc-down)}
+.kpc-chart{display:flex;gap:10px;margin-top:14px}
+.kpc-y{display:flex;flex-direction:column;justify-content:space-between;height:140px;margin:-7px 0 0;font-size:11px;color:var(--kpc-muted);text-align:right;font-variant-numeric:tabular-nums}
+.kpc-y span{line-height:14px}
+.kpc-plot{position:relative;flex:1;min-width:0}
+.kpc-plot svg{display:block;width:100%;height:140px;overflow:visible;outline:none;cursor:crosshair}
+.kpc-plot svg:focus-visible{box-shadow:0 0 0 2px #3b82f655;border-radius:4px}
+.kpc-grid{stroke:var(--kpc-grid);stroke-width:1}
+.kpc-line{transition:opacity .15s}
+.kpc-cross{stroke:var(--kpc-faint);stroke-width:1;stroke-dasharray:3 3}
+.kpc-dot{position:absolute;width:7px;height:7px;margin:-3.5px 0 0 -3.5px;border-radius:50%;border:1.5px solid var(--kpc-bg);box-shadow:0 0 0 .5px #0002;pointer-events:none}
+.kpc-x{position:relative;height:16px;margin-top:6px;font-size:11px;color:var(--kpc-muted)}
+.kpc-x span{position:absolute;transform:translateX(-50%);white-space:nowrap}.kpc-x .is-first{transform:none}.kpc-x .is-last{transform:translateX(-100%)}
+.kpc-empty{position:absolute;inset:0 0 22px;display:grid;place-items:center;font-size:13px;color:var(--kpc-faint)}
+.kpc-tip{position:absolute;top:-6px;z-index:3;min-width:150px;margin-left:12px;padding:8px 10px;border:1px solid var(--kpc-line);border-radius:8px;background:var(--kpc-bg);box-shadow:0 6px 20px #0000001a;font-size:12px;pointer-events:none;animation:kpc-in .15s both}
+.kpc-tip.is-left{transform:translateX(calc(-100% - 24px))}
+.kpc-tip-h{margin-bottom:4px;color:var(--kpc-muted)}
+.kpc-tip-row{display:flex;align-items:center;gap:7px;line-height:20px}.kpc-tip-row i{width:8px;height:2px;border-radius:1px}
+.kpc-tip-row span{flex:1}.kpc-tip-row b{font-weight:500;font-variant-numeric:tabular-nums}
+.kpc-foot{padding:10px 16px;border-top:1px solid var(--kpc-line);font-size:12px;color:var(--kpc-muted)}
+@keyframes kpc-in{from{opacity:0}}
+@media(max-width:360px){.kpc-body{padding:14px 12px 10px}.kpc-tip{min-width:130px}}
+@media(prefers-reduced-motion:reduce){.kpc *{animation:none!important;transition:none!important}}
+`;
 
 export default KPIChart;

@@ -3,385 +3,588 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type ToolCall = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  status: "running" | "done" | "failed";
+  input: unknown;
+  output?: unknown;
+  error?: string;
+  /** ms since the run started */
+  at?: number;
+  duration?: number;
+  replay?: boolean;
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
+export type AccessTool = { id: string; name: string; icon?: React.ReactNode; description?: string };
+export type AgentTool = { id: string; calls?: ToolCall[] };
+export type MapAgent = {
+  id: string;
+  name: string;
+  model?: string;
+  avatar?: React.ReactNode;
+  status: "queued" | "running" | "waiting" | "done" | "failed";
+  task?: string;
+  tools: AgentTool[];
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
+export type ToolAccessMapProps = {
+  agents?: MapAgent[];
+  tools?: AccessTool[];
+  agent?: string;
+  defaultAgent?: string;
+  onAgentChange?: (id: string) => void;
+  onReplay?: (call: ToolCall, input: unknown, tool: AccessTool, agent: MapAgent) => void;
+  formatTime?: (ms: number) => string;
+  title?: string;
+  className?: string;
+};
+
+const ico = (children: React.ReactNode) => <svg viewBox="0 0 16 16" aria-hidden="true">{children}</svg>;
+
+const logos = {
+  claude: ico(
+    <>
+      {[0, 30, 60, 90, 120, 150].map((r) => (
+        <rect key={r} x="7.35" y="2" width="1.3" height="12" rx=".65" fill="#d97757" transform={`rotate(${r} 8 8)`} />
+      ))}
+    </>,
+  ),
+  openai: ico(
+    <>
+      {[0, 60, 120, 180, 240, 300].map((r) => (
+        <path key={r} d="M8 2.6a2.4 2.4 0 0 1 2.4 2.4v3.1" fill="none" stroke="currentColor" strokeWidth="1.1" transform={`rotate(${r} 8 8)`} />
+      ))}
+    </>,
+  ),
+  gemini: ico(<path d="M8 1.5c.4 3.3 3.2 6.1 6.5 6.5-3.3.4-6.1 3.2-6.5 6.5-.4-3.3-3.2-6.1-6.5-6.5 3.3-.4 6.1-3.2 6.5-6.5Z" fill="#3b82f6" />),
+};
+
+const toolIcons: Record<string, React.ReactNode> = {
+  github: ico(
+    <path fill="currentColor" d="M8 1a7 7 0 0 0-2.2 13.6c.35.07.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.81-.78-1.03-.78-1.03-.64-.43.05-.42.05-.42.7.05 1.07.72 1.07.72.62 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.55-.18-3.19-.78-3.19-3.47 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72a6.6 6.6 0 0 1 3.5 0c1.33-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.7-1.64 3.29-3.2 3.46.25.22.47.64.47 1.29v1.92c0 .19.13.41.48.34A7 7 0 0 0 8 1Z" />,
+  ),
+  terminal: ico(
+    <>
+      <rect x="2" y="3" width="12" height="10" rx="2" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="m5 6.5 1.8 1.5L5 9.5M8.5 10h2.5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </>,
+  ),
+  stripe: ico(
+    <>
+      <rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#635bff" />
+      <path d="M10 5.7c-.6-.3-1.2-.4-1.8-.4-.8 0-1.2.3-1.2.8 0 1.2 3.2.6 3.2 2.8 0 1.1-.9 1.7-2.2 1.7-.8 0-1.5-.2-2.1-.5" fill="none" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" />
+    </>,
+  ),
+  figma: ico(
+    <>
+      <rect x="5" y="1.5" width="3" height="4.3" rx="1.5" fill="#f24e1e" />
+      <rect x="8" y="1.5" width="3" height="4.3" rx="1.5" fill="#ff7262" />
+      <rect x="5" y="5.8" width="3" height="4.3" rx="1.5" fill="#a259ff" />
+      <circle cx="9.5" cy="8" r="1.6" fill="#1abcfe" />
+      <rect x="5" y="10.1" width="3" height="4.3" rx="1.5" fill="#0acf83" />
+    </>,
+  ),
+  database: ico(
+    <g fill="none" stroke="#14b8a6" strokeWidth="1.2">
+      <ellipse cx="8" cy="4" rx="4.5" ry="1.8" />
+      <path d="M3.5 4v8c0 1 2 1.8 4.5 1.8s4.5-.8 4.5-1.8V4M3.5 8c0 1 2 1.8 4.5 1.8s4.5-.8 4.5-1.8" />
+    </g>,
+  ),
+  web: ico(
+    <>
+      <circle cx="7" cy="7" r="4" fill="none" stroke="#3b82f6" strokeWidth="1.3" />
+      <path d="m10 10 3.5 3.5" stroke="#3b82f6" strokeWidth="1.3" strokeLinecap="round" />
+    </>,
+  ),
+  notion: ico(
+    <>
+      <rect x="2.5" y="2" width="11" height="12" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M5.5 11V5l5 6V5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+    </>,
+  ),
+  slack: ico(
+    <>
+      <rect x="1.5" y="6.5" width="5.5" height="2.2" rx="1.1" fill="#36c5f0" />
+      <rect x="6.5" y="1.5" width="2.2" height="5.5" rx="1.1" fill="#2eb67d" />
+      <rect x="9" y="7.3" width="5.5" height="2.2" rx="1.1" fill="#ecb22e" />
+      <rect x="7.3" y="9" width="2.2" height="5.5" rx="1.1" fill="#e01e5a" />
+    </>,
+  ),
+  hubspot: ico(
+    <>
+      <circle cx="9.5" cy="9.5" r="2.4" fill="none" stroke="#ff7a59" strokeWidth="1.4" />
+      <path d="M9.5 7V4M4 4.5l3.7 3.4M7.7 11.2 5 13.5" stroke="#ff7a59" strokeWidth="1.4" strokeLinecap="round" />
+    </>,
+  ),
+};
+
+const defaultTools: AccessTool[] = [
+  { id: "github", name: "GitHub" },
+  { id: "terminal", name: "Terminal" },
+  { id: "stripe", name: "Stripe" },
+  { id: "figma", name: "Figma" },
+  { id: "database", name: "Database" },
+  { id: "web", name: "Web search" },
+  { id: "notion", name: "Notion" },
+  { id: "slack", name: "Slack" },
+  { id: "hubspot", name: "HubSpot" },
+];
+
+const c = (id: string, at: number, duration: number, input: unknown, output: unknown, status: ToolCall["status"] = "done"): ToolCall => ({
+  id,
+  status,
+  at,
+  duration,
+  input,
+  output,
+});
+
+const defaultAgents: MapAgent[] = [
+  {
+    id: "researcher", name: "Researcher", model: "Opus 5.5", avatar: logos.claude, status: "done",
+    task: "Compare competitor pricing pages",
+    tools: [
+      { id: "web", calls: [c("r1", 4000, 2100, { q: "saas pricing pages 2026" }, { results: 10 }), c("r2", 9000, 1800, { q: "per-seat vs usage pricing" }, { results: 8 })] },
+      { id: "notion", calls: [c("r3", 15000, 900, { page: "Pricing research" }, { saved: true })] },
+    ],
   },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
+  {
+    id: "coder", name: "Coder", model: "GPT-6 Sol", avatar: logos.openai, status: "running",
+    task: "Build the pricing page and wire up checkout",
+    tools: [
+      { id: "github", calls: [c("g1", 12000, 5200, { action: "create_branch", name: "pricing-page" }, { ok: true }), c("g2", 31000, 4800, { action: "commit", files: 4 }, { sha: "8f2c1a" }), c("g3", 52000, 5200, { action: "open_pr", title: "Pricing page" }, { pr: 482 })] },
+      { id: "terminal", calls: [c("t1", 20000, 9000, { cmd: "pnpm test" }, { passed: 128 }), c("t2", 45000, 10000, { cmd: "pnpm build" }, { ok: true })] },
+      { id: "stripe", calls: [c("s1", 38000, 730, { action: "create_price", amount: 2900 }, { id: "price_1Q" })] },
+      { id: "figma", calls: [c("f1", 8000, 1200, { file: "Pricing v3", frame: "Desktop" }, { nodes: 42 })] },
+      { id: "database", calls: [c("d1", 41000, 280, { sql: "select * from plans" }, { rows: 3 })] },
+      { id: "web" },
+    ],
+  },
+  {
+    id: "writer", name: "Writer", model: "Sonnet 5.5", avatar: logos.claude, status: "waiting",
+    task: "Write the pricing page copy",
+    tools: [
+      { id: "notion", calls: [c("w1", 22000, 1100, { page: "Pricing copy" }, { words: 640 })] },
+      { id: "figma", calls: [c("w2", 30000, 1500, { file: "Pricing v3" }, { nodes: 42 })] },
+      { id: "slack" },
+    ],
+  },
+  {
+    id: "analyst", name: "Analyst", model: "Gemini 3.8 Flash", avatar: logos.gemini, status: "queued",
+    task: "Forecast revenue for the new tiers",
+    tools: [{ id: "database" }, { id: "stripe" }, { id: "hubspot" }],
+  },
+];
+
+const fmtDur = (ms?: number) => (ms == null ? "" : ms < 1000 ? `${ms}ms` : `${+(ms / 1000).toFixed(1)}s`);
+const defaultFormatTime = (ms: number) => `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, "0")}`;
+const pretty = (v: unknown) => (typeof v === "string" ? v : JSON.stringify(v, null, 2));
+
+// geometry
+const W = 680;
+const CARD_W = 130;
+const CARD_H = 46;
+const PITCH = 58;
+const BUS_L = 185;
+const AG_X = 240;
+const AG_W = 200;
+const BUS_R = AG_X + AG_W + 55;
+const R = 7;
+
+export function ToolAccessMap({
+  agents = defaultAgents,
+  tools: toolsProp,
+  agent: agentProp,
+  defaultAgent,
+  onAgentChange,
+  onReplay,
+  formatTime = defaultFormatTime,
+  title = "Tool access",
+  className = "",
+}: ToolAccessMapProps) {
+  const tools = React.useMemo(() => {
+    if (toolsProp) return toolsProp;
+    const ids = Array.from(new Set(agents.flatMap((a) => a.tools.map((t) => t.id))));
+    const known = defaultTools.filter((t) => ids.includes(t.id));
+    return [...known, ...ids.filter((i) => !known.some((k) => k.id === i)).map((i) => ({ id: i, name: i }))];
+  }, [toolsProp, agents]);
+  const [innerAgent, setInnerAgent] = React.useState(defaultAgent ?? agents[0]?.id);
+  const agentId = agentProp ?? innerAgent;
+  const agent = agents.find((a) => a.id === agentId) ?? agents[0];
+  const [openTool, setOpenTool] = React.useState<string | null>(null);
+  const [callIdx, setCallIdx] = React.useState(0);
+  const [draft, setDraft] = React.useState("");
+  const tabsRef = React.useRef<HTMLDivElement>(null);
+  const toolRefs = React.useRef<Record<string, HTMLButtonElement | null>>({});
+  const listRef = React.useRef<HTMLUListElement>(null);
+  const id = React.useId();
+
+  const pickAgent = (a: string) => {
+    if (agentProp === undefined) setInnerAgent(a);
+    onAgentChange?.(a);
+    setOpenTool(null);
+  };
+
+  const access = (tid: string) => agent?.tools.find((t) => t.id === tid);
+  const used = agent?.tools.length ?? 0;
+  const callsTotal = agent?.tools.reduce((n, t) => n + (t.calls?.length ?? 0), 0) ?? 0;
+  const running = agent?.tools.reduce((n, t) => n + (t.calls?.filter((x) => x.status === "running").length ?? 0), 0) ?? 0;
+
+  const half = Math.ceil(tools.length / 2);
+  const left = tools.slice(0, half);
+  const right = tools.slice(half);
+  const H = Math.max(left.length, right.length) * PITCH - (PITCH - CARD_H);
+  const midY = H / 2;
+  const colY = (i: number, n: number) => (H - (n * PITCH - (PITCH - CARD_H))) / 2 + i * PITCH;
+
+  const wire = (y: number, side: "l" | "r") => {
+    const d = y - midY;
+    const s = Math.sign(d);
+    const r = Math.min(R, Math.abs(d) / 2);
+    if (side === "l") {
+      if (!s) return `M${CARD_W} ${y}H${AG_X}`;
+      return `M${CARD_W} ${y}H${BUS_L - r}Q${BUS_L} ${y} ${BUS_L} ${y - s * r}V${midY + s * r}Q${BUS_L} ${midY} ${BUS_L + r} ${midY}H${AG_X}`;
+    }
+    const x0 = AG_X + AG_W;
+    const x1 = W - CARD_W;
+    if (!s) return `M${x0} ${midY}H${x1}`;
+    return `M${x0} ${midY}H${BUS_R - r}Q${BUS_R} ${midY} ${BUS_R} ${midY + s * r}V${y - s * r}Q${BUS_R} ${y} ${BUS_R + r} ${y}H${x1}`;
+  };
+
+  const tool = tools.find((t) => t.id === openTool);
+  const calls = (openTool && access(openTool)?.calls) || [];
+  const call = calls[callIdx];
+
+  React.useEffect(() => {
+    if (call) setDraft(pretty(call.input));
+  }, [openTool, callIdx]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  React.useEffect(() => {
+    if (openTool) listRef.current?.focus();
+  }, [openTool]);
+
+  const closeCalls = () => {
+    const t = openTool;
+    setOpenTool(null);
+    if (t) window.setTimeout(() => toolRefs.current[t]?.focus(), 0);
+  };
+
+  const replay = () => {
+    if (!call || !tool || !agent) return;
+    let input: unknown = draft;
+    if (typeof call.input !== "string") {
+      try {
+        input = JSON.parse(draft);
+      } catch {
+        input = draft;
+      }
+    }
+    onReplay?.(call, input, tool, agent);
+  };
+
+  const card = (t: AccessTool, x: number, y: number) => {
+    const a = access(t.id);
+    const n = a?.calls?.length ?? 0;
+    const last = a?.calls?.[n - 1];
+    const isRunning = last?.status === "running";
+    const failed = last?.status === "failed";
+    const state = !a ? "No access" : !n ? "Not used yet" : isRunning ? "Running" : failed ? "Failed" : `Last call ${fmtDur(last?.duration)}`;
     return (
       <button
+        key={t.id}
         type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
+        ref={(el) => {
+          toolRefs.current[t.id] = el;
+        }}
+        className={`tam-tool ${!a ? "off" : ""} ${isRunning ? "run" : ""} ${failed ? "fail" : ""}`}
+        style={{ left: x, top: y }}
+        aria-disabled={!a || !n || undefined}
+        aria-label={`${t.name}: ${state}${n ? `, ${n} ${n === 1 ? "call" : "calls"}` : ""}`}
+        onClick={() => {
+          if (!a || !n) return;
+          setCallIdx(n - 1);
+          setOpenTool(t.id);
+        }}
       >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
+        <span className="tam-t1">
+          <span className="tam-ico">{t.icon ?? toolIcons[t.id] ?? t.name[0]}</span>
+          <span className="tam-name">{t.name}</span>
+          {n > 0 && <span className="tam-n">{n}×</span>}
         </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
+        <span className={`tam-t2 ${failed ? "fail" : isRunning ? "run" : ""}`}>{state}</span>
       </button>
-    ) : (
-      <div className="st-row">{content}</div>
     );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
+  };
+
+  return (
+    <section className={`tam ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="tam-bar">
+        <svg className="tam-logo" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="8" cy="8" r="2.2" fill="currentColor" />
+          <circle cx="2.5" cy="8" r="1.2" fill="currentColor" opacity=".55" />
+          <circle cx="13.5" cy="8" r="1.2" fill="currentColor" opacity=".55" />
+          <path d="M3.7 8h2.1m4.4 0h2.1" stroke="currentColor" strokeWidth="1" opacity=".55" />
+        </svg>
+        <strong>{title}</strong>
+        <span className="tam-stats" aria-live="polite">
+          {running > 0 && <span className="tam-runtag">{running} running</span>}
+          <span>{used}/{tools.length} tools</span>
+          <span>· {callsTotal} calls</span>
+        </span>
+      </header>
+
       <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
+        className="tam-tabs"
+        role="tablist"
+        aria-label="Agents"
+        ref={tabsRef}
+        onKeyDown={(e) => {
+          if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+          e.preventDefault();
+          const i = agents.findIndex((a) => a.id === agent?.id);
+          const n = agents[(i + (e.key === "ArrowRight" ? 1 : agents.length - 1)) % agents.length];
+          pickAgent(n.id);
+          window.setTimeout(() => tabsRef.current?.querySelector<HTMLButtonElement>(`[data-agent="${n.id}"]`)?.focus(), 0);
+        }}
       >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
+        {agents.map((a) => (
           <button
+            key={a.id}
             type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
+            role="tab"
+            data-agent={a.id}
+            id={`${id}-tab-${a.id}`}
+            aria-selected={a.id === agent?.id}
+            aria-controls={`${id}-panel`}
+            tabIndex={a.id === agent?.id ? 0 : -1}
+            className="tam-tab"
+            onClick={() => pickAgent(a.id)}
           >
-            {v}
+            <span className="tam-ico">{a.avatar ?? a.name[0]}</span>
+            {a.name}
           </button>
         ))}
       </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+      {agent && (
+        <div className="tam-panel" id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-tab-${agent.id}`}>
+          <div className="tam-map" style={{ height: H }} inert={!!openTool || undefined}>
+            <svg className="tam-wires" viewBox={`0 0 ${W} ${H}`} aria-hidden="true">
+              {left.map((t, i) => {
+                const y = colY(i, left.length) + CARD_H / 2;
+                const a = access(t.id);
+                const run = a?.calls?.some((x) => x.status === "running");
+                return (
+                  <g key={t.id}>
+                    <path d={wire(y, "l")} className={a ? "on" : "off"} />
+                    {a && <path key={agent.id} d={wire(y, "l")} className="draw" pathLength={1} />}
+                    {run && <path d={wire(y, "l")} className="glint" pathLength={1} />}
+                  </g>
+                );
+              })}
+              {right.map((t, i) => {
+                const y = colY(i, right.length) + CARD_H / 2;
+                const a = access(t.id);
+                const run = a?.calls?.some((x) => x.status === "running");
+                return (
+                  <g key={t.id}>
+                    <path d={wire(y, "r")} className={a ? "on" : "off"} />
+                    {a && <path key={agent.id} d={wire(y, "r")} className="draw" pathLength={1} />}
+                    {run && <path d={wire(y, "r")} className="glint" pathLength={1} />}
+                  </g>
+                );
+              })}
+              <circle cx={AG_X} cy={midY} r="3" className="tam-port" />
+              <circle cx={AG_X + AG_W} cy={midY} r="3" className="tam-port" />
+            </svg>
+            {left.map((t, i) => card(t, 0, colY(i, left.length)))}
+            {right.map((t, i) => card(t, W - CARD_W, colY(i, right.length)))}
+            <div className="tam-agent" style={{ left: AG_X, top: midY }} key={agent.id}>
+              <div className="tam-a1">
+                <span className="tam-ico lg">{agent.avatar ?? agent.name[0]}</span>
+                <span className="tam-who">
+                  <strong>{agent.name}</strong>
+                  {agent.model && <span>{agent.model}</span>}
+                </span>
+                <span className={`tam-badge ${agent.status}`}>
+                  {agent.status === "running" && <i className="tam-spin" aria-hidden="true" />}
+                  {agent.status === "waiting" ? "Needs you" : agent.status[0].toUpperCase() + agent.status.slice(1)}
+                </span>
+              </div>
+              {agent.task && <p className="tam-task">{agent.task}</p>}
+            </div>
+          </div>
 
-export function ToolAccessMap({
-  title = "Tool access",
-  items = [
-    {
-      id: "coder",
-      title: "Coder",
-      detail: "Build the pricing page",
-      tags: ["GitHub", "Terminal", "Stripe"],
-    },
-    {
-      id: "research",
-      title: "Researcher",
-      detail: "Compare competitor plans",
-      tags: ["Web search", "Notion"],
-    },
-    {
-      id: "writer",
-      title: "Writer",
-      detail: "Prepare the launch post",
-      tags: ["Notion", "Slack"],
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const tools = [
-    "GitHub",
-    "Terminal",
-    "Stripe",
-    "Web search",
-    "Notion",
-    "Slack",
-  ];
-  const [agent, setAgent] = React.useState(items[0]);
-  const [tool, setTool] = React.useState("GitHub");
-  const [input, setInput] = React.useState('{"branch":"pricing-page"}');
-  const [result, setResult] = React.useState("");
-  const [error, setError] = React.useState("");
-  return (
-    <UI.Panel
-      title={title}
-      subtitle="Who can call what, and what happened"
-      className={className}
-    >
-      <UI.Tabs
-        values={items.map((x) => x.title)}
-        value={agent?.title ?? ""}
-        onChange={(v) => {
-          setAgent(items.find((x) => x.title === v)!);
-          setResult("");
-        }}
-      />
-      <div className="st-flow">
-        <div className="st-tile">
-          <UI.Avatar name={agent?.title ?? "AI"} />
-          <h4>{agent?.title}</h4>
-          <small>{agent?.detail}</small>
-        </div>
-        <span>→</span>
-        <div
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}
-        >
-          {tools.map((t) => (
-            <button
-              key={t}
-              className={`st-tile ${tool === t ? "active" : ""}`}
-              disabled={!agent?.tags?.includes(t)}
-              style={{
-                padding: 10,
-                opacity: agent?.tags?.includes(t) ? 1 : 0.3,
-                borderStyle: agent?.tags?.includes(t) ? "solid" : "dashed",
-              }}
-              onClick={() => {
-                setTool(t);
-                setResult("");
+          {tool && call && (
+            <div
+              className="tam-calls"
+              role="dialog"
+              aria-label={`${tool.name} calls`}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  e.preventDefault();
+                  closeCalls();
+                }
               }}
             >
-              {t}
-            </button>
-          ))}
+              <div className="tam-calls-head">
+                <button type="button" className="tam-back" aria-label="Back to the map" onClick={closeCalls}>
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
+                </button>
+                <span className="tam-ico">{("icon" in tool ? (tool as { icon?: React.ReactNode }).icon : undefined) ?? toolIcons[tool.id]}</span>
+                <strong>{tool.name}</strong>
+                <span className="tam-muted">{calls.length} {calls.length === 1 ? "call" : "calls"} by {agent.name}</span>
+              </div>
+              <div className="tam-calls-body">
+                <ul
+                  ref={listRef}
+                  className="tam-list"
+                  role="listbox"
+                  tabIndex={0}
+                  aria-label="Calls"
+                  aria-activedescendant={`${id}-call-${callIdx}`}
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowDown") {
+                      e.preventDefault();
+                      setCallIdx((i) => Math.min(calls.length - 1, i + 1));
+                    }
+                    if (e.key === "ArrowUp") {
+                      e.preventDefault();
+                      setCallIdx((i) => Math.max(0, i - 1));
+                    }
+                  }}
+                >
+                  {calls.map((x, i) => (
+                    <li
+                      key={x.id}
+                      id={`${id}-call-${i}`}
+                      role="option"
+                      aria-selected={i === callIdx}
+                      className={i === callIdx ? "on" : ""}
+                      onClick={() => setCallIdx(i)}
+                    >
+                      <i className={`tam-dot ${x.status}`} />
+                      <span>#{i + 1}{x.replay ? " · replay" : ""}</span>
+                      <span className="tam-muted">{x.at != null ? formatTime(x.at) : ""}</span>
+                      <span className="tam-muted tam-dur">{fmtDur(x.duration)}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="tam-call">
+                  <label className="tam-lbl" htmlFor={`${id}-input`}>Input</label>
+                  <textarea
+                    id={`${id}-input`}
+                    value={draft}
+                    spellCheck={false}
+                    onChange={(e) => setDraft(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                        e.preventDefault();
+                        replay();
+                      }
+                    }}
+                  />
+                  <div className="tam-lbl">{call.error ? "Error" : "Output"}</div>
+                  <pre className={call.error ? "err" : ""}>{call.error ?? (call.output !== undefined ? pretty(call.output) : "…")}</pre>
+                  <div className="tam-call-foot">
+                    <button type="button" className="tam-replay" onClick={replay}>
+                      Replay
+                      <kbd>⌘↵</kbd>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-      <UI.Detail title={`${tool} · call details`} open>
-        <label className="st-field">
-          <span>Arguments (JSON)</span>
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            style={{ fontFamily: "monospace" }}
-          />
-        </label>
-        {error && (
-          <p role="alert" style={{ color: "var(--st-red)" }}>
-            {error}
-          </p>
-        )}
-        <UI.Button
-          primary
-          disabled={!agent?.tags?.includes(tool)}
-          onClick={() => {
-            try {
-              JSON.parse(input);
-              setError("");
-              setResult(
-                "Replay requested. Your onAction handler receives the tool and arguments.",
-              );
-              onAction?.("replay", { id: tool, title: tool, detail: input });
-            } catch {
-              setError("Enter valid JSON arguments.");
-            }
-          }}
-        >
-          Replay call
-        </UI.Button>
-        {result && <p className="st-status">{result}</p>}
-      </UI.Detail>
-    </UI.Panel>
+      )}
+    </section>
   );
 }
 
-export default ToolAccessMap;
+const css = `
+.tam{--tam-bg:#fff;--tam-fg:#18181b;--tam-muted:#71717a;--tam-faint:#a1a1aa;--tam-line:#ececef;--tam-chip:#ededef;--tam-blue:#3b82f6;--tam-blue-bg:#e3eefd;--ui-tamc-used:#9cc3f5;--ui-tamc-off:#d4d4d8;--ui-tamc-glint:#2563eb;--ui-tamc-dim:.5;--tam-red:#dc2626;--tam-amber:#b45309;--tam-amber-bg:#fdf3d7;width:100%;max-width:680px;color:var(--tam-fg);font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
+:where(.dark,[data-theme=dark]) .tam{--tam-bg:#1f1f23;--tam-fg:#ececef;--tam-muted:#a1a1aa;--tam-faint:#71717a;--tam-line:#303036;--tam-chip:#2a2a2f;--tam-blue-bg:#1c2a40;--ui-tamc-used:#3d6fb8;--ui-tamc-off:#45454c;--ui-tamc-glint:#93c5fd;--tam-amber:#fbbf24;--tam-amber-bg:#3a2f12;color-scheme:dark}
+.tam *{box-sizing:border-box}.tam button{font:inherit;color:inherit;cursor:pointer}
+.tam-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.tam-logo{width:16px;height:16px;color:var(--tam-muted)}
+.tam-bar strong{font-size:14px;font-weight:500}
+.tam-stats{display:flex;align-items:center;gap:8px;margin-left:auto;color:var(--tam-muted);font-variant-numeric:tabular-nums}
+.tam-stats>span:not(.tam-runtag){min-width:4.6em;text-align:right}
+.tam-runtag{padding:0 6px;border-radius:4px;background:var(--tam-blue-bg);color:var(--tam-blue);font-size:12px;line-height:18px}
+.tam-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tam-tab{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 9px 0 4px;border:1px solid transparent;border-radius:7px;background:var(--tam-chip);color:var(--tam-muted)!important;font-size:13px}
+.tam-tab:hover{color:var(--tam-fg)!important}
+.tam-tab[aria-selected=true]{background:var(--tam-bg);border-color:var(--tam-line);color:var(--tam-fg)!important;box-shadow:0 1px 2px #0000000d}
+.tam-ico{display:grid;place-items:center;width:20px;height:20px;flex:none;border-radius:5px;background:var(--tam-bg);border:1px solid var(--tam-line);color:var(--tam-fg);font-size:10px;font-weight:600}
+.tam-ico svg{width:12px;height:12px}
+.tam-tab .tam-ico{border:0;box-shadow:0 0 0 1px var(--tam-line)}
+.tam-ico.lg{width:24px;height:24px;border-radius:6px}.tam-ico.lg svg{width:15px;height:15px}
+.tam-panel{position:relative}
+.tam-map{position:relative;width:100%}
+.tam-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tam-wires path{fill:none;stroke-width:1.5}
+.tam-wires path.on{stroke:var(--ui-tamc-used)}
+.tam-wires path.off{stroke:var(--ui-tamc-off);stroke-width:1.2;stroke-dasharray:2 3}
+.tam-wires path.draw{stroke:var(--ui-tamc-used);stroke-dasharray:1;stroke-dashoffset:1;animation:tam-draw .5s ease-out forwards;opacity:.9}
+.tam-wires path.glint{stroke:var(--ui-tamc-glint);stroke-width:2;stroke-dasharray:.12 .88;animation:tam-glint 1.2s linear infinite}
+.tam-port{fill:var(--tam-bg);stroke:var(--ui-tamc-used);stroke-width:1.2}
+.tam-tool{position:absolute;width:${CARD_W}px;height:${CARD_H}px;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:0 10px;border:1px solid var(--tam-line);border-radius:8px;background:var(--tam-bg);box-shadow:0 1px 2px #0000000a;text-align:left;transition:opacity .25s,border-color .15s,box-shadow .15s}
+.tam-tool:not(.off):not([aria-disabled]):hover{border-color:color-mix(in srgb,var(--tam-fg) 20%,var(--tam-line));box-shadow:0 2px 8px #0000000f}
+.tam-tool[aria-disabled]{cursor:default}
+.tam-tool.off{opacity:var(--ui-tamc-dim);box-shadow:none;background:transparent}
+.tam-tool.run{border-color:color-mix(in srgb,var(--tam-blue) 45%,var(--tam-line))}
+.tam-tool .tam-ico{width:16px;height:16px;border:0;background:none}
+.tam-tool .tam-ico svg{width:13px;height:13px}
+.tam-t1{display:flex;align-items:center;gap:6px;min-width:0}
+.tam-name{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tam-n{margin-left:auto;color:var(--tam-faint);font-size:11.5px}
+.tam-t2{padding-left:22px;font-size:11.5px;color:var(--tam-muted);white-space:nowrap}
+.tam-t2.run{color:var(--tam-blue)}.tam-t2.fail{color:var(--tam-red)}
+.tam-agent{position:absolute;width:${AG_W}px;transform:translateY(-50%);padding:10px;border:1px solid var(--tam-line);border-radius:10px;background:var(--tam-bg);box-shadow:0 2px 10px #0000000d;animation:tam-up .3s ease-out}
+.tam-a1{display:flex;align-items:flex-start;gap:8px}
+.tam-who{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.25}
+.tam-who strong{font-size:14px;font-weight:500}.tam-who span{font-size:11.5px;color:var(--tam-muted)}
+.tam-badge{display:inline-flex;align-items:center;gap:5px;padding:0 5px;border-radius:4px;font-size:11.5px;line-height:17px;background:var(--tam-chip);color:var(--tam-muted)}
+.tam-badge.running{background:var(--tam-blue-bg);color:var(--tam-blue)}
+.tam-badge.waiting{background:var(--tam-amber-bg);color:var(--tam-amber)}
+.tam-badge.failed{background:#fde8e8;color:var(--tam-red)}
+.tam-spin{width:8px;height:8px;border:1.3px solid currentColor;border-right-color:transparent;border-radius:50%;animation:tam-spin 1s linear infinite}
+.tam-task{margin:8px 0 0;font-size:12.5px;line-height:1.4;color:var(--tam-fg);opacity:.85}
+.tam-calls{position:absolute;inset:-4px 0 auto;min-height:calc(100% + 8px);border:1px solid var(--tam-line);border-radius:12px;background:var(--tam-bg);box-shadow:0 10px 30px #00000014;animation:tam-in .22s ease-out;display:flex;flex-direction:column}
+.tam-calls-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--tam-line)}
+.tam-calls-head strong{font-weight:500;font-size:14px}
+.tam-back{display:grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:6px;background:none;color:var(--tam-muted)}.tam-back:hover{background:var(--tam-chip)}
+.tam-back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+.tam-muted{color:var(--tam-muted)}
+.tam-calls-body{display:grid;grid-template-columns:200px minmax(0,1fr);flex:1;min-height:0}
+.tam-list{list-style:none;margin:0;padding:6px;border-right:1px solid var(--tam-line);outline:none}
+.tam-list li{display:flex;align-items:center;gap:8px;height:30px;padding:0 8px;border-radius:6px;cursor:pointer}
+.tam-list li.on{background:var(--tam-chip)}
+.tam-list:focus-visible li.on{box-shadow:inset 0 0 0 2px var(--tam-blue)}
+.tam-dur{margin-left:auto}
+.tam-dot{width:6px;height:6px;border-radius:50%;background:#22c55e}.tam-dot.running{background:var(--tam-blue)}.tam-dot.failed{background:var(--tam-red)}
+.tam-call{padding:10px 12px 12px;min-width:0;display:flex;flex-direction:column}
+.tam-lbl{display:block;margin:2px 0 4px;font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--tam-muted)}
+.tam-call textarea,.tam-call pre{width:100%;margin:0 0 10px;padding:8px 10px;border:1px solid var(--tam-line);border-radius:7px;background:color-mix(in srgb,var(--tam-chip) 45%,var(--tam-bg));color:var(--tam-fg);font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-word}
+.tam-call textarea{min-height:96px;resize:vertical}
+.tam-call pre.err{color:var(--tam-red)}
+.tam-call-foot{display:flex;justify-content:flex-end;margin-top:auto}
+.tam-replay{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 10px;border:0;border-radius:7px;background:var(--tam-fg);color:var(--tam-bg)!important;font-weight:500}
+.tam-replay kbd{font:inherit;font-size:10px;opacity:.6}
+.tam :focus-visible{outline:2px solid var(--tam-blue);outline-offset:2px}
+@keyframes tam-draw{to{stroke-dashoffset:0}}
+@keyframes tam-glint{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes tam-spin{to{transform:rotate(360deg)}}
+@keyframes tam-up{from{opacity:0;transform:translateY(calc(-50% + 6px))}}
+@keyframes tam-in{from{opacity:0;transform:translateY(6px)}}
+@media(max-width:700px){.tam-map{height:auto!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tam-wires{display:none}.tam-tool,.tam-agent{position:relative;left:auto!important;top:auto!important;width:auto;transform:none}.tam-agent{grid-column:1/-1;order:-1;animation:none}.tam-calls-body{grid-template-columns:1fr}.tam-list{border-right:0;border-bottom:1px solid var(--tam-line)}}
+@media(prefers-reduced-motion:reduce){.tam *{animation:none!important;transition:none!important}.tam-wires path.glint{display:none}}
+`;
+
+export function Demo() {
+  return <ToolAccessMap defaultAgent="coder" />;
+}
+
+export default Demo;

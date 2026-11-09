@@ -3,359 +3,254 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type AutonomyLevel = 0 | 1 | 2;
+export type AgentAction = {
   id: string;
-  title: string;
+  label: string;
   detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
+  risk: "safe" | "risky" | "destructive";
+  icon?: React.ReactNode;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
+export type AutonomyDialProps = {
+  actions?: AgentAction[];
+  level?: AutonomyLevel;
+  defaultLevel?: AutonomyLevel;
+  onLevelChange?: (level: AutonomyLevel) => void;
+  pinned?: string[];
+  defaultPinned?: string[];
+  onPinnedChange?: (pinned: string[]) => void;
+  title?: string;
+  subtitle?: string;
+  className?: string;
+};
+
+const svg = (c: React.ReactNode) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    {c}
+  </svg>
+);
+export const autonomyIcons = {
+  notion: svg(
+    <>
+      <rect x="1.5" y="1.5" width="13" height="13" rx="2" fill="#fff" stroke="#111" strokeWidth="1.3" />
+      <path d="M5 11.5v-7h1.1l3.8 7H11v-7" fill="none" stroke="#111" strokeWidth="1.3" />
+    </>,
+  ),
+  gmail: svg(
+    <>
+      <path d="M1.5 4.5v8h2.5V7l4 3 4-3v5.5h2.5v-8L12.5 3 8 6.4 3.5 3Z" fill="#ea4335" />
+      <path d="M1.5 4.5 4 6.5v6H1.5Z" fill="#4285f4" />
+      <path d="M14.5 4.5 12 6.5v6h2.5Z" fill="#34a853" />
+    </>,
+  ),
+  hubspot: svg(
+    <>
+      <circle cx="10" cy="9.5" r="2.6" fill="none" stroke="#ff7a59" strokeWidth="1.6" />
+      <path d="M10 6.9V3.5M7.9 8 3.5 4.5M8 11.4l-3 2.6" stroke="#ff7a59" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="3.3" cy="4.2" r="1.3" fill="#ff7a59" />
+    </>,
+  ),
+  drive: svg(
+    <>
+      <path d="M5.5 2h5l4.5 8h-5Z" fill="#fbbc04" />
+      <path d="M5.5 2 1 10l2.5 4.2L8 6.3Z" fill="#0f9d58" />
+      <path d="M3.5 14.2h9L15 10H6Z" fill="#4285f4" />
+    </>,
+  ),
+  stripe: svg(
+    <>
+      <rect x="1" y="1" width="14" height="14" rx="3" fill="#635bff" />
+      <path d="M10.2 5.6c-.6-.4-1.3-.6-2-.6-1.1 0-1.8.5-1.8 1.3 0 1.7 3.6 1.1 3.6 3.3 0 1-.9 1.6-2.1 1.6-.8 0-1.6-.3-2.2-.7" fill="none" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" />
+    </>,
+  ),
+};
+
+const defaultActions: AgentAction[] = [
+  { id: "read", label: "Read files and docs", risk: "safe", icon: autonomyIcons.notion },
+  { id: "draft", label: "Draft emails", risk: "safe", icon: autonomyIcons.gmail },
+  { id: "crm", label: "Update CRM records", risk: "risky", icon: autonomyIcons.hubspot },
+  { id: "send", label: "Send emails", risk: "risky", icon: autonomyIcons.gmail },
+  { id: "delete", label: "Delete files", risk: "destructive", icon: autonomyIcons.drive },
+  { id: "spend", label: "Spend money", risk: "destructive", icon: autonomyIcons.stripe },
+];
+
+const levels = ["Always ask", "If risky", "Full auto"] as const;
+const meaning = [
+  "Every action waits for you",
+  "Safe actions run, risky ones wait for you",
+  "Everything runs except what you lock",
+];
+
+const Lock = ({ open }: { open: boolean }) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <rect x="3.5" y="7" width="9" height="7" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+    <path d={open ? "M5.5 7V5a2.5 2.5 0 0 1 4.9-.7" : "M5.5 7V5a2.5 2.5 0 0 1 5 0v2"} fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    <circle cx="8" cy="10.5" r=".9" fill="currentColor" />
+  </svg>
+);
+
+export function AutonomyDial({
+  actions = defaultActions,
+  level,
+  defaultLevel = 1,
+  onLevelChange,
+  pinned,
+  defaultPinned = ["spend"],
+  onPinnedChange,
+  title = "Sales agent",
+  subtitle = "What it may do without asking you",
+  className = "",
+}: AutonomyDialProps) {
+  const [innerLevel, setInnerLevel] = React.useState<AutonomyLevel>(defaultLevel);
+  const [innerPinned, setInnerPinned] = React.useState<string[]>(defaultPinned);
+  const lv = level ?? innerLevel;
+  const pins = pinned ?? innerPinned;
+  const setLevel = (l: AutonomyLevel) => {
+    setInnerLevel(l);
+    onLevelChange?.(l);
+  };
+  const togglePin = (id: string) => {
+    const next = pins.includes(id) ? pins.filter((p) => p !== id) : [...pins, id];
+    setInnerPinned(next);
+    onPinnedChange?.(next);
+  };
+  const runs = (a: AgentAction) =>
+    !pins.includes(a.id) && (lv === 2 || (lv === 1 && a.risk === "safe"));
+  const own = actions.filter(runs);
+  const ask = actions.filter((a) => !runs(a));
+  const descId = React.useId();
+
+  const row = (a: AgentAction) => {
+    const locked = pins.includes(a.id);
     return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
+      <li key={a.id} className="ad-row">
+        <span className="ad-ico">{a.icon}</span>
+        <span className="ad-label">{a.label}</span>
+        {a.risk !== "safe" && (
+          <span className={`ad-risk ad-${a.risk}`}>
+            {a.risk === "risky" ? (
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5 14 13H2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /><path d="M8 6.5v3M8 11.2v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+            ) : (
+              <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M8 5v3.5M8 10.8v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+            )}
+            {a.risk === "risky" ? "Risky" : "Destructive"}
+          </span>
         )}
-        <div className="st-content">{children}</div>
-      </section>
+        <button
+          type="button"
+          className={`ad-lock ${locked ? "is-on" : ""}`}
+          aria-pressed={locked}
+          aria-label={`${locked ? "Unlock" : "Lock"} ${a.label}`}
+          title={locked ? "Always asks – click to unlock" : "Always ask for this"}
+          onClick={() => togglePin(a.id)}
+        >
+          <Lock open={!locked} />
+        </button>
+      </li>
     );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
+  };
+
+  return (
+    <section className={`ad ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="ad-head">
+        <svg className="ad-spark" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M8 1.5c.4 3.6 2.9 6.1 6.5 6.5-3.6.4-6.1 2.9-6.5 6.5C7.6 10.9 5.1 8.4 1.5 8 5.1 7.6 7.6 5.1 8 1.5Z" fill="url(#ad-g)" />
+          <defs>
+            <linearGradient id="ad-g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#4285f4" />
+              <stop offset="1" stopColor="#9b72cb" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div>
+          <h3>{title}</h3>
+          <p>{subtitle}</p>
+        </div>
+      </header>
       <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
+        className="ad-levels"
+        role="radiogroup"
+        aria-label="Autonomy level"
+        aria-describedby={descId}
       >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
+        {levels.map((l, i) => (
           <button
+            key={l}
             type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
+            role="radio"
+            aria-checked={lv === i}
+            tabIndex={lv === i ? 0 : -1}
+            onClick={() => setLevel(i as AutonomyLevel)}
+            onKeyDown={(e) => {
+              const d = ["ArrowRight", "ArrowDown"].includes(e.key) ? 1 : ["ArrowLeft", "ArrowUp"].includes(e.key) ? -1 : 0;
+              if (!d) return;
+              e.preventDefault();
+              const n = Math.max(0, Math.min(2, lv + d)) as AutonomyLevel;
+              setLevel(n);
+              (e.currentTarget.parentElement?.children[n] as HTMLElement)?.focus();
+            }}
           >
-            {v}
+            {l}
           </button>
         ))}
       </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
+      <p id={descId} className="ad-sr">
+        {meaning[lv]}
       </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
-
-export function AutonomyDial({
-  title = "Sales agent",
-  items = [
-    { id: "read", title: "Read files and docs", value: 0 },
-    { id: "draft", title: "Draft emails", value: 0 },
-    { id: "send", title: "Send customer emails", value: 1 },
-    { id: "delete", title: "Delete files", value: 2 },
-    { id: "spend", title: "Spend money", value: 2 },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [level, setLevel] = React.useState(1);
-  const [locked, setLocked] = React.useState(["spend"]);
-  return (
-    <UI.Panel
-      title={title}
-      subtitle="Choose how much the agent can do on its own"
-      className={className}
-    >
-      <div style={{ padding: "20px 4px" }}>
-        <input
-          aria-label="Autonomy level"
-          type="range"
-          min={0}
-          max={2}
-          step={1}
-          className="st-range"
-          value={level}
-          onChange={(e) => {
-            setLevel(+e.target.value);
-            onAction?.("level", {
-              id: "level",
-              title: ["Careful", "Balanced", "Autonomous"][+e.target.value],
-              value: +e.target.value,
-            });
-          }}
-        />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            fontSize: 11,
-          }}
-        >
-          <span>Careful</span>
-          <span>Balanced</span>
-          <span>Autonomous</span>
-        </div>
+      <div className="ad-body">
+        <section aria-label="Runs on its own">
+          <h4>
+            Runs on its own <span className="ad-count">{own.length}</span>
+          </h4>
+          <ul>{own.map(row)}</ul>
+        </section>
+        <section aria-label="Asks you first">
+          <h4>
+            Asks you first <span className="ad-count">{ask.length}</span>
+          </h4>
+          <ul>{ask.map(row)}</ul>
+        </section>
       </div>
-      {["Runs on its own", "Asks you first"].map((group, gi) => (
-        <div key={group}>
-          <small style={{ marginTop: 12 }}>{group.toUpperCase()}</small>
-          {items
-            .filter((x) =>
-              gi === 0
-                ? (x.value ?? 0) < level && !locked.includes(x.id)
-                : (x.value ?? 0) >= level || locked.includes(x.id),
-            )
-            .map((x) => (
-              <UI.Row
-                key={x.id}
-                title={x.title}
-                icon={
-                  <span
-                    style={{
-                      color: gi ? "var(--st-amber)" : "var(--st-green)",
-                    }}
-                  >
-                    {gi ? "◌" : "✓"}
-                  </span>
-                }
-              >
-                <UI.Button
-                  aria-label={`${locked.includes(x.id) ? "Unlock" : "Always ask for"} ${x.title}`}
-                  onClick={() => {
-                    setLocked((s) =>
-                      s.includes(x.id)
-                        ? s.filter((id) => id !== x.id)
-                        : [...s, x.id],
-                    );
-                    onAction?.("pin", x);
-                  }}
-                >
-                  {locked.includes(x.id) ? "Locked" : "Lock"}
-                </UI.Button>
-              </UI.Row>
-            ))}
-        </div>
-      ))}
-    </UI.Panel>
+      <p className="ad-sr" aria-live="polite">
+        {levels[lv]}: {own.length} on its own, {ask.length} ask first
+      </p>
+    </section>
   );
 }
+
+const css = `
+.ad{--ad-bg:#fff;--ad-fg:#18181b;--ad-muted:#71717a;--ad-faint:#a1a1aa;--ad-line:#ececef;--ad-chip:#efeff1;--ad-accent:#3b82f6;width:100%;max-width:432px;background:var(--ad-bg);color:var(--ad-fg);border:1px solid var(--ad-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .ad{--ad-bg:#1b1b1e;--ad-fg:#ececef;--ad-muted:#a1a1aa;--ad-faint:#71717a;--ad-line:#2e2e33;--ad-chip:#2a2a2f;color-scheme:dark}
+.ad *{box-sizing:border-box}.ad button{font:inherit;color:inherit;cursor:pointer}
+.ad-head{display:flex;align-items:flex-start;gap:12px;padding:18px 18px 0}
+.ad-spark{width:14px;height:14px;margin-top:12px;flex:none}
+.ad-head h3{margin:0;font-size:14px;font-weight:500}.ad-head p{margin:1px 0 0;font-size:13px;color:var(--ad-muted)}
+.ad-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:16px 17px 19px;border-bottom:1px solid var(--ad-line)}
+.ad-levels button{height:27px;border:0;border-radius:6px;background:var(--ad-chip);font-size:13px;color:var(--ad-muted);transition:background .2s,color .2s,box-shadow .2s}
+.ad-levels button[aria-checked=true]{background:var(--ad-bg);color:var(--ad-fg);font-weight:500;box-shadow:0 0 0 1px var(--ad-line),0 1px 3px #00000014}
+.ad-body{padding:12px 17px 10px}
+.ad-body h4{display:flex;align-items:center;gap:8px;margin:4px 0 4px;font-size:13px;font-weight:400;color:var(--ad-muted)}
+.ad-body section+section h4{margin-top:14px}
+.ad-count{display:inline-grid;place-items:center;min-width:16px;height:16px;padding:0 4px;border-radius:4px;box-shadow:0 0 0 1px var(--ad-line);font-size:11px;color:var(--ad-fg)}
+.ad-body ul{list-style:none;margin:0;padding:0}
+.ad-row{display:flex;align-items:center;gap:12px;height:32px;animation:ad-in .3s both}
+.ad-ico{display:grid;place-items:center;width:18px;height:18px;flex:none}.ad-ico svg{width:17px;height:17px}
+.ad-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ad-risk{display:inline-flex;align-items:center;gap:3px;height:20px;padding:0 5px;border-radius:4px;font-size:12px;flex:none}
+.ad-risk svg{width:12px;height:12px}
+.ad-risky{background:#fff1dc;color:#c2580c}.ad-destructive{background:#ffe6e6;color:#dc2626}
+:where(.dark,[data-theme=dark]) .ad-risky{background:#3a2a12;color:#fdba74}:where(.dark,[data-theme=dark]) .ad-destructive{background:#3a1717;color:#fca5a5}
+.ad-lock{display:grid;place-items:center;width:26px;height:26px;margin-left:auto;border:0;border-radius:6px;background:none;color:var(--ad-faint);opacity:0;transition:opacity .15s,background .15s}
+.ad-row:hover .ad-lock,.ad-lock:focus-visible,.ad-lock.is-on{opacity:1}
+.ad-lock:hover{background:var(--ad-chip);color:var(--ad-fg)}.ad-lock svg{width:16px;height:16px}
+.ad-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ad :focus-visible{outline:2px solid var(--ad-accent);outline-offset:2px}
+@keyframes ad-in{from{opacity:0;transform:translateY(4px)}}
+@media(max-width:400px){.ad-levels{gap:6px;padding:14px}.ad-levels button{font-size:12px}.ad-risk{display:none}}
+@media(prefers-reduced-motion:reduce){.ad *{animation:none!important;transition:none!important}}
+`;
 
 export default AutonomyDial;

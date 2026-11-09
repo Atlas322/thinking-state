@@ -69,7 +69,7 @@
     "pro": true,
     "description": "Where every agent is right now – a live timeline with a lane per agent, tasks growing into “now”, hand-offs drawn between agents and approvals right on the block",
     "exportName": "AgentLanes",
-    "usage": "import { AgentLanes } from \"./agent-lanes\";\n\nexport default function App() {\n  return <AgentLanes />;\n}"
+    "usage": "import { AgentLanes } from \"./agent-lanes\";\n\nexport default function App() {\n  return <AgentLanes />; // props: agents, tasks, span, now, onApprove, onReject, onOpen, title\n}"
   },
   {
     "slug": "agent-ledger",
@@ -123,7 +123,7 @@
     "pro": true,
     "description": "Steer an agent while it works – queue a note for the next step and watch it glide into the plan when the agent picks it up, or interrupt right away",
     "exportName": "AgentSteering",
-    "usage": "import { AgentSteering } from \"./agent-steering\";\n\nexport default function App() {\n  return <AgentSteering />;\n}"
+    "usage": "import { AgentSteering } from \"./agent-steering\";\n\nexport default function App() {\n  return <AgentSteering title=\"Migrate users table\" agent=\"Opus 5.5\" onQueue={(t) => console.log(t)} onInterrupt={(t) => console.log(t)} />;\n}"
   },
   {
     "slug": "agent-trail",
@@ -168,7 +168,7 @@
     "pro": true,
     "description": "The approval requests of an agent run as a stack of cards – the one to decide now on top with who asks, what exactly and why, the diff or arguments on it; approve, reject or change it first, and it drops into the decided list while the next rises – open ones hold the steps behind them",
     "exportName": "ApprovalGates",
-    "usage": "import { ApprovalGates } from \"./approval-gates\";\n\nexport default function App() {\n  return <ApprovalGates />;\n}"
+    "usage": "import { ApprovalGates } from \"./approval-gates\";\n\nexport default function App() {\n  return <ApprovalGates task=\"Launch the new pricing page\" onDecide={(id, decision, value) => console.info(id, decision, value)} />;\n}"
   },
   {
     "slug": "autonomy-dial",
@@ -258,7 +258,7 @@
     "pro": true,
     "description": "What agents actually say to each other – a quiet chat where every message shows who it is from and who it is for, handoffs and questions for you tagged, files as chips that open a preview, a card with details under every message, and a composer to name agents with @ or answer a question",
     "exportName": "CollaborationStream",
-    "usage": "import { CollaborationStream } from \"./collaboration-stream\";\n\nexport default function App() {\n  return <CollaborationStream />;\n}"
+    "usage": "import { CollaborationStream } from \"./collaboration-stream\";\n\nexport default function App() {\n  return <CollaborationStream onSend={({ text, to }) => console.log(text, to)} />;\n}"
   },
   {
     "slug": "combobox",
@@ -267,7 +267,7 @@
     "pro": true,
     "description": "Pick one or many from a searchable, grouped list – chips with avatars, highlighted matches, create-on-the-fly and full keyboard support",
     "exportName": "Combobox",
-    "usage": "import { Combobox } from \"./combobox\";\n\nexport default function App() {\n  return <Combobox />;\n}"
+    "usage": "import { Combobox } from \"./combobox\";\n\nexport default function App() {\n  return <Combobox label=\"Reviewers\" placeholder=\"Add reviewers…\" creatable />;\n}"
   },
   {
     "slug": "command-menu",
@@ -276,7 +276,7 @@
     "pro": true,
     "description": "Search and run anything from one field – tool actions with logos and ⌘1–⌘5, everyday commands with icons",
     "exportName": "CommandMenu",
-    "usage": "import { CommandMenu } from \"./command-menu\";\n\nexport default function App() {\n  return <CommandMenu />;\n}"
+    "usage": "import { CommandMenu } from \"./command-menu\";\n\nexport default function App() {\n  return <CommandMenu onRun={(id, query) => console.info(id, query)} />;\n}"
   },
   {
     "slug": "comment-thread",
@@ -330,7 +330,7 @@
     "pro": true,
     "description": "What fills the model's context, as a field of cells – hover a part to light it up, remove files, and compact the conversation while its cells shimmer and clear",
     "exportName": "ContextWindow",
-    "usage": "import { ContextWindow } from \"./context-window\";\n\nexport default function App() {\n  return <ContextWindow />;\n}"
+    "usage": "import { ContextWindow } from \"./context-window\";\n\nexport default function App() {\n  return <ContextWindow limit={200000} model=\"claude-sonnet-5-5\" onCompact={(id) => console.log(id)} />;\n}"
   },
   {
     "slug": "cost-waterfall",
@@ -348,7 +348,7 @@
     "pro": true,
     "description": "Spreadsheet-style table: select cells and ranges, edit in place, copy and paste, undo and sort",
     "exportName": "DataTable",
-    "usage": "import { DataTable } from \"./data-table\";\n\nexport default function App() {\n  return <DataTable />;\n}"
+    "usage": "import { DataTable } from \"./data-table\";\n\nexport default function App() {\n  return <DataTable onRowsChange={(rows) => console.log(rows)} />;\n}"
   },
   {
     "slug": "date-range-picker",
@@ -366,7 +366,7 @@
     "pro": true,
     "description": "An agent's question, asked the way Claude asks one – its own card just above the chat composer: numbered options with one Recommended, Approve / Decline for an approval, preview tiles for a pick, and a last row for your own words; a click or 1–5 answers, Later folds it to one line",
     "exportName": "DecisionCard",
-    "usage": "import { DecisionCard } from \"./decision-card\";\n\nexport default function App() {\n  return <DecisionCard />;\n}"
+    "usage": "import { DecisionCard } from \"./decision-card\";\n\nexport default function App() {\n  return <DecisionCard onDecide={(id, answer) => console.info(id, answer)} />;\n}"
   },
   {
     "slug": "decision-inbox",
@@ -429,7 +429,7 @@
     "pro": true,
     "description": "One request finding a model that answers, as a small flow diagram – the request branches out to each model in its fallback order, a light runs to the one being tried, failed branches break red, and the one that answers runs on to the response",
     "exportName": "FallbackChain",
-    "usage": "import { FallbackChain } from \"./fallback-chain\";\n\nexport default function App() {\n  return <FallbackChain />;\n}"
+    "usage": "import { FallbackChain } from \"./fallback-chain\";\n\nexport default function App() {\n  return <FallbackChain title=\"Summarize support ticket\" route=\"openrouter/auto\" />;\n}"
   },
   {
     "slug": "fan-out-grid",
@@ -456,7 +456,7 @@
     "pro": true,
     "description": "AI edits to prose shown inline – struck and added words you accept or reject one by one, with keys, a popover and undo",
     "exportName": "InlineDiff",
-    "usage": "import { InlineDiff } from \"./inline-diff\";\n\nexport default function App() {\n  return <InlineDiff />;\n}"
+    "usage": "import { InlineDiff } from \"./inline-diff\";\n\nexport default function App() {\n  return <InlineDiff original=\"We are very excited to announce the launch\" suggested=\"We launched\" onDone={(text) => console.log(text)} />;\n}"
   },
   {
     "slug": "integration-picker",
@@ -474,7 +474,7 @@
     "pro": true,
     "description": "Settings card for a connected service – on/off switch, API key, validated site address, time zone and a save bar",
     "exportName": "IntegrationSettings",
-    "usage": "import { IntegrationSettings } from \"./integration-settings\";\n\nexport default function App() {\n  return <IntegrationSettings />;\n}"
+    "usage": "import { IntegrationSettings } from \"./integration-settings\";\n\nexport default function App() {\n  return <IntegrationSettings onSave={values => console.info(values)} />;\n}"
   },
   {
     "slug": "judge-bracket",
@@ -546,7 +546,7 @@
     "pro": true,
     "description": "An agent tries the same task several ways at once and the best one wins – every attempt races as a row with its model, approach and live bar, then gets a score; the best is marked and picked, and you can switch to another",
     "exportName": "ParallelAttempts",
-    "usage": "import { ParallelAttempts } from \"./parallel-attempts\";\n\nexport default function App() {\n  return <ParallelAttempts />;\n}"
+    "usage": "import { ParallelAttempts } from \"./parallel-attempts\";\n\nexport default function App() {\n  return <ParallelAttempts task=\"Fix the flaky checkout test\" onPick={(a) => console.log(a.id)} />;\n}"
   },
   {
     "slug": "permission-request",
@@ -564,7 +564,7 @@
     "pro": true,
     "description": "An agent's plan against what really happens – every step's bar grows over its dashed planned ghost, overruns turn amber, the steps after it slide right, and the expected finish moves away from the planned one",
     "exportName": "PlanVsActual",
-    "usage": "import { PlanVsActual } from \"./plan-vs-actual\";\n\nexport default function App() {\n  return <PlanVsActual />;\n}"
+    "usage": "import { PlanVsActual } from \"./plan-vs-actual\";\n\nexport default function App() {\n  return <PlanVsActual task=\"Ship the pricing page\" now={111000} steps={[{ id: \"a\", title: \"Read the brief\", plan: 20000, start: 0, end: 16000 }, { id: \"b\", title: \"Draft the copy\", plan: 40000, deps: [\"a\"], start: 16000 }]} />;\n}"
   },
   {
     "slug": "profile-menu",
@@ -591,7 +591,7 @@
     "pro": true,
     "description": "A two-line project summary that quietly unfolds on hover – a progress ring with one segment per subtask, a people filter and a status picker, all linked by hover",
     "exportName": "ProjectCard",
-    "usage": "import { ProjectCard } from \"./project-card\";\n\nexport default function App() {\n  return <ProjectCard />;\n}"
+    "usage": "import { ProjectCard } from \"./project-card\";\n\nexport default function App() {\n  return <ProjectCard due=\"Oct 24\" defaultOpen action={{ label: \"Open\", onClick: () => {} }} />;\n}"
   },
   {
     "slug": "prompt-library",
@@ -672,7 +672,7 @@
     "pro": true,
     "description": "Onboarding panel with a progress bar and collapsible task groups that strike through when done",
     "exportName": "SetupGuide",
-    "usage": "import { SetupGuide } from \"./setup-guide\";\n\nexport default function App() {\n  return <SetupGuide />;\n}"
+    "usage": "import { SetupGuide } from \"./setup-guide\";\n\nexport default function App() {\n  return <SetupGuide onChange={(done) => console.log(done)} />;\n}"
   },
   {
     "slug": "smart-recommendation",
@@ -690,7 +690,7 @@
     "pro": true,
     "description": "A multi-step flow for onboarding and setup – steps that fill and check off, sliding steps, a card that morphs to each step, inline validation and a success state",
     "exportName": "StepperForm",
-    "usage": "import { StepperForm } from \"./stepper-form\";\n\nexport default function App() {\n  return <StepperForm />;\n}"
+    "usage": "import { StepperForm } from \"./stepper-form\";\n\nexport default function App() {\n  return <StepperForm onComplete={(v) => console.log(v)} />; // v: { name, url, invites, plan }\n}"
   },
   {
     "slug": "switch",
@@ -762,7 +762,7 @@
     "pro": true,
     "description": "Calm toasts from anywhere – a stack that fans out on hover, promise toasts that morph from spinner to check, swipe to dismiss",
     "exportName": "Toaster",
-    "usage": "import { Toaster, toast } from \"./toaster\";\n\nexport default function App() {\n  return <><button onClick={() => toast(\"Saved\")}>Save</button><Toaster /></>;\n}"
+    "usage": "import { Toaster, toast } from \"./toaster\";\n\nexport default function App() {\n  return <><button onClick={() => toast.success(\"Saved\", { description: \"All changes are up to date\" })}>Save</button><Toaster /></>;\n}"
   },
   {
     "slug": "tool-access-map",
@@ -771,7 +771,7 @@
     "pro": true,
     "description": "An agent in the middle with every tool it can reach around it – which ones it used, which failed and which it calls right now; open a tool for its calls and replay one on its own",
     "exportName": "ToolAccessMap",
-    "usage": "import { ToolAccessMap } from \"./tool-access-map\";\n\nexport default function App() {\n  return <ToolAccessMap />;\n}"
+    "usage": "import { ToolAccessMap } from \"./tool-access-map\";\n\nexport default function App() {\n  return <ToolAccessMap defaultAgent=\"coder\" />;\n}"
   },
   {
     "slug": "tool-call-card",

@@ -450,5 +450,29 @@ const css = /* css */ `
 
 /** Working example; use the named ThinkingLoader export in your application. */
 export default function Demo() {
-  return <ThinkingLoader loop />;
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setDone(true), 10000);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div style={{ width: "100%", maxWidth: 420, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16 }}>
+      <div
+        style={{
+          alignSelf: "flex-end",
+          maxWidth: "85%",
+          padding: "8px 12px",
+          borderRadius: 12,
+          background: "rgba(127,127,127,0.12)",
+          fontSize: 14,
+          lineHeight: 1.45,
+        }}
+      >
+        Which CRM fits a 10-person sales team best?
+      </div>
+      <div style={{ alignSelf: "flex-start" }}>
+        <ThinkingLoader done={done} />
+      </div>
+    </div>
+  );
 }

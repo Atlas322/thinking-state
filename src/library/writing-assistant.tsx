@@ -3,376 +3,263 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+
+export type WritingMessage = { id: number; role: "user" | "assistant"; text: string };
+
+export type WritingAssistantProps = {
+  name?: string;
+  tagline?: string;
+  greeting?: string;
+  suggestions?: string[];
+  placeholder?: string;
+  respond?: (message: string) => string | Promise<string>;
+  speech?: "auto" | "simulate";
+  dictation?: string;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const sample = (m: string) => {
+  const t = m.toLowerCase();
+  if (t.includes("shorter"))
+    return "Here's a tighter version: “Thanks for the update – I'll review the draft today and send notes by Friday.” Want it even shorter?";
+  if (t.includes("tone"))
+    return "I softened the opening and swapped “ASAP” for a clear date. It now reads warm but direct – shall I apply it to the rest?";
+  if (t.includes("reply"))
+    return "Hi Sam – thanks for sending this over. The plan looks good; I'd only move the review to Thursday so design can join. Talk soon!";
+  if (t.includes("email"))
+    return "I tidied the greeting, cut two filler sentences and ended with one clear ask. Paste the email and I'll polish the wording line by line.";
+  return "Happy to help. Paste your draft and tell me who it's for – I'll keep your voice and make it clearer.";
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+type SpeechRec = {
+  lang: string;
+  interimResults: boolean;
+  onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+};
 
 export function WritingAssistant({
-  title = "Quill",
+  name = "Quill",
+  tagline = "Your writing companion.",
+  greeting = "What should we write?",
+  suggestions = ["Polish my email", "Make it shorter", "Fix the tone", "Draft a reply"],
+  placeholder = "Ask anything…",
   respond,
-  onAction,
-  className,
-}: StudioProps & { respond?: (message: string) => Promise<string> }) {
-  const [text, setText] = React.useState("");
-  const [messages, setMessages] = React.useState<
-    { role: string; text: string }[]
-  >([
-    {
-      role: "assistant",
-      text: "What are you working on? I can help refine your writing.",
+  speech = "auto",
+  dictation = "Write a short thank-you note to the design team for shipping on time.",
+  className = "",
+}: WritingAssistantProps) {
+  const [messages, setMessages] = React.useState<WritingMessage[]>([]);
+  const [input, setInput] = React.useState("");
+  const [streaming, setStreaming] = React.useState<{ id: number; full: string; shown: number } | null>(null);
+  const [thinking, setThinking] = React.useState(false);
+  const [listening, setListening] = React.useState(false);
+  const timers = React.useRef<number[]>([]);
+  const rec = React.useRef<SpeechRec | null>(null);
+  const listRef = React.useRef<HTMLDivElement>(null);
+  const idRef = React.useRef(0);
+
+  React.useEffect(
+    () => () => {
+      timers.current.forEach((t) => window.clearTimeout(t));
+      rec.current?.stop();
     },
-  ]);
-  const [busy, setBusy] = React.useState(false);
-  const [error, setError] = React.useState("");
-  const send = async (value = text) => {
-    if (!value.trim() || busy) return;
-    setMessages((s) => [...s, { role: "user", text: value }]);
-    setText("");
-    setBusy(true);
-    setError("");
-    try {
-      const result = respond
-        ? await respond(value)
-        : `Demo response: Start with your main point, use concrete words, and keep each sentence focused.\n\nYour draft: ${value}`;
-      setMessages((s) => [...s, { role: "assistant", text: result }]);
-      onAction?.("response", {
-        id: Date.now().toString(),
-        title: value,
-        detail: result,
-      });
-    } catch (e) {
-      setError(
-        e instanceof Error
-          ? e.message
-          : "Could not generate a response. Try again.",
-      );
-    } finally {
-      setBusy(false);
+    [],
+  );
+
+  React.useEffect(() => {
+    if (!streaming || streaming.shown >= streaming.full.length) {
+      if (streaming) {
+        setMessages((m) => [...m, { id: streaming.id, role: "assistant", text: streaming.full }]);
+        setStreaming(null);
+      }
+      return;
     }
+    const t = window.setTimeout(() => setStreaming((s) => s && { ...s, shown: s.shown + 3 }), 18);
+    return () => window.clearTimeout(t);
+  }, [streaming]);
+
+  React.useEffect(() => {
+    listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
+  }, [messages, streaming, thinking]);
+
+  const send = async (text: string) => {
+    const v = text.trim();
+    if (!v || streaming || thinking) return;
+    setMessages((m) => [...m, { id: ++idRef.current, role: "user", text: v }]);
+    setInput("");
+    setThinking(true);
+    let reply: string;
+    try {
+      reply = respond
+        ? await respond(v)
+        : await new Promise<string>((res) => {
+            timers.current.push(window.setTimeout(() => res(sample(v)), 650));
+          });
+    } catch {
+      reply = "Something went wrong – try again.";
+    }
+    setThinking(false);
+    setStreaming({ id: ++idRef.current, full: reply, shown: 0 });
   };
+
+  const dictate = () => {
+    if (listening) {
+      rec.current?.stop();
+      timers.current.forEach((t) => window.clearTimeout(t));
+      setListening(false);
+      return;
+    }
+    setListening(true);
+    const W = window as unknown as { SpeechRecognition?: new () => SpeechRec; webkitSpeechRecognition?: new () => SpeechRec };
+    const Ctor = W.SpeechRecognition ?? W.webkitSpeechRecognition;
+    if (speech === "auto" && Ctor) {
+      const r = new Ctor();
+      r.lang = "en-US";
+      r.interimResults = true;
+      r.onresult = (e) => setInput(Array.from(e.results).map((x) => x[0].transcript).join(""));
+      r.onend = () => setListening(false);
+      rec.current = r;
+      try {
+        r.start();
+        return;
+      } catch {
+        /* fall back to the simulated take */
+      }
+    }
+    const words = dictation.split(" ");
+    words.forEach((_, i) => {
+      timers.current.push(window.setTimeout(() => setInput(words.slice(0, i + 1).join(" ")), 140 * (i + 1)));
+    });
+    timers.current.push(window.setTimeout(() => setListening(false), 140 * words.length + 200));
+  };
+
+  const empty = messages.length === 0 && !streaming && !thinking;
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="Your writing companion"
-      className={className}
-    >
-      <div style={{ maxHeight: 340, overflow: "auto" }}>
-        {messages.map((m, i) => (
-          <div
-            key={i}
-            className={`st-bubble ${m.role === "user" ? "user" : ""}`}
-          >
-            {m.text}
-          </div>
-        ))}
-        {busy && (
-          <p role="status" className="st-muted">
-            Writing…
-          </p>
-        )}
+    <section className={`wra ${className}`} aria-label={name}>
+      <style>{css}</style>
+      <header className="wra-head">
+        <div className="wra-name">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M6 2 7.2 5.5 10.5 6.5 7.2 7.5 6 11 4.8 7.5 1.5 6.5 4.8 5.5ZM12 9.5l.6 1.5 1.5.6-1.5.6-.6 1.5-.6-1.5-1.5-.6 1.5-.6Z" fill="url(#wra-g)" />
+            <defs>
+              <linearGradient id="wra-g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#d946ef" />
+                <stop offset="1" stopColor="#6366f1" />
+              </linearGradient>
+            </defs>
+          </svg>
+          {name}
+        </div>
+        <div className="wra-tag">{tagline}</div>
+      </header>
+      <div className="wra-stage">
+        <div className={`wra-glow${listening ? " is-listening" : ""}`} aria-hidden="true" />
+        <div className="wra-scroll" ref={listRef} aria-live="polite">
+          {empty ? (
+            <div className="wra-welcome">
+              <p className="wra-greet">{greeting}</p>
+              <div className="wra-chips">
+                {suggestions.map((s) => (
+                  <button key={s} type="button" onClick={() => send(s)}>
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="wra-thread">
+              {messages.map((m) => (
+                <div key={m.id} className={`wra-msg is-${m.role}`}>
+                  {m.text}
+                </div>
+              ))}
+              {thinking && (
+                <div className="wra-msg is-assistant wra-dots" aria-label="Writing">
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              )}
+              {streaming && (
+                <div className="wra-msg is-assistant">
+                  {streaming.full.slice(0, streaming.shown)}
+                  <span className="wra-caret" />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        <form
+          className="wra-input"
+          onSubmit={(e) => {
+            e.preventDefault();
+            send(input);
+          }}
+        >
+          <input aria-label="Message" placeholder={listening ? "Listening…" : placeholder} value={input} onChange={(e) => setInput(e.target.value)} />
+          {input.trim() && !listening ? (
+            <button type="submit" className="wra-send" aria-label="Send">
+              <svg viewBox="0 0 16 16"><path d="M8 12.5v-9M4.5 7 8 3.5 11.5 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+          ) : (
+            <button type="button" className={`wra-mic${listening ? " is-on" : ""}`} aria-label={listening ? "Stop dictation" : "Dictate"} aria-pressed={listening} onClick={dictate}>
+              {listening ? (
+                <span className="wra-bars" aria-hidden="true"><i /><i /><i /><i /></span>
+              ) : (
+                <svg viewBox="0 0 16 16"><rect x="6" y="1.8" width="4" height="8" rx="2" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M3.8 7.5a4.2 4.2 0 0 0 8.4 0M8 11.7v2.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+              )}
+            </button>
+          )}
+        </form>
       </div>
-      {messages.length === 1 && (
-        <div className="st-actions">
-          {[
-            "Make it shorter",
-            "Improve the tone",
-            "Find a stronger opening",
-          ].map((v) => (
-            <UI.Button key={v} onClick={() => setText(v + ": ")}>
-              {v}
-            </UI.Button>
-          ))}
-        </div>
-      )}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          send();
-        }}
-      >
-        <label className="st-field">
-          <span>Your message</span>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Paste a draft or ask a question…"
-          />
-        </label>
-        {error && (
-          <p role="alert" style={{ color: "var(--st-red)" }}>
-            {error}
-          </p>
-        )}
-        <div className="st-actions">
-          <UI.Button type="submit" primary disabled={busy || !text.trim()}>
-            {busy ? "Writing…" : "Send →"}
-          </UI.Button>
-          <small>
-            {respond
-              ? "Connected to your response handler"
-              : "Local demo · no AI service connected"}
-          </small>
-        </div>
-      </form>
-    </UI.Panel>
+    </section>
   );
 }
+
+const css = `
+.wra{--wra-bg:#fff;--wra-fg:#18181b;--wra-muted:#71717a;--wra-faint:#a1a1aa;--wra-line:#ececef;--wra-chip:#f4f4f5;--wra-glow-a:#f0abfc;--wra-glow-b:#a5b4fc;--wra-glow-c:#c4b5fd;width:100%;max-width:380px;background:var(--wra-bg);color:var(--wra-fg);border:1px solid var(--wra-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.5 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .wra{--wra-bg:#1b1b1e;--wra-fg:#ececef;--wra-muted:#a1a1aa;--wra-faint:#71717a;--wra-line:#2e2e33;--wra-chip:#2a2a2f;--wra-glow-a:#86198f;--wra-glow-b:#3730a3;--wra-glow-c:#5b21b6;color-scheme:dark}
+.wra *{box-sizing:border-box}.wra button,.wra input{font:inherit;color:inherit}.wra button{cursor:pointer}
+.wra-head{padding:14px 16px 12px;border-bottom:1px solid var(--wra-line)}
+.wra-name{display:flex;align-items:center;gap:6px;font-weight:500}.wra-name svg{width:14px;height:14px}
+.wra-tag{font-size:12px;color:var(--wra-muted)}
+.wra-stage{position:relative;display:flex;flex-direction:column;height:340px;overflow:hidden}
+.wra-glow{position:absolute;inset:auto -5% -20% -5%;height:80%;pointer-events:none;background:radial-gradient(40% 35% at 30% 45%,color-mix(in srgb,var(--wra-glow-a) 65%,transparent),transparent 70%),radial-gradient(45% 40% at 62% 62%,color-mix(in srgb,var(--wra-glow-c) 65%,transparent),transparent 70%),radial-gradient(45% 35% at 40% 85%,color-mix(in srgb,var(--wra-glow-b) 55%,transparent),transparent 70%);filter:blur(10px);animation:wra-drift 9s ease-in-out infinite alternate}
+.wra-glow.is-listening{animation-duration:2.4s;opacity:1}
+.wra-scroll{position:relative;flex:1;overflow-y:auto;display:flex;flex-direction:column;padding:16px 16px 4px}
+.wra-welcome{margin-top:auto}
+.wra-greet{margin:0 0 12px;font-size:15px;font-weight:500}
+.wra-chips{display:flex;flex-wrap:wrap;gap:6px}
+.wra-chips button{height:28px;padding:0 9px;border:0;border-radius:6px;background:color-mix(in srgb,var(--wra-bg) 80%,transparent);box-shadow:0 0 0 1px var(--wra-line);font-size:13.5px;color:color-mix(in srgb,var(--wra-fg) 85%,transparent);backdrop-filter:blur(6px);transition:background .15s}
+.wra-chips button:hover{background:var(--wra-bg)}
+.wra-thread{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.wra-msg{max-width:88%;font-size:14px;animation:wra-in .25s both}
+.wra-msg.is-user{align-self:flex-end;padding:6px 11px;border-radius:12px;background:var(--wra-chip)}
+.wra-msg.is-assistant{align-self:flex-start}
+.wra-caret{display:inline-block;width:6px;height:6px;margin-left:3px;border-radius:50%;background:var(--wra-fg);vertical-align:1px;animation:wra-blink 1s infinite}
+.wra-dots{display:flex;gap:3px;padding:8px 0}.wra-dots i{width:5px;height:5px;border-radius:50%;background:var(--wra-faint);animation:wra-bounce 1s infinite}
+.wra-dots i:nth-child(2){animation-delay:.15s}.wra-dots i:nth-child(3){animation-delay:.3s}
+.wra-input{position:relative;display:flex;align-items:center;gap:8px;height:48px;padding:0 10px 0 16px}
+.wra-input input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:14px}.wra-input input::placeholder{color:var(--wra-faint)}
+.wra-mic,.wra-send{display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:none;color:var(--wra-muted)}
+.wra-mic:hover{background:color-mix(in srgb,var(--wra-fg) 7%,transparent);color:var(--wra-fg)}
+.wra-mic svg,.wra-send svg{width:14px;height:14px}
+.wra-send{background:var(--wra-fg);color:var(--wra-bg)}
+.wra-mic.is-on{background:var(--wra-fg);color:var(--wra-bg)}
+.wra-bars{display:flex;align-items:center;gap:2px;height:12px}.wra-bars i{width:2px;height:100%;border-radius:1px;background:currentColor;animation:wra-bar .8s ease-in-out infinite}
+.wra-bars i:nth-child(2){animation-delay:.1s}.wra-bars i:nth-child(3){animation-delay:.2s}.wra-bars i:nth-child(4){animation-delay:.3s}
+.wra :focus-visible{outline:2px solid #8b5cf6;outline-offset:2px}
+@keyframes wra-drift{to{transform:translate(4%,-4%) scale(1.06)}}
+@keyframes wra-in{from{opacity:0;transform:translateY(4px)}}
+@keyframes wra-blink{50%{opacity:0}}
+@keyframes wra-bounce{50%{transform:translateY(-3px)}}
+@keyframes wra-bar{50%{transform:scaleY(.35)}}
+@media(max-width:400px){.wra-stage{height:300px}.wra-scroll{padding:12px 12px 4px}}
+@media(prefers-reduced-motion:reduce){.wra *{animation:none!important;transition:none!important}}
+`;
 
 export default WritingAssistant;

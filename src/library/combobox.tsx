@@ -3,379 +3,396 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
+
+export type ComboboxOption = {
+  value: string;
+  label: string;
+  hint?: string;
+  /** Image URL, or true for initials. */
+  avatar?: string | boolean;
   color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  icon?: React.ReactNode;
+  group?: string;
+  keywords?: string[];
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+
+export type ComboboxProps = {
+  options?: ComboboxOption[];
+  multiple?: boolean;
+  value?: string[];
+  defaultValue?: string[];
+  onChange?: (value: string[], options: ComboboxOption[]) => void;
+  placeholder?: string;
+  creatable?: boolean;
+  onCreate?: (text: string) => ComboboxOption | void;
+  createLabel?: (text: string) => string;
+  maxVisibleTags?: number;
+  label?: string;
+  defaultOpen?: boolean;
+  emptyText?: string;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
+const defaultOptions: ComboboxOption[] = [
+  { value: "maya", label: "Maya Chen", hint: "Product Designer", avatar: true, group: "Design" },
+  { value: "jonas", label: "Jonas Weber", hint: "Design Lead", avatar: true, group: "Design" },
+  { value: "priya", label: "Priya Raman", hint: "Brand Designer", avatar: true, group: "Design" },
+  { value: "sara", label: "Sara Okafor", hint: "Staff Engineer", avatar: true, group: "Engineering" },
+  { value: "leo", label: "Leo Martins", hint: "Frontend", avatar: true, group: "Engineering" },
+  { value: "nina", label: "Nina Petrova", hint: "Backend", avatar: true, group: "Engineering" },
+  { value: "tom", label: "Tom Becker", hint: "iOS", avatar: true, group: "Engineering" },
+  { value: "ava", label: "Ava Lindqvist", hint: "Product Manager", avatar: true, group: "Product" },
+  { value: "omar", label: "Omar Haddad", hint: "Product Analyst", avatar: true, group: "Product" },
+];
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const initials = (s: string) =>
+  s
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
-export function Combobox({
-  title = "Assign teammates",
-  items = [
-    { id: "maya", title: "Maya Chen", detail: "Design" },
-    { id: "jonas", title: "Jonas Weber", detail: "Engineering" },
-    { id: "lena", title: "Lena Hart", detail: "Operations" },
-    { id: "sam", title: "Sam Rivera", detail: "Engineering" },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [query, setQuery] = React.useState("");
-  const [chosen, setChosen] = React.useState<StudioItem[]>(
-    [items[0]].filter(Boolean),
-  );
-  const [focus, setFocus] = React.useState(0);
-  const listId = React.useId();
-  const filtered = items.filter((x) =>
-    x.title.toLowerCase().includes(query.toLowerCase()),
-  );
-  const toggle = (x: StudioItem) => {
-    setChosen((s) =>
-      s.some((v) => v.id === x.id) ? s.filter((v) => v.id !== x.id) : [...s, x],
-    );
-    onAction?.("select", x);
-  };
+function Highlight({ text, query }: { text: string; query: string }) {
+  const q = query.trim();
+  const i = q ? text.toLowerCase().indexOf(q.toLowerCase()) : -1;
+  if (i < 0) return <>{text}</>;
   return (
-    <UI.Panel title={title} className={className}>
-      <div className="st-actions">
-        {chosen.map((x) => (
-          <span className="st-chip" key={x.id}>
-            {x.title}
-            <button aria-label={`Remove ${x.title}`} onClick={() => toggle(x)}>
-              ×
-            </button>
-          </span>
-        ))}
-      </div>
-      <input
-        className="st-input"
-        style={{ marginTop: 14 }}
-        aria-label="Search teammates"
-        role="combobox"
-        aria-expanded={true}
-        aria-controls={listId}
-        aria-activedescendant={
-          filtered[focus] ? `${listId}-${focus}` : undefined
-        }
-        placeholder="Search or add a person…"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setFocus(0);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowDown") {
-            e.preventDefault();
-            setFocus((i) => Math.min(i + 1, filtered.length - 1));
-          }
-          if (e.key === "ArrowUp") {
-            e.preventDefault();
-            setFocus((i) => Math.max(0, i - 1));
-          }
-          if (e.key === "Enter" && filtered[focus]) {
-            e.preventDefault();
-            toggle(filtered[focus]);
-          }
-          if (e.key === "Escape") setQuery("");
-        }}
-      />
-      <div
-        id={listId}
-        role="listbox"
-        aria-label="Teammates"
-        aria-multiselectable="true"
-      >
-        {filtered.map((x, i) => (
-          <div
-            key={x.id}
-            id={`${listId}-${i}`}
-            role="option"
-            aria-selected={chosen.some((v) => v.id === x.id)}
-          >
-            <UI.Row
-              title={x.title}
-              detail={x.detail}
-              icon={<UI.Avatar name={x.title} />}
-              onClick={() => toggle(x)}
-            >
-              <span style={{ color: "var(--st-accent)" }}>
-                {chosen.some((v) => v.id === x.id)
-                  ? "✓"
-                  : i === focus
-                    ? "↵"
-                    : ""}
-              </span>
-            </UI.Row>
-          </div>
-        ))}
-      </div>
-      {!filtered.length && (
-        <UI.Button
-          onClick={() => {
-            toggle({ id: query, title: query, detail: "New person" });
-            setQuery("");
-          }}
-        >
-          + Create “{query}”
-        </UI.Button>
-      )}
-    </UI.Panel>
+    <>
+      {text.slice(0, i)}
+      <mark>{text.slice(i, i + q.length)}</mark>
+      {text.slice(i + q.length)}
+    </>
   );
 }
 
-export default Combobox;
+function Avatar({ o }: { o: ComboboxOption }) {
+  if (o.icon) return <span className="cb-ico">{o.icon}</span>;
+  if (typeof o.avatar === "string") return <img className="cb-av" src={o.avatar} alt="" />;
+  if (o.avatar) return <span className="cb-av" style={{ background: o.color }}>{initials(o.label)}</span>;
+  if (o.color) return <span className="cb-dot" style={{ background: o.color }} />;
+  return null;
+}
+
+export function Combobox({
+  options: optionsProp = defaultOptions,
+  multiple = true,
+  value: valueProp,
+  defaultValue = [],
+  onChange,
+  placeholder = "Search…",
+  creatable = false,
+  onCreate,
+  createLabel = (t) => `Create “${t}”`,
+  maxVisibleTags,
+  label,
+  defaultOpen = false,
+  emptyText = "No results",
+  className = "",
+}: ComboboxProps) {
+  const [created, setCreated] = React.useState<ComboboxOption[]>([]);
+  const options = React.useMemo(() => [...optionsProp, ...created], [optionsProp, created]);
+  const [inner, setInner] = React.useState<string[]>(defaultValue);
+  const value = valueProp ?? inner;
+  const [open, setOpen] = React.useState(defaultOpen);
+  const [query, setQuery] = React.useState("");
+  const [active, setActive] = React.useState(0);
+  const [hotChip, setHotChip] = React.useState(false);
+  const [announce, setAnnounce] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const id = React.useId();
+  const listId = `${id}-list`;
+
+  const q = query.trim().toLowerCase();
+  const filtered = options.filter(
+    (o) =>
+      !q ||
+      o.label.toLowerCase().includes(q) ||
+      o.hint?.toLowerCase().includes(q) ||
+      o.keywords?.some((k) => k.toLowerCase().includes(q)),
+  );
+  const showCreate = creatable && q.length > 0 && !options.some((o) => o.label.toLowerCase() === q);
+  const rows: (ComboboxOption | "create")[] = [...filtered, ...(showCreate ? ["create" as const] : [])];
+
+  const groups: { name?: string; items: { o: ComboboxOption; i: number }[] }[] = [];
+  filtered.forEach((o, i) => {
+    const g = groups.find((x) => x.name === o.group);
+    if (g) g.items.push({ o, i });
+    else groups.push({ name: o.group, items: [{ o, i }] });
+  });
+  // keep index order consistent with grouping
+  const ordered = groups.flatMap((g) => g.items);
+  const indexOf = (i: number) => ordered.findIndex((x) => x.i === i);
+
+  const commit = (next: string[], msg: string) => {
+    if (valueProp === undefined) setInner(next);
+    onChange?.(next, next.map((v) => options.find((o) => o.value === v)).filter(Boolean) as ComboboxOption[]);
+    setAnnounce(`${msg}. ${next.length} selected.`);
+  };
+
+  const toggle = (o: ComboboxOption) => {
+    const has = value.includes(o.value);
+    if (multiple) commit(has ? value.filter((v) => v !== o.value) : [...value, o.value], `${o.label} ${has ? "removed" : "added"}`);
+    else {
+      commit(has ? [] : [o.value], `${o.label} ${has ? "removed" : "selected"}`);
+      setOpen(false);
+    }
+    setQuery("");
+  };
+
+  const create = () => {
+    const text = query.trim();
+    const made = onCreate?.(text) || { value: text, label: text, avatar: true, color: "#ececef" };
+    setCreated((c) => [...c, made]);
+    const next = multiple ? [...value, made.value] : [made.value];
+    if (valueProp === undefined) setInner(next);
+    onChange?.(next, [...options, made].filter((o) => next.includes(o.value)));
+    setAnnounce(`${made.label} created. ${next.length} selected.`);
+    setQuery("");
+    if (!multiple) setOpen(false);
+  };
+
+  const pickActive = () => {
+    const visualRow = active < ordered.length ? ordered[active]?.o : showCreate ? "create" : undefined;
+    if (visualRow === "create") create();
+    else if (visualRow) toggle(visualRow);
+  };
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [open]);
+
+  React.useEffect(() => setActive(0), [query]);
+
+  const picked = value.map((v) => options.find((o) => o.value === v)).filter(Boolean) as ComboboxOption[];
+  const limit = maxVisibleTags ?? 3;
+  const shown = multiple ? picked.slice(0, limit) : [];
+  const overflow = multiple ? picked.length - shown.length : 0;
+  const single = !multiple ? picked[0] : undefined;
+  const activeId = open && rows.length ? `${id}-opt-${active}` : undefined;
+
+  return (
+    <div ref={rootRef} className={`cb ${className}`}>
+      <style>{css}</style>
+      {label && (
+        <label className="cb-label" htmlFor={`${id}-input`} id={`${id}-label`}>
+          {label}
+        </label>
+      )}
+      <div
+        className={`cb-field ${open ? "open" : ""}`}
+        onMouseDown={(e) => {
+          if (e.target !== inputRef.current) e.preventDefault();
+          inputRef.current?.focus();
+          setOpen(true);
+        }}
+      >
+        {shown.map((o, i) => (
+          <span key={o.value} className={`cb-chip ${hotChip && i === shown.length - 1 && !overflow ? "hot" : ""}`}>
+            <Avatar o={o} />
+            <span className="cb-chip-t">{o.label}</span>
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-label={`Remove ${o.label}`}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggle(o);
+              }}
+            >
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3.5 3.5 5 5m0-5-5 5" /></svg>
+            </button>
+          </span>
+        ))}
+        {overflow > 0 && <span className={`cb-chip cb-more ${hotChip ? "hot" : ""}`}>+{overflow}</span>}
+        {single && !query && (
+          <span className="cb-single">
+            <Avatar o={single} />
+            {single.label}
+          </span>
+        )}
+        <input
+          ref={inputRef}
+          id={`${id}-input`}
+          className="cb-input"
+          role="combobox"
+          aria-expanded={open}
+          aria-controls={listId}
+          aria-activedescendant={activeId}
+          aria-autocomplete="list"
+          aria-label={label ? undefined : placeholder}
+          placeholder={picked.length ? "" : placeholder}
+          value={query}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setHotChip(false)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setOpen(true);
+            setHotChip(false);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+              e.preventDefault();
+              if (!open) return setOpen(true);
+              const n = rows.length;
+              if (!n) return;
+              setActive((a) => (e.key === "ArrowDown" ? (a + 1) % n : (a - 1 + n) % n));
+            } else if (e.key === "Enter") {
+              if (open && rows.length) {
+                e.preventDefault();
+                pickActive();
+              }
+            } else if (e.key === "Escape") {
+              if (open) setOpen(false);
+              else setQuery("");
+            } else if (e.key === "Tab") {
+              setOpen(false);
+            } else if (e.key === "Backspace" && !query && picked.length) {
+              if (hotChip) {
+                toggle(picked[picked.length - 1]);
+                setHotChip(false);
+              } else setHotChip(true);
+            }
+          }}
+        />
+        <svg className="cb-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m5 6.5 3 3 3-3" /></svg>
+      </div>
+
+      {open && (
+        <div className="cb-pop">
+          <div
+            id={listId}
+            role="listbox"
+            aria-labelledby={label ? `${id}-label` : undefined}
+            aria-label={label ? undefined : placeholder}
+            aria-multiselectable={multiple || undefined}
+            className="cb-list"
+            onMouseDown={(e) => e.preventDefault()}
+            onMouseLeave={() => setActive(-1)}
+          >
+            {groups.map((g, gi) => (
+              <div role="group" key={g.name ?? gi} aria-label={g.name}>
+                {g.name && <div className="cb-group">{g.name}</div>}
+                {g.items.map(({ o, i }) => {
+                  const idx = indexOf(i);
+                  const sel = value.includes(o.value);
+                  return (
+                    <div
+                      key={o.value}
+                      id={`${id}-opt-${idx}`}
+                      role="option"
+                      aria-selected={sel}
+                      className={`cb-opt ${idx === active ? "active" : ""}`}
+                      onMouseMove={() => setActive(idx)}
+                      onClick={() => toggle(o)}
+                    >
+                      <Avatar o={o} />
+                      <span className="cb-opt-t">
+                        <Highlight text={o.label} query={query} />
+                      </span>
+                      {o.hint && <span className="cb-hint">{o.hint}</span>}
+                      <svg className={`cb-check ${sel ? "on" : ""}`} viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="m3.5 8.5 3 3 6-7" />
+                      </svg>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+            {showCreate && (
+              <div
+                id={`${id}-opt-${ordered.length}`}
+                role="option"
+                aria-selected={false}
+                className={`cb-opt cb-create ${active === ordered.length ? "active" : ""}`}
+                onMouseMove={() => setActive(ordered.length)}
+                onClick={create}
+              >
+                <span className="cb-ico">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9" /></svg>
+                </span>
+                {createLabel(query.trim())}
+              </div>
+            )}
+            {!rows.length && <div className="cb-empty">{emptyText}</div>}
+          </div>
+          <div className="cb-count">
+            <span>{multiple ? `${value.length} selected` : `${filtered.length} options`}</span>
+            <span className="cb-keys">
+              <kbd>↑</kbd><kbd>↓</kbd> to move <kbd>↵</kbd> to toggle
+            </span>
+          </div>
+        </div>
+      )}
+      <span className="cb-sr" aria-live="polite">{announce}</span>
+    </div>
+  );
+}
+
+const css = `
+.cb{--cb-bg:#fff;--cb-fg:#18181b;--cb-muted:#71717a;--cb-faint:#a1a1aa;--cb-line:#e7e7ea;--cb-soft:#f4f4f5;--cb-hover:#f1f1f3;--cb-accent:#3b82f6;--cb-mark:#fdf0b5;position:relative;width:100%;max-width:420px;color:var(--cb-fg);font:400 14px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .cb{--cb-bg:#1b1b1e;--cb-fg:#ececef;--cb-muted:#a1a1aa;--cb-faint:#71717a;--cb-line:#2e2e33;--cb-soft:#26262a;--cb-hover:#2a2a2f;--cb-accent:#60a5fa;--cb-mark:#5b4a12;color-scheme:dark}
+.cb *{box-sizing:border-box}.cb button{font:inherit;color:inherit;cursor:pointer}
+.cb-label{display:block;margin:0 0 6px 2px;font-size:12px;font-weight:500}
+.cb-field{display:flex;align-items:center;gap:4px;min-height:34px;padding:3px 30px 3px 4px;border:1px solid var(--cb-line);border-radius:8px;background:var(--cb-bg);box-shadow:0 1px 2px #00000008;position:relative;cursor:text;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.cb-field:focus-within{border-color:color-mix(in srgb,var(--cb-fg) 22%,var(--cb-line))}.cb-field:has(.cb-input:focus-visible){box-shadow:0 0 0 3px color-mix(in srgb,var(--cb-accent) 16%,transparent)}
+.cb-input{flex:1;min-width:60px;height:26px;padding:0 6px;border:0;outline:0;background:none;color:inherit;font:inherit;font-size:13px}
+.cb-input::placeholder{color:var(--cb-faint)}.cb .cb-input:focus,.cb .cb-input:focus-visible{outline:none;box-shadow:none}
+.cb-chev{position:absolute;right:9px;top:50%;width:14px;height:14px;margin-top:-7px;fill:none;stroke:var(--cb-muted);stroke-width:1.4;stroke-linecap:round;transition:transform .15s}
+.cb-field.open .cb-chev{transform:rotate(180deg)}
+.cb-chip{display:inline-flex;align-items:center;gap:5px;flex:none;max-width:150px;height:24px;padding:0 3px 0 4px;border-radius:6px;background:var(--cb-soft);font-size:12.5px;animation:cb-pop .18s cubic-bezier(.3,1.4,.5,1)}
+.cb-chip.hot{background:color-mix(in srgb,var(--cb-accent) 18%,var(--cb-bg))}
+.cb-chip-t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cb-chip button{display:grid;place-items:center;width:16px;height:16px;padding:0;border:0;border-radius:4px;background:none;color:var(--cb-muted)}
+.cb-chip button:hover{background:color-mix(in srgb,var(--cb-fg) 10%,transparent);color:var(--cb-fg)}
+.cb-chip button svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+.cb-more{padding:0 7px;color:var(--cb-muted)}
+.cb-single{display:inline-flex;align-items:center;gap:7px;padding-left:6px;font-size:13px;flex:none}
+.cb-av{display:grid;place-items:center;width:18px;height:18px;flex:none;border-radius:50%;background:var(--cb-soft);border:1px solid var(--cb-line);font-size:7.5px;font-weight:500;color:var(--cb-muted);object-fit:cover}
+.cb-chip .cb-av{width:16px;height:16px;font-size:8px}
+.cb-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.cb-ico{display:grid;place-items:center;width:18px;height:18px;flex:none;color:var(--cb-muted)}.cb-ico svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+.cb-pop{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 6px);border:1px solid var(--cb-line);border-radius:10px;background:var(--cb-bg);box-shadow:0 10px 30px #0000001a,0 1px 3px #0000000d;overflow:hidden;animation:cb-in .14s ease-out}
+.cb-label+.cb-field+.cb-pop{top:calc(100% + 6px)}
+.cb-list{max-height:300px;overflow:auto;padding:4px}
+.cb-group{padding:10px 8px 4px;font-size:10.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--cb-muted)}
+.cb-opt{display:flex;align-items:center;gap:9px;height:32px;padding:0 8px;border-radius:6px;cursor:pointer;font-size:13px;transition:background .08s}
+.cb-opt.active{background:var(--cb-hover)}
+.cb-opt-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cb-opt mark{background:var(--cb-mark);color:inherit;border-radius:2px}
+.cb-hint{color:var(--cb-muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cb-check{width:15px;height:15px;margin-left:auto;flex:none;fill:none;stroke:var(--cb-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.4);transition:opacity .15s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+.cb-check.on{opacity:1;transform:none}
+.cb-create{color:var(--cb-muted)}
+.cb-empty{padding:18px 8px;text-align:center;color:var(--cb-faint);font-size:13px}
+.cb-count{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;border-top:1px solid var(--cb-line);font-size:12px;color:var(--cb-muted)}
+.cb-keys{color:var(--cb-faint)}.cb-keys kbd{font:inherit;font-size:10.5px;padding:0 4px;margin:0 1px;border:1px solid var(--cb-line);border-radius:4px}
+.cb-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@keyframes cb-pop{from{transform:scale(.7);opacity:0}}
+@keyframes cb-in{from{opacity:0;transform:translateY(-4px)}}
+@media(pointer:coarse){.cb-opt{height:44px}.cb-input{font-size:16px}.cb-chip button{width:24px;height:24px}}
+@media(max-width:480px){.cb-keys{display:none}.cb-chip{max-width:110px}}
+@media(prefers-reduced-motion:reduce){.cb *{animation:none!important;transition:none!important}}
+`;
+
+export function Demo() {
+  return (
+    <div style={{ width: "100%", maxWidth: 420, minHeight: 390 }}>
+      <Combobox
+        label="Reviewers"
+        placeholder="Add reviewers…"
+        creatable
+        createLabel={(t) => `Invite “${t}”`}
+      />
+    </div>
+  );
+}
+
+export default Demo;

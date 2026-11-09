@@ -3,373 +3,340 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type PlanStep = {
   id: string;
   title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
+  /** Planned duration in ms. */
+  plan: number;
+  /** Ids of the steps that have to finish first. */
+  deps?: string[];
+  /** Real start and end in ms from the start of the run. */
+  start?: number;
+  end?: number;
+  icon?: React.ReactNode;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
+export type PlanVsActualProps = {
+  steps?: PlanStep[];
+  /** Where the run is, in ms from its start. Omit to let the demo run. */
+  now?: number;
+  task?: string;
+  title?: string;
+  /** Spent and budgeted cost shown in the header. */
+  cost?: [spent: number, budget: number];
+  formatTime?: (ms: number) => string;
+  className?: string;
+};
+
+const S = 1000;
+const demoSteps: PlanStep[] = [
+  { id: "brief", title: "Read the brief", plan: 20 * S, start: 0, end: 16 * S },
+  { id: "copy", title: "Draft the copy", plan: 40 * S, deps: ["brief"], start: 16 * S, end: 68 * S },
+  { id: "layout", title: "Build the layout", plan: 60 * S, deps: ["brief"], start: 16 * S, end: 101 * S },
+  { id: "tests", title: "Write the tests", plan: 30 * S, deps: ["copy"], start: 69 * S, end: 97 * S },
+  { id: "stripe", title: "Wire up Stripe", plan: 45 * S, deps: ["layout"], start: 101 * S },
+  { id: "fix", title: "Run tests and fix", plan: 35 * S, deps: ["tests", "stripe"] },
+  { id: "pr", title: "Open the pull request", plan: 15 * S, deps: ["fix"] },
+];
+
+const clock = (ms: number) => {
+  const s = Math.max(0, Math.round(ms / 1000));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+};
+const signed = (ms: number) => {
+  const s = Math.round(ms / 1000);
+  return s === 0 ? "±0s" : `${s > 0 ? "+" : "−"}${Math.abs(s)}s`;
+};
+
+type Layout = {
+  step: PlanStep;
+  state: "done" | "running" | "waiting";
+  planStart: number;
+  planEnd: number;
+  start: number;
+  end: number;
+  /** Where a running bar is now. */
+  cursor: number;
+};
+
+/** A waiting step starts a moment after the steps it waits for. */
+const handoff = 1000;
+
+function layout(steps: PlanStep[], now: number) {
+  const byId = new Map<string, Layout>();
+  const rows = steps.map((step) => {
+    const deps = (step.deps ?? []).map((d) => byId.get(d)).filter(Boolean) as Layout[];
+    const planStart = deps.length ? Math.max(...deps.map((d) => d.planEnd)) : 0;
+    const planEnd = planStart + step.plan;
+    let row: Layout;
+    if (step.start != null && step.end != null)
+      row = { step, state: "done", planStart, planEnd, start: step.start, end: step.end, cursor: step.end };
+    else if (step.start != null)
+      row = {
+        step,
+        state: "running",
+        planStart,
+        planEnd,
+        start: step.start,
+        end: Math.max(now, step.start + step.plan),
+        cursor: Math.max(step.start, now),
+      };
+    else {
+      const start = Math.max(now, deps.length ? Math.max(...deps.map((d) => d.end)) + handoff : 0);
+      row = { step, state: "waiting", planStart, planEnd, start, end: start + step.plan, cursor: start };
+    }
+    byId.set(step.id, row);
+    return row;
+  });
+  return rows;
+}
+
+function StatusIcon({ state }: { state: Layout["state"] }) {
+  if (state === "done")
     return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
+      <svg viewBox="0 0 16 16" aria-hidden="true" className="pva-st done">
+        <path d="m3.5 8.5 3 3 6-7" />
       </svg>
     );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
-
-export function PlanVsActual({
-  title = "Ship the pricing page",
-  items = [
-    {
-      id: "brief",
-      title: "Read the brief",
-      value: 20,
-      cost: 16,
-      status: "done",
-    },
-    {
-      id: "layout",
-      title: "Build the layout",
-      value: 60,
-      cost: 78,
-      status: "running",
-    },
-    {
-      id: "stripe",
-      title: "Wire up billing",
-      value: 45,
-      cost: 0,
-      status: "queued",
-    },
-    {
-      id: "test",
-      title: "Review and test",
-      value: 30,
-      cost: 0,
-      status: "queued",
-    },
-  ],
-  className,
-}: StudioProps) {
-  const [showPlan, setShowPlan] = React.useState(true);
-  const sec = UI.useClock();
-  let offset = 0;
+  if (state === "running") return <i className="pva-spin" aria-hidden="true" />;
   return (
-    <UI.Panel
-      title={title}
-      subtitle="Planned time and actual time, side by side"
-      className={className}
-    >
-      <label className="st-checkline">
-        <input
-          type="checkbox"
-          checked={showPlan}
-          onChange={(e) => setShowPlan(e.target.checked)}
-        />
-        Show planned duration
-      </label>
-      {items.map((x) => {
-        const start = offset;
-        offset += x.value ?? 0;
-        const actual = (x.cost ?? 0) + (x.status === "running" ? sec : 0);
-        return (
-          <div className="st-row" key={x.id}>
-            <span style={{ width: 110, fontSize: 11 }}>
-              {x.title}
-              <small>{x.status}</small>
-            </span>
-            <div
-              className="st-grow"
-              style={{ position: "relative", height: 36 }}
-            >
-              {showPlan && (
-                <span
-                  style={{
-                    position: "absolute",
-                    left: start / 3 + "%",
-                    width: (x.value ?? 0) / 3 + "%",
-                    height: 20,
-                    border: "1px dashed var(--st-muted)",
-                    borderRadius: 4,
-                    top: 2,
-                  }}
-                />
-              )}
-              {actual > 0 && (
-                <span
-                  title={`${actual}s actual / ${x.value}s planned`}
-                  style={{
-                    position: "absolute",
-                    left: start / 3 + "%",
-                    width: Math.min(100 - start / 3, actual / 3) + "%",
-                    height: 20,
-                    top: 12,
-                    borderRadius: 4,
-                    background:
-                      actual > (x.value ?? 0)
-                        ? "var(--st-amber)"
-                        : "var(--st-accent)",
-                    opacity: 0.7,
-                  }}
-                />
-              )}
-            </div>
-            <small>{actual || "—"}s</small>
-          </div>
-        );
-      })}
-      <div className="st-actions">
-        <UI.Badge tone="amber">Layout is taking longer than planned</UI.Badge>
-      </div>
-    </UI.Panel>
+    <svg viewBox="0 0 16 16" aria-hidden="true" className="pva-st wait">
+      <circle cx="8" cy="8" r="5" strokeDasharray="2 2.2" />
+    </svg>
   );
 }
+
+export function PlanVsActual({
+  steps = demoSteps,
+  now: nowProp,
+  task = "Ship the pricing page",
+  title = "Plan vs actual",
+  cost,
+  formatTime = clock,
+  className = "",
+}: PlanVsActualProps) {
+  const demo = nowProp == null && steps === demoSteps;
+  const [tick, setTick] = React.useState(110 * S);
+  React.useEffect(() => {
+    if (!demo) return;
+    const id = window.setInterval(() => setTick((t) => (t >= 160 * S ? t : t + S)), 1000);
+    return () => window.clearInterval(id);
+  }, [demo]);
+  const now = nowProp ?? (demo ? tick : 0);
+  const [hover, setHover] = React.useState<string | null>(null);
+
+  const rows = React.useMemo(() => layout(steps, now), [steps, now]);
+  const planTotal = Math.max(0, ...rows.map((r) => r.planEnd));
+  const eta = Math.max(planTotal ? 0 : 0, ...rows.map((r) => r.end));
+  const behind = eta - planTotal;
+  const domain = Math.max(60 * S, Math.max(eta, planTotal) * 1.4);
+  const tickStep = domain > 10 * 60 * S ? 120 * S : domain > 5 * 60 * S ? 60 * S : 30 * S;
+  const ticks: number[] = [];
+  for (let t = tickStep; t < domain - tickStep / 2; t += tickStep) ticks.push(t);
+  const pct = (ms: number) => `${(Math.min(ms, domain) / domain) * 100}%`;
+  const spent = cost ?? (demo ? [Math.min(1.03, now * 0.0000077), 1.03] : undefined);
+  const related = (id: string) => {
+    if (!hover) return false;
+    const h = steps.find((s) => s.id === hover);
+    return id === hover || !!h?.deps?.includes(id) || !!steps.find((s) => s.id === id)?.deps?.includes(hover);
+  };
+
+  return (
+    <section className={`pva-root ${className}`} aria-label={`${title}: ${task}`}>
+      <style>{css}</style>
+      <header className="pva-head">
+        <svg viewBox="0 0 16 16" aria-hidden="true" className="pva-logo">
+          <rect x="1.5" y="3" width="6" height="2.6" rx="1.3" fill="#3d7be8" />
+          <rect x="5" y="6.8" width="8" height="2.6" rx="1.3" fill="#9db8f2" />
+          <rect x="9" y="10.6" width="5.5" height="2.6" rx="1.3" fill="#c9d8f8" />
+        </svg>
+        <strong>{title}</strong>
+        <span className="pva-task">{task}</span>
+        <span className="pva-stats">
+          <span>
+            Time <b>{formatTime(now)}</b> / {formatTime(planTotal)}
+          </span>
+          {spent && (
+            <span>
+              Cost <b>${spent[0].toFixed(2)}</b> / ${spent[1].toFixed(2)}
+            </span>
+          )}
+          <span className={`pva-chip ${behind > 0 ? "late" : "early"}`}>
+            {behind > 0 ? `${signed(behind)} behind` : behind < 0 ? `${Math.round(-behind / 1000)}s ahead` : "On plan"}
+          </span>
+        </span>
+      </header>
+
+      <div className="pva-body">
+        <div className="pva-axis" aria-hidden="true">
+          <span className="pva-name">Step</span>
+          <span className="pva-track">
+            {ticks.map((t, i) => (
+              <span key={t} className={`pva-tick ${i % 2 ? "odd" : ""}`} style={{ left: pct(t) }}>
+                {formatTime(t)}
+              </span>
+            ))}
+          </span>
+        </div>
+
+        <div className="pva-chart">
+          <div className="pva-overlay" aria-hidden="true">
+            {ticks.map((t) => (
+              <i key={t} className="pva-grid" style={{ left: pct(t) }} />
+            ))}
+            {eta > planTotal && (
+              <i className="pva-gap" style={{ left: pct(planTotal), width: `calc(${pct(eta)} - ${pct(planTotal)})` }} />
+            )}
+            <i className="pva-planline" style={{ left: pct(planTotal) }} />
+            {eta > planTotal && <i className="pva-etaline" style={{ left: pct(eta) }} />}
+            {now > 0 && now < eta && <i className="pva-now" style={{ left: pct(now) }} />}
+          </div>
+          <ol className="pva-rows">
+            {rows.map((r) => {
+              const actual = r.state === "waiting" ? 0 : r.cursor - r.start;
+              const over = r.state !== "waiting" ? Math.max(0, actual - r.step.plan) : 0;
+              const delta = r.state === "done" ? r.end - r.start - r.step.plan : 0;
+              const labelAt = Math.max(r.planEnd, r.state === "running" ? r.end : r.state === "done" ? r.end : r.end);
+              const words =
+                r.state === "done"
+                  ? `took ${formatTime(r.end - r.start)} against ${formatTime(r.step.plan)} planned, ${delta > 0 ? `${Math.round(delta / 1000)}s behind` : delta < 0 ? `${Math.round(-delta / 1000)}s early` : "on plan"}`
+                  : r.state === "running"
+                    ? `running for ${formatTime(actual)} of ${formatTime(r.step.plan)} planned`
+                    : `expected to start at ${formatTime(r.start)}, ${formatTime(r.step.plan)} planned`;
+              const dim = hover && !related(r.step.id);
+              return (
+                <li
+                  key={r.step.id}
+                  tabIndex={0}
+                  className={`pva-row ${r.state} ${dim ? "dim" : ""} ${hover === r.step.id ? "hot" : ""}`}
+                  aria-label={`${r.step.title}: ${words}`}
+                  onMouseEnter={() => setHover(r.step.id)}
+                  onMouseLeave={() => setHover(null)}
+                  onFocus={() => setHover(r.step.id)}
+                  onBlur={() => setHover(null)}
+                >
+                  <span className="pva-name">
+                    {r.step.icon ?? <StatusIcon state={r.state} />}
+                    <span>{r.step.title}</span>
+                  </span>
+                  <span className="pva-track" aria-hidden="true">
+                    <i className="pva-ghost" style={{ left: pct(r.planStart), width: `calc(${pct(r.planEnd)} - ${pct(r.planStart)})` }} />
+                    {r.state === "waiting" ? (
+                      <i className="pva-future" style={{ left: pct(r.start), width: `calc(${pct(r.end)} - ${pct(r.start)})` }} />
+                    ) : (
+                      <>
+                        {r.state === "running" && (
+                          <i className="pva-future" style={{ left: pct(r.start), width: `calc(${pct(r.end)} - ${pct(r.start)})` }} />
+                        )}
+                        <i
+                          className={`pva-bar ${r.state}`}
+                          style={{ left: pct(r.start), width: `calc(${pct(r.start + actual - over)} - ${pct(r.start)})` }}
+                        />
+                        {over > 0 && (
+                          <i
+                            className="pva-over"
+                            style={{ left: pct(r.start + r.step.plan), width: `calc(${pct(r.cursor)} - ${pct(r.start + r.step.plan)})` }}
+                          />
+                        )}
+                      </>
+                    )}
+                    <span className={`pva-label ${r.state}`} style={{ left: `calc(${pct(labelAt)} + 6px)` }}>
+                      {r.state === "waiting" ? formatTime(r.step.plan) : formatTime(actual)}
+                      {r.state === "done" && (
+                        <em className={delta > 0 ? "late" : "early"}>{signed(delta)}</em>
+                      )}
+                    </span>
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+
+        <footer className="pva-foot">
+          <span className="pva-key" aria-hidden="true">
+            <span><i className="k-plan" />Plan</span>
+            <span><i className="k-actual" />Actual</span>
+            <span><i className="k-over" />Over plan</span>
+          </span>
+          <span className="pva-track">
+            <span className="pva-flag plan" style={{ left: pct(planTotal) }}>
+              Plan {formatTime(planTotal)}
+            </span>
+            {eta > planTotal && (
+              <span className="pva-flag eta" style={{ left: pct(eta) }}>
+                ETA {formatTime(eta)}
+              </span>
+            )}
+          </span>
+        </footer>
+      </div>
+    </section>
+  );
+}
+
+const css = `
+.pva-root{--pva-fg:#1f1f1f;--pva-muted:#8a8a8a;--pva-card:#fff;--pva-line:#eeeeee;--pva-soft:#f4f4f4;--pva-bar:#e6e6fb;--pva-bar-edge:#c5c5ef;--pva-amber:#c2660d;--pva-amber-bg:#fdecd6;--pva-green:#1f8a4c;--pva-green-bg:#dff3e6;--pva-blue:#3d7be8;--pva-name:200px;width:100%;max-width:760px;margin:0 auto;background:var(--pva-card);border:1px solid var(--pva-line);border-radius:12px;color:var(--pva-fg);font:400 13px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;box-shadow:0 1px 2px #00000008;overflow:hidden}
+:where(.dark,[data-theme=dark]) .pva-root{--pva-fg:#ececec;--pva-muted:#8f8f94;--pva-card:#1b1b1e;--pva-line:#2b2b30;--pva-soft:#25252a;--pva-bar:#34345a;--pva-bar-edge:#4c4c86;--pva-amber:#f0a35a;--pva-amber-bg:#f0a35a26;--pva-green:#5bd08c;--pva-green-bg:#5bd08c22;color-scheme:dark}
+.pva-root *{box-sizing:border-box}
+.pva-head{display:flex;align-items:center;gap:8px;padding:12px 14px 12px 16px;border-bottom:1px solid var(--pva-line);flex-wrap:wrap}
+.pva-logo{width:15px;height:15px;flex:none}
+.pva-head strong{font-weight:500;font-size:13px}
+.pva-task{color:var(--pva-muted)}
+.pva-stats{margin-left:auto;display:flex;align-items:center;gap:14px;color:var(--pva-muted);font-size:12px;font-variant-numeric:tabular-nums}
+.pva-stats b{font-weight:500;color:var(--pva-fg)}
+.pva-chip{font-size:12px;border-radius:5px;padding:1px 8px;line-height:20px}
+.pva-chip.late{background:var(--pva-amber-bg);color:var(--pva-amber)}
+.pva-chip.early{background:var(--pva-green-bg);color:var(--pva-green)}
+.pva-body{position:relative}
+.pva-axis,.pva-row,.pva-foot{display:grid;grid-template-columns:var(--pva-name) 1fr;align-items:center}
+.pva-axis{height:30px;border-bottom:1px solid var(--pva-line);font-size:12px;color:var(--pva-muted)}
+.pva-axis .pva-name{padding-left:16px;font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.pva-track{position:relative;height:100%;margin-right:16px}
+.pva-tick{position:absolute;top:50%;transform:translateY(-50%);padding-left:6px;white-space:nowrap}
+.pva-chart{position:relative}
+.pva-overlay{position:absolute;top:0;bottom:0;left:var(--pva-name);right:16px;pointer-events:none}
+.pva-grid{position:absolute;top:-30px;bottom:0;width:1px;background:var(--pva-line)}
+.pva-gap{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--pva-amber-bg) 55%,transparent);transition:width .4s,left .4s}
+.pva-planline{position:absolute;top:0;bottom:-40px;border-left:1px dashed color-mix(in srgb,var(--pva-amber) 45%,transparent)}
+.pva-etaline{position:absolute;top:0;bottom:-40px;width:1px;background:color-mix(in srgb,var(--pva-amber) 55%,transparent);transition:left .4s}
+.pva-now{position:absolute;top:0;bottom:0;width:1px;background:color-mix(in srgb,var(--pva-fg) 45%,transparent);transition:left 1s linear}
+.pva-now::before{content:"";position:absolute;top:-3px;left:-2.5px;width:6px;height:6px;border-radius:50%;background:var(--pva-blue)}
+.pva-rows{list-style:none;margin:0;padding:4px 0 6px;position:relative}
+.pva-row{height:32px;outline:none;transition:opacity .2s}
+.pva-row:focus-visible .pva-name span{outline:2px solid var(--pva-blue);outline-offset:2px;border-radius:3px}
+.pva-row.dim{opacity:.45}
+.pva-row .pva-name{display:flex;align-items:center;gap:10px;padding-left:18px;min-width:0}
+.pva-row .pva-name span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pva-row.waiting .pva-name{color:color-mix(in srgb,var(--pva-fg) 75%,transparent)}
+.pva-st{width:12px;height:12px;flex:none;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.pva-st.done{stroke:var(--pva-muted)}
+.pva-st.wait{stroke:color-mix(in srgb,var(--pva-muted) 70%,transparent);stroke-width:1.1}
+.pva-spin{width:11px;height:11px;flex:none;border-radius:50%;border:1.4px solid color-mix(in srgb,var(--pva-blue) 22%,transparent);border-top-color:var(--pva-blue);animation:pva-spin 1s linear infinite}
+.pva-track i{position:absolute;top:50%;height:13px;transform:translateY(-50%);border-radius:3px}
+.pva-ghost{border:1px dashed color-mix(in srgb,var(--pva-muted) 70%,transparent);background:transparent;z-index:3}
+.pva-bar{background:var(--pva-bar);border:1px solid var(--pva-bar-edge);z-index:2;transition:width 1s linear}
+.pva-bar.running{border-right:2px solid var(--pva-blue);background-image:linear-gradient(90deg,transparent,#ffffff99,transparent);background-size:60% 100%;background-repeat:no-repeat;animation:pva-sheen 2s linear infinite}
+.pva-over{background:var(--pva-amber-bg);border:1px solid color-mix(in srgb,var(--pva-amber) 40%,transparent);border-left:0;border-radius:0 3px 3px 0!important;z-index:2}
+.pva-future{background:var(--pva-soft);z-index:0;transition:left .4s,width .4s}
+.pva-label{position:absolute;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:6px;white-space:nowrap;font-size:12px;font-variant-numeric:tabular-nums;z-index:3;transition:left .4s}
+.pva-label.waiting{color:color-mix(in srgb,var(--pva-muted) 70%,transparent)}
+.pva-label em{font-style:normal;border-radius:4px;padding:0 4px;line-height:17px}
+.pva-label em.late{background:var(--pva-amber-bg);color:var(--pva-amber)}
+.pva-label em.early{background:var(--pva-green-bg);color:var(--pva-green)}
+.pva-foot{height:38px;border-top:1px solid var(--pva-line);font-size:12px;color:var(--pva-muted)}
+.pva-key{display:flex;gap:14px;padding-left:16px;white-space:nowrap}
+.pva-key span{display:flex;align-items:center;gap:6px}
+.pva-key i{width:13px;height:7px;border-radius:2px}
+.k-plan{border:1px dashed var(--pva-muted)}.k-actual{background:var(--pva-bar);border:1px solid var(--pva-bar-edge)}.k-over{background:var(--pva-amber-bg);border:1px solid color-mix(in srgb,var(--pva-amber) 40%,transparent)}
+.pva-flag{position:absolute;top:50%;transform:translate(-100%,-50%);padding:1px 6px;border-radius:4px;white-space:nowrap;line-height:18px;font-variant-numeric:tabular-nums;transition:left .4s}
+.pva-flag.plan{background:var(--pva-soft);color:var(--pva-fg);margin-left:-4px}
+.pva-flag.eta{transform:translate(0,-50%);background:var(--pva-amber-bg);color:var(--pva-amber)}
+@keyframes pva-spin{to{transform:rotate(360deg)}}
+@keyframes pva-sheen{from{background-position:-100% 0}to{background-position:200% 0}}
+@media (prefers-reduced-motion:reduce){.pva-root *{animation:none!important;transition:none!important}}
+@media (max-width:560px){.pva-root{--pva-name:130px}.pva-task,.pva-key,.pva-st,.pva-spin{display:none}.pva-tick.odd{display:none}.pva-stats{gap:8px}}
+`;
 
 export default PlanVsActual;

@@ -3,365 +3,323 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type Contender = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  name: string;
+  icon?: React.ReactNode;
+  meta?: string;
+  output?: string;
+  /** A line of code shown under the output. */
+  code?: string;
 };
-export type StudioProps = {
+export type Verdict = { winner: string; reason?: string; scores?: [number, number] };
+
+export type JudgeBracketProps = {
+  contenders?: Contender[];
+  verdicts?: Record<string, Verdict>;
+  judging?: string;
+  judge?: string;
+  task?: string;
+  onPick?: (winner: Contender) => void;
   title?: string;
-  items?: StudioItem[];
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const ico = (c: React.ReactNode) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    {c}
+  </svg>
+);
+export const judgeIcons = {
+  claude: ico(
+    <g stroke="#d97757" strokeWidth="1.4" strokeLinecap="round">
+      <path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4M5.2 2.6l5.6 10.8M10.8 2.6 5.2 13.4" />
+    </g>,
+  ),
+  openai: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.1">
+      <path d="M8 2.2a2.8 2.8 0 0 1 4.6 2.6 2.8 2.8 0 0 1 .4 5A2.8 2.8 0 0 1 8.5 13a2.8 2.8 0 0 1-4.7-2.4 2.8 2.8 0 0 1-.6-5A2.8 2.8 0 0 1 8 2.2Z" />
+      <path d="M6 4.4v5l2 1.2 2-1.2V5.3M4 8.2l4-2.3 4 2.3" />
+    </g>,
+  ),
+  gemini: ico(<path d="M8 1.5c.4 3.6 2.9 6.1 6.5 6.5-3.6.4-6.1 2.9-6.5 6.5C7.6 10.9 5.1 8.4 1.5 8 5.1 7.6 7.6 5.1 8 1.5Z" fill="#3b7cf6" />),
+  meta: ico(<path d="M2.5 10.5c0-3 1.5-5.5 3-5.5 2 0 3 5.5 5 5.5 1.3 0 2.5-1.2 2.5-3S12 5 10.5 5C8.5 5 7.5 10.5 5.5 10.5 3.6 10.5 2.5 9.5 2.5 10.5Z" fill="none" stroke="currentColor" strokeWidth="1.3" />),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultContenders: Contender[] = [
+  { id: "idem", name: "Idempotency key", icon: judgeIcons.claude, meta: "Sonnet · +18 −4 · 3 files · 42/42 tests", output: "Sends one idempotency key per checkout, so Stripe returns the first charge on a retry instead of making a second.", code: "stripe.paymentIntents.create(params, { idempotencyKey: checkout.id })" },
+  { id: "guard", name: "Retry guard", icon: judgeIcons.openai, meta: "GPT-6 · +22 −3 · 2 files · 40/42 tests", output: "Skips the retry when a charge for the order already exists in the last minute." },
+  { id: "lock", name: "Row lock", icon: judgeIcons.gemini, meta: "Gemini · +31 −6 · 4 files · 42/42 tests", output: "Takes a row lock on the order before charging, so two requests can't charge the same order.", code: "SELECT … FROM orders WHERE id = $1 FOR UPDATE" },
+  { id: "noretry", name: "No retries", icon: judgeIcons.meta, meta: "Llama · +2 −9 · 1 file · 38/42 tests", output: "Turns off automatic retries for payment calls." },
+  { id: "hook", name: "Webhook dedupe", icon: judgeIcons.claude, meta: "Opus · +26 −2 · 3 files · 42/42 tests", output: "Drops a webhook whose event id was already handled." },
+  { id: "state", name: "State machine", icon: judgeIcons.openai, meta: "GPT-6 · +64 −20 · 6 files · 41/42 tests", output: "Moves orders through pending, charging and paid; only pending orders can be charged." },
+  { id: "debounce", name: "Button debounce", icon: judgeIcons.gemini, meta: "Gemini · +6 −1 · 1 file · 36/42 tests", output: "Disables the pay button for two seconds after a click." },
+  { id: "refund", name: "Refund later", icon: judgeIcons.meta, meta: "Llama · +40 −0 · 2 files · 39/42 tests", output: "Finds double charges every night and refunds the second one." },
+];
+const defaultVerdicts: Record<string, Verdict> = {
+  "0:0": { winner: "idem", scores: [9.1, 6.2] },
+  "0:1": { winner: "lock", scores: [8.3, 4.1] },
+  "0:2": { winner: "hook", scores: [8.7, 7.2] },
+  "0:3": { winner: "refund", scores: [3.8, 5.1] },
+};
+
+const SLOT = 40;
+const GAP = 4;
+const BLOCK = 100;
+const COLW = 208;
+const COLGAP = 28;
+
+const roundName = (r: number, rounds: number) => {
+  const left = rounds - r;
+  return left === 1 ? "Final" : left === 2 ? "Semifinal" : left === 3 ? "Quarterfinal" : `Round ${r + 1}`;
+};
 
 export function JudgeBracket({
-  title = "Choose the best welcome email",
-  items = [
-    {
-      id: "a",
-      title: "Warm and personal",
-      detail: "Your next chapter starts here. Welcome to your 14-day trial.",
-      value: 8.1,
-    },
-    {
-      id: "b",
-      title: "Formal and precise",
-      detail: "Your trial account has been activated for 14 days.",
-      value: 7.4,
-    },
-    {
-      id: "c",
-      title: "Three quick steps",
-      detail: "Create a project. Invite a teammate. Make something great.",
-      value: 8.5,
-    },
-    {
-      id: "d",
-      title: "Short and direct",
-      detail: "Your workspace is ready. Let’s get started.",
-      value: 7.9,
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [winners, setWinners] = React.useState<Record<number, StudioItem>>({});
-  const [chosen, setChosen] = React.useState<StudioItem>();
-  const [match, setMatch] = React.useState(0);
-  const contenders =
-    match < 2
-      ? items.slice(match * 2, match * 2 + 2)
-      : [winners[0], winners[1]].filter(Boolean);
-  return (
-    <UI.Panel
-      title={title}
-      subtitle="Compare two answers at a time"
-      className={className}
-      aside={
-        <UI.Badge>
-          {chosen ? "Winner" : match < 2 ? `Semifinal ${match + 1}` : "Final"}
-        </UI.Badge>
+  contenders = defaultContenders,
+  verdicts = defaultVerdicts,
+  judging = "1:0",
+  judge = "Claude Opus",
+  task = "Fix: customers charged twice when a payment is retried",
+  onPick,
+  title = "Judge",
+  className = "",
+}: JudgeBracketProps) {
+  const rounds = Math.max(1, Math.round(Math.log2(contenders.length)));
+  // entrants[r] = the contenders standing in round r (null = not decided yet)
+  const entrants = React.useMemo(() => {
+    const out: (Contender | null)[][] = [contenders];
+    for (let r = 0; r < rounds; r++) {
+      const prev = out[r];
+      const next: (Contender | null)[] = [];
+      for (let m = 0; m < prev.length / 2; m++) {
+        const v = verdicts[`${r}:${m}`];
+        next.push(v ? contenders.find((c) => c.id === v.winner) ?? null : null);
       }
-    >
-      {chosen ? (
-        <div className="st-tile active" style={{ marginTop: 16 }}>
-          <UI.Badge tone="green">Best answer</UI.Badge>
-          <h3>{chosen.title}</h3>
-          <p className="st-prose">{chosen.detail}</p>
-          <UI.Button
-            onClick={() => {
-              setChosen(undefined);
-              setWinners({});
-              setMatch(0);
-            }}
-          >
-            Start again
-          </UI.Button>
+      out.push(next);
+    }
+    return out;
+  }, [contenders, verdicts, rounds]);
+
+  const totalMatches = contenders.length - 1;
+  const decidedCount = Object.keys(verdicts).length;
+  const champion = entrants[rounds][0];
+  const [sel, setSel] = React.useState<string | null>(null);
+  const shown = sel ?? judging ?? `${rounds - 1}:0`;
+  const [sr, sm] = shown.split(":").map(Number);
+  const pair = [entrants[sr]?.[sm * 2], entrants[sr]?.[sm * 2 + 1]];
+  const shownVerdict = verdicts[shown];
+  const jr = judging ? Number(judging.split(":")[0]) : rounds - 1;
+
+  const winPath = React.useMemo(() => {
+    const s = new Set<string>();
+    if (!champion) return s;
+    for (let r = 0; r <= rounds; r++) s.add(`${r}:${champion.id}`);
+    return s;
+  }, [champion, rounds]);
+
+  // vertical center of slot i in round r (round r has contenders.length / 2^r slots)
+  const center = (r: number, i: number): number => {
+    if (r === 0) {
+      const m = Math.floor(i / 2);
+      return m * BLOCK + (i % 2) * (SLOT + GAP) + SLOT / 2;
+    }
+    return (center(r - 1, i * 2) + center(r - 1, i * 2 + 1)) / 2;
+  };
+  const height = (contenders.length / 2) * BLOCK - (BLOCK - (SLOT * 2 + GAP));
+  const cols = rounds;
+  const width = cols * COLW + (cols - 1) * COLGAP;
+
+  const slot = (r: number, i: number) => {
+    const c = entrants[r][i];
+    const m = Math.floor(i / 2);
+    const key = `${r}:${m}`;
+    const v = r < rounds ? verdicts[key] : undefined;
+    const lost = v && c && v.winner !== c.id;
+    const won = v && c && v.winner === c.id;
+    const isJudging = judging === key && r < rounds;
+    const score = v?.scores?.[i % 2];
+    const top = center(r, i) - SLOT / 2;
+    const left = r * (COLW + COLGAP);
+    const finalSlot = r === rounds - 1 && !!won;
+    if (!c)
+      return <div key={`${r}-${i}`} className="jb-slot is-empty" style={{ top, left }} aria-hidden="true" />;
+    return (
+      <button
+        key={`${r}-${i}`}
+        type="button"
+        className={`jb-slot ${lost ? "is-lost" : ""} ${won ? "is-won" : ""} ${isJudging ? "is-judging" : ""} ${winPath.has(`${r}:${c.id}`) ? "is-path" : ""} ${sel === key ? "is-sel" : ""}`}
+        style={{ top, left }}
+        aria-label={
+          r < rounds
+            ? `${roundName(r, rounds)} ${m + 1}: ${entrants[r][m * 2]?.name ?? "TBD"} against ${entrants[r][m * 2 + 1]?.name ?? "TBD"}${v ? `, ${contenders.find((x) => x.id === v.winner)?.name} won` : isJudging ? ", being judged" : ""}`
+            : `Winner: ${c.name}`
+        }
+        onClick={() => r < rounds && setSel(sel === key ? null : key)}
+      >
+        <span className="jb-ico">{c.icon}</span>
+        <span className="jb-name">{c.name}</span>
+        {finalSlot ? (
+          <svg className="jb-cup" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.5h7v3a3.5 3.5 0 0 1-7 0Zm0 1.2H2.5a2 2 0 0 0 2 2.3M11.5 3.7h2a2 2 0 0 1-2 2.3M8 9v3M5.5 13.5h5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+        ) : score != null ? (
+          <span className="jb-score">{score.toFixed(1)}</span>
+        ) : null}
+      </button>
+    );
+  };
+
+  const lines: React.ReactNode[] = [];
+  for (let r = 0; r < rounds - 1; r++) {
+    for (let i = 0; i < entrants[r].length; i++) {
+      const c = entrants[r][i];
+      const m = Math.floor(i / 2);
+      const v = verdicts[`${r}:${m}`];
+      const y1 = center(r, i);
+      const y2 = center(r + 1, m);
+      const x1 = r * (COLW + COLGAP) + COLW;
+      const xm = x1 + COLGAP / 2;
+      const x2 = x1 + COLGAP;
+      const lost = v && c && v.winner !== c.id;
+      const path = c && winPath.has(`${r + 1}:${c.id}`);
+      lines.push(
+        <path
+          key={`${r}-${i}`}
+          d={`M${x1} ${y1}H${xm - 4}Q${xm} ${y1} ${xm} ${y1 + Math.sign(y2 - y1) * 4}V${y2 - Math.sign(y2 - y1) * 4}Q${xm} ${y2} ${xm + 4} ${y2}H${x2}`}
+          className={`${lost || !v ? "is-dash" : ""} ${path ? "is-path" : ""}`}
+        />,
+      );
+    }
+  }
+
+  const cardFor = (c: Contender | null | undefined, idx: number) =>
+    c ? (
+      <div className={`jb-ans ${shownVerdict && shownVerdict.winner !== c.id ? "is-lost" : ""}`}>
+        <div className="jb-ans-h">
+          <span className="jb-ico">{c.icon}</span>
+          <strong>{c.name}</strong>
+          {shownVerdict?.scores && <span className="jb-score">{shownVerdict.scores[idx].toFixed(1)}</span>}
         </div>
-      ) : (
-        <div className="st-columns">
-          {contenders.map((x) => (
-            <div className="st-tile" key={x.id}>
-              <small>Score {x.value}/10</small>
-              <h4>{x.title}</h4>
-              <p className="st-prose">{x.detail}</p>
-              <UI.Button
-                primary
-                onClick={() => {
-                  if (match === 2) {
-                    setChosen(x);
-                    onAction?.("pick", x);
-                  } else {
-                    setWinners((s) => ({ ...s, [match]: x }));
-                    setMatch((i) => i + 1);
-                  }
-                }}
-              >
-                {match === 2 ? "Pick winner" : "Advance →"}
-              </UI.Button>
-            </div>
+        {c.meta && <div className="jb-meta">{c.meta}</div>}
+        {c.output && <p>{c.output}</p>}
+        {c.code && <code>{c.code}</code>}
+      </div>
+    ) : (
+      <div className="jb-ans is-tbd">Waiting for the match before</div>
+    );
+
+  return (
+    <section className={`jb ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="jb-bar">
+        <svg viewBox="0 0 16 16" className="jb-mark" aria-hidden="true">
+          <path d="M2 3.5h3v3H2M2 9.5h3v3H2M5 5v6M5 8h3" fill="none" stroke="currentColor" strokeWidth="1.2" />
+          <circle cx="11" cy="8" r="2.3" fill="currentColor" />
+        </svg>
+        <strong>{title}</strong>
+        {task && <span className="jb-task">{task}</span>}
+        <span className={`jb-state ${champion ? "is-done" : ""}`}>
+          {champion ? (
+            <>Winner · {champion.name}</>
+          ) : (
+            <>
+              <span className="jb-spin" aria-hidden="true" />
+              Judging
+            </>
+          )}
+        </span>
+        <span className="jb-round">
+          {champion ? "Final" : roundName(jr, rounds)} · {decidedCount}/{totalMatches}
+        </span>
+      </header>
+      <div className="jb-scroll">
+        <div className="jb-heads" style={{ width }}>
+          {Array.from({ length: rounds }, (_, r) => (
+            <span key={r} style={{ left: r * (COLW + COLGAP) }}>
+              {roundName(r, rounds)}
+            </span>
           ))}
         </div>
-      )}
-      <div className="st-actions">
-        {Object.values(winners).map((x) => (
-          <UI.Badge key={x.id} tone="blue">
-            {x.title} →
-          </UI.Badge>
-        ))}
+        <div className="jb-tree" style={{ width, height }}>
+          <svg className="jb-lines" width={width} height={height} aria-hidden="true">
+            {lines}
+          </svg>
+          {entrants.slice(0, rounds).map((list, r) => list.map((_, i) => slot(r, i)))}
+        </div>
       </div>
-    </UI.Panel>
+      <div className="jb-detail" aria-live="polite">
+        <div className="jb-detail-h">
+          <strong>
+            {roundName(sr, rounds)} {entrants[sr].length > 2 ? sm + 1 : ""}
+          </strong>
+          <span>
+            {shownVerdict
+              ? `${judge} picked ${contenders.find((c) => c.id === shownVerdict.winner)?.name}${shownVerdict.reason ? ` – ${shownVerdict.reason}` : ""}`
+              : shown === judging
+                ? `${judge} is comparing…`
+                : "Not judged yet"}
+          </span>
+        </div>
+        <div className="jb-pair">
+          {cardFor(pair[0], 0)}
+          {cardFor(pair[1], 1)}
+        </div>
+        {champion && onPick && sr === rounds - 1 && (
+          <button type="button" className="jb-use" onClick={() => onPick(champion)}>
+            Use {champion.name}
+          </button>
+        )}
+      </div>
+    </section>
   );
 }
+
+const css = `
+.jb{--jb-bg:#fff;--jb-fg:#18181b;--jb-muted:#71717a;--jb-faint:#a1a1aa;--jb-line:#ececef;--jb-wire:#d4d4d8;--jb-chip:#f4f4f5;--jb-blue:#3b82f6;--jb-link:#82bcff;width:100%;max-width:${3 * COLW + 2 * COLGAP}px;color:var(--jb-fg);font:400 13px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+:where(.dark,[data-theme=dark]) .jb{--jb-bg:#1b1b1e;--jb-fg:#ececef;--jb-muted:#a1a1aa;--jb-faint:#71717a;--jb-line:#2e2e33;--jb-wire:#3f3f46;--jb-chip:#26262a;color-scheme:dark}
+.jb *{box-sizing:border-box}.jb button{font:inherit;color:inherit;cursor:pointer}
+.jb-bar{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.jb-mark{width:14px;height:14px;color:var(--jb-muted);flex:none}
+.jb-bar strong{font-size:14px;font-weight:500}
+.jb-task{color:var(--jb-muted);overflow:hidden;text-overflow:ellipsis;min-width:0;font-size:13px}
+.jb-state{display:inline-flex;align-items:center;gap:5px;margin-left:auto;padding:1px 6px;border-radius:4px;background:#e8f0fe;color:#2563eb;font-size:11px;font-weight:500}
+.jb-state.is-done{background:#dcfce7;color:#15803d}
+.jb-spin{width:9px;height:9px;border:1.4px solid #93c5fd;border-top-color:#2563eb;border-radius:50%;animation:jb-spin .8s linear infinite}
+.jb-round{margin-left:28px;color:var(--jb-muted);font-size:12px}
+.jb-scroll{overflow-x:auto;margin-top:12px}
+.jb-heads{position:relative;height:22px}
+.jb-heads span{position:absolute;top:0;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--jb-faint)}
+.jb-tree{position:relative}
+.jb-lines{position:absolute;inset:0;overflow:visible}
+.jb-lines path{fill:none;stroke:var(--jb-wire);stroke-width:1.2}
+.jb-lines .is-dash{stroke-dasharray:2 3}.jb-lines .is-path{stroke:var(--jb-link);stroke-width:1.6;stroke-dasharray:none}
+.jb-slot{position:absolute;display:flex;align-items:center;gap:10px;width:${COLW}px;height:${SLOT}px;padding:0 10px 0 12px;border:0;border-radius:8px;background:var(--jb-bg);box-shadow:0 0 0 1px var(--jb-line),0 1px 2px #0000000a;text-align:left;transition:opacity .2s,box-shadow .15s}
+.jb-slot:hover{box-shadow:0 0 0 1px var(--jb-wire),0 1px 3px #00000014}
+.jb-slot.is-lost{background:color-mix(in srgb,var(--jb-chip) 60%,var(--jb-bg));box-shadow:0 0 0 1px var(--jb-line)}
+.jb-slot.is-lost .jb-name,.jb-slot.is-lost .jb-score,.jb-slot.is-lost .jb-ico{opacity:.6;color:var(--jb-muted)}
+.jb-slot.is-lost .jb-ico{filter:grayscale(1)}
+.jb-slot.is-sel{box-shadow:0 0 0 1.5px var(--jb-link)}
+.jb-slot.is-path{box-shadow:0 0 0 1.5px var(--jb-link)}
+.jb-slot.is-judging .jb-name{background:linear-gradient(90deg,var(--jb-fg) 35%,var(--jb-faint) 50%,var(--jb-fg) 65%) 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:jb-shim 1.6s linear infinite}
+.jb-slot.is-empty{background:none;border:1px dashed var(--jb-wire);box-shadow:none}
+.jb-ico{display:grid;place-items:center;width:14px;height:14px;flex:none}.jb-ico svg{width:12px;height:12px}
+.jb-name{flex:1;min-width:0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jb-score{font-size:11px;color:var(--jb-fg)}
+.jb-cup{width:15px;height:15px;color:#d97706}
+.jb-detail{margin-top:18px;padding:14px;border:1px solid var(--jb-line);border-radius:12px;background:var(--jb-bg);box-shadow:0 1px 2px #0000000a}
+.jb-detail-h{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}
+.jb-detail-h strong{font-size:14px;font-weight:500}.jb-detail-h span{color:var(--jb-muted);font-size:12px;text-align:right}
+.jb-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.jb-ans{padding:10px 10px 10px 10px;border:1px solid var(--jb-line);border-radius:8px;background:color-mix(in srgb,var(--jb-chip) 50%,var(--jb-bg));transition:opacity .2s}
+.jb-ans.is-lost{opacity:.55}.jb-ans.is-tbd{display:grid;place-items:center;min-height:90px;color:var(--jb-faint)}
+.jb-ans-h{display:flex;align-items:center;gap:10px}.jb-ans-h strong{font-weight:500}.jb-ans-h .jb-score{margin-left:auto}
+.jb-meta{margin-top:4px;font-size:11px;color:var(--jb-faint)}
+.jb-ans p{margin:6px 0 0;font-size:12px;color:var(--jb-fg);opacity:.82}
+.jb-ans code{display:block;margin-top:2px;font:12px/1.5 Inter,system-ui,sans-serif;color:var(--jb-fg);opacity:.82;word-break:break-word}
+.jb-use{margin-top:12px;height:30px;padding:0 12px;border:0;border-radius:7px;background:var(--jb-fg);color:var(--jb-bg)!important;font-weight:500}
+.jb :focus-visible{outline:2px solid var(--jb-blue);outline-offset:2px}
+@keyframes jb-spin{to{transform:rotate(1turn)}}@keyframes jb-shim{to{background-position:-250% 0}}
+@media(max-width:560px){.jb-task,.jb-round{display:none}.jb-pair{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.jb *{animation:none!important;transition:none!important}}
+`;
 
 export default JudgeBracket;

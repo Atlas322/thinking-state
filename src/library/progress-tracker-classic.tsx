@@ -461,12 +461,15 @@ const css = /* css */ `
 export default function Demo() {
   return (
     <ProgressTracker
-      title="Make yourself at home"
+      title="Getting started"
+      autoPlay
+      interval={2500}
       steps={[
-        { id: "1", label: "Create your workspace", done: true },
-        { id: "2", label: "Connect your tools" },
-        { id: "3", label: "Invite your team" },
-        { id: "4", label: "Create your first project" },
+        { id: "tools", label: "Connect your tools" },
+        { id: "notify", label: "Turn on notifications" },
+        { id: "updates", label: "Catch up on blockers" },
+        { id: "notes", label: "Summarize priorities" },
+        { id: "project", label: "Create a project" },
       ]}
     />
   );

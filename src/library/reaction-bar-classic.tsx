@@ -343,8 +343,8 @@ export default function Demo() {
       reactions={{
         like: { count: 128 },
         comment: { count: 24 },
-        repost: { count: 8 },
-        share: { count: 3 },
+        repost: { count: 9 },
+        share: { count: 0 },
       }}
     />
   );

@@ -556,31 +556,15 @@ export default function Demo() {
   const [, setNote] = React.useState("");
   return (
     <ProfileMenu
-      name="Maya Chen"
-      email="maya@example.com"
+      name="Lena Hartmann"
+      email="lena.hartmann@fastmail.com"
       items={[
-        {
-          id: "settings",
-          label: "Settings",
-          onSelect: () => setNote("Settings selected"),
-        },
-        {
-          id: "docs",
-          label: "Documentation",
-          onSelect: () => setNote("Documentation selected"),
-        },
-        {
-          id: "signout",
-          label: "Sign out",
-          onSelect: () => setNote("Sign out selected"),
-        },
+        { id: "settings", label: "Settings", icon: <SettingsIcon />, onSelect: () => setNote("settings") },
+        { id: "docs", label: "Docs", icon: <DocsIcon />, onSelect: () => setNote("docs") },
+        { id: "apps", label: "Apps", icon: <AppsIcon />, badge: "New", onSelect: () => setNote("apps") },
+        { id: "logout", label: "Logout", icon: <LogoutIcon />, onSelect: () => setNote("logout") },
       ]}
-      setup={{
-        done: 3,
-        total: 5,
-        next: "Invite your teammates",
-        onContinue: () => setNote("Invitation flow selected"),
-      }}
+      setup={{ done: 3, total: 5, next: "Add a profile photo", onContinue: () => setNote("profile") }}
     />
   );
 }

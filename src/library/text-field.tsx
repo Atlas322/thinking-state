@@ -654,27 +654,39 @@ const css = /* css */ `
 
 /** Working example; use the named TextField export in your application. */
 export default function Demo() {
+  const [slug, setSlug] = useState("maya-labs");
+  const valid = /^[a-z0-9-]*$/.test(slug);
   return (
-    <div style={{ display: "grid", gap: 24 }}>
+    <div
+      style={{
+        display: "grid",
+        gap: 16,
+        width: "100%",
+        maxWidth: 360,
+        padding: 20,
+        borderRadius: 12,
+        background: "var(--demo-card, #fff)",
+        boxShadow: "0 0 0 1px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04)",
+      }}
+    >
+      <TextField label="Workspace name" defaultValue="Maya Labs" maxLength={32} counter clearable required />
       <TextField
         label="Workspace URL"
-        prefix="https://"
-        suffix=".app"
-        defaultValue="lumen-studio"
-        clearable
+        prefix="acme.app/"
+        value={slug}
+        onChange={(e) => setSlug(e.target.value)}
+        hint="Lowercase letters, numbers and dashes."
+        error={valid ? undefined : "Only lowercase letters, numbers and dashes."}
       />
       <TextField
-        label="Project name"
-        defaultValue="Autumn launch"
-        maxLength={40}
-        counter
+        label="Billing email"
+        optional
+        type="email"
+        defaultValue="maya@acme"
+        error="Enter a full email, like maya@acme.com"
       />
-      <TextField
-        label="Share link"
-        value="https://example.com/project"
-        readOnly
-        copyable
-      />
+      <TextField label="Password" type="password" defaultValue="correct-horse-42" autoComplete="new-password" />
+      <TextField label="API key" value="aui_demo_4f9a2c71e8b3" readOnly copyable style={{ fontFamily: "ui-monospace, monospace" }} />
     </div>
   );
 }

@@ -3,342 +3,375 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type RunningTaskState = "running" | "paused" | "needs-you" | "done";
+
+export type RunningTask = {
   id: string;
   title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  step: string;
+  done: number;
+  total: number;
+  state: RunningTaskState;
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+
+export type RunningNowLabels = {
+  title: string;
+  running: string;
+  needsYou: string;
+  needsYouOne: string;
+  needsYouBadge: string;
+  paused: string;
+  pausedCount: string;
+  done: string;
+  pause: string;
+  resume: string;
+  open: string;
+  openAll: string;
+  empty: string;
+  idle: string;
+};
+
+export type RunningNowProps = {
+  tasks?: RunningTask[];
+  onPause?: (id: string) => void;
+  onResume?: (id: string) => void;
+  onOpen?: (id: string) => void;
+  onOpenAll?: () => void;
+  defaultOpen?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  align?: "start" | "end";
+  labels?: Partial<RunningNowLabels>;
+  /** Left side of the demo header bar; pass null to render only the pill. */
+  brand?: React.ReactNode;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const defaultLabels: RunningNowLabels = {
+  title: "Background tasks",
+  running: "running",
+  needsYou: "need you",
+  needsYouOne: "needs you",
+  needsYouBadge: "Needs you",
+  paused: "Paused",
+  pausedCount: "paused",
+  done: "Done",
+  pause: "Pause",
+  resume: "Resume",
+  open: "Open",
+  openAll: "Open Tasks",
+  empty: "Nothing running",
+  idle: "No tasks running",
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultTasks: RunningTask[] = [
+  { id: "ingest", title: "Ingest pipeline", step: "Embedding chunks", done: 2, total: 4, state: "running" },
+  { id: "refund", title: "Refund review", step: "Waiting for approval of $480", done: 3, total: 5, state: "needs-you" },
+  { id: "seo", title: "SEO audit", step: "Crawling 214 pages", done: 1, total: 6, state: "running" },
+  { id: "digest", title: "Weekly digest", step: "Drafting the summary", done: 2, total: 5, state: "running" },
+];
 
-export function RunningNow({
-  title = "Running now",
-  items = [
-    {
-      id: "ingest",
-      title: "Ingest pipeline",
-      detail: "Embedding chunks",
-      status: "running",
-      value: 50,
-    },
-    {
-      id: "refund",
-      title: "Refund review",
-      detail: "Approve a $240 refund",
-      status: "waiting",
-      value: 33,
-    },
-    {
-      id: "deps",
-      title: "Dependency upgrade",
-      detail: "Running 212 tests",
-      status: "paused",
-      value: 25,
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [open, setOpen] = React.useState(true);
-  const [tasks, setTasks] = React.useState(items);
-  const sec = UI.useClock(tasks.some((x) => x.status === "running"));
+const ringColor = (t: RunningTask) => {
+  if (t.state === "done") return "var(--rn-blue)";
+  const p = t.done / Math.max(1, t.total);
+  return p < 0.34 ? "var(--rn-orange)" : p < 0.67 ? "var(--rn-amber)" : "var(--rn-teal)";
+};
+
+function Ring({ task }: { task: RunningTask }) {
+  const p = task.state === "done" ? 1 : task.done / Math.max(1, task.total);
+  const r = 5;
+  const c = 2 * Math.PI * r;
   return (
-    <UI.Panel
-      title={title}
-      subtitle={`${tasks.filter((x) => x.status === "running").length} active · ${sec}s`}
-      className={className}
-      aside={
-        <UI.Button aria-expanded={open} onClick={() => setOpen((s) => !s)}>
-          {open ? "Collapse" : "Expand"}
-        </UI.Button>
-      }
-    >
-      {open &&
-        tasks.map((x) => (
-          <div key={x.id}>
-            <UI.Row title={x.title} detail={x.detail}>
-              <UI.Badge tone={x.status}>{x.status}</UI.Badge>
-              <UI.Button
-                onClick={() => {
-                  const status = x.status === "running" ? "paused" : "running";
-                  setTasks((s) =>
-                    s.map((v) => (v.id === x.id ? { ...v, status } : v)),
-                  );
-                  onAction?.(x.status === "waiting" ? "review" : status, x);
-                }}
-              >
-                {x.status === "running"
-                  ? "Pause"
-                  : x.status === "waiting"
-                    ? "Review"
-                    : "Resume"}
-              </UI.Button>
-            </UI.Row>
-            <UI.Meter value={x.value ?? 0} />
-          </div>
-        ))}
-      {open && (
-        <div className="st-actions">
-          <UI.Button onClick={() => onAction?.("open-all")}>
-            View all tasks →
-          </UI.Button>
-        </div>
-      )}
-    </UI.Panel>
+    <svg className="rn-ring" viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="8" cy="8" r="6.5" fill="none" stroke="var(--rn-line)" strokeWidth="1" />
+      <circle
+        cx="8"
+        cy="8"
+        r={r}
+        fill="none"
+        stroke={ringColor(task)}
+        strokeWidth="3"
+        strokeDasharray={`${c * p} ${c}`}
+        transform="rotate(-90 8 8)"
+        style={{ transition: "stroke-dasharray .5s, stroke .5s" }}
+      />
+    </svg>
   );
 }
+
+export function RunningNow({
+  tasks: tasksProp,
+  onPause,
+  onResume,
+  onOpen,
+  onOpenAll,
+  defaultOpen = false,
+  open: openProp,
+  onOpenChange,
+  align = "end",
+  labels: labelsProp,
+  brand,
+  className = "",
+}: RunningNowProps) {
+  const L = { ...defaultLabels, ...labelsProp };
+  const [own, setOwn] = React.useState(tasksProp ?? defaultTasks);
+  const tasks = tasksProp ?? own;
+  const [openState, setOpenState] = React.useState(defaultOpen);
+  const open = openProp ?? openState;
+  const [announce, setAnnounce] = React.useState("");
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const rowRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
+  const popId = React.useId();
+
+  const setOpen = (v: boolean) => {
+    setOpenState(v);
+    onOpenChange?.(v);
+  };
+
+  // Demo: running tasks move through their steps.
+  React.useEffect(() => {
+    if (tasksProp) return;
+    const id = window.setInterval(() => {
+      setOwn((ts) =>
+        ts.map((t) => {
+          if (t.state !== "running") return t;
+          const done = t.done + 1;
+          if (done >= t.total) {
+            setAnnounce(`${t.title} finished`);
+            return { ...t, done: t.total, state: "done", step: "Finished" };
+          }
+          return { ...t, done };
+        }),
+      );
+    }, 7000);
+    return () => window.clearInterval(id);
+  }, [tasksProp]);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const down = (e: MouseEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", down);
+    return () => document.removeEventListener("mousedown", down);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const running = tasks.filter((t) => t.state === "running").length;
+  const waiting = tasks.filter((t) => t.state === "needs-you").length;
+  const paused = tasks.filter((t) => t.state === "paused").length;
+  const summary =
+    running || waiting
+      ? [running && `${running} ${L.running}`, waiting && `${waiting} ${waiting === 1 ? L.needsYouOne : L.needsYou}`].filter(Boolean).join(", ")
+      : paused
+        ? `${paused} ${L.pausedCount}`
+        : L.idle;
+
+  const setState = (id: string, state: RunningTaskState) => {
+    if (!tasksProp) setOwn((ts) => ts.map((t) => (t.id === id ? { ...t, state } : t)));
+  };
+  const focusRow = (i: number) => rowRefs.current[(i + tasks.length) % tasks.length]?.focus();
+
+  return (
+    <div ref={rootRef} className={`rn ${brand === null ? "rn-bare" : ""} ${className}`}>
+      <style>{css}</style>
+      {brand !== null && (
+        <div className="rn-brand">
+          {brand ?? (
+            <>
+              <span className="rn-logo" aria-hidden="true">
+                <svg viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="3" fill="currentColor" /><path d="M5 5h4v2H7v4H5Z" fill="var(--rn-bg)" /><rect x="8" y="8" width="3" height="3" fill="var(--rn-bg)" /></svg>
+              </span>
+              <span className="rn-crumb">Acme</span>
+              <span className="rn-sep">/</span>
+              <span>Agents</span>
+            </>
+          )}
+        </div>
+      )}
+      <div className="rn-anchor">
+        <button
+          ref={triggerRef}
+          type="button"
+          className="rn-pill"
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-controls={popId}
+          aria-label={`${L.title}: ${summary}`}
+          onClick={() => {
+            setOpen(!open);
+            if (!open) window.setTimeout(() => focusRow(0), 0);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+              e.preventDefault();
+              setOpen(true);
+              window.setTimeout(() => focusRow(e.key === "ArrowDown" ? 0 : -1), 0);
+            }
+          }}
+        >
+          {running || waiting ? (
+            <>
+              {running > 0 && (
+                <span className="rn-part">
+                  <i className="rn-live" />
+                  <b key={running}>{running}</b> {L.running}
+                </span>
+              )}
+              {running > 0 && waiting > 0 && <span className="rn-dot">·</span>}
+              {waiting > 0 && (
+                <span className="rn-part">
+                  <i className="rn-wait" />
+                  <b key={waiting}>{waiting}</b> {waiting === 1 ? L.needsYouOne : L.needsYou}
+                </span>
+              )}
+            </>
+          ) : (
+            <span className="rn-part">{summary}</span>
+          )}
+          <svg className="rn-chev" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="m5 6.5 3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {open && (
+          <div
+            id={popId}
+            role="dialog"
+            aria-label={L.title}
+            className={`rn-pop rn-${align}`}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setOpen(false);
+                triggerRef.current?.focus();
+              }
+            }}
+            onBlur={(e) => {
+              if (!rootRef.current?.contains(e.relatedTarget as Node) && e.relatedTarget) setOpen(false);
+            }}
+          >
+            <div className="rn-ph">
+              <span>{L.title}</span>
+              <span className="rn-pc">{summary}</span>
+            </div>
+            {tasks.length === 0 ? (
+              <p className="rn-empty">{L.empty}</p>
+            ) : (
+              <ul className="rn-list">
+                {tasks.map((t, i) => (
+                  <li key={t.id} className={`rn-row is-${t.state}`}>
+                    <button
+                      ref={(el) => {
+                        rowRefs.current[i] = el;
+                      }}
+                      type="button"
+                      className="rn-main"
+                      aria-label={`${t.title} – ${t.state === "needs-you" ? L.needsYouBadge.toLowerCase() : t.state}. ${t.step}. ${t.done} of ${t.total} steps`}
+                      onClick={() => onOpen?.(t.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === "ArrowDown") { e.preventDefault(); focusRow(i + 1); }
+                        if (e.key === "ArrowUp") { e.preventDefault(); focusRow(i - 1); }
+                        if (e.key === "Home") { e.preventDefault(); focusRow(0); }
+                        if (e.key === "End") { e.preventDefault(); focusRow(-1); }
+                      }}
+                    >
+                      <Ring task={t} />
+                      <span className="rn-text">
+                        <span className="rn-title">
+                          {t.title}
+                          {t.state === "needs-you" && <span className="rn-badge">{L.needsYouBadge}</span>}
+                          {t.state === "paused" && <span className="rn-badge rn-muted">{L.paused}</span>}
+                        </span>
+                        <span className="rn-step" key={t.step}>
+                          {t.state === "done" ? L.done : t.step}
+                        </span>
+                      </span>
+                      <span className="rn-count">
+                        {t.done}/{t.total}
+                      </span>
+                    </button>
+                    {t.state === "running" && (
+                      <button type="button" className="rn-act" aria-label={`${L.pause} ${t.title}`} onClick={() => { setState(t.id, "paused"); onPause?.(t.id); }}>
+                        <svg viewBox="0 0 16 16"><path d="M6 4v8M10 4v8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
+                      </button>
+                    )}
+                    {t.state === "paused" && (
+                      <button type="button" className="rn-act" aria-label={`${L.resume} ${t.title}`} onClick={() => { setState(t.id, "running"); onResume?.(t.id); }}>
+                        <svg viewBox="0 0 16 16"><path d="M5.5 4v8l6.5-4Z" fill="currentColor" /></svg>
+                      </button>
+                    )}
+                    {t.state === "needs-you" && (
+                      <button type="button" className="rn-open" aria-label={`${L.open} ${t.title} – ${L.needsYouBadge.toLowerCase()}`} onClick={() => onOpen?.(t.id)}>
+                        {L.open}
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {onOpenAll && (
+              <button type="button" className="rn-all" onClick={onOpenAll}>
+                {L.openAll}
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+      <span role="status" className="rn-sr">{announce}</span>
+    </div>
+  );
+}
+
+const css = `
+.rn{--rn-bg:#fff;--rn-fg:#18181b;--rn-muted:#71717a;--rn-faint:#a1a1aa;--rn-line:#ececef;--rn-soft:#f6f6f7;--rn-teal:#14b8a6;--rn-amber:#eab308;--rn-orange:#f97316;--rn-blue:#3b82f6;--rn-wait:#e5a000;position:relative;display:flex;align-items:center;gap:12px;width:100%;max-width:722px;height:50px;padding:0 9px 0 14px;background:var(--rn-bg);color:var(--rn-fg);border:1px solid var(--rn-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;box-sizing:border-box}
+:where(.dark,[data-theme=dark]) .rn{--rn-bg:#1b1b1e;--rn-fg:#ececef;--rn-muted:#a1a1aa;--rn-faint:#5c5c64;--rn-line:#2c2c31;--rn-soft:#24242a;--rn-wait:#facc15;color-scheme:dark}
+.rn.rn-bare{display:inline-flex;width:auto;height:auto;padding:0;border:0;box-shadow:none;background:none}
+.rn *{box-sizing:border-box}.rn button{font:inherit;color:inherit;cursor:pointer}
+.rn-brand{display:flex;align-items:center;gap:6px;min-width:0}
+.rn-logo{display:grid;place-items:center;width:16px;height:16px;margin-right:4px;color:var(--rn-fg)}.rn-logo svg{width:16px;height:16px}
+.rn-crumb{color:var(--rn-muted)}.rn-sep{color:var(--rn-faint);margin:0 -2px}
+.rn-anchor{position:relative;margin-left:auto}
+.rn-pill{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 9px 0 10px;border:1px solid var(--rn-line);border-radius:7px;background:var(--rn-bg);font-size:12.5px;color:var(--rn-muted);transition:background .15s}
+.rn-pill:hover,.rn-pill[aria-expanded=true]{background:var(--rn-soft)}
+.rn-part{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.rn-part b{font-weight:500;color:var(--rn-fg);display:inline-block;animation:rn-roll .3s both}
+.rn-part i{width:7px;height:7px;margin-right:5px;border-radius:50%}
+.rn-live{border:1.5px solid var(--rn-teal)}
+.rn-wait{background:var(--rn-wait)}
+.rn-dot{color:var(--rn-faint);margin:0 1px}
+.rn-chev{width:13px;height:13px;color:var(--rn-faint);transition:transform .2s}.rn-pill[aria-expanded=true] .rn-chev{transform:rotate(180deg)}
+.rn-pop{position:absolute;z-index:20;top:calc(100% + 8px);width:340px;background:var(--rn-bg);border:1px solid var(--rn-line);border-radius:11px;box-shadow:0 12px 32px #00000018,0 2px 6px #0000000a;overflow:hidden;animation:rn-pop .18s cubic-bezier(.2,.8,.3,1) both}
+.rn-end{right:0;transform-origin:top right}.rn-start{left:0;transform-origin:top left}
+.rn-ph{display:flex;justify-content:space-between;align-items:baseline;padding:11px 14px 9px;border-bottom:1px solid var(--rn-line);font-weight:500}
+.rn-pc{font-size:12.5px;font-weight:400;color:var(--rn-muted)}
+.rn-list{list-style:none;margin:0;padding:4px}
+.rn-row{display:flex;align-items:center;gap:4px;border-radius:7px}
+.rn-row:hover{background:var(--rn-soft)}
+.rn-main{flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 9px;border:0;background:none;text-align:left;border-radius:7px}
+.rn-ring{width:16px;height:16px;flex:none}
+.rn-text{flex:1;min-width:0;display:flex;flex-direction:column}
+.rn-title{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.rn-badge{padding:0 6px;border-radius:4px;background:color-mix(in srgb,var(--rn-wait) 16%,transparent);color:color-mix(in srgb,var(--rn-wait) 70%,var(--rn-fg));font-size:11.5px;line-height:18px}
+.rn-badge.rn-muted{background:var(--rn-soft);color:var(--rn-muted)}
+.rn-step{font-size:12.5px;color:var(--rn-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;animation:rn-roll .3s both}
+.rn-row.is-paused .rn-title,.rn-row.is-paused .rn-step{color:var(--rn-faint)}
+.rn-count{font-size:12px;color:var(--rn-faint);font-variant-numeric:tabular-nums}
+.rn-act{display:grid;place-items:center;width:28px;height:28px;margin-right:4px;border:0;border-radius:6px;background:none;color:var(--rn-muted)}
+.rn-act:hover{background:var(--rn-bg);color:var(--rn-fg)}.rn-act svg{width:14px;height:14px}
+.rn-open{height:26px;margin-right:5px;padding:0 9px;border:1px solid var(--rn-line);border-radius:6px;background:var(--rn-bg);font-size:12.5px}
+.rn-open:hover{background:var(--rn-soft)}
+.rn-empty{margin:0;padding:16px 14px;color:var(--rn-muted)}
+.rn-all{display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 14px;border:0;border-top:1px solid var(--rn-line);background:none;text-align:left}
+.rn-all:hover{background:var(--rn-soft)}.rn-all svg{width:14px;height:14px;color:var(--rn-muted)}
+.rn-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.rn :focus-visible{outline:2px solid var(--rn-blue);outline-offset:1px}
+@keyframes rn-pop{from{opacity:0;transform:scale(.96) translateY(-4px)}}
+@keyframes rn-roll{from{opacity:0;transform:translateY(4px)}}
+@media(max-width:480px){.rn-pop{width:calc(100vw - 32px);max-width:340px}.rn-crumb,.rn-sep{display:none}}
+@media(prefers-reduced-motion:reduce){.rn *{animation:none!important;transition:none!important}}
+`;
 
 export default RunningNow;

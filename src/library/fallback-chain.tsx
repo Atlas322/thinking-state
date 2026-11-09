@@ -3,349 +3,264 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type FallbackStatus = "waiting" | "trying" | "failed" | "answered" | "skipped";
+export type FallbackAttempt = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
+  model: string;
+  provider?: string;
+  logo?: React.ReactNode;
+  status: FallbackStatus;
+  /** Why it failed, e.g. "Rate limited · 429". */
+  reason?: string;
+  tokens?: number;
+  /** Seconds spent. */
+  took?: number;
   cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  startedAt?: number;
 };
-export type StudioProps = {
+export type ChainEnd = { name?: string; logo?: React.ReactNode; text?: string; details?: string[] };
+
+export type FallbackChainProps = {
+  attempts?: FallbackAttempt[];
   title?: string;
-  items?: StudioItem[];
+  route?: string;
+  request?: ChainEnd;
+  response?: ChainEnd;
+  now?: number;
+  onRetry?: () => void;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const L = {
+  claude: (
+    <svg viewBox="0 0 16 16"><g stroke="#d97757" strokeWidth="1.5" strokeLinecap="round"><path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2" /></g></svg>
+  ),
+  openai: (
+    <svg viewBox="0 0 16 16"><g fill="none" stroke="currentColor" strokeWidth="1.1"><path d="M8 2.2a3 3 0 0 1 5 2.9 3 3 0 0 1-.6 5 3 3 0 0 1-4.4 3.7 3 3 0 0 1-5-2.9 3 3 0 0 1 .6-5A3 3 0 0 1 8 2.2Z" /><path d="M6 4.5v5L8 10.7l2-1.2V6.5L8 5.3 6 6.5" /></g></svg>
+  ),
+  gemini: <svg viewBox="0 0 16 16"><path d="M8 1c.5 3.6 3.4 6.5 7 7-3.6.5-6.5 3.4-7 7-.5-3.6-3.4-6.5-7-7 3.6-.5 6.5-3.4 7-7Z" fill="#3b82f6" /></svg>,
+  grok: <svg viewBox="0 0 16 16"><path d="M3 12.5 12 3.5M5 3.5a5 5 0 0 1 7.5 6M11 12.5A5 5 0 0 1 3.5 7" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>,
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultAttempts: FallbackAttempt[] = [
+  { id: "a1", model: "Claude Opus 5.5", provider: "AWS Bedrock", logo: L.claude, status: "failed", reason: "Rate limited · 429", took: 1.6, cost: 0 },
+  { id: "a2", model: "GPT-6", provider: "Azure OpenAI", logo: L.openai, status: "failed", reason: "Timed out", took: 5.0, cost: 0.0006 },
+  { id: "a3", model: "Gemini 3.8 Pro", provider: "Google Vertex", logo: L.gemini, status: "answered", tokens: 412, took: 1.9, cost: 0.0021 },
+  { id: "a4", model: "Grok 4", provider: "xAI", logo: L.grok, status: "skipped" },
+];
+
+const money = (n: number) => (n === 0 ? "$0" : `$${n.toFixed(4)}`);
+const ROW = 60;
+const GAP = 10;
+
+function statusText(a: FallbackAttempt) {
+  switch (a.status) {
+    case "failed":
+      return a.reason ?? "Failed";
+    case "answered":
+      return `Answered${a.tokens ? ` · ${a.tokens} tokens` : ""}`;
+    case "trying":
+      return "Trying…";
+    case "skipped":
+      return "Not needed";
+    default:
+      return "Waiting";
+  }
+}
 
 export function FallbackChain({
-  title = "Find an available model",
-  items = [
-    {
-      id: "a",
-      title: "Primary model",
-      detail: "Provider A · rate limit",
-      status: "failed",
-    },
-    {
-      id: "b",
-      title: "Secondary model",
-      detail: "Provider B · timeout",
-      status: "failed",
-    },
-    {
-      id: "c",
-      title: "Fallback model",
-      detail: "Provider C · 820 ms",
-      status: "done",
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [attempt, setAttempt] = React.useState(items.length - 1);
-  const [running, setRunning] = React.useState(false);
+  attempts = defaultAttempts,
+  title = "Summarize support ticket",
+  route = "openrouter/auto",
+  request,
+  response,
+  now,
+  onRetry,
+  className = "",
+}: FallbackChainProps) {
+  const [clock, setClock] = React.useState(() => Date.now());
+  const trying = attempts.find((a) => a.status === "trying");
   React.useEffect(() => {
-    if (!running) return;
-    const t = window.setTimeout(() => {
-      if (attempt >= items.length - 1) setRunning(false);
-      else setAttempt((i) => i + 1);
-    }, 1300);
-    return () => window.clearTimeout(t);
-  }, [running, attempt, items.length]);
+    if (!trying || now != null) return;
+    const id = window.setInterval(() => setClock(Date.now()), 100);
+    return () => window.clearInterval(id);
+  }, [trying, now]);
+  const t = now ?? clock;
+  const tookOf = (a: FallbackAttempt) =>
+    a.status === "trying" && a.startedAt ? (t - a.startedAt) / 1000 : a.took ?? 0;
+
+  const answered = attempts.find((a) => a.status === "answered");
+  const allFailed = attempts.length > 0 && attempts.every((a) => a.status === "failed");
+  const totalTime = attempts.reduce((s, a) => s + tookOf(a), 0);
+  const totalCost = attempts.reduce((s, a) => s + (a.cost ?? 0), 0);
+  const maxTime = Math.max(5, ...attempts.map(tookOf));
+  const n = attempts.length;
+  const H = n * ROW + (n - 1) * GAP;
+  const cy = (i: number) => i * (ROW + GAP) + ROW / 2;
+  const idx = trying ? attempts.indexOf(trying) + 1 : 0;
+
+  const summary = answered
+    ? { cls: "ok", text: "Answered" }
+    : allFailed
+      ? { cls: "bad", text: "All models failed" }
+      : { cls: "run", text: `Attempt ${idx || 1} of ${n}` };
+
+  const lineClass = (a: FallbackAttempt) =>
+    a.status === "answered" ? "fc-l-ok" : a.status === "failed" ? "fc-l-bad" : a.status === "trying" ? "fc-l-run" : "fc-l-idle";
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="One request, a resilient path to an answer"
-      className={className}
-    >
-      <div className="st-tile" style={{ margin: "12px 0" }}>
-        <small>REQUEST</small>
-        <strong>Summarize support ticket #4821</strong>
-      </div>
-      <ol className="st-timeline">
-        {items.slice(0, attempt + 1).map((x, i) => (
-          <li key={x.id} className={running && i === attempt ? "active" : ""}>
-            <UI.Row title={x.title} detail={x.detail}>
-              <UI.Badge tone={running && i === attempt ? "running" : x.status}>
-                {running && i === attempt
-                  ? "Trying…"
-                  : x.status === "done"
-                    ? "Answered"
-                    : x.status}
-              </UI.Badge>
-            </UI.Row>
-          </li>
-        ))}
-      </ol>
-      {!running && (
-        <div className="st-tile">
-          <small>RESPONSE</small>
-          <p style={{ marginTop: 8 }}>
-            The customer needs help updating their billing details.
-          </p>
+    <section className={`fc ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="fc-head" role="status">
+        <strong>{title}</strong>
+        <span className={`fc-sum fc-${summary.cls}`}>
+          <i />
+          {summary.text}
+        </span>
+        <span className="fc-meta">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M8 5v3l2 1.3" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+          {totalTime.toFixed(1)}s
+        </span>
+        <span className="fc-meta fc-cost">{money(totalCost)}</span>
+      </header>
+
+      <div className="fc-canvas">
+        <div className="fc-grid" style={{ height: H }}>
+          <div className="fc-end" tabIndex={0} title={request?.text}>
+            <span className="fc-ico fc-req">
+              {request?.logo ?? (
+                <svg viewBox="0 0 16 16"><path d="M3 5.5h6.5a2.5 2.5 0 0 1 0 5H6M6 8.5 4 10.5l2 2" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              )}
+            </span>
+            <span className="fc-end-t">
+              <b>{request?.name ?? "Request"}</b>
+              {route && <code>{route}</code>}
+            </span>
+          </div>
+
+          <svg className="fc-wire" viewBox={`0 0 48 ${H}`} preserveAspectRatio="none" aria-hidden="true">
+            {attempts.map((a, i) => (
+              <path key={a.id} className={lineClass(a)} d={`M0 ${H / 2} C24 ${H / 2} 24 ${cy(i)} 48 ${cy(i)}`} />
+            ))}
+          </svg>
+
+          <ol className="fc-models" aria-label="Models in fallback order">
+            {attempts.map((a, i) => {
+              const took = tookOf(a);
+              const frac = Math.min(1, took / maxTime);
+              return (
+                <li key={a.id} className={`fc-m fc-m-${a.status}`} tabIndex={0} style={{ animationDelay: `${i * 70}ms` }}>
+                  <span className="fc-logo">
+                    {a.logo ?? <b>{a.model[0]}</b>}
+                    <span className="fc-n">{i + 1}</span>
+                  </span>
+                  <span className="fc-body">
+                    <span className="fc-top">
+                      <span className="fc-name">
+                        {a.model} {a.provider && <small>{a.provider}</small>}
+                      </span>
+                      <span className="fc-t">{a.status === "skipped" || a.status === "waiting" ? "–" : `${took.toFixed(1)}s`}</span>
+                    </span>
+                    <span className="fc-top">
+                      <span className="fc-st">{statusText(a)}</span>
+                      <span className="fc-c">{a.cost != null && a.status !== "skipped" ? money(a.cost) : ""}</span>
+                    </span>
+                    {a.status !== "skipped" && a.status !== "waiting" && (
+                      <span className="fc-bar">
+                        <span style={{ width: `${(a.status === "failed" && a.reason?.includes("Timed") ? 1 : frac) * 100}%` }} />
+                      </span>
+                    )}
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+
+          <svg className="fc-wire" viewBox={`0 0 48 ${H}`} preserveAspectRatio="none" aria-hidden="true">
+            {attempts.map((a, i) => (
+              <path
+                key={a.id}
+                className={a.status === "answered" ? "fc-l-ok" : "fc-l-idle"}
+                d={`M0 ${cy(i)} C24 ${cy(i)} 24 ${H / 2} 48 ${H / 2}`}
+              />
+            ))}
+          </svg>
+
+          <div className={`fc-end ${answered ? "fc-end-ok" : ""}`} tabIndex={0} title={response?.text}>
+            <span className="fc-ico fc-res">
+              {response?.logo ?? (
+                <svg viewBox="0 0 16 16"><path d="M3 3.5h10v7H7l-3 2.5v-2.5H3Z" fill="currentColor" /><path d="M6 6.5h4M6 8.3h2.5" stroke="#fff" strokeWidth="1" strokeLinecap="round" /></svg>
+              )}
+            </span>
+            <span className="fc-end-t">
+              <b>{response?.name ?? "Response"}</b>
+              <em>{answered ? `${answered.tokens ?? ""} tokens` : allFailed ? "No answer" : "Waiting"}</em>
+            </span>
+          </div>
         </div>
-      )}
-      <div className="st-actions">
-        <UI.Button
-          disabled={running}
-          onClick={() => {
-            setAttempt(0);
-            setRunning(true);
-            onAction?.("retry");
-          }}
-        >
-          Replay request
-        </UI.Button>
+        {allFailed && onRetry && (
+          <button type="button" className="fc-retry" onClick={onRetry}>
+            Retry
+          </button>
+        )}
       </div>
-    </UI.Panel>
+    </section>
   );
 }
+
+const css = `
+.fc{--fc-bg:#fff;--fc-fg:#18181b;--fc-muted:#71717a;--fc-faint:#a1a1aa;--fc-line:#e7e7ea;--fc-canvas:#fafafa;--fc-dot:#e4e4e7;--fc-ok:#15803d;--fc-okbar:#86c79c;--fc-bad:#dc2626;--fc-badbar:#f19a9a;--fc-run:#3b82f6;width:100%;max-width:740px;color:var(--fc-fg);font:400 13px/1.35 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .fc{--fc-bg:#1b1b1e;--fc-fg:#ececef;--fc-muted:#a1a1aa;--fc-faint:#71717a;--fc-line:#2e2e33;--fc-canvas:#151517;--fc-dot:#2a2a2f;--fc-ok:#4ade80;--fc-okbar:#2f7a4a;--fc-bad:#f87171;--fc-badbar:#8a3434;--fc-run:#60a5fa;color-scheme:dark}
+.fc *{box-sizing:border-box}.fc button{font:inherit;cursor:pointer}
+.fc-head{display:flex;align-items:center;gap:12px;padding:0 2px 14px}
+.fc-head strong{font-weight:500;font-size:14px;flex:1;min-width:0}
+.fc-sum{display:inline-flex;align-items:center;gap:6px;font-size:13px}.fc-sum i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.fc-ok{color:var(--fc-ok)}.fc-bad{color:var(--fc-bad)}.fc-run{color:var(--fc-run)}
+.fc-meta{display:inline-flex;align-items:center;gap:5px;padding-left:12px;border-left:1px solid var(--fc-line);font-variant-numeric:tabular-nums}
+.fc-meta svg{width:13px;height:13px;color:var(--fc-muted)}
+.fc-canvas{padding:22px 14px;border:1px solid var(--fc-line);border-radius:10px;background:var(--fc-canvas) radial-gradient(var(--fc-dot) 1px,transparent 1.2px) 0 0/12px 12px}
+.fc-grid{display:grid;grid-template-columns:148px 44px minmax(0,1fr) 44px 142px;align-items:center}
+.fc-wire{width:100%;height:100%;overflow:visible}
+.fc-wire path{fill:none;stroke-width:1.3;vector-effect:non-scaling-stroke}
+.fc-l-ok{stroke:var(--fc-ok)}.fc-l-bad{stroke:var(--fc-badbar);stroke-dasharray:4 3}.fc-l-idle{stroke:var(--fc-dot);stroke-dasharray:3 3}
+.fc-l-run{stroke:var(--fc-run);stroke-dasharray:5 4;animation:fc-dash .6s linear infinite}
+.fc-end{display:flex;align-items:center;gap:10px;height:54px;padding:0 10px;border:1px solid var(--fc-line);border-radius:8px;background:var(--fc-bg);box-shadow:0 1px 2px #0000000a}
+.fc-end-ok{border-color:var(--fc-okbar);box-shadow:0 0 0 1px color-mix(in srgb,var(--fc-ok) 20%,transparent)}
+.fc-ico{display:grid;place-items:center;width:22px;height:22px;border-radius:6px;flex:none}.fc-ico svg{width:14px;height:14px}
+.fc-req{background:color-mix(in srgb,var(--fc-run) 12%,transparent);color:var(--fc-run)}
+.fc-res{background:color-mix(in srgb,var(--fc-ok) 12%,transparent);color:var(--fc-ok)}
+.fc-end-t{display:flex;flex-direction:column;min-width:0}.fc-end-t b{font-weight:500}
+.fc-end-t code{font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--fc-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fc-end-t em{font-style:normal;font-size:12px;color:var(--fc-ok)}
+.fc-models{list-style:none;margin:0;padding:0;display:grid;gap:${GAP}px}
+.fc-m{display:flex;align-items:center;gap:10px;height:${ROW}px;padding:0 12px 0 10px;border:1px solid var(--fc-line);border-radius:8px;background:var(--fc-bg);box-shadow:0 1px 2px #0000000a;animation:fc-in .35s both}
+.fc-m-answered{border-color:var(--fc-okbar);box-shadow:0 0 0 1px color-mix(in srgb,var(--fc-ok) 20%,transparent)}
+.fc-m-skipped,.fc-m-waiting{color:var(--fc-faint)}
+.fc-logo{position:relative;display:grid;place-items:center;width:22px;height:22px;flex:none}.fc-logo svg{width:15px;height:15px}
+.fc-n{position:absolute;right:-5px;bottom:-5px;display:grid;place-items:center;width:13px;height:13px;border-radius:50%;font-size:9px;font-weight:600;color:#fff;background:var(--fc-faint);border:1.5px solid var(--fc-bg)}
+.fc-m-failed .fc-n{background:var(--fc-bad)}.fc-m-answered .fc-n{background:var(--fc-ok)}.fc-m-trying .fc-n{background:var(--fc-run)}
+.fc-m-skipped .fc-n{background:none;color:var(--fc-faint)}
+.fc-m-skipped .fc-logo svg{opacity:.6}
+.fc-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.fc-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.fc-name{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fc-m-skipped .fc-name{font-weight:400}
+.fc-name small{font-size:11px;font-weight:400;color:var(--fc-faint);margin-left:4px}
+.fc-t,.fc-c{font-variant-numeric:tabular-nums;font-size:12px}.fc-c{color:var(--fc-muted)}
+.fc-st{font-size:12px}.fc-m-failed .fc-st{color:var(--fc-bad)}.fc-m-answered .fc-st{color:var(--fc-ok)}.fc-m-trying .fc-st{color:var(--fc-run)}
+.fc-bar{position:relative;display:block;height:4px;margin-top:5px;background:repeating-linear-gradient(90deg,var(--fc-dot) 0 4px,transparent 4px 6px)}
+.fc-bar span{position:absolute;inset:0 auto 0 0;background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 6px);transition:width .4s}
+.fc-m-failed .fc-bar span{color:var(--fc-badbar)}.fc-m-answered .fc-bar span{color:var(--fc-okbar)}
+.fc-m-trying .fc-bar span{color:var(--fc-run);animation:fc-pulse 1s ease-in-out infinite}
+.fc-retry{display:block;margin:14px auto 0;padding:6px 14px;border:1px solid var(--fc-line);border-radius:7px;background:var(--fc-bg);color:var(--fc-fg)}
+.fc :focus-visible{outline:2px solid var(--fc-run);outline-offset:2px}
+@keyframes fc-in{from{opacity:0;transform:translateX(-6px)}}
+@keyframes fc-dash{to{stroke-dashoffset:-9}}
+@keyframes fc-pulse{50%{opacity:.5}}
+@media(max-width:680px){.fc-name small{display:none}.fc-grid{grid-template-columns:110px 28px minmax(0,1fr) 28px 110px}}
+@media(max-width:520px){.fc-grid{grid-template-columns:1fr;height:auto!important;gap:10px}.fc-wire{display:none}.fc-models{padding-left:14px;border-left:1px dashed var(--fc-faint)}}
+@media(prefers-reduced-motion:reduce){.fc *{animation:none!important;transition:none!important}}
+`;
 
 export default FallbackChain;
