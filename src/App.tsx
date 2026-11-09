@@ -522,7 +522,7 @@ export default function App() {
                       </h3>
                       <p>{x.description}</p>
                       <span className={`origin ${x.pro ? "recreated" : "mit"}`}>
-                        {x.pro ? "Recreated" : "MIT original"}
+                        {"source" in x ? x.source : x.pro ? "Recreated" : "MIT original"}
                       </span>
                     </div>
                   </button>
@@ -565,7 +565,9 @@ export default function App() {
                 <div className="component-meta">
                   <span className={`origin ${entry.pro ? "recreated" : "mit"}`}>
                     <span className="origin-dot" />
-                    {entry.pro
+                    {"source" in entry
+                      ? `Source · ${entry.source}`
+                      : entry.pro
                       ? "Independent recreation"
                       : "Original · MIT license"}
                   </span>
@@ -779,17 +781,21 @@ export default function App() {
                 </section>
                 <section>
                   <h3>
-                    {entry.pro
+                    {"source" in entry
+                      ? `From ${entry.source}`
+                      : entry.pro
                       ? "About this recreation"
                       : "From the open-source collection"}
                   </h3>
                   <p>
-                    {entry.pro
+                    {"source" in entry
+                      ? `Ported from ${entry.source} (MIT + Commons Clause) with its CSS inlined. It needs the npm package named in the file header.`
+                      : entry.pro
                       ? "Independently built from the public preview and documented behavior. Visual details and APIs may differ from affectUI Pro. The code here is fully available to copy and customize."
                       : "The original affectUI component under the MIT license, with a local working example. The license notice is included when you copy or download the code."}
                   </p>
                   <a
-                    href={`https://www.affectui.com/components/${entry.slug}`}
+                    href={"source" in entry ? "https://reactbits.dev" : `https://www.affectui.com/components/${entry.slug}`}
                     target="_blank"
                     rel="noreferrer"
                   >

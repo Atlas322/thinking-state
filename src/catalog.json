@@ -817,5 +817,25 @@
     "description": "AI chat card with a soft gradient glow, suggestions, streaming replies and live voice dictation",
     "exportName": "WritingAssistant",
     "usage": "import { WritingAssistant } from \"./writing-assistant\";\n\nexport default function App() {\n  return <WritingAssistant />;\n}"
+  },
+  {
+    "slug": "folder-float",
+    "name": "Folder Float",
+    "category": "Cards",
+    "pro": true,
+    "source": "React Bits",
+    "description": "A folder that opens to float its notes out as pills; once they land they drift, collide and can be thrown in a zero-gravity world (React Bits, matter-js)",
+    "exportName": "FolderFloat",
+    "usage": "import { FolderFloat } from \"./folder-float\";\n\nexport default function App() {\n  return (\n    <FolderFloat\n      items={[\"Try a warmer palette\", \"Tighten the spacing\", \"Logo feels small\"]}\n      label=\"Design feedback\"\n      trigger=\"click\"\n      onSelect={(value) => console.log(value)}\n    />\n  );\n}"
+  },
+  {
+    "slug": "swipe-row",
+    "name": "Swipe Row",
+    "category": "Data display",
+    "pro": true,
+    "source": "React Bits",
+    "description": "A list row you swipe to reveal actions; a full swipe leaps the primary action across and folds the row shut, with keyboard support (React Bits, motion)",
+    "exportName": "SwipeRow",
+    "usage": "import { SwipeRow } from \"./swipe-row\";\n\nexport default function App() {\n  return (\n    <SwipeRow\n      actions={[{ id: \"delete\", label: \"Delete\" }, { id: \"archive\", label: \"Archive\", dismiss: true }]}\n      onCommit={(action) => console.log(action.id)}\n    >\n      <span>Design review notes</span>\n    </SwipeRow>\n  );\n}"
   }
 ]
