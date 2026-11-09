@@ -12,12 +12,14 @@
     "package:library": "node scripts/package-library.mjs",
     "predev": "npm run package:library",
     "prebuild": "npm run package:library",
-    "check:copy": "node scripts/check-copy.mjs"
+    "check:copy": "node scripts/check-copy.mjs",
+    "start": "serve -s dist -l ${PORT:-3000}"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "serve": "^14.2.7"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.3",
@@ -28,5 +30,8 @@
     "typescript": "~5.9.3",
     "vite": "^7.0.0",
     "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
