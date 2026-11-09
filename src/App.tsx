@@ -1,89 +1,823 @@
-import { useState } from 'react';
-import { ThinkingState, type ThinkingStep } from './components/thinking-state';
+import {
+  Component,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import {
+  catalog,
+  categories,
+  previewFor,
+  sourceFor,
+  fileFor,
+  usageFor,
+  buildPrompt,
+  hasClassic,
+} from "./registry";
 
-const steps: ThinkingStep[] = [
-  {
-    kind: 'search',
-    label: 'Searching',
-    sources: [
-      { label: 'Slack – #team-offsite', href: 'https://slack.com/', tooltip: 'slack.com', icon: <SlackMark /> },
-      { label: 'X – @lisbonguide', href: 'https://x.com/', tooltip: 'x.com', icon: <XMark /> },
-      { label: 'Notion – Offsite plan', href: 'https://notion.so/', tooltip: 'notion.so', icon: <NotionMark /> },
-      { label: 'Wikipedia – Lisbon', href: 'https://en.wikipedia.org/wiki/Lisbon', tooltip: 'en.wikipedia.org/wiki/Lisbon', icon: <WikipediaMark /> },
-    ],
-    moreSources: [
-      { label: 'Google Flights – LIS', href: 'https://www.google.com/travel/flights', tooltip: 'google.com/travel/flights' },
-      { label: 'Booking.com – Lisbon', href: 'https://www.booking.com', tooltip: 'booking.com' },
-      { label: 'Airbnb – Alfama', href: 'https://www.airbnb.com', tooltip: 'airbnb.com' },
-    ],
-  },
-  { kind: 'step', label: 'Reading 7 sources about the trip' },
-  { kind: 'step', label: 'Comparing flights and hotels' },
-  { kind: 'step', label: 'Checking dates against the team calendar' },
-  { kind: 'step', label: 'Drafting the offsite agenda' },
-];
-
-export default function App() {
-  const [dark, setDark] = useState(false);
-  const [run, setRun] = useState(0);
-  const [loop, setLoop] = useState(false);
-  const [variant, setVariant] = useState<'clean' | 'classic'>('clean');
-
+const symbols: Record<string, string> = {
+  Agents: "⌘",
+  Chat: "◌",
+  Inputs: "⊞",
+  "Data display": "▤",
+  Navigation: "↗",
+  Feedback: "◉",
+  Cards: "▢",
+  Buttons: "↵",
+};
+const read = (key: string, fallback: string) => {
+  try {
+    return localStorage.getItem(key) ?? fallback;
+  } catch {
+    return fallback;
+  }
+};
+function Icon({ name }: { name: string }) {
+  const paths: Record<string, ReactNode> = {
+    search: (
+      <>
+        <circle cx="10.5" cy="10.5" r="6.5" />
+        <path d="m16 16 4 4" />
+      </>
+    ),
+    copy: (
+      <>
+        <rect x="8" y="8" width="12" height="12" rx="2" />
+        <path d="M16 8V4H4v12h4" />
+      </>
+    ),
+    download: (
+      <>
+        <path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5" />
+      </>
+    ),
+    sun: (
+      <>
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+      </>
+    ),
+    moon: <path d="M21 13a9 9 0 1 1-10-10 7 7 0 0 0 10 10Z" />,
+    reset: (
+      <>
+        <path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" />
+      </>
+    ),
+    menu: <path d="M4 6h16M4 12h16M4 18h16" />,
+    check: <path d="m5 12 4 4L19 6" />,
+    code: (
+      <>
+        <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18" />
+      </>
+    ),
+    arrow: <path d="M5 12h14m-5-5 5 5-5 5" />,
+    star: (
+      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z" />
+    ),
+  };
   return (
-    <div className="demo" data-theme={dark ? 'dark' : 'light'}>
-      <main className="demo-main">
-        <header className="demo-heading">
-          <div>
-            <p className="demo-eyebrow">COMPONENT PREVIEW</p>
-            <h1>Thinking State</h1>
-            <p className="demo-description">A little clarity while your assistant works.</p>
-          </div>
-          <button className="demo-icon-button" type="button" onClick={() => setDark(!dark)} aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}>
-            {dark ? <SunIcon /> : <MoonIcon />}
-          </button>
-        </header>
-
-        <section className="demo-preview" aria-label="Thinking state preview">
-          <div className="demo-toolbar">
-            <div className="demo-variants" role="group" aria-label="Component style">
-              <button type="button" aria-pressed={variant === 'clean'} onClick={() => setVariant('clean')}>Clean</button>
-              <button type="button" aria-pressed={variant === 'classic'} onClick={() => setVariant('classic')}>Classic</button>
-            </div>
-            <div className="demo-actions">
-              <label className="demo-loop"><input type="checkbox" checked={loop} onChange={(event) => { setLoop(event.target.checked); setRun((value) => value + 1); }} />Loop</label>
-              <button type="button" className="demo-replay" onClick={() => setRun((value) => value + 1)}><ReplayIcon />Replay</button>
-            </div>
-          </div>
-          <div className="demo-stage">
-            <ThinkingState key={run} steps={steps} loop={loop} stepMs={1500} variant={variant} />
-          </div>
-        </section>
-        <p className="demo-note">Click the heading to collapse. Explore the sources as each step appears.</p>
-      </main>
-      <footer className="demo-footer">React component · Inspired by <a href="https://www.affectui.com/components/thinking-state" target="_blank" rel="noreferrer">affectUI</a></footer>
-    </div>
+    <svg
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {paths[name] ?? paths.code}
+    </svg>
   );
 }
-
-function ReplayIcon() {
-  return <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" /></svg>;
+class PreviewBoundary extends Component<
+  { children: ReactNode },
+  { error: string }
+> {
+  state = { error: "" };
+  static getDerivedStateFromError(error: Error) {
+    return { error: error.message };
+  }
+  render() {
+    return this.state.error ? (
+      <div className="empty-state">
+        <h3>Preview could not load</h3>
+        <p>{this.state.error}</p>
+        <p>The source remains available in the Code tab.</p>
+      </div>
+    ) : (
+      this.props.children
+    );
+  }
+}
+function initialRoute() {
+  const slug = decodeURIComponent(location.hash.replace(/^#\/?/, ""));
+  return catalog.some((x) => x.slug === slug) || slug === "overview"
+    ? slug
+    : "thinking-state";
 }
 
-function SlackMark() {
-  return <svg aria-hidden="true" viewBox="0 0 16 16"><rect x="1" y="5" width="7" height="3" rx="1.5" fill="#36c5f0" /><circle cx="6.5" cy="2.5" r="1.5" fill="#36c5f0" /><rect x="8" y="1" width="3" height="7" rx="1.5" fill="#2eb67d" /><circle cx="13.5" cy="6.5" r="1.5" fill="#2eb67d" /><rect x="8" y="8" width="7" height="3" rx="1.5" fill="#ecb22e" /><circle cx="9.5" cy="13.5" r="1.5" fill="#ecb22e" /><rect x="5" y="8" width="3" height="7" rx="1.5" fill="#e01e5a" /><circle cx="2.5" cy="9.5" r="1.5" fill="#e01e5a" /></svg>;
-}
-function XMark() {
-  return <svg aria-hidden="true" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="#111" /><path d="m4 3 8 10h-2L2 3h2Zm0 10L12 3" transform="translate(1 0)" fill="none" stroke="white" strokeWidth="1" /></svg>;
-}
-function NotionMark() {
-  return <svg aria-hidden="true" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="1.5" fill="white" stroke="#111" strokeWidth="1.2" /><path d="M4 12V4h1.5l5 8H12V4M3 4h4m2 0h4M3 12h4" fill="none" stroke="#111" strokeWidth="1.2" /></svg>;
-}
-function WikipediaMark() {
-  return <svg aria-hidden="true" viewBox="0 0 16 16"><rect width="16" height="16" rx="2" fill="white" /><path d="m2 4 3.5 8L8 6l2.5 6L14 4M1 4h4m1 0h4m2 0h3" fill="none" stroke="#111" strokeWidth="1" /></svg>;
-}
-function MoonIcon() {
-  return <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20.5 13a8.7 8.7 0 0 1-9.5-9.5A8.8 8.8 0 1 0 20.5 13Z" /></svg>;
-}
-function SunIcon() {
-  return <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><circle cx="12" cy="12" r="3.8" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>;
+export default function App() {
+  const [route, setRoute] = useState(initialRoute);
+  const [query, setQuery] = useState("");
+  const [theme, setTheme] = useState(() => read("studio-theme", "light"));
+  const [style, setStyle] = useState("clean");
+  const [tab, setTab] = useState("preview");
+  const [run, setRun] = useState(0);
+  const [code, setCode] = useState("");
+  const [sourceError, setSourceError] = useState("");
+  const [copied, setCopied] = useState("");
+  const [copyError, setCopyError] = useState("");
+  const [manualText, setManualText] = useState("");
+  const [mobile, setMobile] = useState(false);
+  const [narrow, setNarrow] = useState(false);
+  const [favoriteOnly, setFavoriteOnly] = useState(false);
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      return JSON.parse(read("studio-favorites", "[]"));
+    } catch {
+      return [];
+    }
+  });
+  const search = useRef<HTMLInputElement>(null);
+  const manual = useRef<HTMLTextAreaElement>(null);
+  const entry = catalog.find((x) => x.slug === route);
+  const matches = catalog.filter(
+    (x) =>
+      (!favoriteOnly || favorites.includes(x.slug)) &&
+      `${x.name} ${x.category} ${x.description}`
+        .toLowerCase()
+        .includes(query.toLowerCase()),
+  );
+  const Preview = entry ? previewFor(entry, style) : null;
+  useEffect(() => {
+    const fn = () => setRoute(initialRoute());
+    addEventListener("hashchange", fn);
+    return () => removeEventListener("hashchange", fn);
+  }, []);
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    try {
+      localStorage.setItem("studio-theme", theme);
+    } catch {}
+  }, [theme]);
+  useEffect(() => {
+    try {
+      localStorage.setItem("studio-favorites", JSON.stringify(favorites));
+    } catch {}
+  }, [favorites]);
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        e.key === "/" &&
+        !["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)
+      ) {
+        e.preventDefault();
+        setMobile(true);
+        search.current?.focus();
+      }
+      if (e.key === "Escape") {
+        setMobile(false);
+        setManualText("");
+      }
+    };
+    addEventListener("keydown", fn);
+    return () => removeEventListener("keydown", fn);
+  }, []);
+  useEffect(() => {
+    setCode("");
+    setSourceError("");
+    setCopied("");
+    setCopyError("");
+    if (!entry) return;
+    let alive = true;
+    sourceFor(entry, style)
+      .then((value) => {
+        if (alive) setCode(value);
+      })
+      .catch(() => {
+        if (alive)
+          setSourceError("Could not load the source. Refresh to try again.");
+      });
+    return () => {
+      alive = false;
+    };
+  }, [entry, style]);
+  useEffect(() => {
+    if (manualText) {
+      manual.current?.focus();
+      manual.current?.select();
+    }
+  }, [manualText]);
+  useEffect(() => {
+    if (!copied) return;
+    const timer = setTimeout(() => setCopied(""), 2200);
+    return () => clearTimeout(timer);
+  }, [copied]);
+  const navigate = (slug: string) => {
+    location.hash = "/" + slug;
+    setRoute(slug);
+    setMobile(false);
+    setTab("preview");
+    setRun((n) => n + 1);
+    setNarrow(false);
+    document.querySelector(".workspace")?.scrollTo(0, 0);
+  };
+  const toggleFavorite = (slug: string) =>
+    setFavorites((s) =>
+      s.includes(slug) ? s.filter((v) => v !== slug) : [...s, slug],
+    );
+  const copy = async (kind: string, text: string) => {
+    setCopyError("");
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(kind);
+    } catch {
+      setCopyError(
+        "Clipboard access is unavailable. Copy the selected text below.",
+      );
+      setManualText(text);
+    }
+  };
+  const download = () => {
+    if (!entry || !code) return;
+    const url = URL.createObjectURL(
+      new Blob([code], { type: "text/plain;charset=utf-8" }),
+    );
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileFor(entry, style);
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+  return (
+    <div className="studio-shell">
+      {mobile && (
+        <button
+          className="sidebar-scrim"
+          aria-label="Close navigation"
+          onClick={() => setMobile(false)}
+        />
+      )}
+      <aside className={`sidebar ${mobile ? "is-open" : ""}`}>
+        <button
+          className="brand"
+          onClick={() => navigate("overview")}
+          aria-label="Component Studio home"
+        >
+          <span className="brand-mark">
+            s<span>·</span>
+          </span>
+          <span>
+            component<span className="brand-light">studio</span>
+          </span>
+          <span className="brand-version">01</span>
+        </button>
+        <div className="sidebar-search">
+          <Icon name="search" />
+          <input
+            ref={search}
+            placeholder="Find a component…"
+            aria-label="Search components"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <kbd>/</kbd>
+        </div>
+        <button
+          className={`overview-link ${route === "overview" ? "active" : ""}`}
+          onClick={() => navigate("overview")}
+        >
+          <span>▦</span> All components <span className="count">90</span>
+        </button>
+        <button
+          className={`favorites-filter ${favoriteOnly ? "active" : ""}`}
+          aria-pressed={favoriteOnly}
+          onClick={() => setFavoriteOnly((s) => !s)}
+        >
+          <Icon name="star" /> Favorites{" "}
+          <span className="count">{favorites.length}</span>
+        </button>
+        <nav aria-label="Components" className="component-navigation">
+          {categories.map((category) => {
+            const list = matches.filter((x) => x.category === category);
+            if (!list.length) return null;
+            return (
+              <div className="nav-group" key={category}>
+                <div className="nav-category">
+                  <span>{symbols[category]}</span>
+                  {category}
+                  <small>{list.length}</small>
+                </div>
+                {list.map((x) => (
+                  <button
+                    key={x.slug}
+                    className={`nav-item ${route === x.slug ? "active" : ""}`}
+                    aria-current={route === x.slug ? "page" : undefined}
+                    onClick={() => navigate(x.slug)}
+                  >
+                    <span>{x.name}</span>
+                    {favorites.includes(x.slug) && (
+                      <span className="nav-star">✦</span>
+                    )}
+                    {route === x.slug && <span className="active-dot" />}
+                  </button>
+                ))}
+              </div>
+            );
+          })}
+          {!matches.length && (
+            <div className="nav-empty">
+              No components found.
+              <button
+                onClick={() => {
+                  setQuery("");
+                  setFavoriteOnly(false);
+                }}
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
+        </nav>
+        <a className="sidebar-download" href="/component-library.zip" download>
+          <span className="download-tile">
+            <Icon name="download" />
+          </span>
+          <span>
+            <strong>Take the library with you</strong>
+            <small>All source files · ZIP download</small>
+          </span>
+          <span>↗</span>
+        </a>
+        <div className="sidebar-footer">
+          <span className="live-dot" />
+          90 components. Yours to build with.
+        </div>
+      </aside>
+      <div className="workspace">
+        <header className="topbar">
+          <button
+            className="icon-button mobile-menu"
+            aria-label="Open navigation"
+            onClick={() => setMobile((s) => !s)}
+          >
+            <Icon name="menu" />
+          </button>
+          <div className="breadcrumb">
+            <button onClick={() => navigate("overview")}>Library</button>
+            <span>/</span>
+            {entry ? (
+              <>
+                <span>{entry.category}</span>
+                <span>/</span>
+                <strong>{entry.name}</strong>
+              </>
+            ) : (
+              <strong>All components</strong>
+            )}
+          </div>
+          <div className="topbar-actions">
+            <a
+              href="https://example.com/temuulen/thinking-state"
+              target="_blank"
+              rel="noreferrer"
+              className="repo-link"
+            >
+              GitHub ↗
+            </a>
+            <span className="toolbar-divider" />
+            <button
+              className="icon-button"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+              onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
+            >
+              <Icon name={theme === "dark" ? "sun" : "moon"} />
+            </button>
+          </div>
+        </header>
+        <main className="main-content">
+          {!entry ? (
+            <>
+              <section className="library-hero">
+                <div className="eyebrow">
+                  <span className="live-dot" />
+                  THE COMPONENT COLLECTION
+                </div>
+                <h1>
+                  Good interfaces.
+                  <br />
+                  <span>A better starting point.</span>
+                </h1>
+                <p>
+                  90 interactive components for agents, conversations, and the
+                  rest of your product. Explore, copy, and make them yours.
+                </p>
+                <div className="collection-stats">
+                  <span>
+                    <strong>90</strong> components
+                  </span>
+                  <span>
+                    <strong>23</strong> MIT originals
+                  </span>
+                  <span>
+                    <strong>67</strong> independent recreations
+                  </span>
+                </div>
+              </section>
+              <div className="gallery-header">
+                <h2>
+                  {query
+                    ? `Results for “${query}”`
+                    : favoriteOnly
+                      ? "Your favorites"
+                      : "Explore the collection"}
+                </h2>
+                <span>{matches.length} components</span>
+              </div>
+              <div className="catalog-grid">
+                {matches.map((x, i) => (
+                  <button
+                    className="catalog-card"
+                    key={x.slug}
+                    onClick={() => navigate(x.slug)}
+                  >
+                    <div className={`card-art art-${i % 5}`}>
+                      <span className="mini-window">
+                        <span className="mini-dots">···</span>
+                        <span className="mini-row">
+                          <i />
+                          <b />
+                          <em />
+                        </span>
+                        <span className="mini-row">
+                          <i />
+                          <b />
+                          <em />
+                        </span>
+                        <span className="mini-row">
+                          <i />
+                          <b />
+                          <em />
+                        </span>
+                      </span>
+                      <span className="art-symbol">{symbols[x.category]}</span>
+                    </div>
+                    <div className="catalog-card-info">
+                      <small>{x.category}</small>
+                      <h3>
+                        {x.name}
+                        <span>↗</span>
+                      </h3>
+                      <p>{x.description}</p>
+                      <span className={`origin ${x.pro ? "recreated" : "mit"}`}>
+                        {x.pro ? "Recreated" : "MIT original"}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              {!matches.length && (
+                <div className="empty-state">
+                  <h3>No components match</h3>
+                  <button
+                    className="action-button"
+                    onClick={() => {
+                      setQuery("");
+                      setFavoriteOnly(false);
+                    }}
+                  >
+                    Clear filters
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="component-heading">
+                <div className="eyebrow">
+                  {entry.category.toUpperCase()} <span> / </span> COMPONENT{" "}
+                  {String(catalog.indexOf(entry) + 1).padStart(2, "0")}
+                </div>
+                <div className="heading-title">
+                  <h1>{entry.name}</h1>
+                  <button
+                    className={`favorite-button ${favorites.includes(entry.slug) ? "saved" : ""}`}
+                    aria-label={`${favorites.includes(entry.slug) ? "Remove from" : "Add to"} favorites`}
+                    aria-pressed={favorites.includes(entry.slug)}
+                    onClick={() => toggleFavorite(entry.slug)}
+                  >
+                    <Icon name="star" />
+                  </button>
+                </div>
+                <p>{entry.description}</p>
+                <div className="component-meta">
+                  <span className={`origin ${entry.pro ? "recreated" : "mit"}`}>
+                    <span className="origin-dot" />
+                    {entry.pro
+                      ? "Independent recreation"
+                      : "Original · MIT license"}
+                  </span>
+                  <span>React 19</span>
+                  <span>TypeScript</span>
+                  <span>Self-contained</span>
+                </div>
+              </div>
+              <section
+                className="showcase"
+                aria-label={`${entry.name} showcase`}
+              >
+                <div className="showcase-toolbar">
+                  <div
+                    className="view-tabs"
+                    role="tablist"
+                    aria-label="Component view"
+                  >
+                    {["preview", "code", "usage"].map((t) => (
+                      <button
+                        role="tab"
+                        aria-selected={tab === t}
+                        aria-controls="component-panel"
+                        id={`tab-${t}`}
+                        key={t}
+                        onClick={() => setTab(t)}
+                      >
+                        {t === "preview" ? (
+                          <span>◉</span>
+                        ) : t === "code" ? (
+                          <Icon name="code" />
+                        ) : (
+                          <span>↗</span>
+                        )}
+                        {t[0].toUpperCase() + t.slice(1)}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="preview-options">
+                    {tab === "preview" && (
+                      <>
+                        {hasClassic(entry) && (
+                          <div
+                            className="style-switch"
+                            role="group"
+                            aria-label="Component style"
+                          >
+                            <button
+                              aria-pressed={style === "clean"}
+                              onClick={() => setStyle("clean")}
+                            >
+                              Clean
+                            </button>
+                            <button
+                              aria-pressed={style === "classic"}
+                              onClick={() => setStyle("classic")}
+                            >
+                              Classic
+                            </button>
+                          </div>
+                        )}
+                        <button
+                          className={`icon-button ${narrow ? "selected" : ""}`}
+                          aria-label={
+                            narrow ? "Use wide preview" : "Use narrow preview"
+                          }
+                          aria-pressed={narrow}
+                          onClick={() => setNarrow((s) => !s)}
+                        >
+                          <span style={{ fontSize: 17 }}>▯</span>
+                        </button>
+                        <button
+                          className="icon-button"
+                          aria-label="Replay component"
+                          onClick={() => setRun((n) => n + 1)}
+                        >
+                          <Icon name="reset" />
+                        </button>
+                      </>
+                    )}
+                    {tab !== "preview" && (
+                      <span className="filename">
+                        {tab === "code" ? fileFor(entry, style) : "usage.tsx"}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div
+                  id="component-panel"
+                  role="tabpanel"
+                  aria-labelledby={`tab-${tab}`}
+                  className={tab === "preview" ? "preview-stage" : "code-stage"}
+                >
+                  {tab === "preview" ? (
+                    <div
+                      className={`preview-container ${narrow ? "narrow" : ""}`}
+                    >
+                      <PreviewBoundary key={`${entry.slug}-${style}-${run}`}>
+                        <Suspense
+                          fallback={
+                            <div className="preview-loading">
+                              <span className="loading-mark" />
+                              Loading component…
+                            </div>
+                          }
+                        >
+                          {Preview && <Preview />}
+                        </Suspense>
+                      </PreviewBoundary>
+                    </div>
+                  ) : (
+                    <pre tabIndex={0}>
+                      <code>
+                        {tab === "usage"
+                          ? usageFor(entry, style)
+                          : sourceError || code || "Loading source…"}
+                      </code>
+                    </pre>
+                  )}
+                </div>
+                <div className="showcase-footer">
+                  <span>
+                    <span className="live-dot" />
+                    {tab === "preview"
+                      ? "Interactive preview — try it out"
+                      : tab === "code"
+                        ? "Complete source, including styles"
+                        : "A starting point for your application"}
+                  </span>
+                  <span>
+                    {tab === "preview"
+                      ? "No backend connected"
+                      : code
+                        ? `${code.split("\n").length} lines`
+                        : ""}
+                  </span>
+                </div>
+              </section>
+              <div className="copy-bar">
+                <div>
+                  <span className="copy-bar-icon">
+                    <Icon name="code" />
+                  </span>
+                  <div>
+                    <strong>Make it part of your project.</strong>
+                    <p>
+                      Copy the source, or give an AI assistant the complete
+                      prompt.
+                    </p>
+                  </div>
+                </div>
+                <div className="copy-actions">
+                  <button
+                    className="action-button"
+                    disabled={!code}
+                    onClick={download}
+                    aria-label="Download component file"
+                  >
+                    <Icon name="download" />
+                  </button>
+                  <button
+                    className="action-button"
+                    disabled={!code}
+                    onClick={() => copy("code", code)}
+                  >
+                    <Icon name={copied === "code" ? "check" : "copy"} />
+                    {copied === "code" ? "Copied!" : "Copy code"}
+                  </button>
+                  <button
+                    className="action-button primary"
+                    disabled={!code}
+                    onClick={() =>
+                      copy("prompt", buildPrompt(entry, style, code))
+                    }
+                  >
+                    <span>✦</span>
+                    {copied === "prompt" ? "Prompt copied!" : "Copy prompt"}
+                    <Icon name="arrow" />
+                  </button>
+                </div>
+              </div>
+              <div className="copy-feedback" role="status" aria-live="polite">
+                {copied === "prompt"
+                  ? "Ready to paste into ChatGPT, Claude, Cursor, or another coding assistant."
+                  : copied === "code"
+                    ? "Complete component source copied."
+                    : sourceError}
+              </div>
+              <div className="component-notes">
+                <section>
+                  <h3>Copy. Paste. Build.</h3>
+                  <ol>
+                    <li>
+                      Copy the code or download the <code>.tsx</code> file.
+                    </li>
+                    <li>
+                      Add it to your React 19 project. Styles are already
+                      included.
+                    </li>
+                    <li>
+                      Pass your data and connect the callbacks to your
+                      application.
+                    </li>
+                  </ol>
+                  <button
+                    className="text-button"
+                    onClick={() => setTab("usage")}
+                  >
+                    See usage example <Icon name="arrow" />
+                  </button>
+                </section>
+                <section>
+                  <h3>
+                    {entry.pro
+                      ? "About this recreation"
+                      : "From the open-source collection"}
+                  </h3>
+                  <p>
+                    {entry.pro
+                      ? "Independently built from the public preview and documented behavior. Visual details and APIs may differ from affectUI Pro. The code here is fully available to copy and customize."
+                      : "The original affectUI component under the MIT license, with a local working example. The license notice is included when you copy or download the code."}
+                  </p>
+                  <a
+                    href={`https://www.affectui.com/components/${entry.slug}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View original reference ↗
+                  </a>
+                </section>
+              </div>
+              <section className="related">
+                <div className="gallery-header">
+                  <h2>Keep exploring</h2>
+                  <button
+                    className="text-button"
+                    onClick={() => navigate("overview")}
+                  >
+                    View all 90 <Icon name="arrow" />
+                  </button>
+                </div>
+                <div className="related-grid">
+                  {catalog
+                    .filter(
+                      (x) =>
+                        x.category === entry.category && x.slug !== entry.slug,
+                    )
+                    .slice(0, 3)
+                    .map((x) => (
+                      <button key={x.slug} onClick={() => navigate(x.slug)}>
+                        <span>{symbols[x.category]}</span>
+                        <div>
+                          <small>{x.category}</small>
+                          <strong>{x.name}</strong>
+                        </div>
+                        <span>↗</span>
+                      </button>
+                    ))}
+                </div>
+              </section>
+            </>
+          )}
+          <footer className="main-footer">
+            <span>
+              Component Studio <span className="footer-dot">·</span> Built to be
+              used.
+            </span>
+            <a
+              href="https://example.com/temuulen/thinking-state"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Source repository ↗
+            </a>
+          </footer>
+        </main>
+      </div>
+      {manualText && (
+        <div className="modal-backdrop">
+          <section
+            className="copy-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Copy manually"
+          >
+            <h2>Copy manually</h2>
+            <p>{copyError}</p>
+            <textarea
+              ref={manual}
+              value={manualText}
+              readOnly
+              aria-label="Text to copy"
+            />
+            <button className="action-button" onClick={() => setManualText("")}>
+              Close
+            </button>
+          </section>
+        </div>
+      )}
+    </div>
+  );
 }

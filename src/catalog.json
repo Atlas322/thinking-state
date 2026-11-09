@@ -1,0 +1,812 @@
+[
+  {
+    "slug": "agent-checkpoints",
+    "name": "Agent Checkpoints",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent's run as a line of checkpoints, like git for agents – rewind to any of them and a new attempt branches out of it, while the one it left fades back but stays",
+    "exportName": "AgentCheckpoints",
+    "usage": "import { AgentCheckpoints } from \"./agent-checkpoints\";\n\nexport default function App() {\n  return <AgentCheckpoints />;\n}"
+  },
+  {
+    "slug": "agent-cursors",
+    "name": "Agent Cursors",
+    "category": "Agents",
+    "pro": true,
+    "description": "Agents working in a document like teammates in a multiplayer editor – live pointers with names, suggestions typed letter by letter, images they resize, code they fix and comments beside the page",
+    "exportName": "AgentCursors",
+    "usage": "import { AgentCursors } from \"./agent-cursors\";\n\nexport default function App() {\n  return <AgentCursors />;\n}"
+  },
+  {
+    "slug": "agent-findings",
+    "name": "Agent Findings",
+    "category": "Agents",
+    "pro": true,
+    "description": "A swarm of agents checking something – one calm row per agent with its progress, and their findings sliding into a short feed as they're found",
+    "exportName": "AgentFindings",
+    "usage": "import { AgentFindings } from \"./agent-findings\";\n\nexport default function App() {\n  return <AgentFindings />;\n}"
+  },
+  {
+    "slug": "agent-fleet",
+    "name": "Agent Fleet",
+    "category": "Agents",
+    "pro": true,
+    "description": "Several agents side by side – each card sums up its sub-agents, and a click opens its tree to the right while the last one folds back into its card",
+    "exportName": "AgentFleet",
+    "usage": "import { AgentFleet } from \"./agent-fleet\";\n\nexport default function App() {\n  return <AgentFleet />;\n}"
+  },
+  {
+    "slug": "agent-graph",
+    "name": "Agent Graph",
+    "category": "Agents",
+    "pro": true,
+    "description": "Agents and the tools they call as a living network – a pulse along the link for every call and its answer, busy links growing thicker, agents that breathe while they work and turn amber when they need you",
+    "exportName": "AgentGraph",
+    "usage": "import { AgentGraph } from \"./agent-graph\";\n\nexport default function App() {\n  return <AgentGraph />;\n}"
+  },
+  {
+    "slug": "agent-handoff",
+    "name": "Agent Handoff",
+    "category": "Agents",
+    "pro": true,
+    "description": "A task passed from agent to agent like a relay – at every handoff what went along to the next one, and what got lost on the way",
+    "exportName": "AgentHandoff",
+    "usage": "import { AgentHandoff } from \"./agent-handoff\";\n\nexport default function App() {\n  return <AgentHandoff />;\n}"
+  },
+  {
+    "slug": "agent-inbox",
+    "name": "Agent Inbox",
+    "category": "Agents",
+    "pro": true,
+    "description": "Background tasks in a Board or List, grouped by Needs you, Running, and Done. Expand cards to review steps, approve, reject, or retry.",
+    "exportName": "AgentInbox",
+    "usage": "import { AgentInbox } from \"./agent-inbox\";\n\nexport default function App() {\n  return <AgentInbox />;\n}"
+  },
+  {
+    "slug": "agent-lanes",
+    "name": "Agent Lanes",
+    "category": "Agents",
+    "pro": true,
+    "description": "Where every agent is right now – a live timeline with a lane per agent, tasks growing into “now”, hand-offs drawn between agents and approvals right on the block",
+    "exportName": "AgentLanes",
+    "usage": "import { AgentLanes } from \"./agent-lanes\";\n\nexport default function App() {\n  return <AgentLanes />;\n}"
+  },
+  {
+    "slug": "agent-ledger",
+    "name": "Agent Ledger",
+    "category": "Agents",
+    "pro": true,
+    "description": "Everything an agent changed in your systems, each change with an undo – before and after per row, and pointing at Undo shows what builds on it: what would be undone too, and what can't be taken back",
+    "exportName": "AgentLedger",
+    "usage": "import { AgentLedger } from \"./agent-ledger\";\n\nexport default function App() {\n  return <AgentLedger />;\n}"
+  },
+  {
+    "slug": "agent-monitor",
+    "name": "Agent Monitor",
+    "category": "Agents",
+    "pro": true,
+    "description": "One agent at work, as a card – its current step with a clock and the bill so far, a time strip and the finished steps with the logo of each tool, a click on any of them for the details; the exact command when it needs your OK; folds into a small bar with the tools it has used",
+    "exportName": "AgentMonitor",
+    "usage": "import { AgentMonitor } from \"./agent-monitor\";\n\nexport default function App() {\n  return <AgentMonitor />;\n}"
+  },
+  {
+    "slug": "agent-plan",
+    "name": "Agent Plan",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent's step-by-step plan to review before it runs – rename, drag to reorder, remove or add steps, then watch each one run with live timers and retry from a failed step",
+    "exportName": "AgentPlan",
+    "usage": "import { AgentPlan } from \"./agent-plan\";\n\nexport default function App() {\n  return <AgentPlan />;\n}"
+  },
+  {
+    "slug": "agent-queue",
+    "name": "Agent Queue",
+    "category": "Agents",
+    "pro": true,
+    "description": "The work waiting for your agents, and how fast it moves – jobs drop into a live queue, glide into free worker slots as growing bars and land in Done or Failed, while a depth chart shows the backlog build up when a rate limit pauses the workers and drain when they resume",
+    "exportName": "AgentQueue",
+    "usage": "import { AgentQueue } from \"./agent-queue\";\n\nexport default function App() {\n  return <AgentQueue />;\n}"
+  },
+  {
+    "slug": "agent-recap",
+    "name": "Agent Recap",
+    "category": "Agents",
+    "pro": true,
+    "description": "What the agents did while you were away – the night as a small chart with a peak per event, then a board of what needs you, what failed and what's done, acted on right on the card",
+    "exportName": "AgentRecap",
+    "usage": "import { AgentRecap } from \"./agent-recap\";\n\nexport default function App() {\n  return <AgentRecap />;\n}"
+  },
+  {
+    "slug": "agent-steering",
+    "name": "Agent Steering",
+    "category": "Agents",
+    "pro": true,
+    "description": "Steer an agent while it works – queue a note for the next step and watch it glide into the plan when the agent picks it up, or interrupt right away",
+    "exportName": "AgentSteering",
+    "usage": "import { AgentSteering } from \"./agent-steering\";\n\nexport default function App() {\n  return <AgentSteering />;\n}"
+  },
+  {
+    "slug": "agent-trail",
+    "name": "Agent Trail",
+    "category": "Agents",
+    "pro": true,
+    "description": "The steps an agent works through, as one quiet trail – a header with the task and \"3/5\", done ones with a check and their time, the one it is on says what it is doing and branches into its sub-steps with a live timer, a step that needs approval waits with a dashed ring; a short fading light runs down the trail into the sub-step it is on",
+    "exportName": "AgentTrail",
+    "usage": "import { AgentTrail } from \"./agent-trail\";\n\nexport default function App() {\n  return <AgentTrail />;\n}"
+  },
+  {
+    "slug": "agent-tree",
+    "name": "Agent Tree",
+    "category": "Agents",
+    "pro": true,
+    "description": "Who started whom – an orchestrator and its sub-agents as a live tree, with status, cost and time on every card, costs rolling up each branch, and branches that fold to one line",
+    "exportName": "AgentTree",
+    "usage": "import { AgentTree } from \"./agent-tree\";\n\nexport default function App() {\n  return <AgentTree />;\n}"
+  },
+  {
+    "slug": "ai-answer",
+    "name": "AI Answer",
+    "category": "Chat",
+    "pro": true,
+    "description": "Streamed answer with source cards, citation chips that preview their source, copy, regenerate, feedback and follow-ups",
+    "exportName": "AIAnswer",
+    "usage": "import { AIAnswer } from \"./ai-answer\";\n\nexport default function App() {\n  return <AIAnswer />;\n}"
+  },
+  {
+    "slug": "approval-card",
+    "name": "Approval Card",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent asks before it acts – risk badge, preview, Approve and Deny with shortcuts, a pausing countdown, and a smooth morph into a resolved row",
+    "exportName": "ApprovalCard",
+    "usage": "import { ApprovalCard } from \"./approval-card\";\n\nexport default function App() {\n  return <ApprovalCard />;\n}"
+  },
+  {
+    "slug": "approval-gates",
+    "name": "Approval Gates",
+    "category": "Agents",
+    "pro": true,
+    "description": "The approval requests of an agent run as a stack of cards – the one to decide now on top with who asks, what exactly and why, the diff or arguments on it; approve, reject or change it first, and it drops into the decided list while the next rises – open ones hold the steps behind them",
+    "exportName": "ApprovalGates",
+    "usage": "import { ApprovalGates } from \"./approval-gates\";\n\nexport default function App() {\n  return <ApprovalGates />;\n}"
+  },
+  {
+    "slug": "autonomy-dial",
+    "name": "Autonomy Dial",
+    "category": "Agents",
+    "pro": true,
+    "description": "How much an agent may do on its own – a three-stop dial, and its real actions gliding between “Runs on its own” and “Asks you first”, with a lock for what always asks",
+    "exportName": "AutonomyDial",
+    "usage": "import { AutonomyDial } from \"./autonomy-dial\";\n\nexport default function App() {\n  return <AutonomyDial />;\n}"
+  },
+  {
+    "slug": "away-summary",
+    "name": "Away Summary",
+    "category": "Agents",
+    "pro": true,
+    "description": "The “While you were away” card for a chat thread – right where you left off: how long you were gone, what needs you, what failed and what's done as a short list with one action per row; Got it folds it into a one-line divider",
+    "exportName": "AwaySummary",
+    "usage": "import { AwaySummary } from \"./away-summary\";\n\nexport default function App() {\n  return <AwaySummary />;\n}"
+  },
+  {
+    "slug": "billing-schedule",
+    "name": "Billing Schedule",
+    "category": "Inputs",
+    "pro": true,
+    "description": "Build a billing phase – start date, duration, products with repeats and timing, discount, minimum and live totals",
+    "exportName": "BillingSchedule",
+    "usage": "import { BillingSchedule } from \"./billing-schedule\";\n\nexport default function App() {\n  return <BillingSchedule />;\n}"
+  },
+  {
+    "slug": "breakdown-chart",
+    "name": "Breakdown Chart",
+    "category": "Data display",
+    "pro": true,
+    "description": "Stacked bar chart with measure, slice and segment pickers, a hover breakdown and a linked table",
+    "exportName": "BreakdownChart",
+    "usage": "import { BreakdownChart } from \"./breakdown-chart\";\n\nexport default function App() {\n  return <BreakdownChart />;\n}"
+  },
+  {
+    "slug": "button",
+    "name": "Button",
+    "category": "Buttons",
+    "pro": false,
+    "description": "Primary, secondary, ghost and destructive buttons with icons, sizes and a shimmering loading state",
+    "exportName": "Button",
+    "usage": "import { Button } from \"./button\";\nimport * as React from \"react\";\n\nexport default function App() { const [note, setNote] = React.useState(\"\");\nreturn (<div style={{display:\"flex\",gap:12,flexWrap:\"wrap\"}}><Button onClick={() => setNote(\"Changes saved\")}>Save changes</Button><Button variant=\"secondary\" onClick={() => setNote(\"Draft saved\")}>Save draft</Button><Button variant=\"ghost\" onClick={() => setNote(\"Cancelled\")}>Cancel</Button><Button variant=\"destructive\" onClick={() => setNote(\"Item removed\")}>Delete</Button><p role=\"status\" style={{width:\"100%\"}}>{note}</p></div>);\n}"
+  },
+  {
+    "slug": "change-summary",
+    "name": "Change Summary",
+    "category": "Data display",
+    "pro": false,
+    "description": "What moved since last time – one metric per row with a colored trend",
+    "exportName": "ChangeSummary",
+    "usage": "import { ChangeSummary } from \"./change-summary\";\n\nexport default function App() { \nreturn (<ChangeSummary period=\"This week\" changes={[{label:\"Revenue\",change:\"Up 12.8% to $42,800\",tone:\"good\"},{label:\"Active users\",change:\"Up 8.2% to 12,450\",tone:\"good\"},{label:\"Churn\",change:\"Down 0.4% to 2.1%\",tone:\"good\",direction:\"down\"}]} />);\n}"
+  },
+  {
+    "slug": "chat-composer",
+    "name": "Chat Composer",
+    "category": "Chat",
+    "pro": true,
+    "description": "Prompt composer with model picker, voice input, app connections and approval request",
+    "exportName": "ChatComposer",
+    "usage": "import { ChatComposer } from \"./chat-composer\";\n\nexport default function App() {\n  return <ChatComposer />;\n}"
+  },
+  {
+    "slug": "checkbox",
+    "name": "Checkbox",
+    "category": "Inputs",
+    "pro": false,
+    "description": "A real checkbox with a label and a second line, a some-of-them state for Select all, an error and a card row – the check draws itself",
+    "exportName": "Checkbox",
+    "usage": "import { Checkbox } from \"./checkbox\";\nimport * as React from \"react\";\n\nexport default function App() {\n  const [picked, setPicked] = React.useState(['mentions']);\n  const [agreed, setAgreed] = React.useState(false);\n  const all = ['mentions', 'approvals', 'summary'];\n  return <div className=\"checkbox-example\"><style>{`.checkbox-example{width:362px;max-width:100%;padding:20px;border:1px solid #e9e9e9;background:white;border-radius:12px;color:#222;font:13px/1.5 Inter,system-ui,sans-serif}.checkbox-example fieldset{padding:0;margin:0 0 20px;border:0}.checkbox-example legend{padding:0;margin-bottom:12px}.checkbox-example .checkbox-nested{display:grid;gap:12px;margin:14px 0 0 26px}.checkbox-example>div:last-child{margin-top:18px}:where(.dark,[data-theme=dark]) .checkbox-example{background:#131315;border-color:#29292b;color:#eee}`}</style><fieldset><legend>Email me about</legend><Checkbox label=\"Everything\" checked={picked.length===3} indeterminate={picked.length>0 && picked.length<3} onChange={()=>setPicked(picked.length===3?[]:all)}/><div className=\"checkbox-nested\">{[{id:'mentions',label:'Mentions',description:'Someone mentions you in a chat or a file'},{id:'approvals',label:'Approvals',description:'An agent waits for your OK before it acts'},{id:'summary',label:'Weekly summary'}].map(item=><Checkbox key={item.id} label={item.label} description={item.description} checked={picked.includes(item.id)} onChange={event=>setPicked(current=>event.target.checked?[...current,item.id]:current.filter(id=>id!==item.id))}/>)}</div></fieldset><Checkbox label=\"Keep a copy of every run\" description=\"Inputs and outputs stay for 30 days, so you can replay a run.\" variant=\"card\" defaultChecked/><div><Checkbox label=\"I agree to the terms of service\" checked={agreed} onChange={event=>setAgreed(event.target.checked)} error={agreed?undefined:'Agree to the terms to continue.'}/></div></div>;\n}\n"
+  },
+  {
+    "slug": "cited-answer",
+    "name": "Cited Answer",
+    "category": "Chat",
+    "pro": true,
+    "description": "An AI answer wired to its sources – point at a citation to light up its sentence and source, click to unfold the quoted passage with the matching words marked",
+    "exportName": "CitedAnswer",
+    "usage": "import { CitedAnswer } from \"./cited-answer\";\n\nexport default function App() {\n  return <CitedAnswer />;\n}"
+  },
+  {
+    "slug": "collaboration-stream",
+    "name": "Collaboration Stream",
+    "category": "Agents",
+    "pro": true,
+    "description": "What agents actually say to each other – a quiet chat where every message shows who it is from and who it is for, handoffs and questions for you tagged, files as chips that open a preview, a card with details under every message, and a composer to name agents with @ or answer a question",
+    "exportName": "CollaborationStream",
+    "usage": "import { CollaborationStream } from \"./collaboration-stream\";\n\nexport default function App() {\n  return <CollaborationStream />;\n}"
+  },
+  {
+    "slug": "combobox",
+    "name": "Combobox",
+    "category": "Inputs",
+    "pro": true,
+    "description": "Pick one or many from a searchable, grouped list – chips with avatars, highlighted matches, create-on-the-fly and full keyboard support",
+    "exportName": "Combobox",
+    "usage": "import { Combobox } from \"./combobox\";\n\nexport default function App() {\n  return <Combobox />;\n}"
+  },
+  {
+    "slug": "command-menu",
+    "name": "Command Menu",
+    "category": "Navigation",
+    "pro": true,
+    "description": "Search and run anything from one field – tool actions with logos and ⌘1–⌘5, everyday commands with icons",
+    "exportName": "CommandMenu",
+    "usage": "import { CommandMenu } from \"./command-menu\";\n\nexport default function App() {\n  return <CommandMenu />;\n}"
+  },
+  {
+    "slug": "comment-thread",
+    "name": "Comment Thread",
+    "category": "Chat",
+    "pro": false,
+    "description": "One comment with replies – an assistant reports what it did, folds open details and answers @mentions",
+    "exportName": "CommentThread",
+    "usage": "import { CommentThread } from \"./comment-thread\";\n\nexport default function App() { \nreturn (<CommentThread title=\"Launch notes\" currentUser={{name:\"You\"}} messages={[{id:\"1\",author:{name:\"Maya Chen\"},createdAt:Date.now()-120000,text:\"Can we simplify the first paragraph?\"},{id:\"2\",author:{name:\"Assistant\",assistant:true},createdAt:Date.now()-30000,text:\"I shortened the opening and kept the important details.\",status:\"Updated the draft\",details:[\"Removed repeated phrases\",\"Kept the launch date\"]}]} />);\n}"
+  },
+  {
+    "slug": "comments-panel",
+    "name": "Comments Panel",
+    "category": "Chat",
+    "pro": true,
+    "description": "Comment feed with filters, runnable /edit commands, resolve and a composer",
+    "exportName": "CommentsPanel",
+    "usage": "import { CommentsPanel } from \"./comments-panel\";\n\nexport default function App() {\n  return <CommentsPanel />;\n}"
+  },
+  {
+    "slug": "compact-breakdown",
+    "name": "Compact Breakdown",
+    "category": "Data display",
+    "pro": true,
+    "description": "A total split into its parts in one small card – numbers roll, the bar glides and the ranked rows trade places when the period changes",
+    "exportName": "CompactBreakdown",
+    "usage": "import { CompactBreakdown } from \"./compact-breakdown\";\n\nexport default function App() {\n  return <CompactBreakdown />;\n}"
+  },
+  {
+    "slug": "conflict-radar",
+    "name": "Conflict Radar",
+    "category": "Agents",
+    "pro": true,
+    "description": "Agents working on their own branches at once, and where they get in each other's way – a row per file and a column per agent, a line between the agents that changed the same lines, each agent's way in one sentence to pick from, and Merge once all are settled",
+    "exportName": "ConflictRadar",
+    "usage": "import { ConflictRadar } from \"./conflict-radar\";\n\nexport default function App() {\n  return <ConflictRadar />;\n}"
+  },
+  {
+    "slug": "context-map",
+    "name": "Context Map",
+    "category": "Agents",
+    "pro": true,
+    "description": "What fills an agent's context window, as a living treemap – system prompt, tools, memory, every file, the chat and tool results as tiles that glide as it grows, the free space dashed, and compaction squeezing old turns into a summary",
+    "exportName": "ContextMap",
+    "usage": "import { ContextMap } from \"./context-map\";\n\nexport default function App() {\n  return <ContextMap />;\n}"
+  },
+  {
+    "slug": "context-window",
+    "name": "Context Window",
+    "category": "Agents",
+    "pro": true,
+    "description": "What fills the model's context, as a field of cells – hover a part to light it up, remove files, and compact the conversation while its cells shimmer and clear",
+    "exportName": "ContextWindow",
+    "usage": "import { ContextWindow } from \"./context-window\";\n\nexport default function App() {\n  return <ContextWindow />;\n}"
+  },
+  {
+    "slug": "cost-waterfall",
+    "name": "Cost Waterfall",
+    "category": "Agents",
+    "pro": true,
+    "description": "Where the money and tokens of an agent run go – every LLM call, tool call and sub-agent as a step in a waterfall, with model, tokens, cost and time, the most expensive step on top and a switch between cost and tokens",
+    "exportName": "CostWaterfall",
+    "usage": "import { CostWaterfall } from \"./cost-waterfall\";\n\nexport default function App() {\n  return <CostWaterfall />;\n}"
+  },
+  {
+    "slug": "data-table",
+    "name": "Data Table",
+    "category": "Data display",
+    "pro": true,
+    "description": "Spreadsheet-style table: select cells and ranges, edit in place, copy and paste, undo and sort",
+    "exportName": "DataTable",
+    "usage": "import { DataTable } from \"./data-table\";\n\nexport default function App() {\n  return <DataTable />;\n}"
+  },
+  {
+    "slug": "date-range-picker",
+    "name": "Date Range Picker",
+    "category": "Inputs",
+    "pro": true,
+    "description": "Presets and two calendars with a hover preview, comparison with the previous period or year, full keyboard control",
+    "exportName": "DateRangePicker",
+    "usage": "import { DateRangePicker } from \"./date-range-picker\";\n\nexport default function App() {\n  return <DateRangePicker />;\n}"
+  },
+  {
+    "slug": "decision-card",
+    "name": "Decision Card",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent's question, asked the way Claude asks one – its own card just above the chat composer: numbered options with one Recommended, Approve / Decline for an approval, preview tiles for a pick, and a last row for your own words; a click or 1–5 answers, Later folds it to one line",
+    "exportName": "DecisionCard",
+    "usage": "import { DecisionCard } from \"./decision-card\";\n\nexport default function App() {\n  return <DecisionCard />;\n}"
+  },
+  {
+    "slug": "decision-inbox",
+    "name": "Decision Inbox",
+    "category": "Feedback",
+    "pro": false,
+    "description": "Open decisions with two quick answers each – answered ones confirm and fold away",
+    "exportName": "DecisionInbox",
+    "usage": "import { DecisionInbox } from \"./decision-inbox\";\n\nexport default function App() { \nreturn (<DecisionInbox decisions={[{id:\"1\",title:\"Where should the report go?\",detail:\"The weekly overview is ready to share.\",primary:\"Post to Slack\",secondary:\"Save to Notion\"},{id:\"2\",title:\"Include the full breakdown?\",detail:\"Adds a channel-by-channel view.\",primary:\"Include details\",secondary:\"Keep it brief\",collapsed:true}]} />);\n}"
+  },
+  {
+    "slug": "decision-tree",
+    "name": "Decision Tree",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent stuck on a decision lays out its options as a tree – the consequences of each branch, the risky ones marked, its own pick highlighted – and you choose a path or write your own",
+    "exportName": "DecisionTree",
+    "usage": "import { DecisionTree } from \"./decision-tree\";\n\nexport default function App() {\n  return <DecisionTree />;\n}"
+  },
+  {
+    "slug": "delegate-board",
+    "name": "Delegate Board",
+    "category": "Agents",
+    "pro": true,
+    "description": "Hand work to your agents by dragging it onto them – each agent previews its new “busy until” time, or switch to Auto and every new task goes to whoever is free first",
+    "exportName": "DelegateBoard",
+    "usage": "import { DelegateBoard } from \"./delegate-board\";\n\nexport default function App() {\n  return <DelegateBoard />;\n}"
+  },
+  {
+    "slug": "dropzone",
+    "name": "Dropzone",
+    "category": "Inputs",
+    "pro": true,
+    "description": "Drag files in and watch them upload – fanning documents, colored type badges, progress with time left, errors with retry",
+    "exportName": "Dropzone",
+    "usage": "import { Dropzone } from \"./dropzone\";\n\nexport default function App() {\n  return <Dropzone />;\n}"
+  },
+  {
+    "slug": "email-draft",
+    "name": "Email Draft",
+    "category": "Cards",
+    "pro": false,
+    "description": "Agent-written email for review – switch recipient and tone, edit inline, remove the attachment, send or discard with undo",
+    "exportName": "EmailDraft",
+    "usage": "import { EmailDraft } from \"./email-draft\";\n\nexport default function App() { \nreturn (<EmailDraft />);\n}"
+  },
+  {
+    "slug": "experiment-card",
+    "name": "Experiment Card",
+    "category": "Data display",
+    "pro": true,
+    "description": "An A/B test in two lines that quietly unfolds on hover – variants linked to a tiny chart, a metric switch with rolling numbers, and a winner you pick with a click",
+    "exportName": "ExperimentCard",
+    "usage": "import { ExperimentCard } from \"./experiment-card\";\n\nexport default function App() {\n  return <ExperimentCard />;\n}"
+  },
+  {
+    "slug": "fallback-chain",
+    "name": "Fallback Chain",
+    "category": "Agents",
+    "pro": true,
+    "description": "One request finding a model that answers, as a small flow diagram – the request branches out to each model in its fallback order, a light runs to the one being tried, failed branches break red, and the one that answers runs on to the response",
+    "exportName": "FallbackChain",
+    "usage": "import { FallbackChain } from \"./fallback-chain\";\n\nexport default function App() {\n  return <FallbackChain />;\n}"
+  },
+  {
+    "slug": "fan-out-grid",
+    "name": "Fan-out Grid",
+    "category": "Agents",
+    "pro": true,
+    "description": "One agent hands a big job to many workers – every task a cell on a live grid that fills in as they get through it, with retries, failures, cost and the time left, and the details of any task on hover",
+    "exportName": "FanoutGrid",
+    "usage": "import { FanoutGrid } from \"./fan-out-grid\";\n\nexport default function App() {\n  return <FanoutGrid />;\n}"
+  },
+  {
+    "slug": "filter-menu",
+    "name": "Filter Menu",
+    "category": "Inputs",
+    "pro": false,
+    "description": "Grouped filters with removable chips, collapsible checkbox groups, Clear all and full keyboard control",
+    "exportName": "FilterMenu",
+    "usage": "import { FilterMenu } from \"./filter-menu\";\n\nexport default function App() { \nreturn (<FilterMenu groups={[{id:\"status\",label:\"Status\",options:[{id:\"open\",label:\"Open\"},{id:\"progress\",label:\"In progress\"},{id:\"done\",label:\"Done\"}]},{id:\"priority\",label:\"Priority\",chipPrefix:\"Priority: \",options:[{id:\"high\",label:\"High\"},{id:\"medium\",label:\"Medium\"},{id:\"low\",label:\"Low\"}]}]} defaultValue={{status:[\"open\"]}} />);\n}"
+  },
+  {
+    "slug": "inline-diff",
+    "name": "Inline Diff",
+    "category": "Agents",
+    "pro": true,
+    "description": "AI edits to prose shown inline – struck and added words you accept or reject one by one, with keys, a popover and undo",
+    "exportName": "InlineDiff",
+    "usage": "import { InlineDiff } from \"./inline-diff\";\n\nexport default function App() {\n  return <InlineDiff />;\n}"
+  },
+  {
+    "slug": "integration-picker",
+    "name": "Integration Picker",
+    "category": "Navigation",
+    "pro": true,
+    "description": "Integrations page of a command menu – search, a list of services and the picked one with its connection on two tiles",
+    "exportName": "IntegrationPicker",
+    "usage": "import { IntegrationPicker } from \"./integration-picker\";\n\nexport default function App() {\n  return <IntegrationPicker />;\n}"
+  },
+  {
+    "slug": "integration-settings",
+    "name": "Integration Settings",
+    "category": "Inputs",
+    "pro": true,
+    "description": "Settings card for a connected service – on/off switch, API key, validated site address, time zone and a save bar",
+    "exportName": "IntegrationSettings",
+    "usage": "import { IntegrationSettings } from \"./integration-settings\";\n\nexport default function App() {\n  return <IntegrationSettings />;\n}"
+  },
+  {
+    "slug": "judge-bracket",
+    "name": "Judge Bracket",
+    "category": "Agents",
+    "pro": true,
+    "description": "How an LLM judge picks the best of several attempts, as a tournament – two answers at a time, the one it prefers moves on, the other fades back; the winner's way through the bracket lights up, and every match opens both answers side by side with the scores and why",
+    "exportName": "JudgeBracket",
+    "usage": "import { JudgeBracket } from \"./judge-bracket\";\n\nexport default function App() {\n  return <JudgeBracket />;\n}"
+  },
+  {
+    "slug": "kpi-chart",
+    "name": "KPI Chart",
+    "category": "Data display",
+    "pro": true,
+    "description": "Metric card with a multi-line chart and a tooltip that follows the pointer",
+    "exportName": "KPIChart",
+    "usage": "import { KPIChart } from \"./kpi-chart\";\n\nexport default function App() {\n  return <KPIChart />;\n}"
+  },
+  {
+    "slug": "memory-panel",
+    "name": "Memory Panel",
+    "category": "Agents",
+    "pro": true,
+    "description": "What the assistant remembers about you, grouped and editable – a master switch, category filters, and on every memory edit in place, pause or forget with Undo on the tray",
+    "exportName": "MemoryPanel",
+    "usage": "import { MemoryPanel } from \"./memory-panel\";\n\nexport default function App() {\n  return <MemoryPanel />;\n}"
+  },
+  {
+    "slug": "message-actions",
+    "name": "Message Actions",
+    "category": "Chat",
+    "pro": false,
+    "description": "The quiet bar under an AI message – copy turns into a check, regenerate spins and unfolds a version switcher, thumbs pop and ask why, read aloud becomes a tiny equalizer",
+    "exportName": "MessageActions",
+    "usage": "import { MessageActions } from \"./message-actions\";\nimport * as React from \"react\";\n\nexport default function App() { const [note, setNote] = React.useState(\"\");\nreturn (<div data-ui-message><p style={{lineHeight:1.8}}>Your weekly report is ready. Revenue grew 12.8%, and the team resolved 48 support requests.</p><MessageActions quiet={false} text=\"Revenue grew 12.8%, and the team resolved 48 support requests.\" versions={3} onRegenerate={() => setNote(\"A fresh response was requested\")} onFeedback={(kind) => setNote(kind ? \"Feedback saved\" : \"Feedback removed\")} /><small role=\"status\">{note}</small></div>);\n}"
+  },
+  {
+    "slug": "model-picker",
+    "name": "Model Picker",
+    "category": "Chat",
+    "pro": true,
+    "description": "The model menu of an AI chat – point at a model and its speed, quality and cost bars fill, switch on extended thinking and its effort unfolds, while the tray rolls the first-token time and price",
+    "exportName": "ModelPicker",
+    "usage": "import { ModelPicker } from \"./model-picker\";\n\nexport default function App() {\n  return <ModelPicker />;\n}"
+  },
+  {
+    "slug": "notification-stack",
+    "name": "Notification Stack",
+    "category": "Feedback",
+    "pro": false,
+    "description": "Notice cards stacked behind each other – dismiss the front one to reveal the next",
+    "exportName": "NotificationStack",
+    "usage": "import { NotificationStack } from \"./notification-stack\";\nimport * as React from \"react\";\n\nexport default function App() { const [, setNote] = React.useState(\"\");\nreturn (<NotificationStack notices={[{id:\"1\",badge:\"New\",title:\"Your workspace, connected\",text:\"Bring your tools together and give your team a single place to work.\",pattern:\"orbit\",action:{label:\"Explore\",onClick:()=>setNote(\"Explore selected\")}},{id:\"2\",badge:\"Tip\",title:\"Make room for focus\",text:\"Try quiet hours to keep distractions out of your day.\",pattern:\"grid\"},{id:\"3\",badge:\"Update\",title:\"All caught up\",text:\"Your projects are synced and ready.\",pattern:\"rays\"}]} />);\n}"
+  },
+  {
+    "slug": "otp-input",
+    "name": "OTP Input",
+    "category": "Inputs",
+    "pro": false,
+    "description": "The verification code field done right – a gliding focus ring, paste and SMS autofill, a calm shake on errors and a morph into Verified",
+    "exportName": "OtpInput",
+    "usage": "import { OtpInput } from \"./otp-input\";\nimport * as React from \"react\";\n\nexport default function App() { const [note, setNote] = React.useState(\"\");\nreturn (<div><h3 style={{marginBottom:8}}>Check your inbox</h3><p style={{color:\"#888\",marginBottom:24}}>Enter the six-digit code. Try 123456.</p><OtpInput separator status={note === \"123456\" ? \"success\" : note ? \"error\" : \"idle\"} onComplete={setNote} errorMessage=\"Try 123456 in this demo.\" clearOnError onChange={()=>setNote(\"\")}/></div>);\n}"
+  },
+  {
+    "slug": "parallel-attempts",
+    "name": "Parallel Attempts",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent tries the same task several ways at once and the best one wins – every attempt races as a row with its model, approach and live bar, then gets a score; the best is marked and picked, and you can switch to another",
+    "exportName": "ParallelAttempts",
+    "usage": "import { ParallelAttempts } from \"./parallel-attempts\";\n\nexport default function App() {\n  return <ParallelAttempts />;\n}"
+  },
+  {
+    "slug": "permission-request",
+    "name": "Permission Request",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent asks for one specific right – who, why and exactly what will happen – and you allow it once, for an hour or always; then it folds into one line with the time left and Revoke",
+    "exportName": "PermissionRequest",
+    "usage": "import { PermissionRequest } from \"./permission-request\";\n\nexport default function App() {\n  return <PermissionRequest />;\n}"
+  },
+  {
+    "slug": "plan-vs-actual",
+    "name": "Plan vs Actual",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent's plan against what really happens – every step's bar grows over its dashed planned ghost, overruns turn amber, the steps after it slide right, and the expected finish moves away from the planned one",
+    "exportName": "PlanVsActual",
+    "usage": "import { PlanVsActual } from \"./plan-vs-actual\";\n\nexport default function App() {\n  return <PlanVsActual />;\n}"
+  },
+  {
+    "slug": "profile-menu",
+    "name": "Profile Menu",
+    "category": "Navigation",
+    "pro": false,
+    "description": "Account card with the signed-in user, menu actions and profile setup progress",
+    "exportName": "ProfileMenu",
+    "usage": "import { ProfileMenu } from \"./profile-menu\";\nimport * as React from \"react\";\n\nexport default function App() { const [, setNote] = React.useState(\"\");\nreturn (<ProfileMenu name=\"Maya Chen\" email=\"maya@example.com\" items={[{id:\"settings\",label:\"Settings\",onSelect:()=>setNote(\"Settings selected\")},{id:\"docs\",label:\"Documentation\",onSelect:()=>setNote(\"Documentation selected\")},{id:\"signout\",label:\"Sign out\",onSelect:()=>setNote(\"Sign out selected\")}]} setup={{done:3,total:5,next:\"Invite your teammates\",onContinue:()=>setNote(\"Invitation flow selected\")}} />);\n}"
+  },
+  {
+    "slug": "progress-tracker",
+    "name": "Progress Tracker",
+    "category": "Feedback",
+    "pro": false,
+    "description": "Onboarding checklist with an animated progress bar, ticks that draw themselves and auto play",
+    "exportName": "ProgressTracker",
+    "usage": "import { ProgressTracker } from \"./progress-tracker\";\n\nexport default function App() { \nreturn (<ProgressTracker title=\"Make yourself at home\" steps={[{id:\"1\",label:\"Create your workspace\",done:true},{id:\"2\",label:\"Connect your tools\"},{id:\"3\",label:\"Invite your team\"},{id:\"4\",label:\"Create your first project\"}]} />);\n}"
+  },
+  {
+    "slug": "project-card",
+    "name": "Project Card",
+    "category": "Cards",
+    "pro": true,
+    "description": "A two-line project summary that quietly unfolds on hover – a progress ring with one segment per subtask, a people filter and a status picker, all linked by hover",
+    "exportName": "ProjectCard",
+    "usage": "import { ProjectCard } from \"./project-card\";\n\nexport default function App() {\n  return <ProjectCard />;\n}"
+  },
+  {
+    "slug": "prompt-library",
+    "name": "Prompt Library",
+    "category": "Inputs",
+    "pro": true,
+    "description": "Saved prompt templates with variables – type straight into the sentence, watch the finished prompt assemble below, and use it once every variable is filled",
+    "exportName": "PromptLibrary",
+    "usage": "import { PromptLibrary } from \"./prompt-library\";\n\nexport default function App() {\n  return <PromptLibrary />;\n}"
+  },
+  {
+    "slug": "reaction-bar",
+    "name": "Reaction Bar",
+    "category": "Buttons",
+    "pro": false,
+    "description": "Like, comment, repost and share in one pill – icons pop and fill, counts roll in digit by digit",
+    "exportName": "ReactionBar",
+    "usage": "import { ReactionBar } from \"./reaction-bar\";\n\nexport default function App() { \nreturn (<ReactionBar reactions={{like:{count:128},comment:{count:24},repost:{count:8},share:{count:3}}} />);\n}"
+  },
+  {
+    "slug": "review-center",
+    "name": "Review Center",
+    "category": "Agents",
+    "pro": true,
+    "description": "A focused workspace for what your agents want to do – the queue sorted by risk, one item at a time with the shaky spans marked, Approve, Edit, Reject and Skip on single keys, a stamp as each one leaves and the next one rising in",
+    "exportName": "ReviewCenter",
+    "usage": "import { ReviewCenter } from \"./review-center\";\n\nexport default function App() {\n  return <ReviewCenter />;\n}"
+  },
+  {
+    "slug": "root-cause-tree",
+    "name": "Root Cause Tree",
+    "category": "Agents",
+    "pro": true,
+    "description": "How an agent finds out why a run failed, as a fault tree – it checks one hypothesis after another, rules some out, confirms the cause, and the way up to the failure lights up",
+    "exportName": "RootCauseTree",
+    "usage": "import { RootCauseTree } from \"./root-cause-tree\";\n\nexport default function App() {\n  return <RootCauseTree />;\n}"
+  },
+  {
+    "slug": "running-now",
+    "name": "Running Now",
+    "category": "Agents",
+    "pro": true,
+    "description": "A live status of background agent tasks for a header or sidebar – one quiet pill, \"3 running · 2 need you\"; open it for the tasks with a filling ring, the step each is on and its steps, Pause and Resume, and Open on the ones that wait for you",
+    "exportName": "RunningNow",
+    "usage": "import { RunningNow } from \"./running-now\";\n\nexport default function App() {\n  return <RunningNow />;\n}"
+  },
+  {
+    "slug": "scheduled-runs",
+    "name": "Scheduled Runs",
+    "category": "Agents",
+    "pro": true,
+    "description": "Agent tasks sorted into a week of sessions – each session has a usage limit, small tasks fill the gaps, big ones are split across sessions, and the stack flies in one card at a time",
+    "exportName": "ScheduledRuns",
+    "usage": "import { ScheduledRuns } from \"./scheduled-runs\";\n\nexport default function App() {\n  return <ScheduledRuns />;\n}"
+  },
+  {
+    "slug": "segmented-control",
+    "name": "Segmented Control",
+    "category": "Navigation",
+    "pro": false,
+    "description": "Switch between two to six options – a raised pill or underline that glides, stretches a little and can be dragged across, with icons, counts and badges",
+    "exportName": "SegmentedControl",
+    "usage": "import { SegmentedControl } from \"./segmented-control\";\nimport * as React from \"react\";\n\nexport default function App() { const [note, setNote] = React.useState(\"\");\nreturn (<div style={{display:\"grid\",gap:24}}><SegmentedControl options={[{value:\"overview\",label:\"Overview\"},{value:\"activity\",label:\"Activity\",count:12},{value:\"settings\",label:\"Settings\"}]} onChange={setNote}/><SegmentedControl variant=\"tray\" options={[{value:\"month\",label:\"Monthly\"},{value:\"year\",label:\"Yearly\",badge:\"Save 20%\"}]} /><p role=\"status\">{note ? `Selected: ${note}` : \"Switch between views\"}</p></div>);\n}"
+  },
+  {
+    "slug": "select",
+    "name": "Select",
+    "category": "Inputs",
+    "pro": false,
+    "description": "Pick one option in the Text Field's look – icons and a second line per option, a gliding highlight, type-ahead and a list that never gets cut off",
+    "exportName": "Select",
+    "usage": "import { Select } from \"./select\";\n\nexport default function App() { \nreturn (<Select label=\"Assign to\" placeholder=\"Select a teammate\" options={[{value:\"maya\",label:\"Maya Chen\",description:\"Product design\"},{value:\"jonas\",label:\"Jonas Weber\",description:\"Engineering\"},{value:\"lena\",label:\"Lena Hart\",description:\"Operations\"}]} />);\n}"
+  },
+  {
+    "slug": "setup-guide",
+    "name": "Setup Guide",
+    "category": "Feedback",
+    "pro": true,
+    "description": "Onboarding panel with a progress bar and collapsible task groups that strike through when done",
+    "exportName": "SetupGuide",
+    "usage": "import { SetupGuide } from \"./setup-guide\";\n\nexport default function App() {\n  return <SetupGuide />;\n}"
+  },
+  {
+    "slug": "smart-recommendation",
+    "name": "Smart Recommendation",
+    "category": "Cards",
+    "pro": false,
+    "description": "Suggestion card with a confidence signal, alternatives to switch to and accept with undo",
+    "exportName": "SmartRecommendation",
+    "usage": "import { SmartRecommendation } from \"./smart-recommendation\";\n\nexport default function App() { \nreturn (<SmartRecommendation title=\"A better way to sync\" defaultOpen options={[{id:\"incremental\",label:\"Incremental sync\",reason:\"Only changed records will be synced. Save time on every run.\",signal:3},{id:\"full\",label:\"Full sync\",reason:\"Rebuild the complete dataset from the source.\",signal:1}]} />);\n}"
+  },
+  {
+    "slug": "stepper-form",
+    "name": "Stepper Form",
+    "category": "Inputs",
+    "pro": true,
+    "description": "A multi-step flow for onboarding and setup – steps that fill and check off, sliding steps, a card that morphs to each step, inline validation and a success state",
+    "exportName": "StepperForm",
+    "usage": "import { StepperForm } from \"./stepper-form\";\n\nexport default function App() {\n  return <StepperForm />;\n}"
+  },
+  {
+    "slug": "switch",
+    "name": "Switch",
+    "category": "Inputs",
+    "pro": false,
+    "description": "On or off for things that apply right away – label and second line, at the start or across a settings row, a thumb that stretches as you press it",
+    "exportName": "Switch",
+    "usage": "import { Switch } from \"./switch\";\n\nexport default function App() { \nreturn (<div style={{display:\"grid\",gap:24}}><Switch label=\"Enable notifications\" description=\"Stay up to date with your team.\" defaultChecked placement=\"end\"/><Switch label=\"Quiet hours\" description=\"Pause alerts outside your working hours.\" placement=\"end\"/><Switch label=\"Show completed tasks\" size=\"sm\"/></div>);\n}"
+  },
+  {
+    "slug": "tag-input",
+    "name": "Tag Input",
+    "category": "Inputs",
+    "pro": false,
+    "description": "Several values in one field as chips – paste a whole list, a check per value, duplicates flash, Backspace and arrow keys to edit",
+    "exportName": "TagInput",
+    "usage": "import { TagInput } from \"./tag-input\";\n\nexport default function App() { \nreturn (<TagInput label=\"Invite teammates\" defaultValue={[\"maya@example.com\",\"jonas@example.com\"]} placeholder=\"Add an email address\" hint=\"Press Enter or comma to add a person.\" avatar validate={value=>/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(value)||\"Enter a valid email\"}/>);\n}"
+  },
+  {
+    "slug": "text-area",
+    "name": "Text Area",
+    "category": "Inputs",
+    "pro": false,
+    "description": "The multi-line twin of the Text Field – grows with the text, a character count, a button for more room and ⌘ Enter to send",
+    "exportName": "TextArea",
+    "usage": "import { TextArea } from \"./text-area\";\n\nexport default function App() { \nreturn (<TextArea label=\"Project brief\" placeholder=\"What would you like to build?\" defaultValue=\"A calmer workspace for our team.\" maxLength={500} counter expandable minRows={4}/>);\n}"
+  },
+  {
+    "slug": "text-field",
+    "name": "Text Field",
+    "category": "Inputs",
+    "pro": false,
+    "description": "One input for every form – label, hint and error in place, prefix and suffix, clear, show-password and copy buttons, a character count",
+    "exportName": "TextField",
+    "usage": "import { TextField } from \"./text-field\";\n\nexport default function App() { \nreturn (<div style={{display:\"grid\",gap:24}}><TextField label=\"Workspace URL\" prefix=\"https://\" suffix=\".app\" defaultValue=\"lumen-studio\" clearable/><TextField label=\"Project name\" defaultValue=\"Autumn launch\" maxLength={40} counter/><TextField label=\"Share link\" value=\"https://example.com/project\" readOnly copyable/></div>);\n}"
+  },
+  {
+    "slug": "thinking-loader",
+    "name": "Thinking Loader",
+    "category": "Chat",
+    "pro": false,
+    "description": "A small working pill for AI replies – an eight-ray spinner and a shimmering label that rolls through phases and settles on a check",
+    "exportName": "ThinkingLoader",
+    "usage": "import { ThinkingLoader } from \"./thinking-loader\";\n\nexport default function App() { \nreturn (<ThinkingLoader loop />);\n}"
+  },
+  {
+    "slug": "thinking-state",
+    "name": "Thinking State",
+    "category": "Chat",
+    "pro": true,
+    "description": "AI working panel with a live timer, searched sources and thinking steps that appear one by one",
+    "exportName": "ThinkingState",
+    "usage": "import Example from \"./thinking-state\";\nexport default function App() { return <Example />; }"
+  },
+  {
+    "slug": "tips-panel",
+    "name": "Tips Panel",
+    "category": "Cards",
+    "pro": false,
+    "description": "Grid of short tips with one action each – taken tips turn into a done state",
+    "exportName": "TipsPanel",
+    "usage": "import { TipsPanel } from \"./tips-panel\";\n\nexport default function App() { \nreturn (<TipsPanel tips={[{id:\"1\",title:\"Work faster with shortcuts\",description:\"Press / to jump to search.\",action:\"Got it\",doneLabel:\"Noted\",primary:true},{id:\"2\",title:\"Keep your tools connected\",description:\"Bring your files and conversations into one place.\",action:\"Connect\",doneLabel:\"Connected\"}]} />);\n}"
+  },
+  {
+    "slug": "toaster",
+    "name": "Toaster",
+    "category": "Feedback",
+    "pro": true,
+    "description": "Calm toasts from anywhere – a stack that fans out on hover, promise toasts that morph from spinner to check, swipe to dismiss",
+    "exportName": "Toaster",
+    "usage": "import { Toaster, toast } from \"./toaster\";\n\nexport default function App() {\n  return <><button onClick={() => toast(\"Saved\")}>Save</button><Toaster /></>;\n}"
+  },
+  {
+    "slug": "tool-access-map",
+    "name": "Tool Access Map",
+    "category": "Agents",
+    "pro": true,
+    "description": "An agent in the middle with every tool it can reach around it – which ones it used, which failed and which it calls right now; open a tool for its calls and replay one on its own",
+    "exportName": "ToolAccessMap",
+    "usage": "import { ToolAccessMap } from \"./tool-access-map\";\n\nexport default function App() {\n  return <ToolAccessMap />;\n}"
+  },
+  {
+    "slug": "tool-call-card",
+    "name": "Tool Call Card",
+    "category": "Agents",
+    "pro": false,
+    "description": "An agent's tool call in one line – live timer, status and summary, folds open to highlighted arguments and result with copy, retry on errors and a group that sums them up",
+    "exportName": "ToolCallCard",
+    "usage": "import { ToolCallCard } from \"./tool-call-card\";\n\nexport default function App() { \nreturn (<ToolCallCard name=\"search_web\" summary=\"Searched for team offsite venues in Lisbon\" status=\"success\" duration={1240} args={{query:\"Lisbon offsite venues\",limit:5}} result={{count:5,sources:[\"Visit Lisbon\",\"Local guide\"]}} />);\n}"
+  },
+  {
+    "slug": "trace-waterfall",
+    "name": "Trace Waterfall",
+    "category": "Agents",
+    "pro": true,
+    "description": "Where the time and money of an agent run go – every LLM call, tool call and sub-agent as a bar on a live timeline, with tokens and cost per step, the slowest call marked and branches that fold into their parent",
+    "exportName": "TraceWaterfall",
+    "usage": "import { TraceWaterfall } from \"./trace-waterfall\";\n\nexport default function App() {\n  return <TraceWaterfall />;\n}"
+  },
+  {
+    "slug": "usage-meter",
+    "name": "Usage Meter",
+    "category": "Data display",
+    "pro": true,
+    "description": "Plan usage and AI credits – a stacked credits meter by category, daily sparkline, limits and a button that speaks up near the limit",
+    "exportName": "UsageMeter",
+    "usage": "import { UsageMeter } from \"./usage-meter\";\n\nexport default function App() {\n  return <UsageMeter />;\n}"
+  },
+  {
+    "slug": "writing-assistant",
+    "name": "Writing Assistant",
+    "category": "Chat",
+    "pro": true,
+    "description": "AI chat card with a soft gradient glow, suggestions, streaming replies and live voice dictation",
+    "exportName": "WritingAssistant",
+    "usage": "import { WritingAssistant } from \"./writing-assistant\";\n\nexport default function App() {\n  return <WritingAssistant />;\n}"
+  }
+]
