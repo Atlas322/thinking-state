@@ -3,349 +3,370 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type DecisionOption = {
   id: string;
   title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  summary?: string;
+  recommended?: boolean;
+  preview?: React.ReactNode;
+  blocks?: string[];
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+export type Decision = {
+  id: string;
+  question: string;
+  task?: string;
+  kind?: "decision" | "pick" | "approval";
+  options?: DecisionOption[];
+  facts?: { label: string; value: string }[];
+};
+export type DecisionAnswer = { option: string } | { text: string } | "approve" | "decline";
+export type DecisionCardLabels = {
+  needsYou: string;
+  later: string;
+  show: string;
+  recommended: string;
+  approve: string;
+  decline: string;
+  own: string;
+  waiting: (n: number) => string;
+  of: (i: number, n: number) => string;
+};
+export type DecisionCardProps = {
+  decisions?: Decision[];
+  onDecide?: (id: string, answer: DecisionAnswer) => void;
+  onLater?: (id: string) => void;
+  defaultFolded?: boolean;
+  reveal?: number;
+  labels?: Partial<DecisionCardLabels>;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const baseLabels: DecisionCardLabels = {
+  needsYou: "Needs you",
+  later: "Later",
+  show: "Show",
+  recommended: "Recommended",
+  approve: "Approve",
+  decline: "Decline",
+  own: "Something else…",
+  waiting: (n) => `${n} decision${n === 1 ? "" : "s"} waiting`,
+  of: (i, n) => `${i} of ${n}`,
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultDecisions: Decision[] = [
+  {
+    id: "weekly",
+    kind: "approval",
+    task: "Weekly update",
+    question: "Send the weekly update to Northwind?",
+    facts: [
+      { label: "To", value: "Dana Reyes, Northwind" },
+      { label: "Subject", value: "Week 45: ingest is live, dashboard in review" },
+      { label: "Body", value: "Ingest runs on staging and took Tuesday's spike without losing an event, and the dashboard is in review with Dana's team." },
+    ],
+  },
+];
+
+type Row = { key: string; title: string; summary?: string; recommended?: boolean; answer: DecisionAnswer };
 
 export function DecisionCard({
-  title = "Which approach should I use?",
-  items = [
-    {
-      id: "1",
-      title: "Incremental migration",
-      detail: "Move one table at a time. Lowest risk.",
-      status: "recommended",
-    },
-    {
-      id: "2",
-      title: "Full migration",
-      detail: "Faster, but requires a maintenance window.",
-    },
-    {
-      id: "3",
-      title: "Keep the existing schema",
-      detail: "Add a compatibility layer instead.",
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [answer, setAnswer] = React.useState<StudioItem>();
-  const [custom, setCustom] = React.useState("");
-  const [later, setLater] = React.useState(false);
+  decisions = defaultDecisions,
+  onDecide,
+  onLater,
+  defaultFolded = false,
+  reveal,
+  labels: labelsProp,
+  className = "",
+}: DecisionCardProps) {
+  const L = { ...baseLabels, ...labelsProp };
+  const [answered, setAnswered] = React.useState<string[]>([]);
+  const open = decisions.filter((d) => !answered.includes(d.id));
+  const [page, setPage] = React.useState(0);
+  const [folded, setFolded] = React.useState(defaultFolded);
+  const [focus, setFocus] = React.useState(0);
+  const [text, setText] = React.useState("");
+  const [said, setSaid] = React.useState("");
+  const [pulse, setPulse] = React.useState(0);
+  const rowsRef = React.useRef<(HTMLElement | null)[]>([]);
+  const fieldRef = React.useRef<HTMLInputElement>(null);
+  const showRef = React.useRef<HTMLButtonElement>(null);
+  const qid = React.useId();
+  const idx = Math.min(page, Math.max(0, open.length - 1));
+  const d = open[idx];
+
+  React.useEffect(() => {
+    if (reveal === undefined) return;
+    setFolded(false);
+    setPulse((p) => p + 1);
+    window.setTimeout(() => rowsRef.current[focus]?.focus(), 30);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reveal]);
+
+  const rows: Row[] = !d
+    ? []
+    : d.kind === "approval"
+      ? [
+          { key: "approve", title: L.approve, answer: "approve" },
+          { key: "decline", title: L.decline, answer: "decline" },
+        ]
+      : (d.options ?? []).map((o) => ({ key: o.id, title: o.title, summary: o.summary, recommended: o.recommended, answer: { option: o.id } }));
+
+  const answer = (a: DecisionAnswer) => {
+    if (!d) return;
+    const left = open.length - 1;
+    const what = a === "approve" ? L.approve : a === "decline" ? L.decline : "text" in a ? a.text : rows.find((r) => typeof r.answer === "object" && "option" in r.answer && r.answer.option === a.option)?.title;
+    setAnswered((s) => [...s, d.id]);
+    setText("");
+    setFocus(0);
+    setSaid(left ? `Answer recorded: ${what}. ${L.waiting(left)}.` : "Answer recorded");
+    onDecide?.(d.id, a);
+    window.setTimeout(() => (left ? rowsRef.current[0]?.focus() : undefined), 30);
+  };
+
+  const later = () => {
+    if (!d) return;
+    setFolded(true);
+    setSaid(`${L.later}. ${L.waiting(open.length)}.`);
+    onLater?.(d.id);
+    window.setTimeout(() => showRef.current?.focus(), 30);
+  };
+
+  const n = rows.length;
+  const move = (to: number) => {
+    const t = Math.max(0, Math.min(n, to));
+    setFocus(t);
+    (t === n ? fieldRef.current : rowsRef.current[t])?.focus();
+  };
+
+  const onKey = (e: React.KeyboardEvent) => {
+    const inField = e.target === fieldRef.current;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      later();
+      return;
+    }
+    if (!inField && /^[1-5]$/.test(e.key)) {
+      const k = Number(e.key) - 1;
+      if (k < n) answer(rows[k].answer);
+      else if (k === n) move(n);
+      e.preventDefault();
+      return;
+    }
+    if (inField) {
+      if (e.key === "ArrowUp" && !text) {
+        e.preventDefault();
+        move(n - 1);
+      }
+      return;
+    }
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") (e.preventDefault(), move(focus + 1));
+    else if (e.key === "ArrowUp" || e.key === "ArrowLeft") (e.preventDefault(), move(focus - 1));
+    else if (e.key === "Home") (e.preventDefault(), move(0));
+    else if (e.key === "End") (e.preventDefault(), move(n - 1));
+    else if ((e.key === "Enter" || e.key === " ") && focus < n) (e.preventDefault(), answer(rows[focus].answer));
+  };
+
+  if (!open.length)
+    return (
+      <div className={`dc dc-gone ${className}`}>
+        <style>{css}</style>
+        <span role="status" aria-live="polite" className="dc-sr">{said}</span>
+      </div>
+    );
+
+  if (folded)
+    return (
+      <div className={`dc ${className}`}>
+        <style>{css}</style>
+        <div className="dc-folded">
+          <span className="dc-pill">{L.needsYou}</span>
+          <span>{L.waiting(open.length)}</span>
+          <span className="dc-dot">·</span>
+          <button ref={showRef} type="button" className="dc-link" onClick={() => { setFolded(false); window.setTimeout(() => rowsRef.current[0]?.focus(), 30); }}>
+            {L.show}
+          </button>
+        </div>
+        <span role="status" aria-live="polite" className="dc-sr">{said}</span>
+      </div>
+    );
+
+  const isPick = d.kind === "pick";
   return (
-    <UI.Panel
-      title={later ? "Decision saved for later" : title}
-      className={className}
-      subtitle="The agent needs your direction"
-    >
-      {answer ? (
-        <UI.Row title={answer.title} detail="Answer recorded">
-          <UI.Button onClick={() => setAnswer(undefined)}>Change</UI.Button>
-        </UI.Row>
-      ) : later ? (
-        <UI.Button onClick={() => setLater(false)}>Answer now</UI.Button>
-      ) : (
-        <>
-          {items.map((x, i) => (
-            <UI.Row
-              key={x.id}
-              title={x.title}
-              detail={x.detail}
-              icon={<span className="st-key">{i + 1}</span>}
-              onClick={() => {
-                setAnswer(x);
-                onAction?.("answer", x);
-              }}
-            >
-              {x.status === "recommended" && (
-                <UI.Badge tone="green">Recommended</UI.Badge>
-              )}
-            </UI.Row>
-          ))}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (custom.trim()) {
-                const x = { id: "custom", title: custom };
-                setAnswer(x);
-                onAction?.("answer", x);
+    <div className={`dc ${className}`}>
+      <style>{css}</style>
+      <section key={`${d.id}-${pulse}`} className="dc-card" data-pulse={pulse > 0} role="group" aria-labelledby={qid} onKeyDown={onKey}>
+        <header className="dc-head">
+          <span className="dc-pill">{L.needsYou}</span>
+          {d.task && <span className="dc-task">{d.task}</span>}
+          <span className="dc-spacer" />
+          {open.length > 1 && (
+            <span className="dc-pager">
+              <button type="button" aria-label="Previous decision" disabled={idx === 0} onClick={() => setPage(idx - 1)}>
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+              </button>
+              {L.of(idx + 1, open.length)}
+              <button type="button" aria-label="Next decision" disabled={idx === open.length - 1} onClick={() => setPage(idx + 1)}>
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+              </button>
+            </span>
+          )}
+          <button type="button" className="dc-later" aria-keyshortcuts="Escape" onClick={later}>{L.later}</button>
+        </header>
+        <h3 id={qid} className="dc-q">{d.question}</h3>
+        {d.facts && (
+          <dl className="dc-facts">
+            {d.facts.map((f) => (
+              <React.Fragment key={f.label}>
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </React.Fragment>
+            ))}
+          </dl>
+        )}
+        <div className={isPick ? "dc-tiles" : "dc-rows"} role="listbox" aria-labelledby={qid}>
+          {rows.map((r, i) => {
+            const opt = d.options?.find((o) => o.id === r.key);
+            return (
+              <div
+                key={r.key}
+                ref={(el) => { rowsRef.current[i] = el; }}
+                role="option"
+                aria-selected={focus === i}
+                aria-keyshortcuts={String(i + 1)}
+                tabIndex={focus === i ? 0 : -1}
+                className={isPick ? "dc-tile" : "dc-row"}
+                onFocus={() => setFocus(i)}
+                onClick={() => answer(r.answer)}
+              >
+                {isPick && opt?.preview && <div className="dc-preview">{opt.preview}</div>}
+                <span className="dc-num" aria-hidden="true">{i + 1}</span>
+                <span className="dc-body">
+                  <span className="dc-title">
+                    {r.title}
+                    {r.recommended && <span className="dc-rec">{L.recommended}</span>}
+                  </span>
+                  {r.summary && <span className="dc-sum">{r.summary}</span>}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        <label className="dc-row dc-own">
+          <span className="dc-num" aria-hidden="true">{n + 1}</span>
+          <input
+            ref={fieldRef}
+            value={text}
+            aria-label={L.own.replace("…", "")}
+            aria-keyshortcuts={String(n + 1)}
+            placeholder={L.own}
+            onFocus={() => setFocus(n)}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && text.trim()) {
+                e.preventDefault();
+                answer({ text: text.trim() });
               }
             }}
-          >
-            <UI.Field
-              label="Or write your own"
-              value={custom}
-              onChange={(e) => setCustom(e.target.value)}
-            />
-            <div className="st-actions">
-              <UI.Button primary type="submit" disabled={!custom.trim()}>
-                Answer
-              </UI.Button>
-              <UI.Button onClick={() => setLater(true)}>Later</UI.Button>
-            </div>
-          </form>
-        </>
-      )}
-    </UI.Panel>
+          />
+          {text.trim() && (
+            <button type="button" className="dc-send" aria-label="Send answer" onClick={() => answer({ text: text.trim() })}>
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3.5M4 7.5l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+          )}
+        </label>
+      </section>
+      <span role="status" aria-live="polite" className="dc-sr">{said}</span>
+    </div>
   );
 }
 
-export default DecisionCard;
+/** Demo: the card sitting just above a chat composer. */
+export function DecisionCardDemo() {
+  return (
+    <div className="dc-demo">
+      <p className="dc-status">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          {[2, 7, 12].flatMap((x, i) => [2, 7, 12].map((y, j) => (
+            <rect key={`${i}${j}`} x={x} y={y} width="3" height="3" rx=".6" fill={(i + j) % 2 ? "#c084fc" : "#8b5cf6"} opacity={(i + j) % 3 === 1 ? 0.45 : 1} />
+          )))}
+        </svg>
+        Setup checklist – on it.
+      </p>
+      <DecisionCard />
+      <div className="dc-composer">
+        <div className="dc-ph">Ask for anything…</div>
+        <div className="dc-tools">
+          <span>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+          </span>
+          <span className="dc-req">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 8V3.8a1 1 0 0 1 2 0V7.5m0-.5V2.8a1 1 0 0 1 2 0V7.5m0-.3V3.8a1 1 0 0 1 2 0V9c0 3-1.6 4.5-4 4.5-2 0-3-1-4.2-3L2.6 8.6a1 1 0 0 1 1.6-1.1L5.5 9" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" /></svg>
+            Request approval
+          </span>
+          <span className="dc-spacer" />
+          <span className="dc-auto">Auto <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg></span>
+          <span>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="6" y="2" width="4" height="7.5" rx="2" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M4 8a4 4 0 0 0 8 0M8 12v2" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+          </span>
+          <span className="dc-sendbox">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3.5M4 7.5l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const css = `
+.dc,.dc-demo{--dc-bg:#fff;--dc-fg:#18181b;--dc-muted:#71717a;--dc-faint:#a1a1aa;--dc-line:#ececef;--dc-soft:#f4f4f5;--dc-hl:#f6f6f7;--dc-accent:#4f7cf0;--dc-amber:#c2620a;--dc-amber-bg:#fdefdc;font:400 12.5px/1.45 Inter,system-ui,sans-serif;color:var(--dc-fg)}
+:where(.dark,[data-theme=dark]) :is(.dc,.dc-demo){--dc-bg:#1b1b1e;--dc-fg:#ececef;--dc-muted:#a1a1aa;--dc-faint:#71717a;--dc-line:#2c2c31;--dc-soft:#28282d;--dc-hl:#232327;--dc-accent:#7c9cff;--dc-amber:#eba659;--dc-amber-bg:#3a2a16;color-scheme:dark}
+.dc{width:100%}.dc *,.dc-demo *{box-sizing:border-box}.dc button{font:inherit;color:inherit;cursor:pointer}
+.dc-card{background:var(--dc-bg);border:1px solid var(--dc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 4px 14px -6px #0000001a;padding:10px 12px 10px;animation:dc-in .25s both}
+.dc-card[data-pulse=true]{animation:dc-pulse .7s both}
+.dc-head{display:flex;align-items:center;gap:8px;font-size:12px}
+.dc-pill{display:inline-flex;align-items:center;height:18px;padding:0 6px;border-radius:5px;background:var(--dc-amber-bg);color:var(--dc-amber);font-size:11px;font-weight:500;white-space:nowrap}
+.dc-task{color:var(--dc-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc-spacer{flex:1}
+.dc-later{border:0;background:none;padding:2px 4px;border-radius:5px;font-size:12px}.dc-later:hover{background:var(--dc-hl)}
+.dc-pager{display:inline-flex;align-items:center;gap:2px;color:var(--dc-muted);font-size:12px}
+.dc-pager button{display:grid;place-items:center;width:22px;height:22px;border:0;border-radius:5px;background:none}.dc-pager button:hover:not(:disabled){background:var(--dc-hl)}.dc-pager button:disabled{opacity:.35;cursor:default}.dc-pager svg{width:13px;height:13px}
+.dc-q{margin:12px 0 8px;font-size:14px;font-weight:500;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dc-facts{display:grid;grid-template-columns:auto 1fr;gap:3px 20px;margin:0 0 8px}
+.dc-facts dt{color:var(--dc-muted)}.dc-facts dd{margin:0;min-width:0;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.dc-rows{display:flex;flex-direction:column;margin:0 -6px}
+.dc-row{display:flex;align-items:center;gap:10px;min-height:36px;padding:4px 6px;border-radius:8px;cursor:pointer;outline:none;transition:background .12s}
+.dc-rows .dc-row:hover,.dc-rows .dc-row:focus-visible{background:var(--dc-hl)}
+.dc-rows .dc-row:focus-visible{box-shadow:inset 0 0 0 1.5px var(--dc-accent)}
+.dc-num{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:5px;background:var(--dc-soft);color:var(--dc-muted);font-size:11.5px;font-variant-numeric:tabular-nums}
+.dc-body{display:flex;flex-direction:column;min-width:0}
+.dc-title{display:flex;align-items:center;gap:8px}
+.dc-rec{height:17px;padding:0 5px;border-radius:4px;background:color-mix(in srgb,var(--dc-accent) 12%,transparent);color:var(--dc-accent);font-size:10.5px;font-weight:500;line-height:17px}
+.dc-sum{color:var(--dc-muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc-own{margin:4px -6px 0;cursor:text}
+.dc-own input{flex:1;min-width:0;height:28px;border:0;background:none;outline:none;color:var(--dc-fg);font:inherit;border-bottom:1px solid transparent}
+.dc-own input::placeholder{color:var(--dc-faint)}.dc-own input:focus{border-bottom-color:var(--dc-line)}
+.dc-send{display:grid;place-items:center;width:26px;height:26px;border:0;border-radius:7px;background:var(--dc-fg);color:var(--dc-bg)!important}.dc-send svg{width:13px;height:13px}
+.dc-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.dc-tile{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;padding:8px;border:1px solid var(--dc-line);border-radius:9px;cursor:pointer;outline:none}
+.dc-tile:hover,.dc-tile:focus-visible{border-color:var(--dc-accent)}
+.dc-preview{grid-column:1/-1;aspect-ratio:16/10;border-radius:6px;background:var(--dc-soft);overflow:hidden}
+.dc-folded{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;background:var(--dc-bg);border:1px solid var(--dc-line);border-radius:12px;color:var(--dc-muted);font-size:12.5px;animation:dc-in .2s both}
+.dc-dot{color:var(--dc-faint)}.dc-link{border:0;background:none;padding:0;color:var(--dc-fg)!important;font-weight:500}
+.dc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.dc :focus-visible{outline:2px solid var(--dc-accent);outline-offset:2px}.dc .dc-row:focus-visible{outline:none}
+.dc-demo{width:100%;max-width:600px;display:flex;flex-direction:column;gap:8px}
+.dc-status{display:flex;align-items:center;gap:8px;margin:0 0 4px 12px;color:var(--dc-muted)}.dc-status svg{width:18px;height:18px}
+.dc-composer{background:var(--dc-bg);border:1px solid var(--dc-line);border-radius:12px;padding:14px 10px 10px 14px}
+.dc-ph{color:var(--dc-faint);height:40px}
+.dc-tools{display:flex;align-items:center;gap:12px;color:var(--dc-muted)}.dc-tools svg{width:15px;height:15px;display:block}
+.dc-req,.dc-auto{display:inline-flex;align-items:center;gap:6px}.dc-auto{color:var(--dc-fg)}.dc-auto svg{width:12px;height:12px;color:var(--dc-faint)}
+.dc-sendbox{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:var(--dc-soft);color:var(--dc-faint)}
+@keyframes dc-in{from{opacity:0;transform:translateY(4px)}}
+@keyframes dc-pulse{0%{background:var(--dc-soft)}100%{background:var(--dc-bg)}}
+@media(max-width:420px){.dc-tiles{grid-template-columns:1fr}.dc-preview{display:none}}
+@media(hover:none){.dc-row{min-height:44px}}
+@media(prefers-reduced-motion:reduce){.dc *,.dc-card{animation:none!important;transition:none!important}}
+`;
+
+export default DecisionCardDemo;

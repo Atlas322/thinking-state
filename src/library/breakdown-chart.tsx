@@ -3,352 +3,271 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+
+export type BreakdownRecord = Record<string, string | number>;
+export type Dimension = {
+  key: string;
+  label: string;
+  values: string[];
+  colors?: Record<string, string>;
+  icons?: Record<string, React.ReactNode>;
 };
-export type StudioProps = {
+export type Measure = { key: string; label: string; unit?: string; field?: string };
+
+export type BreakdownChartProps = {
+  records?: BreakdownRecord[];
+  dimensions?: Dimension[];
+  measures?: Measure[];
   title?: string;
-  items?: StudioItem[];
+  defaultMeasure?: string;
+  defaultSlice?: string;
+  defaultSegment?: string;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 1.3, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+const statusIcons: Record<string, React.ReactNode> = {
+  Backlog: <svg viewBox="0 0 16 16" {...stroke}><path d="M2.5 9.5 4 4h8l1.5 5.5V12a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1Z M2.5 9.5h3.2l.8 1.2h3l.8-1.2h3.2" /></svg>,
+  Todo: <svg viewBox="0 0 16 16" {...stroke}><rect x="2.8" y="2.8" width="10.4" height="10.4" rx="2" /></svg>,
+  "In progress": <svg viewBox="0 0 16 16" {...stroke} style={{ color: "#4f8ef7" }}><circle cx="8" cy="8" r="5.5" /><path d="M8 5v3l2 1.3" /></svg>,
+  "In review": <svg viewBox="0 0 16 16" {...stroke} style={{ color: "#5b5bd6" }}><path d="M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8Z" /><circle cx="8" cy="8" r="1.8" /></svg>,
+  Done: <svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2" fill="#2f7cf6" /><path d="m5.3 8.2 1.8 1.8 3.6-3.8" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" /></svg>,
+  Canceled: <svg viewBox="0 0 16 16" {...stroke}><circle cx="8" cy="8" r="5.5" /><path d="m4.2 11.8 7.6-7.6" /></svg>,
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const statuses = ["Backlog", "Todo", "In progress", "In review", "Done", "Canceled"];
+const priorities = ["Urgent", "High", "Medium", "Low", "None"];
+const matrix = [
+  [3, 6, 6, 8, 3],
+  [1, 7, 12, 11, 5],
+  [1, 9, 12, 7, 5],
+  [0, 1, 6, 4, 2],
+  [7, 14, 23, 25, 27],
+  [0, 1, 3, 1, 2],
+];
+const people = ["Ana", "Ben", "Chen", "Dara"];
+const types = ["Feature", "Bug", "Chore"];
 
-export function BreakdownChart({
-  title = "Project breakdown",
-  items = [
-    { id: "design", title: "Design", value: 42, tags: ["24", "12", "6"] },
-    {
-      id: "engineering",
-      title: "Engineering",
-      value: 68,
-      tags: ["32", "24", "12"],
-    },
-    { id: "marketing", title: "Marketing", value: 31, tags: ["18", "8", "5"] },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [measure, setMeasure] = React.useState("Tasks");
-  const [slice, setSlice] = React.useState("Team");
-  const [selected, setSelected] = React.useState<StudioItem>();
-  const colors = ["#7294e0", "#aabfe9", "#d9e3f5"];
+const defaultRecords: BreakdownRecord[] = (() => {
+  const out: BreakdownRecord[] = [];
+  let n = 0;
+  matrix.forEach((row, si) =>
+    row.forEach((c, pi) => {
+      for (let i = 0; i < c; i++, n++)
+        out.push({ status: statuses[si], priority: priorities[pi], assignee: people[n % 4], type: types[(n * 7) % 3], points: [1, 2, 3, 5, 8][(n * 3) % 5] });
+    }),
+  );
+  return out;
+})();
+
+const defaultDimensions: Dimension[] = [
+  { key: "status", label: "Status", values: statuses, icons: statusIcons },
+  { key: "priority", label: "Priority", values: priorities, colors: { Urgent: "#e5484d", High: "#e8a20c", Medium: "#3b82f6", Low: "#a9c8f5", None: "#d9d9de" } },
+  { key: "assignee", label: "Assignee", values: people },
+  { key: "type", label: "Type", values: types },
+];
+
+const defaultMeasures: Measure[] = [
+  { key: "count", label: "Task count", unit: "tasks" },
+  { key: "points", label: "Story points", unit: "points", field: "points" },
+];
+
+const palette = ["#3b82f6", "#e8a20c", "#16a34a", "#a855f7", "#e5484d", "#14b8a6"];
+
+function Picker({ label, value, options, onChange }: { label: string; value: string; options: { value: string; label: string }[]; onChange: (v: string) => void }) {
+  const id = React.useId();
   return (
-    <UI.Panel title={title} className={className}>
-      <div className="st-columns">
-        <label className="st-field">
-          <span>Measure</span>
-          <select value={measure} onChange={(e) => setMeasure(e.target.value)}>
-            <option>Tasks</option>
-            <option>Hours</option>
-          </select>
-        </label>
-        <label className="st-field">
-          <span>Group by</span>
-          <select value={slice} onChange={(e) => setSlice(e.target.value)}>
-            <option>Team</option>
-            <option>Priority</option>
-          </select>
-        </label>
-      </div>
-      {items.map((x, i) => (
-        <button
-          key={x.id}
-          type="button"
-          className="st-row st-row-button"
-          onClick={() => {
-            setSelected(x);
-            onAction?.("select", x);
-          }}
-        >
-          <span style={{ width: 95, fontSize: 11 }}>
-            {slice === "Team" ? x.title : ["High", "Medium", "Low"][i % 3]}
-          </span>
-          <div
-            className="st-grow"
-            style={{ display: "flex", height: 26, gap: 2 }}
-          >
-            {(x.tags ?? ["20", "10", "5"]).map((v, j) => (
-              <span
-                key={j}
-                title={`${["Done", "In progress", "Todo"][j]}: ${v}`}
-                style={{
-                  width: `${(+v / 70) * 100}%`,
-                  background: colors[j],
-                  borderRadius: 3,
-                }}
-              />
-            ))}
-          </div>
-          <small>{(x.value ?? 0) * (measure === "Hours" ? 2 : 1)}</small>
-        </button>
-      ))}
-      <div className="st-actions">
-        {["Done", "In progress", "Todo"].map((v, i) => (
-          <span key={v} className="st-chip">
-            <span className="st-dot" style={{ background: colors[i] }} />
-            {v}
-          </span>
-        ))}
-      </div>
-      {selected && (
-        <div className="st-code">
-          {selected.title}: {selected.value} tasks ·{" "}
-          {selected.tags?.join(" / ")}
-        </div>
-      )}
-    </UI.Panel>
+    <label className="bc-pick" htmlFor={id}>
+      <span>{label}</span>
+      <span className="bc-sel">
+        <select id={id} value={value} onChange={(e) => onChange(e.target.value)}>
+          {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+      </span>
+    </label>
   );
 }
+
+export function BreakdownChart({
+  records = defaultRecords,
+  dimensions = defaultDimensions,
+  measures = defaultMeasures,
+  title = "Sprint 24",
+  defaultMeasure,
+  defaultSlice,
+  defaultSegment,
+  className = "",
+}: BreakdownChartProps) {
+  const [mKey, setM] = React.useState(defaultMeasure ?? measures[0]?.key);
+  const [sKey, setS] = React.useState(defaultSlice ?? dimensions[0]?.key);
+  const [gKey, setG] = React.useState(defaultSegment ?? dimensions[1]?.key ?? "none");
+  const [hidden, setHidden] = React.useState<Set<string>>(new Set());
+  const [hot, setHot] = React.useState<string | null>(null);
+
+  const measure = measures.find((m) => m.key === mKey) ?? measures[0];
+  const slice = dimensions.find((d) => d.key === sKey) ?? dimensions[0];
+  const seg = dimensions.find((d) => d.key === gKey && d.key !== slice.key);
+  const segValues = seg ? seg.values : ["All"];
+  const colorOf = (v: string, i: number) => seg?.colors?.[v] ?? (seg ? palette[i % palette.length] : "#3b82f6");
+  const val = (r: BreakdownRecord) => (measure.field ? Number(r[measure.field]) || 0 : 1);
+
+  const table = slice.values.map((sv) => {
+    const rs = records.filter((r) => String(r[slice.key]) === sv);
+    const parts = segValues.map((gv) => rs.filter((r) => !seg || String(r[seg.key]) === gv).reduce((n, r) => n + val(r), 0));
+    return { key: sv, parts, total: parts.reduce((a, b) => a + b, 0) };
+  });
+  const grand = table.reduce((n, r) => n + r.total, 0);
+  const visTotal = (r: (typeof table)[0]) => r.parts.reduce((n, p, i) => n + (hidden.has(segValues[i]) ? 0 : p), 0);
+  const peak = Math.max(1, ...table.map(visTotal));
+  const step = Math.max(5, Math.ceil(peak / 5 / 5) * 5);
+  const top = step * 5;
+  const ticks = [5, 4, 3, 2, 1, 0].map((i) => i * step);
+
+  const toggle = (v: string) =>
+    setHidden((s) => {
+      const n = new Set(s);
+      if (n.has(v)) n.delete(v);
+      else n.add(v);
+      return n;
+    });
+
+  const segOpts = [{ value: "none", label: "None" }, ...dimensions.filter((d) => d.key !== slice.key).map((d) => ({ value: d.key, label: d.label }))];
+
+  return (
+    <section className={`bc ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="bc-head">
+        <h3>{title}</h3>
+        <span className="bc-total"><b>{grand}</b> {measure.unit ?? ""}</span>
+      </header>
+      <div className="bc-picks">
+        <Picker label="Measure" value={measure.key} options={measures.map((m) => ({ value: m.key, label: m.label }))} onChange={setM} />
+        <Picker label="Slice" value={slice.key} options={dimensions.map((d) => ({ value: d.key, label: d.label }))} onChange={(v) => { setS(v); if (v === gKey) setG("none"); }} />
+        <Picker label="Segment" value={seg ? seg.key : "none"} options={segOpts} onChange={setG} />
+      </div>
+      <div className="bc-plot">
+        <div className="bc-area">
+          {ticks.map((t) => <span key={t} className="bc-grid" style={{ bottom: `${(t / top) * 100}%` }} />)}
+          <div className="bc-bars">
+            {table.map((r) => {
+              const t = visTotal(r);
+              return (
+                <div key={r.key} className="bc-col">
+                  <button
+                    type="button"
+                    className="bc-bar"
+                    aria-label={`${r.key}: ${t} ${measure.unit ?? ""}`}
+                    onMouseEnter={() => setHot(r.key)}
+                    onMouseLeave={() => setHot(null)}
+                    onFocus={() => setHot(r.key)}
+                    onBlur={() => setHot(null)}
+                    style={{ height: `${(t / top) * 100}%` }}
+                  >
+                    {r.parts.map((p, i) =>
+                      hidden.has(segValues[i]) || p === 0 ? null : (
+                        <span key={i} style={{ flexGrow: p, background: colorOf(segValues[i], i) }} />
+                      ),
+                    )}
+                  </button>
+                  {hot === r.key && (
+                    <div className="bc-tip" role="tooltip">
+                      <strong>{r.key}<b>{t}</b></strong>
+                      {seg && r.parts.map((p, i) => hidden.has(segValues[i]) ? null : (
+                        <span key={i}><i style={{ background: colorOf(segValues[i], i) }} />{segValues[i]}<b>{p}</b></span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="bc-y">{ticks.map((t) => <span key={t} style={{ bottom: `${(t / top) * 100}%` }}>{t}</span>)}</div>
+        <div className="bc-x">
+          {table.map((r) => (
+            <span key={r.key} title={r.key} className={hot === r.key ? "is-hot" : ""}>
+              {slice.icons?.[r.key] ?? <em>{r.key}</em>}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="bc-table-wrap">
+        <table className="bc-table">
+          <thead>
+            <tr>
+              <th>{slice.label}</th>
+              <th className="num">{measure.label}</th>
+              {seg && segValues.map((v, i) => <th key={v} className="num"><i style={{ background: colorOf(v, i) }} />{v}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {table.map((r) => (
+              <tr key={r.key} className={hot === r.key ? "is-hot" : ""} onMouseEnter={() => setHot(r.key)} onMouseLeave={() => setHot(null)}>
+                <td><span className="bc-name">{slice.icons?.[r.key] && <span className="bc-ico">{slice.icons[r.key]}</span>}{r.key}</span></td>
+                <td className="num">{r.total}</td>
+                {seg && r.parts.map((p, i) => <td key={i} className="num">{p}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {seg && (
+        <div className="bc-legend">
+          {segValues.map((v, i) => (
+            <button key={v} type="button" aria-pressed={!hidden.has(v)} onClick={() => toggle(v)}>
+              <i style={{ background: colorOf(v, i) }} />{v}
+            </button>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+const css = `
+.bc{--bc-bg:#fff;--bc-fg:#18181b;--bc-muted:#71717a;--bc-faint:#a1a1aa;--bc-line:#ececef;--bc-soft:#f4f4f5;--bc-accent:#3b82f6;width:100%;max-width:560px;background:var(--bc-bg);color:var(--bc-fg);border:1px solid var(--bc-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .bc{--bc-bg:#1b1b1e;--bc-fg:#ececef;--bc-muted:#a1a1aa;--bc-faint:#71717a;--bc-line:#2e2e33;--bc-soft:#26262b;color-scheme:dark}
+.bc *{box-sizing:border-box}.bc button{font:inherit;color:inherit;cursor:pointer}
+.bc-head{display:flex;justify-content:space-between;align-items:baseline;padding:16px 16px 10px}
+.bc h3{margin:0;font-size:15px;font-weight:500}
+.bc-total{color:var(--bc-muted);font-size:12px}.bc-total b{color:var(--bc-fg);font-size:15px;font-weight:500;margin-right:2px}
+.bc-picks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 16px}
+.bc-pick{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--bc-muted)}
+.bc-sel{position:relative;display:block}
+.bc-sel select{appearance:none;-webkit-appearance:none;width:100%;height:30px;padding:0 28px 0 10px;border:1px solid var(--bc-line);border-radius:6px;background:var(--bc-bg);color:var(--bc-fg);font:inherit;font-size:13.5px;cursor:pointer;box-shadow:0 1px 1px #00000008}
+.bc-sel select:hover{border-color:color-mix(in srgb,var(--bc-fg) 20%,transparent)}
+.bc-sel svg{position:absolute;right:8px;top:8px;width:14px;height:14px;pointer-events:none;color:var(--bc-muted)}
+.bc-plot{display:grid;grid-template-columns:1fr 44px;grid-template-rows:196px auto;padding:20px 0 0 16px}
+.bc-area{position:relative;border-bottom:1px solid var(--bc-line)}
+.bc-grid{position:absolute;left:0;right:0;border-top:1px solid var(--bc-line)}
+.bc-bars{position:absolute;inset:0;display:flex}
+.bc-col{position:relative;flex:1;display:flex;justify-content:center;align-items:flex-end;height:100%}
+.bc-bar{display:flex;flex-direction:column-reverse;width:12px;padding:0;border:0;background:none;gap:1px;transition:height .35s cubic-bezier(.2,.8,.2,1),opacity .15s}
+.bc-bar span{display:block;min-height:1px;transition:flex-grow .35s}
+.bc-bar span:last-child{border-radius:2px 2px 0 0}
+.bc-bars:hover .bc-bar:not(:hover){opacity:.55}
+.bc-y{position:relative}.bc-y span{position:absolute;right:16px;transform:translateY(50%);font-size:10.5px;color:var(--bc-muted)}
+.bc-x{display:flex;padding:8px 0 12px}.bc-x span{flex:1;display:flex;justify-content:center;color:var(--bc-faint)}.bc-x svg{width:13px;height:13px}.bc-x em{font-style:normal;font-size:11px;color:var(--bc-muted)}.bc-x .is-hot{color:var(--bc-fg)}
+.bc-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);z-index:3;min-width:140px;padding:8px 10px;border:1px solid var(--bc-line);border-radius:8px;background:var(--bc-bg);box-shadow:0 6px 20px #0000001a;font-size:12px;display:flex;flex-direction:column;gap:3px;pointer-events:none;bottom:auto;top:0}
+.bc-tip strong{display:flex;justify-content:space-between;gap:12px;font-weight:500;margin-bottom:2px}
+.bc-tip span{display:flex;align-items:center;gap:6px;color:var(--bc-muted)}.bc-tip b{margin-left:auto;color:var(--bc-fg);font-weight:500}
+.bc i{display:inline-block;width:7px;height:7px;border-radius:2px;flex:none}
+.bc-table-wrap{overflow-x:auto;border-top:1px solid var(--bc-line)}
+.bc-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.bc-table th{height:32px;padding:0 16px 0 0;font-size:10.5px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--bc-muted);text-align:left;border-bottom:1px solid var(--bc-line);white-space:nowrap}
+.bc-table th:first-child,.bc-table td:first-child{padding-left:16px}
+.bc-table th i{margin-right:6px}
+.bc-table td{height:36px;padding:0 16px 0 0;border-bottom:1px solid var(--bc-line);font-variant-numeric:tabular-nums}
+.bc-table .num{text-align:right}
+.bc-table tr.is-hot td{background:var(--bc-soft)}
+.bc-name{display:flex;align-items:center;gap:10px}.bc-ico{display:grid;place-items:center;color:var(--bc-faint)}.bc-ico svg{width:14px;height:14px}
+.bc-legend{display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px 14px}
+.bc-legend button{display:flex;align-items:center;gap:6px;border:0;background:none;padding:0;font-size:12.5px;color:var(--bc-muted)}
+.bc-legend button[aria-pressed=false]{opacity:.4}.bc-legend button:hover{color:var(--bc-fg)}
+.bc :focus-visible{outline:2px solid var(--bc-accent);outline-offset:2px}
+@media(max-width:560px){.bc-picks{grid-template-columns:1fr}.bc-table{font-size:12.5px}}
+@media(prefers-reduced-motion:reduce){.bc *{transition:none!important}}
+`;
 
 export default BreakdownChart;

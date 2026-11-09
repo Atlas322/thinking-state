@@ -3,392 +3,341 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
-};
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
-
-export type ModelOption = {
+export type PickerModel = {
   id: string;
   name: string;
-  description: string;
-  speed: number;
-  quality: number;
-  cost: number;
+  description?: string;
+  icon?: React.ReactNode;
+  speed?: number;
+  quality?: number;
+  cost?: number;
+  latencyMs?: number;
+  pricePerM?: number;
 };
-export function ModelPicker({
-  title = "Choose a model",
-  models = [
-    {
-      id: "reasoning",
-      name: "Reasoning",
-      description: "For your hardest problems",
-      speed: 2,
-      quality: 5,
-      cost: 5,
-    },
-    {
-      id: "balanced",
-      name: "Balanced",
-      description: "Everyday work, done well",
-      speed: 4,
-      quality: 4,
-      cost: 3,
-    },
-    {
-      id: "fast",
-      name: "Fast",
-      description: "Quick answers and small tasks",
-      speed: 5,
-      quality: 3,
-      cost: 1,
-    },
-  ],
-  onSelect,
-  className,
-}: StudioProps & {
-  models?: ModelOption[];
-  onSelect?: (model: ModelOption, effort: string) => void;
-}) {
-  const [selected, setSelected] = React.useState(models[1] ?? models[0]);
-  const [hover, setHover] = React.useState(selected);
-  const [thinking, setThinking] = React.useState(false);
-  const [effort, setEffort] = React.useState("Medium");
+export type Effort = "low" | "medium" | "high";
+
+export type ModelPickerProps = {
+  models?: PickerModel[];
+  value?: string;
+  defaultValue?: string;
+  onChange?: (id: string) => void;
+  thinking?: boolean;
+  defaultThinking?: boolean;
+  onThinkingChange?: (on: boolean) => void;
+  webSearch?: boolean;
+  defaultWebSearch?: boolean;
+  onWebSearchChange?: (on: boolean) => void;
+  effort?: Effort;
+  defaultEffort?: Effort;
+  onEffortChange?: (effort: Effort) => void;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  align?: "start" | "end";
+  side?: "bottom" | "top";
+  placeholder?: string;
+  className?: string;
+};
+
+const defaultModels: PickerModel[] = [
+  { id: "auto", name: "Auto", description: "Picks the model for each message" },
+  { id: "haiku", name: "Haiku 5", description: "Fastest for quick answers", speed: 5, quality: 3, cost: 1, latencyMs: 300, pricePerM: 1 },
+  { id: "sonnet", name: "Sonnet 5.5", description: "Smart, fast, everyday work", speed: 4, quality: 4, cost: 3, latencyMs: 800, pricePerM: 3 },
+  { id: "opus", name: "Opus 5.5", description: "Deepest reasoning for hard tasks", speed: 2, quality: 5, cost: 5, latencyMs: 1900, pricePerM: 15 },
+];
+
+const efforts: Effort[] = ["low", "medium", "high"];
+const effortMul: Record<Effort, number> = { low: 1.6, medium: 2.6, high: 4.2 };
+
+function useRoll(target: number, ms = 300) {
+  const [v, setV] = React.useState(target);
+  const cur = React.useRef(target);
+  React.useEffect(() => {
+    const reduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const from = cur.current;
+    if (reduce || from === target) { cur.current = target; setV(target); return; }
+    let raf = 0;
+    const t0 = performance.now();
+    const tick = (t: number) => {
+      const k = Math.min(1, (t - t0) / ms);
+      cur.current = from + (target - from) * (1 - Math.pow(1 - k, 3));
+      setV(cur.current);
+      if (k < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, ms]);
+  return v;
+}
+
+function Bars({ n, lit }: { n?: number; lit?: boolean }) {
   return (
-    <UI.Panel title={title} className={className}>
-      {models.map((x) => (
-        <div
-          key={x.id}
-          onMouseEnter={() => setHover(x)}
-          onFocus={() => setHover(x)}
-        >
-          <UI.Row
-            title={x.name}
-            detail={x.description}
-            onClick={() => {
-              setSelected(x);
-              onSelect?.(x, thinking ? effort : "off");
-            }}
-            icon={<UI.Avatar name={x.name} />}
-          >
-            <span style={{ color: "var(--st-accent)" }}>
-              {selected?.id === x.id ? "✓" : ""}
-            </span>
-          </UI.Row>
-        </div>
-      ))}
-      {hover && (
-        <div className="st-tile" style={{ marginTop: 14 }}>
-          <small>{hover.name.toUpperCase()}</small>
-          {(["speed", "quality", "cost"] as const).map((k) => (
-            <div
-              className="st-row"
-              key={k}
-              style={{ minHeight: 35, padding: "7px 0" }}
-            >
-              <span className="st-grow">{k[0].toUpperCase() + k.slice(1)}</span>
-              <div style={{ display: "flex", gap: 3 }}>
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <span
-                    key={n}
-                    style={{
-                      width: 17,
-                      height: 5,
-                      borderRadius: 2,
-                      background:
-                        n <= hover[k] ? "var(--st-accent)" : "var(--st-line)",
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-      <label className="st-checkline">
-        <input
-          type="checkbox"
-          checked={thinking}
-          onChange={(e) => {
-            setThinking(e.target.checked);
-            if (selected)
-              onSelect?.(selected, e.target.checked ? effort : "off");
-          }}
-        />
-        Extended thinking
-      </label>
-      {thinking && (
-        <UI.Tabs
-          values={["Low", "Medium", "High"]}
-          value={effort}
-          onChange={(v) => {
-            setEffort(v);
-            if (selected) onSelect?.(selected, v);
-          }}
-        />
-      )}
-      <small>
-        Illustrative model profiles. Supply your own available models and
-        pricing.
-      </small>
-    </UI.Panel>
+    <span className={`mp-bars${lit ? " is-lit" : ""}`} aria-hidden="true">
+      {[1, 2, 3, 4, 5].map((i) => <i key={i} className={n != null && i <= n ? "on" : ""} style={{ transitionDelay: `${i * 30}ms` }} />)}
+    </span>
   );
 }
+
+const Bulb = () => (
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 12.5h4M6.5 14.5h3M8 1.8a4.2 4.2 0 0 0-2.5 7.6c.4.3.6.8.6 1.3v.3h3.8v-.3c0-.5.2-1 .6-1.3A4.2 4.2 0 0 0 8 1.8Z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+);
+
+function Switch({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
+  return (
+    <button type="button" role="switch" aria-checked={on} aria-label={label} className="mp-switch" onClick={() => onChange(!on)}>
+      <span />
+    </button>
+  );
+}
+
+export function ModelPicker({
+  models = defaultModels,
+  value,
+  defaultValue = "sonnet",
+  onChange,
+  thinking,
+  defaultThinking = true,
+  onThinkingChange,
+  webSearch,
+  defaultWebSearch = false,
+  onWebSearchChange,
+  effort,
+  defaultEffort = "medium",
+  onEffortChange,
+  open,
+  defaultOpen = false,
+  onOpenChange,
+  align = "start",
+  side = "bottom",
+  placeholder = "Ask anything…",
+  className = "",
+}: ModelPickerProps) {
+  const [inId, setInId] = React.useState(models.some((m) => m.id === defaultValue) ? defaultValue : models[0]?.id);
+  const [inThink, setInThink] = React.useState(defaultThinking);
+  const [inWeb, setInWeb] = React.useState(defaultWebSearch);
+  const [inEffort, setInEffort] = React.useState<Effort>(defaultEffort);
+  const [inOpen, setInOpen] = React.useState(defaultOpen);
+  const [active, setActive] = React.useState<string | null>(null);
+  const [text, setText] = React.useState("");
+  const id = value ?? inId;
+  const think = thinking ?? inThink;
+  const web = webSearch ?? inWeb;
+  const eff = effort ?? inEffort;
+  const isOpen = open ?? inOpen;
+  const model = models.find((m) => m.id === id) ?? models[0];
+  const shown = models.find((m) => m.id === active) ?? model;
+  const listId = React.useId();
+  const trigRef = React.useRef<HTMLButtonElement>(null);
+  const listRef = React.useRef<HTMLDivElement>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+
+  const setOpen = (o: boolean) => {
+    if (open === undefined) setInOpen(o);
+    onOpenChange?.(o);
+    if (!o) setActive(null);
+  };
+  const pick = (mid: string) => {
+    if (value === undefined) setInId(mid);
+    onChange?.(mid);
+    setOpen(false);
+    trigRef.current?.focus();
+  };
+
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const away = (e: PointerEvent) => { if (!rootRef.current?.contains(e.target as Node)) setOpen(false); };
+    document.addEventListener("pointerdown", away);
+    return () => document.removeEventListener("pointerdown", away);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
+
+  const latency = (shown.latencyMs ?? 900) * (think ? effortMul[eff] : 1) / 1000;
+  const price = shown.pricePerM ?? 3;
+  const rLat = useRoll(latency);
+  const rPrice = useRoll(price);
+  const routed = shown.speed == null && shown.quality == null && shown.cost == null;
+  const initial = (m: PickerModel) => m.icon ?? <span className="mp-ini">{m.name[0]}</span>;
+
+  const onListKey = (e: React.KeyboardEvent) => {
+    const i = models.findIndex((m) => m.id === (active ?? id));
+    let n = i;
+    if (e.key === "ArrowDown") n = Math.min(models.length - 1, i + 1);
+    else if (e.key === "ArrowUp") n = Math.max(0, i - 1);
+    else if (e.key === "Home") n = 0;
+    else if (e.key === "End") n = models.length - 1;
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(models[i].id); return; }
+    else return;
+    e.preventDefault();
+    setActive(models[n].id);
+  };
+
+  return (
+    <div className={`mp ${className}`} ref={rootRef} onKeyDown={(e) => { if (e.key === "Escape" && isOpen) { setOpen(false); trigRef.current?.focus(); } }}>
+      <style>{css}</style>
+      <textarea className="mp-input" rows={1} placeholder={placeholder} value={text} onChange={(e) => setText(e.target.value)} aria-label="Message" />
+      <div className="mp-bar">
+        <div className="mp-anchor">
+          <button
+            ref={trigRef}
+            type="button"
+            className="mp-trigger"
+            aria-haspopup="listbox"
+            aria-expanded={isOpen}
+            aria-controls={listId}
+            aria-label={`Model: ${model.name}${think ? ", extended thinking on" : ""}`}
+            onClick={() => { setOpen(!isOpen); if (!isOpen) requestAnimationFrame(() => listRef.current?.focus()); }}
+            onKeyDown={(e) => { if (e.key === "ArrowDown") { e.preventDefault(); setOpen(true); requestAnimationFrame(() => listRef.current?.focus()); } }}
+          >
+            {initial(model)}
+            <span key={model.id} className="mp-name">{model.name}</span>
+            <span className={`mp-bulb${think ? " is-on" : ""}`}><Bulb /></span>
+            <svg className="mp-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+          </button>
+          <div className={`mp-menu mp-${side} mp-${align}${isOpen ? " is-open" : ""}`} inert={!isOpen ? true : undefined}>
+            <div className="mp-head" aria-hidden="true"><span>Model</span><span>Speed</span><span>Quality</span><span>Cost</span></div>
+            <div
+              ref={listRef}
+              id={listId}
+              role="listbox"
+              tabIndex={0}
+              aria-label="Models"
+              aria-activedescendant={`${listId}-${active ?? id}`}
+              className={`mp-list${active ? " has-active" : ""}`}
+              onKeyDown={onListKey}
+              onMouseLeave={() => setActive(null)}
+            >
+              {models.map((m) => {
+                const r = m.speed == null && m.quality == null && m.cost == null;
+                return (
+                  <div
+                    key={m.id}
+                    id={`${listId}-${m.id}`}
+                    role="option"
+                    aria-selected={m.id === id}
+                    className={`mp-opt${m.id === active ? " is-active" : ""}`}
+                    onMouseEnter={() => setActive(m.id)}
+                    onClick={() => pick(m.id)}
+                  >
+                    <span className="mp-opt-main">
+                      {initial(m)}
+                      <span>
+                        <strong>{m.name}{m.id === id && <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>}</strong>
+                        {m.description && <small>{m.description}</small>}
+                      </span>
+                    </span>
+                    {r ? (
+                      <span className="mp-varies">Varies</span>
+                    ) : (
+                      <>
+                        <Bars n={m.speed} lit={m.id === (active ?? id)} />
+                        <Bars n={m.quality} lit={m.id === (active ?? id)} />
+                        <Bars n={m.cost} lit={m.id === (active ?? id)} />
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mp-sep" />
+            <div className="mp-set">
+              <span className="mp-set-l"><Bulb /><span>Extended thinking<small>Thinks before it answers</small></span></span>
+              <Switch on={think} label="Extended thinking" onChange={(v) => { if (thinking === undefined) setInThink(v); onThinkingChange?.(v); }} />
+            </div>
+            <div className={`mp-effort-wrap${think ? " is-open" : ""}`}>
+              <div className="mp-effort-in">
+                <div
+                  className="mp-effort"
+                  role="radiogroup"
+                  aria-label="Effort"
+                  onKeyDown={(e) => {
+                    const i = efforts.indexOf(eff);
+                    const n = e.key === "ArrowRight" ? Math.min(2, i + 1) : e.key === "ArrowLeft" ? Math.max(0, i - 1) : i;
+                    if (n !== i) { if (effort === undefined) setInEffort(efforts[n]); onEffortChange?.(efforts[n]); }
+                  }}
+                >
+                  <span className="mp-eff-thumb" style={{ transform: `translateX(${efforts.indexOf(eff) * 100}%)` }} />
+                  {efforts.map((x) => (
+                    <button key={x} type="button" role="radio" aria-checked={x === eff} tabIndex={x === eff ? 0 : -1} onClick={() => { if (effort === undefined) setInEffort(x); onEffortChange?.(x); }}>
+                      {x[0].toUpperCase() + x.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="mp-set">
+              <span className="mp-set-l">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M2 8h12M8 2c-2.2 2.4-2.2 9.6 0 12M8 2c2.2 2.4 2.2 9.6 0 12" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
+                <span>Web search<small>Looks things up when needed</small></span>
+              </span>
+              <Switch on={web} label="Web search" onChange={(v) => { if (webSearch === undefined) setInWeb(v); onWebSearchChange?.(v); }} />
+            </div>
+            <div className="mp-tray">
+              <span>First token <b>{routed ? "varies" : `~${rLat.toFixed(1)}s`}</b></span>
+              <span><b>{routed ? "varies" : `$${rPrice.toFixed(rPrice < 10 ? 2 : 0)}`}</b>{routed ? "" : " / M tokens"}</span>
+            </div>
+          </div>
+        </div>
+        <button type="button" className="mp-send" aria-label="Send" disabled={!text.trim()}>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const css = `
+.mp{--mp-bg:#fff;--mp-fg:#18181b;--mp-muted:#71717a;--mp-faint:#a1a1aa;--mp-line:#ececef;--mp-soft:#f4f4f5;--mp-seg:#e4e4e7;--mp-blue:#3b82f6;position:relative;width:100%;max-width:360px;background:var(--mp-bg);color:var(--mp-fg);border:1px solid var(--mp-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .mp{--mp-bg:#1b1b1e;--mp-fg:#ececef;--mp-muted:#a1a1aa;--mp-faint:#71717a;--mp-line:#2e2e33;--mp-soft:#26262b;--mp-seg:#38383e;color-scheme:dark}
+.mp *{box-sizing:border-box}.mp button{font:inherit;color:inherit;cursor:pointer}
+.mp-input{display:block;width:100%;resize:none;border:0;outline:0;background:none;color:var(--mp-fg);font:inherit;font-size:13.5px;padding:14px 14px 6px}
+.mp-input::placeholder{color:var(--mp-faint)}
+.mp-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 10px 10px 14px}
+.mp-anchor{position:relative}
+.mp-trigger{display:flex;align-items:center;gap:7px;height:26px;margin-left:-6px;padding:0 6px;border:0;border-radius:6px;background:none;font-size:13.5px!important}
+.mp-trigger:hover,.mp-trigger[aria-expanded=true]{background:var(--mp-soft)}
+.mp-ini{display:grid;place-items:center;width:18px;height:18px;border:1px solid var(--mp-line);border-radius:5px;font-size:10px;font-weight:600;flex:none;background:var(--mp-bg)}
+.mp-name{animation:mp-fade .25s both}
+.mp-bulb{display:grid;place-items:center;width:0;overflow:hidden;color:var(--mp-blue);transition:width .2s}.mp-bulb.is-on{width:14px}.mp-bulb svg{width:14px;height:14px;flex:none}
+.mp-chev{width:13px;height:13px;color:var(--mp-muted)}
+.mp-send{display:grid;place-items:center;width:28px;height:28px;border:0;border-radius:7px;background:var(--mp-fg);color:var(--mp-bg)!important}.mp-send svg{width:15px;height:15px}.mp-send:disabled{cursor:default;opacity:1}
+.mp-menu{position:absolute;z-index:20;width:380px;padding:6px;background:var(--mp-bg);border:1px solid var(--mp-line);border-radius:10px;box-shadow:0 12px 36px #0000001f;opacity:0;transform:scale(.97);pointer-events:none;transition:opacity .14s,transform .14s}
+.mp-menu.is-open{opacity:1;transform:none;pointer-events:auto}
+.mp-bottom{top:calc(100% + 6px)}.mp-top{bottom:calc(100% + 6px)}
+.mp-start{left:-6px;transform-origin:top left}.mp-end{right:0;transform-origin:top right}.mp-top.mp-start{transform-origin:bottom left}
+.mp-head,.mp-opt{display:grid;grid-template-columns:minmax(0,1fr) 40px 40px 40px;gap:8px;align-items:center}
+.mp-head{padding:4px 8px 6px;font-size:11px;color:var(--mp-faint)}.mp-head span:not(:first-child){text-align:center}
+.mp-list{outline:0}
+.mp-opt{padding:7px 8px;border-radius:6px;cursor:pointer;transition:opacity .15s,background .15s}
+.mp-list.has-active .mp-opt:not(.is-active){opacity:.55}
+.mp-opt.is-active{background:var(--mp-soft)}
+.mp-list:focus-visible .mp-opt.is-active{box-shadow:inset 0 0 0 2px var(--mp-blue)}
+.mp-opt-main{display:flex;align-items:center;gap:9px;min-width:0}
+.mp-opt-main>span:last-child{display:flex;flex-direction:column;min-width:0}
+.mp-opt strong{display:flex;align-items:center;gap:5px;font-weight:500}.mp-opt strong svg{width:12px;height:12px;color:var(--mp-blue)}
+.mp-opt small{font-size:11.5px;color:var(--mp-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mp-bars{display:flex;gap:2px;justify-content:center}
+.mp-bars i{width:5px;height:10px;border-radius:1.5px;background:var(--mp-seg);transition:background .2s}
+.mp-bars i.on{background:var(--mp-faint)}.mp-bars.is-lit i.on{background:var(--mp-blue)}
+.mp-varies{grid-column:2/5;text-align:center;font-size:11.5px;color:var(--mp-faint)}
+.mp-sep{height:1px;margin:6px 2px;background:var(--mp-line)}
+.mp-set{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 8px}
+.mp-set-l{display:flex;align-items:center;gap:9px}.mp-set-l>svg{width:15px;height:15px;color:var(--mp-muted);flex:none}
+.mp-set-l>span{display:flex;flex-direction:column}.mp-set-l small{font-size:11.5px;color:var(--mp-muted)}
+.mp-switch{position:relative;width:30px;height:18px;padding:0;border:0;border-radius:9px;background:var(--mp-seg);transition:background .2s;flex:none}
+.mp-switch span{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s}
+.mp-switch[aria-checked=true]{background:var(--mp-blue)}.mp-switch[aria-checked=true] span{transform:translateX(12px)}
+.mp-effort-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s}.mp-effort-wrap.is-open{grid-template-rows:1fr}
+.mp-effort-in{overflow:hidden;min-height:0}
+.mp-effort{position:relative;display:flex;margin:2px 8px 6px 32px;padding:2px;border-radius:7px;background:var(--mp-soft)}
+.mp-eff-thumb{position:absolute;top:2px;bottom:2px;left:2px;width:calc((100% - 4px)/3);border-radius:5px;background:var(--mp-bg);box-shadow:0 1px 2px #00000014;transition:transform .18s}
+.mp-effort button{position:relative;flex:1;height:22px;border:0;background:none;font-size:12px!important;color:var(--mp-muted)!important}.mp-effort button[aria-checked=true]{color:var(--mp-fg)!important;font-weight:500}
+.mp-tray{display:flex;justify-content:space-between;margin:6px -6px -6px;padding:9px 14px;border-top:1px solid var(--mp-line);border-radius:0 0 10px 10px;background:var(--mp-soft);font-size:12px;color:var(--mp-muted);font-variant-numeric:tabular-nums}
+.mp-tray b{color:var(--mp-fg);font-weight:500}
+.mp :focus-visible{outline:2px solid var(--mp-blue);outline-offset:2px}
+@keyframes mp-fade{from{opacity:0}}
+@media(max-width:480px){.mp-menu{width:calc(100vw - 32px);max-width:380px}.mp-opt small{display:none}}
+@media(prefers-reduced-motion:reduce){.mp *{animation:none!important;transition:none!important}}
+`;
 
 export default ModelPicker;

@@ -3,266 +3,6 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
-};
-
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
 
 export type LedgerEntry = {
   id: string;
@@ -289,6 +29,66 @@ export type AgentLedgerProps = {
   className?: string;
 };
 
+const logos: Record<string, React.ReactNode> = {
+  HubSpot: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="10" cy="9.5" r="2.4" fill="none" stroke="#ff7a59" strokeWidth="1.5" />
+      <path d="M10 7V3.5M4 4l4.3 3.8M8 11.5 5.5 13.5" stroke="#ff7a59" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="10" cy="3" r="1.1" fill="#ff7a59" />
+      <circle cx="3.6" cy="3.6" r="1.1" fill="#ff7a59" />
+    </svg>
+  ),
+  Slack: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="2" y="6" width="5" height="2" rx="1" fill="#36c5f0" />
+      <rect x="6" y="2" width="2" height="5" rx="1" fill="#2eb67d" />
+      <rect x="9" y="8" width="5" height="2" rx="1" fill="#ecb22e" />
+      <rect x="8" y="9" width="2" height="5" rx="1" fill="#e01e5a" />
+      <rect x="8" y="2" width="2" height="5" rx="1" fill="#2eb67d" />
+      <rect x="6" y="9" width="2" height="5" rx="1" fill="#e01e5a" />
+      <rect x="2" y="8" width="5" height="2" rx="1" fill="#36c5f0" />
+      <rect x="9" y="6" width="5" height="2" rx="1" fill="#ecb22e" />
+    </svg>
+  ),
+  Notion: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M5.5 11.5v-7h1l3.5 7h1v-7" fill="none" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
+  ),
+  Stripe: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#635bff" />
+      <path d="M10.2 6.1c-.5-.4-1.2-.6-1.9-.6-1 0-1.6.5-1.6 1.1 0 1.6 3.6.9 3.6 3 0 .9-.8 1.6-2.1 1.6-.8 0-1.6-.3-2.1-.7" fill="none" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  ),
+  Vercel: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 2.5 14.5 13.5h-13Z" fill="currentColor" />
+    </svg>
+  ),
+  GitHub: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M8 1a7 7 0 0 0-2.2 13.6c.35.07.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.81-.78-1.03-.78-1.03-.64-.43.05-.42.05-.42.7.05 1.07.72 1.07.72.63 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.55-.18-3.19-.78-3.19-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72a6.6 6.6 0 0 1 3.5 0c1.34-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.3v1.93c0 .19.13.41.48.34A7 7 0 0 0 8 1Z"
+      />
+    </svg>
+  ),
+};
+
+const T0 = Date.now();
+const defaultEntries: LedgerEntry[] = [
+  { id: "email", action: "Sent email", target: "3,812 customers", system: "HubSpot", at: T0 - 37000, detail: "New price and the code LAUNCH20", dependsOn: ["coupon"], reversible: false },
+  { id: "slack", action: "Posted in #launch", target: "New pricing is live", system: "Slack", at: T0 - 62000, detail: "With a link to the pricing page", dependsOn: ["deploy"] },
+  { id: "deals", action: "Updated 212 deals", target: "Renewals in Q4", system: "HubSpot", at: T0 - 70000, change: ["$29 per seat", "$34 per seat"], dependsOn: ["price"] },
+  { id: "faq", action: "Updated page", target: "Pricing FAQ", system: "Notion", at: T0 - 80000, change: ["3 answers", "3 answers rewritten"], dependsOn: ["price"] },
+  { id: "coupon", action: "Created coupon", target: "LAUNCH20", system: "Stripe", at: T0 - 125000, detail: "20% off the first year · ends in 7 days" },
+  { id: "price", action: "Changed price", target: "Pro plan", system: "Stripe", at: T0 - 130000, change: ["$29 / month", "$34 / month"] },
+  { id: "deploy", action: "Deployed", target: "affectui.com", system: "Vercel", at: T0 - 185000, change: ["#481", "#483 in production"], dependsOn: ["merge"] },
+  { id: "merge", action: "Merged PR #482", target: "Pricing page v2", system: "GitHub", at: T0 - 190000, change: ["pricing-v2", "main"] },
+];
+
 /** Dependency traversal follows ids, never the current display order. Cycles terminate. */
 function ledgerDependents(entries: LedgerEntry[], id: string) {
   const affected = new Set([id]);
@@ -296,10 +96,7 @@ function ledgerDependents(entries: LedgerEntry[], id: string) {
   while (changed) {
     changed = false;
     for (const entry of entries) {
-      if (
-        !affected.has(entry.id) &&
-        entry.dependsOn?.some((parent) => affected.has(parent))
-      ) {
+      if (!affected.has(entry.id) && entry.dependsOn?.some((parent) => affected.has(parent))) {
         affected.add(entry.id);
         changed = true;
       }
@@ -307,9 +104,21 @@ function ledgerDependents(entries: LedgerEntry[], id: string) {
   }
   return affected;
 }
+
+const UndoIcon = () => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M5.5 3.5 3 6l2.5 2.5M3.5 6h6a3.5 3.5 0 0 1 0 7H7" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+const RedoIcon = () => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M10.5 3.5 13 6l-2.5 2.5M12.5 6h-6a3.5 3.5 0 0 0 0 7H9" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 export function AgentLedger({
-  entries = [],
-  agent,
+  entries = defaultEntries,
+  agent = entries === defaultEntries ? "Launch agent" : undefined,
   now,
   undone,
   defaultUndone = [],
@@ -340,23 +149,17 @@ export function AgentLedger({
     return () => window.clearInterval(timer);
   }, [now]);
   const active = pointAt === undefined ? hover : pointAt;
-  const affected = active
-    ? ledgerDependents(entries, active)
-    : new Set<string>();
+  const affected = active ? ledgerDependents(entries, active) : new Set<string>();
   const sorted = [...entries].sort((a, b) => b.at - a.at);
   const titleId = React.useId();
+
   const perform = async (entry: LedgerEntry, redo: boolean) => {
     if (locked.current || entry.reversible === false) return;
     if (redo && entry.dependsOn?.some((id) => removed.includes(id))) return;
     const chain = ledgerDependents(entries, entry.id);
     const ids = entries
-      .filter(
-        (value) =>
-          chain.has(value.id) &&
-          value.reversible !== false &&
-          removed.includes(value.id) === redo,
-      )
-      .map((value) => value.id);
+      .filter((v) => chain.has(v.id) && v.reversible !== false && removed.includes(v.id) === redo)
+      .map((v) => v.id);
     if (!ids.length) return;
     locked.current = true;
     setBusy(true);
@@ -365,172 +168,185 @@ export function AgentLedger({
       await (redo ? onRedo : onUndo)?.(ids);
       if (!mounted.current) return;
       if (undone === undefined)
-        setInternal((current) =>
-          redo
-            ? current.filter((id) => !ids.includes(id))
-            : [...new Set([...current, ...ids])],
-        );
-      setAnnouncement(
-        `${redo ? "Restored" : "Undid"} ${ids.length} change${ids.length === 1 ? "" : "s"}.`,
-      );
+        setInternal((cur) => (redo ? cur.filter((id) => !ids.includes(id)) : [...new Set([...cur, ...ids])]));
+      setAnnouncement(`${redo ? "Restored" : "Undid"} ${ids.length} change${ids.length === 1 ? "" : "s"}.`);
     } catch (failure) {
       if (mounted.current)
-        setError(
-          failure instanceof Error
-            ? failure.message
-            : "Could not update these changes. Try again.",
-        );
+        setError(failure instanceof Error ? failure.message : "Could not update these changes. Try again.");
     } finally {
       locked.current = false;
       if (mounted.current) setBusy(false);
     }
   };
+
   const relative = (at: number) => {
-    const seconds = Math.max(0, Math.floor(((now ?? clock) - at) / 1000));
-    return seconds < 60
-      ? "Just now"
-      : seconds < 3600
-        ? `${Math.floor(seconds / 60)}m ago`
-        : seconds < 86400
-          ? `${Math.floor(seconds / 3600)}h ago`
-          : `${Math.floor(seconds / 86400)}d ago`;
+    const s = Math.max(0, Math.floor(((now ?? clock) - at) / 1000));
+    return s < 60 ? `${s}s ago` : s < 3600 ? `${Math.floor(s / 60)}m ago` : s < 86400 ? `${Math.floor(s / 3600)}h ago` : `${Math.floor(s / 86400)}d ago`;
   };
+
   return (
-    <div className={`ldg-root ${className}`} style={{ width: "100%" }}>
-      <style>{`.ldg-root{container:ldg/inline-size}.ldg-list{list-style:none;padding:0;margin:0}.ldg-entry{padding:12px 0;border-bottom:1px solid var(--st-line);transition:opacity .2s,background .2s}.ldg-entry:last-child{border:0}.ldg-entry[data-undone=true]{opacity:.55}.ldg-entry[data-undone=true] .ldg-title{text-decoration:line-through}.ldg-entry[data-affected=true]{background:color-mix(in srgb,var(--st-accent) 7%,transparent)}.ldg-main{display:flex;align-items:center;gap:10px}.ldg-main>div{flex:1;min-width:0}.ldg-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 0 40px;font-size:11px}.ldg-main .st-btn{flex:none}.ldg-change{display:flex;gap:8px;flex-wrap:wrap}.ldg-main strong{overflow-wrap:anywhere}.ldg-main button[aria-disabled=true]{opacity:.5;cursor:not-allowed}@container ldg(max-width:480px){.ldg-meta{margin-left:0}.ldg-main{gap:7px}}@media(prefers-reduced-motion:reduce){.ldg-entry{transition:none}}`}</style>
-      <UI.Panel title={title} subtitle={agent}>
-        <span
-          id={titleId}
-          style={{
-            position: "absolute",
-            width: 1,
-            height: 1,
-            overflow: "hidden",
-            clipPath: "inset(50%)",
-          }}
-        >
-          {title}
+    <section className={`ldg ${className}`}>
+      <style>{css}</style>
+      <header className="ldg-bar">
+        <svg viewBox="0 0 16 16" aria-hidden="true" className="ldg-bar-ico">
+          <rect x="2.5" y="2" width="11" height="12" rx="2" fill="none" stroke="currentColor" strokeWidth="1.3" />
+          <path d="M5.5 6h5M5.5 8.5h5M5.5 11h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        </svg>
+        <span id={titleId} className="ldg-title">{title}</span>
+        {agent && <span className="ldg-agent">{agent}</span>}
+        <span className="ldg-count">
+          <strong>{entries.length}</strong> change{entries.length === 1 ? "" : "s"}
         </span>
-        <ol className="ldg-list" aria-labelledby={titleId} aria-busy={busy}>
-          {sorted.map((entry) => {
-            const isUndone = removed.includes(entry.id);
-            const dependencyUndone = entry.dependsOn?.some((id) =>
-              removed.includes(id),
-            );
-            const dependents = entries.filter(
-              (value) =>
-                value.id !== entry.id &&
-                ledgerDependents(entries, entry.id).has(value.id) &&
-                value.reversible !== false &&
-                !removed.includes(value.id),
-            );
-            return (
-              <li
-                key={entry.id}
-                className="ldg-entry"
-                data-undone={isUndone}
-                data-affected={affected.has(entry.id)}
-              >
-                <div className="ldg-main">
-                  <span aria-hidden="true">
-                    {entry.icon ?? <UI.Avatar name={entry.system} />}
+      </header>
+      <div className="ldg-card">
+        {!entries.length ? (
+          <p className="ldg-empty">No changes yet</p>
+        ) : (
+          <ol className="ldg-list" aria-labelledby={titleId} aria-busy={busy}>
+            {sorted.map((entry) => {
+              const isUndone = removed.includes(entry.id);
+              const dependencyUndone = entry.dependsOn?.some((id) => removed.includes(id));
+              const chain = ledgerDependents(entries, entry.id);
+              const dependents = entries.filter(
+                (v) => v.id !== entry.id && chain.has(v.id) && v.reversible !== false && !removed.includes(v.id),
+              );
+              const lit = affected.has(entry.id) && entry.id !== active;
+              const flag =
+                lit && entry.reversible === false
+                  ? "kept"
+                  : lit && !isUndone
+                    ? "also"
+                    : entry.reversible === false && dependencyUndone
+                      ? "kept"
+                      : null;
+              return (
+                <li
+                  key={entry.id}
+                  className="ldg-row"
+                  data-undone={isUndone}
+                  data-active={entry.id === active}
+                  data-flag={flag ?? undefined}
+                >
+                  <span className="ldg-logo" aria-hidden="true">
+                    {entry.icon ?? logos[entry.system] ?? entry.system.slice(0, 1)}
                   </span>
-                  <div>
-                    <strong className="ldg-title">{entry.action}</strong>
-                    {entry.target && <small>{entry.target}</small>}
+                  <div className="ldg-text">
+                    <div className="ldg-l1">
+                      <span className="ldg-action">{entry.action}</span>
+                      {entry.target && <span className="ldg-target">{entry.target}</span>}
+                    </div>
+                    <div className="ldg-l2">
+                      {entry.change ? (
+                        <>
+                          <s>{entry.change[0]}</s>
+                          <span className="ldg-arrow" aria-label="to">
+                            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9m-3-3 3 3-3 3" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+                          </span>
+                          <span>{entry.change[1]}</span>
+                        </>
+                      ) : (
+                        entry.detail
+                      )}
+                    </div>
                   </div>
-                  {entry.reversible === false ? (
-                    <UI.Badge tone={affected.has(entry.id) ? "amber" : ""}>
-                      Can't undo
-                    </UI.Badge>
-                  ) : (
-                    <UI.Button
-                      aria-label={`${isUndone ? "Redo" : "Undo"} ${entry.action}${!isUndone && dependents.length ? ` and ${dependents.length} dependent changes` : ""}`}
-                      aria-disabled={busy || (isUndone && !!dependencyUndone)}
-                      title={
-                        isUndone && dependencyUndone
-                          ? "Restore the dependency first"
-                          : undefined
-                      }
-                      onMouseEnter={() => setHover(entry.id)}
-                      onMouseLeave={() => setHover(null)}
-                      onFocus={() => setHover(entry.id)}
-                      onBlur={() => setHover(null)}
-                      onClick={() => void perform(entry, isUndone)}
-                    >
-                      {isUndone ? "Redo" : "Undo"}
-                    </UI.Button>
-                  )}
-                </div>
-                <div className="ldg-meta">
-                  {entry.change && (
-                    <span className="ldg-change">
-                      <s>{entry.change[0]}</s>
-                      <span aria-label="to">→</span>
-                      <span>{entry.change[1]}</span>
-                    </span>
-                  )}
-                  {entry.detail && <span>{entry.detail}</span>}
-                  <small>
-                    {entry.system} · {relative(entry.at)}
-                  </small>
-                  {affected.has(entry.id) &&
-                    entry.id !== active &&
-                    entry.reversible !== false &&
-                    !isUndone && <UI.Badge tone="blue">Also undone</UI.Badge>}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
-        {!entries.length && <UI.Empty>No changes yet</UI.Empty>}
-        {error && (
-          <p role="alert" style={{ color: "var(--st-red)" }}>
-            {error}
-          </p>
+                  <div className="ldg-slot">
+                    {flag === "also" && <span className="ldg-flag ldg-also">Also undone</span>}
+                    {flag === "kept" && (
+                      <span className="ldg-flag ldg-kept">
+                        <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M5.5 7V5.5a2.5 2.5 0 0 1 5 0V7" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
+                        Can't undo
+                      </span>
+                    )}
+                    {!flag && (
+                      <span className="ldg-time">
+                        {relative(entry.at)}
+                        <span className="ldg-sys"> · {entry.system}</span>
+                      </span>
+                    )}
+                    {entry.reversible !== false && !flag && (
+                      <button
+                        type="button"
+                        className="ldg-btn"
+                        aria-label={`${isUndone ? "Redo" : "Undo"} ${entry.action}${!isUndone && dependents.length ? ` and ${dependents.length} dependent changes` : ""}`}
+                        aria-disabled={busy || (isUndone && !!dependencyUndone)}
+                        title={isUndone && dependencyUndone ? "Restore the dependency first" : undefined}
+                        onMouseEnter={() => setHover(entry.id)}
+                        onMouseLeave={() => setHover(null)}
+                        onFocus={() => setHover(entry.id)}
+                        onBlur={() => setHover(null)}
+                        onClick={() => void perform(entry, isUndone)}
+                      >
+                        {isUndone ? <RedoIcon /> : <UndoIcon />}
+                        <span className="ldg-btn-label">{isUndone ? "Redo" : "Undo"}</span>
+                      </button>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
         )}
-        <span role="status" className="st-status">
-          {announcement}
-        </span>
-      </UI.Panel>
-    </div>
+      </div>
+      {error && (
+        <p role="alert" className="ldg-error">
+          {error}
+        </p>
+      )}
+      <span role="status" className="ldg-sr">
+        {announcement}
+      </span>
+    </section>
   );
 }
-export default Demo;
-export function Demo() {
-  const now = React.useRef(Date.now()).current;
-  return (
-    <AgentLedger
-      agent="Launch agent"
-      entries={[
-        {
-          id: "price",
-          action: "Changed price",
-          target: "Pro plan",
-          system: "Stripe",
-          at: now - 120000,
-          change: ["$29 / month", "$34 / month"],
-        },
-        {
-          id: "deals",
-          action: "Updated 212 deals",
-          target: "Renewals in Q4",
-          system: "HubSpot",
-          at: now - 60000,
-          change: ["$29 per seat", "$34 per seat"],
-          dependsOn: ["price"],
-        },
-        {
-          id: "email",
-          action: "Sent email",
-          target: "3,812 customers",
-          system: "HubSpot",
-          at: now,
-          detail: "New price and the code LAUNCH20",
-          dependsOn: ["price"],
-          reversible: false,
-        },
-      ]}
-    />
-  );
-}
+
+const css = `
+.ldg{--ui-ldgc-bg:#fff;--ui-ldgc-fg:#18181b;--ui-ldgc-muted:#71717a;--ui-ldgc-faint:#a1a1aa;--ui-ldgc-line:#ececef;--ui-ldgc-logo-bg:#fafafa;--ui-ldgc-accent:#4f7cf0;--ui-ldgc-also-bg:#eef3ff;--ui-ldgc-also-fg:#3b6be0;--ui-ldgc-kept-bg:#fdf3e2;--ui-ldgc-kept-fg:#b4741a;--ui-ldgc-red:#d14343;container:ldg/inline-size;width:100%;max-width:640px;color:var(--ui-ldgc-fg);font:400 12.5px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .ldg{--ui-ldgc-bg:#1b1b1e;--ui-ldgc-fg:#ececef;--ui-ldgc-muted:#a1a1aa;--ui-ldgc-faint:#71717a;--ui-ldgc-line:#2c2c31;--ui-ldgc-logo-bg:#232327;--ui-ldgc-accent:#7c9cff;--ui-ldgc-also-bg:#1f2a44;--ui-ldgc-also-fg:#8fb0ff;--ui-ldgc-kept-bg:#3a2c14;--ui-ldgc-kept-fg:#e7b35f;color-scheme:dark}
+.ldg *{box-sizing:border-box}
+.ldg-bar{display:flex;align-items:center;gap:8px;padding:0 2px 10px;font-size:13px}
+.ldg-bar-ico{width:15px;height:15px;color:var(--ui-ldgc-accent)}
+.ldg-title{font-weight:500}.ldg-agent{color:var(--ui-ldgc-muted)}
+.ldg-count{margin-left:auto;font-size:12px;color:var(--ui-ldgc-muted)}.ldg-count strong{color:var(--ui-ldgc-fg);font-weight:600}
+.ldg-card{background:var(--ui-ldgc-bg);border:1px solid var(--ui-ldgc-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;overflow:hidden}
+.ldg-list{list-style:none;margin:0;padding:0}
+.ldg-row{position:relative;display:flex;align-items:center;gap:12px;height:56px;padding:0 16px 0 14px;border-bottom:1px solid var(--ui-ldgc-line);transition:background .18s;animation:ldg-in .35s both}
+.ldg-row:last-child{border-bottom:0}
+.ldg-row[data-active=true]{background:color-mix(in srgb,var(--ui-ldgc-fg) 3%,transparent)}
+.ldg-row[data-flag=also]{background:var(--ui-ldgc-also-bg)}
+.ldg-row[data-flag=kept]{background:var(--ui-ldgc-kept-bg)}
+.ldg-logo{display:grid;place-items:center;flex:none;width:28px;height:28px;border:1px solid color-mix(in srgb,var(--ui-ldgc-line) 60%,transparent);border-radius:7px;background:var(--ui-ldgc-logo-bg);font-size:11px;font-weight:600;transition:filter .3s,opacity .3s}
+.ldg-logo svg{width:15px;height:15px}
+.ldg-text{flex:1;min-width:0}
+.ldg-l1,.ldg-l2{display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ldg-action{font-weight:500}.ldg-target{color:var(--ui-ldgc-muted);overflow:hidden;text-overflow:ellipsis}
+.ldg-l2{font-size:11.5px;color:var(--ui-ldgc-muted);margin-top:1px}
+.ldg-l2 s{color:var(--ui-ldgc-faint)}.ldg-l2>span:last-child{color:var(--ui-ldgc-fg)}
+.ldg-arrow{display:inline-flex;color:var(--ui-ldgc-faint)!important}.ldg-arrow svg{width:12px;height:12px}
+.ldg-slot{position:relative;display:flex;align-items:center;justify-content:flex-end;flex:none;min-width:120px;height:30px}
+.ldg-time{font-size:12px;color:var(--ui-ldgc-muted);white-space:nowrap;transition:opacity .15s}
+.ldg-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 10px;border:1px solid var(--ui-ldgc-line);border-radius:7px;background:var(--ui-ldgc-bg);color:var(--ui-ldgc-fg);font:500 12px/1 inherit;font-family:inherit;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .15s,background .15s}
+.ldg-btn svg{width:14px;height:14px}
+.ldg-btn:hover{background:color-mix(in srgb,var(--ui-ldgc-fg) 5%,var(--ui-ldgc-bg))}
+.ldg-btn[aria-disabled=true]{opacity:.45!important;cursor:not-allowed}
+.ldg-row:hover .ldg-btn,.ldg-btn:focus-visible,.ldg-row[data-undone=true] .ldg-btn{opacity:1;pointer-events:auto}
+.ldg-row:hover .ldg-time,.ldg-row:focus-within .ldg-time,.ldg-row[data-undone=true] .ldg-time{opacity:0}
+.ldg-flag{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:6px;font-size:11.5px;font-weight:500;white-space:nowrap}
+.ldg-flag svg{width:12px;height:12px}
+.ldg-also{color:var(--ui-ldgc-also-fg);background:color-mix(in srgb,var(--ui-ldgc-also-fg) 12%,transparent)}
+.ldg-kept{color:var(--ui-ldgc-kept-fg);background:color-mix(in srgb,var(--ui-ldgc-kept-fg) 14%,transparent)}
+.ldg-row[data-undone=true] .ldg-text{color:var(--ui-ldgc-faint)}
+.ldg-row[data-undone=true] .ldg-text *{color:var(--ui-ldgc-faint)!important}
+.ldg-row[data-undone=true] .ldg-logo{filter:grayscale(1);opacity:.55}
+.ldg-row[data-undone=true]::after{content:"";position:absolute;left:54px;right:150px;top:50%;height:1px;background:var(--ui-ldgc-faint);transform-origin:left;animation:ldg-strike .4s both}
+.ldg-empty{margin:0;padding:28px;text-align:center;color:var(--ui-ldgc-muted)}
+.ldg-error{margin:8px 2px 0;color:var(--ui-ldgc-red);font-size:12px}
+.ldg-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.ldg :focus-visible{outline:2px solid var(--ui-ldgc-accent);outline-offset:2px}
+@keyframes ldg-in{from{opacity:0;transform:translateY(-4px)}}
+@keyframes ldg-strike{from{transform:scaleX(0)}}
+@media(hover:none){.ldg-btn{opacity:1;pointer-events:auto}.ldg-time{opacity:0}}
+@container ldg (max-width:480px){.ldg-row{height:64px;padding:0 12px}.ldg-sys{display:none}.ldg-slot{min-width:56px}.ldg-btn{width:30px;padding:0;justify-content:center;border-radius:50%}.ldg-btn-label{display:none}.ldg-l2{flex-wrap:wrap}.ldg-row[data-undone=true]::after{right:70px}}
+@media(prefers-reduced-motion:reduce){.ldg *,.ldg *::after,.ldg-row::after{animation:none!important;transition:none!important}}
+`;
+
+export default AgentLedger;

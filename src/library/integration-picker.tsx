@@ -3,347 +3,437 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type Integration = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
+  name: string;
+  domain: string;
+  category: string;
+  description: string;
+  features: string[];
+  /** SVG path data drawn in white on the brand color (24×24 box). */
+  path?: string;
   color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  icon?: React.ReactNode;
+  connected?: boolean;
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+
+export type IntegrationPickerProps = {
+  integrations?: Integration[];
+  appName?: string;
+  appIcon?: React.ReactNode;
+  defaultSelected?: string;
+  onToggle?: (id: string, connected: boolean) => void;
+  onExplore?: (id: string) => void;
+  onBack?: () => void;
+  onClose?: () => void;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const svg = (children: React.ReactNode) => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">{children}</svg>
+);
+
+const brand: Record<string, React.ReactNode> = {
+  linear: svg(
+    <>
+      <rect width="24" height="24" rx="6" fill="#5e6ad2" />
+      <circle cx="12" cy="12" r="6.5" fill="#fff" />
+      <path d="M6.6 9.2 14.8 17.4M5.6 12.2l6.2 6.2M8.2 7l8.8 8.8M10.8 5.7l7.5 7.5" stroke="#5e6ad2" strokeWidth="1.1" />
+    </>,
+  ),
+  notion: svg(
+    <>
+      <rect x=".75" y=".75" width="22.5" height="22.5" rx="5.5" fill="#fff" stroke="#e4e4e7" strokeWidth="1.5" />
+      <rect x="6" y="5.5" width="12" height="13" rx="1.4" fill="none" stroke="#111" strokeWidth="1.6" />
+      <path d="M9 15.5v-7l6 7v-7" fill="none" stroke="#111" strokeWidth="1.6" />
+    </>,
+  ),
+  stripe: svg(
+    <>
+      <rect width="24" height="24" rx="6" fill="#635bff" />
+      <path d="M15.2 8.4c-.9-.4-1.9-.7-3-.7-1.4 0-2.2.6-2.2 1.5 0 2.3 5.6 1.2 5.6 5 0 1.9-1.6 3-3.9 3-1.3 0-2.6-.3-3.7-.9" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+    </>,
+  ),
+  figma: svg(
+    <>
+      <rect x=".75" y=".75" width="22.5" height="22.5" rx="5.5" fill="#fff" stroke="#e4e4e7" strokeWidth="1.5" />
+      <rect x="8" y="4.5" width="4" height="5" rx="2" fill="#f24e1e" />
+      <rect x="12" y="4.5" width="4" height="5" rx="2" fill="#ff7262" />
+      <rect x="8" y="9.5" width="4" height="5" rx="2" fill="#a259ff" />
+      <circle cx="14" cy="12" r="2" fill="#1abcfe" />
+      <rect x="8" y="14.5" width="4" height="5" rx="2" fill="#0acf83" />
+    </>,
+  ),
+  hubspot: svg(
+    <>
+      <rect width="24" height="24" rx="6" fill="#ff7a59" />
+      <circle cx="14" cy="14" r="3" fill="none" stroke="#fff" strokeWidth="1.8" />
+      <path d="M14 11V6.5M7 7.5l4.6 4.3M11.6 16.4 8 19" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="14" cy="6" r="1.4" fill="#fff" />
+    </>,
+  ),
+  shopify: svg(
+    <>
+      <rect width="24" height="24" rx="6" fill="#95bf47" />
+      <path d="M7 9h10l-1 10H8Z" fill="#fff" />
+      <path d="M9.5 9V7.5a2.5 2.5 0 0 1 5 0V9" fill="none" stroke="#fff" strokeWidth="1.5" />
+      <path d="M13 12.2c-.4-.2-.8-.3-1.2-.3-.6 0-.9.3-.9.6 0 .9 2.3.5 2.3 2 0 .8-.7 1.3-1.6 1.3-.5 0-1-.1-1.5-.4" fill="none" stroke="#95bf47" strokeWidth="1" strokeLinecap="round" />
+    </>,
+  ),
+  airtable: svg(
+    <>
+      <rect x=".75" y=".75" width="22.5" height="22.5" rx="5.5" fill="#fff" stroke="#e4e4e7" strokeWidth="1.5" />
+      <path d="m12 5 7 2.8-7 2.8-7-2.8Z" fill="#fcb400" />
+      <path d="M12.8 12.2 19 9.8v6.8l-6.2 2.4Z" fill="#18bfff" />
+      <path d="M11.2 12.3 5 9.6v6.6l6.2 2.8Z" fill="#f82b60" />
+    </>,
+  ),
+  webflow: svg(
+    <>
+      <rect width="24" height="24" rx="6" fill="#146ef5" />
+      <path d="m4.5 8 3 8 3-6 2.5 6 6.5-9" fill="none" stroke="#fff" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+    </>,
+  ),
+  vercel: svg(
+    <>
+      <rect width="24" height="24" rx="6" fill="#000" />
+      <path d="m12 6.5 6.5 11h-13Z" fill="#fff" />
+    </>,
+  ),
+  clickup: svg(
+    <>
+      <rect x=".75" y=".75" width="22.5" height="22.5" rx="5.5" fill="#fff" stroke="#e4e4e7" strokeWidth="1.5" />
+      <path d="m6.5 15 2.3-1.8c1.2 1.6 2.1 2.3 3.2 2.3s2-.7 3.2-2.3l2.3 1.8c-1.8 2.4-3.4 3.4-5.5 3.4S8.3 17.4 6.5 15Z" fill="#7b68ee" />
+      <path d="m7.5 10.6 4.5-4 4.5 4-1.5 1.7-3-2.6-3 2.6Z" fill="#fd71af" />
+    </>,
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultIntegrations: Integration[] = [
+  {
+    id: "linear", name: "Linear", domain: "linear.app", category: "Project management", connected: true,
+    description: "Turn requests from chat into issues and keep their status in sync both ways.",
+    features: ["Create issues from any message", "Two-way status sync", "Link issues to customers"],
+  },
+  {
+    id: "notion", name: "Notion", domain: "notion.so", category: "Docs & wiki", connected: true,
+    description: "Search your workspace and save answers as pages your team can find later.",
+    features: ["Search pages and databases", "Save answers as pages", "Keep permissions in place"],
+  },
+  {
+    id: "stripe", name: "Stripe", domain: "stripe.com", category: "Payments", connected: true,
+    description: "Look up customers, invoices and subscriptions without leaving the conversation.",
+    features: ["Find customers and invoices", "Refund with approval", "Revenue at a glance"],
+  },
+  {
+    id: "figma", name: "Figma", domain: "figma.com", category: "Design",
+    description: "Pull frames and comments into context and share links that preview inline.",
+    features: ["Preview frames inline", "Read file comments", "Link frames to issues"],
+  },
+  {
+    id: "hubspot", name: "HubSpot", domain: "hubspot.com", category: "CRM",
+    description: "See contacts and deals next to every request and log calls automatically.",
+    features: ["Contact and deal lookup", "Log notes and calls", "Sync owners"],
+  },
+  {
+    id: "shopify", name: "Shopify", domain: "shopify.com", category: "Commerce",
+    description: "Answer order questions with live data from your store.",
+    features: ["Order and shipping status", "Product lookup", "Draft refunds"],
+  },
+  {
+    id: "airtable", name: "Airtable", domain: "airtable.com", category: "Databases",
+    description: "Read and update records in your bases from a simple prompt.",
+    features: ["Query any base", "Create and update records", "Respect field types"],
+  },
+  {
+    id: "webflow", name: "Webflow", domain: "webflow.com", category: "Website",
+    description: "Edit CMS items and publish changes to your site after a review.",
+    features: ["Edit CMS collections", "Stage before publishing", "Form submissions"],
+  },
+  {
+    id: "vercel", name: "Vercel", domain: "vercel.com", category: "Developer tools",
+    description: "Follow deployments, read logs and roll back from the same place.",
+    features: ["Deployment status", "Runtime logs", "Instant rollback"],
+  },
+  {
+    id: "clickup", name: "ClickUp", domain: "clickup.com", category: "Project management",
+    description: "Create tasks from messages and keep lists in sync with the team.",
+    features: ["Tasks from messages", "Assignees and due dates", "Status sync"],
+  },
+];
+
+const appMark = (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 6h7v4h5v8h-7v-4H6Z" fill="#fff" />
+    <path d="M11 10h2v4h-2Z" fill="#000" />
+  </svg>
+);
+
+const tile = (i: Integration) =>
+  i.icon ?? brand[i.id] ?? (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect width="24" height="24" rx="6" fill={i.color ?? "#71717a"} />
+      {i.path ? <path d={i.path} fill="#fff" /> : <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="600" fill="#fff">{i.name[0]}</text>}
+    </svg>
+  );
 
 export function IntegrationPicker({
-  title = "Connect your tools",
-  items = [
-    { id: "notion", title: "Notion", detail: "Pages and databases" },
-    { id: "slack", title: "Slack", detail: "Team conversations" },
-    { id: "github", title: "GitHub", detail: "Code and issues" },
-    { id: "drive", title: "Google Drive", detail: "Files and documents" },
-    { id: "linear", title: "Linear", detail: "Projects and tasks" },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
+  integrations = defaultIntegrations,
+  appName = "affectUI",
+  appIcon = appMark,
+  defaultSelected,
+  onToggle,
+  onExplore,
+  onBack,
+  onClose,
+  className = "",
+}: IntegrationPickerProps) {
+  const [conn, setConn] = React.useState<Record<string, boolean>>(() =>
+    Object.fromEntries(integrations.map((i) => [i.id, !!i.connected])),
+  );
+  const [selected, setSelected] = React.useState(defaultSelected ?? integrations[0]?.id);
   const [query, setQuery] = React.useState("");
-  const [selected, setSelected] = React.useState(items[0]);
-  const [connected, setConnected] = React.useState(["notion"]);
-  return (
-    <UI.Panel
-      title={title}
-      subtitle="Choose the context your assistant can work with"
-      className={className}
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const listRef = React.useRef<HTMLDivElement>(null);
+  const id = React.useId();
+
+  const q = query.trim().toLowerCase();
+  const match = (i: Integration) => !q || i.name.toLowerCase().includes(q) || i.category.toLowerCase().includes(q);
+  const connected = integrations.filter((i) => conn[i.id] && match(i));
+  const available = integrations.filter((i) => !conn[i.id] && match(i));
+  const flat = [...connected, ...available];
+  const current = integrations.find((i) => i.id === selected) ?? flat[0];
+  const isOn = current ? !!conn[current.id] : false;
+  const count = integrations.filter((i) => conn[i.id]).length;
+
+  React.useEffect(() => {
+    if (flat.length && !flat.some((i) => i.id === selected)) setSelected(flat[0].id);
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  React.useEffect(() => {
+    listRef.current?.querySelector(`[data-id="${selected}"]`)?.scrollIntoView({ block: "nearest" });
+  }, [selected]);
+
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "/" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const toggle = (i: Integration) => {
+    const next = !conn[i.id];
+    setConn((c) => ({ ...c, [i.id]: next }));
+    onToggle?.(i.id, next);
+  };
+
+  const row = (i: Integration) => (
+    <div
+      key={i.id}
+      data-id={i.id}
+      id={`${id}-${i.id}`}
+      role="option"
+      aria-selected={i.id === current?.id}
+      className={`ip-row ${i.id === current?.id ? "on" : ""}`}
+      onMouseDown={(e) => e.preventDefault()}
+      onClick={() => setSelected(i.id)}
     >
-      <UI.Field
-        label="Search integrations"
-        placeholder="Find an app…"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <div className="st-split">
-        <div>
-          {items
-            .filter((x) => x.title.toLowerCase().includes(query.toLowerCase()))
-            .map((x) => (
-              <UI.Row
-                key={x.id}
-                title={x.title}
-                onClick={() => setSelected(x)}
-                icon={<UI.Avatar name={x.title} />}
-              >
-                {connected.includes(x.id) && (
-                  <span style={{ color: "var(--st-green)" }}>✓</span>
-                )}
-              </UI.Row>
-            ))}
-        </div>
-        {selected && (
-          <div className="st-tile">
-            <UI.Avatar name={selected.title} />
-            <h3>{selected.title}</h3>
-            <p>{selected.detail}</p>
-            <UI.Badge tone={connected.includes(selected.id) ? "green" : ""}>
-              {connected.includes(selected.id)
-                ? "Connected in demo"
-                : "Not connected"}
-            </UI.Badge>
-            <div className="st-actions">
-              <UI.Button
-                primary
-                onClick={() => {
-                  setConnected((s) =>
-                    s.includes(selected.id)
-                      ? s.filter((id) => id !== selected.id)
-                      : [...s, selected.id],
-                  );
-                  onAction?.(
-                    connected.includes(selected.id) ? "disconnect" : "connect",
-                    selected,
-                  );
-                }}
-              >
-                {connected.includes(selected.id) ? "Disconnect" : "Connect"}
-              </UI.Button>
+      <span className="ip-tile">{tile(i)}</span>
+      <span className="ip-txt">
+        <span className="ip-name">{i.name}</span>
+        <span className="ip-cat">{i.category}</span>
+      </span>
+    </div>
+  );
+
+  return (
+    <section className={`ip ${className}`} aria-label="Integrations">
+      <style>{css}</style>
+      <header className="ip-head">
+        <button
+          type="button"
+          className="ip-back"
+          aria-label="Back"
+          onClick={() => onBack?.()}
+        >
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
+        </button>
+        <span className="ip-crumb">Integrations</span>
+        <input
+          ref={inputRef}
+          className="ip-search"
+          role="combobox"
+          aria-expanded="true"
+          aria-controls={`${id}-list`}
+          aria-activedescendant={current ? `${id}-${current.id}` : undefined}
+          aria-label="Search integrations"
+          placeholder="Search integrations"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            const idx = flat.findIndex((i) => i.id === current?.id);
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+              e.preventDefault();
+              if (!flat.length) return;
+              const n = e.key === "ArrowDown" ? Math.min(flat.length - 1, idx + 1) : Math.max(0, idx - 1);
+              setSelected(flat[n].id);
+            } else if (e.key === "Enter" && current) {
+              e.preventDefault();
+              toggle(current);
+            } else if (e.key === "Escape") {
+              if (query) setQuery("");
+              else onClose?.();
+            } else if (e.key === "ArrowLeft" && !query && onBack) {
+              onBack();
+            }
+          }}
+        />
+        <kbd className="ip-kbd">⌘/</kbd>
+      </header>
+
+      <div className="ip-body">
+        <div className="ip-list" id={`${id}-list`} role="listbox" aria-label="Integrations" ref={listRef}>
+          {connected.length > 0 && (
+            <div role="group" aria-label="Connected">
+              <div className="ip-group">Connected</div>
+              {connected.map(row)}
             </div>
-            <small style={{ marginTop: 18 }}>
-              Connect onAction to your OAuth flow for a real integration.
-            </small>
+          )}
+          {available.length > 0 && (
+            <div role="group" aria-label="Available">
+              <div className="ip-group">Available</div>
+              {available.map(row)}
+            </div>
+          )}
+          {!flat.length && <p className="ip-empty">No integrations match “{query}”</p>}
+        </div>
+
+        {current && (
+          <div className="ip-detail" aria-live="polite">
+            <div className={`ip-stage ${isOn ? "live" : ""}`}>
+              <span className="ip-ring r1" aria-hidden="true" />
+              <span className="ip-ring r2" aria-hidden="true" />
+              <span className="ip-ring r3" aria-hidden="true" />
+              <span className="ip-big app">{appIcon}</span>
+              <svg className={`ip-arrows ${isOn ? "on" : ""}`} viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M3 6h9.5m-2-2 2 2-2 2M13 10H3.5m2-2-2 2 2 2" />
+              </svg>
+              <span className="ip-big" key={current.id}>{tile(current)}</span>
+            </div>
+            <div className="ip-info">
+              <div className="ip-titlerow">
+                <h3>
+                  {appName} + {current.name}
+                </h3>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={isOn}
+                  aria-label={`${isOn ? "Disconnect" : "Connect"} ${current.name}`}
+                  className="ip-switch"
+                  onClick={() => toggle(current)}
+                >
+                  <span />
+                </button>
+              </div>
+              <div className="ip-meta">
+                {current.domain}
+                {isOn && <span className="ip-badge">Connected</span>}
+              </div>
+              <p className="ip-desc">{current.description}</p>
+              <ul className="ip-feats">
+                {current.features.map((f) => (
+                  <li key={f}>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" /></svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <button type="button" className="ip-explore" onClick={() => onExplore?.(current.id)}>
+                Explore integration
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" /></svg>
+              </button>
+            </div>
           </div>
         )}
       </div>
-    </UI.Panel>
+
+      <footer className="ip-foot">
+        <span className="ip-count">
+          <i />
+          {count} of {integrations.length} connected
+        </span>
+        <span className="ip-keys">
+          <kbd>↑</kbd>
+          <kbd>↓</kbd> to move <kbd>↵</kbd> to switch
+        </span>
+      </footer>
+    </section>
   );
 }
+
+const css = `
+.ip{--ip-bg:#fff;--ip-fg:#18181b;--ip-muted:#71717a;--ip-faint:#a1a1aa;--ip-line:#ececef;--ip-soft:#f4f4f5;--ip-hover:#efeff1;--ip-stage:#f7f7f8;--ip-blue:#3b82f6;--ip-green:#15803d;--ip-green-bg:#e3f6e8;width:100%;max-width:660px;background:var(--ip-bg);color:var(--ip-fg);border:1px solid var(--ip-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden;container:ip/inline-size}
+:where(.dark,[data-theme=dark]) .ip{--ip-bg:#1b1b1e;--ip-fg:#ececef;--ip-muted:#a1a1aa;--ip-faint:#71717a;--ip-line:#2e2e33;--ip-soft:#26262a;--ip-hover:#2a2a2f;--ip-stage:#222226;--ip-green:#4ade80;--ip-green-bg:#173323;color-scheme:dark}
+.ip *{box-sizing:border-box}.ip button{font:inherit;color:inherit;cursor:pointer}
+.ip-head{display:flex;align-items:center;gap:8px;height:46px;padding:0 12px 0 10px;border-bottom:1px solid var(--ip-line)}
+.ip-back{display:grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:6px;background:none;color:var(--ip-muted)}.ip-back:hover{background:var(--ip-soft);color:var(--ip-fg)}
+.ip-back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+.ip-crumb{padding:1px 6px;border-radius:5px;background:var(--ip-soft);font-size:12.5px;color:var(--ip-fg)}
+.ip-search{flex:1;min-width:0;height:30px;border:0;outline:0;background:none;color:inherit;font:inherit;font-size:14px}
+.ip .ip-search:focus-visible{outline:none}
+.ip-search::placeholder{color:var(--ip-faint)}
+.ip-kbd{font:500 10px/1 Inter,system-ui,sans-serif;padding:3px 4px;border:1px solid var(--ip-line);border-radius:4px;color:var(--ip-muted)}
+.ip-body{display:grid;grid-template-columns:280px minmax(0,1fr);height:356px}
+.ip-list{overflow:auto;padding:4px;border-right:1px solid var(--ip-line);scrollbar-width:thin}
+.ip-group{padding:10px 8px 4px;font-size:10.5px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--ip-muted)}
+.ip-row{display:flex;align-items:center;gap:10px;padding:4px 8px;height:44px;border-radius:7px;cursor:pointer}
+.ip-row:hover{background:color-mix(in srgb,var(--ip-hover) 60%,transparent)}
+.ip-row.on{background:var(--ip-hover)}
+.ip-tile{display:grid;place-items:center;width:24px;height:24px;flex:none}.ip-tile svg{width:24px;height:24px;display:block}
+.ip-txt{display:flex;flex-direction:column;min-width:0;line-height:1.3}
+.ip-name{font-size:14px}
+.ip-cat{font-size:12.5px;color:var(--ip-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ip-empty{padding:24px 10px;margin:0;text-align:center;color:var(--ip-muted);font-size:13px}
+.ip-detail{display:flex;flex-direction:column;min-width:0;padding:8px;overflow:auto}
+.ip-stage{position:relative;display:flex;align-items:center;justify-content:center;gap:26px;height:104px;border:1px solid var(--ip-line);border-radius:8px;background:var(--ip-stage);overflow:hidden;flex:none}
+.ip-ring{position:absolute;left:50%;top:50%;border:1px solid var(--ip-line);border-radius:50%;transform:translate(-50%,-50%)}
+.ip-ring.r1{width:68px;height:68px}.ip-ring.r2{width:150px;height:150px}.ip-ring.r3{width:236px;height:236px}
+.ip-stage.live .ip-ring.r1{border-color:color-mix(in srgb,var(--ip-blue) 30%,var(--ip-line));animation:ip-ring 2.8s ease-out infinite}
+.ip-big{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:10px;box-shadow:0 2px 6px #00000014;animation:ip-swap .25s ease-out}
+.ip-big svg{width:44px;height:44px;display:block;border-radius:10px}
+.ip-big.app{background:#000;animation:none}.ip-big.app svg{width:28px;height:28px}
+.ip-arrows{position:relative;width:16px;height:16px;fill:none;stroke:var(--ip-faint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .5s,stroke .2s}
+.ip-arrows.on{stroke:var(--ip-blue);transform:rotate(180deg)}
+.ip-info{padding:14px 8px 4px}
+.ip-titlerow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ip-titlerow h3{margin:0;font-size:15px;font-weight:500;letter-spacing:-.005em}
+.ip-switch{position:relative;width:32px;height:18px;flex:none;padding:0;border:0;border-radius:99px;background:color-mix(in srgb,var(--ip-fg) 18%,transparent);transition:background .2s}
+.ip-switch span{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s}
+.ip-switch[aria-checked=true]{background:var(--ip-blue)}.ip-switch[aria-checked=true] span{transform:translateX(14px)}
+.ip-meta{display:flex;align-items:center;gap:7px;margin-top:1px;font-size:12.5px;color:var(--ip-muted)}
+.ip-badge{padding:0 5px;border-radius:4px;background:var(--ip-green-bg);color:var(--ip-green);font-size:11.5px;line-height:17px}
+.ip-desc{margin:10px 0 12px;color:var(--ip-fg);opacity:.85}
+.ip-feats{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:4px}
+.ip-feats li{display:flex;align-items:center;gap:9px;color:var(--ip-fg);opacity:.85}
+.ip-feats svg{width:14px;height:14px;fill:none;stroke:var(--ip-faint);stroke-width:1.5;stroke-linecap:round;flex:none}
+.ip-explore{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid var(--ip-line);border-radius:7px;background:var(--ip-bg);font-size:14px}
+.ip-explore:hover{background:var(--ip-soft)}
+.ip-explore svg{width:12px;height:12px;fill:none;stroke:var(--ip-muted);stroke-width:1.5;stroke-linecap:round}
+.ip-foot{display:flex;align-items:center;justify-content:space-between;height:40px;padding:0 12px;border-top:1px solid var(--ip-line);font-size:12.5px;color:var(--ip-muted)}
+.ip-count{display:flex;align-items:center;gap:8px}.ip-count i{width:6px;height:6px;border-radius:50%;background:#22c55e}
+.ip-keys kbd{display:inline-grid;place-items:center;min-width:17px;height:17px;margin:0 2px;padding:0 3px;border:1px solid var(--ip-line);border-radius:4px;font:inherit;font-size:10px}
+.ip :focus-visible{outline:2px solid var(--ip-blue);outline-offset:1px}
+@keyframes ip-ring{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(3.4);opacity:0}}
+@keyframes ip-swap{from{opacity:0;filter:blur(3px);transform:translateY(4px)}}
+@container ip (max-width:560px){.ip-body{grid-template-columns:1fr;height:auto}.ip-list{max-height:220px;border-right:0;border-bottom:1px solid var(--ip-line)}.ip-keys{display:none}}
+@container ip (max-width:400px){.ip-feats{display:none}}
+@media(prefers-reduced-motion:reduce){.ip *{animation:none!important;transition:none!important}}
+`;
 
 export default IntegrationPicker;

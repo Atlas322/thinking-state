@@ -527,15 +527,34 @@ const css = /* css */ `
 
 /** Working example; use the named TextArea export in your application. */
 export default function Demo() {
+  const [text, setText] = useState(
+    "We're Acme, a 40-person B2B company selling scheduling software to clinics in Germany and Austria.\nCommon terms: MRR, churn, onboarding call, practice (= customer).\nAnswer in English unless someone writes in German.",
+  );
+  const [note, setNote] = useState("");
   return (
-    <TextArea
-      label="Project brief"
-      placeholder="What would you like to build?"
-      defaultValue="A calmer workspace for our team."
-      maxLength={500}
-      counter
-      expandable
-      minRows={4}
-    />
+    <div className="text-area-example">
+      <style>{`.text-area-example{width:400px;max-width:100%;box-sizing:border-box;padding:20px;display:grid;gap:20px;border:1px solid #e9e9e9;background:white;border-radius:12px}:where(.dark,[data-theme=dark]) .text-area-example{background:#131315;border-color:#29292b}`}</style>
+      <TextArea
+        label="Company context"
+        hint="Added to every chat in this workspace."
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        maxLength={2000}
+        counter
+        minRows={3}
+        maxRows={8}
+        expandable
+      />
+      <TextArea
+        label="Note for the reviewer"
+        optional
+        placeholder="What should they look at first?"
+        hint="⌘ Enter to send"
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+        minRows={2}
+        onSubmitShortcut={() => setNote("")}
+      />
+    </div>
   );
 }

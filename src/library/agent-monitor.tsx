@@ -3,355 +3,384 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type AgentRunState = "idle" | "running" | "waiting" | "paused" | "finished" | "failed" | "cancelled";
+export type StepKind = "read" | "search" | "edit" | "run" | "think" | "web";
+export type AgentRunStep = {
   id: string;
-  title: string;
+  label: string;
+  kind?: StepKind;
+  icon?: React.ReactNode;
+  state: "queued" | "running" | "done" | "failed";
+  since?: number;
+  /** ms */
+  took?: number;
+  tool?: string;
   detail?: string;
-  status?: string;
-  value?: number;
+  output?: string;
+};
+
+export type AgentMonitorProps = {
+  state?: AgentRunState;
+  agent?: { name: string; role?: string; mark?: React.ReactNode };
+  steps?: AgentRunStep[];
+  current?: { label: string; kind?: StepKind; icon?: React.ReactNode };
+  since?: number;
+  until?: number;
+  pausedFor?: number;
   cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+  ask?: { title: string; command?: string; icon?: React.ReactNode };
+  outcome?: { added?: number; removed?: number; files?: number; note?: string };
+  error?: string;
+  onAllow?: () => void;
+  onDecline?: () => void;
+  onPause?: () => void;
+  onResume?: () => void;
+  onCancel?: () => void;
+  onRetry?: () => void;
+  onOpenLog?: () => void;
+  defaultFolded?: boolean;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const ico = (c: React.ReactNode) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    {c}
+  </svg>
+);
+export const monitorIcons = {
+  claude: ico(
+    <g stroke="#d97757" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M8 1.8v12.4M1.8 8h12.4M3.6 3.6l8.8 8.8M12.4 3.6l-8.8 8.8M5 2.4l6 11.2M11 2.4 5 13.6M2.4 5l11.2 6M13.6 5 2.4 11" />
+    </g>,
+  ),
+  notion: ico(
+    <>
+      <rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M5.3 11V5h1l3.4 6h1V5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+    </>,
+  ),
+  github: ico(
+    <path
+      d="M8 1.5a6.5 6.5 0 0 0-2 12.7c.3 0 .4-.1.4-.3v-1.2c-1.8.4-2.2-.8-2.2-.8-.3-.7-.7-.9-.7-.9-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.5.7 1.9.5 0-.4.2-.7.4-.9-1.4-.2-3-.7-3-3.2 0-.7.3-1.3.7-1.8-.1-.2-.3-.8 0-1.7 0 0 .6-.2 1.8.7a6 6 0 0 1 3.2 0c1.2-.9 1.8-.7 1.8-.7.3.9.1 1.5 0 1.7.4.5.7 1.1.7 1.8 0 2.5-1.5 3-3 3.2.3.2.5.6.5 1.2v1.8c0 .2.1.4.4.3A6.5 6.5 0 0 0 8 1.5Z"
+      fill="currentColor"
+    />,
+  ),
+  linear: ico(
+    <>
+      <circle cx="8" cy="8" r="6" fill="#5e6ad2" />
+      <path d="M3 9.5 6.5 13M2.4 7.4l6.2 6.2M3.2 5.3l7.5 7.5" stroke="#fff" strokeWidth=".9" />
+    </>,
+  ),
+  terminal: ico(
+    <>
+      <rect x="1.5" y="2.5" width="13" height="11" rx="2" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="m4.5 6 2 2-2 2M8 10.5h3" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </>,
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultSteps: AgentRunStep[] = [
+  { id: "s1", label: "Collected 14 issues", icon: monitorIcons.linear, state: "done", took: 1700, tool: "Linear", detail: "Pulled every issue closed since v3.1.", output: "project = WEB AND closed > v3.1" },
+  { id: "s2", label: "Compared 38 commits", icon: monitorIcons.github, state: "done", took: 2400, tool: "GitHub", detail: "Diffed main against the last release tag.", output: "git log v3.1.0..main --oneline" },
+  { id: "s3", label: "Drafted the release notes", icon: monitorIcons.notion, state: "done", took: 2800, tool: "Notion", detail: "Grouped the changes into features and fixes.", output: "Releases / v3.2" },
+  { id: "s4", label: "Building the preview", icon: monitorIcons.terminal, kind: "run", state: "running", tool: "Terminal", output: "pnpm build --filter web" },
+  { id: "s5", label: "Run the smoke tests", state: "queued" },
+  { id: "s6", label: "Publish the release", state: "queued" },
+];
+
+const clock = (ms: number) => {
+  const s = Math.max(0, Math.floor(ms / 1000));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+};
+const secs = (ms: number) => `${(ms / 1000).toFixed(1)}s`;
+
+const tags: Record<AgentRunState, string> = {
+  idle: "Idle",
+  running: "Running",
+  waiting: "Needs you",
+  paused: "Paused",
+  finished: "Finished",
+  failed: "Failed",
+  cancelled: "Cancelled",
+};
 
 export function AgentMonitor({
-  title = "Release agent",
-  items = [
-    {
-      id: "issues",
-      title: "Collected 14 issues",
-      status: "done",
-      detail: "1.7s · Linear",
-    },
-    {
-      id: "notes",
-      title: "Drafting release notes",
-      status: "running",
-      detail: "Notion",
-    },
-    {
-      id: "build",
-      title: "Build the preview",
-      status: "queued",
-      detail: "Terminal",
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [state, setState] = React.useState("running");
-  const [collapsed, setCollapsed] = React.useState(false);
-  const sec = UI.useClock(state === "running");
-  const action = (s: string) => {
-    setState(s);
-    onAction?.(s);
-  };
-  return (
-    <UI.Panel
-      title={title}
-      subtitle={`Assistant · ${sec}s · $${(0.12 + sec * 0.001).toFixed(3)}`}
-      className={className}
-      aside={
-        <UI.Button
-          aria-expanded={!collapsed}
-          onClick={() => setCollapsed((s) => !s)}
-        >
-          {collapsed ? "Expand" : "Collapse"}
-        </UI.Button>
-      }
-    >
-      {!collapsed && (
-        <>
-          <div className="st-actions">
-            <UI.Badge tone={state}>{state}</UI.Badge>
-            <span className="st-dot running" />
-          </div>
-          {items.map((x) => (
-            <UI.Detail
-              key={x.id}
-              title={
-                <span>
-                  {x.status === "done" ? "✓" : "◌"} {x.title}
-                </span>
-              }
-            >
-              <div className="st-code">
-                {x.detail}
-                <br />
-                State: {x.status}
-              </div>
-            </UI.Detail>
+  state: stateProp,
+  agent = { name: "Claude Opus 5.5", role: "Release agent · web-app v3.2", mark: monitorIcons.claude },
+  steps = defaultSteps,
+  current,
+  since,
+  until,
+  pausedFor = 0,
+  cost = 0.055,
+  ask,
+  outcome,
+  error,
+  onAllow,
+  onDecline,
+  onPause,
+  onResume,
+  onCancel,
+  onRetry,
+  onOpenLog = () => {},
+  defaultFolded = false,
+  className = "",
+}: AgentMonitorProps) {
+  const [innerState, setInnerState] = React.useState<AgentRunState>("running");
+  const state = stateProp ?? innerState;
+  const [folded, setFolded] = React.useState(defaultFolded);
+  const [open, setOpen] = React.useState<string | null>(null);
+  const [hot, setHot] = React.useState<string | null>(null);
+  const startRef = React.useRef(since ?? Date.now() - 9000);
+  const [now, setNow] = React.useState(() => Date.now());
+  const live = state === "running" || state === "waiting";
+  React.useEffect(() => {
+    if (!live) return;
+    const id = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, [live]);
+  const pausedAt = React.useRef<number | null>(null);
+  if (state === "paused" && pausedAt.current == null) pausedAt.current = now;
+  if (state !== "paused") pausedAt.current = null;
+  const elapsed = (until ?? pausedAt.current ?? now) - (since ?? startRef.current) - pausedFor;
+
+  const done = steps.filter((s) => s.state === "done" || s.state === "failed");
+  const running = steps.find((s) => s.state === "running");
+  const well = current ?? running;
+  const count = `${done.length + (running ? 1 : 0)}/${steps.length}`;
+  const totalTook = done.reduce((n, s) => n + (s.took ?? 0), 0) || 1;
+  const recent = done.slice().reverse();
+  const openStep = steps.find((s) => s.id === open);
+
+  const pause = () => (onPause ? onPause() : setInnerState("paused"));
+  const resume = () => (onResume ? onResume() : setInnerState("running"));
+  const cancel = () => (onCancel ? onCancel() : setInnerState("cancelled"));
+  const label = `${agent.name}, ${tags[state]}${well ? `, ${well.label}` : ""}`;
+
+  if (folded) {
+    const tools = done.filter((s) => s.icon);
+    return (
+      <button type="button" className={`am am-folded ${className}`} aria-label={label} onClick={() => setFolded(false)}>
+        <style>{css}</style>
+        <span className="am-mark">{agent.mark ?? agent.name[0]}</span>
+        <span className="am-stack">
+          {tools.map((s) => (
+            <span key={s.id} className="am-stack-i" title={`${s.label} · ${secs(s.took ?? 0)}`}>
+              {s.icon}
+            </span>
           ))}
-          <div className="st-code">npm run build && npm run test</div>
-        </>
-      )}
-      <div className="st-actions">
-        {state === "running" ? (
-          <>
-            <UI.Button onClick={() => action("paused")}>Pause</UI.Button>
-            <UI.Button onClick={() => action("cancelled")}>Cancel</UI.Button>
-            <UI.Button primary onClick={() => action("finished")}>
-              Finish demo
-            </UI.Button>
-          </>
-        ) : (
-          <UI.Button primary onClick={() => action("running")}>
-            {state === "paused" ? "Resume" : "Run again"}
-          </UI.Button>
+        </span>
+        <span className={`am-clock ${live ? "is-live" : ""}`}>{clock(elapsed)}</span>
+        <span className={`am-tag am-${state}`}>{tags[state]}</span>
+      </button>
+    );
+  }
+
+  return (
+    <section
+      className={`am ${className}`}
+      aria-label={label}
+      tabIndex={-1}
+      onKeyDown={(e) => {
+        if (state !== "waiting") return;
+        if (e.key === "Enter") onAllow?.();
+        if (e.key === "Escape") onDecline?.();
+      }}
+    >
+      <style>{css}</style>
+      <header className="am-head">
+        <span className="am-mark">{agent.mark ?? agent.name[0]}</span>
+        <div className="am-who">
+          <strong>{agent.name}</strong>
+          {agent.role && <span>{agent.role}</span>}
+        </div>
+        {cost != null && (
+          <span className={`am-cost ${live ? "is-live" : ""}`} aria-label={`${cost.toFixed(3)} dollars so far`}>
+            <span className="am-cur">$</span>
+            {cost.toFixed(3)}
+          </span>
         )}
+        <span className={`am-tag am-${state}`}>
+          <i />
+          {tags[state]}
+        </span>
+        <button type="button" className="am-fold" aria-label="Fold away" onClick={() => setFolded(true)}>
+          <svg viewBox="0 0 16 16"><path d="m5 6 3-3 3 3M5 10l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+      </header>
+
+      {state === "waiting" && ask ? (
+        <div className="am-ask">
+          <div className="am-ask-t">
+            <span className="am-ico">{ask.icon ?? monitorIcons.terminal}</span>
+            {ask.title}
+          </div>
+          {ask.command && <code>{ask.command}</code>}
+        </div>
+      ) : (
+        <div className="am-well">
+          <span className="am-well-i">{well?.icon ?? monitorIcons.terminal}</span>
+          <span className={`am-well-l ${state === "running" ? "is-live" : ""}`}>
+            {state === "finished"
+              ? `Finished in ${Math.round(elapsed / 1000)}s${outcome?.note ? ` · ${outcome.note}` : ""}`
+              : state === "failed"
+                ? error ?? "Failed"
+                : state === "cancelled"
+                  ? "Cancelled"
+                  : well?.label ?? "Waiting to start"}
+          </span>
+          <span className="am-well-c">{clock(elapsed)}</span>
+        </div>
+      )}
+
+      <div className="am-strip" role="img" aria-label={done.map((s) => `${s.label} ${secs(s.took ?? 0)}`).join(", ")}>
+        {done.map((s) => (
+          <span
+            key={s.id}
+            className={`${hot === s.id || open === s.id ? "is-hot" : ""} ${hot && hot !== s.id ? "is-dim" : ""} ${s.state === "failed" ? "is-fail" : ""}`}
+            style={{ flexGrow: (s.took ?? 0) / totalTook }}
+            onMouseEnter={() => setHot(s.id)}
+            onMouseLeave={() => setHot(null)}
+            onClick={() => setOpen(open === s.id ? null : s.id)}
+          />
+        ))}
+        {running && <span className={`am-run ${state === "paused" ? "is-paused" : ""}`} style={{ flexGrow: 0.42 }} />}
       </div>
-    </UI.Panel>
+
+      <ul className="am-list">
+        {recent.map((s) => (
+          <li key={s.id}>
+            <button
+              type="button"
+              aria-expanded={open === s.id}
+              className={`${hot === s.id || open === s.id ? "is-hot" : ""} ${hot && hot !== s.id ? "is-dim" : ""}`}
+              onMouseEnter={() => setHot(s.id)}
+              onMouseLeave={() => setHot(null)}
+              onClick={() => setOpen(open === s.id ? null : s.id)}
+            >
+              <span className="am-ico">{s.icon}</span>
+              <span className="am-l">{s.label}</span>
+              <span className="am-t">{secs(s.took ?? 0)}</span>
+            </button>
+            {open === s.id && openStep && (
+              <div className="am-info" role="dialog" aria-label={s.label}>
+                <div className="am-info-h">
+                  {s.tool && <strong>{s.tool}</strong>}
+                  <button type="button" aria-label="Close" onClick={() => setOpen(null)}>
+                    <svg viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+                  </button>
+                </div>
+                {s.detail && <p>{s.detail}</p>}
+                {s.output && <code>{s.output}</code>}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <footer className="am-foot">
+        {state === "waiting" ? (
+          <>
+            <button type="button" className="am-btn" onClick={onDecline}>
+              Decline <kbd>Esc</kbd>
+            </button>
+            <button type="button" className="am-btn is-primary" onClick={onAllow}>
+              Allow <kbd>⏎</kbd>
+            </button>
+          </>
+        ) : state === "running" || state === "paused" ? (
+          <>
+            <button type="button" className="am-btn" onClick={state === "paused" ? resume : pause}>
+              {state === "paused" ? (
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5Z" fill="currentColor" /></svg>
+              ) : (
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4v8M10 4v8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+              )}
+              {state === "paused" ? "Resume" : "Pause"}
+            </button>
+            <button type="button" className="am-btn" onClick={cancel}>
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 5 6 6m0-6-6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+              Cancel
+            </button>
+          </>
+        ) : state === "failed" && onRetry ? (
+          <button type="button" className="am-btn" onClick={onRetry}>
+            Try again
+          </button>
+        ) : (stateProp == null && state === "cancelled") ? (
+          <button type="button" className="am-btn" onClick={() => setInnerState("running")}>
+            Restart
+          </button>
+        ) : null}
+        <span className="am-count">{count}</span>
+        {onOpenLog && (
+          <button type="button" className="am-log" onClick={onOpenLog}>
+            Log
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 10.5 10.5 5.5M6.5 5.5h4v4" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+          </button>
+        )}
+      </footer>
+    </section>
   );
 }
+
+const css = `
+.am{--am-bg:#fff;--am-fg:#18181b;--am-muted:#71717a;--am-faint:#a1a1aa;--am-line:#ececef;--am-well:#f4f4f5;--am-bar:#e4e4e7;--am-blue:#2563eb;--am-blue-soft:#e8f0fe;width:100%;max-width:340px;background:var(--am-bg);color:var(--am-fg);border:1px solid var(--am-line);border-radius:12px;box-shadow:0 1px 3px #0000000f;font:400 13px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;outline:none}
+:where(.dark,[data-theme=dark]) .am{--am-bg:#1b1b1e;--am-fg:#ececef;--am-muted:#a1a1aa;--am-faint:#71717a;--am-line:#2e2e33;--am-well:#26262a;--am-bar:#3a3a40;--am-blue:#5b9bff;--am-blue-soft:#1d2a44;color-scheme:dark}
+.am *{box-sizing:border-box}.am button{font:inherit;color:inherit;cursor:pointer}
+.am-head{display:flex;align-items:center;gap:8px;padding:12px 12px 0 12px}
+.am-mark{display:grid;place-items:center;width:28px;height:28px;flex:none;border:1px solid var(--am-line);border-radius:8px}.am-mark svg{width:15px;height:15px}
+.am-who{display:flex;flex-direction:column;min-width:0;flex:1}
+.am-who strong{font-size:14px;font-weight:500;line-height:1.25}
+.am-who span{font-size:11px;color:var(--am-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.am-cost{font-size:11px;flex:none}.am-cur{color:var(--am-faint)}
+.am-cost.is-live,.am-clock.is-live,.am-well-l.is-live{background:linear-gradient(90deg,currentColor 35%,var(--am-faint) 50%,currentColor 65%) 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:am-shim 1.8s linear infinite}
+.am-tag{display:inline-flex;align-items:center;gap:5px;flex:none;height:18px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;background:var(--am-well);color:var(--am-muted)}
+.am-tag i{width:5px;height:5px;border-radius:1.5px;background:currentColor}
+.am-running{background:var(--am-blue-soft);color:var(--am-blue)}
+.am-waiting{background:#fdf1d6;color:#b45309}.am-finished{background:#dcfce7;color:#15803d}.am-failed{background:#fde2e2;color:#b91c1c}
+.am-fold{display:grid;place-items:center;width:20px;height:20px;flex:none;border:0;border-radius:5px;background:none;color:var(--am-faint)}
+.am-fold:hover{background:var(--am-well);color:var(--am-fg)}.am-fold svg{width:12px;height:12px}
+.am-well{display:flex;align-items:center;gap:10px;margin:10px 12px 0;padding:0 10px;height:34px;border-radius:8px;background:var(--am-well)}
+.am-well-i{display:grid;place-items:center;width:16px;height:16px;color:var(--am-muted)}.am-well-i svg{width:14px;height:14px}
+.am-well-l{font-size:12px;flex:1;min-width:0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--am-fg)}
+.am-well-c{font-size:12px;color:var(--am-muted)}
+.am-ask{margin:10px 12px 0;padding:9px 10px;border-radius:8px;background:#fdf6e7}
+.am-ask-t{display:flex;align-items:center;gap:8px;font-weight:500}
+.am-ask code,.am-info code{display:block;margin-top:6px;padding:5px 7px;border-radius:5px;background:var(--am-bg);font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.am-strip{display:flex;gap:2px;height:5px;margin:14px 12px 0}
+.am-strip span{min-width:10px;border-radius:2px;background:var(--am-bar);cursor:pointer;transition:background .15s,opacity .15s}
+.am-strip span.is-hot{background:#a1a1aa}.am-strip span.is-dim{opacity:.5}.am-strip span.is-fail{background:#f3a6a6}
+.am-strip .am-run{background:linear-gradient(90deg,#93c5fd,#bfdbfe 60%,#e0ecff) 0/200% 100%;animation:am-shim 1.6s linear infinite;cursor:default}
+.am-strip .am-run.is-paused{animation:none}
+.am-list{list-style:none;margin:10px 0 0;padding:0 6px;max-height:84px;overflow:auto}
+.am-list li>button{display:flex;align-items:center;gap:10px;width:100%;height:26px;padding:0 6px;border:0;border-radius:6px;background:none;text-align:left;transition:opacity .15s,background .15s}
+.am-list li>button.is-hot{background:var(--am-well)}.am-list li>button.is-dim{opacity:.55}
+.am-ico{display:grid;place-items:center;width:14px;height:14px;flex:none}.am-ico svg{width:13px;height:13px}
+.am-l{font-size:12px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--am-fg)}
+.am-t{font-size:12px;color:var(--am-faint)}
+.am-info{margin:2px 6px 6px;padding:8px 10px;border:1px solid var(--am-line);border-radius:8px;background:var(--am-bg);box-shadow:0 6px 18px #00000014;animation:am-drop .18s both}
+.am-info-h{display:flex;align-items:center;justify-content:space-between}.am-info-h strong{font-weight:500}
+.am-info-h button{display:grid;place-items:center;width:20px;height:20px;border:0;border-radius:5px;background:none;color:var(--am-muted)}.am-info-h svg{width:12px;height:12px}
+.am-info p{margin:4px 0 0;color:var(--am-muted)}
+.am-foot{display:flex;align-items:center;gap:6px;padding:10px 12px 12px}
+.am-btn{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px;border:0;border-radius:6px;background:var(--am-well);font-size:12px;font-weight:500}
+.am-btn svg{width:10px;height:10px;color:var(--am-faint)}
+.am-btn kbd{font:inherit;font-size:10px;color:var(--am-faint)}
+.am-btn.is-primary{background:var(--am-fg);color:var(--am-bg)}
+.am-count{margin-left:auto;font-size:12px;color:var(--am-faint)}
+.am-log{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 4px;border:0;background:none;font-size:13px;color:var(--am-muted)}.am-log svg{width:11px;height:11px}
+.am-folded{display:inline-flex;align-items:center;gap:8px;width:auto;max-width:none;padding:6px 8px 6px 6px}
+.am-folded .am-mark{width:22px;height:22px}
+.am-stack{display:flex}.am-stack-i{display:grid;place-items:center;width:20px;height:20px;margin-left:-5px;border-radius:50%;background:var(--am-bg);box-shadow:0 0 0 1px var(--am-line);opacity:.55}
+.am-stack-i:last-child{opacity:1}.am-stack-i svg{width:12px;height:12px}
+.am-clock{font-size:12px}
+.am :focus-visible,.am:focus-visible{outline:2px solid var(--am-blue);outline-offset:2px}
+@keyframes am-shim{to{background-position:-250% 0}}
+@keyframes am-drop{from{opacity:0;transform:translateY(-4px)}}
+@media(max-width:360px){.am-who span{display:none}}
+@media(prefers-reduced-motion:reduce){.am *{animation:none!important;transition:none!important}}
+`;
 
 export default AgentMonitor;

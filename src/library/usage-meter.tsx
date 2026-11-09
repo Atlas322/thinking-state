@@ -3,357 +3,293 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
+
+export type UsagePart = { label: string; value: number; color?: string };
+export type UsageLimit = { label: string; used: number; total?: number | null; unit?: string; decimals?: number };
+export type UsagePeriod = { id: string; label: string };
+export type UsageDay = { label: string; value: number | null };
+export type UsageState = "ok" | "warn" | "limit";
+
+export type UsageMeterProps = {
+  total?: number;
+  used?: UsagePart[];
+  limits?: UsageLimit[];
+  periods?: UsagePeriod[];
+  period?: string;
+  defaultPeriod?: string;
+  onPeriodChange?: (id: string) => void;
+  /** Days until reset, or a date. */
+  resetAt?: Date | string | number;
+  daily?: UsageDay[];
+  onUpgrade?: (state: UsageState) => void;
   title?: string;
-  items?: StudioItem[];
+  plan?: string;
+  unit?: string;
+  warnAt?: number;
+  upgradeLabel?: string;
+  topUpLabel?: string;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
+const tints = ["#3b7be8", "#7ea7ec", "#aac6f2", "#d4e3f8", "#d4d4d8"];
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const dailyBase = [180, 260, 250, 210, 330, 130, 150, 290, 290, 250, 320, 110, 140, 360, 380, 310, 260, 270, 170, 340, 230, 300];
+const dailyScale = 7420 / dailyBase.reduce((n, v) => n + v, 0);
+const dailyDemo: UsageDay[] = dailyBase.map((v, i) => ({ label: `Day ${i + 1}`, value: Math.round(v * dailyScale) }));
+for (let i = 0; i < 8; i++) dailyDemo.push({ label: `Day ${23 + i}`, value: null });
+
+const fmt = (n: number, d = 0) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+
+function daysUntil(r: UsageMeterProps["resetAt"]) {
+  if (r == null) return null;
+  if (typeof r === "number" && r < 1000) return r;
+  const ms = new Date(r).getTime() - Date.now();
+  return Math.max(0, Math.ceil(ms / 864e5));
+}
 
 export function UsageMeter({
-  title = "Workspace usage",
-  items = [
-    { id: "chat", title: "Chat", value: 3980, color: "#89a5df" },
-    { id: "search", title: "Search", value: 1640, color: "#b097cd" },
-    { id: "tools", title: "Tools", value: 890, color: "#7fbaa1" },
-  ],
   total = 10000,
-  onAction,
-  className,
-}: StudioProps & { total?: number }) {
-  const [period, setPeriod] = React.useState("This month");
-  const [notice, setNotice] = React.useState("");
-  const scale =
-    period === "This month" ? 1 : period === "Last month" ? 0.83 : 0.22;
-  const used = items.reduce((s, x) => s + (x.value ?? 0) * scale, 0);
+  used = [
+    { label: "Chat", value: 3980 },
+    { label: "Search", value: 1640 },
+    { label: "Image", value: 1120 },
+    { label: "API", value: 680 },
+  ],
+  limits = [
+    { label: "Seats", used: 8, total: 10 },
+    { label: "Storage", used: 3.2, total: 5, unit: "GB", decimals: 1 },
+    { label: "Projects", used: 12, total: null },
+  ],
+  periods = [
+    { id: "month", label: "This month" },
+    { id: "last", label: "Last month" },
+    { id: "7d", label: "7 days" },
+  ],
+  period,
+  defaultPeriod,
+  onPeriodChange,
+  resetAt = 9,
+  daily = dailyDemo,
+  onUpgrade,
+  title = "Acme AI",
+  plan = "Pro plan",
+  unit = "credits",
+  warnAt = 0.8,
+  upgradeLabel = "Upgrade",
+  topUpLabel = "Add credits",
+  className = "",
+}: UsageMeterProps) {
+  const [inner, setInner] = React.useState(defaultPeriod ?? periods[0]?.id);
+  const active = period ?? inner;
+  const [hover, setHover] = React.useState<number | null>(null);
+  const [day, setDay] = React.useState<number | null>(null);
+  const sum = used.reduce((n, p) => n + p.value, 0);
+  const share = total ? sum / total : 0;
+  const state: UsageState = share >= 1 ? "limit" : share >= warnAt ? "warn" : "ok";
+  const maxDay = Math.max(1, ...daily.map((d) => d.value ?? 0));
+  const real = daily.filter((d) => d.value != null) as { label: string; value: number }[];
+  const avg = real.length ? Math.round(real.reduce((n, d) => n + d.value, 0) / real.length) : 0;
+  const days = daysUntil(resetAt);
+  const pick = (id: string) => {
+    setInner(id);
+    onPeriodChange?.(id);
+  };
+
   return (
-    <UI.Panel title={title} subtitle="Pro plan" className={className}>
-      <UI.Tabs
-        values={["This month", "Last month", "7 days"]}
-        value={period}
-        onChange={setPeriod}
-      />
-      <div className="st-big">
-        {Math.round(used).toLocaleString()}{" "}
-        <span
-          style={{ fontSize: 14, color: "var(--st-muted)", letterSpacing: 0 }}
-        >
-          / {total.toLocaleString()}
+    <section className={`um um-${state} ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="um-head">
+        <div className="um-title">
+          <h3>{title}</h3>
+          <p>
+            {plan}
+            {plan && days != null && <span className="um-dot">·</span>}
+            {days != null && `Resets in ${days} day${days === 1 ? "" : "s"}`}
+          </p>
+        </div>
+        {periods.length > 0 && (
+          <div className="um-switch" role="radiogroup" aria-label="Period">
+            {periods.map((p, i) => (
+              <button
+                key={p.id}
+                type="button"
+                role="radio"
+                aria-checked={p.id === active}
+                tabIndex={p.id === active ? 0 : -1}
+                onClick={() => pick(p.id)}
+                onKeyDown={(e) => {
+                  const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+                  if (!d) return;
+                  e.preventDefault();
+                  const n = periods[(i + d + periods.length) % periods.length];
+                  pick(n.id);
+                  (e.currentTarget.parentElement?.children[(i + d + periods.length) % periods.length] as HTMLElement)?.focus();
+                }}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div className="um-big">
+        <strong>{fmt(sum)}</strong>
+        <span>
+          of {fmt(total)} {unit}
         </span>
+        <em className="um-share">{Math.round(share * 100)}%</em>
       </div>
       <div
-        style={{
-          display: "flex",
-          height: 10,
-          gap: 2,
-          background: "var(--st-line)",
-          borderRadius: 5,
-          overflow: "hidden",
-          margin: "18px 0",
-        }}
+        className="um-bar"
+        role="meter"
+        aria-valuemin={0}
+        aria-valuemax={total}
+        aria-valuenow={sum}
+        aria-valuetext={`${fmt(sum)} of ${fmt(total)} ${unit}`}
+        tabIndex={0}
+        onMouseLeave={() => setHover(null)}
       >
-        {items.map((x) => (
+        {used.map((p, i) => (
           <span
-            key={x.id}
-            style={{
-              width: `${(((x.value ?? 0) * scale) / Math.max(1, total)) * 100}%`,
-              background: x.color,
-            }}
+            key={p.label}
+            className={hover != null && hover !== i ? "is-dim" : ""}
+            style={{ width: `${(p.value / total) * 100}%`, background: p.color ?? tints[Math.min(i, tints.length - 1)] }}
+            onMouseEnter={() => setHover(i)}
           />
         ))}
       </div>
-      {items.map((x) => (
-        <UI.Row
-          key={x.id}
-          title={x.title}
-          icon={<span className="st-dot" style={{ background: x.color }} />}
-        >
-          <strong>{Math.round((x.value ?? 0) * scale).toLocaleString()}</strong>
-        </UI.Row>
-      ))}
-      <div className="st-columns">
-        <div className="st-tile">
-          <small>Seats</small>
-          <h4>8 / 10</h4>
-          <UI.Meter value={80} />
+
+      <ul className="um-legend">
+        {used.map((p, i) => (
+          <li
+            key={p.label}
+            className={hover === i ? "is-on" : hover != null ? "is-dim" : ""}
+            onMouseEnter={() => setHover(i)}
+            onMouseLeave={() => setHover(null)}
+          >
+            <i style={{ background: p.color ?? tints[Math.min(i, tints.length - 1)] }} />
+            <span className="um-l">{p.label}</span>
+            <span className="um-v">{fmt(p.value)}</span>
+            <span className="um-p">{sum ? Math.round((p.value / sum) * 100) : 0}%</span>
+          </li>
+        ))}
+      </ul>
+
+      {daily.length > 0 && (
+        <div className="um-daily">
+          <div className="um-daily-h">
+            <span>Per day</span>
+            <span>
+              {day != null && daily[day].value != null ? (
+                <>
+                  {daily[day].label} <b>{fmt(daily[day].value as number)}</b>
+                </>
+              ) : (
+                <>
+                  Avg <b>{fmt(avg)}</b> / day
+                </>
+              )}
+            </span>
+          </div>
+          <div className="um-spark" onMouseLeave={() => setDay(null)}>
+            {daily.map((d, i) => (
+              <span
+                key={i}
+                className={d.value == null ? "is-future" : day === i ? "is-on" : ""}
+                style={{ height: d.value == null ? 2 : `${Math.max(8, (d.value / maxDay) * 100)}%` }}
+                onMouseEnter={() => setDay(i)}
+              />
+            ))}
+          </div>
         </div>
-        <div className="st-tile">
-          <small>Storage</small>
-          <h4>3.2 / 5 GB</h4>
-          <UI.Meter value={64} />
+      )}
+
+      {limits.length > 0 && (
+        <div className="um-limits">
+          {limits.map((l) => {
+            const s = l.total ? l.used / l.total : 0;
+            const warn = l.total != null && s >= warnAt;
+            return (
+              <div key={l.label} className={`um-limit ${warn ? "is-warn" : ""} ${l.total == null ? "is-inf" : ""}`}>
+                <span className="um-limit-l">
+                  {l.label}
+                  {warn && <i className="um-warn-dot" aria-label="Running low" />}
+                </span>
+                <span className="um-limit-v">
+                  <b>{fmt(l.used, l.decimals ?? 0)}</b> of {l.total == null ? "∞" : fmt(l.total, 0)}
+                  {l.unit ? ` ${l.unit}` : ""}
+                </span>
+                <span
+                  className="um-track"
+                  role="meter"
+                  aria-valuemin={0}
+                  aria-valuemax={l.total ?? undefined}
+                  aria-valuenow={l.used}
+                  aria-label={l.label}
+                >
+                  {l.total != null && <span style={{ width: `${Math.min(100, s * 100)}%` }} />}
+                </span>
+              </div>
+            );
+          })}
         </div>
-      </div>
-      <div className="st-actions">
-        <UI.Button
-          primary
-          onClick={() => {
-            setNotice("Plan selection requested");
-            onAction?.("upgrade");
-          }}
-        >
-          Manage plan
-        </UI.Button>
-        <small>Usage resets at the start of your billing cycle</small>
-      </div>
-      <p className="st-status" role="status">
-        {notice}
-      </p>
-    </UI.Panel>
+      )}
+
+      <footer className="um-foot">
+        <span>
+          {state === "limit" ? "No credits left" : `${fmt(Math.max(0, total - sum))} ${unit} left`}
+        </span>
+        <button type="button" className={state === "ok" ? "" : "is-dark"} onClick={() => onUpgrade?.(state)}>
+          {state === "ok" ? upgradeLabel : topUpLabel}
+        </button>
+      </footer>
+    </section>
   );
 }
+
+const css = `
+.um{--um-bg:#fff;--um-fg:#18181b;--um-muted:#71717a;--um-faint:#a1a1aa;--um-line:#ececef;--um-chip:#f1f1f3;--um-track:#ececef;--um-spark:#e4e4e7;--um-amber:#e8a10c;--um-blue:#3b7be8;width:100%;max-width:460px;background:var(--um-bg);color:var(--um-fg);border:1px solid var(--um-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+:where(.dark,[data-theme=dark]) .um{--um-bg:#1b1b1e;--um-fg:#ececef;--um-muted:#a1a1aa;--um-faint:#71717a;--um-line:#2e2e33;--um-chip:#2a2a2f;--um-track:#2e2e33;--um-spark:#3a3a40;color-scheme:dark}
+.um *{box-sizing:border-box}.um button{font:inherit;color:inherit;cursor:pointer}
+.um-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 16px 0}
+.um-title h3{margin:0;font-size:15px;font-weight:500;letter-spacing:-.01em}
+.um-title p{margin:2px 0 0;font-size:12px;color:var(--um-muted)}.um-dot{margin:0 6px;color:var(--um-faint)}
+.um-switch{display:flex;gap:6px;flex:none}
+.um-switch button{height:28px;padding:0 10px;border:1px solid var(--um-line);border-radius:7px;background:var(--um-bg);font-size:13px;color:var(--um-muted);transition:background .15s,color .15s}
+.um-switch button[aria-checked=true]{background:var(--um-chip);border-color:var(--um-chip);color:var(--um-fg)}
+.um-big{display:flex;align-items:baseline;gap:8px;padding:14px 16px 0}
+.um-big strong{font-size:26px;font-weight:500;letter-spacing:-.02em}.um-big span{font-size:12px;color:var(--um-muted)}
+.um-share{margin-left:auto;font-style:normal;font-size:12px;padding:1px 6px;border-radius:5px;background:var(--um-chip);color:var(--um-muted)}
+.um-warn .um-share{background:#fdf1d6;color:#a16207}.um-limit .um-share{background:#fde2e2;color:#b91c1c}
+.um-bar{display:flex;gap:2px;height:8px;margin:12px 16px 0;border-radius:3px;background:var(--um-track);overflow:hidden;outline-offset:3px}
+.um-bar span{height:100%;transition:opacity .15s,width .4s}.um-bar .is-dim{opacity:.35}
+.um-legend{list-style:none;margin:14px 0 0;padding:0 16px}
+.um-legend li{display:grid;grid-template-columns:14px 1fr auto 46px;align-items:center;height:32px;transition:opacity .15s}
+.um-legend li.is-dim{opacity:.45}
+.um-legend i{width:7px;height:7px;border-radius:2px}
+.um-v{text-align:right}.um-p{text-align:right;font-size:12px;color:var(--um-faint)}
+.um-daily{padding:12px 16px 0}
+.um-daily-h{display:flex;justify-content:space-between;font-size:11px;color:var(--um-muted)}
+.um-daily-h>span:first-child{text-transform:uppercase;letter-spacing:.04em}.um-daily-h b{font-weight:500;color:var(--um-fg)}
+.um-spark{display:flex;align-items:flex-end;gap:2px;height:32px;margin-top:8px}
+.um-spark span{flex:1;background:var(--um-spark);border-radius:1px;transition:background .15s}
+.um-spark span.is-on{background:var(--um-blue)}.um-spark span.is-future{background:var(--um-track)}
+.um-limits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:14px 16px 0;padding:14px 0 18px;border-top:1px solid var(--um-line)}
+.um-limit{display:flex;flex-direction:column;gap:1px;min-width:0}
+.um-limit-l{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--um-muted)}
+.um-warn-dot{width:5px;height:5px;border-radius:50%;background:var(--um-amber)}
+.um-limit-v{font-size:14px;color:var(--um-muted);white-space:nowrap}.um-limit-v b{font-weight:400;color:var(--um-fg)}
+.um-track{display:block;height:4px;margin-top:6px;border-radius:2px;background:var(--um-track);overflow:hidden}
+.um-track span{display:block;height:100%;border-radius:2px;background:var(--um-blue)}
+.um-limit.is-warn .um-track span{background:var(--um-amber)}
+.um-limit.is-inf .um-track{background:repeating-linear-gradient(-45deg,var(--um-track) 0 4px,transparent 4px 7px)}
+.um-foot{display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 16px;border-top:1px solid var(--um-line);font-size:12px;color:var(--um-muted)}
+.um-foot button{height:32px;padding:0 11px;border:0;border-radius:8px;background:var(--um-bg);box-shadow:0 0 0 1px var(--um-line),0 1px 2px #0000000f;font-size:14px;font-weight:500;color:var(--um-fg);transition:background .2s,color .2s}
+.um-foot button.is-dark{background:var(--um-fg);color:var(--um-bg);box-shadow:none}
+.um :focus-visible{outline:2px solid var(--um-blue);outline-offset:2px}
+@media(max-width:400px){.um-head{flex-direction:column}.um-limits{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.um *{transition:none!important;animation:none!important}}
+`;
 
 export default UsageMeter;

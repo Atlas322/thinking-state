@@ -867,24 +867,47 @@ const css = /* css */ `
 import * as React from "react";
 
 /** Working example; use the named MessageActions export in your application. */
+const DEMO_VERSIONS = [
+  "Version 2.4 adds shared workspaces, cuts sync time in half and fixes the export bug on Windows.",
+  "Shared workspaces arrive in 2.4, sync is twice as fast, and exports on Windows work again.",
+];
+
 export default function Demo() {
-  const [note, setNote] = React.useState("");
+  const [version, setVersion] = React.useState(0);
+  const [writing, setWriting] = React.useState(false);
+  const text = DEMO_VERSIONS[version];
   return (
-    <div data-ui-message>
-      <p style={{ lineHeight: 1.8 }}>
-        Your weekly report is ready. Revenue grew 12.8%, and the team resolved
-        48 support requests.
-      </p>
-      <MessageActions
-        quiet={false}
-        text="Revenue grew 12.8%, and the team resolved 48 support requests."
-        versions={3}
-        onRegenerate={() => setNote("A fresh response was requested")}
-        onFeedback={(kind) =>
-          setNote(kind ? "Feedback saved" : "Feedback removed")
-        }
-      />
-      <small role="status">{note}</small>
+    <div style={{ width: 400, maxWidth: "100%", margin: "0 auto", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 12, background: "#fff", boxShadow: "0 1px 2px rgba(0,0,0,0.04)", fontSize: 13.5, lineHeight: 1.5, color: "#121213" }}>
+      <div style={{ padding: "16px 16px 0", display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ maxWidth: "85%", background: "#f4f4f5", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 10, padding: "6px 10px" }}>
+          Summarize the 2.4 release notes in one sentence.
+        </div>
+      </div>
+      <div data-ui-message>
+        <div style={{ padding: "12px 16px 14px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12.5, color: "#71717a", marginBottom: 4 }}>
+            <span style={{ width: 8, height: 8, borderRadius: 2, background: "#d97757" }} />
+            Sonnet 5.5
+          </div>
+          <MessageText version={version}>{text}</MessageText>
+        </div>
+        <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", padding: "6px 10px" }}>
+          <MessageActions
+            text={text}
+            versions={DEMO_VERSIONS}
+            version={version}
+            onVersionChange={setVersion}
+            regenerating={writing}
+            onRegenerate={() => {
+              setWriting(true);
+              window.setTimeout(() => {
+                setVersion((v) => (v + 1) % DEMO_VERSIONS.length);
+                setWriting(false);
+              }, 900);
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -552,18 +552,40 @@ const css = /* css */ `
 }
 `;
 
+const DEMO_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const tagDemoCss = `
+.tag-demo-card { width: 100%; max-width: 400px; margin: 0 auto; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; background: #fff; border-radius: 12px; box-shadow: 0 0 0 1px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05); }
+:where(.dark, [data-theme="dark"]) .tag-demo-card { background: #1c1c1e; box-shadow: 0 0 0 1px rgba(255,255,255,0.1); }
+`;
+
 /** Working example; use the named TagInput export in your application. */
 export default function Demo() {
+  const [emails, setEmails] = useState<string[]>(["maya@acme.com", "jonas@acme.com"]);
+  const [labels, setLabels] = useState<string[]>(["Onboarding", "Q4 launch"]);
   return (
-    <TagInput
-      label="Invite teammates"
-      defaultValue={["maya@example.com", "jonas@example.com"]}
-      placeholder="Add an email address"
-      hint="Press Enter or comma to add a person."
-      avatar
-      validate={(value) =>
-        /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value) || "Enter a valid email"
-      }
-    />
+    <div className="tag-demo-card">
+      <style>{tagDemoCss}</style>
+      <TagInput
+        label="Invite people"
+        value={emails}
+        onChange={setEmails}
+        placeholder="name@company.com"
+        hint="Paste a whole list – commas, spaces or new lines."
+        avatar
+        splitOnSpace
+        max={10}
+        normalize={(t) => t.trim().toLowerCase()}
+        validate={(t) => (DEMO_EMAIL.test(t) ? true : `“${t}” doesn't look like an email address.`)}
+        name="emails"
+      />
+      <TagInput
+        label="Labels"
+        optional
+        value={labels}
+        onChange={setLabels}
+        hint="Press Enter or a comma after each one."
+      />
+    </div>
   );
 }

@@ -722,31 +722,49 @@ const css = /* css */ `
 `;
 
 /** Working example; use the named FilterMenu export in your application. */
+const demoGroups: FilterGroup[] = [
+  {
+    id: "stage",
+    label: "Stage",
+    options: [
+      { id: "new", label: "New lead" },
+      { id: "qualified", label: "Qualified" },
+      { id: "proposal", label: "Proposal sent" },
+      { id: "negotiation", label: "Negotiation" },
+    ],
+  },
+  {
+    id: "size",
+    label: "Deal size",
+    chipPrefix: "Deal: ",
+    options: [
+      { id: "s", label: "Under $5k" },
+      { id: "m", label: "$5k–20k" },
+      { id: "l", label: "$20k–50k" },
+      { id: "xl", label: "Over $50k" },
+    ],
+  },
+  {
+    id: "region",
+    label: "Region",
+    options: [
+      { id: "dach", label: "DACH" },
+      { id: "nordics", label: "Nordics" },
+      { id: "uki", label: "UK & Ireland" },
+      { id: "na", label: "North America" },
+      { id: "apac", label: "APAC" },
+    ],
+  },
+];
+
 export default function Demo() {
   return (
-    <FilterMenu
-      groups={[
-        {
-          id: "status",
-          label: "Status",
-          options: [
-            { id: "open", label: "Open" },
-            { id: "progress", label: "In progress" },
-            { id: "done", label: "Done" },
-          ],
-        },
-        {
-          id: "priority",
-          label: "Priority",
-          chipPrefix: "Priority: ",
-          options: [
-            { id: "high", label: "High" },
-            { id: "medium", label: "Medium" },
-            { id: "low", label: "Low" },
-          ],
-        },
-      ]}
-      defaultValue={{ status: ["open"] }}
-    />
+    <div style={{ width: "100%", maxWidth: 440, margin: "0 auto" }}>
+      <FilterMenu
+        groups={demoGroups}
+        defaultValue={{ stage: ["qualified"], size: ["m"], region: ["dach"] }}
+        defaultOpen={["stage"]}
+      />
+    </div>
   );
 }

@@ -101,15 +101,15 @@ describe("Library behavior", () => {
   it("moves an approved inbox task into Running and switches layouts", () => {
     render(<AgentInbox />);
     fireEvent.click(
-      screen.getByRole("button", { name: /Migrate users table/ }),
+      screen.getByRole("button", { name: /Clean up CRM contacts/ }),
     );
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
+    fireEvent.click(screen.getByRole("button", { name: /Retry/ }));
     expect(
       screen.getByRole("region", { name: "Running" }).textContent,
-    ).toContain("Migrate users table");
+    ).toContain("Clean up CRM contacts");
     expect(
       screen.getByRole("region", { name: "Needs you" }).textContent,
-    ).not.toContain("Migrate users table");
+    ).not.toContain("Clean up CRM contacts");
     fireEvent.click(screen.getByRole("radio", { name: "List" }));
     expect(
       screen.getByRole("radio", { name: "List" }).getAttribute("aria-checked"),
@@ -117,90 +117,92 @@ describe("Library behavior", () => {
   });
   it("leaves task state to the consumer when an inbox callback is supplied", () => {
     const onApprove = vi.fn();
-    render(<AgentInbox onApprove={onApprove} />);
+    render(<AgentInbox onRetry={onApprove} />);
     fireEvent.click(
-      screen.getByRole("button", { name: /Migrate users table/ }),
+      screen.getByRole("button", { name: /Clean up CRM contacts/ }),
     );
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
+    fireEvent.click(screen.getByRole("button", { name: /Retry/ }));
     expect(onApprove).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "migrate", status: "waiting" }),
+      expect.objectContaining({ id: "crm", status: "failed" }),
     );
     expect(
       screen.getByRole("region", { name: "Needs you" }).textContent,
-    ).toContain("Migrate users table");
+    ).toContain("Clean up CRM contacts");
   });
   it("runs an editable plan in order and cleans up timers", () => {
     vi.useFakeTimers();
     const onAction = vi.fn();
-    const { unmount } = render(<AgentPlan onAction={onAction} />);
+    const { unmount } = render(<AgentPlan onAction={onAction} status="draft" />);
     fireEvent.change(screen.getByLabelText("New step"), {
       target: { value: "Check results" },
     });
     fireEvent.click(screen.getByRole("button", { name: "Add" }));
-    expect(screen.getByLabelText("Step 5")).toHaveProperty(
+    expect(screen.getByLabelText("Step 6")).toHaveProperty(
       "value",
       "Check results",
     );
     fireEvent.click(screen.getByRole("button", { name: "Run plan" }));
     expect(onAction).toHaveBeenCalledWith("run");
-    for (let i = 0; i < 5; i++) act(() => vi.advanceTimersByTime(1500));
+    for (let i = 0; i < 6; i++) act(() => vi.advanceTimersByTime(1500));
     expect(screen.getByText("✓ Plan complete")).toBeTruthy();
     unmount();
     expect(vi.getTimerCount()).toBe(0);
   });
   it("edits a table cell, calls its consumer, and supports undo", () => {
     const onChange = vi.fn();
-    render(<DataTable onChange={onChange} />);
-    fireEvent.change(screen.getByLabelText("Maya Chen name"), {
-      target: { value: "Maya Updated" },
+    render(<DataTable onRowsChange={onChange} />);
+    fireEvent.doubleClick(screen.getByText("Figma"));
+    fireEvent.change(screen.getByLabelText("Figma Tool"), {
+      target: { value: "Figma Updated" },
     });
-    expect(onChange.mock.calls.at(-1)?.[0][0].name).toBe("Maya Updated");
+    fireEvent.keyDown(screen.getByLabelText("Figma Tool"), { key: "Enter" });
+    expect(onChange.mock.calls.at(-1)?.[0][0].tool).toBe("Figma Updated");
     fireEvent.click(screen.getByRole("button", { name: /Undo/ }));
-    expect(screen.getByLabelText("Maya Chen name")).toHaveProperty(
-      "value",
-      "Maya Chen",
-    );
+    expect(screen.getByText("Figma")).toBeTruthy();
   });
   it("returns a custom decision to its consumer", () => {
-    const onAction = vi.fn();
-    render(<DecisionCard onAction={onAction} />);
-    fireEvent.change(screen.getByLabelText("Or write your own"), {
+    const onDecide = vi.fn();
+    render(<DecisionCard onDecide={onDecide} />);
+    fireEvent.change(screen.getByLabelText("Something else"), {
       target: { value: "Use a staged release" },
     });
-    fireEvent.click(screen.getByRole("button", { name: "Answer" }));
-    expect(onAction).toHaveBeenCalledWith("answer", {
-      id: "custom",
-      title: "Use a staged release",
+    fireEvent.click(screen.getByRole("button", { name: "Send answer" }));
+    expect(onDecide).toHaveBeenCalledWith("weekly", {
+      text: "Use a staged release",
     });
     expect(screen.getByText("Answer recorded")).toBeTruthy();
   });
   it("keeps locked actions out of autonomous execution", () => {
     render(<AutonomyDial />);
-    fireEvent.change(screen.getByLabelText("Autonomy level"), {
-      target: { value: "2" },
-    });
+    fireEvent.click(screen.getByRole("radio", { name: "Full auto" }));
     expect(
       screen.getByRole("button", { name: "Unlock Spend money" }),
     ).toBeTruthy();
-    expect(screen.getByText("ASKS YOU FIRST")).toBeTruthy();
+    expect(
+      screen.getByRole("region", { name: "Asks you first" }).textContent,
+    ).toContain("Spend money");
   });
   it("validates a stepper before returning completed data", () => {
     const onComplete = vi.fn();
     render(<StepperForm onComplete={onComplete} />);
-    fireEvent.click(screen.getByRole("button", { name: "Continue →" }));
-    expect(screen.getByRole("alert").textContent).toContain(
+    fireEvent.change(screen.getByLabelText("Workspace name"), {
+      target: { value: "" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
+    expect(screen.getAllByRole("alert")[0].textContent).toContain(
       "Give your workspace",
     );
     fireEvent.change(screen.getByLabelText("Workspace name"), {
       target: { value: "Lumen" },
     });
-    fireEvent.click(screen.getByRole("button", { name: "Continue →" }));
-    fireEvent.click(screen.getByRole("button", { name: "Continue →" }));
-    fireEvent.click(screen.getByRole("button", { name: "Continue →" }));
+    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
+    fireEvent.click(screen.getByRole("button", { name: "Skip" }));
+    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
     fireEvent.click(screen.getByRole("button", { name: "Create workspace" }));
     expect(onComplete).toHaveBeenCalledWith({
       name: "Lumen",
-      email: "",
+      url: "lumen",
+      invites: [],
       plan: "Pro",
     });
   });

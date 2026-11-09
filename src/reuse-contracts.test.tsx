@@ -206,7 +206,7 @@ describe("Ledger dependencies", () => {
 describe("File upload lifecycle", () => {
   const drop = (files: File[]) =>
     fireEvent.drop(
-      screen.getByRole("button", { name: /Drop your files here/ }),
+      screen.getByRole("button", { name: /Drop files here/ }),
       { dataTransfer: { files } },
     );
   it("validates extensions and size before calling the upload handler", async () => {

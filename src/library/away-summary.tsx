@@ -3,338 +3,298 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type AwayItemKind = "needs-you" | "failed" | "done";
+
+export type AwayItem = {
   id: string;
   title: string;
+  kind: AwayItemKind;
   detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  /** Button label; false leaves the row without one. */
+  action?: string | false;
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+
+export type AwaySummaryLabels = {
+  title: string;
+  needsYou: string;
+  failed: string;
+  done: string;
+  decide: string;
+  retry: string;
+  open: string;
+  showMore: (n: number) => string;
+  showLess: string;
+  gotIt: string;
+  divider: (summary: string) => string;
+};
+
+export type AwaySummaryProps = {
+  /** Minutes away, or when the person left. */
+  since?: Date | number | string;
+  now?: Date | number;
+  items?: AwayItem[];
+  limit?: number;
+  timeStyle?: "duration" | "clock";
+  collapsed?: boolean;
+  defaultCollapsed?: boolean;
+  onCollapsedChange?: (collapsed: boolean) => void;
+  onAction?: (id: string, item: AwayItem) => void | Promise<unknown>;
+  onDismiss?: () => void;
+  labels?: Partial<AwaySummaryLabels>;
+  /** Show the demo chat around the card. */
+  thread?: boolean;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
+const defaultLabels: AwaySummaryLabels = {
+  title: "While you were away",
+  needsYou: "need you",
+  failed: "failed",
+  done: "done",
+  decide: "Decide",
+  retry: "Retry",
+  open: "Open",
+  showMore: (n) => `Show ${n} more`,
+  showLess: "Show less",
+  gotIt: "Got it",
+  divider: (s) => s,
+};
+
+const defaultItems: AwayItem[] = [
+  { id: "ingest", title: "Ingest pipeline", kind: "done", detail: "Answered: Kafka · deploying to staging" },
+  { id: "report", title: "Weekly report", kind: "done", detail: "Answered: the whole team · sent" },
+  { id: "billing", title: "Billing sync", kind: "done", detail: "Retried · synced all 3,900 invoices" },
+  { id: "auth", title: "Auth refactor", kind: "done", detail: "Opened PR #482 · on staging" },
+  { id: "usage", title: "Usage page", kind: "done", detail: "Shipped to Northwind" },
+  { id: "docs", title: "Evalkit docs", kind: "done", detail: "Published 14 pages" },
+  { id: "load", title: "Load test", kind: "done", detail: "Passed at 20k events a minute" },
+  { id: "flaky", title: "Flaky tests", kind: "done", detail: "Quarantined 3 tests in checkout" },
+];
+
+const order: Record<AwayItemKind, number> = { "needs-you": 0, failed: 1, done: 2 };
+
+const fmtDuration = (ms: number) => {
+  const m = Math.max(0, Math.round(ms / 60000));
+  const h = Math.floor(m / 60);
+  return h ? `${h}h ${m % 60}m` : `${m}m`;
+};
+
+const Mark = ({ kind }: { kind: AwayItemKind }) => (
+  <span className={`aws-mark is-${kind}`} aria-hidden="true">
+    {kind === "done" ? (
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="m5 8.2 2 2 4-4.4" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    ) : kind === "failed" ? (
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="currentColor" /><path d="M8 4.5v4.2M8 11.2v.1" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" /></svg>
     ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" strokeWidth="1.6" /><circle cx="8" cy="8" r="2.4" fill="currentColor" /></svg>
+    )}
+  </span>
+);
 
 export function AwaySummary({
-  title = "While you were away",
-  items = [
-    {
-      id: "ingest",
-      title: "Ingest pipeline",
-      detail: "Which queue — Kafka or SQS?",
-      status: "waiting",
-    },
-    {
-      id: "billing",
-      title: "Billing sync",
-      detail: "Stripe rate limit reached",
-      status: "failed",
-    },
-    {
-      id: "auth",
-      title: "Auth refactor",
-      detail: "Opened pull request #482",
-      status: "done",
-    },
-  ],
+  since,
+  now,
+  items = defaultItems,
+  limit = 5,
+  timeStyle = "duration",
+  collapsed: collapsedProp,
+  defaultCollapsed = false,
+  onCollapsedChange,
   onAction,
-  className,
-}: StudioProps) {
-  const [dismissed, setDismissed] = React.useState(false);
-  const [handled, setHandled] = React.useState<string[]>([]);
-  return (
-    <UI.Panel
-      title={dismissed ? "You’re all caught up" : title}
-      subtitle={dismissed ? undefined : "Since your last visit · 2 hours ago"}
-      className={className}
-    >
-      {dismissed ? (
-        <UI.Button onClick={() => setDismissed(false)}>Show summary</UI.Button>
-      ) : (
-        <>
-          {items.map((x) => (
-            <UI.Row key={x.id} title={x.title} detail={x.detail}>
-              <UI.Badge tone={handled.includes(x.id) ? "green" : x.status}>
-                {handled.includes(x.id) ? "Handled" : x.status}
-              </UI.Badge>
-              <UI.Button
-                onClick={() => {
-                  setHandled((s) => [...s, x.id]);
-                  onAction?.(x.status === "failed" ? "retry" : "open", x);
-                }}
-              >
-                {x.status === "failed"
-                  ? "Retry"
-                  : x.status === "waiting"
-                    ? "Review"
-                    : "Open"}
-              </UI.Button>
-            </UI.Row>
+  onDismiss,
+  labels: labelsProp,
+  thread = true,
+  className = "",
+}: AwaySummaryProps) {
+  const L = { ...defaultLabels, ...labelsProp };
+  const [collapsedState, setCollapsed] = React.useState(defaultCollapsed);
+  const collapsed = collapsedProp ?? collapsedState;
+  const setC = (c: boolean) => {
+    setCollapsed(c);
+    onCollapsedChange?.(c);
+  };
+  const [expanded, setExpanded] = React.useState(false);
+  const [busy, setBusy] = React.useState<string | null>(null);
+  const [reply, setReply] = React.useState("");
+
+  const nowMs = now !== undefined ? +new Date(now) : Date.now();
+  const sinceMs = since === undefined ? nowMs - 134 * 60000 : typeof since === "number" && since < 1e7 ? nowMs - since * 60000 : +new Date(since);
+  const away =
+    timeStyle === "clock"
+      ? `since ${new Date(sinceMs).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`
+      : fmtDuration(nowMs - sinceMs);
+
+  const sorted = [...items].sort((a, b) => order[a.kind] - order[b.kind]);
+  const shown = expanded ? sorted : sorted.slice(0, limit);
+  const hidden = sorted.length - shown.length;
+  const counts = (["needs-you", "failed", "done"] as AwayItemKind[])
+    .map((k) => ({ k, n: items.filter((i) => i.kind === k).length }))
+    .filter((c) => c.n);
+  const countText = (k: AwayItemKind, n: number) => `${n} ${k === "needs-you" ? L.needsYou : k === "failed" ? L.failed : L.done}`;
+  const summary = counts.map((c) => countText(c.k, c.n)).join(" · ");
+
+  const run = async (item: AwayItem) => {
+    const r = onAction?.(item.id, item);
+    if (r && typeof (r as Promise<unknown>).then === "function") {
+      setBusy(item.id);
+      try {
+        await r;
+      } finally {
+        setBusy(null);
+      }
+    }
+  };
+
+  const card = collapsed ? (
+    <button type="button" className="aws-divider" aria-expanded={false} onClick={() => setC(false)}>
+      <span />
+      {L.divider(`${L.title} · ${away} · ${summary}`)}
+      <span />
+    </button>
+  ) : (
+    <section className="aws-card" aria-label={`${L.title}, ${away}`}>
+      <header className="aws-head">
+        <span className="aws-title">
+          {L.title}
+          <span className="aws-time"> · {away}</span>
+        </span>
+        <span className="aws-counts">
+          {counts.map((c) => (
+            <span key={c.k} className={`aws-count is-${c.k}`}>
+              <i />
+              {countText(c.k, c.n)}
+            </span>
           ))}
-          <div className="st-actions">
-            <UI.Button
-              primary
-              onClick={() => {
-                setDismissed(true);
-                onAction?.("dismiss");
-              }}
-            >
-              Got it
-            </UI.Button>
+        </span>
+      </header>
+      <ul className="aws-list">
+        {shown.map((item) => {
+          const label = item.action === false ? null : item.action ?? (item.kind === "needs-you" ? L.decide : item.kind === "failed" ? L.retry : L.open);
+          return (
+            <li key={item.id} className={`aws-row is-${item.kind}`}>
+              <Mark kind={item.kind} />
+              <span className="aws-sr">{item.kind}: </span>
+              <div className="aws-text">
+                <div className="aws-name">{item.title}</div>
+                {item.detail && <div className="aws-detail">{item.detail}</div>}
+              </div>
+              {label && (
+                <button
+                  type="button"
+                  className={`aws-act${item.kind === "needs-you" ? " is-primary" : ""}`}
+                  disabled={busy === item.id}
+                  aria-busy={busy === item.id}
+                  onClick={() => run(item)}
+                >
+                  {busy === item.id ? <span className="aws-spin" aria-hidden="true" /> : null}
+                  {label}
+                </button>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <footer className="aws-foot">
+        {(hidden > 0 || expanded) && sorted.length > limit ? (
+          <button type="button" className="aws-more" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>
+            {expanded ? L.showLess : L.showMore(hidden)}
+            <svg viewBox="0 0 16 16" aria-hidden="true" style={{ transform: expanded ? "rotate(180deg)" : undefined }}>
+              <path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>
+          </button>
+        ) : (
+          <span />
+        )}
+        <button
+          type="button"
+          className="aws-got"
+          onClick={() => {
+            setC(true);
+            onDismiss?.();
+          }}
+        >
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          {L.gotIt}
+        </button>
+      </footer>
+    </section>
+  );
+
+  return (
+    <div className={`aws ${className}`}>
+      <style>{css}</style>
+      {thread && (
+        <>
+          <div className="aws-user">Get ingest onto staging today – ping me if you need anything.</div>
+          <div className="aws-agent">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              {[0, 1, 2].flatMap((r) =>
+                [0, 1, 2].map((c) => (
+                  <rect key={`${r}${c}`} x={1.5 + c * 4.7} y={1.5 + r * 4.7} width="3.3" height="3.3" rx=".6" fill={(r + c) % 2 ? "#c4b5fd" : "#8b5cf6"} opacity={r === 1 && c === 1 ? 0 : 1} />
+                )),
+              )}
+            </svg>
+            On it. I’ll split it into tasks and keep going while you’re out.
           </div>
         </>
       )}
-    </UI.Panel>
+      {card}
+      {thread && (
+        <form
+          className="aws-reply"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setReply("");
+          }}
+        >
+          <input aria-label="Reply to the agent" placeholder="Reply to the agent…" value={reply} onChange={(e) => setReply(e.target.value)} />
+          <button type="submit" aria-label="Send" disabled={!reply.trim()}>
+            <svg viewBox="0 0 16 16"><path d="M8 12.5v-9M4.5 7 8 3.5 11.5 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+        </form>
+      )}
+    </div>
   );
 }
+
+const css = `
+.aws{--aws-bg:#fff;--aws-fg:#18181b;--aws-muted:#71717a;--aws-faint:#a1a1aa;--aws-line:#ececef;--aws-chip:#f1f1f3;--aws-blue:#3b82f6;--aws-red:#e5484d;--aws-amber:#f59e0b;display:flex;flex-direction:column;gap:14px;width:100%;max-width:600px;color:var(--aws-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .aws{--aws-bg:#1b1b1e;--aws-fg:#ececef;--aws-muted:#a1a1aa;--aws-faint:#71717a;--aws-line:#2e2e33;--aws-chip:#2a2a2f;--aws-blue:#5b9cff;--aws-red:#ff6b6f;color-scheme:dark}
+.aws *{box-sizing:border-box}.aws button,.aws input{font:inherit;color:inherit}.aws button{cursor:pointer}
+.aws-user{align-self:flex-end;max-width:85%;padding:6px 12px;border-radius:12px;background:var(--aws-chip);font-size:14px}
+.aws-agent{display:flex;align-items:center;gap:10px;font-size:14px;margin-top:-4px}.aws-agent svg{width:18px;height:18px;flex:none}
+.aws-card{background:var(--aws-bg);border:1px solid var(--aws-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;overflow:hidden;animation:aws-in .25s both}
+.aws-head{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--aws-line)}
+.aws-title{flex:1;min-width:0;font-weight:500}.aws-time{font-weight:400;color:var(--aws-muted)}
+.aws-counts{display:flex;gap:10px;font-size:12px;color:var(--aws-muted)}
+.aws-count{display:inline-flex;align-items:center;gap:6px}.aws-count i{width:6px;height:6px;border-radius:50%;background:var(--aws-blue)}
+.aws-count.is-failed i{background:var(--aws-red)}.aws-count.is-needs-you i{background:var(--aws-amber)}
+.aws-list{list-style:none;margin:0;padding:6px 0}
+.aws-row{display:flex;align-items:center;gap:10px;padding:7px 14px;animation:aws-in .25s both}
+.aws-mark{align-self:flex-start;display:grid;place-items:center;width:14px;height:14px;margin-top:3px;flex:none;color:var(--aws-blue)}
+.aws-mark svg{width:14px;height:14px}.aws-mark.is-failed{color:var(--aws-red)}.aws-mark.is-needs-you{color:var(--aws-amber)}
+.aws-text{flex:1;min-width:0}.aws-name{font-size:14px}.aws-detail{font-size:12px;color:var(--aws-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aws-act{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border:0;border-radius:6px;background:none;font-size:12.5px}
+.aws-act:hover{background:var(--aws-chip)}
+.aws-act.is-primary{background:var(--aws-fg);color:var(--aws-bg)}
+.aws-spin{width:11px;height:11px;border-radius:50%;border:1.5px solid currentColor;border-right-color:transparent;animation:aws-rot .7s linear infinite}
+.aws-foot{display:flex;align-items:center;justify-content:space-between;padding:6px 8px 6px 6px;border-top:1px solid var(--aws-line)}
+.aws-more,.aws-got{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 8px;border:0;border-radius:6px;background:none;font-size:12.5px;color:var(--aws-muted)}
+.aws-more{color:var(--aws-fg)}.aws-more:hover,.aws-got:hover{background:var(--aws-chip)}
+.aws-more svg,.aws-got svg{width:13px;height:13px;color:var(--aws-faint);transition:transform .2s}
+.aws-divider{display:flex;align-items:center;gap:12px;width:100%;padding:4px 0;border:0;background:none;font-size:12px;color:var(--aws-muted);white-space:nowrap}
+.aws-divider span{flex:1;height:1px;background:var(--aws-line)}.aws-divider:hover{color:var(--aws-fg)}
+.aws-reply{display:flex;align-items:center;gap:8px;height:48px;padding:0 10px 0 14px;border:1px solid var(--aws-line);border-radius:10px;background:var(--aws-bg);box-shadow:0 1px 2px #0000000a}
+.aws-reply input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:14px}.aws-reply input::placeholder{color:var(--aws-faint)}
+.aws-reply button{display:grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:var(--aws-fg);color:var(--aws-bg)}
+.aws-reply button:disabled{background:color-mix(in srgb,var(--aws-fg) 22%,transparent);cursor:default}.aws-reply svg{width:14px;height:14px}
+.aws-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.aws :focus-visible{outline:2px solid var(--aws-blue);outline-offset:2px}
+@keyframes aws-in{from{opacity:0;transform:translateY(3px)}}
+@keyframes aws-rot{to{transform:rotate(360deg)}}
+@media(max-width:480px){.aws-detail{white-space:normal}.aws-head{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.aws *{animation:none!important;transition:none!important}}
+`;
 
 export default AwaySummary;

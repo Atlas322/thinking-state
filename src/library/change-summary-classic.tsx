@@ -312,18 +312,16 @@ const css = /* css */ `
 /** Working example; use the named ChangeSummary export in your application. */
 export default function Demo() {
   return (
-    <ChangeSummary
-      period="This week"
-      changes={[
-        { label: "Revenue", change: "Up 12.8% to $42,800", tone: "good" },
-        { label: "Active users", change: "Up 8.2% to 12,450", tone: "good" },
-        {
-          label: "Churn",
-          change: "Down 0.4% to 2.1%",
-          tone: "good",
-          direction: "down",
-        },
-      ]}
-    />
+    <div style={{ width: "100%", maxWidth: 480, margin: "0 auto" }}>
+      <ChangeSummary
+        period="This week"
+        changes={[
+          { label: "Active users", change: "Up 6.1% to 18.2K", tone: "good" },
+          { label: "Activation", change: "Climbed to 41%, up 3 pts", tone: "good" },
+          { label: "Churn", change: "Down to 2.1% from 2.6%", tone: "good", direction: "down" },
+          { label: "Support tickets", change: "Up 14% to 312", tone: "bad", direction: "up" },
+        ]}
+      />
+    </div>
   );
 }

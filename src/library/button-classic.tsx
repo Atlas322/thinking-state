@@ -517,22 +517,52 @@ import * as React from "react";
 
 /** Working example; use the named Button export in your application. */
 export default function Demo() {
-  const [note, setNote] = React.useState("");
+  const [busy, setBusy] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+  const svg = (d: React.ReactNode) => (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>
+  );
+  const Trash = svg(<><path d="M3 6h18" /><path d="M8 6V4h8v2" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" /></>);
+  const Plus = svg(<path d="M12 5v14M5 12h14" />);
+  const Arrow = svg(<path d="M5 12h14M13 6l6 6-6 6" />);
+  const Dots = svg(<><circle cx="5" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /></>);
+  const Copy = svg(<><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>);
+  const Check = svg(<path d="M5 12l5 5L20 7" />);
+  const Upload = svg(<><path d="M12 15V3M7 8l5-5 5 5" /><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" /></>);
+  const group: React.CSSProperties = { display: "flex", flexDirection: "column", alignItems: "center", gap: 10 };
+  const row: React.CSSProperties = { display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", justifyContent: "center" };
+  const label: React.CSSProperties = { fontSize: 13, color: "#71717a", margin: 0 };
+  const copy = () => { setCopied(true); setTimeout(() => setCopied(false), 1500); };
+  const upload = () => { setBusy(true); setTimeout(() => setBusy(false), 2000); };
   return (
-    <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-      <Button onClick={() => setNote("Changes saved")}>Save changes</Button>
-      <Button variant="secondary" onClick={() => setNote("Draft saved")}>
-        Save draft
-      </Button>
-      <Button variant="ghost" onClick={() => setNote("Cancelled")}>
-        Cancel
-      </Button>
-      <Button variant="destructive" onClick={() => setNote("Item removed")}>
-        Delete
-      </Button>
-      <p role="status" style={{ width: "100%" }}>
-        {note}
-      </p>
+    <div style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
+      <div style={group}>
+        <p style={label}>Styles</p>
+        <div style={row}>
+          <Button>Save changes</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Button variant="destructive" icon={Trash}>Delete</Button>
+        </div>
+      </div>
+      <div style={group}>
+        <p style={label}>Icons and sizes</p>
+        <div style={row}>
+          <Button variant="secondary" size="sm" icon={Plus}>Add item</Button>
+          <Button iconRight={Arrow}>Continue</Button>
+          <Button variant="ghost" size="sm" icon={Dots} aria-label="More" />
+          <Button variant="secondary" size="lg">Large</Button>
+        </div>
+      </div>
+      <div style={group}>
+        <p style={label}>Feedback and states</p>
+        <div style={row}>
+          <Button variant="secondary" icon={copied ? Check : Copy} onClick={copy}>{copied ? "Copied" : "Copy link"}</Button>
+          <Button variant="secondary" icon={copied ? Check : Copy} aria-label="Copy" onClick={copy} />
+          <Button variant="secondary" icon={Upload} loading={busy} onClick={upload}>Upload file</Button>
+          <Button variant="secondary" disabled>Disabled</Button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -3,352 +3,295 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type AnswerSource = {
   id: string;
+  provider: string;
   title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  url?: string;
+  icon?: React.ReactNode;
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+
+/** Inline answer content: plain text, bold, or a citation chip. */
+export type AnswerPart =
+  | string
+  | { bold: string }
+  | { cite: string[] };
+
+export type AnswerBlock =
+  | { kind: "p"; parts: AnswerPart[] }
+  | { kind: "list"; items: AnswerPart[][] };
+
+export type AIAnswerProps = {
+  question?: string;
+  sources?: AnswerSource[];
+  answer?: AnswerBlock[];
+  related?: string[];
+  /** Seconds shown in the footer once streaming ends. */
+  answeredIn?: number;
+  /** Characters revealed per tick while streaming. */
+  speed?: number;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
+  onAction?: (
+    action: "copy" | "regenerate" | "like" | "dislike" | "related" | "source",
+    value?: string,
+  ) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const icons: Record<string, React.ReactNode> = {
+  Notion: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="13" height="13" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M5 11.5v-7h1.2l3.6 7H11v-7" fill="none" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+  ),
+  Slack: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="1" y="5" width="7" height="3" rx="1.5" fill="#36c5f0" />
+      <rect x="8" y="1" width="3" height="7" rx="1.5" fill="#2eb67d" />
+      <rect x="8" y="8" width="7" height="3" rx="1.5" fill="#ecb22e" />
+      <rect x="5" y="8" width="3" height="7" rx="1.5" fill="#e01e5a" />
+    </svg>
+  ),
+  Wikipedia: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="m2 4 3.5 8L8 6l2.5 6L14 4M1 4h3m2 0h4m2 0h3" fill="none" stroke="currentColor" strokeWidth="1" />
+    </svg>
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultSources: AnswerSource[] = [
+  { id: "notion", provider: "Notion", title: "Offsite plan – shortlist and budget" },
+  { id: "slack", provider: "Slack", title: "#team-offsite – who can make which dates" },
+  { id: "wiki", provider: "Wikipedia", title: "Alfama – the oldest district of Lisbon" },
+  { id: "airbnb", provider: "Airbnb", title: "Two linked houses in Alfama" },
+  { id: "hotel", provider: "Booking", title: "Hotel quote for 12 guests" },
+  { id: "flights", provider: "Google Flights", title: "Berlin and Munich to Lisbon" },
+];
+
+const defaultAnswer: AnswerBlock[] = [
+  {
+    kind: "p",
+    parts: [
+      { bold: "Alfama" },
+      " is the best fit for the 12-person offsite: walkable, quiet in the mornings and inside the budget you set ",
+      { cite: ["notion", "wiki"] },
+      ".",
+    ],
+  },
+  {
+    kind: "list",
+    items: [
+      [{ bold: "Dates:" }, " 14–16 May works for everyone, Jonas joins on day two ", { cite: ["slack"] }, "."],
+      [
+        { bold: "Stay:" },
+        " two linked houses in Alfama come to €2,880 for three nights, about 20% less than the hotel ",
+        { cite: ["airbnb", "hotel"] },
+        ".",
+      ],
+      [
+        { bold: "Flights:" },
+        " direct flights from Berlin and Munich land before 10:30, so day one can start after lunch ",
+        { cite: ["flights"] },
+        ".",
+      ],
+    ],
+  },
+  {
+    kind: "p",
+    parts: ["Book the houses this week – only one May weekend is still free ", { cite: ["airbnb"] }, "."],
+  },
+];
+
+const partLength = (p: AnswerPart) =>
+  typeof p === "string" ? p.length : "bold" in p ? p.bold.length : 1;
 
 export function AIAnswer({
-  title = "Where should we hold the team offsite?",
-  answer = "Lisbon is a strong choice for the team. It combines direct flights, walkable neighborhoods, and a good range of venues.\n\nChoose a quiet space in Príncipe Real for focused sessions, then leave the afternoons open for exploring together.\n\nA three-day agenda gives everyone enough time to work, connect, and recharge.",
+  question = "Where should we hold the team offsite in Lisbon?",
+  sources = defaultSources,
+  answer = defaultAnswer,
+  related = ["Compare the houses with the hotel", "Draft a three-day agenda"],
+  answeredIn = 5.9,
+  speed = 3,
+  className = "",
   onAction,
-  className,
-}: StudioProps & { answer?: string }) {
-  const [count, setCount] = React.useState(0);
-  const [feedback, setFeedback] = React.useState("");
-  const { copy, status } = UI.useCopy();
+}: AIAnswerProps) {
+  const total = React.useMemo(
+    () =>
+      answer.reduce(
+        (n, b) =>
+          n +
+          (b.kind === "p"
+            ? b.parts.reduce((m, p) => m + partLength(p), 0)
+            : b.items.reduce((m, it) => m + it.reduce((k, p) => k + partLength(p), 0), 0)),
+        0,
+      ),
+    [answer],
+  );
+  const [shown, setShown] = React.useState(0);
+  const [feedback, setFeedback] = React.useState<"like" | "dislike" | null>(null);
+  const [copied, setCopied] = React.useState(false);
+  const done = shown >= total;
+
   React.useEffect(() => {
-    if (count >= answer.length) return;
-    const id = window.setTimeout(
-      () => setCount((n) => Math.min(answer.length, n + 5)),
-      18,
-    );
+    if (done) return;
+    const id = window.setTimeout(() => setShown((n) => Math.min(total, n + speed)), 16);
     return () => window.clearTimeout(id);
-  }, [count, answer]);
+  }, [shown, total, speed, done]);
+
+  const byId = (id: string) => sources.find((s) => s.id === id);
+  const visible = sources.slice(0, 3);
+  const extra = sources.length - visible.length;
+
+  let budget = shown;
+  const renderParts = (parts: AnswerPart[]) =>
+    parts.map((p, i) => {
+      if (budget <= 0) return null;
+      if (typeof p === "string" || "bold" in p) {
+        const text = typeof p === "string" ? p : p.bold;
+        const slice = text.slice(0, budget);
+        budget -= text.length;
+        return typeof p === "string" ? <React.Fragment key={i}>{slice}</React.Fragment> : <strong key={i}>{slice}</strong>;
+      }
+      budget -= 1;
+      const first = byId(p.cite[0]);
+      return (
+        <button
+          key={i}
+          type="button"
+          className="aa-cite"
+          title={p.cite.map((c) => byId(c)?.title).filter(Boolean).join("\n")}
+          onClick={() => onAction?.("source", p.cite[0])}
+        >
+          {first?.provider ?? p.cite[0]}
+          {p.cite.length > 1 && ` +${p.cite.length - 1}`}
+        </button>
+      );
+    });
+
+  const plain = answer
+    .map((b) =>
+      (b.kind === "p" ? [b.parts] : b.items)
+        .map((ps) => ps.map((p) => (typeof p === "string" ? p : "bold" in p ? p.bold : "")).join(""))
+        .join("\n"),
+    )
+    .join("\n\n");
+
   return (
-    <UI.Panel className={className}>
-      <small style={{ marginTop: 14 }}>YOU ASKED</small>
-      <h3>{title}</h3>
-      <div className="st-columns">
-        <a
-          className="st-tile"
-          href="https://www.visitlisboa.com/"
-          target="_blank"
-          rel="noreferrer"
-          style={{ textDecoration: "none" }}
-        >
-          <small>1 · Visit Lisbon</small>
-          <h4>Plan your stay</h4>
-          <p>Neighborhoods, venues and travel information.</p>
-        </a>
-        <a
-          className="st-tile"
-          href="https://en.wikipedia.org/wiki/Lisbon"
-          target="_blank"
-          rel="noreferrer"
-          style={{ textDecoration: "none" }}
-        >
-          <small>2 · Wikipedia</small>
-          <h4>About Lisbon</h4>
-          <p>City overview and useful background.</p>
-        </a>
-      </div>
-      <div className="st-prose" aria-busy={count < answer.length}>
-        {answer.slice(0, count)}
-        {count < answer.length && (
-          <span style={{ color: "var(--st-accent)" }}>▍</span>
+    <section className={`aa ${className}`}>
+      <style>{css}</style>
+      <div className="aa-body">
+        <h3 className="aa-q">{question}</h3>
+        <div className="aa-sources">
+          {visible.map((s, i) => (
+            <button key={s.id} type="button" className="aa-src" onClick={() => onAction?.("source", s.id)}>
+              <span className="aa-src-top">
+                <span className="aa-ico">{s.icon ?? icons[s.provider] ?? s.provider[0]}</span>
+                {s.provider}
+                <span className="aa-num">{i + 1}</span>
+              </span>
+              <span className="aa-src-title">{s.title}</span>
+            </button>
+          ))}
+          {extra > 0 && (
+            <button type="button" className="aa-src aa-more">
+              <strong>+{extra}</strong>
+              <span>more</span>
+            </button>
+          )}
+        </div>
+        <div className="aa-label">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M6 1.5 7.2 5 10.5 6 7.2 7 6 10.5 4.8 7 1.5 6 4.8 5ZM12 9l.7 1.8 1.8.7-1.8.7L12 14l-.7-1.8-1.8-.7 1.8-.7Z" fill="currentColor" />
+          </svg>
+          Answer
+        </div>
+        <div className="aa-prose" aria-busy={!done}>
+          {answer.map((b, i) =>
+            b.kind === "p" ? (
+              budget > 0 ? <p key={i}>{renderParts(b.parts)}</p> : null
+            ) : budget > 0 ? (
+              <ul key={i}>
+                {b.items.map((it, j) => (budget > 0 ? <li key={j}>{renderParts(it)}</li> : null))}
+              </ul>
+            ) : null,
+          )}
+        </div>
+        {done && related.length > 0 && (
+          <div className="aa-related">
+            <div className="aa-related-h">Related</div>
+            {related.map((r) => (
+              <button key={r} type="button" onClick={() => onAction?.("related", r)}>
+                {r}
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                </svg>
+              </button>
+            ))}
+          </div>
         )}
       </div>
-      <div className="st-actions">
-        <UI.Button onClick={() => copy(answer)}>
-          {status === "Copied" ? "Copied ✓" : "Copy"}
-        </UI.Button>
-        <UI.Button
+      <footer className="aa-foot">
+        <button
+          type="button"
+          aria-label={copied ? "Copied" : "Copy"}
           onClick={() => {
-            setCount(0);
-            onAction?.("regenerate");
+            navigator.clipboard?.writeText(plain).catch(() => {});
+            setCopied(true);
+            window.setTimeout(() => setCopied(false), 1400);
+            onAction?.("copy");
           }}
         >
-          ↻ Regenerate
-        </UI.Button>
-        <UI.Button
-          aria-pressed={feedback === "up"}
-          onClick={() => {
-            setFeedback("up");
-            onAction?.("positive-feedback");
-          }}
-        >
-          Helpful
-        </UI.Button>
-        <UI.Button
-          aria-pressed={feedback === "down"}
-          onClick={() => {
-            setFeedback("down");
-            onAction?.("negative-feedback");
-          }}
-        >
-          Not helpful
-        </UI.Button>
-      </div>
-      {feedback && <p className="st-status">Thanks for your feedback.</p>}
-    </UI.Panel>
+          {copied ? (
+            <svg viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+          ) : (
+            <svg viewBox="0 0 16 16"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" fill="currentColor" /><path d="M3 10.5V3.5A1 1 0 0 1 4 2.5h6.5" fill="none" stroke="currentColor" strokeWidth="1.4" /></svg>
+          )}
+        </button>
+        <button type="button" aria-label="Regenerate" onClick={() => { setShown(0); setFeedback(null); onAction?.("regenerate"); }}>
+          <svg viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v2.5h-2.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+        </button>
+        <button type="button" aria-label="Good answer" aria-pressed={feedback === "like"} onClick={() => { setFeedback("like"); onAction?.("like"); }}>
+          <svg viewBox="0 0 16 16"><path d="M2 7h2.5v7H2zM6 14h5.5a1.5 1.5 0 0 0 1.5-1.2l.9-4.3A1.5 1.5 0 0 0 12.4 6.7H9.5l.5-2.6A1.4 1.4 0 0 0 7.4 3.2L6 6.5Z" fill="currentColor" /></svg>
+        </button>
+        <button type="button" aria-label="Bad answer" aria-pressed={feedback === "dislike"} onClick={() => { setFeedback("dislike"); onAction?.("dislike"); }}>
+          <svg viewBox="0 0 16 16" style={{ transform: "rotate(180deg)" }}><path d="M2 7h2.5v7H2zM6 14h5.5a1.5 1.5 0 0 0 1.5-1.2l.9-4.3A1.5 1.5 0 0 0 12.4 6.7H9.5l.5-2.6A1.4 1.4 0 0 0 7.4 3.2L6 6.5Z" fill="currentColor" /></svg>
+        </button>
+        <span className="aa-time">{done ? `Answered in ${answeredIn}s` : "Answering…"}</span>
+      </footer>
+    </section>
   );
 }
+
+const css = `
+.aa{--aa-bg:#fff;--aa-fg:#18181b;--aa-muted:#71717a;--aa-faint:#a1a1aa;--aa-line:#e9e9ec;--aa-chip:#f1f1f3;--aa-accent:#4f7cf0;width:100%;max-width:730px;background:var(--aa-bg);color:var(--aa-fg);border:1px solid var(--aa-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.6 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .aa{--aa-bg:#1b1b1e;--aa-fg:#ececef;--aa-muted:#a1a1aa;--aa-faint:#71717a;--aa-line:#2e2e33;--aa-chip:#2a2a2f;--aa-accent:#7c9cff;color-scheme:dark}
+.aa *{box-sizing:border-box}.aa button{font:inherit;color:inherit;cursor:pointer}
+.aa-body{padding:22px 26px 6px}
+.aa-q{margin:0 0 14px;font-size:16px;font-weight:500;letter-spacing:-.01em}
+.aa-sources{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;margin-bottom:20px}
+.aa-src{display:flex;flex-direction:column;gap:6px;text-align:left;padding:10px 12px;border:1px solid var(--aa-line);border-radius:10px;background:var(--aa-bg);box-shadow:0 1px 2px #00000008;transition:border-color .15s,transform .15s;min-width:0}
+.aa-src:hover{border-color:color-mix(in srgb,var(--aa-fg) 22%,transparent)}
+.aa-src-top{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--aa-muted)}
+.aa-ico{display:grid;place-items:center;width:14px;height:14px;flex:none;font-size:10px;font-weight:600}.aa-ico svg{width:14px;height:14px}
+.aa-num{margin-left:auto;font-size:12px;color:var(--aa-faint)}
+.aa-src-title{font-size:14px;font-weight:500;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.aa-more{justify-content:space-between;min-width:66px}.aa-more strong{font-weight:500}.aa-more span{color:var(--aa-muted)}
+.aa-label{display:flex;align-items:center;gap:8px;color:var(--aa-muted);margin-bottom:6px}.aa-label svg{width:17px;height:17px;color:var(--aa-accent)}
+.aa-prose p{margin:0 0 10px}.aa-prose ul{margin:0 0 10px;padding-left:24px}.aa-prose li{margin:0 0 6px}.aa-prose li::marker{color:var(--aa-faint)}.aa-prose strong{font-weight:600}
+.aa-cite{display:inline-flex;align-items:center;margin-left:4px;padding:0 7px;height:22px;vertical-align:1px;border:0;border-radius:6px;background:var(--aa-chip);font-size:12px!important;color:var(--aa-muted)!important;transition:background .15s}
+.aa-cite:hover{background:color-mix(in srgb,var(--aa-fg) 12%,transparent)}
+.aa-related{margin:16px 0 8px}.aa-related-h{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--aa-muted);padding-bottom:6px;border-bottom:1px solid var(--aa-line)}
+.aa-related button{display:flex;width:100%;align-items:center;justify-content:space-between;padding:10px 0;border:0;border-bottom:1px solid var(--aa-line);background:none;text-align:left;animation:aa-in .3s both}
+.aa-related button:last-child{border-bottom:0}.aa-related svg{width:16px;height:16px;color:var(--aa-faint)}.aa-related button:hover svg{color:var(--aa-fg)}
+.aa-foot{display:flex;align-items:center;gap:4px;padding:10px 14px;border-top:1px solid var(--aa-line)}
+.aa-foot button{display:grid;place-items:center;width:30px;height:30px;border:0;border-radius:7px;background:none;color:var(--aa-muted)}
+.aa-foot button:hover,.aa-foot button[aria-pressed=true]{background:var(--aa-chip);color:var(--aa-fg)}.aa-foot svg{width:16px;height:16px}
+.aa-time{margin-left:auto;font-size:13px;color:var(--aa-muted)}
+.aa :focus-visible{outline:2px solid var(--aa-accent);outline-offset:2px}
+@keyframes aa-in{from{opacity:0;transform:translateY(4px)}}
+@media(max-width:560px){.aa-body{padding:18px 16px 4px}.aa-sources{grid-template-columns:repeat(2,minmax(0,1fr))}.aa-more{display:none}}
+@media(prefers-reduced-motion:reduce){.aa *{animation:none!important;transition:none!important}}
+`;
 
 export default AIAnswer;

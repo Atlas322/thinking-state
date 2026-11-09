@@ -3,374 +3,313 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type RadarAgent = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  name: string;
+  model?: string;
+  branch?: string;
+  icon?: "claude" | "openai" | "grok" | React.ReactNode;
+  working?: boolean;
 };
-export type StudioProps = {
+
+export type RadarEdit = {
+  agent: string;
+  lines: [number, number];
+  writing?: boolean;
+  /** For conflicts: this agent's way, in one sentence. */
+  way?: string;
+};
+
+export type RadarFile = { path: string; edits: RadarEdit[] };
+
+export type ConflictRadarProps = {
+  agents?: RadarAgent[];
+  files?: RadarFile[];
   title?: string;
-  items?: StudioItem[];
+  resolved?: Record<string, string>;
+  onResolve?: (path: string, agentId: string) => void;
+  onMerge?: () => void;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
+const Claude = (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M5 2.2l6 11.6M11 2.2 5 13.8M2.2 5l11.6 6M13.8 5 2.2 11" stroke="#d97757" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+const OpenAI = (
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.1">
+    <path d="M6.2 2.3a3 3 0 0 1 4.9 1.6 3 3 0 0 1 2.5 4.4 3 3 0 0 1-2.4 4.5 3 3 0 0 1-5 .9 3 3 0 0 1-3.7-3.1 3 3 0 0 1-.3-5.3 3 3 0 0 1 4-3Z" />
+    <path d="M6 4.8v5.4l4.5 2.4M10 3.6 5.4 6.2v5.2M3 6.2l4.6 2.6 4.6-2.6M13 9.8 8.4 7.2 3.8 9.8" />
+  </svg>
+);
+const Grok = (
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
+    <path d="M11.5 5.2A4.2 4.2 0 1 0 12 9.5M12.8 3.2 6 10" />
+  </svg>
+);
+const iconOf = (i: RadarAgent["icon"]) => (i === "openai" ? OpenAI : i === "grok" ? Grok : i === "claude" || !i ? Claude : i);
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultAgents: RadarAgent[] = [
+  { id: "checkout", name: "Checkout", model: "Opus 5.5", branch: "fix/flaky-checkout", icon: "claude" },
+  { id: "stripe", name: "Stripe v2", model: "GPT-5", branch: "chore/stripe-v2", icon: "openai", working: true },
+  { id: "retries", name: "Retries", model: "Grok 4", branch: "feat/payment-retry", icon: "grok", working: true },
+];
+const defaultFiles: RadarFile[] = [
+  {
+    path: "src/checkout/payment.ts",
+    edits: [
+      { agent: "checkout", lines: [40, 68], way: "Waits for the charge to settle before the receipt renders" },
+      { agent: "stripe", lines: [52, 80], writing: true, way: "Moves to PaymentIntents.confirm with an idempotency key" },
+      { agent: "retries", lines: [44, 58], writing: true, way: "Wraps the charge in three retries with backoff" },
+    ],
+  },
+  { path: "src/checkout/receipt.tsx", edits: [{ agent: "checkout", lines: [12, 30] }] },
+  {
+    path: "tests/checkout.spec.ts",
+    edits: [
+      { agent: "checkout", lines: [8, 40], way: "Polls the order until it is paid, then checks the receipt" },
+      { agent: "retries", lines: [20, 52], way: "Adds a failing-card case and expects three attempts" },
+    ],
+  },
+  { path: "src/lib/stripe.ts", edits: [{ agent: "stripe", lines: [1, 64], writing: true }] },
+  { path: "src/lib/retry.ts", edits: [{ agent: "retries", lines: [1, 40] }] },
+  { path: "package.json", edits: [{ agent: "stripe", lines: [14, 16] }] },
+];
+
+const isConflict = (f: RadarFile) => f.edits.filter((e) => e.way).length > 1;
 
 export function ConflictRadar({
-  title = "Conflict radar",
-  items = [
-    {
-      id: "pricing",
-      title: "src/pricing.ts",
-      detail: "Both agents changed lines 28–42",
-      status: "conflict",
-      tags: ["Use monthly totals", "Use annual totals"],
-    },
-    {
-      id: "checkout",
-      title: "src/checkout.ts",
-      detail: "No overlapping changes",
-      status: "clear",
-    },
-    {
-      id: "plans",
-      title: "src/plans.tsx",
-      detail: "Both agents changed the plan label",
-      status: "conflict",
-      tags: ["Keep “Pro”", "Rename to “Team”"],
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [choices, setChoices] = React.useState<Record<string, string>>({});
-  const [merged, setMerged] = React.useState(false);
+  agents = defaultAgents,
+  files = defaultFiles,
+  title = "Parallel work",
+  resolved: resolvedProp,
+  onResolve,
+  onMerge,
+  className = "",
+}: ConflictRadarProps) {
+  const [own, setOwn] = React.useState<Record<string, string>>({});
+  const resolved = resolvedProp ?? own;
+  const conflicts = files.filter(isConflict);
+  const firstOpen = conflicts.find((f) => !resolved[f.path]) ?? conflicts[0];
+  const [focus, setFocus] = React.useState<string | undefined>(firstOpen?.path);
+  const open = conflicts.filter((f) => !resolved[f.path]).length;
+  const allDone = open === 0 && agents.every((a) => !a.working);
+  const current = files.find((f) => f.path === focus && isConflict(f));
+
+  const pick = (path: string, agent: string) => {
+    if (!resolvedProp) setOwn((r) => ({ ...r, [path]: agent }));
+    onResolve?.(path, agent);
+    const next = conflicts.find((f) => f.path !== path && !resolved[f.path]);
+    if (next) window.setTimeout(() => setFocus(next.path), 500);
+  };
+
+  const split = (p: string) => {
+    const i = p.lastIndexOf("/");
+    return i < 0 ? ["", p] : [p.slice(0, i + 1), p.slice(i + 1)];
+  };
+  const maxLine = (f: RadarFile) => Math.max(80, ...f.edits.map((e) => e.lines[1]));
+  const agentStats = (id: string) => {
+    const touched = files.filter((f) => f.edits.some((e) => e.agent === id));
+    const c = touched.filter((f) => isConflict(f) && !resolved[f.path] && f.edits.some((e) => e.agent === id && e.way)).length;
+    const k = touched.filter((f) => resolved[f.path] === id).length;
+    return `${touched.length} files · ${c} ${c === 1 ? "conflict" : "conflicts"} · ${k} kept`;
+  };
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="Two agents working on separate branches"
-      className={className}
-    >
-      <table className="st-table">
+    <section className={`ui-cr cr ${className}`}>
+      <style>{css}</style>
+      <header className="cr-bar">
+        <svg className="cr-logo" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="8" cy="8" r="5.8" fill="none" stroke="currentColor" strokeWidth="1.3" />
+          <circle cx="8" cy="8" r="2.6" fill="none" stroke="currentColor" strokeWidth="1.3" />
+          <path d="m8 8 5-5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        </svg>
+        <strong>{title}</strong>
+        {open > 0 ? (
+          <span className="cr-pill">
+            {open} {open === 1 ? "conflict" : "conflicts"} to settle
+          </span>
+        ) : (
+          <button type="button" className="cr-merge" disabled={!allDone} onClick={onMerge}>
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M5 3v10M5 6c0 3 6 2 6 6M11 12v1" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+              <circle cx="5" cy="3" r="1.4" fill="currentColor" />
+            </svg>
+            {allDone ? "Merge" : "Waiting for agents"}
+          </button>
+        )}
+      </header>
+
+      <table className="cr-grid">
         <thead>
           <tr>
-            <th>File</th>
-            <th>Coder A</th>
-            <th>Coder B</th>
+            <th className="cr-legend">
+              <span className="cr-sr">File</span>
+              <span><i className="cr-k-changed" />Changed</span>
+              <span><i className="cr-k-conflict" />Conflict</span>
+              <span><i className="cr-k-kept" />Kept</span>
+            </th>
+            {agents.map((a) => (
+              <th key={a.id} className="cr-agent" title={`${[a.model, a.branch].filter(Boolean).join(" · ")}\n${agentStats(a.id)}`}>
+                <span className="cr-aico">{iconOf(a.icon)}</span>
+                {a.name}
+                {a.working && <i className="cr-working" aria-label="working" />}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {items.map((x) => (
-            <tr key={x.id}>
-              <td>{x.title}</td>
-              <td>
-                <UI.Badge tone={x.status === "conflict" ? "amber" : "green"}>
-                  +12 −4
-                </UI.Badge>
-              </td>
-              <td>
-                <UI.Badge tone={x.status === "conflict" ? "amber" : "green"}>
-                  +8 −2
-                </UI.Badge>
-              </td>
-            </tr>
-          ))}
+          {files.map((f) => {
+            const [dir, base] = split(f.path);
+            const c = isConflict(f);
+            const kept = resolved[f.path];
+            const max = maxLine(f);
+            const cols = agents.map((a) => f.edits.find((e) => e.agent === a.id));
+            const idx = cols.map((e, i) => (e?.way ? i : -1)).filter((i) => i >= 0);
+            return (
+              <tr key={f.path} className={`${c && !kept ? "is-conflict" : ""} ${focus === f.path ? "is-focus" : ""}`}>
+                <th scope="row" className="cr-file">
+                  {c ? (
+                    <button type="button" onClick={() => setFocus(f.path)} aria-pressed={focus === f.path}>
+                      <i className={kept ? "cr-dot cr-dot-kept" : "cr-dot cr-dot-c"} />
+                      <span className="cr-sr">{kept ? "Settled:" : "Conflict:"}</span>
+                      <span className="cr-dir">{dir}</span>
+                      {base}
+                    </button>
+                  ) : (
+                    <span>
+                      <i className="cr-dot" />
+                      <span className="cr-dir">{dir}</span>
+                      {base}
+                    </span>
+                  )}
+                </th>
+                {cols.map((e, i) => {
+                  const state = !e ? "" : kept ? (kept === e.agent ? "kept" : "dropped") : c && e.way ? "conflict" : "changed";
+                  const left = e ? (e.lines[0] / max) * 100 : 0;
+                  const w = e ? Math.max(14, ((e.lines[1] - e.lines[0]) / max) * 100) : 0;
+                  const linkL = c && idx.length > 1 && i > idx[0] && i <= idx[idx.length - 1];
+                  return (
+                    <td key={agents[i].id} className="cr-cell">
+                      {linkL && !kept && <span className="cr-link" />}
+                      {e ? (
+                        <span
+                          className={`cr-barline cr-${state} ${e.writing ? "is-writing" : ""}`}
+                          style={{ left: `${Math.min(left, 100 - w) * 0.7 + 15}%`, width: `${w * 0.7}%` }}
+                          title={`${agents[i].name} · lines ${e.lines[0]}–${e.lines[1]}${state ? ` · ${state}` : ""}`}
+                        />
+                      ) : (
+                        <i className="cr-empty" aria-label="untouched" />
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
-      {items
-        .filter((x) => x.status === "conflict")
-        .map((x) => (
-          <UI.Detail
-            key={x.id}
-            title={
-              <span>
-                {choices[x.id] ? "✓" : "⚑"} {x.title}
-              </span>
-            }
-            open={!choices[x.id]}
-          >
-            <p className="st-muted">{x.detail}</p>
-            <div className="st-actions">
-              {x.tags?.map((v) => (
-                <UI.Button
-                  key={v}
-                  primary={choices[x.id] === v}
-                  onClick={() => {
-                    setChoices((s) => ({ ...s, [x.id]: v }));
-                    onAction?.("resolve", { ...x, detail: v });
-                  }}
-                >
-                  {v}
-                </UI.Button>
-              ))}
-            </div>
-          </UI.Detail>
-        ))}
-      <div className="st-actions">
-        <UI.Button
-          primary
-          disabled={
-            merged ||
-            items.some((x) => x.status === "conflict" && !choices[x.id])
-          }
-          onClick={() => {
-            setMerged(true);
-            onAction?.("merge");
-          }}
-        >
-          {merged ? "Branches merged ✓" : "Merge resolved changes"}
-        </UI.Button>
-      </div>
-    </UI.Panel>
+
+      {current && (
+        <div className="cr-pick" aria-live="polite">
+          <div className="cr-ph">
+            <strong>{resolved[current.path] ? "Kept" : "Pick a way"}</strong>
+            <span>
+              {split(current.path)[1]} · lines {Math.min(...current.edits.filter((e) => e.way).map((e) => e.lines[0]))}–
+              {Math.max(...current.edits.filter((e) => e.way).map((e) => e.lines[1]))}
+            </span>
+          </div>
+          <div className="cr-ways" role="radiogroup" aria-label={`Ways to settle ${current.path}`}>
+            {current.edits
+              .filter((e) => e.way)
+              .map((e) => {
+                const a = agents.find((x) => x.id === e.agent);
+                const on = resolved[current.path] === e.agent;
+                return (
+                  <button
+                    key={e.agent}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    className="cr-way"
+                    onClick={() => pick(current.path, e.agent)}
+                  >
+                    <span className="cr-wh">
+                      <span className="cr-aico">{iconOf(a?.icon)}</span>
+                      {a?.name ?? e.agent}
+                      {on && (
+                        <svg className="cr-check" viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                        </svg>
+                      )}
+                    </span>
+                    <span className="cr-wt">{e.way}</span>
+                  </button>
+                );
+              })}
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
+
+const css = `
+.cr{--cr-bg:#fff;--cr-fg:#18181b;--cr-muted:#71717a;--cr-faint:#a1a1aa;--cr-line:#ececef;--cr-soft:#f7f7f8;--cr-changed:#dbe8fb;--cr-changed-edge:#a9c6f2;--cr-conflict:#f8d3bd;--cr-conflict-edge:#eaa47c;--cr-hot:#fdf3ec;--cr-dot:#dc4a12;--cr-kept:#cdebd6;--cr-kept-edge:#86c99b;--cr-accent:#3b82f6;width:100%;max-width:560px;background:var(--cr-bg);color:var(--cr-fg);border:1px solid var(--cr-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cr{--cr-bg:#1b1b1e;--cr-fg:#ececef;--cr-muted:#a1a1aa;--cr-faint:#5c5c64;--cr-line:#2c2c31;--cr-soft:#232328;--cr-changed:#22344f;--cr-changed-edge:#3d5d8c;--cr-conflict:#4a2c1c;--cr-conflict-edge:#a8603a;--cr-hot:#2a1f19;--cr-dot:#fb7a45;--cr-kept:#1d3a27;--cr-kept-edge:#3f8a57;--cr-accent:#7aa2ff;color-scheme:dark}
+.cr *{box-sizing:border-box}.cr button{font:inherit;color:inherit;cursor:pointer}
+.cr-bar{display:flex;align-items:center;gap:10px;height:52px;padding:0 10px 0 16px;border-bottom:1px solid var(--cr-line)}
+.cr-logo{width:15px;height:15px;color:var(--cr-accent)}.cr-bar strong{font-weight:500}
+.cr-pill{margin-left:auto;padding:3px 8px;border:1px solid var(--cr-line);border-radius:6px;font-size:12.5px;color:var(--cr-muted)}
+.cr-merge{margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border:0;border-radius:7px;background:var(--cr-fg);color:var(--cr-bg)!important;font-weight:500;animation:cr-pop .25s both}
+.cr-merge svg{width:14px;height:14px}.cr-merge:disabled{background:var(--cr-soft);color:var(--cr-muted)!important;cursor:default}
+.cr-grid{width:100%;border-collapse:collapse;table-layout:fixed}
+.cr-grid thead th{height:32px;font-size:12.5px;font-weight:400;color:var(--cr-muted);border-bottom:1px solid var(--cr-line)}
+.cr-legend{width:46%;text-align:left;padding:0 0 0 16px;font-size:11px!important}
+.cr-legend span:not(.cr-sr){display:inline-flex;align-items:center;gap:5px;margin-right:12px}
+.cr-legend i{width:12px;height:5px;border-radius:3px;border:1px solid}
+.cr-k-changed{background:var(--cr-changed);border-color:var(--cr-changed-edge)!important}.cr-k-conflict{background:var(--cr-conflict);border-color:var(--cr-conflict-edge)!important}.cr-k-kept{background:var(--cr-kept);border-color:var(--cr-kept-edge)!important}
+.cr-agent{border-left:1px solid var(--cr-line);white-space:nowrap}
+.cr-aico{display:inline-grid;place-items:center;width:14px;height:14px;margin-right:7px;vertical-align:-2px}.cr-aico svg{width:12px;height:12px}
+.cr-working{display:inline-block;width:5px;height:5px;margin-left:5px;border-radius:50%;background:var(--cr-accent);vertical-align:2px;animation:cr-pulse 1.4s infinite}
+.cr-grid tbody tr{height:36px;border-bottom:1px solid var(--cr-line);transition:background .2s}
+.cr-grid tbody tr.is-conflict.is-focus{background:var(--cr-hot)}
+.cr-file{text-align:left;font-weight:400;padding:0 0 0 14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cr-file button,.cr-file>span{display:inline-flex;align-items:center;border:0;background:none;padding:0;text-align:left;font-size:14px}
+.cr-dot{width:5px;height:5px;margin-right:11px;border-radius:50%;background:var(--cr-line);flex:none}
+.cr-dot-c{background:var(--cr-dot)}.cr-dot-kept{background:var(--cr-kept-edge)}
+.cr-dir{color:var(--cr-faint)}
+.cr-cell{position:relative;border-left:1px solid var(--cr-line)}
+.cr-empty{position:absolute;left:50%;top:50%;width:3px;height:3px;margin:-1.5px;border-radius:50%;background:var(--cr-line)}
+.cr-barline{position:absolute;top:50%;height:7px;margin-top:-3.5px;border-radius:4px;border:1px solid;z-index:1;transform-origin:left;animation:cr-grow .5s cubic-bezier(.2,.7,.2,1) both;overflow:hidden}
+.cr-changed{background:var(--cr-changed);border-color:var(--cr-changed-edge)}
+.cr-conflict{background:var(--cr-conflict);border-color:var(--cr-conflict-edge)}
+.cr-kept{background:var(--cr-kept);border-color:var(--cr-kept-edge)}
+.cr-dropped{background:var(--cr-soft);border-color:var(--cr-line);opacity:.7}
+.cr-barline.is-writing::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,#ffffffb0,transparent);animation:cr-sheen 1.6s infinite}
+.cr-link{position:absolute;top:50%;left:-50%;right:50%;height:1px;background:color-mix(in srgb,var(--cr-muted) 60%,transparent);z-index:0}
+.cr-link::after{content:"";position:absolute;inset:-1px 0;background:linear-gradient(90deg,transparent,var(--cr-conflict-edge),transparent);background-size:40% 100%;background-repeat:no-repeat;animation:cr-run 2s linear infinite}
+.cr-pick{padding:14px 12px 12px;animation:cr-fade .25s both}
+.cr-ph{display:flex;align-items:baseline;gap:7px;padding:0 4px 10px}.cr-ph strong{font-weight:500}.cr-ph span{font-size:12.5px;color:var(--cr-muted)}
+.cr-ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.cr-way{display:flex;flex-direction:column;gap:8px;padding:12px 12px 11px;text-align:left;border:1px solid var(--cr-line);border-radius:8px;background:var(--cr-soft);transition:border-color .15s,background .15s}
+.cr-way:hover{border-color:color-mix(in srgb,var(--cr-fg) 20%,transparent)}
+.cr-way[aria-checked=true]{border-color:var(--cr-kept-edge);background:color-mix(in srgb,var(--cr-kept) 50%,var(--cr-bg))}
+.cr-wh{display:flex;align-items:center;font-weight:500}.cr-wh .cr-aico{width:18px;height:18px;margin-right:8px;border-radius:5px;background:var(--cr-bg);border:1px solid var(--cr-line)}
+.cr-check{width:14px;height:14px;margin-left:auto;color:#16a34a}
+.cr-wt{font-size:12.5px;line-height:1.45;color:var(--cr-muted)}
+.cr-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cr :focus-visible{outline:2px solid var(--cr-accent);outline-offset:2px;border-radius:4px}
+@keyframes cr-grow{from{transform:scaleX(0)}}
+@keyframes cr-sheen{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@keyframes cr-run{from{background-position:-40% 0}to{background-position:140% 0}}
+@keyframes cr-pulse{50%{opacity:.3}}
+@keyframes cr-fade{from{opacity:0;transform:translateY(3px)}}
+@keyframes cr-pop{from{opacity:0;transform:scale(.95)}}
+@media(max-width:520px){.cr-legend span:not(.cr-sr){display:none}.cr-legend{width:42%}.cr-dir{display:none}.cr-agent{font-size:0!important}.cr-agent .cr-aico{margin:0}}
+@media(prefers-reduced-motion:reduce){.cr *,.cr *::after{animation:none!important;transition:none!important}}
+`;
 
 export default ConflictRadar;

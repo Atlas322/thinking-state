@@ -3,343 +3,487 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type DecisionFlag = { text: string; note: string; source?: string };
+export type DecisionText = string | (string | DecisionFlag)[];
+export type DecisionFollowUp = { question: string; options: DecisionOption[] };
+export type DecisionOption = {
+  label: string;
+  icon?: React.ReactNode;
+  effects?: DecisionText[];
+  apps?: React.ReactNode[];
+  pick?: boolean;
+  next?: DecisionFollowUp;
+};
+export type Decision = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  question: string;
+  context?: string;
+  agent: string;
+  model?: string;
+  icon?: React.ReactNode;
+  risk?: "high" | "medium" | "low";
+  options: DecisionOption[];
 };
-export type StudioProps = {
+export type DecisionChoice =
+  | { index: number; option: DecisionOption; then?: DecisionOption }
+  | { other: string };
+
+export type DecisionTreeProps = {
+  decisions?: Decision[];
+  onChoose?: (decision: Decision, choice: DecisionChoice) => string | void | Promise<string | void>;
+  allowOther?: boolean;
   title?: string;
-  items?: StudioItem[];
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const ico = (c: React.ReactNode) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    {c}
+  </svg>
+);
+export const decisionIcons = {
+  openai: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.1">
+      <path d="M8 2.2a2.8 2.8 0 0 1 4.6 2.6 2.8 2.8 0 0 1 .4 5A2.8 2.8 0 0 1 8.5 13a2.8 2.8 0 0 1-4.7-2.4 2.8 2.8 0 0 1-.6-5A2.8 2.8 0 0 1 8 2.2Z" />
+      <path d="M6 4.4v5l2 1.2 2-1.2V5.3M4 8.2l4-2.3 4 2.3" />
+    </g>,
+  ),
+  salesforce: ico(<path d="M4.5 12a2.5 2.5 0 0 1-.6-4.9A3 3 0 0 1 9 4.8a2.4 2.4 0 0 1 3.3 1A2.6 2.6 0 0 1 12 12Z" fill="#00a1e0" />),
+  stripe: ico(
+    <>
+      <rect x="2" y="2" width="12" height="12" rx="3" fill="#635bff" />
+      <path d="M10 5.8c-.5-.3-1.1-.5-1.7-.5-.9 0-1.5.4-1.5 1 0 1.5 3.1 1 3.1 2.9 0 .8-.8 1.4-1.8 1.4-.7 0-1.4-.2-1.9-.6" fill="none" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" />
+    </>,
+  ),
+  slack: ico(
+    <>
+      <rect x="2" y="6.5" width="5" height="2" rx="1" fill="#36c5f0" />
+      <rect x="7.5" y="2" width="2" height="5" rx="1" fill="#2eb67d" />
+      <rect x="9" y="7.5" width="5" height="2" rx="1" fill="#ecb22e" />
+      <rect x="6.5" y="9" width="2" height="5" rx="1" fill="#e01e5a" />
+    </>,
+  ),
+  claude: ico(
+    <g stroke="#d97757" strokeWidth="1.4" strokeLinecap="round">
+      <path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4" />
+    </g>,
+  ),
+  statuspage: ico(<><circle cx="8" cy="8" r="6" fill="#3fb950" /><path d="M5 8.5 7 10.5l4-4.5" fill="none" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" /></>),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const I = decisionIcons;
+const defaultDecisions: Decision[] = [
+  {
+    id: "acme",
+    agent: "Sales agent",
+    model: "GPT-6 Sol",
+    icon: I.openai,
+    risk: "medium",
+    question: "Acme wants 25% off their $84k renewal or they'll switch – how should I respond?",
+    context: "Renewal in 9 days · 212 seats · they asked twice on yesterday's call.",
+    options: [
+      {
+        label: "Offer 15% instead",
+        icon: I.salesforce,
+        pick: true,
+        next: {
+          question: "Tie it to a longer contract?",
+          options: [
+            { label: "Only with 2 years", pick: true, effects: ["$71.4k a year until 2028"], apps: [I.salesforce, I.stripe] },
+            { label: "For one year", effects: ["$71.4k · renews at full price"], apps: [I.salesforce] },
+          ],
+        },
+      },
+      {
+        label: "Ask the VP",
+        icon: I.slack,
+        next: {
+          question: "What should I send along?",
+          options: [
+            { label: "The call notes", effects: ["Summary of yesterday's call"], apps: [I.slack, I.salesforce] },
+            { label: "Usage and margin", effects: ["Margin drops to 41%"], apps: [I.slack, I.stripe] },
+          ],
+        },
+      },
+      {
+        label: "Accept 25%",
+        icon: I.stripe,
+        effects: [
+          [
+            {
+              text: "$63k a year · needs sign-off",
+              note: "Anything above 20% off needs the CRO's approval before the quote goes out.",
+              source: "Salesforce · approval rules",
+            },
+          ],
+        ],
+        apps: [I.salesforce, I.stripe],
+      },
+    ],
+  },
+  {
+    id: "incident",
+    agent: "Incident agent",
+    model: "Claude Opus 5.5",
+    icon: I.claude,
+    risk: "high",
+    question: "Checkout errors are at 4% for 12 minutes – do we tell customers yet?",
+    context: "Started after the 14:02 deploy · rollback is running.",
+    options: [
+      { label: "Post on the status page", icon: I.statuspage, pick: true, effects: ["Customers see “Investigating” within a minute"], apps: [I.statuspage] },
+      { label: "Wait for the rollback", icon: I.claude, effects: ["About 6 more minutes of silence"] },
+      { label: "Tell the team only", icon: I.slack, effects: ["#incidents gets the update"], apps: [I.slack] },
+    ],
+  },
+];
 
 export function DecisionTree({
-  title = "How should we handle the migration?",
-  items = [
-    {
-      id: "rolling",
-      title: "Rolling migration",
-      detail: "No downtime · takes 2 hours",
-      status: "recommended",
-      children: [
-        { id: "backup", title: "Create a backup" },
-        { id: "batch", title: "Migrate in batches" },
-        { id: "verify", title: "Verify each batch" },
-      ],
-    },
-    {
-      id: "full",
-      title: "Full cutover",
-      detail: "15 minutes downtime · takes 30 min",
-      status: "risky",
-      children: [
-        { id: "pause", title: "Pause writes" },
-        { id: "switch", title: "Switch all tables" },
-      ],
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [selected, setSelected] = React.useState(items[0]?.id);
-  const [chosen, setChosen] = React.useState(false);
-  return (
-    <UI.Panel
-      title={title}
-      subtitle="Two paths, different tradeoffs"
-      className={className}
-    >
-      <div className="st-columns">
-        {items.map((x) => (
-          <button
-            key={x.id}
-            className={`st-tile ${x.id === selected ? "active" : ""}`}
-            onClick={() => {
-              setSelected(x.id);
-              setChosen(false);
-            }}
-          >
-            <UI.Badge tone={x.status === "risky" ? "amber" : "green"}>
-              {x.status}
-            </UI.Badge>
-            <h4>{x.title}</h4>
-            <p>{x.detail}</p>
-            <ol className="st-timeline">
-              {x.children?.map((c) => (
-                <li key={c.id}>{c.title}</li>
-              ))}
-            </ol>
-          </button>
+  decisions = defaultDecisions,
+  onChoose,
+  allowOther = true,
+  title = "Decisions",
+  className = "",
+}: DecisionTreeProps) {
+  const [doneIds, setDoneIds] = React.useState<string[]>([]);
+  const queue = decisions.filter((d) => !doneIds.includes(d.id));
+  const [pos, setPos] = React.useState(0);
+  const d = queue[Math.min(pos, Math.max(0, queue.length - 1))];
+  const [hover, setHover] = React.useState<number | null>(null);
+  const [chosen, setChosen] = React.useState<number | null>(null);
+  const [outcome, setOutcome] = React.useState<string | null>(null);
+  const [other, setOther] = React.useState<string | null>(null);
+  const [note, setNote] = React.useState<string | null>(null);
+  const [live, setLive] = React.useState("");
+  const timer = React.useRef<number | undefined>(undefined);
+  React.useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  const reset = () => {
+    setChosen(null);
+    setOutcome(null);
+    setOther(null);
+    setHover(null);
+    setNote(null);
+  };
+  const finish = (msg: string) => {
+    if (!d) return;
+    setOutcome(msg);
+    setLive(msg);
+    timer.current = window.setTimeout(() => {
+      setDoneIds((ids) => [...ids, d.id]);
+      setPos(0);
+      reset();
+    }, 1800);
+  };
+  const choose = async (i: number, then?: number) => {
+    if (!d || outcome) return;
+    const opt = d.options[i];
+    if (opt.next && then == null) {
+      setChosen(i);
+      setLive(`${opt.label} – picked. ${opt.next.question}`);
+      return;
+    }
+    setChosen(i);
+    const thenOpt = then != null ? opt.next?.options[then] : undefined;
+    const r = await onChoose?.(d, { index: i, option: opt, then: thenOpt });
+    finish(typeof r === "string" ? r : `${thenOpt ? `${opt.label} · ${thenOpt.label}` : opt.label} – picked. ${d.agent} goes ahead.`);
+  };
+  const sendOther = async () => {
+    if (!d || !other?.trim()) return;
+    const r = await onChoose?.(d, { other: other.trim() });
+    finish(typeof r === "string" ? r : `Sent to ${d.agent}: “${other.trim()}”`);
+  };
+  const go = (n: number) => {
+    if (!queue.length) return;
+    setPos((p) => (p + n + queue.length) % queue.length);
+    reset();
+  };
+
+  const text = (t: DecisionText, key: string) =>
+    typeof t === "string"
+      ? t
+      : t.map((p, i) =>
+          typeof p === "string" ? (
+            <React.Fragment key={i}>{p}</React.Fragment>
+          ) : (
+            <span key={i} className="dt-flagwrap">
+              <mark
+                tabIndex={0}
+                className="dt-flag"
+                aria-describedby={note === `${key}${i}` ? `dt-note-${key}${i}` : undefined}
+                onMouseEnter={() => setNote(`${key}${i}`)}
+                onMouseLeave={() => setNote(null)}
+                onFocus={() => setNote(`${key}${i}`)}
+                onBlur={() => setNote(null)}
+              >
+                {p.text}
+              </mark>
+              {note === `${key}${i}` && (
+                <span role="tooltip" id={`dt-note-${key}${i}`} className="dt-note">
+                  <span className="dt-note-h">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5 14 13H2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /><path d="M8 6.5v3M8 11.2v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+                    Agent's note
+                  </span>
+                  {p.note}
+                  {p.source && <span className="dt-note-s">{p.source}</span>}
+                </span>
+              )}
+            </span>
+          ),
+        );
+
+  const flags = React.useMemo(() => {
+    const out: string[] = [];
+    d?.options.forEach((o, i) => o.effects?.forEach((e, j) => Array.isArray(e) && e.forEach((p, k) => typeof p !== "string" && out.push(`e${i}-${j}${k}`))));
+    return out;
+  }, [d]);
+
+  const onKey = (e: React.KeyboardEvent) => {
+    if (!d) return;
+    const t = e.target as HTMLElement;
+    if (t.tagName === "TEXTAREA") {
+      if (e.key === "Enter" && !e.shiftKey) (e.preventDefault(), sendOther());
+      if (e.key === "Escape") setOther(null);
+      return;
+    }
+    const n = Number(e.key);
+    const max = d.options.length + (allowOther ? 1 : 0);
+    if (n >= 1 && n <= max) {
+      if (n === d.options.length + 1) setOther("");
+      else if (chosen != null && d.options[chosen].next && !outcome) choose(chosen, n - 1);
+      else choose(n - 1);
+    } else if (e.key === "ArrowRight" || e.key.toLowerCase() === "j") go(1);
+    else if (e.key === "ArrowLeft" || e.key.toLowerCase() === "k") go(-1);
+    else if (e.key.toLowerCase() === "f" && flags.length) setNote((cur) => flags[(flags.indexOf(cur ?? "") + 1) % flags.length]);
+    else if (e.key === "Escape") (setNote(null), setOther(null));
+  };
+
+  const Apps = ({ apps }: { apps?: React.ReactNode[] }) =>
+    apps?.length ? (
+      <span className="dt-apps">
+        {apps.map((a, i) => (
+          <span key={i}>{a}</span>
         ))}
-      </div>
-      <div className="st-actions">
-        <UI.Button
-          primary
-          disabled={!selected || chosen}
-          onClick={() => {
-            setChosen(true);
-            onAction?.(
-              "choose",
-              items.find((x) => x.id === selected),
-            );
-          }}
-        >
-          {chosen ? "Path selected ✓" : "Choose this path"}
-        </UI.Button>
-      </div>
-    </UI.Panel>
+      </span>
+    ) : null;
+
+  return (
+    <section className={`dt ${className}`} aria-label={title} onKeyDown={onKey} tabIndex={-1}>
+      <style>{css}</style>
+      <header className="dt-bar">
+        <svg viewBox="0 0 16 16" className="dt-mark" aria-hidden="true">
+          <circle cx="3.5" cy="8" r="2" fill="none" stroke="currentColor" strokeWidth="1.3" />
+          <circle cx="12.5" cy="3.5" r="2" fill="none" stroke="currentColor" strokeWidth="1.3" />
+          <circle cx="12.5" cy="12.5" r="2" fill="none" stroke="currentColor" strokeWidth="1.3" />
+          <path d="M5.5 8h2.5M8 8c0-3 1-4.5 2.5-4.5M8 8c0 3 1 4.5 2.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+        </svg>
+        <strong>{title}</strong>
+        <span className="dt-wait">{queue.length ? `${queue.length} waiting for you` : "All decided"}</span>
+        {queue.length > 0 && (
+          <span className="dt-pager">
+            <span className="dt-dots" aria-hidden="true">
+              {queue.map((q, i) => (
+                <i key={q.id} className={i === pos ? "is-on" : ""} />
+              ))}
+            </span>
+            {pos + 1} of {queue.length}
+          </span>
+        )}
+      </header>
+
+      {d ? (
+        <div className={`dt-tree ${outcome ? "is-done" : ""}`} key={d.id}>
+          <div className="dt-qcol">
+            {d.risk && d.risk !== "low" && <span className={`dt-risk is-${d.risk}`}>{d.risk === "high" ? "High risk" : "Medium risk"}</span>}
+            <div className="dt-q">
+              <div className="dt-agent">
+                <span className="dt-agent-i">{d.icon}</span>
+                <span>
+                  <strong>{d.agent}</strong>
+                  {d.model && <small>{d.model}</small>}
+                </span>
+              </div>
+              <p className="dt-question">{d.question}</p>
+              {d.context && <p className="dt-context">{d.context}</p>}
+            </div>
+          </div>
+          <ol className="dt-branches">
+            {d.options.map((o, i) => {
+              const state = chosen == null ? (hover != null && hover !== i ? "is-back" : hover === i ? "is-hot" : "") : chosen === i ? "is-chosen" : "is-gone";
+              return (
+                <li key={i} className={`dt-branch ${state}`} onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}>
+                  <button
+                    type="button"
+                    className={`dt-opt ${o.pick ? "is-pick" : ""}`}
+                    aria-label={`${o.label}${o.pick ? ", the agent's pick" : ""}`}
+                    aria-keyshortcuts={String(i + 1)}
+                    onClick={() => choose(i)}
+                    disabled={!!outcome}
+                  >
+                    <kbd>{i + 1}</kbd>
+                    {o.icon && <span className="dt-i">{o.icon}</span>}
+                    <span className="dt-ol">
+                      {o.label}
+                      {o.pick && <small>Agent's pick</small>}
+                    </span>
+                  </button>
+                  {o.next ? (
+                    <div className={`dt-next ${chosen === i ? "is-awake" : ""}`}>
+                      <div className="dt-nq">{o.next.question}</div>
+                      <ul className="dt-subs">
+                        {o.next.options.map((s, j) => (
+                          <li key={j}>
+                            <button
+                              type="button"
+                              className="dt-card"
+                              disabled={chosen !== i || !!outcome}
+                              aria-label={`${s.label}${s.pick ? ", the agent's pick" : ""}`}
+                              onClick={() => choose(i, j)}
+                            >
+                              <span className="dt-card-t">
+                                {s.label}
+                                {s.pick && <small>Agent's pick</small>}
+                              </span>
+                              <span className="dt-card-e">
+                                <span>{s.effects?.map((e, k) => <React.Fragment key={k}>{text(e, `s${i}${j}-${k}`)}</React.Fragment>)}</span>
+                                <Apps apps={s.apps} />
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : o.effects?.length ? (
+                    <div className="dt-effect">
+                      <span>{o.effects.map((e, k) => <React.Fragment key={k}>{text(e, `e${i}-${k}`)}</React.Fragment>)}</span>
+                      <Apps apps={o.apps} />
+                    </div>
+                  ) : (
+                    <span />
+                  )}
+                </li>
+              );
+            })}
+            {allowOther && (
+              <li className={`dt-branch ${chosen != null ? "is-gone" : ""}`}>
+                {other == null ? (
+                  <button type="button" className="dt-opt is-other" onClick={() => setOther("")} aria-keyshortcuts={String(d.options.length + 1)} disabled={!!outcome}>
+                    <kbd>{d.options.length + 1}</kbd>
+                    <span className="dt-ol">Other…</span>
+                  </button>
+                ) : (
+                  <textarea
+                    className="dt-other"
+                    autoFocus
+                    rows={2}
+                    value={other}
+                    placeholder={`Tell ${d.agent} what to do`}
+                    aria-label="Your own instruction"
+                    onChange={(e) => setOther(e.target.value)}
+                  />
+                )}
+                <span />
+              </li>
+            )}
+          </ol>
+        </div>
+      ) : (
+        <div className="dt-empty">Nothing waiting – the agents carry on.</div>
+      )}
+
+      <footer className="dt-foot">
+        {outcome ? (
+          <span className="dt-outcome">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+            {outcome}
+          </span>
+        ) : d ? (
+          <>
+            Pick a branch <kbd>1</kbd> – <kbd>{d.options.length + (allowOther ? 1 : 0)}</kbd>
+            <span className="dt-sep">·</span>
+            <button type="button" className="dt-nextbtn" onClick={() => go(1)} disabled={queue.length < 2}>
+              next <kbd>→</kbd>
+            </button>
+          </>
+        ) : null}
+      </footer>
+      <p className="dt-sr" aria-live="polite">
+        {live}
+      </p>
+    </section>
   );
 }
+
+const css = `
+.dt{--dt-bg:#fff;--dt-fg:#18181b;--dt-muted:#71717a;--dt-faint:#a1a1aa;--dt-line:#ececef;--dt-wire:#dcdce0;--dt-chip:#f4f4f5;--dt-blue:#3b82f6;--dt-link:#82bcff;--dt-amber:#fde7b0;width:100%;max-width:780px;color:var(--dt-fg);font:400 13px/1.45 Inter,system-ui,sans-serif;outline:none;container-type:inline-size}
+:where(.dark,[data-theme=dark]) .dt{--dt-bg:#1b1b1e;--dt-fg:#ececef;--dt-muted:#a1a1aa;--dt-faint:#71717a;--dt-line:#2e2e33;--dt-wire:#3f3f46;--dt-chip:#26262a;--dt-amber:#5a4410;color-scheme:dark}
+.dt *{box-sizing:border-box}.dt button,.dt textarea{font:inherit;color:inherit}.dt button{cursor:pointer}
+.dt-bar{display:flex;align-items:center;gap:8px}
+.dt-mark{width:15px;height:15px;color:var(--dt-blue)}
+.dt-bar strong{font-size:14px;font-weight:500}.dt-wait{font-size:12px;color:var(--dt-muted)}
+.dt-pager{display:inline-flex;align-items:center;gap:10px;margin-left:auto;font-size:12px;color:var(--dt-muted)}
+.dt-dots{display:flex;gap:3px}.dt-dots i{width:4px;height:4px;border-radius:50%;background:var(--dt-wire)}.dt-dots i.is-on{background:var(--dt-fg)}
+.dt-tree{display:grid;grid-template-columns:205px 1fr;gap:28px;align-items:center;margin-top:44px;animation:dt-in .4s both}
+.dt-qcol{position:relative}
+.dt-qcol::after{content:"";position:absolute;right:-28px;top:50%;width:14px;border-top:1px solid var(--dt-wire)}
+.dt-risk{position:absolute;top:-22px;left:0;padding:1px 6px;border-radius:4px;font-size:12px}
+.dt-risk.is-medium{background:#fdf0d5;color:#b45309}.dt-risk.is-high{background:#fde2e2;color:#dc2626}
+.dt-q{padding:14px 16px;border:1px solid var(--dt-line);border-radius:8px;background:var(--dt-bg);box-shadow:0 1px 2px #0000000a}
+.dt-agent{display:flex;align-items:center;gap:10px}
+.dt-agent-i{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;box-shadow:0 0 0 1px var(--dt-line)}.dt-agent-i svg{width:15px;height:15px}
+.dt-agent strong{display:block;font-weight:500;font-size:14px;line-height:1.2}.dt-agent small{font-size:12px;color:var(--dt-muted)}
+.dt-question{margin:14px 0 0;font-size:14px;font-weight:500;line-height:1.45}
+.dt-context{margin:12px 0 0;font-size:12px;color:var(--dt-muted)}
+.dt-branches{list-style:none;margin:0;padding:0}
+.dt-branch{position:relative;display:grid;grid-template-columns:185px 1fr;gap:22px;align-items:center;padding:6px 0 6px 14px;transition:opacity .25s}
+.dt-branch::before{content:"";position:absolute;left:0;top:0;bottom:0;border-left:1px solid var(--dt-wire)}
+.dt-branch:first-child::before{top:50%;border-top-left-radius:6px}.dt-branch:last-child::before{bottom:50%}
+.dt-branch::after{content:"";position:absolute;left:0;top:50%;width:14px;border-top:1px solid var(--dt-wire)}
+.dt-branch.is-back,.dt-branch.is-gone{opacity:.35}
+.dt-branch.is-hot::after,.dt-branch.is-chosen::after{border-color:var(--dt-link)}
+.dt-opt{position:relative;display:flex;align-items:center;gap:10px;width:100%;min-height:36px;padding:7px 12px;border:1px solid var(--dt-line);border-radius:7px;background:var(--dt-bg);box-shadow:0 1px 2px #0000000a;text-align:left;font-size:14px;transition:border-color .15s,box-shadow .15s}
+.dt-opt::after{content:"";position:absolute;right:-23px;top:50%;width:22px;border-top:1px solid var(--dt-wire)}
+.dt-opt:hover:not(:disabled){border-color:var(--dt-wire)}
+.dt-opt.is-pick{border-color:var(--dt-link)}
+.dt-opt.is-other{border-style:solid;color:var(--dt-muted);background:color-mix(in srgb,var(--dt-chip) 50%,var(--dt-bg));box-shadow:none}.dt-opt.is-other::after{display:none}
+.dt-opt:disabled{cursor:default}
+.dt kbd{display:inline-grid;place-items:center;min-width:16px;height:16px;padding:0 3px;border-radius:3px;background:var(--dt-chip);font:500 10px/1 Inter,system-ui,sans-serif;color:var(--dt-muted)}
+.dt-i{display:grid;place-items:center;width:14px;height:14px}.dt-i svg{width:13px;height:13px}
+.dt-ol{display:flex;flex-direction:column;line-height:1.3}.dt-ol small{font-size:12px;color:var(--dt-blue)}
+
+.dt-nq{display:inline-block;padding:4px 10px;border:1px solid var(--dt-line);border-radius:7px;background:var(--dt-bg);font-size:13px}
+.dt-subs{list-style:none;margin:6px 0 0;padding:0 0 0 14px;position:relative}
+.dt-subs li{position:relative;padding:4px 0 4px 8px}
+.dt-subs li::before{content:"";position:absolute;left:-14px;top:-6px;bottom:0;border-left:1px solid var(--dt-wire)}
+.dt-subs li:last-child::before{bottom:50%}
+.dt-subs li::after{content:"";position:absolute;left:-14px;top:50%;width:22px;border-top:1px solid var(--dt-wire)}
+.dt-card{display:flex;flex-direction:column;align-items:stretch;gap:3px;width:100%;max-width:230px;padding:8px 10px;border:1px solid var(--dt-line);border-radius:7px;background:var(--dt-bg);text-align:left}
+.dt-next.is-awake .dt-card{opacity:1;box-shadow:0 1px 2px #0000000d}
+.dt-next.is-awake .dt-card:hover{border-color:var(--dt-link)}
+.dt-card:disabled{cursor:default}
+.dt-card-t{font-size:13px}.dt-card-t small{margin-left:8px;font-size:12px;color:var(--dt-blue)}
+.dt-card-e,.dt-effect{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--dt-muted)}
+.dt-effect{max-width:240px;padding:8px 10px;border:1px solid var(--dt-line);border-radius:7px;background:color-mix(in srgb,var(--dt-chip) 40%,var(--dt-bg))}
+.dt-apps{display:flex;gap:4px;margin-left:auto;flex:none}.dt-apps span{display:grid;place-items:center;width:14px;height:14px}.dt-apps svg{width:12px;height:12px}
+.dt-flagwrap{position:relative}
+.dt-flag{padding:1px 2px;background:var(--dt-amber);color:var(--dt-fg);border-bottom:1px solid #f59e0b;cursor:help;outline:none}
+.dt-flag:focus-visible{box-shadow:0 0 0 2px var(--dt-blue)}
+.dt-note{position:absolute;right:-20px;bottom:24px;z-index:3;display:block;width:300px;padding:10px 12px;border:1px solid var(--dt-line);border-radius:10px;background:var(--dt-bg);box-shadow:0 10px 30px #0000001f;font-size:13px;line-height:1.45;color:var(--dt-fg);animation:dt-pop .16s both}
+.dt-note-h{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:#d97706}.dt-note-h svg{width:12px;height:12px}
+.dt-note-s{display:inline-block;margin-top:6px;padding:1px 6px;border-radius:4px;background:var(--dt-chip);font-size:12px;color:var(--dt-muted)}
+.dt-other{display:block;width:100%;min-height:52px;max-height:76px;padding:7px 10px;border:1px solid var(--dt-wire);border-radius:7px;background:var(--dt-bg);resize:none;outline:none;font-size:13px}
+.dt-other:focus{border-color:var(--dt-muted)}
+.dt-empty{padding:60px 0;text-align:center;color:var(--dt-faint)}
+.dt-foot{display:flex;align-items:center;gap:6px;margin-top:26px;font-size:12px;color:var(--dt-muted)}
+.dt-sep{margin:0 4px;color:var(--dt-faint)}
+.dt-nextbtn{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:0;color:var(--dt-muted)}.dt-nextbtn:disabled{opacity:.5;cursor:default}
+.dt-outcome{display:inline-flex;align-items:center;gap:6px;color:var(--dt-fg)}.dt-outcome svg{width:13px;height:13px;color:#16a34a}
+.dt-tree.is-done{animation:dt-out .4s 1.4s both}
+.dt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.dt :focus-visible{outline:2px solid var(--dt-blue);outline-offset:2px}
+@keyframes dt-in{from{opacity:0;transform:translateX(-6px)}}@keyframes dt-out{to{opacity:0}}@keyframes dt-pop{from{opacity:0;transform:scale(.97)}}
+@container (max-width:640px){.dt-tree{grid-template-columns:1fr;gap:16px}.dt-qcol::after,.dt-opt::after{display:none}.dt-branch{grid-template-columns:1fr;gap:6px}.dt-next,.dt-effect{margin-left:12px}.dt-note{right:auto;left:0;width:240px}}
+@media(prefers-reduced-motion:reduce){.dt *,.dt-tree{animation:none!important;transition:none!important}}
+`;
 
 export default DecisionTree;

@@ -436,24 +436,25 @@ const css = /* css */ `
 /** Working example; use the named DecisionInbox export in your application. */
 export default function Demo() {
   return (
-    <DecisionInbox
-      decisions={[
-        {
-          id: "1",
-          title: "Where should the report go?",
-          detail: "The weekly overview is ready to share.",
-          primary: "Post to Slack",
-          secondary: "Save to Notion",
-        },
-        {
-          id: "2",
-          title: "Include the full breakdown?",
-          detail: "Adds a channel-by-channel view.",
-          primary: "Include details",
-          secondary: "Keep it brief",
-          collapsed: true,
-        },
-      ]}
-    />
+    <div style={{ width: "100%", maxWidth: 440, margin: "0 auto" }}>
+      <DecisionInbox
+        decisions={[
+          {
+            id: "rollout",
+            title: "Roll out the new onboarding to everyone?",
+            detail: "Test won with +8% activation · 2 weeks of data",
+            primary: "Roll out",
+            secondary: "Keep testing",
+          },
+          {
+            id: "renewal",
+            title: "Renew Figma for the design team?",
+            detail: "12 seats · $1,800 per year · renews in 5 days",
+            primary: "Renew",
+            secondary: "Change seats",
+          },
+        ]}
+      />
+    </div>
   );
 }

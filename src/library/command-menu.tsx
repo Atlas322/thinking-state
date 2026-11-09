@@ -3,351 +3,313 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type Command = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  label: string;
+  hint?: string;
+  /** Brand logo for tool actions. */
+  logo?: React.ReactNode;
+  /** Plain icon for everyday commands. */
+  icon?: React.ReactNode;
+  keys?: string[];
+  keywords?: string[];
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+export type CommandGroup = { id: string; label: string; commands: Command[] };
+export type CommandMenuProps = {
+  groups?: CommandGroup[];
+  placeholder?: string;
+  onRun?: (id: string, query?: string) => void;
+  onClose?: () => void;
+  autoFocus?: boolean;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const s = (d: React.ReactNode) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">{d}</svg>
+);
+const line = { fill: "none", stroke: "currentColor", strokeWidth: 1.3, strokeLinecap: "round", strokeLinejoin: "round" } as const;
+
+const L = {
+  gmail: s(<><path d="M2 4.5v7.5h2.5V7.2L8 9.8l3.5-2.6V12H14V4.5l-1-.8L8 7.3 3 3.7Z" fill="#ea4335" /><path d="M2 4.5 3 3.7v8.3H2Z" fill="#4285f4" /><path d="M14 4.5 13 3.7v8.3h1Z" fill="#34a853" /></>),
+  spark: s(<path d="M8 1.5 9.3 6.7 14.5 8 9.3 9.3 8 14.5 6.7 9.3 1.5 8 6.7 6.7Z" fill="#4f7cf0" />),
+  clickup: s(<><path d="m3 10.5 2-1.5c1 1.4 1.9 2 3 2s2-.6 3-2l2 1.5c-1.5 2-3 3-5 3s-3.5-1-5-3Z" fill="#7b68ee" /><path d="m4 6.5 4-3.5 4 3.5-1.4 1.4L8 5.7 5.4 7.9Z" fill="#fc4d8f" /></>),
+  hubspot: s(<><circle cx="10" cy="9.5" r="2.3" fill="none" stroke="#ff7a59" strokeWidth="1.5" /><path d="M10 7V3.7M4 4.2l4.3 3.6M8 11.6 5.6 13.4" stroke="#ff7a59" strokeWidth="1.5" strokeLinecap="round" /><circle cx="3.7" cy="3.8" r="1.1" fill="#ff7a59" /></>),
+  gcal: s(<><rect x="2" y="2" width="12" height="12" rx="2" fill="#4285f4" /><rect x="4.5" y="4.5" width="7" height="7" rx=".5" fill="#fff" /><path d="M6.3 7h3.4M6.3 9h3.4" stroke="#4285f4" strokeWidth="1" /></>),
+  slack: s(<><rect x="2" y="6" width="5" height="2" rx="1" fill="#36c5f0" /><rect x="8" y="2" width="2" height="5" rx="1" fill="#2eb67d" /><rect x="9" y="8" width="5" height="2" rx="1" fill="#ecb22e" /><rect x="6" y="9" width="2" height="5" rx="1" fill="#e01e5a" /></>),
+  notion: s(<><rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" /><path d="M5.5 11.5v-7h1l3.5 7h1v-7" {...line} /></>),
+};
+const I = {
+  doc: s(<><path d="M4 2h5l3 3v9H4Z" {...line} /><path d="M9 2v3h3" {...line} /></>),
+  user: s(<><circle cx="6.5" cy="5.5" r="2.5" {...line} /><path d="M2 13.5c.6-2.3 2.3-3.5 4.5-3.5s3.9 1.2 4.5 3.5M12.5 5v4M10.5 7h4" {...line} /></>),
+  upload: s(<path d="M8 10.5V2.5M5 5.5l3-3 3 3M2.5 10v3.5h11V10" {...line} />),
+  moon: s(<path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5Z" {...line} />),
+  home: s(<path d="M2.5 7 8 2.5 13.5 7v6.5h-4v-4h-3v4h-4Z" {...line} />),
+  inbox: s(<><path d="M2.5 9 4 3h8l1.5 6v4.5h-11Z" {...line} /><path d="M2.5 9h3l1 1.5h3l1-1.5h3" {...line} /></>),
+  chart: s(<path d="M2.5 13.5h11M4.5 11V8M8 11V4.5M11.5 11V6.5" {...line} />),
+  gear: s(<><circle cx="8" cy="8" r="2" {...line} /><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4" {...line} /></>),
+  search: s(<><circle cx="7" cy="7" r="4.5" {...line} /><path d="m10.5 10.5 3 3" {...line} /></>),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultGroups: CommandGroup[] = [
+  {
+    id: "suggestions",
+    label: "Suggestions",
+    commands: [
+      { id: "email", label: "Write an email", hint: "Gmail", logo: L.gmail, keywords: ["mail", "send"] },
+      { id: "ask", label: "Ask assistant", hint: "Summaries, drafts, answers", logo: L.spark, keywords: ["ai", "chat"] },
+      { id: "task", label: "Create a task", hint: "ClickUp", logo: L.clickup, keywords: ["todo"] },
+      { id: "contact", label: "Add contact to CRM", hint: "HubSpot", logo: L.hubspot, keywords: ["lead"] },
+      { id: "meeting", label: "Schedule a meeting", hint: "Google Calendar", logo: L.gcal, keywords: ["calendar", "event"] },
+    ],
+  },
+  {
+    id: "share",
+    label: "Share",
+    commands: [
+      { id: "post", label: "Post an update", hint: "#team-updates", logo: L.slack },
+      { id: "page", label: "Save as page", hint: "Notion · Meeting notes", logo: L.notion },
+    ],
+  },
+  {
+    id: "general",
+    label: "General",
+    commands: [
+      { id: "new-doc", label: "New document", icon: I.doc, keys: ["N"] },
+      { id: "invite", label: "Invite teammates", icon: I.user, keys: ["I"] },
+      { id: "upload", label: "Upload files", icon: I.upload, keys: ["U"] },
+      { id: "theme", label: "Switch to dark mode", icon: I.moon, keys: ["⇧", "D"] },
+    ],
+  },
+  {
+    id: "goto",
+    label: "Go to",
+    commands: [
+      { id: "home", label: "Home", icon: I.home, keys: ["G", "H"] },
+      { id: "inbox", label: "Inbox", icon: I.inbox, keys: ["G", "I"] },
+      { id: "reports", label: "Reports", icon: I.chart, keys: ["G", "R"] },
+      { id: "settings", label: "Settings", icon: I.gear, keys: ["G", "S"] },
+    ],
+  },
+];
+
+const matches = (c: Command, q: string) => {
+  if (!q) return true;
+  const hay = [c.label, c.hint ?? "", ...(c.keywords ?? [])].join(" ").toLowerCase();
+  return q.toLowerCase().split(/\s+/).every((w) => hay.includes(w));
+};
 
 export function CommandMenu({
-  title = "What would you like to do?",
-  items = [
-    { id: "search", title: "Search your workspace", detail: "Navigation" },
-    { id: "project", title: "Create a new project", detail: "Actions" },
-    { id: "invite", title: "Invite a teammate", detail: "Actions" },
-    { id: "settings", title: "Open settings", detail: "Navigation" },
-    { id: "theme", title: "Toggle appearance", detail: "Preferences" },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
+  groups = defaultGroups,
+  placeholder = "Type a command or search…",
+  onRun,
+  onClose,
+  autoFocus,
+  className = "",
+}: CommandMenuProps) {
   const [query, setQuery] = React.useState("");
-  const [index, setIndex] = React.useState(0);
-  const [selected, setSelected] = React.useState("");
-  const listId = React.useId();
-  const rows = items.filter((x) =>
-    x.title.toLowerCase().includes(query.toLowerCase()),
-  );
-  const run = (x: StudioItem) => {
-    setSelected(x.title);
-    onAction?.("run", x);
+  const [active, setActive] = React.useState(0);
+  const [ran, setRan] = React.useState<{ label: string; key: number } | null>(null);
+  const [pressed, setPressed] = React.useState<string | null>(null);
+  const [hoverOut, setHoverOut] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const listRef = React.useRef<HTMLDivElement>(null);
+  const id = React.useId();
+
+  const visible = groups
+    .map((g) => ({ ...g, commands: g.commands.filter((c) => matches(c, query.trim())) }))
+    .filter((g) => g.commands.length);
+  const flat = visible.flatMap((g) => g.commands.map((c) => ({ c, g })));
+  const fallback = query.trim() && !flat.length;
+  const idx = Math.min(active, Math.max(0, flat.length - 1));
+  const current = flat[idx];
+
+  React.useEffect(() => setActive(0), [query]);
+  React.useEffect(() => {
+    const el = listRef.current?.querySelector<HTMLElement>(`[data-idx="${idx}"]`);
+    el?.scrollIntoView?.({ block: "nearest" });
+  }, [idx]);
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const run = (c: Command | null, q?: string) => {
+    const label = c ? c.label : `Ask “${q}”`;
+    if (c) {
+      setPressed(c.id);
+      window.setTimeout(() => setPressed(null), 160);
+    }
+    setRan({ label, key: Date.now() });
+    onRun?.(c ? c.id : "ask", c ? undefined : q);
   };
+
+  const suggestions = groups.find((g) => g.id === "suggestions")?.commands.slice(0, 5) ?? [];
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const mod = e.metaKey || e.ctrlKey;
+    if (mod && /^[1-5]$/.test(e.key)) {
+      const c = suggestions[Number(e.key) - 1];
+      if (c) {
+        e.preventDefault();
+        run(c);
+      }
+      return;
+    }
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      setHoverOut(false);
+      if (!flat.length) return;
+      setActive((a) => (Math.min(a, flat.length - 1) + (e.key === "ArrowDown" ? 1 : -1) + flat.length) % flat.length);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (fallback) run(null, query.trim());
+      else if (current) run(current.c);
+    } else if (e.key === "Tab" && visible.length > 1) {
+      e.preventDefault();
+      const gi = visible.findIndex((g) => g.id === current?.g.id);
+      const next = (gi + (e.shiftKey ? -1 : 1) + visible.length) % visible.length;
+      setActive(flat.findIndex((f) => f.g.id === visible[next].id));
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      if (query) setQuery("");
+      else onClose?.();
+    }
+  };
+
+  let n = -1;
   return (
-    <UI.Panel className={className}>
-      <input
-        className="st-input"
-        style={{ margin: "12px 0" }}
-        aria-label={title}
-        role="combobox"
-        aria-controls={listId}
-        aria-expanded={true}
-        aria-activedescendant={rows[index] ? `${listId}-${index}` : undefined}
-        placeholder={title}
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setIndex(0);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowDown") {
-            e.preventDefault();
-            setIndex((i) => Math.min(rows.length - 1, i + 1));
-          }
-          if (e.key === "ArrowUp") {
-            e.preventDefault();
-            setIndex((i) => Math.max(0, i - 1));
-          }
-          if (e.key === "Enter" && rows[index]) run(rows[index]);
-          if (e.key === "Escape") setQuery("");
-        }}
-      />
-      <div id={listId} role="listbox" aria-label="Commands">
-        {rows.map((x, i) => (
-          <div
-            id={`${listId}-${i}`}
-            key={x.id}
-            role="option"
-            aria-selected={index === i}
-            style={{
-              background: index === i ? "var(--st-soft)" : undefined,
-              borderRadius: 6,
-            }}
-          >
-            <UI.Row
-              title={x.title}
-              detail={x.detail}
-              onClick={() => run(x)}
-              icon={<UI.Avatar name={["⌕", "＋", "↗", "⚙", "◐"][i % 5]} />}
+    <div className={`cmdk ${className}`} onKeyDown={onKeyDown}>
+      <style>{css}</style>
+      <div className="cmdk-field">
+        <span className="cmdk-search">{I.search}</span>
+        <input
+          ref={inputRef}
+          role="combobox"
+          aria-expanded="true"
+          aria-controls={`${id}-list`}
+          aria-activedescendant={current && !fallback ? `${id}-${current.c.id}` : undefined}
+          aria-autocomplete="list"
+          autoFocus={autoFocus}
+          value={query}
+          placeholder={placeholder}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <kbd className="cmdk-enter" aria-hidden="true">↵</kbd>
+      </div>
+      <div
+        className="cmdk-list"
+        id={`${id}-list`}
+        role="listbox"
+        ref={listRef}
+        data-out={hoverOut}
+        onMouseLeave={() => setHoverOut(true)}
+      >
+        {fallback && (
+          <div className="cmdk-group">
+            <button
+              type="button"
+              role="option"
+              aria-selected="true"
+              className="cmdk-row"
+              data-active="true"
+              onClick={() => run(null, query.trim())}
             >
-              <span className="st-key">↵</span>
-            </UI.Row>
+              <span className="cmdk-ico">{L.spark}</span>
+              <span className="cmdk-label">Ask assistant</span>
+              <span className="cmdk-hint">“{query.trim()}”</span>
+            </button>
+          </div>
+        )}
+        {visible.map((g) => (
+          <div key={g.id} className="cmdk-group" role="group" aria-labelledby={`${id}-g-${g.id}`}>
+            <div className="cmdk-glabel" id={`${id}-g-${g.id}`}>{g.label}</div>
+            {g.commands.map((c) => {
+              n += 1;
+              const i = n;
+              const num = g.id === "suggestions" ? suggestions.indexOf(c) : -1;
+              const keys = num >= 0 ? ["⌘", String(num + 1)] : c.keys;
+              return (
+                <button
+                  key={c.id}
+                  id={`${id}-${c.id}`}
+                  type="button"
+                  role="option"
+                  tabIndex={-1}
+                  aria-selected={i === idx}
+                  data-idx={i}
+                  data-active={i === idx && !hoverOut}
+                  data-pressed={pressed === c.id}
+                  className="cmdk-row"
+                  onMouseMove={() => {
+                    setHoverOut(false);
+                    if (active !== i) setActive(i);
+                  }}
+                  onClick={() => run(c)}
+                >
+                  <span className={`cmdk-ico ${c.logo ? "cmdk-logo" : ""}`}>{c.logo ?? c.icon}</span>
+                  <span className="cmdk-label">{c.label}</span>
+                  {c.hint && <span className="cmdk-hint">{c.hint}</span>}
+                  {keys && (
+                    <span className="cmdk-keys" aria-hidden="true">
+                      {keys.map((k, j) => <kbd key={j}>{k}</kbd>)}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         ))}
       </div>
-      {!rows.length && <UI.Empty>No commands match your search</UI.Empty>}
-      <div className="st-actions">
-        <small>↑ ↓ navigate · Enter select · Esc clear</small>
+      <div className="cmdk-foot">
+        {ran ? (
+          <span key={ran.key} className="cmdk-ran">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            {ran.label}
+          </span>
+        ) : (
+          <span><kbd>Tab</kbd> to jump between sections</span>
+        )}
+        <span className="cmdk-open"><kbd>⌘</kbd><kbd>K</kbd> to open</span>
       </div>
-      <p className="st-status" role="status">
-        {selected ? `Selected: ${selected}` : ""}
-      </p>
-    </UI.Panel>
+      <span role="status" aria-live="polite" className="cmdk-sr">{ran ? `Ran ${ran.label}` : ""}</span>
+    </div>
   );
 }
+
+const css = `
+.cmdk{--cmdk-bg:#fff;--cmdk-fg:#18181b;--cmdk-muted:#71717a;--cmdk-faint:#a1a1aa;--cmdk-line:#ececef;--cmdk-hl:#f1f1f3;--cmdk-accent:#4f7cf0;--cmdk-green:#2f8a5b;width:100%;max-width:600px;display:flex;flex-direction:column;background:var(--cmdk-bg);color:var(--cmdk-fg);border:1px solid var(--cmdk-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 12px 32px -12px #00000024;font:400 12.5px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cmdk{--cmdk-bg:#1b1b1e;--cmdk-fg:#ececef;--cmdk-muted:#a1a1aa;--cmdk-faint:#71717a;--cmdk-line:#2c2c31;--cmdk-hl:#2a2a2f;--cmdk-accent:#7c9cff;--cmdk-green:#6cc596;color-scheme:dark}
+.cmdk *{box-sizing:border-box}
+.cmdk-field{display:flex;align-items:center;gap:10px;height:48px;padding:0 12px 0 16px;border-bottom:1px solid var(--cmdk-line)}
+.cmdk-search{display:grid;color:var(--cmdk-muted)}.cmdk-search svg{width:15px;height:15px}
+.cmdk-field input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;color:var(--cmdk-fg);font:inherit;font-size:13.5px}
+.cmdk-field input::placeholder{color:var(--cmdk-faint)}
+.cmdk kbd{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border:1px solid var(--cmdk-line);border-radius:5px;background:var(--cmdk-bg);color:var(--cmdk-muted);font:400 11px/1 Inter,system-ui,sans-serif}
+.cmdk-list{max-height:356px;overflow-y:auto;padding:4px 4px 6px;scroll-padding:28px 0 6px}
+.cmdk-glabel{padding:10px 8px 6px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--cmdk-muted)}
+.cmdk-row{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 8px;border:0;border-radius:7px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:background .12s,transform .12s}
+.cmdk-row[data-active=true]{background:var(--cmdk-hl)}
+.cmdk-list[data-out=true] .cmdk-row{background:transparent}
+.cmdk-row[data-pressed=true]{transform:scale(.985)}
+.cmdk-ico{display:grid;place-items:center;width:16px;height:16px;flex:none;color:var(--cmdk-muted)}.cmdk-ico svg{width:15px;height:15px}
+.cmdk-label{white-space:nowrap}
+.cmdk-hint{color:var(--cmdk-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.cmdk-keys{display:flex;gap:4px;margin-left:auto;padding-left:12px}
+.cmdk-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;height:40px;padding:0 12px;border-top:1px solid var(--cmdk-line);font-size:12px;color:var(--cmdk-muted)}
+.cmdk-foot kbd{margin-right:6px}.cmdk-open kbd{margin-right:4px}.cmdk-open kbd:nth-child(2){margin-right:6px}
+.cmdk-ran{display:inline-flex;align-items:center;gap:6px;color:var(--cmdk-fg);animation:cmdk-in .25s both}.cmdk-ran svg{width:14px;height:14px;color:var(--cmdk-green)}
+.cmdk-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.cmdk :focus-visible{outline:none}
+@keyframes cmdk-in{from{opacity:0;transform:translateY(3px)}}
+@media(max-width:520px){.cmdk-keys,.cmdk-hint,.cmdk-open{display:none}}
+@media(prefers-reduced-motion:reduce){.cmdk *{animation:none!important;transition:none!important}}
+`;
 
 export default CommandMenu;

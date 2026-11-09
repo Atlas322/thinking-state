@@ -3,344 +3,295 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type ExperimentTone = "red" | "amber" | "green" | "blue" | "violet" | "gray";
+export type ExperimentVariant = {
   id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
+  key: string;
+  name: string;
+  values: Record<string, number>;
+  control?: boolean;
+  visitors?: number;
+  confidence?: Record<string, number>;
   color?: string;
-  children?: StudioItem[];
-  tags?: string[];
 };
-export type StudioProps = {
+export type ExperimentMetric = {
+  id: string;
+  label: string;
+  format?: (v: number) => string;
+  lowerIsBetter?: boolean;
+};
+
+export type ExperimentCardProps = {
   title?: string;
-  items?: StudioItem[];
+  variants?: ExperimentVariant[];
+  metrics?: ExperimentMetric[];
+  metric?: string;
+  defaultMetric?: string;
+  onMetricChange?: (id: string) => void;
+  winner?: string | null;
+  defaultWinner?: string | null;
+  onWinnerChange?: (id: string | null) => void;
+  status?: { label: string; tone?: ExperimentTone };
+  note?: string;
+  action?: { label: string | ((v: ExperimentVariant) => string); onClick: (v: ExperimentVariant) => void };
+  hint?: React.ReactNode;
+  trigger?: "hover" | "click";
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
+const pct = (v: number) => `${v.toFixed(1)}%`;
+const defaultMetrics: ExperimentMetric[] = [
+  { id: "conversion", label: "Conversion", format: pct },
+  { id: "revenue", label: "Revenue", format: (v) => `$${v.toFixed(2)}` },
+  { id: "bounce", label: "Bounce", format: pct, lowerIsBetter: true },
+];
+const defaultVariants: ExperimentVariant[] = [
+  { id: "a", key: "A", name: "Start free trial", control: true, values: { conversion: 4.2, revenue: 1.84, bounce: 38.2 }, color: "#a1a1aa" },
+  { id: "b", key: "B", name: "Try it free", values: { conversion: 4.7, revenue: 2.03, bounce: 35.1 }, color: "#3b82f6" },
+  { id: "c", key: "C", name: "Get started – $0", values: { conversion: 4.0, revenue: 1.71, bounce: 40.6 }, color: "#6366f1" },
+];
+
+const useTween = (target: number, ms = 320) => {
+  const [v, setV] = React.useState(target);
+  const from = React.useRef(target);
+  React.useEffect(() => {
+    const reduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const start = from.current;
+    if (reduce || start === target) { from.current = target; setV(target); return; }
+    let raf = 0;
+    const t0 = performance.now();
+    const step = (t: number) => {
+      const k = Math.min(1, (t - t0) / ms);
+      const e = 1 - Math.pow(1 - k, 3);
+      const cur = start + (target - start) * e;
+      from.current = cur;
+      setV(cur);
+      if (k < 1) raf = requestAnimationFrame(step);
     };
-    return { status, copy };
-  },
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [target, ms]);
+  return v;
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+function Rolling({ value, format }: { value: number; format: (v: number) => string }) {
+  return <>{format(useTween(value))}</>;
+}
 
 export function ExperimentCard({
-  title = "New onboarding flow",
-  items = [
-    { id: "a", title: "Variant A", detail: "Current flow", value: 12.4 },
-    { id: "b", title: "Variant B", detail: "Guided setup", value: 16.8 },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [metric, setMetric] = React.useState("Conversion");
-  const [winner, setWinner] = React.useState<string>();
-  const [expanded, setExpanded] = React.useState(false);
+  title = "Signup button copy",
+  variants = defaultVariants,
+  metrics = defaultMetrics,
+  metric,
+  defaultMetric,
+  onMetricChange,
+  winner,
+  defaultWinner = null,
+  onWinnerChange,
+  status = { label: "Running", tone: "green" },
+  note = "Day 9 of 14",
+  action,
+  hint = "Pick a winner",
+  trigger = "hover",
+  open,
+  defaultOpen = false,
+  onOpenChange,
+  className = "",
+}: ExperimentCardProps) {
+  const [innerOpen, setInnerOpen] = React.useState(defaultOpen);
+  const [innerMetric, setInnerMetric] = React.useState(defaultMetric ?? metrics[0]?.id);
+  const [innerWinner, setInnerWinner] = React.useState<string | null>(defaultWinner);
+  const [hot, setHot] = React.useState<string | null>(null);
+  const isOpen = open ?? innerOpen;
+  const mId = metric ?? innerMetric;
+  const win = winner !== undefined ? winner : innerWinner;
+  const m = metrics.find((x) => x.id === mId) ?? metrics[0];
+  const fmt = m.format ?? ((v: number) => String(v));
+  const control = variants.find((v) => v.control) ?? variants[0];
+  const base = control.values[m.id] ?? 0;
+  const delta = (v: ExperimentVariant) => (base ? ((v.values[m.id] - base) / base) * 100 : 0);
+  const better = (v: ExperimentVariant) => (m.lowerIsBetter ? -delta(v) : delta(v));
+  const leader = variants.filter((v) => v !== control).sort((a, b) => better(b) - better(a))[0];
+  const max = Math.max(...variants.map((v) => v.values[m.id] ?? 0), 0.0001);
+  const min = Math.min(...variants.map((v) => v.values[m.id] ?? 0));
+  const headRef = React.useRef<HTMLButtonElement>(null);
+
+  const setOpen = (o: boolean) => {
+    if (open === undefined) setInnerOpen(o);
+    onOpenChange?.(o);
+  };
+  const setMetric = (id: string) => {
+    if (metric === undefined) setInnerMetric(id);
+    onMetricChange?.(id);
+  };
+  const pick = (id: string) => {
+    const next = win === id ? null : id;
+    if (winner === undefined) setInnerWinner(next);
+    onWinnerChange?.(next);
+  };
+  const winV = variants.find((v) => v.id === win);
+  const sign = (n: number) => `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(n).toFixed(1)}%`;
+  const showLead = winV ?? leader;
+  const leadDelta = showLead ? delta(showLead) : 0;
+  const good = showLead ? better(showLead) >= 0 : true;
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="A/B experiment · 2,408 participants"
-      className={className}
-      aside={
-        <UI.Badge tone={winner ? "green" : "blue"}>
-          {winner ? "Winner selected" : "Running"}
-        </UI.Badge>
-      }
+    <div
+      className={`ec${isOpen ? " is-open" : ""} ${className}`}
+      onMouseEnter={trigger === "hover" ? () => setOpen(true) : undefined}
+      onMouseLeave={trigger === "hover" ? () => { setOpen(false); setHot(null); } : undefined}
+      onKeyDown={(e) => { if (e.key === "Escape" && isOpen) { setOpen(false); headRef.current?.focus(); } }}
     >
-      <UI.Tabs
-        values={["Conversion", "Retention", "Revenue"]}
-        value={metric}
-        onChange={setMetric}
-      />
-      <div className="st-columns">
-        {items.map((x, i) => (
-          <button
-            key={x.id}
-            className={`st-tile ${winner === x.id ? "active" : ""}`}
-            onClick={() => {
-              setWinner(x.id);
-              onAction?.("pick", x);
-            }}
-          >
-            <small>
-              {x.title} · {x.detail}
-            </small>
-            <div className="st-big">
-              {metric === "Revenue" ? "$" : ""}
-              {(
-                (x.value ?? 0) *
-                (metric === "Retention" ? 3 : metric === "Revenue" ? 12 : 1)
-              ).toFixed(1)}
-              {metric !== "Revenue" ? "%" : ""}
-            </div>
-            <UI.Spark
-              values={[4, 8, 6, 12, 10, 15, 12, 18, 16, 22].map(
-                (v) => v * (i ? 1.3 : 1),
-              )}
-              color={i ? "#9a83c6" : "#7294e0"}
-            />
-            <small>
-              {winner === x.id
-                ? "✓ Selected winner"
-                : "Click to choose as winner"}
-            </small>
-          </button>
-        ))}
-      </div>
-      <UI.Button
-        aria-expanded={expanded}
-        onClick={() => setExpanded((s) => !s)}
+      <style>{css}</style>
+      <button
+        ref={headRef}
+        type="button"
+        className="ec-head"
+        aria-expanded={isOpen}
+        aria-label={`${title}, ${status.label}${note ? `, ${note}` : ""}${showLead ? `, ${showLead.key} ${sign(leadDelta)}` : ""}`}
+        onClick={() => setOpen(!isOpen)}
       >
-        {expanded ? "Hide" : "Show"} experiment details
-      </UI.Button>
-      {expanded && (
-        <p className="st-prose">
-          50/50 allocation. Compare the same cohort and observation window
-          before selecting a winner. Displayed metrics are sample data.
-        </p>
-      )}
-    </UI.Panel>
+        <span className="ec-chart" aria-hidden="true">
+          {variants.map((v) => (
+            <span
+              key={v.id}
+              className={hot && hot !== v.id ? "is-dim" : hot === v.id ? "is-hot" : ""}
+              style={{ height: `${30 + 70 * (((v.values[m.id] ?? 0) - min) / Math.max(0.0001, max - min))}%`, background: v.color ?? "#3b82f6" }}
+            />
+          ))}
+        </span>
+        <span className="ec-titles">
+          <strong>{title}</strong>
+          <span className="ec-sub">
+            <span className={`ec-tag ec-${status.tone ?? "gray"}`}><i />{status.label}</span>
+            {note && <span className="ec-note">{note}</span>}
+          </span>
+        </span>
+        {showLead && (
+          <span className={`ec-lead ${good ? "is-up" : "is-down"}`}>
+            {winV ? <svg viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg> : null}
+            {showLead.key}
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d={leadDelta >= 0 ? "M2 11.5 6 7.5l2.5 2.5L14 4.5M10 4.5h4v4" : "M2 4.5 6 8.5l2.5-2.5L14 11.5M10 11.5h4v-4"} fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {sign(leadDelta)}
+          </span>
+        )}
+      </button>
+      <div className="ec-body" inert={!isOpen ? true : undefined} aria-hidden={!isOpen}>
+        <div className="ec-inner">
+          {metrics.length > 1 && (
+            <div
+              className="ec-switch"
+              role="radiogroup"
+              aria-label="Metric"
+              onKeyDown={(e) => {
+                const i = metrics.findIndex((x) => x.id === m.id);
+                if (e.key === "ArrowRight") setMetric(metrics[(i + 1) % metrics.length].id);
+                if (e.key === "ArrowLeft") setMetric(metrics[(i - 1 + metrics.length) % metrics.length].id);
+              }}
+            >
+              <span className="ec-thumb" style={{ width: `${100 / metrics.length}%`, transform: `translateX(${metrics.findIndex((x) => x.id === m.id) * 100}%)` }} />
+              {metrics.map((x) => (
+                <button key={x.id} type="button" role="radio" aria-checked={x.id === m.id} tabIndex={x.id === m.id ? 0 : -1} onClick={() => setMetric(x.id)}>
+                  {x.label}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className="ec-rows" role="radiogroup" aria-label="Variants">
+            {variants.map((v) => {
+              const d = delta(v);
+              const b = m.lowerIsBetter ? -d : d;
+              const picked = win === v.id;
+              return (
+                <button
+                  key={v.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={picked}
+                  aria-label={`${v.key} ${v.name}, ${fmt(v.values[m.id])}${v === control ? ", baseline" : `, ${sign(d)}`}`}
+                  className={`ec-row${picked ? " is-picked" : ""}${win && !picked ? " is-other" : ""}`}
+                  onMouseEnter={() => setHot(v.id)}
+                  onMouseLeave={() => setHot(null)}
+                  onFocus={() => setHot(v.id)}
+                  onBlur={() => setHot(null)}
+                  onClick={() => pick(v.id)}
+                >
+                  <span className="ec-key" style={{ ["--ec-c" as string]: v.color ?? "#3b82f6" }}>
+                    {picked ? <svg viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg> : v.key}
+                  </span>
+                  <span className="ec-name">{v.name}</span>
+                  <span className="ec-bar"><span style={{ width: `${((v.values[m.id] ?? 0) / max) * 100}%`, background: v.color ?? "#3b82f6" }} /></span>
+                  <span className="ec-val"><Rolling value={v.values[m.id] ?? 0} format={fmt} /></span>
+                  <span className={`ec-d${v === control ? "" : b >= 0 ? " is-up" : " is-down"}`}>{v === control ? "Base" : sign(d)}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="ec-last" aria-live="polite">
+            {winV ? (
+              <>
+                <span>{winV.key} picked · {winV.name}</span>
+                <button type="button" className="ec-action" onClick={() => action?.onClick(winV)}>
+                  {action ? (typeof action.label === "function" ? action.label(winV) : action.label) : `Ship ${winV.key}`}
+                </button>
+              </>
+            ) : (
+              <span>{hot ? `${variants.find((v) => v.id === hot)?.name}` : hint}</span>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
+
+const css = `
+.ec{--ec-bg:#fff;--ec-fg:#18181b;--ec-muted:#71717a;--ec-faint:#a1a1aa;--ec-line:#ececef;--ec-soft:#f4f4f5;--ec-green:#16a34a;--ec-green-bg:#e8f7ee;--ec-red:#e5484d;--ec-red-bg:#fdecec;--ec-accent:#3b82f6;width:100%;max-width:340px;background:var(--ec-bg);color:var(--ec-fg);border:1px solid var(--ec-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif;transition:box-shadow .2s}
+.ec.is-open{box-shadow:0 8px 28px #00000014}
+:where(.dark,[data-theme=dark]) .ec{--ec-bg:#1b1b1e;--ec-fg:#ececef;--ec-muted:#a1a1aa;--ec-faint:#71717a;--ec-line:#2e2e33;--ec-soft:#26262b;--ec-green-bg:#16301f;--ec-red-bg:#3a1c1e;color-scheme:dark}
+.ec *{box-sizing:border-box}.ec button{font:inherit;color:inherit;cursor:pointer}
+.ec-head{display:flex;align-items:center;gap:10px;width:100%;padding:12px 12px 12px 12px;border:0;background:none;text-align:left;border-radius:10px}
+.ec-chart{display:flex;align-items:flex-end;justify-content:center;gap:2px;width:36px;height:36px;padding:7px 6px;border:1px solid var(--ec-line);border-radius:7px;flex:none;background:var(--ec-bg)}
+.ec-chart span{width:5px;border-radius:1px;transition:height .35s cubic-bezier(.2,.8,.2,1),opacity .2s,width .2s}
+.ec-chart .is-dim{opacity:.3}.ec-chart .is-hot{width:7px}
+.ec-titles{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.ec-titles strong{font-weight:500;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ec-sub{display:flex;align-items:center;gap:6px;font-size:12px}
+.ec-tag{display:inline-flex;align-items:center;gap:5px;height:18px;padding:0 6px;border-radius:4px;font-weight:500;font-size:12px}
+.ec-tag i{width:5px;height:5px;border-radius:50%;background:currentColor}
+.ec-green{color:var(--ec-green);background:var(--ec-green-bg)}.ec-red{color:var(--ec-red);background:var(--ec-red-bg)}.ec-amber{color:#b45309;background:#fff4e0}.ec-blue{color:#2563eb;background:#eaf2ff}.ec-violet{color:#7c3aed;background:#f1ecfe}.ec-gray{color:var(--ec-muted);background:var(--ec-soft)}
+.ec-note{color:var(--ec-muted)}
+.ec-lead{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border-radius:5px;font-size:12px;font-weight:500;flex:none;font-variant-numeric:tabular-nums}
+.ec-lead svg{width:12px;height:12px}
+.ec-lead.is-up{color:var(--ec-green);background:var(--ec-green-bg)}.ec-lead.is-down{color:var(--ec-red);background:var(--ec-red-bg)}
+.ec-body{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.ec.is-open .ec-body{grid-template-rows:1fr;opacity:1}
+.ec-inner{overflow:hidden;min-height:0}
+.ec-switch{position:relative;display:flex;margin:0 12px 8px;padding:2px;border-radius:7px;background:var(--ec-soft)}
+.ec-thumb{position:absolute;top:2px;bottom:2px;left:2px;max-width:calc(100% - 4px);border-radius:5px;background:var(--ec-bg);box-shadow:0 1px 2px #00000014;transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+.ec-switch button{position:relative;flex:1;height:24px;border:0;background:none;font-size:12px!important;color:var(--ec-muted)!important}
+.ec-switch button[aria-checked=true]{color:var(--ec-fg)!important;font-weight:500}
+.ec-rows{display:flex;flex-direction:column;padding:0 6px}
+.ec-row{display:grid;grid-template-columns:20px minmax(0,1fr) 54px 42px 48px;align-items:center;gap:8px;height:34px;padding:0 6px;border:0;border-radius:6px;background:none;text-align:left;transition:background .15s,opacity .15s}
+.ec-row:hover{background:var(--ec-soft)}.ec-row.is-other{opacity:.5}
+.ec-key{display:grid;place-items:center;width:20px;height:20px;border-radius:5px;background:color-mix(in srgb,var(--ec-c) 14%,transparent);color:var(--ec-c);font-size:11px;font-weight:600}
+.ec-row.is-picked .ec-key{background:var(--ec-c);color:#fff}.ec-key svg{width:12px;height:12px}
+.ec-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ec-bar{height:4px;border-radius:2px;background:var(--ec-soft);overflow:hidden}.ec-bar span{display:block;height:100%;border-radius:2px;transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.ec-val{text-align:right;font-variant-numeric:tabular-nums;font-weight:500}
+.ec-d{text-align:right;font-size:12px;color:var(--ec-faint);font-variant-numeric:tabular-nums}.ec-d.is-up{color:var(--ec-green)}.ec-d.is-down{color:var(--ec-red)}
+.ec-last{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;margin-top:6px;padding:8px 12px;border-top:1px solid var(--ec-line);font-size:12px;color:var(--ec-muted)}
+.ec-action{height:26px;padding:0 10px;border:0;border-radius:6px;background:var(--ec-fg);color:var(--ec-bg)!important;font-size:12px!important;font-weight:500;animation:ec-pop .2s both}
+.ec :focus-visible{outline:2px solid var(--ec-accent);outline-offset:2px}
+@keyframes ec-pop{from{transform:scale(.85);opacity:0}}
+@media(max-width:400px){.ec-row{grid-template-columns:20px minmax(0,1fr) 42px 46px}.ec-bar{display:none}}
+@media(prefers-reduced-motion:reduce){.ec *,.ec{animation:none!important;transition:none!important}}
+`;
 
 export default ExperimentCard;

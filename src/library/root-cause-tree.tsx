@@ -3,363 +3,276 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type CauseStatus = "open" | "checking" | "ruled-out" | "confirmed";
+
+export type Cause = {
   id: string;
   title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
+  icon?: React.ReactNode;
+  files?: string[];
+  gate?: "or" | "and";
+  status?: CauseStatus;
+  verdict?: string;
+  evidence?: { kind: string; source?: string; content: string };
+  /** Milliseconds since the run started. */
+  at?: number;
+  children?: Cause[];
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
+export type RootCauseTreeProps = {
+  title?: string;
+  failure?: Cause & { detail?: string };
+  onAction?: (cause: Cause, action: "fix" | "retry") => void;
+  formatTime?: (ms: number) => string;
+  className?: string;
+};
+
+const stripe = (
+  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#635bff" /><path d="M9.8 6.1c-.5-.3-1.1-.5-1.7-.5-.6 0-.9.2-.9.5 0 .9 3.1.5 3.1 2.8 0 1.2-1 1.9-2.4 1.9-.7 0-1.5-.2-2.1-.6v-1.5c.6.4 1.4.7 2.1.7.5 0 .8-.2.8-.5 0-1-3.1-.6-3.1-2.8 0-1.1.9-1.9 2.3-1.9.7 0 1.3.1 1.9.4Z" fill="#fff" /></svg>
+);
+const github = (
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 0 0-2.2 13.6c.4.1.5-.2.5-.4v-1.3c-2 .4-2.4-.9-2.4-.9-.3-.8-.8-1-.8-1-.6-.4.1-.4.1-.4.7 0 1.1.7 1.1.7.6 1.1 1.7.8 2.1.6 0-.5.3-.8.5-1-1.6-.2-3.2-.8-3.2-3.5 0-.8.3-1.4.7-1.9 0-.2-.3-.9.1-1.9 0 0 .6-.2 1.9.7a6.6 6.6 0 0 1 3.5 0c1.3-.9 1.9-.7 1.9-.7.4 1 .1 1.7.1 1.9.4.5.7 1.1.7 1.9 0 2.7-1.6 3.3-3.2 3.5.3.2.5.7.5 1.3v2c0 .2.1.5.5.4A7 7 0 0 0 8 1Z" fill="currentColor" /></svg>
+);
+const db = (
+  <svg viewBox="0 0 16 16" aria-hidden="true"><ellipse cx="8" cy="4" rx="5" ry="2" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>
+);
+const flask = (
+  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="2" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M5 7h6M5 9.5h3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+);
+
+const defaultFailure: Cause & { detail?: string } = {
+  id: "checkout",
+  title: "Checkout tests failing",
+  icon: flask,
+  files: ["checkout.test.ts"],
+  detail: "4 of 12",
+  gate: "or",
+  status: "checking",
+  children: [
+    {
+      id: "coupon",
+      title: "Coupon ignored",
+      icon: stripe,
+      files: ["app/checkout/coupon.ts", "app/cart/total.ts"],
+      gate: "and",
+      status: "checking",
+      children: [
+        { id: "amount", title: "Sent as amount", icon: stripe, files: ["coupon.ts"], status: "checking" },
+        { id: "cart", title: "Cart drops it", icon: github, files: ["total.ts", "cart.ts"], status: "open" },
+      ],
+    },
+    { id: "stripe", title: "Stripe errors", icon: stripe, files: ["stripe.log"], status: "ruled-out", at: 177000, verdict: "No 4xx or 5xx responses during the run." },
+    { id: "fixtures", title: "Stale fixtures", icon: db, files: ["prices.json"], status: "ruled-out", at: 189000, verdict: "Fixture prices match production." },
+  ],
+};
+
+const fmt = (ms: number) => `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, "0")}`;
+const base = (f: string) => f.split("/").pop() ?? f;
+
+const FileIco = () => (
+  <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5h4l2 2v7H3Z" fill="currentColor" opacity=".55" /></svg>
+);
+
+const statusText: Record<CauseStatus, string> = { open: "Not checked", checking: "Checking", "ruled-out": "Ruled out", confirmed: "Root cause" };
+
+function count(c: Cause): { all: number; out: number } {
+  return (c.children ?? []).reduce(
+    (acc, k) => {
+      const s = count(k);
+      return { all: acc.all + 1 + s.all, out: acc.out + (k.status === "ruled-out" ? 1 : 0) + s.out };
+    },
+    { all: 0, out: 0 },
+  );
+}
+
+export function RootCauseTree({ title = "Root cause", failure = defaultFailure, onAction, formatTime = fmt, className = "" }: RootCauseTreeProps) {
+  const findFirst = (c: Cause): Cause | undefined => {
+    for (const k of c.children ?? []) {
+      if (k.status === "checking" || k.status === "confirmed") return k;
+    }
+    return c.children?.[0];
+  };
+  const [selected, setSelected] = React.useState<string | undefined>(() => findFirst(failure)?.id);
+  const all: Cause[] = [];
+  const walk = (c: Cause) => {
+    all.push(c);
+    c.children?.forEach(walk);
+  };
+  walk(failure);
+  const sel = all.find((c) => c.id === selected);
+  const { all: hyp, out } = count(failure);
+  const confirmed = all.some((c) => c.status === "confirmed" && !c.children?.length);
+
+  const card = (c: Cause, root = false) => {
+    const st = c.status ?? "open";
+    const files = c.files ?? [];
     return (
       <button
         type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
+        className={`rct-card is-${st}${root ? " is-root" : ""}${selected === c.id ? " is-selected" : ""}`}
+        aria-pressed={selected === c.id}
+        onClick={() => setSelected(c.id)}
       >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
+        <span className="rct-title">
+          {c.icon && <span className="rct-ico">{c.icon}</span>}
+          <span className={st === "checking" ? "rct-shimmer" : ""}>{c.title}</span>
         </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
-
-export function RootCauseTree({
-  title = "Checkout tests failing",
-  items = [
-    {
-      id: "stripe",
-      title: "Stripe API errors",
-      detail: "Every call returned 200.",
-      status: "ruled out",
-    },
-    {
-      id: "coupon",
-      title: "Coupon not applied",
-      detail: "Two contributing causes",
-      status: "confirmed",
-      children: [
-        {
-          id: "percent",
-          title: "Discount sent as amount",
-          detail: "- amount_off\n+ percent_off",
-          status: "confirmed",
-        },
-        {
-          id: "total",
-          title: "Total recomputed after discount",
-          detail: "Tracing the update order",
-          status: "checking",
-        },
-      ],
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [opened, setOpened] = React.useState<string[]>(["coupon"]);
-  const [selected, setSelected] = React.useState<StudioItem>();
-  const tree = (nodes: StudioItem[]): React.ReactNode =>
-    nodes.map((x) => (
-      <div key={x.id}>
-        <UI.Row
-          title={x.title}
-          detail={x.status}
-          onClick={() => {
-            setOpened((s) =>
-              s.includes(x.id) ? s.filter((id) => id !== x.id) : [...s, x.id],
-            );
-            setSelected(x);
-          }}
-        >
-          <UI.Badge
-            tone={
-              x.status === "confirmed"
-                ? "red"
-                : x.status === "checking"
-                  ? "blue"
-                  : "green"
-            }
-          >
-            {x.status === "confirmed"
-              ? "!"
-              : x.status === "checking"
-                ? "◌"
-                : "✓"}
-          </UI.Badge>
-        </UI.Row>
-        {x.children && opened.includes(x.id) && (
-          <div className="st-branch">{tree(x.children)}</div>
+        {files.length > 0 && (
+          <span className="rct-files">
+            <span className="rct-file"><FileIco />{base(files[0])}</span>
+            {files.length > 1 && <span className="rct-plus">+{files.length - 1}</span>}
+          </span>
         )}
-      </div>
-    ));
+        {root ? (
+          <span className="rct-status">
+            <svg className="rct-warn" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2 14.5 13.5h-13Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /><path d="M8 6.5v3M8 11.5v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+            <span className="rct-failed">Failed</span>
+            {failure.detail && <span>{failure.detail}</span>}
+            <span className="rct-right">{confirmed ? "Found" : "Investigating"}</span>
+          </span>
+        ) : (
+          <span className="rct-status">
+            <span className={`rct-mark is-${st}`} aria-hidden="true" />
+            {statusText[st]}
+            {c.at !== undefined && st !== "checking" && st !== "open" && ` · ${formatTime(c.at)}`}
+          </span>
+        )}
+      </button>
+    );
+  };
+
+  const branch = (c: Cause, root = false): React.ReactNode => {
+    const kids = c.children ?? [];
+    return (
+      <li key={c.id} className={`rct-node is-${c.status ?? "open"}`}>
+        {card(c, root)}
+        {kids.length > 0 && (
+          <>
+            <span className="rct-gate">{(c.gate ?? "or").toUpperCase()}</span>
+            <ul className={`rct-kids${kids.length === 1 ? " is-single" : ""}`}>{kids.map((k) => branch(k))}</ul>
+          </>
+        )}
+      </li>
+    );
+  };
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="Root cause investigation · 4 of 12 tests"
-      className={className}
-    >
-      {tree(items)}
-      {selected && (
-        <div className="st-tile" style={{ marginTop: 12 }}>
-          <strong>{selected.title}</strong>
-          <pre className="st-code">{selected.detail}</pre>
-          <UI.Button
-            onClick={() => {
-              onAction?.("investigate", selected);
-              setSelected({
-                ...selected,
-                detail:
-                  "Investigation requested. Connect onAction to your agent to continue.",
-              });
-            }}
-          >
-            Investigate further
-          </UI.Button>
+    <section className={`rct ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="rct-bar">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3.5" r="1.8" fill="currentColor" /><circle cx="3.5" cy="12.5" r="1.8" fill="currentColor" /><circle cx="12.5" cy="12.5" r="1.8" fill="currentColor" /><path d="M8 5.5v3M3.5 10.5V8.5h9v2" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>
+        <strong>{title}</strong>
+        <span className={`rct-badge${confirmed ? " is-found" : ""}`}>
+          {!confirmed && <span className="rct-spin" aria-hidden="true" />}
+          {confirmed ? "Found" : "Investigating"}
+        </span>
+        <span className="rct-count">
+          {hyp} hypotheses · {out} ruled out
+        </span>
+      </header>
+      <div className="rct-scroll">
+        <ul className="rct-tree">{branch(failure, true)}</ul>
+      </div>
+      {sel && sel !== failure && (
+        <div className="rct-evidence" aria-live="polite">
+          <div className="rct-ev-head">
+            <span className="rct-title">
+              {sel.icon && <span className="rct-ico">{sel.icon}</span>}
+              {sel.title}
+            </span>
+            <span className="rct-ev-st">{statusText[sel.status ?? "open"]}</span>
+          </div>
+          <p className="rct-ev-text">
+            {sel.verdict ?? (sel.status === "checking" ? "Checking this now…" : sel.status === "open" ? "Not checked yet." : "")}
+          </p>
+          {sel.evidence && (
+            <pre className="rct-ev-code">
+              <span>{sel.evidence.kind}{sel.evidence.source ? ` · ${sel.evidence.source}` : ""}</span>
+              {sel.evidence.content}
+            </pre>
+          )}
+          {sel.files && (
+            <div className="rct-files">
+              {sel.files.map((f) => (
+                <span key={f} className="rct-file"><FileIco />{f}</span>
+              ))}
+            </div>
+          )}
+          {onAction && sel.status === "confirmed" && (
+            <div className="rct-ev-act">
+              <button type="button" onClick={() => onAction(sel, "retry")}>Retry from here</button>
+              <button type="button" className="is-dark" onClick={() => onAction(sel, "fix")}>Fix it</button>
+            </div>
+          )}
         </div>
       )}
-    </UI.Panel>
+    </section>
   );
 }
+
+const css = `
+.rct{--rct-bg:#fff;--rct-fg:#18181b;--rct-muted:#71717a;--rct-faint:#a1a1aa;--rct-line:#e6e6e9;--rct-chip:#f1f1f3;--rct-blue:#3b82f6;--rct-blue-soft:#e8f1fe;--rct-red:#e5484d;--rct-red-soft:#fdecec;--rct-green:#16a34a;width:100%;max-width:700px;color:var(--rct-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .rct{--rct-bg:#1b1b1e;--rct-fg:#ececef;--rct-muted:#a1a1aa;--rct-faint:#71717a;--rct-line:#2e2e33;--rct-chip:#2a2a2f;--rct-blue:#5b9cff;--rct-blue-soft:#1b2a44;--rct-red:#ff6b6f;--rct-red-soft:#3a1d1f;--rct-green:#4ade80;color-scheme:dark}
+.rct *{box-sizing:border-box}.rct button{font:inherit;color:inherit;cursor:pointer}
+.rct-bar{display:flex;align-items:center;gap:8px;padding:0 4px 14px}
+.rct-bar>svg{width:14px;height:14px;color:var(--rct-muted)}.rct-bar strong{flex:1;font-weight:500}
+.rct-badge{display:inline-flex;align-items:center;gap:4px;height:18px;padding:0 5px;border-radius:4px;background:var(--rct-blue-soft);color:var(--rct-blue);font-size:11px;font-weight:500}
+.rct-badge.is-found{background:color-mix(in srgb,var(--rct-green) 14%,transparent);color:var(--rct-green)}
+.rct-spin{width:8px;height:8px;border-radius:50%;border:1.3px solid color-mix(in srgb,currentColor 30%,transparent);border-top-color:currentColor;animation:rct-rot .9s linear infinite}
+.rct-count{margin-left:8px;font-size:12px;color:var(--rct-muted)}
+.rct-scroll{overflow-x:auto;padding-bottom:4px}
+.rct-tree,.rct-kids{list-style:none;margin:0;padding:0;display:flex;justify-content:center}
+.rct-node{position:relative;display:flex;flex-direction:column;align-items:center;padding:0 4px}
+.rct-kids{position:relative;padding-top:14px}
+.rct-kids>.rct-node{padding-top:14px}
+.rct-kids>.rct-node::before{content:"";position:absolute;top:0;left:0;right:0;border-top:1.5px solid var(--rct-line)}
+.rct-kids>.rct-node:first-child::before{left:50%}.rct-kids>.rct-node:last-child::before{right:50%}
+.rct-kids.is-single>.rct-node::before{display:none}
+.rct-kids>.rct-node::after{content:"";position:absolute;top:0;left:50%;height:14px;border-left:1.5px solid var(--rct-line)}
+.rct-kids>.rct-node:first-child::after{border-top-left-radius:6px}
+.rct-kids>.rct-node.is-ruled-out::before{border-top-style:dashed}.rct-kids>.rct-node.is-ruled-out::after{border-left-style:dashed}
+.rct-kids>.rct-node:first-child::before{border-top-left-radius:6px}.rct-kids>.rct-node:last-child::before{border-top-right-radius:6px}
+.rct-kids::before{content:"";position:absolute;top:0;left:50%;height:14px;border-left:1.5px solid var(--rct-line)}
+.rct-gate{position:relative;z-index:1;margin-top:6px;margin-bottom:-14px;height:16px;padding:0 5px;border:1px solid var(--rct-line);border-radius:4px;background:var(--rct-bg);font-size:9.5px;font-weight:600;letter-spacing:.06em;line-height:14px;color:var(--rct-muted)}
+.rct-gate+.rct-kids{padding-top:14px}
+.rct-card{display:flex;flex-direction:column;align-items:flex-start;gap:5px;width:162px;padding:10px 10px 9px;border:1px solid var(--rct-line);border-radius:8px;background:var(--rct-bg);box-shadow:0 1px 2px #0000000a;text-align:left;transition:border-color .15s,opacity .2s;animation:rct-in .3s both}
+.rct-card.is-root{width:204px}
+.rct-card:hover{border-color:color-mix(in srgb,var(--rct-fg) 25%,transparent)}
+.rct-card.is-selected{border-color:color-mix(in srgb,var(--rct-fg) 30%,transparent)}
+.rct-card.is-ruled-out{box-shadow:none;background:color-mix(in srgb,var(--rct-bg) 55%,transparent)}.rct-card.is-ruled-out .rct-files,.rct-card.is-ruled-out .rct-status{opacity:.8}
+.rct-card.is-ruled-out .rct-title{color:var(--rct-muted)}.rct-card.is-ruled-out .rct-ico{filter:grayscale(1);opacity:.6}
+.rct-card.is-confirmed{border-color:var(--rct-green)}
+.rct-title{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:400;line-height:1.3}
+.rct-ico{display:grid;place-items:center;width:14px;height:14px;flex:none}.rct-ico svg{width:13px;height:13px}
+.rct-shimmer{background:linear-gradient(90deg,var(--rct-fg) 40%,var(--rct-faint) 50%,var(--rct-fg) 60%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:rct-sh 2s linear infinite}
+.rct-files{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.rct-file{display:inline-flex;align-items:center;gap:4px;height:18px;padding:0 5px;border-radius:4px;background:var(--rct-chip);font-size:11px;color:color-mix(in srgb,var(--rct-fg) 80%,transparent)}
+.rct-file svg{width:9px;height:9px;color:var(--rct-faint)}
+.rct-plus{font-size:11px;color:var(--rct-muted)}
+.rct-status{display:flex;align-items:center;gap:6px;width:100%;font-size:11px;color:var(--rct-muted)}
+.rct-right{margin-left:auto}
+.rct-warn{width:12px;height:12px;color:var(--rct-red)}
+.rct-failed{padding:0 4px;border-radius:3px;background:var(--rct-red-soft);color:var(--rct-red)}
+.rct-mark{width:8px;height:8px;border-radius:50%;border:1.2px solid var(--rct-faint)}
+.rct-mark.is-checking{border-color:color-mix(in srgb,var(--rct-muted) 30%,transparent);border-top-color:var(--rct-muted);animation:rct-rot .9s linear infinite}
+.rct-mark.is-ruled-out{border:0;width:8px;height:8px;background:linear-gradient(45deg,transparent 44%,var(--rct-faint) 44% 56%,transparent 56%),linear-gradient(-45deg,transparent 44%,var(--rct-faint) 44% 56%,transparent 56%)}
+.rct-mark.is-confirmed{border:0;background:var(--rct-green)}
+.rct-evidence{margin-top:16px;padding:14px;border:1px solid var(--rct-line);border-radius:8px;background:var(--rct-bg);box-shadow:0 1px 2px #0000000a;animation:rct-in .25s both}
+.rct-ev-head{display:flex;justify-content:space-between;align-items:center}
+.rct-ev-st{font-size:12px;color:var(--rct-muted)}
+.rct-ev-text{margin:6px 0 8px;font-size:13px;color:var(--rct-muted)}
+.rct-ev-code{margin:0 0 8px;padding:8px 10px;border-radius:6px;background:var(--rct-chip);font:400 12px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap}
+.rct-ev-code span{display:block;margin-bottom:4px;font-family:Inter,system-ui,sans-serif;color:var(--rct-muted)}
+.rct-ev-act{display:flex;gap:6px;justify-content:flex-end;margin-top:10px}
+.rct-ev-act button{height:28px;padding:0 10px;border:1px solid var(--rct-line);border-radius:6px;background:var(--rct-bg);font-size:13px}
+.rct-ev-act .is-dark{background:var(--rct-fg);border-color:var(--rct-fg);color:var(--rct-bg)}
+.rct :focus-visible{outline:2px solid var(--rct-blue);outline-offset:2px}
+@keyframes rct-in{from{opacity:0;transform:translateY(4px)}}
+@keyframes rct-rot{to{transform:rotate(360deg)}}
+@keyframes rct-sh{from{background-position:100% 0}to{background-position:-150% 0}}
+@media(max-width:560px){.rct-card{width:140px}.rct-card.is-root{width:180px}.rct-count{display:none}}
+@media(prefers-reduced-motion:reduce){.rct *{animation:none!important;transition:none!important}}
+`;
 
 export default RootCauseTree;

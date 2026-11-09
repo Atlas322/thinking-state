@@ -3,371 +3,315 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+
+export type IntegrationValues = {
+  enabled: boolean;
+  siteUrl: string;
+  timeZone: string;
+  apiKey: string;
 };
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
+export type IntegrationSettingsProps = {
+  name?: string;
+  logo?: React.ReactNode;
+  count?: number;
+  meta?: string;
+  defaultValues?: Partial<IntegrationValues>;
+  siteHint?: string;
+  timeZones?: string[];
+  onGenerateKey?: () => string | Promise<string>;
+  onSave?: (values: IntegrationValues) => void | Promise<void>;
+  onToggle?: (enabled: boolean) => void;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
+const ShopifyLogo = (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M15.6 4.3 14.4 4c-.2-.6-.6-1.4-1.3-1.4-.1 0-.3 0-.4.1C12.4 2.3 12 2 11.6 2 8.9 2 7.6 5.3 7.2 7l-2 .6c-.6.2-.6.2-.7.8L3 20.4 15 22.6Z" fill="#95bf47" />
+    <path d="m15.6 4.3-.6 18.3 6-1.3s-2.4-16.4-2.4-16.5c0-.1-.1-.2-.2-.2Z" fill="#5e8e3e" />
+    <path d="M12.3 8.4 11.7 10.3s-.7-.3-1.5-.3c-1.2 0-1.2.7-1.2.9 0 1 2.7 1.4 2.7 3.8 0 1.9-1.2 3.1-2.8 3.1-1.9 0-2.9-1.2-2.9-1.2l.5-1.7s1 .9 1.9.9c.6 0 .8-.4.8-.8 0-1.3-2.2-1.4-2.2-3.6 0-1.9 1.3-3.6 4-3.6 1 0 1.5.3 1.5.3Z" fill="#fff" />
+  </svg>
+);
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultZones = [
+  "(GMT −08:00) Los Angeles",
+  "(GMT −05:00) New York",
+  "(GMT +00:00) London",
+  "(GMT +01:00) Berlin",
+  "(GMT +02:00) Athens",
+  "(GMT +05:30) Kolkata",
+  "(GMT +08:00) Singapore",
+  "(GMT +09:00) Tokyo",
+];
+
+const validHost = (v: string) => /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+(\/\S*)?$/i.test(v.trim());
+const randomKey = () =>
+  "shpat_" + Array.from({ length: 28 }, () => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
 
 export function IntegrationSettings({
-  title = "Shopify store",
-  onAction,
-  className,
-}: StudioProps) {
-  const [enabled, setEnabled] = React.useState(true);
-  const [url, setUrl] = React.useState("https://lumen-studio.example");
-  const [zone, setZone] = React.useState("Asia/Ulaanbaatar");
-  const [key, setKey] = React.useState("demo_key_not_a_real_credential");
-  const [show, setShow] = React.useState(false);
-  const [saved, setSaved] = React.useState(false);
-  const [error, setError] = React.useState("");
+  name = "Shopify store",
+  logo = ShopifyLogo,
+  count = 128,
+  meta = "Connected on March 4, 2026 at 09:12",
+  defaultValues,
+  siteHint = "Your store's primary domain from Settings › Domains",
+  timeZones = defaultZones,
+  onGenerateKey,
+  onSave,
+  onToggle,
+  className = "",
+}: IntegrationSettingsProps) {
+  const initial: IntegrationValues = {
+    enabled: true,
+    siteUrl: "lumen-studio.com",
+    timeZone: "(GMT +01:00) Berlin",
+    apiKey: "",
+    ...defaultValues,
+  };
+  const [saved, setSaved] = React.useState(initial);
+  const [v, setV] = React.useState(initial);
+  const [tzOpen, setTzOpen] = React.useState(false);
+  const [busy, setBusy] = React.useState<"key" | "save" | null>(null);
+  const [copied, setCopied] = React.useState(false);
+  const [said, setSaid] = React.useState("");
+  const [touched, setTouched] = React.useState(false);
+  const id = React.useId();
+  const tzRef = React.useRef<HTMLDivElement>(null);
+
+  const host = v.siteUrl.replace(/^https?:\/\//, "");
+  const invalid = host.length > 0 && !validHost(host);
+  const dirty = v.siteUrl !== saved.siteUrl || v.timeZone !== saved.timeZone || v.apiKey !== saved.apiKey;
+
+  React.useEffect(() => {
+    if (!tzOpen) return;
+    const close = (e: MouseEvent) => {
+      if (!tzRef.current?.contains(e.target as Node)) setTzOpen(false);
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, [tzOpen]);
+
+  const toggle = () => {
+    const enabled = !v.enabled;
+    setV((s) => ({ ...s, enabled }));
+    setSaved((s) => ({ ...s, enabled }));
+    onToggle?.(enabled);
+  };
+  const generate = async () => {
+    setBusy("key");
+    try {
+      const key = onGenerateKey ? await onGenerateKey() : randomKey();
+      setV((s) => ({ ...s, apiKey: key }));
+      setSaid("New API key generated. Copy it now – it won't be shown again.");
+    } finally {
+      setBusy(null);
+    }
+  };
+  const save = async () => {
+    if (invalid) return;
+    setBusy("save");
+    try {
+      const next = { ...v, siteUrl: host };
+      await onSave?.(next);
+      setSaved(next);
+      setV(next);
+      setSaid("Settings saved");
+    } finally {
+      setBusy(null);
+    }
+  };
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="128 products · integration settings"
-      className={className}
-      aside={
-        <input
-          aria-label="Enable integration"
-          type="checkbox"
-          role="switch"
-          checked={enabled}
-          onChange={(e) => {
-            setEnabled(e.target.checked);
-            setSaved(false);
-          }}
-        />
-      }
-    >
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          try {
-            const parsed = new URL(url);
-            if (!["https:", "http:"].includes(parsed.protocol)) throw Error();
-            setError("");
-            setSaved(true);
-            onAction?.("save", {
-              id: "settings",
-              title,
-              detail: url,
-              tags: [zone, enabled ? "enabled" : "disabled"],
-            });
-          } catch {
-            setError("Enter a valid HTTP or HTTPS address.");
-          }
-        }}
-      >
-        <UI.Field
-          label="Site address"
-          type="url"
-          value={url}
-          onChange={(e) => {
-            setUrl(e.target.value);
-            setSaved(false);
-          }}
-        />
-        <UI.Field
-          label="API key (demo)"
-          type={show ? "text" : "password"}
-          value={key}
-          onChange={(e) => {
-            setKey(e.target.value);
-            setSaved(false);
-          }}
-        />
-        <UI.Button onClick={() => setShow((s) => !s)}>
-          {show ? "Hide" : "Show"} key
-        </UI.Button>
-        <label className="st-field">
-          <span>Time zone</span>
-          <select
-            value={zone}
-            onChange={(e) => {
-              setZone(e.target.value);
-              setSaved(false);
-            }}
-          >
-            {[
-              "Asia/Ulaanbaatar",
-              "UTC",
-              "Europe/Berlin",
-              "America/New_York",
-              "Asia/Tokyo",
-            ].map((z) => (
-              <option key={z}>{z}</option>
-            ))}
-          </select>
-        </label>
-        {error && (
-          <p role="alert" style={{ color: "var(--st-red)" }}>
-            {error}
-          </p>
-        )}
-        <div className="st-actions">
-          <UI.Button primary type="submit">
-            {saved ? "Saved ✓" : "Save changes"}
-          </UI.Button>
-          <small>Credentials are never persisted by this demo.</small>
+    <section className={`ist ${className}`}>
+      <style>{css}</style>
+      <header className="ist-head">
+        <span className="ist-logo">{logo}</span>
+        <div className="ist-name">
+          <div className="ist-title">
+            <strong>{name}</strong>
+            {count !== undefined && <span className="ist-count">{count}</span>}
+          </div>
+          <div className="ist-meta">{v.enabled ? meta : "Paused – nothing syncs until you switch it back on"}</div>
         </div>
-      </form>
-    </UI.Panel>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={v.enabled}
+          aria-label={`${name} enabled`}
+          className="ist-switch"
+          onClick={toggle}
+        >
+          <i />
+        </button>
+      </header>
+
+      <div className="ist-fold" data-open={v.enabled} aria-hidden={!v.enabled}>
+        <div className="ist-fold-in">
+          <div className="ist-sec">
+            <div className="ist-label">API key</div>
+            {v.apiKey ? (
+              <div className="ist-field ist-key">
+                <code>{v.apiKey}</code>
+                <button
+                  type="button"
+                  className="ist-ibtn"
+                  aria-label={copied ? "Copied" : "Copy API key"}
+                  tabIndex={v.enabled ? 0 : -1}
+                  onClick={() => {
+                    navigator.clipboard?.writeText(v.apiKey).catch(() => {});
+                    setCopied(true);
+                    window.setTimeout(() => setCopied(false), 1400);
+                  }}
+                >
+                  {copied ? (
+                    <svg viewBox="0 0 16 16"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+                  ) : (
+                    <svg viewBox="0 0 16 16"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M3 10.5V3.5a1 1 0 0 1 1-1h6.5" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
+                  )}
+                </button>
+                <button type="button" className="ist-ibtn" aria-label="Generate a new API key" tabIndex={v.enabled ? 0 : -1} onClick={generate}>
+                  <svg viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v2.5h-2.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+                </button>
+              </div>
+            ) : (
+              <button type="button" className="ist-field ist-gen" disabled={busy === "key"} tabIndex={v.enabled ? 0 : -1} onClick={generate}>
+                {busy === "key" ? "Generating…" : "Generate a new API key"}
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <circle cx="5" cy="11" r="2.8" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                  <path d="m7 9 6-6m-2 2 1.5 1.5M9.5 6.5 11 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                </svg>
+              </button>
+            )}
+            {v.apiKey && v.apiKey !== saved.apiKey && <p className="ist-hint">Copy it now – it won't be shown again.</p>}
+          </div>
+
+          <div className="ist-sec">
+            <label className="ist-label" htmlFor={`${id}-site`}>Site address</label>
+            <div className="ist-field ist-url" data-invalid={invalid && touched}>
+              <span className="ist-proto">https://</span>
+              <input
+                id={`${id}-site`}
+                value={host}
+                spellCheck={false}
+                tabIndex={v.enabled ? 0 : -1}
+                aria-invalid={invalid}
+                aria-describedby={`${id}-hint`}
+                placeholder="your-store.com"
+                onBlur={() => setTouched(true)}
+                onChange={(e) => setV((s) => ({ ...s, siteUrl: e.target.value.replace(/^https?:\/\//, "") }))}
+              />
+              {host && !invalid && (
+                <svg className="ist-ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              )}
+            </div>
+            <p id={`${id}-hint`} className="ist-hint" data-invalid={invalid && touched}>
+              {invalid && touched ? "Enter a domain like your-store.com" : siteHint}
+            </p>
+          </div>
+
+          <div className="ist-sec">
+            <div className="ist-label" id={`${id}-tz`}>Time zone</div>
+            <div className="ist-tz" ref={tzRef}>
+              <button
+                type="button"
+                className="ist-field ist-select"
+                aria-haspopup="listbox"
+                aria-expanded={tzOpen}
+                aria-labelledby={`${id}-tz`}
+                tabIndex={v.enabled ? 0 : -1}
+                onClick={() => setTzOpen((o) => !o)}
+                onKeyDown={(e) => e.key === "Escape" && setTzOpen(false)}
+              >
+                {v.timeZone}
+                <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M8 5v3.2l2 1.3" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
+              </button>
+              {tzOpen && (
+                <ul className="ist-menu" role="listbox" aria-labelledby={`${id}-tz`} onKeyDown={(e) => e.key === "Escape" && setTzOpen(false)}>
+                  {timeZones.map((z) => (
+                    <li key={z}>
+                      <button
+                        type="button"
+                        role="option"
+                        aria-selected={z === v.timeZone}
+                        autoFocus={z === v.timeZone}
+                        onClick={() => {
+                          setV((s) => ({ ...s, timeZone: z }));
+                          setTzOpen(false);
+                        }}
+                      >
+                        {z}
+                        {z === v.timeZone && <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="ist-save" data-open={dirty && v.enabled}>
+        <div className="ist-save-in">
+          <span>Unsaved changes</span>
+          <button type="button" className="ist-btn" tabIndex={dirty ? 0 : -1} onClick={() => { setV(saved); setTouched(false); }}>Discard</button>
+          <button type="button" className="ist-btn ist-primary" tabIndex={dirty ? 0 : -1} disabled={invalid || busy === "save"} onClick={save}>
+            {busy === "save" ? "Saving…" : "Save"}
+          </button>
+        </div>
+      </div>
+      <span role="status" aria-live="polite" className="ist-sr">{said}</span>
+    </section>
   );
 }
+
+const css = `
+.ist{--ist-bg:#fff;--ist-fg:#18181b;--ist-muted:#71717a;--ist-faint:#a1a1aa;--ist-line:#ececef;--ist-soft:#f4f4f5;--ist-accent:#3b82f6;--ist-green:#2f9e6a;--ist-red:#d14343;width:100%;max-width:560px;background:var(--ist-bg);color:var(--ist-fg);border:1px solid var(--ist-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 4px 14px -8px #00000014;font:400 13px/1.45 Inter,system-ui,sans-serif;overflow:visible}
+:where(.dark,[data-theme=dark]) .ist{--ist-bg:#1b1b1e;--ist-fg:#ececef;--ist-muted:#a1a1aa;--ist-faint:#71717a;--ist-line:#2c2c31;--ist-soft:#26262b;--ist-accent:#5b9bff;--ist-green:#6cc596;--ist-red:#f08585;color-scheme:dark}
+.ist *{box-sizing:border-box}.ist button{font:inherit;color:inherit;cursor:pointer}
+.ist-head{display:flex;align-items:center;gap:13px;padding:16px 18px;border-bottom:1px solid var(--ist-line)}
+.ist-logo{display:grid;place-items:center;flex:none;width:46px;height:46px;border:1px solid var(--ist-line);border-radius:10px;background:#fff;box-shadow:0 1px 2px #0000000a}.ist-logo svg{width:26px;height:26px}
+.ist-name{flex:1;min-width:0}
+.ist-title{display:flex;align-items:center;gap:8px}.ist-title strong{font-size:15.5px;font-weight:500;letter-spacing:-.01em}
+.ist-count{height:18px;padding:0 6px;border-radius:5px;background:var(--ist-soft);color:var(--ist-muted);font-size:11.5px;line-height:18px;font-variant-numeric:tabular-nums}
+.ist-meta{margin-top:2px;color:var(--ist-muted);font-size:12.5px}
+.ist-switch{position:relative;flex:none;width:32px;height:18px;padding:0;border:0;border-radius:99px;background:color-mix(in srgb,var(--ist-fg) 18%,transparent);transition:background .2s}
+.ist-switch i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s cubic-bezier(.3,.7,.4,1)}
+.ist-switch[aria-checked=true]{background:var(--ist-accent)}.ist-switch[aria-checked=true] i{transform:translateX(14px)}
+.ist-fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .3s ease,opacity .25s}
+.ist-fold[data-open=false]{grid-template-rows:0fr;opacity:0}
+.ist-fold-in{min-height:0;overflow:hidden}.ist-fold[data-open=true] .ist-fold-in{overflow:visible}
+.ist-sec{padding:16px 18px 18px;border-bottom:1px solid var(--ist-line)}.ist-sec:last-child{border-bottom:0}
+.ist-label{display:block;margin-bottom:8px;font-size:13.5px;font-weight:500}
+.ist-field{display:flex;align-items:center;gap:8px;width:100%;height:36px;padding:0 11px;border:1px solid var(--ist-line);border-radius:8px;background:var(--ist-bg);font-size:13.5px;text-align:left;transition:border-color .15s,box-shadow .15s}
+.ist-field svg{width:15px;height:15px;flex:none;margin-left:auto;color:var(--ist-muted)}
+.ist-gen{background:var(--ist-soft);border-color:var(--ist-line);color:var(--ist-muted)!important}.ist-gen:hover{color:var(--ist-fg)!important}
+.ist-key code{flex:1;min-width:0;font:12.5px ui-monospace,SFMono-Regular,Menlo,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ist-ibtn{display:grid;place-items:center;width:26px;height:26px;padding:0;border:0;border-radius:6px;background:none;color:var(--ist-muted)!important}.ist-ibtn:hover{background:var(--ist-soft);color:var(--ist-fg)!important}.ist-ibtn svg{margin:0;width:14px;height:14px;color:inherit}
+.ist-url{box-shadow:0 1px 2px #00000008}
+.ist-url:focus-within{border-color:color-mix(in srgb,var(--ist-accent) 60%,var(--ist-line));box-shadow:0 0 0 3px color-mix(in srgb,var(--ist-accent) 14%,transparent)}
+.ist-url[data-invalid=true]{border-color:var(--ist-red)}
+.ist-proto{color:var(--ist-faint);margin-right:-8px}
+.ist-url input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;color:var(--ist-fg);font:inherit;padding:0}
+.ist-ok{color:var(--ist-green)!important}
+.ist-hint{margin:8px 0 0;color:var(--ist-muted);font-size:12.5px}.ist-hint[data-invalid=true]{color:var(--ist-red)}
+.ist-tz{position:relative}
+.ist-select{box-shadow:0 1px 2px #00000008}.ist-select:hover{border-color:color-mix(in srgb,var(--ist-fg) 18%,var(--ist-line))}
+.ist-menu{position:absolute;z-index:5;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;background:var(--ist-bg);border:1px solid var(--ist-line);border-radius:9px;box-shadow:0 12px 32px -10px #00000033;max-height:220px;overflow:auto;animation:ist-in .15s both}
+.ist-menu button{display:flex;align-items:center;width:100%;height:32px;padding:0 9px;border:0;border-radius:6px;background:none;text-align:left}
+.ist-menu button:hover,.ist-menu button:focus-visible{background:var(--ist-soft);outline:none}
+.ist-menu svg{width:14px;height:14px;margin-left:auto;color:var(--ist-accent)}
+.ist-save{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease}
+.ist-save[data-open=true]{grid-template-rows:1fr}
+.ist-save-in{min-height:0;overflow:hidden;display:flex;align-items:center;gap:8px;padding:0 18px;border-top:1px solid transparent;background:var(--ist-soft);border-radius:0 0 12px 12px;color:var(--ist-muted)}
+.ist-save[data-open=true] .ist-save-in{padding:10px 18px;border-top-color:var(--ist-line)}
+.ist-save-in span{margin-right:auto}
+.ist-btn{height:30px;padding:0 12px;border:1px solid var(--ist-line);border-radius:7px;background:var(--ist-bg);font-weight:500}.ist-btn:hover{background:color-mix(in srgb,var(--ist-fg) 4%,var(--ist-bg))}
+.ist-primary{background:var(--ist-fg);border-color:var(--ist-fg);color:var(--ist-bg)!important}.ist-primary:hover{background:color-mix(in srgb,var(--ist-fg) 86%,var(--ist-bg))}.ist-primary:disabled{opacity:.45;cursor:not-allowed}
+.ist-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.ist :focus-visible{outline:2px solid var(--ist-accent);outline-offset:2px}
+@keyframes ist-in{from{opacity:0;transform:translateY(-3px)}}
+@media(max-width:480px){.ist-head{padding:14px}.ist-sec{padding:14px}.ist-logo{width:40px;height:40px}.ist-meta{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.ist *{animation:none!important;transition:none!important}}
+`;
 
 export default IntegrationSettings;

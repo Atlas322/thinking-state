@@ -3,369 +3,371 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type DelegateAgent = {
+  id: string;
+  name: string;
+  model?: string;
+  avatar?: React.ReactNode;
+  /** Minutes left on the task it runs now. */
+  current?: number;
+  /** Cost per minute of work. */
+  rate?: number;
+};
+
+export type DelegateTask = {
   id: string;
   title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
+  /** Minutes. */
+  estimate: number;
+  tools?: React.ReactNode[];
+  agentId?: string | null;
 };
-export type StudioProps = {
+
+export type DelegateMode = "auto" | "manual";
+
+export type DelegateBoardProps = {
   title?: string;
-  items?: StudioItem[];
+  agents?: DelegateAgent[];
+  tasks?: DelegateTask[];
+  onAssign?: (taskId: string, agentId: string | null) => void;
+  mode?: DelegateMode;
+  defaultMode?: DelegateMode;
+  onModeChange?: (mode: DelegateMode) => void;
+  suggestion?: { taskId: string; agentId: string } | null;
+  now?: number;
+  formatCost?: (amount: number) => string;
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const logo = {
+  claude: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      {[0, 30, 60, 90, 120, 150].map((r) => (
+        <rect key={r} x="7.35" y="2" width="1.3" height="12" rx=".65" fill="#e0703f" transform={`rotate(${r} 8 8)`} />
+      ))}
+    </svg>
+  ),
+  openai: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      {[0, 60, 120, 180, 240, 300].map((r) => (
+        <ellipse key={r} cx="8" cy="5" rx="2.3" ry="3.4" fill="none" stroke="currentColor" strokeWidth="1.1" transform={`rotate(${r} 8 8)`} />
+      ))}
+    </svg>
+  ),
+  gemini: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5Z" fill="#3b82f6" />
+    </svg>
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const tool = {
+  hubspot: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="10" cy="9.5" r="2.6" fill="none" stroke="#ff7a59" strokeWidth="1.5" /><path d="M10 6.9V3.5M3 3.5l5 4.3M5 14l3-2.5" stroke="#ff7a59" strokeWidth="1.5" strokeLinecap="round" /></svg>
+  ),
+  slack: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="1" y="5" width="7" height="3" rx="1.5" fill="#36c5f0" /><rect x="8" y="1" width="3" height="7" rx="1.5" fill="#2eb67d" /><rect x="8" y="8" width="7" height="3" rx="1.5" fill="#ecb22e" /><rect x="5" y="8" width="3" height="7" rx="1.5" fill="#e01e5a" />
+    </svg>
+  ),
+  notion: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" /><path d="M5 11.5v-7h1.2l3.6 7H11v-7" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>
+  ),
+  github: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 0 0-2.2 13.6c.4.1.5-.2.5-.4v-1.3c-2 .4-2.4-.9-2.4-.9-.3-.8-.8-1-.8-1-.6-.4.1-.4.1-.4.7 0 1.1.7 1.1.7.6 1.1 1.7.8 2.1.6 0-.5.3-.8.5-1-1.6-.2-3.2-.8-3.2-3.5 0-.8.3-1.4.7-1.9 0-.2-.3-.9.1-1.9 0 0 .6-.2 1.9.7a6.6 6.6 0 0 1 3.5 0c1.3-.9 1.9-.7 1.9-.7.4 1 .1 1.7.1 1.9.4.5.7 1.1.7 1.9 0 2.7-1.6 3.3-3.2 3.5.3.2.5.7.5 1.3v2c0 .2.1.5.5.4A7 7 0 0 0 8 1Z" fill="currentColor" /></svg>
+  ),
+  figma: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4.5" y="1" width="3.5" height="4.6" rx="1.75" fill="#f24e1e" /><rect x="8" y="1" width="3.5" height="4.6" rx="1.75" fill="#ff7262" /><rect x="4.5" y="5.6" width="3.5" height="4.6" rx="1.75" fill="#a259ff" /><circle cx="9.75" cy="7.9" r="1.75" fill="#1abcfe" /><rect x="4.5" y="10.2" width="3.5" height="4.6" rx="1.75" fill="#0acf83" /></svg>
+  ),
+};
+
+const defaultAgents: DelegateAgent[] = [
+  { id: "researcher", name: "Researcher", model: "Opus 5.5", avatar: logo.claude, current: 7, rate: 0.08 },
+  { id: "writer", name: "Writer", model: "Sonnet 5.5", avatar: logo.claude, current: 14, rate: 0.03 },
+  { id: "coder", name: "Coder", model: "GPT-6 Sol", avatar: logo.openai, current: 21, rate: 0.06 },
+  { id: "ops", name: "Ops", model: "Gemini 3.8 Flash", avatar: logo.gemini, current: 8, rate: 0.01 },
+];
+
+const defaultTasks: DelegateTask[] = [
+  { id: "crm", title: "Clean up CRM duplicates", estimate: 18, tools: [tool.hubspot], agentId: null },
+  { id: "scan", title: "Competitor scan", estimate: 23, agentId: "researcher" },
+  { id: "churn", title: "Summarize churn calls", estimate: 16, tools: [tool.slack, tool.notion], agentId: "researcher" },
+  { id: "notes", title: "Write release notes", estimate: 14, agentId: "writer" },
+  { id: "auth", title: "Refactor auth", estimate: 21, agentId: "coder" },
+  { id: "flaky", title: "Fix flaky checkout test", estimate: 15, tools: [tool.github], agentId: "coder" },
+  { id: "stripe", title: "Upgrade Stripe SDK", estimate: 8, agentId: "ops" },
+  { id: "pricing", title: "Update pricing page", estimate: 12, tools: [tool.figma], agentId: "ops" },
+];
+
+const clock = (ms: number) => {
+  const d = new Date(ms);
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+};
 
 export function DelegateBoard({
-  title = "Delegate work",
-  items = [
-    {
-      id: "research",
-      title: "Compare competitors",
-      detail: "Research · 12 min",
-    },
-    { id: "copy", title: "Draft launch copy", detail: "Writing · 8 min" },
-    { id: "code", title: "Build pricing page", detail: "Coding · 25 min" },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const agents = ["Researcher", "Writer", "Coder"];
-  const [assigned, setAssigned] = React.useState<Record<string, string>>({});
-  const [drag, setDrag] = React.useState<string>();
-  const [auto, setAuto] = React.useState(false);
-  const assign = (id: string, agent: string) => {
-    setAssigned((s) => ({ ...s, [id]: agent }));
-    onAction?.("assign", { ...items.find((x) => x.id === id)!, detail: agent });
+  title = "Delegate",
+  agents = defaultAgents,
+  tasks: tasksProp = defaultTasks,
+  onAssign,
+  mode: modeProp,
+  defaultMode = "auto",
+  onModeChange,
+  suggestion,
+  now: nowProp,
+  formatCost = (n) => `$${n.toFixed(2)}`,
+  className = "",
+}: DelegateBoardProps) {
+  const [tasks, setTasks] = React.useState(tasksProp);
+  React.useEffect(() => setTasks(tasksProp), [tasksProp]);
+  const [modeState, setMode] = React.useState<DelegateMode>(defaultMode);
+  const mode = modeProp ?? modeState;
+  const [now] = React.useState(() => nowProp ?? new Date().setHours(17, 34, 0, 0));
+  const [dragging, setDragging] = React.useState<string | null>(null);
+  const [over, setOver] = React.useState<string | null>(null);
+  const [picking, setPicking] = React.useState<{ task: string; agent: number } | null>(null);
+  const [announce, setAnnounce] = React.useState("");
+
+  const queue = (id: string | null) => tasks.filter((t) => (t.agentId ?? null) === id);
+  const minutesFor = (a: DelegateAgent) => {
+    const q = queue(a.id);
+    return q.reduce((n, t, i) => n + (i === 0 && a.current !== undefined ? a.current : t.estimate), 0);
   };
+  const busyUntil = (a: DelegateAgent, extra = 0) => clock(now + (minutesFor(a) + extra) * 60000);
+  const totalCost = agents.reduce((n, a) => n + minutesFor(a) * (a.rate ?? 0), 0);
+
+  const assign = React.useCallback(
+    (taskId: string, agentId: string | null) => {
+      const t = tasks.find((x) => x.id === taskId);
+      const a = agents.find((x) => x.id === agentId);
+      if (onAssign) onAssign(taskId, agentId);
+      else setTasks((list) => list.map((x) => (x.id === taskId ? { ...x, agentId } : x)));
+      setAnnounce(`${t?.title} → ${a?.name ?? "Unassigned"}`);
+    },
+    [tasks, agents, onAssign],
+  );
+
+  // Auto mode: about one hand-off a second to the least busy agent
+  // tasks that were already waiting when the board opened stay for a person to drag
+  const seen = React.useRef(new Set(tasksProp.filter((t) => !t.agentId).map((t) => t.id)));
+  const unassigned = queue(null);
+  React.useEffect(() => {
+    const fresh = unassigned.filter((t) => !seen.current.has(t.id));
+    if (mode !== "auto" || !fresh.length || !agents.length) return;
+    const id = window.setTimeout(() => {
+      const free = [...agents].sort((a, b) => minutesFor(a) - minutesFor(b))[0];
+      seen.current.add(fresh[0].id);
+      assign(fresh[0].id, free.id);
+    }, 1400);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, tasks]);
+
+  const preview = (a: DelegateAgent) => {
+    const tid = dragging ?? picking?.task ?? (suggestion?.agentId === a.id ? suggestion.taskId : null);
+    const active = dragging ? over === a.id : picking ? agents[picking.agent]?.id === a.id : suggestion?.agentId === a.id;
+    const t = tasks.find((x) => x.id === tid);
+    return active && t && t.agentId !== a.id ? t : null;
+  };
+
   return (
-    <UI.Panel
-      title={title}
-      subtitle="Drag a task onto an agent, or select one below"
-      className={className}
-      aside={
-        <label className="st-checkline">
+    <section className={`dlb ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="dlb-bar">
+        <svg className="dlb-spark" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M6 1.5 7.2 5 10.5 6 7.2 7 6 10.5 4.8 7 1.5 6 4.8 5ZM12 9l.7 1.8 1.8.7-1.8.7L12 14l-.7-1.8-1.8-.7 1.8-.7Z" fill="currentColor" />
+        </svg>
+        <strong>{title}</strong>
+        <span className="dlb-hint">{mode === "auto" ? "New tasks go to whoever is free first" : "Drag a task onto an agent"}</span>
+        <label className="dlb-switch">
+          Auto
           <input
             type="checkbox"
-            checked={auto}
+            role="switch"
+            checked={mode === "auto"}
             onChange={(e) => {
-              setAuto(e.target.checked);
-              if (e.target.checked) {
-                const next = Object.fromEntries(
-                  items.map((x, i) => [x.id, agents[i % agents.length]]),
-                );
-                setAssigned(next);
-                onAction?.("auto-assign");
-              }
+              const m: DelegateMode = e.target.checked ? "auto" : "manual";
+              setMode(m);
+              onModeChange?.(m);
             }}
           />
-          Auto
+          <span aria-hidden="true" />
         </label>
-      }
-    >
-      <div
-        className="st-columns"
-        style={{ gridTemplateColumns: "repeat(3,minmax(0,1fr))" }}
-      >
-        {agents.map((a) => (
-          <div
-            key={a}
-            className="st-tile"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={() => {
-              if (drag) assign(drag, a);
-            }}
-          >
-            <UI.Avatar name={a} />
-            <h4>{a}</h4>
-            <small>
-              {Object.values(assigned).filter((v) => v === a).length} tasks
-            </small>
-            {items
-              .filter((x) => assigned[x.id] === a)
-              .map((x) => (
-                <div
-                  className="st-chip"
-                  key={x.id}
-                  style={{ marginTop: 10, whiteSpace: "normal" }}
-                >
-                  {x.title}
-                </div>
-              ))}
+      </header>
+      <div className="dlb-body">
+        <div
+          className={`dlb-pool${over === "pool" ? " is-over" : ""}`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setOver("pool");
+          }}
+          onDragLeave={() => setOver(null)}
+          onDrop={() => {
+            if (dragging) {
+              seen.current.add(dragging);
+              assign(dragging, null);
+            }
+            setDragging(null);
+            setOver(null);
+          }}
+        >
+          <div className="dlb-pool-h">
+            Unassigned <span className="dlb-n">{unassigned.length}</span>
           </div>
-        ))}
-      </div>
-      {items.map((x) => (
-        <div key={x.id} draggable={!auto} onDragStart={() => setDrag(x.id)}>
-          <UI.Row
-            title={x.title}
-            detail={x.detail}
-            icon={<span aria-hidden="true">⠿</span>}
-          >
-            <select
-              aria-label={`Assign ${x.title}`}
-              style={{ width: 135 }}
-              value={assigned[x.id] ?? ""}
-              onChange={(e) => assign(x.id, e.target.value)}
+          {unassigned.map((t) => (
+            <div
+              key={t.id}
+              className={`dlb-task${suggestion?.taskId === t.id ? " is-suggested" : ""}${picking?.task === t.id ? " is-picking" : ""}`}
+              draggable
+              tabIndex={0}
+              aria-label={`${t.title}, about ${t.estimate} minutes`}
+              onDragStart={() => setDragging(t.id)}
+              onDragEnd={() => {
+                setDragging(null);
+                setOver(null);
+              }}
+              onKeyDown={(e) => {
+                const k = e.key;
+                if (/^[1-9]$/.test(k) && agents[+k - 1]) {
+                  assign(t.id, agents[+k - 1].id);
+                  setPicking(null);
+                } else if (k === "Enter" || k === " ") {
+                  e.preventDefault();
+                  if (picking?.task === t.id) {
+                    assign(t.id, agents[picking.agent].id);
+                    setPicking(null);
+                  } else setPicking({ task: t.id, agent: 0 });
+                } else if (picking && (k === "ArrowDown" || k === "ArrowUp")) {
+                  e.preventDefault();
+                  const d = k === "ArrowDown" ? 1 : -1;
+                  setPicking({ ...picking, agent: (picking.agent + d + agents.length) % agents.length });
+                } else if (k === "Escape") setPicking(null);
+              }}
             >
-              <option value="">Unassigned</option>
-              {agents.map((a) => (
-                <option key={a}>{a}</option>
-              ))}
-            </select>
-          </UI.Row>
+              <span className="dlb-grip" aria-hidden="true">
+                <svg viewBox="0 0 8 12">{[2, 6, 10].flatMap((y) => [2, 6].map((x) => <circle key={`${x}${y}`} cx={x} cy={y} r="1" fill="currentColor" />))}</svg>
+              </span>
+              <div>
+                <div className="dlb-task-t">{t.title}</div>
+                <div className="dlb-task-m">
+                  {t.tools?.map((ic, i) => <span key={i} className="dlb-ico">{ic}</span>)}~{t.estimate} min
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </UI.Panel>
+        <div className="dlb-agents">
+          <div className="dlb-agents-h">
+            <span>Agents</span>
+            <span>{formatCost(totalCost)} in queues</span>
+          </div>
+          {agents.map((a) => {
+            const q = queue(a.id);
+            const p = preview(a);
+            return (
+              <div
+                key={a.id}
+                className={`dlb-agent${p ? " is-target" : ""}`}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setOver(a.id);
+                }}
+                onDragLeave={() => setOver((o) => (o === a.id ? null : o))}
+                onDrop={() => {
+                  if (dragging) assign(dragging, a.id);
+                  setDragging(null);
+                  setOver(null);
+                }}
+              >
+                <span className="dlb-av">{a.avatar ?? a.name[0]}</span>
+                <div className="dlb-agent-main">
+                  <div className="dlb-agent-top">
+                    <div>
+                      <div className="dlb-agent-n">{a.name}</div>
+                      <div className="dlb-agent-m">
+                        {a.model}
+                        {a.rate !== undefined && <span> {formatCost(a.rate)}/min</span>}
+                      </div>
+                    </div>
+                    <span className={`dlb-until${p ? " is-preview" : ""}`}>
+                      Busy until {p ? busyUntil(a, p.estimate) : busyUntil(a)}
+                      {p && a.rate !== undefined && <em> +{formatCost(p.estimate * a.rate)}</em>}
+                    </span>
+                  </div>
+                  <div className="dlb-queue">
+                    {q.slice(0, 3).map((t, i) => (
+                      <span key={t.id} className={`dlb-chip${i === 0 ? " is-running" : ""}`}>
+                        {i === 0 ? <span className="dlb-ring" aria-hidden="true" /> : t.tools?.map((ic, k) => <span key={k} className="dlb-ico">{ic}</span>)}
+                        {t.title}
+                      </span>
+                    ))}
+                    {q.length > 3 && (
+                      <span className="dlb-chip is-more" tabIndex={0} title={q.slice(3).map((t) => t.title).join("\n")}>
+                        +{q.length - 3}
+                      </span>
+                    )}
+                    {p && <span className="dlb-chip is-ghost">{p.title}</span>}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="dlb-sr" aria-live="polite">
+        Drag onto an agent, or press Enter, choose with the arrow keys and press Enter again. Number keys hand it over at once.
+        {announce && ` ${announce}`}
+      </div>
+    </section>
   );
 }
+
+const css = `
+.dlb{--dlb-bg:#fff;--dlb-fg:#18181b;--dlb-muted:#71717a;--dlb-faint:#a1a1aa;--dlb-line:#ececef;--dlb-soft:#f4f4f5;--dlb-chip:#f1f1f3;--dlb-blue:#3b82f6;--dlb-blue-soft:#e8f1fe;--dlb-blue-fg:#1d6fe0;width:100%;max-width:760px;background:var(--dlb-bg);color:var(--dlb-fg);border:1px solid var(--dlb-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .dlb{--dlb-bg:#1b1b1e;--dlb-fg:#ececef;--dlb-muted:#a1a1aa;--dlb-faint:#71717a;--dlb-line:#2e2e33;--dlb-soft:#232327;--dlb-chip:#2a2a2f;--dlb-blue:#5b9cff;--dlb-blue-soft:#1b2a44;--dlb-blue-fg:#8ab8ff;color-scheme:dark}
+.dlb *{box-sizing:border-box}
+.dlb-bar{display:flex;align-items:center;gap:10px;height:56px;padding:0 16px 0 20px;border-bottom:1px solid var(--dlb-line)}
+.dlb-spark{width:14px;height:14px;color:var(--dlb-blue)}.dlb-bar strong{font-weight:500}
+.dlb-hint{flex:1;min-width:0;font-size:13px;color:var(--dlb-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dlb-switch{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;cursor:pointer}
+.dlb-switch input{position:absolute;opacity:0;width:1px;height:1px}
+.dlb-switch span{position:relative;width:30px;height:18px;border-radius:9px;background:var(--dlb-line);transition:background .2s}
+.dlb-switch span::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transition:transform .2s}
+.dlb-switch input:checked+span{background:var(--dlb-blue)}.dlb-switch input:checked+span::after{transform:translateX(12px)}
+.dlb-switch input:focus-visible+span{outline:2px solid var(--dlb-blue);outline-offset:2px}
+.dlb-body{display:grid;grid-template-columns:236px 1fr;gap:16px;padding:14px 16px 14px 14px}
+.dlb-pool{min-height:380px;padding:8px 6px;border-radius:10px;background:var(--dlb-soft);transition:box-shadow .15s}
+.dlb-pool.is-over{box-shadow:inset 0 0 0 1.5px var(--dlb-blue)}
+.dlb-pool-h{display:flex;align-items:center;gap:6px;padding:0 6px 8px;font-size:13px;color:var(--dlb-muted)}
+.dlb-n{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border:1px solid var(--dlb-line);border-radius:5px;background:var(--dlb-bg);font-size:11px;color:var(--dlb-fg)}
+.dlb-task{display:flex;gap:8px;padding:9px 10px;margin-bottom:6px;border-radius:7px;background:var(--dlb-bg);box-shadow:0 1px 2px #0000000f,0 0 0 1px #0000000a;cursor:grab;animation:dlb-in .25s both;outline:none}
+.dlb-task:focus-visible,.dlb-task.is-picking{box-shadow:0 0 0 2px var(--dlb-blue)}
+.dlb-task.is-suggested{box-shadow:0 0 0 1.5px var(--dlb-blue)}
+.dlb-grip{width:8px;padding-top:4px;color:var(--dlb-faint)}.dlb-grip svg{width:6px;height:10px}
+.dlb-task-t{font-size:14px;font-weight:500}
+.dlb-task-m{display:flex;align-items:center;gap:4px;margin-top:2px;font-size:13px;color:var(--dlb-muted)}
+.dlb-ico{display:inline-grid;place-items:center;width:14px;height:14px;color:var(--dlb-fg)}.dlb-ico svg{width:13px;height:13px}
+.dlb-agents-h{display:flex;justify-content:space-between;padding:0 4px 10px;font-size:13px;color:var(--dlb-muted)}
+.dlb-agent{display:flex;gap:12px;padding:6px 4px 10px;border-radius:9px;transition:background .15s}
+.dlb-agent.is-target{background:color-mix(in srgb,var(--dlb-blue-soft) 60%,transparent)}
+.dlb-av{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:var(--dlb-bg);box-shadow:0 1px 3px #00000014,0 0 0 1px #0000000a}.dlb-av svg{width:16px;height:16px}
+.dlb-agent-main{flex:1;min-width:0}
+.dlb-agent-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.dlb-agent-n{font-size:14px;font-weight:500}
+.dlb-agent-m{font-size:13px;color:var(--dlb-muted)}.dlb-agent-m span{color:var(--dlb-faint);margin-left:4px}
+.dlb-until{flex:none;height:20px;padding:0 6px;border-radius:5px;background:var(--dlb-chip);font-size:12px;line-height:20px;color:var(--dlb-muted);font-variant-numeric:tabular-nums;transition:background .15s,color .15s}
+.dlb-until.is-preview{background:var(--dlb-blue-soft);color:var(--dlb-blue-fg)}.dlb-until em{font-style:normal}
+.dlb-queue{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.dlb-chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;border-radius:6px;background:var(--dlb-bg);box-shadow:0 0 0 1px var(--dlb-line),0 1px 2px #0000000a;font-size:13px;white-space:nowrap;animation:dlb-in .25s both}
+.dlb-chip.is-running{background:var(--dlb-blue-soft);box-shadow:none;color:var(--dlb-blue-fg);font-weight:500}
+.dlb-chip.is-ghost{box-shadow:0 0 0 1px dashed var(--dlb-blue);border:1px dashed var(--dlb-blue);color:var(--dlb-blue-fg);background:none}
+.dlb-chip.is-more{color:var(--dlb-muted);cursor:default}
+.dlb-ring{width:10px;height:10px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--dlb-blue) 30%,transparent);border-top-color:var(--dlb-blue);animation:dlb-rot .9s linear infinite}
+.dlb-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@keyframes dlb-in{from{opacity:0;transform:translateY(3px)}}
+@keyframes dlb-rot{to{transform:rotate(360deg)}}
+@media(max-width:620px){.dlb-body{grid-template-columns:1fr}.dlb-pool{min-height:0}.dlb-hint{display:none}}
+@media(prefers-reduced-motion:reduce){.dlb *{animation:none!important;transition:none!important}}
+`;
 
 export default DelegateBoard;

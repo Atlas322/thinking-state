@@ -3,346 +3,327 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type Checkpoint = {
   id: string;
   title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
+  icon?: React.ReactNode;
+  parent?: string;
+  status?: "running" | "done" | "failed" | "stopped";
+  /** ms since the run began */
+  at?: number;
+  files?: number;
   cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
 };
-export type StudioProps = {
+
+export type AgentCheckpointsProps = {
+  checkpoints?: Checkpoint[];
+  head?: string;
+  onRewind?: (checkpoint: Checkpoint) => void;
+  task?: string;
+  formatTime?: (ms: number) => string;
+  formatCost?: (amount: number) => string;
   title?: string;
-  items?: StudioItem[];
   className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+const ico = (c: React.ReactNode) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    {c}
+  </svg>
+);
+export const checkpointIcons = {
+  slack: ico(
+    <>
+      <rect x="2" y="6.5" width="5" height="2" rx="1" fill="#36c5f0" />
+      <rect x="7.5" y="2" width="2" height="5" rx="1" fill="#2eb67d" />
+      <rect x="9" y="7.5" width="5" height="2" rx="1" fill="#ecb22e" />
+      <rect x="6.5" y="9" width="2" height="5" rx="1" fill="#e01e5a" />
+    </>,
+  ),
+  github: ico(
+    <path
+      d="M8 1.5a6.5 6.5 0 0 0-2 12.7c.3 0 .4-.1.4-.3v-1.2c-1.8.4-2.2-.8-2.2-.8-.3-.7-.7-.9-.7-.9-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.5.7 1.9.5 0-.4.2-.7.4-.9-1.4-.2-3-.7-3-3.2 0-.7.3-1.3.7-1.8-.1-.2-.3-.8 0-1.7 0 0 .6-.2 1.8.7a6 6 0 0 1 3.2 0c1.2-.9 1.8-.7 1.8-.7.3.9.1 1.5 0 1.7.4.5.7 1.1.7 1.8 0 2.5-1.5 3-3 3.2.3.2.5.6.5 1.2v1.8c0 .2.1.4.4.3A6.5 6.5 0 0 0 8 1.5Z"
+      fill="currentColor"
+    />,
+  ),
+  notion: ico(
+    <>
+      <rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M5.3 11V5h1l3.4 6h1V5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+    </>,
+  ),
+  figma: ico(
+    <>
+      <rect x="5" y="1.5" width="3" height="4" rx="1.5" fill="#f24e1e" />
+      <rect x="8" y="1.5" width="3" height="4" rx="1.5" fill="#ff7262" />
+      <rect x="5" y="5.5" width="3" height="4" rx="1.5" fill="#a259ff" />
+      <circle cx="9.5" cy="7.5" r="1.5" fill="#1abcfe" />
+      <rect x="5" y="9.5" width="3" height="4" rx="1.5" fill="#0acf83" />
+    </>,
+  ),
+  stripe: ico(
+    <>
+      <rect x="2" y="2" width="12" height="12" rx="3" fill="#635bff" />
+      <path d="M10 5.8c-.5-.3-1.1-.5-1.7-.5-.9 0-1.5.4-1.5 1 0 1.5 3.1 1 3.1 2.9 0 .8-.8 1.4-1.8 1.4-.7 0-1.4-.2-1.9-.6" fill="none" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" />
+    </>,
+  ),
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+const defaultCheckpoints: Checkpoint[] = [
+  { id: "c1", title: "Read the brief", icon: checkpointIcons.slack, at: 9000, cost: 0.02 },
+  { id: "c2", title: "Scaffolded the pricing page", icon: checkpointIcons.github, parent: "c1", at: 30000, files: 4, cost: 0.06 },
+  { id: "c3", title: "Wrote the plan copy", icon: checkpointIcons.notion, parent: "c2", at: 47000, files: 1, cost: 0.05 },
+  { id: "c4", title: "Built the pricing table", icon: checkpointIcons.figma, parent: "c3", at: 81000, files: 3, cost: 0.11 },
+  { id: "c5", title: "Added Stripe checkout", icon: checkpointIcons.stripe, parent: "c4", at: 122000, files: 5, cost: 0.12 },
+  { id: "c6", title: "Tests failing – 4 of 12", icon: checkpointIcons.github, parent: "c5", at: 148000, status: "failed", cost: 0.04 },
+  { id: "c7", title: "Switched to Stripe Elements", icon: checkpointIcons.stripe, parent: "c4", at: 186000, files: 3, cost: 0.14 },
+  { id: "c8", title: "Tests pass – 12 of 12", icon: checkpointIcons.github, parent: "c7", at: 210000, cost: 0.04 },
+];
+
+const ROW = 30;
+const LANE = 14;
+const X0 = 8;
+
+const defTime = (ms: number) => {
+  const s = Math.round(ms / 1000);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+};
+const defCost = (n: number) => `$${n.toFixed(2)}`;
 
 export function AgentCheckpoints({
+  checkpoints,
+  head,
+  onRewind,
+  task = "Ship the pricing page",
+  formatTime = defTime,
+  formatCost = defCost,
   title = "Checkpoints",
-  items = [
-    {
-      id: "brief",
-      title: "Read the brief",
-      detail: "9s · 2 files",
-      status: "done",
-    },
-    {
-      id: "pricing",
-      title: "Built the pricing table",
-      detail: "1m 04s · 3 files",
-      status: "done",
-    },
-    {
-      id: "tests",
-      title: "Tests failing — 4 of 12",
-      detail: "2m 11s",
-      status: "failed",
-    },
-    {
-      id: "fix",
-      title: "Switched to Stripe Elements",
-      detail: "2m 49s · current attempt",
-      status: "running",
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [head, setHead] = React.useState(items.at(-1)?.id);
-  const [branches, setBranches] = React.useState<StudioItem[]>([]);
-  return (
-    <UI.Panel
-      title={title}
-      subtitle="Launch the new pricing page"
-      className={className}
-      aside={
-        <UI.Badge tone="blue">{items.length + branches.length} saved</UI.Badge>
+  className = "",
+}: AgentCheckpointsProps) {
+  const [inner, setInner] = React.useState(defaultCheckpoints);
+  const [innerHead, setInnerHead] = React.useState<string | undefined>();
+  const list = checkpoints ?? inner;
+  const headId = head ?? innerHead ?? list[list.length - 1]?.id;
+  const [focus, setFocus] = React.useState(list.length - 1);
+  const rows = React.useRef<(HTMLLIElement | null)[]>([]);
+
+  // lanes and attempts from parent links
+  const { lane, attempt, lanes } = React.useMemo(() => {
+    const lane: Record<string, number> = {};
+    const attempt: Record<string, number> = {};
+    const firstChild: Record<string, string> = {};
+    let max = 0;
+    for (const c of list) {
+      if (!c.parent || lane[c.parent] == null) {
+        lane[c.id] = 0;
+        attempt[c.id] = 1;
+      } else if (!firstChild[c.parent]) {
+        firstChild[c.parent] = c.id;
+        lane[c.id] = lane[c.parent];
+        attempt[c.id] = attempt[c.parent];
+      } else {
+        max += 1;
+        lane[c.id] = max;
+        attempt[c.id] = max + 1;
       }
-    >
-      <ol className="st-timeline">
-        {[...items, ...branches].map((x, i) => (
-          <li
-            key={x.id}
-            className={head === x.id ? "active" : ""}
-            style={{
-              opacity:
-                head !== x.id &&
-                i > items.findIndex((v) => v.id === head) &&
-                !branches.length
-                  ? 0.45
-                  : 1,
-            }}
-          >
-            <UI.Row title={x.title} detail={x.detail}>
-              <UI.Badge tone={x.status}>{x.status}</UI.Badge>
-              <UI.Button
-                onClick={() => {
-                  const next = {
-                    id: `branch-${Date.now()}`,
-                    title: `New attempt from ${x.title}`,
-                    detail: "Just now · branch",
-                    status: "running",
-                  };
-                  setBranches((s) => [...s, next]);
-                  setHead(next.id);
-                  onAction?.("rewind", x);
+    }
+    return { lane, attempt, lanes: max + 1 };
+  }, [list]);
+
+  const onPath = React.useMemo(() => {
+    const s = new Set<string>();
+    let id: string | undefined = headId;
+    while (id) {
+      s.add(id);
+      id = list.find((c) => c.id === id)?.parent;
+    }
+    return s;
+  }, [list, headId]);
+
+  const index = (id: string) => list.findIndex((c) => c.id === id);
+  const total = list.reduce((n, c) => n + (c.cost ?? 0), 0);
+  const width = X0 * 2 + (lanes - 1) * LANE;
+
+  const rewind = (c: Checkpoint) => {
+    if (onRewind) return onRewind(c);
+    // uncontrolled demo: mark the work in progress as stopped and branch a new attempt
+    const id = `r${Date.now()}`;
+    const last = list[list.length - 1];
+    const at = (last?.at ?? 0) + 18000;
+    setInner((l) => [
+      ...l.map((x) => (x.status === "running" ? { ...x, status: "stopped" as const } : x)),
+      { id, title: `Retry from “${c.title}”`, icon: c.icon, parent: c.id, at, status: "running", cost: 0.03 },
+    ]);
+    setInnerHead(id);
+    window.setTimeout(() => {
+      setInner((l) => l.map((x) => (x.id === id && x.status === "running" ? { ...x, status: "done" } : x)));
+    }, 1600);
+  };
+
+  React.useEffect(() => {
+    setFocus(list.length - 1);
+  }, [list.length]);
+
+  const move = (i: number) => {
+    const n = Math.max(0, Math.min(list.length - 1, i));
+    setFocus(n);
+    rows.current[n]?.focus();
+  };
+
+  const attempts = lanes;
+
+  return (
+    <section className={`ackc ${className}`} aria-label={title}>
+      <style>{css}</style>
+      <header className="ackc-bar">
+        <svg viewBox="0 0 16 16" className="ackc-mark" aria-hidden="true">
+          <circle cx="4.5" cy="3.5" r="1.6" fill="currentColor" />
+          <circle cx="4.5" cy="12.5" r="1.6" fill="currentColor" />
+          <circle cx="11.5" cy="9" r="1.6" fill="currentColor" />
+          <path d="M4.5 5v6M4.5 6.5c0 2 3 2.5 5.4 2.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
+        <strong>{title}</strong>
+        {task && <span className="ackc-task">{task}</span>}
+        <span className="ackc-sum" aria-live="polite">
+          {list.length} checkpoint{list.length === 1 ? "" : "s"} · {attempts} attempt{attempts === 1 ? "" : "s"} · {formatCost(total)}
+        </span>
+      </header>
+      <div className="ackc-body">
+        <svg className="ackc-rail" width={width} height={list.length * ROW} aria-hidden="true">
+          {list.map((c, i) => {
+            if (!c.parent) return null;
+            const p = index(c.parent);
+            if (p < 0) return null;
+            const x1 = X0 + lane[c.parent] * LANE;
+            const x2 = X0 + lane[c.id] * LANE;
+            const y1 = p * ROW + ROW / 2;
+            const y2 = i * ROW + ROW / 2;
+            const d =
+              x1 === x2
+                ? `M${x1} ${y1}V${y2}`
+                : `M${x1} ${y1}C${x1} ${y1 + 14},${x2} ${y1 + 8},${x2} ${y1 + 22}V${y2}`;
+            const on = onPath.has(c.id);
+            return <path key={c.id} d={d} className={on ? "is-on" : "is-off"} />;
+          })}
+          {list.map((c, i) => {
+            const x = X0 + lane[c.id] * LANE;
+            const y = i * ROW + ROW / 2;
+            const isHead = c.id === headId;
+            const on = onPath.has(c.id);
+            return isHead ? (
+              <circle key={c.id} cx={x} cy={y} r={3.6} className="ackc-head" />
+            ) : on ? (
+              <circle key={c.id} cx={x} cy={y} r={2.4} className="ackc-dot" />
+            ) : (
+              <circle key={c.id} cx={x} cy={y} r={3} className="ackc-ring" />
+            );
+          })}
+        </svg>
+        <ol className="ackc-list" aria-label="Checkpoints">
+          {list.map((c, i) => {
+            const isHead = c.id === headId;
+            const left = !onPath.has(c.id);
+            const status = c.status ?? "done";
+            const att = attempt[c.id];
+            const firstOfAttempt = att > 1 && list.find((x) => attempt[x.id] === att)?.id === c.id;
+            return (
+              <li
+                key={c.id}
+                ref={(el) => {
+                  rows.current[i] = el;
+                }}
+                className={`ackc-row ${left ? "is-left" : ""} ${status === "running" ? "is-running" : ""}`}
+                tabIndex={focus === i ? 0 : -1}
+                aria-current={isHead ? "step" : undefined}
+                aria-label={`${c.title}, attempt ${att}, ${status}${isHead ? ", current" : left ? ", left behind" : ""}`}
+                onFocus={() => setFocus(i)}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown") (e.preventDefault(), move(i + 1));
+                  else if (e.key === "ArrowUp") (e.preventDefault(), move(i - 1));
+                  else if (e.key === "Home") (e.preventDefault(), move(0));
+                  else if (e.key === "End") (e.preventDefault(), move(list.length - 1));
+                  else if (e.key === "Enter" || e.key === " ") (e.preventDefault(), rewind(c));
                 }}
               >
-                ↶ Rewind
-              </UI.Button>
-            </UI.Row>
-          </li>
-        ))}
-      </ol>
-    </UI.Panel>
+                <span className="ackc-ico">{c.icon}</span>
+                <span className="ackc-title">{c.title}</span>
+                {status === "failed" && <span className="ackc-tag is-fail">Failed</span>}
+                {status === "stopped" && <span className="ackc-tag">Stopped</span>}
+                {firstOfAttempt && <span className="ackc-tag">Attempt {att}</span>}
+                <span className="ackc-meta">
+                  {c.files != null && (
+                    <span className="ackc-files">
+                      <svg viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M1.5 4.5a1 1 0 0 1 1-1h3.2l1.3 1.3h6.5a1 1 0 0 1 1 1v6.7a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1Z" fill="currentColor" />
+                      </svg>
+                      {c.files} file{c.files === 1 ? "" : "s"}
+                    </span>
+                  )}
+                  <span className="ackc-time">{c.at != null ? formatTime(c.at) : ""}</span>
+                </span>
+                {!isHead && (
+                  <button
+                    type="button"
+                    className="ackc-rewind"
+                    tabIndex={-1}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      rewind(c);
+                    }}
+                  >
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M3 8a5 5 0 1 0 1.5-3.6M3 2.5V5h2.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    Rewind
+                  </button>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
   );
 }
+
+const css = `
+.ackc{--ui-ackc-link:#82bcff;--ui-ackc-dim:.45;--ackc-bg:#fff;--ackc-fg:#18181b;--ackc-muted:#71717a;--ackc-faint:#a1a1aa;--ackc-line:#ececef;--ackc-chip:#f1f1f3;--ackc-head:#2563eb;width:100%;max-width:480px;background:var(--ackc-bg);color:var(--ackc-fg);border:1px solid var(--ackc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+:where(.dark,[data-theme=dark]) .ackc{--ackc-bg:#1b1b1e;--ackc-fg:#ececef;--ackc-muted:#a1a1aa;--ackc-faint:#71717a;--ackc-line:#2e2e33;--ackc-chip:#2a2a2f;--ackc-head:#5b9bff;color-scheme:dark}
+.ackc *{box-sizing:border-box}.ackc button{font:inherit;color:inherit;cursor:pointer}
+.ackc-bar{display:flex;align-items:center;gap:8px;padding:12px 16px 6px 16px;font-size:13px;white-space:nowrap}
+.ackc-mark{width:14px;height:14px;color:var(--ackc-muted);flex:none}
+.ackc-bar strong{font-weight:500;font-size:14px}
+.ackc-task{color:var(--ackc-muted);overflow:hidden;text-overflow:ellipsis;min-width:0}
+.ackc-sum{margin-left:auto;padding-left:12px;font-size:12px;color:var(--ackc-muted)}
+.ackc-body{display:flex;gap:10px;padding:0 14px 10px 16px;max-height:${14 * ROW + 10}px;overflow:auto}
+.ackc-rail{flex:none;overflow:visible}
+.ackc-rail path{fill:none;stroke-width:1.5}
+.ackc-rail .is-on{stroke:var(--ui-ackc-link)}.ackc-rail .is-off{stroke:var(--ackc-line);stroke-width:1.4}
+.ackc-dot{fill:var(--ui-ackc-link)}.ackc-head{fill:var(--ackc-head);animation:ackc-pop .35s both}
+.ackc-ring{fill:var(--ackc-bg);stroke:#d4d4d8;stroke-width:1.2}
+.ackc-list{list-style:none;margin:0;padding:0;flex:1;min-width:0}
+.ackc-row{position:relative;display:flex;align-items:center;gap:8px;height:${ROW}px;padding:0 2px;border-radius:6px;outline:none;animation:ackc-in .3s both}
+.ackc-row:focus-visible{box-shadow:0 0 0 2px var(--ui-ackc-link)}
+.ackc-row.is-left>:not(.ackc-rewind){opacity:var(--ui-ackc-dim)}
+.ackc-ico{display:grid;place-items:center;width:16px;height:16px;flex:none}.ackc-ico svg{width:14px;height:14px}
+.ackc-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.is-running .ackc-title{background:linear-gradient(90deg,var(--ackc-fg) 30%,var(--ackc-faint) 50%,var(--ackc-fg) 70%) 0/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:ackc-shim 1.4s linear infinite}
+.ackc-tag{flex:none;padding:1px 6px;border-radius:4px;background:var(--ackc-chip);font-size:12px;color:var(--ackc-muted)}
+.ackc-tag.is-fail{background:#fdecec;color:#e35d5d}
+:where(.dark,[data-theme=dark]) .ackc-tag.is-fail{background:#3a1717;color:#fca5a5}
+.ackc-meta{display:flex;align-items:center;gap:20px;margin-left:auto;padding-left:8px;flex:none;font-size:12px}
+.ackc-files{display:inline-flex;align-items:center;gap:5px;color:var(--ackc-faint)}.ackc-files svg{width:11px;height:11px}
+.ackc-time{min-width:28px;text-align:right;color:var(--ackc-muted)}
+.ackc-rewind{position:absolute;right:0;top:50%;transform:translateY(-50%);display:none;align-items:center;gap:5px;height:24px;padding:0 9px;border:0;border-radius:6px;background:var(--ackc-bg);box-shadow:0 0 0 1px var(--ackc-line),0 1px 2px #0000000f;font-size:12px;font-weight:500}
+.ackc-rewind svg{width:12px;height:12px}
+.ackc-row:hover .ackc-rewind,.ackc-row:focus-visible .ackc-rewind{display:inline-flex}
+.ackc-row:hover .ackc-meta,.ackc-row:focus-visible .ackc-meta{visibility:hidden}
+@keyframes ackc-in{from{opacity:0;transform:translateY(4px)}}
+@keyframes ackc-pop{0%{r:0}70%{r:5px}}
+@keyframes ackc-shim{to{background-position:-200% 0}}
+@media(max-width:480px){.ackc-task,.ackc-files{display:none}}
+@media(prefers-reduced-motion:reduce){.ackc *{animation:none!important;transition:none!important}}
+`;
 
 export default AgentCheckpoints;

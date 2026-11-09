@@ -3,394 +3,565 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
-  id: string;
-  title: string;
-  detail?: string;
-  status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
+
+export type ToastId = string;
+export type ToastType = "default" | "success" | "error" | "info" | "loading";
+
+export type ToastOptions = {
+  id?: ToastId;
+  description?: React.ReactNode;
+  action?: { label: string; onClick: (event: React.MouseEvent<HTMLButtonElement>) => void };
+  duration?: number;
+  icon?: React.ReactNode;
+  /** Only the Toaster with this id shows the toast. */
+  toaster?: string;
+  onDismiss?: (id: ToastId) => void;
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
-  },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
-    return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
-      </span>
-    );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
-    return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
-    );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
+export type ToastNotice = ToastOptions & {
+  id: ToastId;
+  title: React.ReactNode;
+  type: ToastType;
+  /** Bumped on every update so timers restart and text crossfades. */
+  version: number;
 };
 
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+type Message<T> = React.ReactNode | { title: React.ReactNode; description?: React.ReactNode } | ((value: T) => React.ReactNode | { title: React.ReactNode; description?: React.ReactNode });
 
-export type ToastNotice = {
-  id: string;
-  title: string;
-  description?: string;
-  tone?: string;
-  action?: { label: string; onClick: () => void };
-};
-let toastQueue: ToastNotice[] = [];
-const toastListeners = new Set<() => void>();
-export function toast(
-  title: string,
-  options: Omit<ToastNotice, "id" | "title"> = {},
-) {
-  const id = `toast-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
-  toastQueue = [...toastQueue, { id, title, ...options }];
-  toastListeners.forEach((fn) => fn());
+let store: ToastNotice[] = [];
+const listeners = new Set<() => void>();
+let seq = 0;
+const emit = () => listeners.forEach((fn) => fn());
+
+function show(title: React.ReactNode, type: ToastType, options: ToastOptions = {}): ToastId {
+  const id = options.id ?? `toast-${++seq}`;
+  const existing = store.find((t) => t.id === id);
+  const next: ToastNotice = { ...existing, ...options, id, title, type, version: (existing?.version ?? 0) + 1 };
+  store = existing ? store.map((t) => (t.id === id ? next : t)) : [next, ...store];
+  emit();
   return id;
 }
-export function dismissToast(id: string) {
-  toastQueue = toastQueue.filter((x) => x.id !== id);
-  toastListeners.forEach((fn) => fn());
+
+function dismiss(id?: ToastId) {
+  const gone = id ? store.filter((t) => t.id === id) : store;
+  store = id ? store.filter((t) => t.id !== id) : [];
+  gone.forEach((t) => t.onDismiss?.(t.id));
+  emit();
 }
-export function Toaster({
-  demo = false,
-  className,
-}: StudioProps & { demo?: boolean }) {
-  const [notices, setNotices] = React.useState(toastQueue);
-  React.useEffect(() => {
-    const fn = () => setNotices([...toastQueue]);
-    toastListeners.add(fn);
-    return () => {
-      toastListeners.delete(fn);
-    };
-  }, []);
+
+function resolveMessage<T>(message: Message<T>, value: T) {
+  const m = typeof message === "function" ? (message as (v: T) => unknown)(value) : message;
+  if (m && typeof m === "object" && "title" in (m as object))
+    return m as { title: React.ReactNode; description?: React.ReactNode };
+  return { title: m as React.ReactNode, description: undefined };
+}
+
+type ToastFn = ((title: React.ReactNode, options?: ToastOptions) => ToastId) & {
+  success: (title: React.ReactNode, options?: ToastOptions) => ToastId;
+  error: (title: React.ReactNode, options?: ToastOptions) => ToastId;
+  info: (title: React.ReactNode, options?: ToastOptions) => ToastId;
+  loading: (title: React.ReactNode, options?: ToastOptions) => ToastId;
+  promise: <T>(
+    promise: Promise<T> | (() => Promise<T>),
+    messages: { loading: Message<void>; success: Message<T>; error: Message<unknown> },
+    options?: ToastOptions,
+  ) => Promise<T>;
+  dismiss: (id?: ToastId) => void;
+};
+
+export const toast: ToastFn = Object.assign(
+  (title: React.ReactNode, options?: ToastOptions) => show(title, "default", options),
+  {
+    success: (title: React.ReactNode, options?: ToastOptions) => show(title, "success", options),
+    error: (title: React.ReactNode, options?: ToastOptions) => show(title, "error", options),
+    info: (title: React.ReactNode, options?: ToastOptions) => show(title, "info", options),
+    loading: (title: React.ReactNode, options?: ToastOptions) => show(title, "loading", { duration: Infinity, ...options }),
+    promise: <T,>(
+      promise: Promise<T> | (() => Promise<T>),
+      messages: { loading: Message<void>; success: Message<T>; error: Message<unknown> },
+      options: ToastOptions = {},
+    ) => {
+      const l = resolveMessage(messages.loading, undefined);
+      const id = show(l.title, "loading", { ...options, description: l.description, duration: Infinity });
+      const p = typeof promise === "function" ? promise() : promise;
+      p.then(
+        (value) => {
+          const m = resolveMessage(messages.success, value);
+          show(m.title, "success", { ...options, id, description: m.description, duration: options.duration });
+        },
+        (err) => {
+          const m = resolveMessage(messages.error, err);
+          show(m.title, "error", { ...options, id, description: m.description, duration: options.duration });
+        },
+      );
+      return p;
+    },
+    dismiss,
+  },
+);
+
+/** @deprecated Use toast.dismiss(id). */
+export const dismissToast = (id: string) => dismiss(id);
+
+export type ToasterProps = {
+  position?: "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
+  inline?: boolean;
+  id?: string;
+  duration?: number;
+  visibleToasts?: number;
+  expand?: boolean;
+  offset?: number;
+  gap?: number;
+  hotkey?: string | null;
+  hairline?: boolean;
+  closeButton?: boolean;
+  label?: string;
+  className?: string;
+};
+
+function Icon({ type }: { type: ToastType }) {
+  if (type === "loading") return <i className="tst-spin" aria-hidden="true" />;
+  if (type === "default") return null;
   return (
-    <UI.Panel title={demo ? "Notifications" : undefined} className={className}>
-      {demo && (
-        <div className="st-actions">
-          <UI.Button
-            onClick={() =>
-              toast("Draft saved", {
-                description: "All changes are up to date.",
-                tone: "green",
-              })
-            }
-          >
-            Success toast
-          </UI.Button>
-          <UI.Button
-            onClick={() =>
-              toast("Connection lost", {
-                description: "Check your network and try again.",
-                tone: "red",
-              })
-            }
-          >
-            Error toast
-          </UI.Button>
-          <UI.Button
-            onClick={() =>
-              toast("File moved to trash", {
-                description: "launch-notes.md",
-                action: {
-                  label: "Undo",
-                  onClick: () => toast("File restored", { tone: "green" }),
-                },
-              })
-            }
-          >
-            Toast with undo
-          </UI.Button>
-        </div>
-      )}
-      <div
-        role="region"
-        aria-label="Notifications"
-        aria-live="polite"
-        style={
-          demo
-            ? { marginTop: 20 }
-            : {
-                position: "fixed",
-                bottom: 24,
-                right: 24,
-                width: "min(360px,calc(100vw - 48px))",
-                zIndex: 1000,
-              }
-        }
-      >
-        {notices.map((n) => (
-          <div key={n.id} className="st-toast">
-            <span
-              style={{
-                color: n.tone === "red" ? "var(--st-red)" : "var(--st-green)",
-              }}
-            >
-              {n.tone === "red" ? "!" : "✓"}
-            </span>
-            <div className="st-grow">
-              <strong>{n.title}</strong>
-              <small>{n.description}</small>
-            </div>
-            {n.action && (
-              <UI.Button
-                onClick={() => {
-                  n.action?.onClick();
-                  dismissToast(n.id);
-                }}
-              >
-                {n.action.label}
-              </UI.Button>
-            )}
-            <UI.Button
-              aria-label={`Dismiss ${n.title}`}
-              onClick={() => dismissToast(n.id)}
-            >
-              ×
-            </UI.Button>
-          </div>
-        ))}
-      </div>
-      {demo && !notices.length && (
-        <UI.Empty>Trigger a notification above</UI.Empty>
-      )}
-    </UI.Panel>
+    <svg viewBox="0 0 16 16" aria-hidden="true" className={`tst-icon ${type}`}>
+      <circle cx="8" cy="8" r="6.25" className="ring" />
+      {type === "success" && <path d="m5.4 8.2 1.8 1.8 3.4-3.6" className="mark" />}
+      {type === "error" && <path d="M6 6l4 4m0-4-4 4" className="mark" />}
+      {type === "info" && <path d="M8 7.3v3.4M8 5.2v.1" className="mark" />}
+    </svg>
   );
 }
-export default function Demo() {
-  return <Toaster demo />;
+
+function ToastItem({
+  t,
+  index,
+  front,
+  expanded,
+  paused,
+  duration,
+  hairline,
+  closeButton,
+  top,
+  offsetY,
+  onHeight,
+}: {
+  t: ToastNotice;
+  index: number;
+  front: boolean;
+  expanded: boolean;
+  paused: boolean;
+  duration: number;
+  hairline: boolean;
+  closeButton: boolean;
+  top: boolean;
+  offsetY: number;
+  onHeight: (id: string, h: number) => void;
+}) {
+  const el = React.useRef<HTMLLIElement>(null);
+  const life = t.duration ?? (t.type === "loading" ? Infinity : duration);
+  const remaining = React.useRef(life);
+  const [leaving, setLeaving] = React.useState(false);
+  const [dx, setDx] = React.useState(0);
+  const drag = React.useRef<{ x: number; y: number } | null>(null);
+
+  React.useEffect(() => {
+    remaining.current = life;
+  }, [t.version, life]);
+
+  React.useEffect(() => {
+    if (paused || !Number.isFinite(remaining.current)) return;
+    const started = Date.now();
+    const id = window.setTimeout(() => close(), remaining.current);
+    return () => {
+      window.clearTimeout(id);
+      remaining.current -= Date.now() - started;
+    };
+  });
+
+  React.useLayoutEffect(() => {
+    const node = el.current;
+    if (!node) return;
+    const measure = () => onHeight(t.id, node.getBoundingClientRect().height);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, [t.id, onHeight]);
+
+  const close = () => {
+    setLeaving(true);
+    window.setTimeout(() => dismiss(t.id), 200);
+  };
+
+  const scale = expanded ? 1 : 1 - index * 0.05;
+  const peek = expanded ? offsetY : index * 10;
+  const y = (top ? 1 : -1) * peek;
+
+  return (
+    <li
+      ref={el}
+      tabIndex={0}
+      data-toast-id={t.id}
+      className={`tst-toast ${t.type} ${leaving ? "leaving" : ""} ${front ? "front" : ""}`}
+      aria-label={typeof t.title === "string" ? t.title : undefined}
+      style={{
+        transform: `translate(${dx}px, ${y}px) scale(${scale})`,
+        zIndex: 100 - index,
+        opacity: !expanded && index > 2 ? 0 : leaving ? 0 : dx ? Math.max(0.2, 1 - Math.abs(dx) / 220) : 1,
+        transition: drag.current ? "none" : undefined,
+        transformOrigin: top ? "center bottom" : "center top",
+        [top ? "top" : "bottom"]: 0,
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          e.stopPropagation();
+          const next = (e.currentTarget.nextElementSibling ?? e.currentTarget.previousElementSibling) as HTMLElement | null;
+          close();
+          next?.focus();
+        }
+      }}
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest("button")) return;
+        drag.current = { x: e.clientX, y: e.clientY };
+        e.currentTarget.setPointerCapture?.(e.pointerId);
+      }}
+      onPointerMove={(e) => {
+        if (!drag.current) return;
+        setDx(e.clientX - drag.current.x);
+      }}
+      onPointerUp={() => {
+        if (!drag.current) return;
+        drag.current = null;
+        if (Math.abs(dx) > 70) {
+          setDx(dx > 0 ? 420 : -420);
+          close();
+        } else setDx(0);
+      }}
+    >
+      <div className="tst-body" key={`body-${t.version}`}>
+        {(t.icon ?? t.type !== "default") && <span className="tst-lead">{t.icon ?? <Icon type={t.type} />}</span>}
+        <div className="tst-text">
+          <strong>{t.title}</strong>
+          {t.description && <span>{t.description}</span>}
+        </div>
+        {t.action && (
+          <button
+            type="button"
+            className="tst-action"
+            onClick={(e) => {
+              t.action!.onClick(e);
+              if (!e.defaultPrevented) close();
+            }}
+          >
+            {t.action.label}
+          </button>
+        )}
+      </div>
+      {closeButton && (
+        <button type="button" className="tst-close" aria-label="Close notification" onClick={close}>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 4.5 7 7m0-7-7 7" /></svg>
+        </button>
+      )}
+      {hairline && Number.isFinite(life) && (
+        <i
+          key={`hair-${t.version}`}
+          className="tst-hair"
+          aria-hidden="true"
+          style={{ animationDuration: `${life}ms`, animationPlayState: paused ? "paused" : "running" }}
+        />
+      )}
+    </li>
+  );
 }
+
+export function Toaster({
+  position = "bottom-right",
+  inline = false,
+  id,
+  duration = 4000,
+  visibleToasts = 3,
+  expand = false,
+  offset,
+  gap = 10,
+  hotkey = "F8",
+  hairline = true,
+  closeButton = true,
+  label = "Notifications",
+  className = "",
+}: ToasterProps) {
+  const [all, setAll] = React.useState(store);
+  const [hovered, setHovered] = React.useState(false);
+  const [focused, setFocused] = React.useState(false);
+  const [hidden, setHidden] = React.useState(false);
+  const [heights, setHeights] = React.useState<Record<string, number>>({});
+  const list = React.useRef<HTMLOListElement>(null);
+  const returnTo = React.useRef<HTMLElement | null>(null);
+
+  React.useEffect(() => {
+    const fn = () => setAll([...store]);
+    listeners.add(fn);
+    fn();
+    return () => {
+      listeners.delete(fn);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    const vis = () => setHidden(document.visibilityState === "hidden");
+    document.addEventListener("visibilitychange", vis);
+    return () => document.removeEventListener("visibilitychange", vis);
+  }, []);
+
+  React.useEffect(() => {
+    if (!hotkey) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== hotkey && e.code !== hotkey) return;
+      const first = list.current?.querySelector<HTMLElement>(".tst-toast");
+      if (!first) return;
+      e.preventDefault();
+      returnTo.current = document.activeElement as HTMLElement;
+      first.focus();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [hotkey]);
+
+  const onHeight = React.useCallback((tid: string, h: number) => {
+    setHeights((prev) => (prev[tid] === h ? prev : { ...prev, [tid]: h }));
+  }, []);
+
+  const toasts = all.filter((t) => (t.toaster ?? undefined) === id);
+  const visible = toasts.slice(0, visibleToasts);
+  const queued = toasts.length - visible.length;
+  const expanded = expand || hovered || focused;
+  const paused = hovered || focused || hidden;
+  const top = position.startsWith("top");
+  const edge = offset ?? (inline ? 20 : 24);
+  const frontHeight = heights[visible[0]?.id] ?? 64;
+  const stackHeight = expanded
+    ? visible.reduce((n, t) => n + (heights[t.id] ?? 64) + gap, -gap)
+    : frontHeight + Math.min(2, visible.length - 1) * 10;
+
+  React.useEffect(() => {
+    if (!toasts.length && returnTo.current) {
+      returnTo.current.focus?.();
+      returnTo.current = null;
+    }
+  }, [toasts.length]);
+
+  let acc = 0;
+  const offsets = visible.map((t) => {
+    const o = acc;
+    acc += (heights[t.id] ?? 64) + gap;
+    return o;
+  });
+
+  const errors = visible.filter((t) => t.type === "error");
+  return (
+    <section
+      className={`tst-region ${inline ? "inline" : ""} ${position} ${className}`}
+      aria-label={`${label}${hotkey ? ` (${hotkey})` : ""}`}
+      style={{ ["--tst-edge" as string]: `${edge}px` }}
+    >
+      <style>{css}</style>
+      <ol
+        ref={list}
+        className="tst-list"
+        style={{ height: visible.length ? stackHeight : 0 }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setFocused(true)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node)) setFocused(false);
+        }}
+      >
+        {visible.map((t, i) => (
+          <ToastItem
+            key={t.id}
+            t={t}
+            index={i}
+            front={i === 0}
+            expanded={expanded}
+            paused={paused || false}
+            duration={duration}
+            hairline={hairline}
+            closeButton={closeButton}
+            top={top}
+            offsetY={offsets[i]}
+            onHeight={onHeight}
+          />
+        ))}
+      </ol>
+      <p className="tst-sr" role="status" aria-live="polite">
+        {visible.filter((t) => t.type !== "error").map((t) => (typeof t.title === "string" ? t.title : "")).join(". ")}
+        {queued > 0 ? `. ${queued} more waiting` : ""}
+      </p>
+      <p className="tst-sr" role="alert">
+        {errors.map((t) => (typeof t.title === "string" ? t.title : "")).join(". ")}
+      </p>
+    </section>
+  );
+}
+
+const fileIcon = (d: string) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d={d} />
+  </svg>
+);
+
+/** Demo: a file card whose actions send toasts into an inline stack. */
+export default function ToasterDemo() {
+  React.useEffect(() => {
+    const id = toast.success("Report uploaded", {
+      id: "demo-upload",
+      description: "Shared with 4 people in Finance",
+      toaster: "demo",
+      duration: 12000,
+    });
+    return () => toast.dismiss(id);
+  }, []);
+  const send = (fn: () => void) => () => fn();
+  return (
+    <div className="tst-demo">
+      <style>{css}</style>
+      <div className="tst-card">
+        <div className="tst-file">
+          <span className="tst-doc">{fileIcon("M4.5 2h4.8L12 4.7v8.8c0 .3-.2.5-.5.5h-7a.5.5 0 0 1-.5-.5V2.5c0-.3.2-.5.5-.5ZM6 8h4M6 10.5h4")}</span>
+          <div>
+            <strong>Q3 Board Report</strong>
+            <span>Finance · edited 2 min ago</span>
+          </div>
+        </div>
+        <div className="tst-actions">
+          <button
+            type="button"
+            onClick={send(() => toast.success("Draft saved", { description: "Q3 Board Report", toaster: "demo" }))}
+          >
+            {fileIcon("M3 3.5c0-.3.2-.5.5-.5h7.3L13 5.2v7.3c0 .3-.2.5-.5.5h-9a.5.5 0 0 1-.5-.5ZM5.5 3v3h4V3M5 13V9.5h6V13")}
+            Save draft
+          </button>
+          <button
+            type="button"
+            onClick={send(() =>
+              toast("File moved to trash", {
+                description: "Q3 Board Report",
+                toaster: "demo",
+                action: { label: "Undo", onClick: () => toast.success("File restored", { toaster: "demo" }) },
+              }),
+            )}
+          >
+            {fileIcon("M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5")}
+            Delete file
+          </button>
+          <button
+            type="button"
+            onClick={send(() =>
+              void toast.promise(
+                new Promise((r) => setTimeout(r, 1800)),
+                {
+                  loading: { title: "Uploading report…", description: "Q3 Board Report.pdf" },
+                  success: { title: "Report uploaded", description: "Shared with 4 people in Finance" },
+                  error: "Upload failed",
+                },
+                { toaster: "demo" },
+              ),
+            )}
+          >
+            {fileIcon("M8 10.5V3M5 5.8 8 3l3 2.8M3 10.5V13h10v-2.5")}
+            Upload report
+          </button>
+          <button
+            type="button"
+            onClick={send(() =>
+              void toast
+                .promise(
+                  new Promise((_, reject) => setTimeout(() => reject(new Error("offline")), 1800)),
+                  {
+                    loading: "Syncing with Drive…",
+                    success: "Synced",
+                    error: { title: "Sync failed", description: "Drive didn't answer – try again in a minute" },
+                  },
+                  { toaster: "demo" },
+                )
+                .catch(() => {}),
+            )}
+          >
+            {fileIcon("M12.5 6.5A4.6 4.6 0 0 0 4 5.2M3.5 9.5a4.6 4.6 0 0 0 8.5 1.3M4 2.8v2.6h2.6M12 13.2v-2.6H9.4")}
+            Sync
+          </button>
+        </div>
+      </div>
+      <p className="tst-hint">
+        Press <kbd>F8</kbd> to jump to notifications
+      </p>
+      <div className="tst-stage">
+        <Toaster inline id="demo" position="top-center" offset={0} />
+      </div>
+    </div>
+  );
+}
+
+const css = `
+.tst-region,.tst-demo{--tst-fg:#1f1f1f;--tst-muted:#7d7d7d;--tst-card:#fff;--tst-line:#ececec;--tst-soft:#f4f4f4;--tst-green:#2f9e66;--tst-red:#e5484d;--tst-blue:#3d7be8;font:400 13px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--tst-fg)}
+:where(.dark,[data-theme=dark]) :is(.tst-region,.tst-demo){--tst-fg:#ececec;--tst-muted:#8f8f94;--tst-card:#1d1d20;--tst-line:#2d2d32;--tst-soft:#27272b;--tst-green:#4cc38a;--tst-red:#ff6b70;color-scheme:dark}
+.tst-region *,.tst-demo *{box-sizing:border-box}
+.tst-region :where(button),.tst-demo :where(button){font:inherit;color:inherit;cursor:pointer}
+.tst-region{position:fixed;z-index:9999;width:356px;max-width:calc(100vw - 24px);pointer-events:none}
+.tst-region.inline{position:absolute}
+.tst-region.top-left,.tst-region.top-center,.tst-region.top-right{top:var(--tst-edge)}
+.tst-region.bottom-left,.tst-region.bottom-center,.tst-region.bottom-right{bottom:var(--tst-edge)}
+.tst-region.top-left,.tst-region.bottom-left{left:var(--tst-edge)}
+.tst-region.top-right,.tst-region.bottom-right{right:var(--tst-edge)}
+.tst-region.top-center,.tst-region.bottom-center{left:50%;transform:translateX(-50%)}
+.tst-list{position:relative;list-style:none;margin:0;padding:0;transition:height .35s cubic-bezier(.22,1,.36,1)}
+.tst-toast{position:absolute;left:0;right:0;pointer-events:auto;background:var(--tst-card);border:1px solid var(--tst-line);border-radius:10px;box-shadow:0 4px 16px #00000012,0 1px 2px #0000000a;padding:13px 16px 14px 14px;overflow:hidden;touch-action:pan-y;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .25s;animation:tst-in .4s cubic-bezier(.22,1,.36,1)}
+.tst-region.top-left .tst-toast,.tst-region.top-center .tst-toast,.tst-region.top-right .tst-toast{animation-name:tst-in-top}
+.tst-toast:focus-visible{outline:2px solid var(--tst-blue);outline-offset:2px}
+.tst-toast.leaving{transform:translateY(6px)!important}
+.tst-toast:not(.front) .tst-body{opacity:var(--tst-back,1)}
+.tst-body{display:flex;align-items:flex-start;gap:10px;animation:tst-fade .25s ease-out}
+.tst-lead{display:grid;place-items:center;width:14px;height:20px;flex:none}
+.tst-text{display:grid;gap:1px;min-width:0;flex:1}
+.tst-text strong{font-weight:500;font-size:14px;line-height:20px}
+.tst-text span{color:color-mix(in srgb,var(--tst-fg) 72%,transparent);font-size:14px;line-height:21px}
+.tst-icon{width:14px;height:14px;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tst-icon .ring{stroke-width:1.1;opacity:.5}
+.tst-icon .mark{stroke-width:1.5;stroke-dasharray:12;animation:tst-draw .35s .1s ease-out both}
+.tst-icon.success{stroke:var(--tst-green)}.tst-icon.error{stroke:var(--tst-red)}.tst-icon.info{stroke:var(--tst-blue)}
+.tst-spin{width:12px;height:12px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--tst-muted) 25%,transparent);border-top-color:var(--tst-muted);animation:tst-spin .8s linear infinite}
+.tst-action{align-self:center;border:0;border-radius:6px;background:var(--tst-fg);color:var(--tst-card)!important;font-size:12px!important;padding:3px 10px;font-weight:500}
+.tst-action:hover{opacity:.85}
+.tst-close{position:absolute;top:6px;right:6px;width:20px;height:20px;display:grid;place-items:center;border:0;background:var(--tst-card);border-radius:5px;color:var(--tst-muted)!important;opacity:0;transition:opacity .15s}
+.tst-toast:hover .tst-close,.tst-toast:focus-within .tst-close{opacity:1}
+.tst-close:hover{background:var(--tst-soft)}
+.tst-close svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+.tst-hair{position:absolute;left:0;right:0;bottom:0;height:1px;background:color-mix(in srgb,var(--tst-fg) 22%,transparent);transform-origin:left;animation:tst-hair linear forwards}
+.tst-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
+.tst-region button:focus-visible,.tst-demo button:focus-visible{outline:2px solid var(--tst-blue);outline-offset:2px}
+.tst-demo{width:356px;max-width:100%;margin:0 auto;display:grid;gap:0;text-align:left}
+.tst-card{background:var(--tst-card);border:1px solid var(--tst-line);border-radius:12px;padding:12px;box-shadow:0 1px 2px #00000008}
+.tst-file{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.tst-file>div{display:grid}
+.tst-file strong{font-weight:500;font-size:14px;line-height:19px}
+.tst-file span{color:var(--tst-muted);font-size:13px}
+.tst-doc{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--tst-line);border-radius:8px;color:var(--tst-muted)}
+.tst-doc svg,.tst-actions svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.tst-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tst-actions button{display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--tst-line);border-radius:7px;background:var(--tst-card);font-size:14px!important;font-weight:500;box-shadow:0 1px 2px #00000008;transition:background .15s,transform .1s}
+.tst-actions button svg{color:var(--tst-muted)}
+.tst-actions button:hover{background:var(--tst-soft)}
+.tst-actions button:active{transform:scale(.98)}
+.tst-hint{margin:12px 0 0;text-align:center;font-size:13px;color:var(--tst-muted)}
+.tst-hint kbd{font:inherit;font-size:12px;color:var(--tst-fg);border:1px solid var(--tst-line);border-radius:4px;padding:0 5px;margin:0 2px;background:var(--tst-card)}
+.tst-stage{position:relative;height:180px;margin-top:14px}
+.tst-stage .tst-region{width:100%}
+@keyframes tst-in{from{opacity:0;transform:translateY(16px) scale(.98)}}
+@keyframes tst-in-top{from{opacity:0;transform:translateY(-16px) scale(.98)}}
+@keyframes tst-fade{from{opacity:0}}
+@keyframes tst-spin{to{transform:rotate(360deg)}}
+@keyframes tst-draw{from{stroke-dashoffset:12}to{stroke-dashoffset:0}}
+@keyframes tst-hair{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){:is(.tst-region,.tst-demo) *:not(.tst-spin){animation:none!important;transition:none!important}}
+@media (max-width:600px){.tst-region:not(.inline){left:12px!important;right:12px!important;width:auto;transform:none!important;bottom:calc(12px + env(safe-area-inset-bottom))}}
+@media (pointer:coarse){.tst-close{opacity:1;width:28px;height:28px}.tst-action{padding:6px 12px}}
+`;

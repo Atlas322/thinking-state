@@ -3,364 +3,258 @@
 import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
-export type StudioItem = {
+
+export type TrailState = "done" | "running" | "pending" | "waiting" | "failed";
+
+export type TrailSubstep = {
+  id?: string;
+  title: string;
+  state?: "done" | "running" | "pending";
+  detail?: string;
+};
+
+export type TrailStep = {
   id: string;
   title: string;
-  detail?: string;
+  state: TrailState;
+  /** ms as a number, or your own text. */
+  duration?: number | string;
   status?: string;
-  value?: number;
-  cost?: number;
-  color?: string;
-  children?: StudioItem[];
-  tags?: string[];
-};
-export type StudioProps = {
-  title?: string;
-  items?: StudioItem[];
-  className?: string;
-  onAction?: (action: string, item?: StudioItem) => void;
+  startedAt?: number;
+  gate?: boolean;
+  substeps?: TrailSubstep[];
 };
 
-const UI = {
-  Panel({
-    title,
-    subtitle,
-    aside,
-    children,
-    className = "",
-  }: {
-    title?: string;
-    subtitle?: string;
-    aside?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-  }) {
-    return (
-      <section className={`st-ui ${className}`}>
-        <style>{studioCSS}</style>
-        {title && (
-          <header className="st-head">
-            <div>
-              <strong>{title}</strong>
-              {subtitle && <p>{subtitle}</p>}
-            </div>
-            {aside}
-          </header>
-        )}
-        <div className="st-content">{children}</div>
-      </section>
-    );
+export type AgentTrailLabels = {
+  title: string;
+  running: string;
+  approval: string;
+  waiting: string;
+  failed: string;
+  empty: string;
+  untitled: string;
+};
+
+export type AgentTrailProps = {
+  title?: string;
+  steps?: TrailStep[];
+  expanded?: string[];
+  onExpandedChange?: (ids: string[]) => void;
+  labels?: Partial<AgentTrailLabels>;
+  className?: string;
+};
+
+const defaultLabels: AgentTrailLabels = {
+  title: "Agent steps",
+  running: "Running",
+  approval: "Approval",
+  waiting: "Needs you",
+  failed: "Failed",
+  empty: "No steps yet",
+  untitled: "Untitled step",
+};
+
+const defaultSteps: TrailStep[] = [
+  { id: "read", title: "Read the bug report", state: "done", duration: 8000 },
+  { id: "repro", title: "Reproduce the crash", state: "done", duration: 34000 },
+  {
+    id: "patch",
+    title: "Patch the checkout form",
+    state: "running",
+    status: "Testing",
+    startedAt: -31000,
+    substeps: [
+      { title: "Found the empty-cart case", detail: "cart.ts:142" },
+      { title: "Added a guard and 2 tests", detail: "+18 −3" },
+      { title: "Running the test suite", state: "running", detail: "182/214" },
+    ],
   },
-  Button({
-    children,
-    primary = false,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement> & { primary?: boolean }) {
+  { id: "note", title: "Write the release note", state: "pending" },
+  { id: "pr", title: "Open a pull request", state: "pending", gate: true },
+];
+
+export function formatDuration(v: number | string | undefined): string {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  const s = Math.max(0, Math.round(v / 1000));
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m ${s % 60}s`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ${m % 60}m`;
+  return `${Math.floor(h / 24)}d ${h % 24}h`;
+}
+
+function Marker({ step }: { step: TrailStep }) {
+  if (step.state === "done")
     return (
-      <button
-        type="button"
-        {...props}
-        className={`st-btn ${primary ? "st-primary" : ""} ${props.className ?? ""}`}
-      >
-        {children}
-      </button>
-    );
-  },
-  Badge({ children, tone = "" }: { children: React.ReactNode; tone?: string }) {
-    return <span className={`st-badge ${tone}`}>{children}</span>;
-  },
-  Avatar({ name, color }: { name: string; color?: string }) {
-    return (
-      <span className="st-avatar" style={{ color }}>
-        {name.slice(0, 2)}
+      <span className="atr-mk atr-mk-done">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="m4.5 8.3 2.3 2.2 4.7-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </span>
     );
-  },
-  Row({
-    title,
-    detail,
-    icon,
-    children,
-    onClick,
-  }: {
-    title: React.ReactNode;
-    detail?: React.ReactNode;
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
-    onClick?: () => void;
-  }) {
-    const content = (
-      <>
-        {icon}
-        <span className="st-grow">
-          <span className="st-row-title">{title}</span>
-          {detail && <small>{detail}</small>}
-        </span>
-        {children}
-      </>
-    );
-    return onClick ? (
-      <button type="button" className="st-row st-row-button" onClick={onClick}>
-        {content}
-      </button>
-    ) : (
-      <div className="st-row">{content}</div>
-    );
-  },
-  Meter({
-    value,
-    label,
-    color,
-  }: {
-    value: number;
-    label?: string;
-    color?: string;
-  }) {
+  if (step.state === "running") return <span className="atr-mk atr-mk-run" />;
+  if (step.state === "failed")
     return (
-      <div
-        className="st-meter"
-        role="progressbar"
-        aria-label={label ?? "Progress"}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(Math.max(0, Math.min(100, value)))}
-      >
-        <span
-          style={{
-            width: `${Math.max(0, Math.min(100, value))}%`,
-            background: color,
-          }}
-        />
-      </div>
+      <span className="atr-mk atr-mk-fail">
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d="m5.5 5.5 5 5m0-5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+        </svg>
+      </span>
     );
-  },
-  Tabs({
-    values,
-    value,
-    onChange,
-  }: {
-    values: string[];
-    value: string;
-    onChange: (value: string) => void;
-  }) {
-    return (
-      <div className="st-tabs" role="group" aria-label="View">
-        {values.map((v) => (
-          <button
-            type="button"
-            key={v}
-            aria-pressed={v === value}
-            onClick={() => onChange(v)}
-          >
-            {v}
-          </button>
-        ))}
-      </div>
-    );
-  },
-  Field({
-    label,
-    ...props
-  }: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
-    const id = React.useId();
-    return (
-      <label className="st-field" htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} id={id} />
-      </label>
-    );
-  },
-  Detail({
-    title,
-    children,
-    open,
-  }: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-    open?: boolean;
-  }) {
-    return (
-      <details className="st-detail" open={open}>
-        <summary>
-          {title}
-          <span aria-hidden="true">⌄</span>
-        </summary>
-        <div>{children}</div>
-      </details>
-    );
-  },
-  Empty({ children = "All caught up" }: { children?: React.ReactNode }) {
-    return (
-      <p className="st-empty" role="status">
-        ✓ {children}
-      </p>
-    );
-  },
-  Spark({
-    values,
-    color = "var(--st-accent)",
-  }: {
-    values: number[];
-    color?: string;
-  }) {
-    const max = Math.max(1, ...values);
-    return (
-      <svg
-        className="st-spark"
-        viewBox="0 0 480 130"
-        role="img"
-        aria-label="Trend chart"
-      >
-        {[25, 65, 105].map((y) => (
-          <path
-            key={y}
-            d={`M0 ${y}H480`}
-            stroke="var(--st-line)"
-            strokeDasharray="3 4"
-          />
-        ))}
-        <polyline
-          fill="none"
-          stroke={color}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          points={values
-            .map(
-              (v, i) =>
-                `${(i / Math.max(1, values.length - 1)) * 480},${120 - (v / max) * 100}`,
-            )
-            .join(" ")}
-        />
-      </svg>
-    );
-  },
-  useClock(active = true) {
-    const [seconds, setSeconds] = React.useState(0);
-    React.useEffect(() => {
-      if (!active) return;
-      const id = window.setInterval(() => setSeconds((n) => n + 1), 1000);
-      return () => window.clearInterval(id);
-    }, [active]);
-    return seconds;
-  },
-  useCopy() {
-    const [status, setStatus] = React.useState("");
-    const copy = async (text: string) => {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus("Copied");
-      } catch {
-        setStatus("Copy unavailable. Select and copy the text.");
-      }
-    };
-    return { status, copy };
-  },
-};
-
-const studioCSS = `
-.st-ui{--st-bg:#fff;--st-fg:#262629;--st-muted:#828287;--st-soft:#f7f7f8;--st-line:#ebebed;--st-accent:#547ded;--st-green:#32956a;--st-red:#d76060;--st-amber:#bd8b35;width:100%;max-width:680px;color:var(--st-fg);font:400 13px/1.55 Inter,system-ui,sans-serif;background:var(--st-bg);border:1px solid var(--st-line);border-radius:14px;box-shadow:0 2px 8px #00000003;overflow:visible;isolation:isolate}
-:where(.dark,[data-theme=dark]) .st-ui{--st-bg:#1c1c1f;--st-fg:#e4e4e7;--st-muted:#929298;--st-soft:#242427;--st-line:#303035;--st-accent:#7899ff;--st-green:#69bf97;--st-red:#ed8585;--st-amber:#dbad61;color-scheme:dark}
-.st-ui *{box-sizing:border-box}.st-ui button,.st-ui input,.st-ui textarea,.st-ui select{font:inherit}.st-ui button{cursor:pointer}.st-ui button:disabled{cursor:not-allowed;opacity:.4}.st-ui :focus-visible{outline:2px solid var(--st-accent);outline-offset:3px}.st-ui strong{font-weight:550}.st-ui p{margin:0 0 12px}.st-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--st-line)}.st-head strong{font-size:14px}.st-head p{color:var(--st-muted);font-size:12px;margin:4px 0 0}.st-content{padding:10px 20px 18px}.st-row{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 0;border-bottom:1px solid var(--st-line);width:100%;text-align:left}.st-row:last-child{border-bottom:0}.st-row-button{background:none;border-top:0;border-left:0;border-right:0;color:inherit}.st-row-button:hover{background:var(--st-soft)}.st-row-title{display:block;font-weight:500}.st-grow{flex:1;min-width:0}.st-ui small,.st-muted{display:block;color:var(--st-muted);font-size:11px}.st-btn{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:6px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;white-space:nowrap;transition:background .18s,transform .18s;min-height:30px}.st-btn:hover{background:var(--st-soft)}.st-btn:active{transform:scale(.97)}.st-btn.st-primary{background:var(--st-fg);color:var(--st-bg);border-color:var(--st-fg)}.st-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.st-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;line-height:18px;padding:0 6px;border-radius:4px;background:var(--st-soft);color:var(--st-muted);white-space:nowrap}.st-badge.running,.st-badge.blue{color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-badge.done,.st-badge.green,.st-badge.success{color:var(--st-green);background:color-mix(in srgb,var(--st-green) 9%,transparent)}.st-badge.failed,.st-badge.red{color:var(--st-red);background:color-mix(in srgb,var(--st-red) 9%,transparent)}.st-badge.waiting,.st-badge.amber{color:var(--st-amber);background:color-mix(in srgb,var(--st-amber) 9%,transparent)}.st-avatar{display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--st-line);border-radius:8px;font-size:11px;background:var(--st-soft);font-weight:600}.st-meter{height:5px;background:var(--st-line);border-radius:10px;overflow:hidden}.st-meter>span{display:block;height:100%;background:var(--st-accent);border-radius:inherit;transition:width .6s cubic-bezier(.2,.8,.2,1)}.st-tabs{display:flex;gap:4px;padding:8px 0;flex-wrap:wrap}.st-tabs button{border:0;border-radius:6px;background:transparent;color:var(--st-muted);padding:5px 9px;font-size:11px}.st-tabs button[aria-pressed=true]{background:var(--st-soft);color:var(--st-fg)}.st-field{display:grid;gap:6px;margin:12px 0}.st-field>span{font-size:12px;font-weight:500}.st-field input,.st-ui textarea,.st-ui select,.st-input{border:1px solid var(--st-line);border-radius:7px;background:var(--st-bg);color:var(--st-fg);padding:8px 10px;min-width:0;max-width:100%;width:100%}.st-ui textarea{resize:vertical;min-height:85px}.st-detail{border-bottom:1px solid var(--st-line)}.st-detail summary{display:flex;justify-content:space-between;gap:12px;cursor:pointer;padding:13px 0;list-style:none}.st-detail summary::-webkit-details-marker{display:none}.st-detail[open] summary>span:last-child{transform:rotate(180deg)}.st-detail>div{padding:0 0 14px}.st-empty{padding:26px 8px;color:var(--st-muted);text-align:center}.st-spark{width:100%;height:130px;overflow:visible;margin:16px 0}.st-big{font-size:34px;letter-spacing:-1.5px;font-weight:550;font-variant-numeric:tabular-nums;margin:12px 0 0}.st-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.st-tile{padding:16px;border:1px solid var(--st-line);border-radius:10px;background:var(--st-bg);min-width:0;text-align:left;color:inherit;transition:border-color .2s,background .2s}.st-tile.active{border-color:var(--st-accent);background:color-mix(in srgb,var(--st-accent) 4%,var(--st-bg))}.st-tile h4{font-size:13px;margin:7px 0}.st-tile p{font-size:12px;color:var(--st-muted)}.st-dot{width:7px;height:7px;display:inline-block;flex:none;border-radius:50%;background:var(--st-accent)}.st-dot.running{animation:st-pulse 1.5s infinite}.st-timeline{list-style:none;padding:4px 0;margin:0}.st-timeline>li{position:relative;margin-left:8px;border-left:1px solid var(--st-line);padding:0 0 20px 24px;animation:st-appear .35s both}.st-timeline>li:before{content:'';position:absolute;left:-4px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--st-muted);box-shadow:0 0 0 4px var(--st-bg)}.st-timeline>li.active:before{background:var(--st-accent);animation:st-pulse 1.5s infinite}.st-timeline>li:last-child{border-color:transparent;padding-bottom:4px}.st-code{font:11px/1.7 ui-monospace,monospace;background:var(--st-soft);border:1px solid var(--st-line);border-radius:8px;padding:14px;white-space:pre-wrap;overflow:auto;word-break:break-word;color:var(--st-muted)}.st-split{display:grid;grid-template-columns:160px 1fr;gap:16px}.st-bars{display:flex;align-items:flex-end;gap:4px;height:85px;margin:16px 0}.st-bars>button{padding:0;flex:1;min-width:2px;border:0;border-radius:3px 3px 0 0;background:var(--st-accent);opacity:.65;transition:height .4s,opacity .2s}.st-bars>button:hover{opacity:1}.st-key{font:10px ui-monospace,monospace;padding:2px 5px;border:1px solid var(--st-line);border-radius:4px;color:var(--st-muted)}.st-table-wrap{overflow:auto}.st-table{border-collapse:collapse;width:100%;font-size:12px}.st-table th{text-align:left;font-weight:500;color:var(--st-muted);padding:10px 8px;border-bottom:1px solid var(--st-line)}.st-table td{padding:11px 8px;border-bottom:1px solid var(--st-line)}.st-table input{width:100%;min-width:90px;border:1px solid transparent;background:none;color:inherit;padding:4px;border-radius:4px}.st-table input:focus{border-color:var(--st-accent)}.st-table tr:hover{background:var(--st-soft)}.st-branch{margin-left:18px;padding-left:18px;border-left:1px solid var(--st-line)}.st-link{border:0;background:none;color:var(--st-accent);padding:0;cursor:pointer;text-decoration:none}.st-check{accent-color:var(--st-accent);width:15px;height:15px}.st-status{color:var(--st-green);font-size:12px;margin-top:12px;min-height:18px}.st-flow{display:flex;gap:14px;align-items:center;justify-content:center;margin:24px 0}.st-flow>div{flex:1}.st-grid-cells{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:18px 0}.st-grid-cells button{border:0;aspect-ratio:1;border-radius:3px;background:var(--st-line);padding:0;min-width:0}.st-grid-cells button:hover{outline:2px solid var(--st-accent);outline-offset:2px}.st-chip{padding:3px 7px;border-radius:5px;border:1px solid var(--st-line);font-size:11px;display:inline-flex;gap:7px;align-items:center;background:var(--st-soft)}.st-chip button{border:0;background:none;color:inherit;padding:0}.st-bubble{padding:12px 15px;background:var(--st-soft);border-radius:0 10px 10px;margin:8px 0;max-width:90%;white-space:pre-wrap}.st-bubble.user{margin-left:auto;border-radius:10px 0 10px 10px;background:color-mix(in srgb,var(--st-accent) 9%,transparent)}.st-prose{font-size:13px;line-height:1.9;margin:18px 0;white-space:pre-wrap}.st-checkline{display:flex;align-items:center;gap:10px;padding:10px 0}.st-checkline input{accent-color:var(--st-accent)}.st-toast{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;background:var(--st-bg);box-shadow:0 3px 20px #0001;border:1px solid var(--st-line);animation:st-appear .3s both;margin-top:10px}.st-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.st-calendar button{border:0;background:none;color:inherit;aspect-ratio:1;border-radius:6px;padding:4px;font-size:12px}.st-calendar button.selected{background:var(--st-accent);color:white}.st-calendar button.inrange{background:color-mix(in srgb,var(--st-accent) 12%,transparent)}.st-calendar small{text-align:center;padding:8px 0}.st-range{width:100%;accent-color:var(--st-accent)}@keyframes st-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}@keyframes st-pulse{50%{opacity:.4;box-shadow:0 0 0 4px color-mix(in srgb,var(--st-accent) 10%,transparent)}}@media(max-width:540px){.st-head{padding:16px}.st-content{padding:8px 14px 16px}.st-columns{grid-template-columns:1fr}.st-split{grid-template-columns:1fr}.st-flow{flex-wrap:wrap}.st-head strong{font-size:13px}.st-row{gap:8px}.st-btn{padding:6px 8px}.st-grid-cells{grid-template-columns:repeat(8,1fr)}}@media(prefers-reduced-motion:reduce){.st-ui *,.st-ui *::before{animation:none!important;transition:none!important}}
-`;
+  if (step.gate || step.state === "waiting") return <span className="atr-mk atr-mk-gate" />;
+  return <span className="atr-mk atr-mk-pend" />;
+}
 
 export function AgentTrail({
   title = "Fix the checkout crash",
-  items = [
-    { id: "read", title: "Read the bug report", detail: "8s", status: "done" },
-    {
-      id: "repro",
-      title: "Reproduce the crash",
-      detail: "34s",
-      status: "done",
-    },
-    {
-      id: "patch",
-      title: "Patch the checkout form",
-      detail: "Testing",
-      status: "running",
-      children: [
-        {
-          id: "case",
-          title: "Found the empty-cart case",
-          detail: "cart.ts:142",
-          status: "done",
-        },
-        {
-          id: "guard",
-          title: "Added a guard and 2 tests",
-          detail: "+18 −3",
-          status: "done",
-        },
-        {
-          id: "suite",
-          title: "Running the test suite",
-          detail: "182 / 214",
-          status: "running",
-        },
-      ],
-    },
-    {
-      id: "pr",
-      title: "Open a pull request",
-      detail: "Requires approval",
-      status: "waiting",
-    },
-  ],
-  onAction,
-  className,
-}: StudioProps) {
-  const [open, setOpen] = React.useState<string[]>(
-    items.filter((x) => x.status === "running").map((x) => x.id),
+  steps = defaultSteps,
+  expanded,
+  onExpandedChange,
+  labels: labelsIn,
+  className = "",
+}: AgentTrailProps) {
+  const labels = { ...defaultLabels, ...labelsIn };
+  // Demo: negative startedAt means "this many ms ago" from mount.
+  const [mountedAt] = React.useState(() => Date.now());
+  const [now, setNow] = React.useState(() => Date.now());
+  const hasRunning = steps.some((s) => s.state === "running" && s.startedAt != null);
+  React.useEffect(() => {
+    if (!hasRunning) return;
+    const id = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, [hasRunning]);
+
+  const [openLocal, setOpenLocal] = React.useState<string[]>(() =>
+    steps.filter((s) => s.state === "running").map((s) => s.id),
   );
-  const seconds = UI.useClock();
+  const open = expanded ?? openLocal;
+  const toggle = (id: string) => {
+    const next = open.includes(id) ? open.filter((x) => x !== id) : [...open, id];
+    if (!expanded) setOpenLocal(next);
+    onExpandedChange?.(next);
+  };
+
+  const doneCount = steps.filter((s) => s.state === "done").length;
+  const started = (s: TrailStep) =>
+    s.startedAt == null ? undefined : s.startedAt < 0 ? mountedAt + s.startedAt : s.startedAt;
+
   return (
-    <UI.Panel
-      title={title}
-      className={className}
-      aside={
-        <UI.Badge>
-          {items.filter((x) => x.status === "done").length}/{items.length}
-        </UI.Badge>
-      }
-    >
-      <ol className="st-timeline">
-        {items.map((x) => (
-          <li key={x.id} className={x.status === "running" ? "active" : ""}>
-            <UI.Row
-              title={x.title}
-              detail={
-                x.status === "running" ? `${x.detail} · ${seconds}s` : x.detail
-              }
-              onClick={() => {
-                setOpen((s) =>
-                  s.includes(x.id)
-                    ? s.filter((id) => id !== x.id)
-                    : [...s, x.id],
-                );
-                onAction?.("select", x);
-              }}
-            >
-              <UI.Badge tone={x.status}>{x.status}</UI.Badge>
-            </UI.Row>
-            {open.includes(x.id) && x.children && (
-              <ol className="st-timeline">
-                {x.children.map((c) => (
-                  <li
-                    key={c.id}
-                    className={c.status === "running" ? "active" : ""}
-                  >
-                    {c.title}
-                    <small>{c.detail}</small>
-                  </li>
-                ))}
-              </ol>
-            )}
-          </li>
-        ))}
-      </ol>
-    </UI.Panel>
+    <section className={`atr ${className}`} aria-label={title ?? labels.title}>
+      <style>{css}</style>
+      {title && (
+        <header className="atr-head">
+          <span className="atr-title">{title}</span>
+          <span className="atr-count">
+            {doneCount}/{steps.length}
+          </span>
+        </header>
+      )}
+      {steps.length === 0 ? (
+        <p className="atr-empty">{labels.empty}</p>
+      ) : (
+        <ol className="atr-list">
+          {steps.map((s, i) => {
+            const next = steps[i + 1];
+            const subs = s.substeps ?? [];
+            const isOpen = subs.length > 0 && open.includes(s.id);
+            const t0 = started(s);
+            const right =
+              s.state === "done"
+                ? formatDuration(s.duration)
+                : s.state === "running" && t0 != null
+                  ? formatDuration(now - t0)
+                  : s.state === "running"
+                    ? formatDuration(s.duration)
+                    : "";
+            const lineOn = s.state === "done" && next && next.state !== "pending";
+            return (
+              <li key={s.id} className={`atr-step atr-${s.state}`}>
+                <div className="atr-row">
+                  <span className="atr-rail">
+                    <Marker step={s} />
+                    {next && <span className={`atr-line ${lineOn ? "on" : ""}`} />}
+                  </span>
+                  {subs.length > 0 ? (
+                    <button
+                      type="button"
+                      className="atr-name atr-btn"
+                      aria-expanded={isOpen}
+                      onClick={() => toggle(s.id)}
+                    >
+                      {s.title || labels.untitled}
+                    </button>
+                  ) : (
+                    <span className="atr-name">{s.title || labels.untitled}</span>
+                  )}
+                  {s.state === "running" && (
+                    <span className="atr-status">{s.status ?? labels.running}</span>
+                  )}
+                  {s.state === "waiting" && <span className="atr-pill atr-pill-wait">{labels.waiting}</span>}
+                  {s.state === "pending" && s.gate && <span className="atr-pill">{labels.approval}</span>}
+                  {s.state === "failed" && <span className="atr-failed">{labels.failed}</span>}
+                  {right && <span className="atr-time">{right}</span>}
+                </div>
+                {isOpen && (
+                  <ul className="atr-subs">
+                    {subs.map((sub, j) => (
+                      <li key={sub.id ?? j} className={`atr-sub atr-sub-${sub.state ?? "done"}`}>
+                        <span className="atr-dot" />
+                        <span className="atr-sub-t">{sub.title}</span>
+                        {sub.detail && <span className="atr-sub-d">{sub.detail}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </section>
   );
 }
+
+const css = `
+.atr{--atr-bg:#fff;--atr-fg:#18181b;--atr-muted:#71717a;--atr-faint:#a1a1aa;--atr-line:#ececef;--atr-accent:#0a84ff;--atr-amber:#e0a106;--atr-amber-bg:#fdf3c8;--atr-amber-fg:#8a6100;--atr-red:#e5484d;width:100%;max-width:360px;background:var(--atr-bg);color:var(--atr-fg);border:1px solid var(--atr-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;padding:14px 16px 12px;font:400 14px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .atr{--atr-bg:#1b1b1e;--atr-fg:#ececef;--atr-muted:#a1a1aa;--atr-faint:#71717a;--atr-line:#2e2e33;--atr-accent:#4ea1ff;--atr-amber-bg:#3a2f0e;--atr-amber-fg:#f5c84b;color-scheme:dark}
+.atr *{box-sizing:border-box}
+.atr-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.atr-title{font-weight:500}.atr-count{font-size:13px;color:var(--atr-muted);font-variant-numeric:tabular-nums}
+.atr-list{list-style:none;margin:0;padding:0}
+.atr-row{display:flex;align-items:center;gap:10px;min-height:32px}
+.atr-rail{position:relative;align-self:stretch;width:16px;display:flex;justify-content:center;align-items:center;flex:none}
+.atr-line{position:absolute;left:7.5px;top:calc(50% + 9px);height:calc(100% - 18px + 0px);width:1.5px;background:var(--atr-line)}
+.atr-line.on{background:var(--atr-accent)}
+.atr-mk{display:grid;place-items:center;width:15px;height:15px;border-radius:50%;flex:none}
+.atr-mk svg{width:13px;height:13px}
+.atr-mk-done{background:color-mix(in srgb,var(--atr-accent) 14%,transparent);color:var(--atr-accent)}
+.atr-mk-run{border:1.5px solid var(--atr-line);border-top-color:var(--atr-accent);animation:atr-spin 1s linear infinite}
+.atr-mk-pend{border:1.5px solid var(--atr-line)}
+.atr-mk-gate{border:1.5px dashed var(--atr-amber)}
+.atr-mk-fail{background:color-mix(in srgb,var(--atr-red) 14%,transparent);color:var(--atr-red)}
+.atr-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--atr-muted)}
+.atr-running .atr-name{color:var(--atr-fg)}
+.atr-btn{border:0;background:none;padding:0;font:inherit;text-align:left;cursor:pointer}
+.atr-status{font-size:13px;color:var(--atr-accent);background:linear-gradient(90deg,var(--atr-accent) 40%,color-mix(in srgb,var(--atr-accent) 40%,transparent) 50%,var(--atr-accent) 60%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:atr-shim 2.2s linear infinite}
+.atr-time{font-size:13px;color:var(--atr-faint);font-variant-numeric:tabular-nums;min-width:22px;text-align:right}
+.atr-pill{font-size:12.5px;padding:1px 7px;border-radius:5px;background:var(--atr-amber-bg);color:var(--atr-amber-fg)}
+.atr-failed{font-size:13px;color:var(--atr-red)}
+.atr-subs{list-style:none;margin:0 0 4px;padding:0 0 0 13px;position:relative}
+.atr-subs::before{content:"";position:absolute;left:21.5px;top:0;bottom:12px;width:1.5px;background:var(--atr-line);border-radius:1px}
+.atr-sub{position:relative;display:flex;align-items:center;gap:8px;min-height:24px;padding-left:20px;font-size:12.5px;color:var(--atr-muted)}
+.atr-dot{position:absolute;left:6.5px;width:5px;height:5px;border-radius:50%;background:var(--atr-faint)}
+.atr-sub-running{color:var(--atr-fg)}.atr-sub-running .atr-dot{background:var(--atr-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--atr-accent) 18%,transparent)}
+.atr-sub-pending .atr-dot{background:none;border:1px solid var(--atr-faint)}
+.atr-sub-t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.atr-sub-d{font-size:11.5px;color:var(--atr-faint);font-variant-numeric:tabular-nums;max-width:45%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.atr-empty{margin:4px 0;color:var(--atr-muted);font-size:13px}
+.atr :focus-visible{outline:2px solid var(--atr-accent);outline-offset:2px;border-radius:4px}
+@keyframes atr-spin{to{transform:rotate(360deg)}}
+@keyframes atr-shim{from{background-position:100% 0}to{background-position:-150% 0}}
+@media(max-width:420px){.atr{padding:12px}.atr-sub-d{display:none}}
+@media(prefers-reduced-motion:reduce){.atr *{animation:none!important;transition:none!important}}
+`;
 
 export default AgentTrail;
