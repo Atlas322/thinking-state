@@ -837,5 +837,14 @@
     "description": "A list row you swipe to reveal actions; a full swipe leaps the primary action across and folds the row shut, with keyboard support (React Bits, motion)",
     "exportName": "SwipeRow",
     "usage": "import { SwipeRow } from \"./swipe-row\";\n\nexport default function App() {\n  return (\n    <SwipeRow\n      actions={[{ id: \"delete\", label: \"Delete\" }, { id: \"archive\", label: \"Archive\", dismiss: true }]}\n      onCommit={(action) => console.log(action.id)}\n    >\n      <span>Design review notes</span>\n    </SwipeRow>\n  );\n}"
+  },
+  {
+    "slug": "explainer-carousel",
+    "name": "Explainer Carousel",
+    "category": "Cards",
+    "pro": true,
+    "description": "1080x1440 education carousel: staircase cover, numbered step slides (figure, three points, rule, next-slide hook), rules sheet, plus figure primitives - token chips, score bars, context budget stack, embedding scatter, tool-call sequence, MCP hub, RAG chunks, agent loop, eval grid, three-circle Venn",
+    "exportName": "ExplainerSlide",
+    "usage": "import { ExplainerSlide, BudgetStack } from \"./explainer-carousel\";\n\nexport default function App() {\n  return <ExplainerSlide n={1} title=\"Title\" page={2} total={12} lede=\"One sentence.\" figure={<BudgetStack ghost=\"\" head=\"\" parts={[]} warn={[\"\", \"\"]} />} />;\n}"
   }
 ]
