@@ -73,4 +73,27 @@ describe("ThinkingState live mode", () => {
     expect(onDone).toHaveBeenCalledTimes(1);
     expect(onDone).toHaveBeenCalledWith(7);
   });
+
+  it("lets the host format the running time and swap the finished icon (a failed run is not a check mark)", () => {
+    const { container } = render(
+      <ThinkingState
+        steps={steps}
+        live={{ done: true, seconds: 65 }}
+        doneLabel="Алдаа гарлаа"
+        doneIcon={<i data-testid="x" />}
+        labels={{ time: (s) => `${Math.floor(s / 60)}м ${s % 60}с` }}
+      />,
+    );
+    expect(screen.getByTestId("x")).toBeTruthy();
+    expect(container.querySelector(".thinking-check")).toBeNull();
+    cleanup();
+    render(
+      <ThinkingState
+        steps={steps}
+        live={{ done: false, seconds: 65 }}
+        labels={{ time: (s) => `${Math.floor(s / 60)}м ${s % 60}с` }}
+      />,
+    );
+    expect(screen.getByText("1м 5с")).toBeTruthy();
+  });
 });
