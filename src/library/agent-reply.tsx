@@ -6,6 +6,9 @@ import * as React from "react";
  * Independent implementation. One agent reply format from Second Brain OS:
  * Summary · Findings · Proposal · Outputs · Your choice · Sources (folded).
  * Choice buttons post the answer back to the agent; an own-answer field sits beside them.
+ *
+ * In a host chat that already draws the message (avatar, name, time) pass `bare`; a host that parses the reply
+ * itself passes `sections` (its own titles and rendered bodies) and puts its own output previews in `children`.
  */
 
 export type ReplyOutput = {
@@ -16,24 +19,48 @@ export type ReplyOutput = {
 
 export type ReplySource = { label: string; href?: string };
 
+export type ReplyTone = "blue" | "green" | "amber" | "muted";
+
+/** A host-defined section: its title, and its body already rendered (markdown, links…). */
+export type ReplySectionItem = {
+  title: string;
+  /** Written to `data-reply-section`. */
+  kind?: string;
+  tone?: ReplyTone;
+  /** Shown beside the title while folded. */
+  count?: number;
+  folded?: boolean;
+  content: React.ReactNode;
+};
+
 export type AgentReplyProps = {
+  /** No avatar and no name/time row — the host chat draws them. */
+  bare?: boolean;
   agent?: string;
   avatar?: React.ReactNode;
   time?: string;
   summary?: React.ReactNode;
   findings?: React.ReactNode[];
   proposal?: React.ReactNode;
+  /** Host-defined sections, after findings and proposal, in the given order. */
+  sections?: ReplySectionItem[];
   outputs?: ReplyOutput[];
   choices?: string[];
   sources?: ReplySource[];
   labels?: Partial<Record<
-    "findings" | "proposal" | "outputs" | "choices" | "sources" | "open" | "own" | "send" | "answered",
+    "findings" | "proposal" | "outputs" | "choices" | "sources" | "open" | "own" | "send",
     string
-  >>;
+  >> & { answered?: string | ((choice: string) => string) };
   /** Called with the chosen option or own answer. Omit for a read-only reply. */
   onChoose?: (choice: string) => void | Promise<unknown>;
   onOpenOutput?: (output: ReplyOutput) => void;
+  /** Host content between the sections and the choices (e.g. the host's own output previews). */
+  children?: React.ReactNode;
   className?: string;
+};
+
+const tones: Record<ReplyTone, string> = {
+  blue: "var(--ar-blue)", green: "var(--ar-green)", amber: "var(--ar-amber)", muted: "var(--ar-mu)",
 };
 
 const defaultLabels = {
@@ -65,7 +92,7 @@ font:14px/1.6 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--ar-tx);displa
 .ar-h svg{width:13px;height:13px;transition:transform .15s}.ar-h[aria-expanded=true] svg{transform:rotate(90deg)}
 .ar-n{font:10px ui-monospace,monospace;color:var(--ar-dim);text-transform:none}
 .ar-body{border-left:2px solid var(--ar-bd);padding-left:12px;font-size:13.5px}
-.ar-body ul{margin:0;padding-left:18px}.ar-body li+li{margin-top:2px}.ar-body p{margin:0}
+.ar-body>ul{margin:0;padding-left:18px}.ar-body>ul>li+li{margin-top:2px}.ar-body>p{margin:0}
 .ar-outs{display:flex;flex-wrap:wrap;gap:6px}
 .ar-out{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:6px 10px;border:1px solid var(--ar-bd);border-radius:8px;background:var(--ar-s1);font-size:12.5px;transition:border-color .15s,background .15s}
 .ar-out:hover,.ar-out:focus-visible{border-color:var(--ar-blue);background:var(--ar-s2)}
@@ -100,13 +127,13 @@ const outIcon: Record<NonNullable<ReplyOutput["kind"]>, React.ReactNode> = {
   image: <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="m3 12 4-4 3 3 2-2 2 2" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>,
 };
 
-function Section({ title, tone, count, folded, children }: {
-  title: string; tone: string; count?: number; folded?: boolean; children: React.ReactNode;
+function Section({ title, tone, count, folded, kind, children }: {
+  title: string; tone: string; count?: number; folded?: boolean; kind?: string; children: React.ReactNode;
 }) {
   const [open, setOpen] = React.useState(!folded);
   const id = React.useId();
   return (
-    <div className="ar-sec" style={{ "--tone": tone } as React.CSSProperties}>
+    <div className="ar-sec" data-reply-section={kind} style={{ "--tone": tone } as React.CSSProperties}>
       <button type="button" className="ar-h" aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
         <Chevron />{title}
         {!open && count ? <span className="ar-n">{count}</span> : null}
@@ -117,8 +144,8 @@ function Section({ title, tone, count, folded, children }: {
 }
 
 export function AgentReply({
-  agent = "Agent", avatar = "◆", time, summary, findings = [], proposal, outputs = [],
-  choices = [], sources = [], labels, onChoose, onOpenOutput, className,
+  bare, agent = "Agent", avatar = "◆", time, summary, findings = [], proposal, sections = [], outputs = [],
+  choices = [], sources = [], labels, onChoose, onOpenOutput, children, className,
 }: AgentReplyProps) {
   const L = { ...defaultLabels, ...labels };
   const [picked, setPicked] = React.useState("");
@@ -135,16 +162,21 @@ export function AgentReply({
   return (
     <article className={`ar${className ? ` ${className}` : ""}`} data-agent-reply>
       <style>{css}</style>
-      <div className="ar-av" aria-hidden="true">{avatar}</div>
+      {!bare && <div className="ar-av" aria-hidden="true">{avatar}</div>}
       <div className="ar-main">
-        <div className="ar-head"><span className="ar-name">{agent}</span>{time && <span className="ar-time">{time}</span>}</div>
-        {summary && <p className="ar-sum">{summary}</p>}
+        {!bare && <div className="ar-head"><span className="ar-name">{agent}</span>{time && <span className="ar-time">{time}</span>}</div>}
+        {summary && <div className="ar-sum">{summary}</div>}
         {findings.length > 0 && (
           <Section title={L.findings} tone="var(--ar-blue)" count={findings.length} folded={findings.length > 6}>
             <ul>{findings.map((f, i) => <li key={i}>{f}</li>)}</ul>
           </Section>
         )}
         {proposal && <Section title={L.proposal} tone="var(--ar-green)"><p>{proposal}</p></Section>}
+        {sections.map((s, i) => (
+          <Section key={`${i}-${s.title}`} title={s.title} kind={s.kind} tone={tones[s.tone ?? "muted"]} count={s.count} folded={s.folded}>
+            {s.content}
+          </Section>
+        ))}
         {outputs.length > 0 && (
           <div className="ar-sec">
             <b className="ar-h" style={{ "--tone": "var(--ar-blue)", cursor: "default" } as React.CSSProperties}>{L.outputs}</b>
@@ -157,6 +189,7 @@ export function AgentReply({
             </div>
           </div>
         )}
+        {children}
         {choices.length > 0 && (
           <div className="ar-ch" role="group" aria-label={L.choices}>
             <b>{L.choices}</b>
@@ -172,7 +205,7 @@ export function AgentReply({
                 <button type="submit" disabled={busy || !own.trim()}>{L.send}</button>
               </form>
             )}
-            {picked && <span className="ar-ok" role="status">✓ «{picked}» — {L.answered}</span>}
+            {picked && <span className="ar-ok" role="status">✓ «{picked}» — {typeof L.answered === "function" ? L.answered(picked) : L.answered}</span>}
             {err && <span className="ar-err" role="alert">{err}</span>}
           </div>
         )}
