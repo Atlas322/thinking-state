@@ -40,7 +40,14 @@ export interface ThinkingStateProps {
    */
   live?: { done: boolean; seconds: number };
   /** Header text, for other languages: "Thinking" and "Worked for 7s". */
-  labels?: { thinking?: string; worked?: (seconds: number) => string };
+  labels?: {
+    thinking?: string;
+    worked?: (seconds: number) => string;
+    /** Running clock next to the header – defaults to "42s". */
+    time?: (seconds: number) => string;
+  };
+  /** Replaces the check mark on the finished row – e.g. a cross when the run failed. */
+  doneIcon?: ReactNode;
 }
 
 function SearchIcon() {
@@ -195,6 +202,7 @@ export function ThinkingState({
   variant = "clean",
   live,
   labels,
+  doneIcon,
 }: ThinkingStateProps) {
   const isLive = live !== undefined;
   const liveDone = live?.done ?? false;
@@ -309,7 +317,9 @@ export function ThinkingState({
               <span className="thinking-shimmer">
                 {labels?.thinking ?? "Thinking"}
               </span>{" "}
-              <span className="thinking-time">{progress.seconds}s</span>
+              <span className="thinking-time">
+                {labels?.time?.(progress.seconds) ?? `${progress.seconds}s`}
+              </span>
             </>
           )}
         </span>
@@ -368,7 +378,7 @@ export function ThinkingState({
             {progress.done && (
               <li className="thinking-item thinking-finished">
                 <span className="thinking-node" aria-hidden="true">
-                  <CheckIcon />
+                  {doneIcon ?? <CheckIcon />}
                 </span>
                 <span>{doneLabel}</span>
               </li>
