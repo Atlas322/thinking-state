@@ -213,7 +213,10 @@ export function ThinkingState({
     done: steps.length === 0,
     cycle: 0,
   });
-  const [expanded, setExpanded] = useState(true);
+  // A run that is already finished when it mounts (chat history) starts folded – no collapse animation per row.
+  const [expanded, setExpanded] = useState(
+    () => !(live?.done && collapseOnDone),
+  );
   const bodyId = useId();
   const doneCallback = useRef(onDone);
   const autoCollapse = useRef(collapseOnDone);
