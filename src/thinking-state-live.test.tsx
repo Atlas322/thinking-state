@@ -96,4 +96,13 @@ describe("ThinkingState live mode", () => {
     );
     expect(screen.getByText("1м 5с")).toBeTruthy();
   });
+
+  it("a run that is already done when it mounts starts folded (chat history)", () => {
+    const { container } = render(
+      <ThinkingState steps={steps} live={{ done: true, seconds: 9 }} collapseOnDone />,
+    );
+    expect(
+      container.querySelector(".thinking-header")?.getAttribute("aria-expanded"),
+    ).toBe("false");
+  });
 });
