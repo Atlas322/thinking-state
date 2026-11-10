@@ -46,6 +46,8 @@ export type ExplainerSlideProps = {
   folio?: string;
   /** "3x4" (default, 1080×1440) or "4x5" (1080×1350, IG feed). */
   format?: ExplainerFormat;
+  /** Show the mini step staircase beside the kicker (default true). */
+  stairs?: boolean;
 };
 
 export type ExplainerFormat = "3x4" | "4x5";
@@ -77,7 +79,7 @@ export function ExplainerSlide(p: ExplainerSlideProps) {
         </span>
       </header>
       <div className="xc-kick">
-        <MiniStairs steps={steps} at={p.n} />
+        {p.stairs !== false && <MiniStairs steps={steps} at={p.n} />}
         {p.kicker && <span>{p.kicker}</span>}
       </div>
       <p className="xc-lede">{p.lede}</p>
@@ -1072,7 +1074,7 @@ const css = `
 .xc-div .xc-axis{stroke:${C.mut};stroke-width:1.5;animation-duration:.8s;animation-delay:0s}
 .xc-div-up{stroke:${C.blue};stroke-width:4}
 .xc-div-dn{stroke:${C.orange};stroke-width:4;stroke-dasharray:1}
-.xc-div-dot{animation:xcPop .3s 1.9s both} .xc-div-dot.up{fill:${C.blue}} .xc-div-dot.dn{fill:${C.orange}}
+.xc-div-dot{transform-box:fill-box;transform-origin:center;animation:xcPop .3s 1.9s both} .xc-div-dot.up{fill:${C.blue}} .xc-div-dot.dn{fill:${C.orange}}
 .xc-div-lbl{display:flex;justify-content:space-between;font-size:28px;font-weight:600;margin-top:6px}
 .xc-div-lbl .up{color:${C.blueSoft}} .xc-div-lbl .dn{color:${C.orange}}
 .xc-ledger{list-style:none;margin:0;padding:0;display:grid;gap:34px}

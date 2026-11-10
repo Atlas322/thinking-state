@@ -14,7 +14,7 @@ import {
 const H = "@itge.e";
 const T = 9;
 const F = "METACOGNITION · №012 · 2026.11";
-const base = { handle: H, theme: "editorial" as const, folio: F, format: "4x5" as const, total: T, steps: 6 };
+const base = { handle: H, theme: "editorial" as const, folio: F, format: "4x5" as const, total: T, stairs: false };
 
 const slides = [
   <StatementSlide
@@ -55,7 +55,7 @@ const slides = [
     n={2}
     page={3}
     title="Aalto: оноо өсөв"
-    kicker="AALTO · 2025 · N = 452"
+    kicker="AALTO · 2025 · ~500 ХҮН · ДАВТАЛТ N = 452"
     lede="~500 хүн LSAT-ийн логикийн даалгавар хийв. Тал нь ChatGPT-4o-той ажилласан."
     figure={
       <Divergence
