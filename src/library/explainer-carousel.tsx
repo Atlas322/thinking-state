@@ -40,13 +40,35 @@ export type ExplainerSlideProps = {
   next?: string;
   handle?: string;
   steps?: number;
+  /** "dark" (default) or "editorial": paper, ink hairlines, dimension-drawing marks, serif titles. */
+  theme?: ExplainerTheme;
+  /** Magazine folio line (editorial), e.g. "GEN AI · №01 · 2026.11". */
+  folio?: string;
+  /** "3x4" (default, 1080×1440) or "4x5" (1080×1350, IG feed). */
+  format?: ExplainerFormat;
 };
+
+export type ExplainerFormat = "3x4" | "4x5";
+const fmt = (f?: ExplainerFormat) => (f === "4x5" ? " xc-45" : "");
+
+export type ExplainerTheme = "dark" | "editorial";
+const th = (t?: ExplainerTheme) => (t === "editorial" ? " xc-ed" : "");
+
+function Folio({ text, page }: { text?: string; page: string }) {
+  return (
+    <div className="xc-folio">
+      <span>{text}</span>
+      <span>{page}</span>
+    </div>
+  );
+}
 
 export function ExplainerSlide(p: ExplainerSlideProps) {
   const steps = p.steps ?? 10;
   return (
-    <section className="xc xc-slide">
+    <section className={`xc xc-slide${th(p.theme)}${fmt(p.format)}`}>
       <style>{css}</style>
+      {p.theme === "editorial" && <Folio text={p.folio} page={`${String(p.page).padStart(2, "0")} / ${p.total}`} />}
       <header className="xc-head">
         <span className="xc-num">{p.n}</span>
         <h2 className="xc-title">{p.title}</h2>
@@ -59,7 +81,15 @@ export function ExplainerSlide(p: ExplainerSlideProps) {
         {p.kicker && <span>{p.kicker}</span>}
       </div>
       <p className="xc-lede">{p.lede}</p>
-      <div className="xc-figure">{p.figure}</div>
+      <div className="xc-figure" data-fig={`FIG. ${String(p.n).padStart(2, "0")}`}>
+        {p.theme === "editorial" && (
+          <>
+            <span className="xc-dim-h" aria-hidden><i>A</i></span>
+            <span className="xc-dim-v" aria-hidden><i>B</i></span>
+          </>
+        )}
+        {p.figure}
+      </div>
       {p.points && (
         <ol className="xc-points">
           {p.points.map((t, i) => (
@@ -111,13 +141,16 @@ export type StairCoverProps = {
   note: string;
   handle?: string;
   page?: string;
+  theme?: ExplainerTheme;
+  folio?: string;
 };
 
 export function StairCover(p: StairCoverProps) {
   const n = p.steps.length;
   return (
-    <section className="xc xc-slide xc-cover">
+    <section className={`xc xc-slide xc-cover${th(p.theme)}`}>
       <style>{css}</style>
+      {p.theme === "editorial" && <Folio text={p.folio} page={p.page ?? ""} />}
       {p.page && <span className="xc-page xc-page-abs">{p.page}</span>}
       <div className="xc-kick-txt">{p.kicker}</div>
       <h1 className="xc-hero">
@@ -141,8 +174,15 @@ export function StairCover(p: StairCoverProps) {
               {s} <b>{i + 1}</b>
             </span>
             <i />
+            {p.theme === "editorial" && <small className="xc-stair-dim">h{(i + 1) * 46} · {String(i + 1).padStart(2, "0")}</small>}
           </div>
         ))}
+        {p.theme === "editorial" && (
+          <>
+            <span className="xc-cdim-h" style={{ left: 250, width: (n - 1) * 62 + 120 }}><i>{n} АЛХАМ · {(n - 1) * 62 + 120} PX</i></span>
+            <span className="xc-cdim-v" style={{ left: 250 + (n - 1) * 62 + 150, height: n * 46 + 4 }}><i>ТЭГ → ОРГИЛ</i></span>
+          </>
+        )}
         <div className="xc-stair-top" style={{ left: 250 + (n - 1) * 62 + 60, bottom: 50 + n * 46 + 6 }}>
           {p.top}
         </div>
@@ -163,16 +203,21 @@ export function RulesSheet({
   page,
   cta,
   handle,
+  theme,
+  folio,
 }: {
   title: string;
   rules: { name: string; rule: string }[];
   page: string;
   cta: string;
   handle?: string;
+  theme?: ExplainerTheme;
+  folio?: string;
 }) {
   return (
-    <section className="xc xc-slide">
+    <section className={`xc xc-slide${th(theme)}`}>
       <style>{css}</style>
+      {theme === "editorial" && <Folio text={folio} page={page} />}
       <header className="xc-head">
         <h2 className="xc-title">{title}</h2>
         <span className="xc-page">{page}</span>
@@ -189,6 +234,163 @@ export function RulesSheet({
       <div className="xc-rule xc-rule-cta">{cta}</div>
       {handle && <p className="xc-handle">{handle}</p>}
     </section>
+  );
+}
+
+/* ---------- statement slide (hook · caveat · CTA) ---------- */
+
+export type StatementSlideProps = {
+  kicker?: string;
+  /** Line 1 upright, line 2 italic accent. */
+  title: [string, string?];
+  sub?: React.ReactNode;
+  /** Optional marked list, e.g. caveats: { mark: "⚠", text }. */
+  items?: { mark: string; text: React.ReactNode }[];
+  /** Dimension label drawn under the title (editorial). */
+  dim?: string;
+  cta?: string;
+  note?: string;
+  page?: string;
+  handle?: string;
+  theme?: ExplainerTheme;
+  folio?: string;
+  format?: ExplainerFormat;
+};
+
+export function StatementSlide(p: StatementSlideProps) {
+  return (
+    <section className={`xc xc-slide xc-stmt${th(p.theme)}${fmt(p.format)}`}>
+      <style>{css}</style>
+      {p.theme === "editorial" && <Folio text={p.folio} page={p.page ?? ""} />}
+      {p.kicker && <div className="xc-kick-txt">{p.kicker}</div>}
+      <h1 className="xc-hero xc-stmt-hero">
+        <span className="xc-l1">{p.title[0]}</span>
+        {p.title[1] && (
+          <>
+            <br />
+            <span className="xc-l2">{p.title[1]}</span>
+          </>
+        )}
+      </h1>
+      {p.dim && (
+        <div className="xc-stmt-dim" aria-hidden>
+          <i>{p.dim}</i>
+        </div>
+      )}
+      {p.sub && <p className="xc-sub">{p.sub}</p>}
+      {p.items && (
+        <ul className="xc-items">
+          {p.items.map((it, i) => (
+            <li key={i} style={{ animationDelay: `${0.9 + i * 0.25}s` }}>
+              <b>{it.mark}</b>
+              <span>{it.text}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className="xc-grow" />
+      {(p.cta || p.note) && (
+        <footer className="xc-cover-foot">
+          {p.cta && <b>{p.cta} →</b>}
+          {p.note && <span>{p.note}</span>}
+        </footer>
+      )}
+      {p.handle && <p className="xc-handle">{p.handle}</p>}
+    </section>
+  );
+}
+
+/* ---------- motion primitives: count-up, draw-on ---------- */
+
+/** Integer count-up in pure CSS (@property), so frame-accurate capture can seek it via getAnimations(). */
+export function CountUp({ to, prefix, suffix, delay = 0.4 }: { to: number; prefix?: string; suffix?: string; delay?: number }) {
+  return (
+    <span className="xc-cnt">
+      {prefix}
+      <span className="xc-count" style={{ ["--to" as string]: to, animationDelay: `${delay}s` } as React.CSSProperties} />
+      {suffix}
+    </span>
+  );
+}
+
+/** Big numbers with labels; optional hatched bar (value as % of 100) that draws on. */
+export function StatRows({
+  rows,
+  foot,
+}: {
+  rows: { value: number; prefix?: string; suffix?: string; label: string; bar?: boolean; hot?: boolean }[];
+  foot?: string;
+}) {
+  return (
+    <FigureCard>
+      <div className="xc-statrows">
+        {rows.map((r, i) => (
+          <div className={`xc-statrow${r.hot ? " hot" : ""}${r.bar ? " has-bar" : ""}`} key={i}>
+            <em>
+              <CountUp to={r.value} prefix={r.prefix} suffix={r.suffix} delay={0.4 + i * 0.2} />
+            </em>
+            <span>{r.label}</span>
+            {r.bar && <i style={{ width: `${r.value}%`, animationDelay: `${0.4 + i * 0.2}s` }} />}
+          </div>
+        ))}
+      </div>
+      {foot && <p className="xc-small">{foot}</p>}
+    </FigureCard>
+  );
+}
+
+/** Schematic divergence: one line rises, one falls (no data values — labelled as a schematic). */
+export function Divergence({
+  up,
+  down,
+  from,
+  to,
+  foot,
+}: {
+  up: string;
+  down: string;
+  from: string;
+  to: string;
+  foot: string;
+}) {
+  return (
+    <FigureCard>
+      <svg className="xc-div" viewBox="0 0 800 400" aria-hidden>
+        <line className="xc-axis" x1="60" y1="340" x2="760" y2="340" pathLength={1} />
+        <line className="xc-axis" x1="60" y1="340" x2="60" y2="30" pathLength={1} />
+        <path className="xc-div-up" d="M60 220 C 300 210, 520 120, 740 60" pathLength={1} />
+        <path className="xc-div-dn" d="M60 200 C 300 210, 520 270, 740 310" pathLength={1} />
+        <circle className="xc-div-dot up" cx="740" cy="60" r="7" />
+        <circle className="xc-div-dot dn" cx="740" cy="310" r="7" />
+      </svg>
+      <div className="xc-div-lbl">
+        <span className="up">↑ {up}</span>
+        <span className="dn">↓ {down}</span>
+      </div>
+      <div className="xc-dots-ends">
+        <span>{from}</span>
+        <span>{to}</span>
+      </div>
+      <p className="xc-small">{foot}</p>
+    </FigureCard>
+  );
+}
+
+/** Ruled lines that draw on one by one — a fill-in habit sheet. */
+export function Ledger({ rows, foot }: { rows: { k: string; text: string }[]; foot?: string }) {
+  return (
+    <FigureCard>
+      <ol className="xc-ledger">
+        {rows.map((r, i) => (
+          <li key={i} style={{ animationDelay: `${0.3 + i * 0.5}s` }}>
+            <b>{r.k}</b>
+            <span>{r.text}</span>
+            <i style={{ animationDelay: `${0.5 + i * 0.5}s` }} />
+          </li>
+        ))}
+      </ol>
+      {foot && <p className="xc-small">{foot}</p>}
+    </FigureCard>
   );
 }
 
@@ -610,7 +812,7 @@ export default function ExplainerCarouselDemo() {
 /* ---------- styles ---------- */
 
 const css = `
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Lora:ital,wght@1,600&family=JetBrains+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@500&display=swap');
 .xc{--xc-blue:${C.blue};font-family:Montserrat,system-ui,sans-serif;color:${C.ink};box-sizing:border-box}
 .xc *{box-sizing:border-box}
 .xc-slide{position:relative;width:1080px;height:1440px;padding:72px 72px 56px;overflow:hidden;display:flex;flex-direction:column;
@@ -733,6 +935,174 @@ const css = `
 .xc-sheet-name{font-size:28px;font-weight:700}
 .xc-sheet-rule{font-size:27px;color:#E6E6EA}
 .xc-rule-cta{text-align:center}
+/* ---------- editorial theme: paper × dimension drawing ---------- */
+.xc-ed{--ink:#1A1814;--paper:#F3EFE6;--gray:#68635B;--hair:rgba(26,24,20,.22);--acc:#C2410C;color:var(--ink)!important;
+  background:linear-gradient(rgba(26,24,20,.045) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,rgba(26,24,20,.045) 1px,transparent 1px) 0 0/24px 24px,var(--paper)!important}
+.xc-ed *{box-shadow:none!important;text-shadow:none!important}
+.xc-ed .xc-folio{display:flex;justify-content:space-between;font:500 18px 'JetBrains Mono',monospace;letter-spacing:.16em;color:var(--gray);border-bottom:1px solid var(--ink);padding-bottom:12px;margin-bottom:26px;text-transform:uppercase}
+.xc-ed .xc-head{border-bottom:1px solid var(--hair);padding-bottom:18px}
+.xc-ed .xc-num{background:none;border:1px solid var(--ink);border-radius:0;width:76px;height:76px;font:500 36px 'JetBrains Mono',monospace;color:var(--ink)}
+.xc-ed .xc-title{font-family:Lora,serif;font-weight:600;font-size:70px;letter-spacing:-.01em}
+.xc-ed .xc-page{display:none}
+.xc-ed .xc-kick{color:var(--acc);font:500 20px 'JetBrains Mono',monospace;letter-spacing:.16em}
+.xc-ed .xc-kick rect{fill:var(--ink)} .xc-ed .xc-kick circle{fill:var(--acc)}
+.xc-ed .xc-lede{font-weight:400;font-size:31px;color:var(--ink)}
+.xc-ed .xc-figure{position:relative;padding:34px 0 0 34px}
+.xc-ed .xc-figure::before{content:attr(data-fig);position:absolute;right:0;top:0;font:500 18px 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--gray);background:var(--paper);padding-left:10px}
+.xc-ed .xc-dim-h{position:absolute;left:34px;right:120px;top:14px;height:0;border-top:1px solid var(--ink)}
+.xc-ed .xc-dim-h::before,.xc-ed .xc-dim-h::after{content:"";position:absolute;top:-8px;height:16px;border-left:1px solid var(--ink)}
+.xc-ed .xc-dim-h::before{left:0} .xc-ed .xc-dim-h::after{right:0}
+.xc-ed .xc-dim-v{position:absolute;left:14px;top:34px;bottom:0;width:0;border-left:1px solid var(--ink)}
+.xc-ed .xc-dim-v::before,.xc-ed .xc-dim-v::after{content:"";position:absolute;left:-8px;width:16px;border-top:1px solid var(--ink)}
+.xc-ed .xc-dim-v::before{top:0} .xc-ed .xc-dim-v::after{bottom:0}
+.xc-ed .xc-dim-h i,.xc-ed .xc-dim-v i{position:absolute;font:500 18px 'JetBrains Mono',monospace;font-style:normal;background:var(--paper);color:var(--acc);border:1px solid var(--acc);border-radius:50%;width:30px;height:30px;display:grid;place-items:center}
+.xc-ed .xc-dim-h i{left:50%;top:-15px} .xc-ed .xc-dim-v i{top:50%;left:-15px}
+.xc-ed .xc-card{background:rgba(255,255,255,.35);border:1px solid var(--ink);border-radius:0}
+.xc-ed .xc-card-title,.xc-ed .xc-big,.xc-ed .xc-mid{font-family:Lora,serif;font-weight:600}
+.xc-ed .xc-quote{font-family:Lora,serif;font-style:italic;font-weight:600}
+.xc-ed .xc-small{font:500 18px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--gray);text-transform:uppercase}
+.xc-ed .orange,.xc-ed .red,.xc-ed .xc-huge{color:var(--acc)!important}
+.xc-ed .xc-huge{font-family:Lora,serif;font-weight:600}
+.xc-ed .xc-points{border-top:1px solid var(--hair);padding-top:20px}
+.xc-ed .xc-points li{color:var(--ink);font-weight:400}
+.xc-ed .xc-points b{background:none;border-radius:0;color:var(--acc);font:500 20px "JetBrains Mono",monospace;width:40px;display:block;white-space:nowrap}
+.xc-ed .xc-points b::before{content:"0"}
+.xc-ed .xc-rule{background:none;border:0;border-left:3px solid var(--acc);border-radius:0;padding:10px 0 10px 24px;font-family:Lora,serif;font-weight:600;font-style:italic}
+.xc-ed .xc-rule em{color:var(--acc);font:500 18px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;font-style:normal;margin-right:10px}
+.xc-ed .xc-next{font-weight:500;color:var(--ink)} .xc-ed .xc-handle{font:500 18px 'JetBrains Mono',monospace;color:var(--gray);letter-spacing:.12em}
+.xc-ed .xc-chip i,.xc-ed .xc-col span,.xc-ed .xc-lanes span,.xc-ed .xc-chunk,.xc-ed .xc-prompt,.xc-ed .xc-pill,.xc-ed .xc-pt>div,.xc-ed .xc-loop-n,.xc-ed .xc-ghost,.xc-ed .xc-stack,.xc-ed .xc-boxnote,.xc-ed .xc-sheet li{background:transparent!important;border:1px solid var(--ink)!important;border-radius:0!important;color:var(--ink)}
+.xc-ed .xc-chunk p,.xc-ed .xc-boxnote span,.xc-ed .xc-chunk b{color:var(--ink)}
+.xc-ed .xc-chip small,.xc-ed .xc-pt small,.xc-ed .xc-stack-head,.xc-ed .xc-dots-ends,.xc-ed .xc-stats div{font-family:'JetBrains Mono',monospace;color:var(--gray)}
+.xc-ed .xc-chip.hl i,.xc-ed .xc-chunk.best,.xc-ed .xc-pt.near>div,.xc-ed .xc-score.win,.xc-ed .xc-answer,.xc-ed .xc-loop-n.top,.xc-ed .xc-lanes span.on{border-color:var(--acc)!important;color:var(--acc)!important;background:transparent!important}
+.xc-ed .xc-chip.hl small{color:var(--acc)}
+.xc-ed .xc-answer{border-radius:0}
+.xc-ed .xc-hbar i,.xc-ed .xc-score i,.xc-ed .xc-chunk i{background:repeating-linear-gradient(-45deg,var(--ink) 0 1px,transparent 1px 7px)!important;border:1px solid var(--ink);border-radius:0!important}
+.xc-ed .xc-hbar:last-of-type i,.xc-ed .xc-score.win i,.xc-ed .xc-chunk.best i{background:repeating-linear-gradient(-45deg,var(--acc) 0 1.5px,transparent 1.5px 6px)!important;border-color:var(--acc)}
+.xc-ed .xc-hbar b,.xc-ed .xc-score b,.xc-ed .xc-chunk em,.xc-ed .xc-pt em,.xc-ed .xc-stack-row b,.xc-ed .xc-stats em{font-family:'JetBrains Mono',monospace;color:var(--ink)}
+.xc-ed .xc-score b{background:var(--paper);padding:0 8px;margin-left:8px;justify-self:start}
+.xc-ed .xc-pt.near em{color:var(--acc)}
+.xc-ed .xc-pt i,.xc-ed .xc-you i{border-radius:0;width:12px;height:12px;background:none;border:1px solid var(--ink);transform:rotate(45deg)}
+.xc-ed .xc-you{color:var(--acc)} .xc-ed .xc-you i,.xc-ed .xc-pt.near i{border-color:var(--acc);background:var(--acc)}
+.xc-ed .xc-stack-row{background:transparent!important;border:1px solid var(--ink);border-radius:0;color:var(--ink)}
+.xc-ed .xc-stack-row.hot{border:1.5px solid var(--acc);color:var(--acc);background:repeating-linear-gradient(-45deg,rgba(194,65,12,.16) 0 1px,transparent 1px 8px)!important}
+.xc-ed .xc-stack-row.hot b{color:var(--acc)}
+.xc-ed .xc-seq-row b,.xc-ed .xc-seq-row.lane1 b,.xc-ed .xc-seq-row.lane2 b{background:none;border:1px solid var(--ink);color:var(--ink);font-family:'JetBrains Mono',monospace;border-radius:0}
+.xc-ed .xc-seq-row .code,.xc-ed .xc-tagrow code{color:var(--ink)}
+.xc-ed .xc-hub-core{border:1px solid var(--acc);color:var(--acc);font-family:'JetBrains Mono',monospace}
+.xc-ed .xc-tagrow em,.xc-ed .xc-prompt em{border-radius:0;border-color:var(--ink);color:var(--ink);font-family:'JetBrains Mono',monospace}
+.xc-ed .xc-loop-ring{border:1px dashed var(--ink);animation:none}
+.xc-ed .xc-dots i{background:none;border:1px solid var(--acc);border-radius:0;width:20px;height:20px}
+.xc-ed .xc-grid i{border-radius:0}
+.xc-ed .xc-grid i.p{background:transparent;border:1px solid var(--ink)} .xc-ed .xc-grid i.f{background:var(--acc)}
+.xc-ed .xc-legend i.p{background:none;border:1px solid var(--ink);border-radius:0} .xc-ed .xc-legend i.f{background:var(--acc);border-radius:0}
+.xc-ed .xc-stat-head{color:var(--acc);font-family:Lora,serif}
+.xc-ed .xc-venn circle{fill:none!important;stroke:var(--ink)!important;stroke-width:1px}
+.xc-ed .xc-venn circle:nth-of-type(3){stroke:var(--acc)!important;stroke-dasharray:6 5}
+.xc-ed .xc-venn text{fill:var(--ink)!important;font-family:'JetBrains Mono',monospace;font-size:19px}
+.xc-ed .xc-venn text:last-child{fill:var(--acc)!important}
+.xc-ed.xc-cover .xc-kick-txt{color:var(--acc);font:500 20px 'JetBrains Mono',monospace;letter-spacing:.16em;margin-top:0}
+.xc-ed .xc-hero{font-family:Lora,serif;font-weight:600;font-size:132px;letter-spacing:-.02em}
+.xc-ed .xc-hero span{color:var(--ink);font-style:italic;font-size:112px}
+.xc-ed .xc-sub{color:var(--ink);font-weight:400;border-top:1px solid var(--ink);padding-top:22px}
+.xc-ed .xc-sub b{color:var(--ink);font-weight:600}
+.xc-ed .xc-stair i{background:none;border:1px solid var(--ink);border-radius:0;height:14px}
+.xc-ed .xc-stair::before{content:"";position:absolute;left:0;top:14px;height:32px;border-left:1px dashed var(--ink);opacity:.4}
+.xc-ed .xc-stair:nth-last-child(5) i{border-color:var(--acc);background:var(--acc)}
+.xc-ed .xc-stair-lbl{font-weight:500;font-size:22px;color:var(--ink)}
+.xc-ed .xc-stair-lbl b{background:none;border:1px solid var(--ink);border-radius:0;color:var(--ink);font-family:'JetBrains Mono',monospace}
+.xc-ed .xc-stair-dim{position:absolute;left:6px;top:18px;font:500 12px 'JetBrains Mono',monospace;color:var(--gray);letter-spacing:.06em;white-space:nowrap}
+.xc-ed .xc-stair-top{color:var(--acc);font-family:Lora,serif;font-style:italic;font-weight:600}
+.xc-ed .xc-stair-zero{color:var(--gray);font-family:'JetBrains Mono',monospace}
+.xc-ed .xc-cdim-h{position:absolute;bottom:14px;height:0;border-top:1px solid var(--ink)}
+.xc-ed .xc-cdim-h::before,.xc-ed .xc-cdim-h::after{content:"";position:absolute;top:-8px;height:16px;border-left:1px solid var(--ink)}
+.xc-ed .xc-cdim-h::before{left:0} .xc-ed .xc-cdim-h::after{right:0}
+.xc-ed .xc-cdim-h i{position:absolute;left:50%;top:-10px;transform:translateX(-50%);background:var(--paper);padding:0 10px;font:500 15px 'JetBrains Mono',monospace;font-style:normal;letter-spacing:.12em;white-space:nowrap}
+.xc-ed .xc-cdim-v{position:absolute;bottom:50px;width:0;border-left:1px solid var(--ink)}
+.xc-ed .xc-cdim-v::before,.xc-ed .xc-cdim-v::after{content:"";position:absolute;left:-8px;width:16px;border-top:1px solid var(--ink)}
+.xc-ed .xc-cdim-v::before{top:0} .xc-ed .xc-cdim-v::after{bottom:0}
+.xc-ed .xc-cdim-v i{position:absolute;top:50%;left:0;transform:translate(-50%,-50%) rotate(-90deg);background:var(--paper);padding:0 10px;white-space:nowrap;font:500 15px 'JetBrains Mono',monospace;font-style:normal;letter-spacing:.12em}
+.xc-ed .xc-cover-foot{border-top:1px solid var(--ink);padding-top:18px}
+.xc-ed .xc-cover-foot b{font-family:Lora,serif;font-weight:600;font-style:italic}
+.xc-ed .xc-cover-foot span{color:var(--gray)}
+.xc-ed .xc-sheet{margin-top:20px}
+.xc-ed .xc-sheet li{border-width:0 0 1px 0!important;padding:14px 0}
+.xc-ed .xc-sheet li:first-child{border-top-width:1px!important}
+.xc-ed .xc-sheet b{background:none;border-radius:0;color:var(--acc);font:500 22px 'JetBrains Mono',monospace}
+.xc-ed .xc-sheet-name{font-family:Lora,serif;font-weight:600}
+.xc-ed .xc-sheet-rule{color:var(--ink);font-weight:400}
+.xc-ed .xc-rule-cta{text-align:left}
+.xc-ed .xc-card>*{flex-shrink:0}
+.xc-ed .xc-card{padding:24px 32px;gap:6px}
+.xc-ed .xc-chip i{font-size:22px;padding:4px 8px}
+.xc-ed .xc-big{font-size:44px;margin:2px 0}
+.xc-ed .xc-hbar{font-size:21px}
+.xc-ed .xc-figure .xc-quote{font-size:26px}
+.xc-ed .xc-loop{height:210px}
+.xc-ed .xc-loop-c,.xc-ed .xc-stats div:last-child em{color:var(--acc)}
+.xc-ed .xc-huge{font-size:96px}
+/* ---------- 4:5 format, statement slide, motion primitives ---------- */
+.xc-45{height:1350px;padding:64px 72px 48px}
+.xc-45 .xc-lede{margin:10px 0 18px}
+.xc-45 .xc-points{margin-top:18px;gap:10px}
+.xc-45 .xc-rule{margin-top:18px}
+.xc-grow{flex:1}
+.xc-stmt .xc-kick-txt{font-size:24px;font-weight:700;letter-spacing:.14em;color:${C.blue};margin-top:8px}
+.xc-stmt-hero{font-size:112px;line-height:1.04}
+.xc-stmt-hero .xc-l1{font:inherit;color:inherit;display:inline;animation:xcUp .6s .1s both}
+.xc-stmt-hero .xc-l2{display:inline-block;animation:xcUp .6s .5s both}
+.xc-stmt-dim{position:relative;height:0;border-top:1px solid currentColor;margin:34px 0 8px;transform-origin:left;animation:xcDrawX 1s .8s both}
+.xc-stmt-dim::before,.xc-stmt-dim::after{content:"";position:absolute;top:-8px;height:16px;border-left:1px solid currentColor}
+.xc-stmt-dim::before{left:0} .xc-stmt-dim::after{right:0}
+.xc-stmt-dim i{position:absolute;left:50%;top:-11px;transform:translateX(-50%);padding:0 12px;font:500 18px 'JetBrains Mono',monospace;font-style:normal;letter-spacing:.14em;white-space:nowrap;background:${C.bg}}
+.xc-items{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:22px}
+.xc-items li{display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;font-size:31px;line-height:1.32;animation:xcUp .45s both}
+.xc-items b{font:500 26px 'JetBrains Mono',monospace;color:${C.orange};padding-top:3px}
+@property --xcn{syntax:'<integer>';inherits:false;initial-value:0}
+.xc-count{--xcn:var(--to);counter-reset:xcn var(--xcn);animation:xcCount 1.6s cubic-bezier(.2,.7,.2,1) both}
+.xc-count::after{content:counter(xcn)}
+@keyframes xcCount{from{--xcn:0}to{--xcn:var(--to)}}
+.xc-statrows{display:grid;gap:18px}
+.xc-statrow{display:grid;grid-template-columns:230px 1fr;align-items:center;column-gap:24px;row-gap:8px}
+.xc-statrow em{font-style:normal;font-size:84px;font-weight:800;line-height:1}
+.xc-statrow>span{font-size:30px;line-height:1.25}
+.xc-statrow i{grid-column:1 / -1;height:16px;background:${C.blue};transform-origin:left;animation:xcDrawX 1.4s both}
+.xc-statrow.hot em{color:${C.orange}} .xc-statrow.hot i{background:${C.orange}}
+.xc-div{width:100%;height:auto;max-height:330px}
+.xc-div path,.xc-div line{fill:none;stroke-dasharray:1;stroke-dashoffset:0;animation:xcStroke 1.6s .3s both}
+.xc-div .xc-axis{stroke:${C.mut};stroke-width:1.5;animation-duration:.8s;animation-delay:0s}
+.xc-div-up{stroke:${C.blue};stroke-width:4}
+.xc-div-dn{stroke:${C.orange};stroke-width:4;stroke-dasharray:1}
+.xc-div-dot{animation:xcPop .3s 1.9s both} .xc-div-dot.up{fill:${C.blue}} .xc-div-dot.dn{fill:${C.orange}}
+.xc-div-lbl{display:flex;justify-content:space-between;font-size:28px;font-weight:600;margin-top:6px}
+.xc-div-lbl .up{color:${C.blueSoft}} .xc-div-lbl .dn{color:${C.orange}}
+.xc-ledger{list-style:none;margin:0;padding:0;display:grid;gap:34px}
+.xc-ledger li{display:grid;grid-template-columns:64px 1fr;gap:18px;align-items:baseline;position:relative;padding-bottom:20px;animation:xcUp .45s both}
+.xc-ledger b{font:500 26px 'JetBrains Mono',monospace;color:${C.orange}}
+.xc-ledger span{font-size:40px;font-weight:700;line-height:1.2}
+.xc-ledger i{position:absolute;left:82px;right:0;bottom:0;height:0;border-top:1.5px dashed ${C.mut};transform-origin:left;animation:xcDrawX 1s both}
+@keyframes xcDrawX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes xcDrawY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes xcStroke{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.xc-ed .xc-dim-h{transform-origin:left;animation:xcDrawX 1s .2s both}
+.xc-ed .xc-dim-v{transform-origin:top;animation:xcDrawY 1s .2s both}
+.xc-ed.xc-stmt .xc-kick-txt{color:var(--acc);font:500 20px 'JetBrains Mono',monospace;letter-spacing:.16em}
+.xc-ed .xc-stmt-hero{font-size:124px}
+.xc-ed.xc-stmt .xc-sub{font-size:38px;line-height:1.35}
+.xc-ed .xc-stmt-hero .xc-l2{color:var(--acc);font-size:116px}
+.xc-ed .xc-stmt-dim{color:var(--ink)} .xc-ed .xc-stmt-dim i{background:var(--paper);color:var(--gray)}
+.xc-ed .xc-items li{font-family:Lora,serif;font-weight:400;color:var(--ink);border-bottom:1px solid var(--hair);padding-bottom:18px}
+.xc-ed .xc-items b{color:var(--acc)}
+.xc-ed .xc-statrow em{font-family:Lora,serif;font-weight:600;color:var(--ink)}
+.xc-ed .xc-statrow.hot em{color:var(--acc)}
+.xc-ed .xc-statrow i{background:repeating-linear-gradient(-45deg,var(--ink) 0 1px,transparent 1px 7px);border:1px solid var(--ink)}
+.xc-ed .xc-statrow.hot i{background:repeating-linear-gradient(-45deg,var(--acc) 0 1.5px,transparent 1.5px 6px);border-color:var(--acc)}
+.xc-ed .xc-div .xc-axis{stroke:var(--ink);stroke-width:1}
+.xc-ed .xc-div-up{stroke:var(--ink);stroke-width:2.5}
+.xc-ed .xc-div-dn{stroke:var(--acc);stroke-width:2.5}
+.xc-ed .xc-div-dot.up{fill:var(--ink)} .xc-ed .xc-div-dot.dn{fill:var(--acc)}
+.xc-ed .xc-div-lbl{font-family:Lora,serif} .xc-ed .xc-div-lbl .up{color:var(--ink)} .xc-ed .xc-div-lbl .dn{color:var(--acc)}
+.xc-ed .xc-ledger b{color:var(--acc)} .xc-ed .xc-ledger span{font-family:Lora,serif;font-weight:600}
+.xc-ed .xc-ledger i{border-top:1px solid var(--ink)}
 @keyframes xcUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes xcGrow{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
 @keyframes xcPop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}

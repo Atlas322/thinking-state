@@ -37,6 +37,8 @@ const R = (i: number) => ({ label: "Дүрэм:", text: rules[i].rule });
 
 const cells = Array.from({ length: 40 }, (_, i) => ([5, 11, 18, 25, 33, 38].includes(i) ? "f" : "p") as "p" | "f");
 
+const theme = (new URLSearchParams(location.search).get("theme") ?? "dark") as "dark" | "editorial";
+const F = "GEN AI · ТЭГЭЭС ОРГИЛД · 2026.11";
 const slides = [
   <StairCover
     page={`1/${T}`}
@@ -52,10 +54,10 @@ const slides = [
     bottom="ТЭГ"
     cta="Гүйлгээд өгс"
     note="10 дүрэм бүгд сүүлийн слайдад. Хадгалаад ав."
-    handle={H}
+    handle={H} theme={theme} folio={F}
   />,
   <ExplainerSlide
-    n={1} title="Токен" page={2} total={T} kicker={k(1, 1)} handle={H}
+    n={1} title="Токен" page={2} total={T} kicker={k(1, 1)} handle={H} theme={theme} folio={F}
     lede="Загвар таны үгийг уншдаггүй. Токен гэх дугаарласан хэсгүүдийг уншдаг."
     figure={
       <TokenChips
@@ -86,7 +88,7 @@ const slides = [
     next="Тэгвэл эдгээр токен юу болж хувирдаг вэ?"
   />,
   <ExplainerSlide
-    n={2} title="Вектор (embedding)" page={3} total={T} kicker={k(2, 1)} handle={H}
+    n={2} title="Вектор (embedding)" page={3} total={T} kicker={k(2, 1)} handle={H} theme={theme} folio={F}
     lede="Embedding бичвэрийг тоо болгоно: утгын орон зай дахь нэг цэг. Ойролцоо утга ойрхон байрлана."
     figure={
       <Scatter
@@ -94,7 +96,7 @@ const slides = [
         you="таны асуулт"
         points={[
           { label: "хэсэг a", score: "0.459", note: "эхэлснээс 36 сар", x: 44, y: 10 },
-          { label: "хэсэг b", score: "0.603", note: "тасралтгүй 24 сарын хамгаалалт", x: 34, y: 46, near: true },
+          { label: "хэсэг b", score: "0.603", note: "тасралтгүй 24 сарын хамгаалалт", x: 42, y: 46, near: true },
           { label: "хэсэг c", score: "0.365", note: "хураамж төлөх өдрөөс 30 хоног", x: 46, y: 78 },
         ]}
         foot="ойр = илүү төстэй утга"
@@ -109,7 +111,7 @@ const slides = [
     next="Тэгвэл дараагийн үгийг яаж сонгодог вэ?"
   />,
   <ExplainerSlide
-    n={3} title="Дараагийн токен" page={4} total={T} kicker={k(3, 1)} handle={H}
+    n={3} title="Дараагийн токен" page={4} total={T} kicker={k(3, 1)} handle={H} theme={theme} folio={F}
     lede="Хэлний загвар ганцхан зүйл хийнэ: дараагийн токеныг таана. Сонголтуудад оноо өгч, нэгийг сонгоод давтана."
     figure={
       <ScoreBars
@@ -134,7 +136,7 @@ const slides = [
     next="Тэгвэл нэг дор хэр ихийг харж чаддаг вэ?"
   />,
   <ExplainerSlide
-    n={4} title="Контекст цонх" page={5} total={T} kicker={k(4, 3)} handle={H}
+    n={4} title="Контекст цонх" page={5} total={T} kicker={k(4, 3)} handle={H} theme={theme} folio={F}
     lede="Контекст цонх бол загварын нэг дор харж чадах бүх зүйл. Багтаагүй нь байхгүйтэй адил."
     figure={
       <BudgetStack
@@ -158,7 +160,7 @@ const slides = [
     next="Одоо загвар яаж үйлдэл хийдэг вэ?"
   />,
   <ExplainerSlide
-    n={5} title="Хэрэгсэл дуудах" page={6} total={T} kicker={k(5, 2)} handle={H}
+    n={5} title="Хэрэгсэл дуудах" page={6} total={T} kicker={k(5, 2)} handle={H} theme={theme} folio={F}
     lede="Загвар өөрөө үйлдэл хийж чадахгүй. Хэрэгслийн хүсэлт бичнэ, таны код ажиллуулна, үр дүн буцаж орно."
     figure={
       <Sequence
@@ -182,7 +184,7 @@ const slides = [
     next="Тэгвэл хэрэгсэл олон болбол яах вэ?"
   />,
   <ExplainerSlide
-    n={6} title="MCP" page={7} total={T} kicker={k(6, 7)} handle={H}
+    n={6} title="MCP" page={7} total={T} kicker={k(6, 7)} handle={H} theme={theme} folio={F}
     lede="MCP бол агент ба хэрэгслийн хоорондох стандарт залгуур. Хэрэгслээ нэг удаа бүтээхэд MCP-тэй ямар ч агент ашиглана."
     figure={
       <HubSpoke
@@ -208,7 +210,7 @@ const slides = [
     next="Тэгвэл баримтууд чинь хаанаас ирэх вэ?"
   />,
   <ExplainerSlide
-    n={7} title="RAG" page={8} total={T} kicker={k(7, 5)} handle={H}
+    n={7} title="RAG" page={8} total={T} kicker={k(7, 5)} handle={H} theme={theme} folio={F}
     lede="Загвар таны баримтыг хэзээ ч хараагүй. RAG асуулт ирэхэд зөв хуудсыг олж, загварт хуулж өгнө."
     figure={
       <ChunkCards
@@ -237,7 +239,7 @@ const slides = [
     next="Одоо бүгдийг нэг давталтад оруулъя."
   />,
   <ExplainerSlide
-    n={8} title="Агент" page={9} total={T} kicker={k(8, 6)} handle={H}
+    n={8} title="Агент" page={9} total={T} kicker={k(8, 6)} handle={H} theme={theme} folio={F}
     lede="Агент бол давталт дахь загвар: шийд, хэрэгслээр үйлдэл хий, үр дүнг унш, дуустал давт."
     figure={
       <LoopRing
@@ -260,7 +262,7 @@ const slides = [
     next="Тэгвэл алхам ажилласныг яаж мэдэх вэ?"
   />,
   <ExplainerSlide
-    n={9} title="Үнэлгээ (eval)" page={10} total={T} kicker={k(9, 8)} handle={H}
+    n={9} title="Үнэлгээ (eval)" page={10} total={T} kicker={k(9, 8)} handle={H} theme={theme} folio={F}
     lede="Үнэлгээ бол AI-ийн тест. Хариу нь мэдэгдэж буй асуултаар системээ ажиллуулж, үр дүн бүрийг дүгнэнэ."
     figure={
       <PassFailGrid
@@ -285,7 +287,7 @@ const slides = [
     next="Тэгвэл оролт өөрөө хортой байвал яах вэ?"
   />,
   <ExplainerSlide
-    n={10} title="Аюулгүй байдал" page={11} total={T} kicker={k(10, 9)} handle={H}
+    n={10} title="Аюулгүй байдал" page={11} total={T} kicker={k(10, 9)} handle={H} theme={theme} folio={F}
     lede="Хувийн өгөгдөлтэй, итгэлгүй контент уншдаг, өгөгдөл гадагш илгээж чаддаг AI аппыг булаан авч болно."
     figure={<Venn3 title="халдагчид юу хэрэгтэй" labels={["Хувийн өгөгдөл", "Итгэлгүй контент", "Гадагш гарц"]} />}
     points={[
@@ -296,7 +298,7 @@ const slides = [
     rule={{ label: "Дүрэм:", text: "Гурвуулаа байна уу? Хүний баталгаа нэм." }}
     next="Бүх алхам дууслаа. Одоо дүрмүүд"
   />,
-  <RulesSheet title="10 дүрэм, нэг хуудсанд" page={`12/${T}`} rules={rules} cta="Хадгалаад дараагийн бүтээлдээ ашигла." handle={H} />,
+  <RulesSheet title="10 дүрэм, нэг хуудсанд" page={`12/${T}`} rules={rules} cta="Хадгалаад дараагийн бүтээлдээ ашигла." handle={H} theme={theme} folio={F} />,
 ];
 
 const q = new URLSearchParams(location.search);
