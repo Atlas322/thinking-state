@@ -26,6 +26,7 @@ const symbols: Record<string, string> = {
   Feedback: "◉",
   Cards: "▢",
   Buttons: "↵",
+  Social: "◫",
 };
 const read = (key: string, fallback: string) => {
   try {
@@ -366,6 +367,7 @@ export default function App() {
                     onClick={() => navigate(x.slug)}
                   >
                     <span>{x.name}</span>
+                    {"subtype" in x && <small className="nav-subtype">{String(x.subtype)}</small>}
                     {favorites.includes(x.slug) && (
                       <span className="nav-star">✦</span>
                     )}

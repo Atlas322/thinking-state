@@ -12,7 +12,10 @@ export const categories = [
   "Feedback",
   "Cards",
   "Buttons",
+  "Social",
 ];
+/** Social = content output (not chat UI). Subtypes: Post · Carousel · Thumbnail · Story/Poster. */
+export const socialSubtypes = ["Post", "Carousel", "Thumbnail", "Story/Poster"] as const;
 const modules = import.meta.glob<{ default: React.ComponentType }>(
   "./library/*.tsx",
 );
