@@ -31,6 +31,9 @@
   "agent-reply@390": {
     "scale": 1
   },
+  "agent-trail@1440": {
+    "wraps": 1
+  },
   "agent-trail@390": {
     "wraps": 1
   },
@@ -42,6 +45,9 @@
   },
   "approval-gates@390": {
     "scale": 3
+  },
+  "autonomy-dial@390": {
+    "wraps": 2
   },
   "billing-schedule@390": {
     "overflow": 1
@@ -71,7 +77,8 @@
     "scale": 6
   },
   "collaboration-stream@390": {
-    "scale": 6
+    "scale": 6,
+    "rows": 1
   },
   "compact-breakdown@1440": {
     "wraps": 3
@@ -90,6 +97,9 @@
   },
   "conflict-radar@390": {
     "align": 2
+  },
+  "cost-waterfall@390": {
+    "rows": 2
   },
   "decision-card@1440": {
     "rows": 1
@@ -132,6 +142,9 @@
   "review-center@390": {
     "align": 4
   },
+  "running-now@390": {
+    "overflow": 1
+  },
   "tag-input@1440": {
     "wraps": 1,
     "rows": 3
@@ -148,5 +161,8 @@
   },
   "trace-waterfall@390": {
     "scale": 1
+  },
+  "ts-primitives@390": {
+    "rows": 2
   }
 }
