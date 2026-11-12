@@ -40,7 +40,7 @@
     if (!visible(el)) continue;
     const r = el.getBoundingClientRect();
     const cs = getComputedStyle(el);
-    if (cs.position === "fixed") continue;
+    if (cs.position === "fixed" || el.closest("[data-layout-bleed]")) continue; // data-layout-bleed marks an intentional bleed
     // Intentional horizontal scrollers (tab strips, carousels) may extend past the stage.
     let scroller = false;
     for (let p = el.parentElement; p && p !== root; p = p.parentElement) {
@@ -48,7 +48,7 @@
       if (o === "auto" || o === "scroll" || o === "hidden" || o === "clip") { scroller = true; break; }
     }
     if (scroller) continue;
-    if (r.right > box.right + 1 || r.left < box.left - 8) {
+    if (r.right > box.right + 1 || r.left < box.left - 1) {
       if (![...el.querySelectorAll("*")].some((c) => c.getBoundingClientRect().right > box.right + 1 && c !== el))
         out.overflow.push(name(el) + ` (${Math.round(r.left - box.left)}…${Math.round(r.right - box.left)} / ${Math.round(box.width)})`);
     }
@@ -102,9 +102,14 @@
     if (range.getClientRects().length > 1) continue; // multi-line text: icon sits on the first line by design
     const tr = range.getClientRects()[0];
     const ir = icon.getBoundingClientRect();
+    if (ir.width < 2 || ir.height < 2) continue; // icon is display:none at this width
+    // Only compare things that sit in the same row: the text must lie inside this control's own box
+    // (labels hung below an icon node, or text clipped far outside, are a different layout, not an axis error).
+    const er = el.getBoundingClientRect();
+    if (tr.top < er.top - 2 || tr.bottom > er.bottom + 2) continue;
     if (!tr || tr.width < 4) continue; // visually-hidden label
     const d = Math.abs(tr.top + tr.height / 2 - (ir.top + ir.height / 2));
-    if (d > 1.5 && d < 20) out.align.push(`${name(el)} Δ${d.toFixed(1)}px`);
+    if (d > 1.5) out.align.push(`${name(el)} Δ${d.toFixed(1)}px`);
   }
   return out;
 })();

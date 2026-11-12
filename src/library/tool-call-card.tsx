@@ -322,6 +322,7 @@ export function ToolCallGroup({
       <button
         type="button"
         className="ui-tclc-group__head"
+        data-layout-bleed="" /* hover wash bleeds 6px past the card on purpose */
         aria-expanded={open}
         aria-controls={`${id}-list`}
         onClick={() => {

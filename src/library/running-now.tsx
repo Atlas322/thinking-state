@@ -372,6 +372,7 @@ const css = `
 @keyframes rn-roll{from{opacity:0;transform:translateY(4px)}}
 @media(max-width:480px){.rn-pop{width:calc(100vw - 32px);max-width:340px}.rn-crumb,.rn-sep{display:none}}
 @media(prefers-reduced-motion:reduce){.rn *{animation:none!important;transition:none!important}}
+.rn-pill{max-width:100%;min-width:0;gap:6px;padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 `;
 
 export default RunningNow;
