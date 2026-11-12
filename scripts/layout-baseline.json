@@ -112,13 +112,6 @@
   "company-mini@390": {
     "align": 4
   },
-  "company-workspace@1440": {
-    "overflow": 2
-  },
-  "company-workspace@390": {
-    "overflow": 19,
-    "align": 11
-  },
   "conflict-radar@1440": {
     "align": 2
   },
