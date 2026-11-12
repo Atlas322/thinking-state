@@ -109,6 +109,14 @@ bundled — load Spectral, Inter and IBM Plex Mono in the app.
 | `@inai/thinking-state/chat` | `renderChatHtml`, `chatRuntime`, `chatWidgets`, `chatWidgetSchemas` |
 | `@inai/thinking-state/tokens.css` | the `--ts-*` themes |
 
+**Motion (v2 суурь, `src/motion/`)**
+
+- `--ts-motion-*` token (`tokens.css`): хугацаа (`instant`…`loop`), easing (`standard`, `enter`, `exit`, `sine`), spring (`gentle`, `snappy`, `bouncy`, `wobble`). Spring бүр `--ts-motion-spring-NAME` ба `…-duration` хос. Spring нь хамааралгүй, аналитик тооцоолсон damped oscillator (`spring.ts`). Үүнийг CSS `linear()` болгодог тул JS кадр бүрт ажиллахгүй. `linear()`-гүй хөтөч cubic-bezier авна.
+- Loop: `ts-loop ts-loop-{bob|swing|breathe|float|spin|pulse|nudge|pop|shake}`, нэг удаагийн `ts-enter`. Зөвхөн transform/opacity ашиглана (compositor). Keyframe дотор `var()` байхгүй, учир нь `var()` нь animation-ийг main thread руу шилжүүлдэг. Тохиргоо: `--ts-loop-period`, `--ts-loop-delay`, `--ts-loop-origin`.
+- `useInViewLoop()` / `<LoopRegion>`: бүх хуудсанд нэг IntersectionObserver ажиллана. Бүс `data-ts-loop`-тэй: `running` (тоглоно), `offscreen` ба `hidden` (тухайн байрлалдаа хөлдөнө), `paused` ба `reduced` (animation-гүй, эцсийн төлөв). `<Replay>` нь ↺ ба ⏸/▶ товч (WCAG 2.2.2). `<MotionProvider>` бүх хуудсыг нэг дор зогсооно. `animateSpring(el, keyframes, "snappy")` нь нэг удаагийн WAAPI animation.
+- Хэмжээ: `src/motion` minify хийсэн 14.1 KB, gzip 5.3 KB, React-аас өөр хамааралгүй.
+- Хэмжилт: `npm run dev`, дараа нь `node scripts/measure-motion.mjs --url http://127.0.0.1:5173 --cpu 4 --gpu`. Headless Chrome 390×844@3x дээр 96 loop-ийн trace-ээс compositor-ийн зурсан кадрыг тоолно.
+
 **Release** (maintainers): bump `version`, then `npm run release:lib -- vX.Y.Z`
 builds `lib/`, runs the tests, commits `lib/` on `release/vX.Y.Z`, tags it,
 and returns to your branch. Push with `git push origin release/vX.Y.Z vX.Y.Z`.
