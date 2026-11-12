@@ -181,6 +181,20 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
           </div>
         ))}
       </dl>
+      {owners.some((o) => o.kind === "person") && (
+        <div className="cv-people" role="group" aria-label="Хүнээр шүүх">
+          {owners
+            .filter((o) => o.kind === "person")
+            .map((o) => (
+              <button key={o.id} type="button" aria-pressed={owner === o.id} onClick={() => setOwner(owner === o.id ? "all" : o.id)}>
+                <span className="cv-ava is-person" style={{ "--s": "20px" } as React.CSSProperties} aria-hidden="true">
+                  {initials(o.name)}
+                </span>
+                {o.name}
+              </button>
+            ))}
+        </div>
+      )}
       <div className="cv-filters" role="group" aria-label="Шүүлт">
         <label>
           <span>Төлөв</span>
@@ -310,6 +324,9 @@ export const dashboardCss = `
 .cv-dash{display:flex;flex-direction:column;gap:12px}
 .cv-dash-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
 .cv-stat.is-amber dd{color:color-mix(in srgb,var(--cv-amber) 85%,var(--cv-fg))}
+.cv-people{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:1px}
+.cv-people button{flex:none;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px 0 4px;border:1px solid var(--cv-line);border-radius:15px;background:var(--cv-bg);font-size:13px;white-space:nowrap}
+.cv-people button[aria-pressed=true]{border-color:var(--cv-accent);background:var(--cv-accent-soft);color:color-mix(in srgb,var(--cv-accent) 70%,var(--cv-fg));font-weight:500}
 .cv-filters{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px}
 .cv-filters label{display:flex;flex-direction:column;gap:3px;font-size:11.5px;font-weight:500;color:var(--cv-muted)}
 .cv-filters select{height:32px;min-width:140px;padding:0 28px 0 10px;border:1px solid var(--cv-line);border-radius:8px;background:var(--cv-bg);color:var(--cv-fg);font:inherit;font-size:13px}

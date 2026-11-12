@@ -36,4 +36,7 @@ try {
 } finally {
   sh(`git checkout ${start}`);
 }
+// Leaving the release branch removes its tracked lib/; rebuild it so a local
+// `npm pack` (e.g. a vendored tarball) still contains the package.
+sh("npm run -s build:lib");
 console.log(`\nTagged ${tag} on release/${tag}. Push: git push origin release/${tag} ${tag}`);
