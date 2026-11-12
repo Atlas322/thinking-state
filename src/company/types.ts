@@ -63,6 +63,10 @@ export type CompanyTask = Placement & {
   priority?: TaskPriority;
   /** Set on company-level tasks (Company.tasks) that still belong to a project. */
   projectId?: string;
+  /** Task-level roles, same shape as the project's. */
+  raci?: Raci;
+  /** Tasks this one waits on (vault blocked_by; blocks read backwards). May point into another project. */
+  dependsOn?: string[];
 };
 export type CompanyDecision = { id: string; title: string; date: string };
 /** Who is Responsible, Accountable, Consulted, Informed (person or agent ids). */
@@ -228,4 +232,45 @@ export function toPmArea(v?: string): PmKnowledgeArea | null {
   if (k.startsWith("communic")) return "communications";
   if (k.startsWith("stakeholder")) return "stakeholder";
   return (PM_AREAS as string[]).find((a) => k.startsWith(a)) as PmKnowledgeArea | undefined ?? null;
+}
+
+export type TaskRef = { project?: CompanyProject; task: CompanyTask };
+
+/** Every task by the ids an export may use: "t4", "<project>-t4", "<project>:t4". */
+export function taskIndex(c: Company): Map<string, TaskRef> {
+  const out = new Map<string, TaskRef>();
+  const add = (ref: TaskRef) => {
+    const ids = [ref.task.id];
+    if (ref.project) ids.push(`${ref.project.id}-${ref.task.id}`, `${ref.project.id}:${ref.task.id}`);
+    for (const id of ids) if (!out.has(id)) out.set(id, ref);
+  };
+  for (const p of c.projects) for (const t of p.tasks) add({ project: p, task: t });
+  for (const t of c.tasks ?? []) add({ project: c.projects.find((p) => p.id === t.projectId), task: t });
+  return out;
+}
+
+const keysOf = (ref: TaskRef) => (ref.project ? [ref.task.id, `${ref.project.id}-${ref.task.id}`, `${ref.project.id}:${ref.task.id}`] : [ref.task.id]);
+
+/**
+ * What a task waits on (its dependsOn, resolved; ids inside the task's own
+ * project win over same-named ids elsewhere) and what waits on it (the
+ * reverse, computed here). Unknown ids are skipped.
+ */
+export function dependenciesOf(c: Company, project: CompanyProject | undefined, task: CompanyTask, index = taskIndex(c)) {
+  const local = (id: string) => (project ? project.tasks.find((t) => t.id === id) : undefined);
+  const waitsOn: TaskRef[] = [];
+  for (const id of task.dependsOn ?? []) {
+    const own = local(id);
+    const ref = own ? { project, task: own } : index.get(id);
+    if (ref && ref.task !== task && !waitsOn.some((w) => w.task === ref.task)) waitsOn.push(ref);
+  }
+  const me = keysOf({ project, task });
+  const blocks: TaskRef[] = [];
+  for (const ref of new Set(index.values())) {
+    if (ref.task === task) continue;
+    const deps = ref.task.dependsOn ?? [];
+    const hit = deps.some((d) => (ref.project && ref.project === project ? d === task.id : false) || me.slice(1).includes(d) || (!project && d === task.id));
+    if (hit && !blocks.some((b) => b.task === ref.task)) blocks.push(ref);
+  }
+  return { waitsOn, blocks };
 }

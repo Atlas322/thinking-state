@@ -269,7 +269,8 @@ export const inai: Company = {
         { id: "t1", title: "TENET дахин төлөвлөлт", status: "completed", ownerId: "project", due: "2026-11-12" },
         { id: "t2", title: "Нэг schema + INAI экспорт", status: "in-progress", ownerId: "architect", due: "2026-11-16", priority: "high" },
         { id: "t3", title: "Hero «тархи ↔ апп» зураглал", status: "planning", ownerId: "creative", due: "2026-11-24", priority: "medium" },
-        { id: "t4", title: "GitHub төлбөр засах", status: "waiting", ownerId: "itge", due: "2026-11-11", priority: "high" },
+        { id: "t4", title: "GitHub төлбөр засах", status: "waiting", ownerId: "itge", due: "2026-11-11", priority: "high", raci: { responsible: ["tuvshin"], accountable: "tuvshin", consulted: ["boldbaatar"], informed: ["itge"] } },
+        { id: "t5", title: "Засвар эрх ба deploy", status: "waiting", ownerId: "boldbaatar", due: "2026-11-14", priority: "high", dependsOn: ["t4"], raci: { responsible: ["boldbaatar"], accountable: "tuvshin", consulted: [], informed: ["itge"] } },
       ],
       decisions: [
         { id: "d1", title: "inai.sh бол Thinking State апп", date: "2026-11-12" },
@@ -282,7 +283,7 @@ export const inai: Company = {
       tasks: [
         { id: "t1", title: "Chat widgets", status: "completed", ownerId: "architect" },
         { id: "t2", title: "Компанийн renderer", status: "in-progress", ownerId: "architect", due: "2026-11-14", priority: "high" },
-        { id: "t3", title: "Figma instance", status: "inbox", ownerId: "creative" },
+        { id: "t3", title: "Figma instance", status: "inbox", ownerId: "creative", dependsOn: ["inai-website-t3"] },
       ],
       decisions: [{ id: "d1", title: "Thinking State бол бүтээгдэхүүн ба engine", date: "2026-11-12" }],
     },
