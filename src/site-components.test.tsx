@@ -74,3 +74,16 @@ describe("AgentConsent", () => {
     expect(screen.queryByRole("radio", { name: /Үргэлж/ })).toBeNull();
   });
 });
+
+describe("ScenarioChat on narrow screens", () => {
+  it("folds the other questions behind «Бусад асуулт (n)»", () => {
+    vi.stubGlobal("IntersectionObserver", undefined);
+    render(<ScenarioChat scenarios={DEMO_SCENARIOS} />);
+    const more = document.querySelector<HTMLButtonElement>(".ts-sc-more")!;
+    expect(more.textContent).toContain("Бусад асуулт (2)");
+    fireEvent.click(more);
+    expect(more.getAttribute("aria-expanded")).toBe("true");
+    expect(document.getElementById(more.getAttribute("aria-controls")!)?.hasAttribute("data-open")).toBe(true);
+    vi.unstubAllGlobals();
+  });
+});
