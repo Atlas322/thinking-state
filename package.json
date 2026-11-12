@@ -63,7 +63,9 @@
     "tokens:figma": "node scripts/figma-variables.mjs",
     "check:motion": "node scripts/check-quality.mjs --motion",
     "check:icons": "node scripts/check-quality.mjs --icons",
-    "check:quality": "node scripts/check-quality.mjs --motion --icons"
+    "check:quality": "node scripts/check-quality.mjs --motion --icons",
+    "check:layout": "node scripts/check-layout.mjs --overflow",
+    "check:typography": "node scripts/check-layout.mjs --typography"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

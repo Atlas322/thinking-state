@@ -22,7 +22,7 @@ const defaultGroups: SetupGroup[] = [
     title: "Ажлын орчноо тохируулах",
     tasks: [
       { id: "name", label: "Ажлын орчны нэр сонгох" },
-      { id: "invite", label: "Багийн гишүүдээ хамтран ажиллахаар урих" },
+      { id: "invite", label: "Багийн гишүүдээ урих" },
       { id: "calendar", label: "Хуанлиа холбох" },
     ],
   },
@@ -165,18 +165,18 @@ const css = `
 .sg-bar{flex:1;height:4px;border-radius:99px;background:var(--sg-track);overflow:hidden}
 .sg-bar span{display:block;height:100%;border-radius:inherit;background:var(--sg-accent);transition:width .4s cubic-bezier(.2,.8,.2,1)}
 .sg-count{font-size:12px;color:var(--sg-muted);font-variant-numeric:tabular-nums}
-.sg-fold{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}.sg-fold.sg-show{grid-template-rows:1fr}.sg-fold>div{overflow:hidden}
+.sg-fold{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--ts-motion-dur-md,320ms) var(--ts-motion-ease-standard,cubic-bezier(.2,0,0,1))}.sg-fold.sg-show{grid-template-rows:1fr}.sg-fold>div{overflow:hidden}
 .sg-groups{padding:4px}
 .sg-group{border-radius:8px;transition:background .25s}
 .sg-group+.sg-group{margin-top:2px}
 .sg-open{background:var(--sg-soft)}
 .sg-gh{display:flex;align-items:center;justify-content:space-between;width:100%;height:36px;padding:0 10px 0 12px!important;text-align:left;font-weight:500}
-.sg-gh svg{width:14px;height:14px;color:var(--sg-muted);transition:transform .25s}
+.sg-gh svg{width:14px;height:14px;color:var(--sg-muted);transition:transform var(--ts-motion-dur-md,320ms) var(--ts-motion-ease-standard,cubic-bezier(.2,0,0,1))}
 .sg-finished .sg-gh span{text-decoration:line-through;color:var(--sg-muted);font-weight:400}
-.sg-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}.sg-open .sg-panel{grid-template-rows:1fr}
+.sg-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--ts-motion-dur-md,320ms) var(--ts-motion-ease-standard,cubic-bezier(.2,0,0,1))}.sg-open .sg-panel{grid-template-rows:1fr}
 .sg-panel ul{overflow:hidden;list-style:none;margin:0;padding:0 8px 0}.sg-open .sg-panel ul{padding-bottom:6px}
 .sg-task{display:flex;align-items:center;gap:10px;width:100%;height:32px;padding:0 4px!important;text-align:left;border-radius:6px}
-.sg-check{display:grid;place-items:center;width:16px;height:16px;border-radius:50%;border:1.2px solid var(--sg-faint);flex:none;transition:all .2s}
+.sg-check{display:grid;place-items:center;width:16px;height:16px;border-radius:50%;border:1.2px solid var(--sg-faint);flex:none;transition:border-color var(--ts-motion-dur-sm,200ms) var(--ts-motion-ease-standard,cubic-bezier(.2,0,0,1)),background-color var(--ts-motion-dur-sm,200ms) var(--ts-motion-ease-standard,cubic-bezier(.2,0,0,1))}
 .sg-check svg{width:12px;height:12px;animation:sg-pop .25s both}
 .sg-done .sg-check{background:var(--sg-accent);border-color:var(--sg-accent);color:var(--sg-on-accent)}
 .sg-done .sg-label{text-decoration:line-through;color:var(--sg-muted)}

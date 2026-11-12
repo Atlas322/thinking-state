@@ -538,7 +538,7 @@ const css = `
 .tst-hair{position:absolute;left:0;right:0;bottom:0;height:1px;background:color-mix(in srgb,var(--tst-fg) 22%,transparent);transform-origin:left;animation:tst-hair linear forwards}
 .tst-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
 .tst-region button:focus-visible,.tst-demo button:focus-visible{outline:2px solid var(--tst-blue);outline-offset:2px}
-.tst-demo{width:356px;max-width:100%;margin:0 auto;display:grid;gap:0;text-align:left}
+.tst-demo{width:380px;max-width:100%;margin:0 auto;display:grid;gap:0;text-align:left}
 .tst-card{background:var(--tst-card);border:1px solid var(--tst-line);border-radius:12px;padding:12px;box-shadow:0 1px 2px #00000008}
 .tst-file{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .tst-file>div{display:grid}
@@ -546,9 +546,9 @@ const css = `
 .tst-file span{color:var(--tst-muted);font-size:13px}
 .tst-doc{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--tst-line);border-radius:8px;color:var(--tst-muted)}
 .tst-doc svg,.tst-actions svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.tst-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.tst-actions button{display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--tst-line);border-radius:7px;background:var(--tst-card);font-size:14px!important;font-weight:500;box-shadow:0 1px 2px #00000008;transition:background .15s,transform .1s}
-.tst-actions button svg{color:var(--tst-muted)}
+.tst-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(172px,1fr));gap:8px}
+.tst-actions button{display:flex;align-items:center;gap:8px;height:32px;min-width:0;padding:0 10px;white-space:nowrap;border:1px solid var(--tst-line);border-radius:7px;background:var(--tst-card);font-size:13px!important;line-height:16px;font-weight:500;box-shadow:0 1px 2px #00000008;transition:background .15s,transform .1s}
+.tst-actions button svg{flex:none;color:var(--tst-muted)}
 .tst-actions button:hover{background:var(--tst-soft)}
 .tst-actions button:active{transform:scale(.98)}
 .tst-hint{margin:12px 0 0;text-align:center;font-size:13px;color:var(--tst-muted)}
