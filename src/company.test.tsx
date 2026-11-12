@@ -136,3 +136,22 @@ describe("CompanyView", () => {
     expect(screen.getByRole("radio", { name: "Баг" }).getAttribute("aria-checked")).toBe("true");
   });
 });
+
+describe("review fixes", () => {
+  it("level switch stays related to the current unit", () => {
+    render(<CompanyView company={acmeGroup} defaultUnitId="logistics" />);
+    fireEvent.click(screen.getByRole("radio", { name: "Баг" }));
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("Тээврийн төлөвлөлт");
+    fireEvent.click(screen.getByRole("radio", { name: "Компани" }));
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("ac.me Logistics");
+  });
+
+  it("module sources import only their folder and the library", async () => {
+    const sources = import.meta.glob<string>(["./company/*.{ts,tsx}", "./library/company-*.tsx"], { query: "?raw", import: "default" });
+    for (const [path, load] of Object.entries(sources)) {
+      const src = await load();
+      for (const m of src.matchAll(/from\s+["'](\.[^"']+)["']/g))
+        expect(m[1], `${path} → ${m[1]}`).toMatch(/^\.\.?\/(company\/|library\/|[a-z-]+$)/);
+    }
+  });
+});

@@ -520,7 +520,7 @@ function DecisionsView({ scoped, L }: { scoped: Company; L: CompanyViewLabels })
         title={`${L.decisions} · ${decisions.length}`}
         decisions={decisions}
         chosen={Object.fromEntries(decisions.map((d) => [d.id, "made"]))}
-        labels={{ open: "нээлттэй", allDone: "Бүх шийдвэр бүртгэгдсэн.", chosen: "Төлөв", due: "", urgent: "Өнөөдөр", undo: "" }}
+        labels={{ open: "нээлттэй", allDone: "Бүх шийдвэр бүртгэгдсэн.", chosen: "Төлөв", due: "Огноо", urgent: "Өнөөдөр", undo: "" }}
       />
     </div>
   );
@@ -580,7 +580,14 @@ export function CompanyView({
   };
   const pickLevel = (lv: CompanyLevel) => {
     if (!available.includes(lv)) return;
-    setScope({ level: lv, unitId: firstUnit(lv)?.id ?? null });
+    // Stay related to where you are: an ancestor of that kind first (zoom
+    // out), then one inside the current unit (zoom in), then the first one.
+    const kinds = kindsOf[lv];
+    const byId = (id?: string) => company.units.find((u) => u.id === id);
+    let up = byId(scope.unitId ?? undefined);
+    for (let guard = 0; up && guard < 50 && !kinds.includes(up.kind); guard++) up = byId(up.parentId);
+    const down = scopeCompany(company, scope.unitId).units.find((u) => kinds.includes(u.kind));
+    setScope({ level: lv, unitId: (up && kinds.includes(up.kind) ? up : down ?? firstUnit(lv))?.id ?? null });
   };
   const pickUnit = (u: CompanyUnit) => setScope({ level: levelOfKind(u.kind), unitId: u.id });
   const setTemplate = (t: CompanyTemplate) => {
@@ -588,6 +595,11 @@ export function CompanyView({
     onTemplateChange?.(t);
   };
 
+  // A refreshed company may drop the unit in view: fall back to the start.
+  React.useEffect(() => {
+    if (scope.unitId && !company.units.some((u) => u.id === scope.unitId)) setScopeState(initial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company.units, scope.unitId]);
   const scoped = scopeCompany(company, scope.unitId);
   const unit = company.units.find((u) => u.id === scope.unitId) ?? null;
   const path: CompanyUnit[] = [];
@@ -697,8 +709,9 @@ export function CompanyView({
     );
   }
 
+  const roots = rootsOf(company.units);
   const tree = (parent: string | undefined, depth: number, seen = new Set<string>()): React.ReactNode => {
-    const list = company.units.filter((u) => (parent ? u.parentId === parent : rootsOf(company.units).includes(u)) && !seen.has(u.id));
+    const list = (parent ? company.units.filter((u) => u.parentId === parent) : roots).filter((u) => !seen.has(u.id));
     if (!list.length) return null;
     return (
       <ul className="cv-nav-list">
