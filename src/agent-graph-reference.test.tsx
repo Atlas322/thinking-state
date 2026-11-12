@@ -174,6 +174,6 @@ describe("Agent Graph orthogonal routing", () => {
     const calls = Array.from({ length: 12 }, (_, i) => ({ id: `call-${i}`, from: "top", to: "bottom", at: 9000, status: "ok" as const }));
     const view = render(<AgentGraph nodes={nodes} calls={calls} now={10000} />);
     expect(view.container.querySelector(".agg-link")?.getAttribute("stroke-width")).toBe("1.5");
-    expect(view.container.querySelector('[data-node-id="bottom"]')?.getAttribute("aria-label")).toContain("12 calls in the last minute");
+    expect(view.container.querySelector('[data-node-id="bottom"]')?.getAttribute("aria-label")).toContain("сүүлийн минутад 12 дуудлага");
   });
 });

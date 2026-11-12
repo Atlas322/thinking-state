@@ -241,10 +241,10 @@ export function EmailDraft({
   const open = phase === "draft" || phase === "sending";
   const badge =
     phase === "sent"
-      ? { text: "Sent", tone: "ok" }
+      ? { text: "Илгээсэн", tone: "ok" }
       : phase === "discarded"
-        ? { text: "Discarded", tone: "muted" }
-        : { text: "Ready for review", tone: "ok" };
+        ? { text: "Хаясан", tone: "muted" }
+        : { text: "Хянахад бэлэн", tone: "ok" };
 
   return (
     <div className={["ui-ed", className].filter(Boolean).join(" ")}>
@@ -280,7 +280,7 @@ export function EmailDraft({
             >
               <div className="ui-ed__meta">
                 <div className="ui-ed__to" ref={menuRef}>
-                  <span className="ui-ed__label">to</span>
+                  <span className="ui-ed__label">Хэнд</span>
                   {to.email ? (
                     <button
                       type="button"
@@ -299,13 +299,13 @@ export function EmailDraft({
                       </svg>
                     </button>
                   ) : (
-                    <span className="ui-ed__email">No recipient</span>
+                    <span className="ui-ed__email">Хүлээн авагчгүй</span>
                   )}
                   {menu && (
                     <ul
                       className="ui-ed__menu"
                       role="listbox"
-                      aria-label="Recipient"
+                      aria-label="Хүлээн авагч"
                     >
                       {contacts.map((c, i) => (
                         <li key={`${c.email}-${i}`}>
@@ -347,7 +347,7 @@ export function EmailDraft({
                     </span>
                     <button
                       type="button"
-                      aria-label={`Remove ${file}`}
+                      aria-label={`${file} хасах`}
                       onClick={() => setFile(null)}
                     >
                       <Icon>
@@ -366,7 +366,7 @@ export function EmailDraft({
                         <path d="M12 6v12M6 12h12" />
                       </Icon>
                       <span className="ui-ed__file-name" title={attachment}>
-                        Attach {attachment}
+                        {attachment} хавсаргах
                       </span>
                     </button>
                   )
@@ -389,7 +389,7 @@ export function EmailDraft({
                       if (e.key === "Escape") setEditing(false);
                     }}
                     onBlur={() => setEditing(false)}
-                    aria-label="Email text"
+                    aria-label="Имэйлийн текст"
                   />
                 ) : (
                   <p
@@ -397,7 +397,7 @@ export function EmailDraft({
                     className="ui-ed__text"
                     dir="auto"
                     onClick={startEditing}
-                    title="Click to edit"
+                    title="Засахын тулд дарна уу"
                   >
                     {body}{" "}
                     <a href={link.href} onClick={(e) => e.stopPropagation()}>
@@ -408,7 +408,7 @@ export function EmailDraft({
               </div>
 
               <div className="ui-ed__actions">
-                <div className="ui-ed__tones" role="group" aria-label="Tone">
+                <div className="ui-ed__tones" role="group" aria-label="Өнгө аяс">
                   {tones.map((t) => (
                     <button
                       key={t.id}
@@ -423,7 +423,7 @@ export function EmailDraft({
                     type="button"
                     className="ui-ed__edit-btn"
                     aria-pressed={editing}
-                    aria-label="Edit text"
+                    aria-label="Текст засах"
                     onClick={startEditing}
                   >
                     <Icon>
@@ -438,7 +438,7 @@ export function EmailDraft({
                     onClick={discard}
                     disabled={phase === "sending"}
                   >
-                    Discard
+                    Хаях
                   </button>
                   <button
                     type="button"
@@ -449,10 +449,10 @@ export function EmailDraft({
                     {phase === "sending" ? (
                       <>
                         <span className="ui-ed__spinner" aria-hidden="true" />
-                        Sending
+                        Илгээж байна
                       </>
                     ) : (
-                      "Send email"
+                      "Имэйл илгээх"
                     )}
                   </button>
                 </div>
@@ -476,15 +476,15 @@ export function EmailDraft({
               <span className="ui-ed__receipt-text">
                 {phase === "sent" ? (
                   <>
-                    Sent to <b dir="auto">{to.name}</b>
-                    {file ? ` with ${file}` : ""}
+                    Илгээсэн: <b dir="auto">{to.name}</b>
+                    {file ? `, хавсралт: ${file}` : ""}
                   </>
                 ) : (
-                  "Draft discarded"
+                  "Ноорог хаягдлаа"
                 )}
               </span>
               <button type="button" className="ui-ed__undo" onClick={undo}>
-                Undo
+                Буцаах
               </button>
             </div>
           )}
@@ -498,7 +498,7 @@ export function EmailDraft({
         <span className="ui-ed__badge" data-tone={badge.tone} key={badge.text}>
           {badge.text}
         </span>
-        {open && <span className="ui-ed__hint">⌘ Enter to send</span>}
+        {open && <span className="ui-ed__hint">⌘ ↵ дарж илгээнэ</span>}
       </div>
     </div>
   );
@@ -544,7 +544,7 @@ const css = /* css */ `
   --ui-ed-line: #ececec;
   --ui-ed-ink: #171717;
   --ui-ed-text: #404040;
-  --ui-ed-muted: #8f8f8f;
+  --ui-ed-muted: #65656d;
   --ui-ed-chip: #f5f5f5;
   --ui-ed-chip-line: #ebebeb;
   --ui-ed-hover: #f5f5f5;
@@ -906,7 +906,7 @@ const css = /* css */ `
   --ui-ed-line: rgba(255, 255, 255, 0.07);
   --ui-ed-ink: #ededed;
   --ui-ed-text: #c4c4c4;
-  --ui-ed-muted: #8f8f8f;
+  --ui-ed-muted: #9a9aa2;
   --ui-ed-chip: #2a2a2d;
   --ui-ed-chip-line: rgba(255, 255, 255, 0.08);
   --ui-ed-hover: rgba(255, 255, 255, 0.05);

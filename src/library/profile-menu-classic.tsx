@@ -160,7 +160,7 @@ export function ProfileMenu({
             ref={listRef}
             className="ui-pm__items"
             role="menu"
-            aria-label="Account"
+            aria-label="Бүртгэл"
             onKeyDown={onKey}
           >
             {list.map((item, i) => (
@@ -205,7 +205,7 @@ function SetupProgress({
   return (
     <div className="ui-pm__setup">
       <div className="ui-pm__setup-head">
-        <span className="ui-pm__setup-title">Profile setup</span>
+        <span className="ui-pm__setup-title">Профайл тохируулах</span>
         <span className="ui-pm__setup-count">
           {count.format(done)}/{count.format(total)}
         </span>
@@ -213,7 +213,7 @@ function SetupProgress({
       <span
         className="ui-pm__track"
         role="progressbar"
-        aria-label="Profile setup"
+        aria-label="Профайл тохируулах"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={percent}
@@ -226,7 +226,7 @@ function SetupProgress({
       {open && (
         <button type="button" className="ui-pm__next" onClick={onContinue}>
           <span className="ui-pm__next-label" dir="auto" title={next}>
-            <span className="ui-pm__next-hint">Next:</span> {next}
+            <span className="ui-pm__next-hint">Дараах:</span> {next}
           </span>
           <ArrowIcon />
         </button>
@@ -313,10 +313,10 @@ const ArrowIcon = () => (
 );
 
 const defaultItems: ProfileMenuItem[] = [
-  { id: "settings", label: "Settings", icon: <SettingsIcon /> },
-  { id: "docs", label: "Docs", icon: <DocsIcon /> },
-  { id: "apps", label: "Apps", icon: <AppsIcon />, badge: "New" },
-  { id: "logout", label: "Logout", icon: <LogoutIcon /> },
+  { id: "settings", label: "Тохиргоо", icon: <SettingsIcon /> },
+  { id: "docs", label: "Баримт бичиг", icon: <DocsIcon /> },
+  { id: "apps", label: "Аппууд", icon: <AppsIcon />, badge: "Шинэ" },
+  { id: "logout", label: "Гарах", icon: <LogoutIcon /> },
 ];
 
 /* ---------- Styles ---------- */
@@ -327,8 +327,8 @@ const css = /* css */ `
   --ui-pm-line: #ececec;
   --ui-pm-ink: #171717;
   --ui-pm-text: #404040;
-  --ui-pm-muted: #8f8f8f;
-  --ui-pm-icon: #737373;
+  --ui-pm-muted: #65656d;
+  --ui-pm-icon: #65656d;
   --ui-pm-hover: #f5f5f5;
   --ui-pm-off: #f0f0f0;
   --ui-pm-fill: #2f6bff;
@@ -548,8 +548,8 @@ const css = /* css */ `
   --ui-pm-line: rgba(255, 255, 255, 0.08);
   --ui-pm-ink: #ededed;
   --ui-pm-text: #c4c4c4;
-  --ui-pm-muted: #8f8f8f;
-  --ui-pm-icon: #8f8f8f;
+  --ui-pm-muted: #9a9aa2;
+  --ui-pm-icon: #9a9aa2;
   --ui-pm-hover: #2a2a2d;
   --ui-pm-off: #161618;
   --ui-pm-badge: #fb7185;

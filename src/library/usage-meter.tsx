@@ -35,8 +35,8 @@ const tints = ["#3b7be8", "#7ea7ec", "#aac6f2", "#d4e3f8", "#d4d4d8"];
 
 const dailyBase = [180, 260, 250, 210, 330, 130, 150, 290, 290, 250, 320, 110, 140, 360, 380, 310, 260, 270, 170, 340, 230, 300];
 const dailyScale = 7420 / dailyBase.reduce((n, v) => n + v, 0);
-const dailyDemo: UsageDay[] = dailyBase.map((v, i) => ({ label: `Day ${i + 1}`, value: Math.round(v * dailyScale) }));
-for (let i = 0; i < 8; i++) dailyDemo.push({ label: `Day ${23 + i}`, value: null });
+const dailyDemo: UsageDay[] = dailyBase.map((v, i) => ({ label: `${i + 1}-р өдөр`, value: Math.round(v * dailyScale) }));
+for (let i = 0; i < 8; i++) dailyDemo.push({ label: `${23 + i}-р өдөр`, value: null });
 
 const fmt = (n: number, d = 0) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 
@@ -50,20 +50,20 @@ function daysUntil(r: UsageMeterProps["resetAt"]) {
 export function UsageMeter({
   total = 10000,
   used = [
-    { label: "Chat", value: 3980 },
-    { label: "Search", value: 1640 },
-    { label: "Image", value: 1120 },
+    { label: "Чат", value: 3980 },
+    { label: "Хайлт", value: 1640 },
+    { label: "Зураг", value: 1120 },
     { label: "API", value: 680 },
   ],
   limits = [
-    { label: "Seats", used: 8, total: 10 },
-    { label: "Storage", used: 3.2, total: 5, unit: "GB", decimals: 1 },
-    { label: "Projects", used: 12, total: null },
+    { label: "Суудал", used: 8, total: 10 },
+    { label: "Хадгалах сан", used: 3.2, total: 5, unit: "GB", decimals: 1 },
+    { label: "Төсөл", used: 12, total: null },
   ],
   periods = [
-    { id: "month", label: "This month" },
-    { id: "last", label: "Last month" },
-    { id: "7d", label: "7 days" },
+    { id: "month", label: "Энэ сар" },
+    { id: "last", label: "Өнгөрсөн сар" },
+    { id: "7d", label: "7 хоног" },
   ],
   period,
   defaultPeriod,
@@ -71,12 +71,12 @@ export function UsageMeter({
   resetAt = 9,
   daily = dailyDemo,
   onUpgrade,
-  title = "Acme AI",
-  plan = "Pro plan",
-  unit = "credits",
+  title = "AI туслах",
+  plan = "Про багц",
+  unit = "кредит",
   warnAt = 0.8,
-  upgradeLabel = "Upgrade",
-  topUpLabel = "Add credits",
+  upgradeLabel = "Багц ахиулах",
+  topUpLabel = "Кредит нэмэх",
   className = "",
 }: UsageMeterProps) {
   const [inner, setInner] = React.useState(defaultPeriod ?? periods[0]?.id);
@@ -104,11 +104,11 @@ export function UsageMeter({
           <p>
             {plan}
             {plan && days != null && <span className="um-dot">·</span>}
-            {days != null && `Resets in ${days} day${days === 1 ? "" : "s"}`}
+            {days != null && `${days} хоногийн дараа шинэчлэгдэнэ`}
           </p>
         </div>
         {periods.length > 0 && (
-          <div className="um-switch" role="radiogroup" aria-label="Period">
+          <div className="um-switch" role="radiogroup" aria-label="Хугацаа">
             {periods.map((p, i) => (
               <button
                 key={p.id}
@@ -136,7 +136,7 @@ export function UsageMeter({
       <div className="um-big">
         <strong>{fmt(sum)}</strong>
         <span>
-          of {fmt(total)} {unit}
+          / {fmt(total)} {unit}
         </span>
         <em className="um-share">{Math.round(share * 100)}%</em>
       </div>
@@ -146,7 +146,7 @@ export function UsageMeter({
         aria-valuemin={0}
         aria-valuemax={total}
         aria-valuenow={sum}
-        aria-valuetext={`${fmt(sum)} of ${fmt(total)} ${unit}`}
+        aria-valuetext={`${fmt(sum)} / ${fmt(total)} ${unit}`}
         tabIndex={0}
         onMouseLeave={() => setHover(null)}
       >
@@ -179,7 +179,7 @@ export function UsageMeter({
       {daily.length > 0 && (
         <div className="um-daily">
           <div className="um-daily-h">
-            <span>Per day</span>
+            <span>Өдөрт</span>
             <span>
               {day != null && daily[day].value != null ? (
                 <>
@@ -187,7 +187,7 @@ export function UsageMeter({
                 </>
               ) : (
                 <>
-                  Avg <b>{fmt(avg)}</b> / day
+                  Дундаж <b>{fmt(avg)}</b> / өдөр
                 </>
               )}
             </span>
@@ -214,10 +214,10 @@ export function UsageMeter({
               <div key={l.label} className={`um-limit ${warn ? "is-warn" : ""} ${l.total == null ? "is-inf" : ""}`}>
                 <span className="um-limit-l">
                   {l.label}
-                  {warn && <i className="um-warn-dot" aria-label="Running low" />}
+                  {warn && <i className="um-warn-dot" aria-label="Дуусах дөхсөн" />}
                 </span>
                 <span className="um-limit-v">
-                  <b>{fmt(l.used, l.decimals ?? 0)}</b> of {l.total == null ? "∞" : fmt(l.total, 0)}
+                  <b>{fmt(l.used, l.decimals ?? 0)}</b> / {l.total == null ? "∞" : fmt(l.total, 0)}
                   {l.unit ? ` ${l.unit}` : ""}
                 </span>
                 <span
@@ -238,7 +238,7 @@ export function UsageMeter({
 
       <footer className="um-foot">
         <span>
-          {state === "limit" ? "No credits left" : `${fmt(Math.max(0, total - sum))} ${unit} left`}
+          {state === "limit" ? "Кредит дууссан" : `${fmt(Math.max(0, total - sum))} ${unit} үлдсэн`}
         </span>
         <button type="button" className={state === "ok" ? "" : "is-dark"} onClick={() => onUpgrade?.(state)}>
           {state === "ok" ? upgradeLabel : topUpLabel}
@@ -249,8 +249,8 @@ export function UsageMeter({
 }
 
 const css = `
-.um{--um-bg:#fff;--um-fg:#18181b;--um-muted:#71717a;--um-faint:#a1a1aa;--um-line:#ececef;--um-chip:#f1f1f3;--um-track:#ececef;--um-spark:#e4e4e7;--um-amber:#e8a10c;--um-blue:#3b7be8;width:100%;max-width:460px;background:var(--um-bg);color:var(--um-fg);border:1px solid var(--um-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
-:where(.dark,[data-theme=dark]) .um{--um-bg:#1b1b1e;--um-fg:#ececef;--um-muted:#a1a1aa;--um-faint:#71717a;--um-line:#2e2e33;--um-chip:#2a2a2f;--um-track:#2e2e33;--um-spark:#3a3a40;color-scheme:dark}
+.um{--um-bg:#fff;--um-fg:#18181b;--um-muted:#65656d;--um-faint:#65656d;--um-line:#ececef;--um-chip:#f1f1f3;--um-track:#ececef;--um-spark:#e4e4e7;--um-amber:#e8a10c;--um-blue:#3b7be8;width:100%;max-width:460px;background:var(--um-bg);color:var(--um-fg);border:1px solid var(--um-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+:where(.dark,[data-theme=dark]) .um{--um-bg:#1b1b1e;--um-fg:#ececef;--um-muted:#a1a1aa;--um-faint:#9a9aa2;--um-line:#2e2e33;--um-chip:#2a2a2f;--um-track:#2e2e33;--um-spark:#3a3a40;color-scheme:dark}
 .um *{box-sizing:border-box}.um button{font:inherit;color:inherit;cursor:pointer}
 .um-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 16px 0}
 .um-title h3{margin:0;font-size:15px;font-weight:500;letter-spacing:-.01em}

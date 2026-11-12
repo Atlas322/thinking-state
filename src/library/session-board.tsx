@@ -131,51 +131,51 @@ export type SessionBoardProps = {
 };
 
 const defaultLabels: SessionBoardLabels = {
-  owner: "Owner",
-  tasks: "Open tasks",
-  decisions: "Decisions",
-  pages: "Pages",
-  prs: "Open PRs",
-  ungrouped: "Ungrouped",
-  sessions: "sessions",
-  session: "session",
-  empty: "No sessions",
-  running: "Running",
-  waiting: "Waiting",
-  done: "Done",
-  idle: "Idle",
-  links: "Links",
+  owner: "Эзэн",
+  tasks: "Нээлттэй даалгавар",
+  decisions: "Шийдвэр",
+  pages: "Хуудас",
+  prs: "Нээлттэй PR",
+  ungrouped: "Бүлэггүй",
+  sessions: "сешн",
+  session: "сешн",
+  empty: "Сешн алга",
+  running: "Ажиллаж байна",
+  waiting: "Хүлээж байна",
+  done: "Дууссан",
+  idle: "Сул",
+  links: "Холбоос",
   pr: "PR",
-  open: "open",
-  draft: "draft",
-  merged: "merged",
-  closed: "closed",
-  view: "View",
-  groupsView: "Groups",
-  statusView: "Status",
-  cardsView: "Cards",
-  subItem: "sub-session",
-  subItems: "sub-sessions",
-  collapseKids: "Hide sub-sessions",
-  expandKids: "Show sub-sessions",
-  inParent: "in",
-  scope: "Show",
-  all: "All",
-  mine: "Mine",
-  sharedWith: "with",
+  open: "нээлттэй",
+  draft: "ноорог",
+  merged: "нэгтгэсэн",
+  closed: "хаагдсан",
+  view: "Харагдац",
+  groupsView: "Бүлгүүд",
+  statusView: "Төлөв",
+  cardsView: "Карт",
+  subItem: "дэд сешн",
+  subItems: "дэд сешн",
+  collapseKids: "Дэд сешнийг нуух",
+  expandKids: "Дэд сешнийг харуулах",
+  inParent: "Харьяа:",
+  scope: "Харуулах",
+  all: "Бүгд",
+  mine: "Минийх",
+  sharedWith: "ба",
 };
 
 export const defaultSessionGroups: SessionBoardGroup[] = [
-  { id: "projects", label: "Projects" },
-  { id: "areas", label: "Areas" },
-  { id: "resources", label: "Resources" },
-  { id: "finance", label: "Finance" },
+  { id: "projects", label: "Төслүүд" },
+  { id: "areas", label: "Хүрээ" },
+  { id: "resources", label: "Нөөц" },
+  { id: "finance", label: "Санхүү" },
 ];
 
 const UNGROUPED = "__ungrouped";
 
 const demoProject: SessionBoardProject = {
-  name: "ac.me website",
+  name: "ac.me вэбсайт",
   icon: "A",
   status: { label: "Идэвхтэй", tone: "green" },
   owner: "Төслийн агент",
@@ -188,20 +188,21 @@ const demoProject: SessionBoardProject = {
 };
 
 const demoSessions: SessionBoardSession[] = [
-  { id: "relaunch", title: "Вэбсайтыг шинэчлэх", line: "Тарифын хуудсыг шинэ сүлжээн дээр дахин бүтээж байна", state: "running", group: "projects", pr: { number: 21, state: "open" }, owner: "Anu", sharedWith: ["Bat"] },
-  { id: "hero", title: "Нүүр хэсгийн текст", line: "Гурван гарчгийн хувилбар урьдчилан харахад гарлаа", state: "done", group: "projects", parent: "relaunch", pr: { number: 22, state: "merged" }, owner: "Tsetseg" },
-  { id: "pricing", title: "Тарифын хүснэгт", line: "Багцын сонголтыг өгөгдөлтэй холбож байна", state: "running", group: "projects", parent: "relaunch", owner: "Bat" },
-  { id: "promote", title: "Урьдчилсан хувилбарыг нийтлэх", line: "Нийтлэхээс өмнө таны зөвшөөрөл хэрэгтэй", state: "waiting", group: "projects", parent: "relaunch", pr: { number: 23, state: "draft" }, owner: "Anu" },
+  { id: "relaunch", title: "Вэбсайтыг шинэчлэх", line: "Тарифын хуудсыг шинэ сүлжээн дээр дахин бүтээж байна", state: "running", group: "projects", pr: { number: 21, state: "open" }, owner: "Ану", sharedWith: ["Бат"] },
+  { id: "hero", title: "Нүүр хэсгийн текст", line: "Гурван гарчгийн хувилбар урьдчилан харахад гарлаа", state: "done", group: "projects", parent: "relaunch", pr: { number: 22, state: "merged" }, owner: "Цэцэг" },
+  { id: "pricing", title: "Тарифын хүснэгт", line: "Багцын сонголтыг өгөгдөлтэй холбож байна", state: "running", group: "projects", parent: "relaunch", owner: "Бат" },
+  { id: "promote", title: "Урьдчилсан хувилбарыг нийтлэх", line: "Нийтлэхээс өмнө таны зөвшөөрөл хэрэгтэй", state: "waiting", group: "projects", parent: "relaunch", pr: { number: 23, state: "draft" }, owner: "Ану" },
   { id: "brand", title: "Брэндийн шинэчлэл", line: "Текст тогтох хүртэл сэтгэгдлийн самбарыг түр зогсоосон", state: "idle", group: "projects" },
   { id: "triage", title: "Ирсэн зүйлсийг ангилах", line: "14 тэмдэглэл ангилж, 3 даалгавар үүсгэлээ", state: "done", group: "areas" },
-  { id: "weekly", title: "Долоо хоногийн тойм", line: "Ноорог бэлэн; 2 шийдвэр таныг хүлээж байна", state: "waiting", group: "areas", owner: "Anu" },
-  { id: "glossary", title: "Нэр томьёоны сан", line: "Давхардсан 6 атомыг нэгтгэж байна", state: "running", group: "resources", owner: "Tsetseg", sharedWith: ["Anu"] },
+  { id: "weekly", title: "Долоо хоногийн тойм", line: "Ноорог бэлэн; 2 шийдвэр таныг хүлээж байна", state: "waiting", group: "areas", owner: "Ану" },
+  { id: "glossary", title: "Нэр томьёоны сан", line: "Давхардсан 6 атомыг нэгтгэж байна", state: "running", group: "resources", owner: "Цэцэг", sharedWith: ["Ану"] },
   { id: "bills", title: "Сарын төлбөрийн шалгалт", line: "9 төлбөр бүгд бүртгэгдсэн", state: "done", group: "finance" },
   { id: "tokens", title: "Токены аудит", line: "Ноорог тэмдэглэл, эзэнгүй", state: "idle" },
 ];
 
 /** Demo data as plain JSON props (used by the catalog's data editor and chat export). */
-export const sessionBoardDemo = { project: demoProject, groups: defaultSessionGroups, sessions: demoSessions, me: "Anu" };
+export const sessionBoardDemo = { project: demoProject, groups: defaultSessionGroups, sessions: demoSessions, me: "Ану" };
+
 
 const reducedMotion = () =>
   typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -753,8 +754,8 @@ export function SessionBoard({
 }
 
 const css = `
-.sb{--sb-bg:var(--ts-surface,#fff);--sb-fg:var(--ts-fg,#18181b);--sb-muted:var(--ts-muted,#71717a);--sb-faint:var(--ts-faint,#a1a1aa);--sb-line:var(--ts-line,#ececef);--sb-soft:var(--ts-soft,#f4f4f5);--sb-soft-2:var(--ts-soft-2,#f1f1f3);--sb-accent:var(--ts-accent,#4f7cf0);--sb-accent-soft:var(--ts-accent-soft,#e8f1fe);--sb-green:var(--ts-green,#16a34a);--sb-green-soft:var(--ts-green-soft,#e9f8ee);--sb-amber:var(--ts-amber,#c2620a);--sb-amber-soft:var(--ts-amber-soft,#fff4e0);--sb-red:var(--ts-red,#dc2626);--sb-red-soft:var(--ts-red-soft,#fdecec);--sb-violet:var(--ts-violet,#7c3aed);--sb-violet-soft:var(--ts-violet-soft,#f1ebfd);--sb-seg-on:var(--ts-seg-on,#fff);--sb-ink:color-mix(in srgb,var(--sb-fg) 35%,transparent);position:relative;width:100%;max-width:640px;display:flex;flex-direction:column;gap:var(--ts-gap-control,16px);color:var(--sb-fg);font:400 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);container:sb/inline-size;box-sizing:border-box}
-:where(.dark,[data-theme=dark]) .sb{--sb-bg:var(--ts-surface,#1b1b1e);--sb-fg:var(--ts-fg,#ececef);--sb-muted:var(--ts-muted,#a1a1aa);--sb-faint:var(--ts-faint,#71717a);--sb-line:var(--ts-line,#2e2e33);--sb-soft:var(--ts-soft,#26262a);--sb-soft-2:var(--ts-soft-2,#2a2a2f);--sb-accent:var(--ts-accent,#7c9cff);--sb-accent-soft:var(--ts-accent-soft,#1b2a44);--sb-green:var(--ts-green,#4ade80);--sb-green-soft:var(--ts-green-soft,#16301f);--sb-amber:var(--ts-amber,#eba659);--sb-amber-soft:var(--ts-amber-soft,#3a2a12);--sb-red:var(--ts-red,#f87171);--sb-red-soft:var(--ts-red-soft,#3a1d1f);--sb-violet:var(--ts-violet,#a78bfa);--sb-violet-soft:var(--ts-violet-soft,#2a2140);--sb-seg-on:var(--ts-seg-on,#3a3a40);color-scheme:dark}
+.sb{--sb-bg:var(--ts-surface,#fff);--sb-fg:var(--ts-fg,#18181b);--sb-muted:var(--ts-muted,#65656d);--sb-faint:var(--ts-faint,#65656d);--sb-line:var(--ts-line,#ececef);--sb-soft:var(--ts-soft,#f4f4f5);--sb-soft-2:var(--ts-soft-2,#f1f1f3);--sb-accent:var(--ts-accent,#4f7cf0);--sb-accent-soft:var(--ts-accent-soft,#e8f1fe);--sb-green:var(--ts-green,#16a34a);--sb-green-soft:var(--ts-green-soft,#e9f8ee);--sb-amber:var(--ts-amber,#c2620a);--sb-amber-soft:var(--ts-amber-soft,#fff4e0);--sb-red:var(--ts-red,#dc2626);--sb-red-soft:var(--ts-red-soft,#fdecec);--sb-violet:var(--ts-violet,#7c3aed);--sb-violet-soft:var(--ts-violet-soft,#f1ebfd);--sb-seg-on:var(--ts-seg-on,#fff);--sb-ink:color-mix(in srgb,var(--sb-fg) 35%,transparent);position:relative;width:100%;max-width:640px;display:flex;flex-direction:column;gap:var(--ts-gap-control,16px);color:var(--sb-fg);font:400 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);container:sb/inline-size;box-sizing:border-box}
+:where(.dark,[data-theme=dark]) .sb{--sb-bg:var(--ts-surface,#1b1b1e);--sb-fg:var(--ts-fg,#ececef);--sb-muted:var(--ts-muted,#a1a1aa);--sb-faint:var(--ts-faint,#9a9aa2);--sb-line:var(--ts-line,#2e2e33);--sb-soft:var(--ts-soft,#26262a);--sb-soft-2:var(--ts-soft-2,#2a2a2f);--sb-accent:var(--ts-accent,#7c9cff);--sb-accent-soft:var(--ts-accent-soft,#1b2a44);--sb-green:var(--ts-green,#4ade80);--sb-green-soft:var(--ts-green-soft,#16301f);--sb-amber:var(--ts-amber,#eba659);--sb-amber-soft:var(--ts-amber-soft,#3a2a12);--sb-red:var(--ts-red,#f87171);--sb-red-soft:var(--ts-red-soft,#3a1d1f);--sb-violet:var(--ts-violet,#a78bfa);--sb-violet-soft:var(--ts-violet-soft,#2a2140);--sb-seg-on:var(--ts-seg-on,#3a3a40);color-scheme:dark}
 .sb *{box-sizing:border-box}
 .sb-name{font-family:var(--ts-font-display,inherit)}:where(.sb) button{font:inherit;color:inherit;cursor:pointer}
 .sb-head,.sb-group{background:var(--sb-bg);border:1px solid var(--sb-line);border-radius:12px;box-shadow:0 1px 2px #0000000a}

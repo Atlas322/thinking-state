@@ -98,11 +98,12 @@ const defaultItems: ReviewItem[] = [
   { id: "post", title: "Хувилбарын тэмдэглэлийг #мэдэгдэл суваг руу илгээх", agent: "Харилцааны агент", model: "Бичигч агент", icon: reviewIcons.ops, type: "Багийн чатын мессеж", risk: "low", confidence: 0.9, createdAt: m(2), reasoning: "3.2 хувилбарыг дөрвөн цэгээр товчилж, өөрчлөлтийн жагсаалтын холбоосыг хавсаргасан." },
 ];
 
+const riskLabel = { high: "өндөр", medium: "дунд", low: "бага" } as const;
 const waited = (ms: number) => {
   const mins = Math.floor(ms / 60000);
-  if (mins < 1) return "now";
-  if (mins < 60) return `${mins}m`;
-  return `${Math.floor(mins / 60)}h`;
+  if (mins < 1) return "одоо";
+  if (mins < 60) return `${mins} мин`;
+  return `${Math.floor(mins / 60)} цаг`;
 };
 
 export function ReviewCenter({
@@ -115,7 +116,7 @@ export function ReviewCenter({
   sla = 1800000,
   now: nowProp,
   lowConfidence = 0.7,
-  reasons = ["Wrong info", "Tone", "Not allowed", "Other"],
+  reasons = ["Буруу мэдээлэл", "Өнгө аяс", "Зөвшөөрөгдөөгүй", "Бусад"],
   order = "given",
   filter: filterProp,
   defaultFilter = "all",
@@ -186,14 +187,14 @@ export function ReviewCenter({
     setMode("view");
     setNote(null);
     onDecide?.(current, result);
-    setAnnounce(`${result.decision === "approved" ? "Approved" : "Rejected"}: ${current.title}. ${done + 1} of ${all} reviewed.`);
+    setAnnounce(`${result.decision === "approved" ? "Батлагдсан" : "Татгалзсан"}: ${current.title}. ${done + 1}/${all} хянасан.`);
   };
   const undo = () => {
     if (!last) return;
     setDecided((d) => d.slice(0, -1));
     setCurrentId(last.item.id);
     onUndo?.(last.item, last.result);
-    setAnnounce(`Undone: ${last.item.title}`);
+    setAnnounce(`Буцаалаа: ${last.item.title}`);
   };
   const skip = () => {
     if (!current) return;
@@ -253,7 +254,7 @@ export function ReviewCenter({
                 <span id="rc-note" role="tooltip" className="rc-note">
                   <span className="rc-note-h">
                     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5 14 13H2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /><path d="M8 6.5v3M8 11.2v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
-                    Agent's note
+                    Агентын тэмдэглэл
                   </span>
                   {p.note}
                   {p.source && <span className="rc-note-s">{p.source}</span>}
@@ -264,9 +265,9 @@ export function ReviewCenter({
         );
 
   const tabs: [Filter, string, number][] = [
-    ["all", "All", waiting.length],
-    ["high", "High risk", waiting.filter((i) => i.risk === "high").length],
-    ["unsure", "Unsure", waiting.filter((i) => i.confidence < lowConfidence).length],
+    ["all", "Бүгд", waiting.length],
+    ["high", "Өндөр эрсдэл", waiting.filter((i) => i.risk === "high").length],
+    ["unsure", "Эргэлзээтэй", waiting.filter((i) => i.confidence < lowConfidence).length],
   ];
 
   return (
@@ -282,9 +283,9 @@ export function ReviewCenter({
           <span style={{ width: `${(done / Math.max(1, all)) * 100}%` }} />
         </span>
         <span className="rc-count">
-          <b>{done}</b> of {all} reviewed
+          <b>{done}</b>/{all} хянасан
           <span className="rc-sep">·</span>
-          oldest <b>{waited(now - oldest)}</b>
+          хамгийн удаан <b>{waited(now - oldest)}</b>
         </span>
         <span className="rc-last">
           {last && (
@@ -294,13 +295,13 @@ export function ReviewCenter({
               ) : (
                 <svg viewBox="0 0 16 16" className="rc-no" aria-hidden="true"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
               )}
-              {last.result.decision === "approved" ? (last.result.text ? "Approved with edits" : "Approved") : `Rejected · ${last.result.reason}`}
+              {last.result.decision === "approved" ? (last.result.text ? "Засвартай батлагдсан" : "Батлагдсан") : `Татгалзсан · ${last.result.reason}`}
             </>
           )}
         </span>
         <button type="button" className="rc-undo" disabled={!last} onClick={undo} aria-keyshortcuts="Z">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8a5 5 0 1 0 1.5-3.6M3 2.5V5h2.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          Undo <kbd>Z</kbd>
+          Буцаах <kbd>Z</kbd>
         </button>
       </header>
       <div className="rc-main">
@@ -320,7 +321,7 @@ export function ReviewCenter({
                   <button
                     type="button"
                     aria-current={current?.id === i.id ? "true" : undefined}
-                    aria-label={`${i.title}, ${i.type}, ${i.risk} risk, ${Math.round(i.confidence * 100)}% confident, waiting ${waited(age)}`}
+                    aria-label={`${i.title}, ${i.type}, ${riskLabel[i.risk]} эрсдэл, ${Math.round(i.confidence * 100)}% итгэлтэй, хүлээсэн: ${waited(age)}`}
                     className={skipped.includes(i.id) ? "is-skipped" : ""}
                     onClick={() => {
                       setCurrentId(i.id);
@@ -347,19 +348,19 @@ export function ReviewCenter({
                 <div>
                   <div className="rc-agent-n">
                     {current.agent}
-                    {current.risk !== "low" && <span className={`rc-risk is-${current.risk}`}>{current.risk === "high" ? "High risk" : "Medium risk"}</span>}
+                    {current.risk !== "low" && <span className={`rc-risk is-${current.risk}`}>{current.risk === "high" ? "Өндөр эрсдэл" : "Дунд эрсдэл"}</span>}
                   </div>
                   {current.model && <div className="rc-model">{current.model}</div>}
                 </div>
               </div>
               {mode === "edit" ? (
-                <textarea className="rc-edit" value={draft} autoFocus onChange={(e) => setDraft(e.target.value)} aria-label="Edit proposal" />
+                <textarea className="rc-edit" value={draft} autoFocus onChange={(e) => setDraft(e.target.value)} aria-label="Саналыг засах" />
               ) : (
                 <h3 className="rc-title">{current.title}</h3>
               )}
               {current.reasoning && (
                 <p className="rc-why">
-                  <b>Why</b> {current.reasoning}
+                  <b>Шалтгаан</b> {current.reasoning}
                 </p>
               )}
               {current.fields && (
@@ -385,37 +386,37 @@ export function ReviewCenter({
               )}
             </div>
           ) : (
-            <div className="rc-empty">All caught up</div>
+            <div className="rc-empty">Бүгдийг хянасан</div>
           )}
           <footer className="rc-actions">
             {mode === "reject" ? (
-              <div className="rc-reasons" role="group" aria-label="Reason for rejecting">
+              <div className="rc-reasons" role="group" aria-label="Татгалзах шалтгаан">
                 {reasons.map((r, i) => (
                   <button key={r} type="button" className="rc-btn" onClick={() => decide({ decision: "rejected", reason: r })}>
                     {r} <kbd>{i + 1}</kbd>
                   </button>
                 ))}
                 <button type="button" className="rc-btn" onClick={() => setMode("view")}>
-                  Cancel <kbd>Esc</kbd>
+                  Болих <kbd>Esc</kbd>
                 </button>
               </div>
             ) : (
               <>
                 <button type="button" className="rc-btn is-primary" disabled={!current} aria-keyshortcuts="A" onClick={() => decide(mode === "edit" ? { decision: "approved", text: draft } : { decision: "approved" })}>
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
-                  Approve <kbd>A</kbd>
+                  Батлах <kbd>A</kbd>
                 </button>
                 <button type="button" className="rc-btn" disabled={!current} aria-keyshortcuts="E" onClick={() => { if (current) { setDraft(current.title); setMode(mode === "edit" ? "view" : "edit"); } }}>
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 3.5h-6v9h9v-6M6.5 9.5l.4-2L12 2.4l1.6 1.6-5.1 5.1Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
-                  Edit <kbd>E</kbd>
+                  Засах <kbd>E</kbd>
                 </button>
                 <button type="button" className="rc-btn" disabled={!current} aria-keyshortcuts="R" onClick={() => setMode("reject")}>
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
-                  Reject <kbd>R</kbd>
+                  Татгалзах <kbd>R</kbd>
                 </button>
                 <button type="button" className="rc-btn" disabled={!current} aria-keyshortcuts="S" onClick={skip}>
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
-                  Skip <kbd>S</kbd>
+                  Алгасах <kbd>S</kbd>
                 </button>
               </>
             )}
@@ -430,8 +431,8 @@ export function ReviewCenter({
 }
 
 const css = `
-.rc{--rc-bg:#fff;--rc-fg:#18181b;--rc-muted:#71717a;--rc-faint:#a1a1aa;--rc-line:#ececef;--rc-chip:#f4f4f5;--rc-blue:#3b82f6;--rc-amber:#fde68a;width:100%;max-width:760px;display:flex;flex-direction:column;background:var(--rc-bg);color:var(--rc-fg);border:1px solid var(--rc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;outline:none;container-type:inline-size}
-:where(.dark,[data-theme=dark]) .rc{--rc-bg:#1b1b1e;--rc-fg:#ececef;--rc-muted:#a1a1aa;--rc-faint:#71717a;--rc-line:#2e2e33;--rc-chip:#26262a;--rc-amber:#6b5310;color-scheme:dark}
+.rc{--rc-bg:#fff;--rc-fg:#18181b;--rc-muted:#65656d;--rc-faint:#65656d;--rc-line:#ececef;--rc-chip:#f4f4f5;--rc-blue:#3b82f6;--rc-amber:#fde68a;width:100%;max-width:760px;display:flex;flex-direction:column;background:var(--rc-bg);color:var(--rc-fg);border:1px solid var(--rc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;outline:none;container-type:inline-size}
+:where(.dark,[data-theme=dark]) .rc{--rc-bg:#1b1b1e;--rc-fg:#ececef;--rc-muted:#a1a1aa;--rc-faint:#9a9aa2;--rc-line:#2e2e33;--rc-chip:#26262a;--rc-amber:#6b5310;color-scheme:dark}
 .rc *{box-sizing:border-box}.rc button,.rc textarea{font:inherit;color:inherit}.rc button{cursor:pointer}
 .rc-bar{display:flex;align-items:center;gap:10px;height:48px;padding:0 16px;border-bottom:1px solid var(--rc-line);font-size:13px;white-space:nowrap}
 .rc-logo{width:16px;height:16px;color:var(--rc-blue);flex:none}

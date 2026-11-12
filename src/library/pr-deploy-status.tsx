@@ -103,78 +103,78 @@ export type PrDeployStatusProps = PrDeployStatusData & {
 };
 
 const defaultLabels: PrDeployStatusLabels = {
-  pullRequests: "Pull requests",
-  deploys: "Deploys",
-  open: "Open",
-  draft: "Draft",
-  merged: "Merged",
-  closed: "Closed",
-  approved: "Approved",
-  changes: "Changes requested",
-  pending: "Review pending",
-  passed: "passed",
-  failed: "failed",
-  running: "running",
-  live: "Live",
-  building: "Building",
-  queued: "Queued",
-  stuck: "Stuck",
-  deployFailed: "Failed",
-  since: "for",
-  showLog: "Show log",
-  hideLog: "Hide log",
-  noPrs: "No open pull requests",
-  noDeploys: "No deploys yet",
-  scope: "Show",
-  all: "All",
-  mine: "Mine",
+  pullRequests: "Нэгтгэх хүсэлтүүд",
+  deploys: "Байршуулалт",
+  open: "Нээлттэй",
+  draft: "Ноорог",
+  merged: "Нэгтгэсэн",
+  closed: "Хаагдсан",
+  approved: "Батлагдсан",
+  changes: "Засвар хүссэн",
+  pending: "Хяналт хүлээж байна",
+  passed: "амжилттай",
+  failed: "алдаатай",
+  running: "ажиллаж байна",
+  live: "Шууд",
+  building: "Бүтээж байна",
+  queued: "Дараалалд",
+  stuck: "Гацсан",
+  deployFailed: "Алдаатай",
+  since: "болоод",
+  showLog: "Лог харах",
+  hideLog: "Лог нуух",
+  noPrs: "Нээлттэй нэгтгэх хүсэлт алга",
+  noDeploys: "Байршуулалт хараахан алга",
+  scope: "Харах",
+  all: "Бүгд",
+  mine: "Минийх",
 };
 
 export const prDeployStatusDemo: PrDeployStatusData = {
   repo: "acme/box-web",
-  me: "Bat",
+  me: "Бат",
   prs: [
-    { number: 41, title: "Winter box landing page", state: "open", branch: "feat/winter-landing", checks: { passed: 12 }, review: "approved", updated: "18 min ago", owner: "Anu", sharedWith: ["Bat"] },
-    { number: 42, title: "Subscription pause flow", state: "open", branch: "feat/pause-flow", checks: { passed: 10, failed: 1, pending: 1 }, review: "changes", updated: "1 h ago", owner: "Bat" },
-    { number: 43, title: "Darkhan delivery slots", state: "draft", branch: "feat/darkhan-slots", checks: { pending: 3 }, review: "pending", updated: "2 h ago", owner: "Tsetseg" },
-    { number: 39, title: "Address form validation", state: "merged", branch: "fix/address-form", checks: { passed: 12 }, updated: "yesterday", owner: "Bat" },
+    { number: 41, title: "Өвлийн хайрцгийн нүүр хуудас", state: "open", branch: "feat/winter-landing", checks: { passed: 12 }, review: "approved", updated: "18 мин өмнө", owner: "Ану", sharedWith: ["Бат"] },
+    { number: 42, title: "Захиалгыг түр зогсоох урсгал", state: "open", branch: "feat/pause-flow", checks: { passed: 10, failed: 1, pending: 1 }, review: "changes", updated: "1 цаг өмнө", owner: "Бат" },
+    { number: 43, title: "Дарханы хүргэлтийн цагууд", state: "draft", branch: "feat/darkhan-slots", checks: { pending: 3 }, review: "pending", updated: "2 цаг өмнө", owner: "Цэцэг" },
+    { number: 39, title: "Хаягийн маягтын шалгалт", state: "merged", branch: "fix/address-form", checks: { passed: 12 }, updated: "өчигдөр", owner: "Бат" },
   ],
   deploys: [
     {
       id: "preview",
-      env: "Preview",
+      env: "Туршилтын орчин",
       state: "live",
       target: "PR #41",
-      updated: "16 min ago",
+      updated: "16 мин өмнө",
       steps: [
-        { label: "Queue", state: "done", time: "4s" },
-        { label: "Build", state: "done", time: "1m 52s" },
-        { label: "Checks", state: "done", time: "38s" },
-        { label: "Live", state: "done" },
+        { label: "Дараалал", state: "done", time: "4 с" },
+        { label: "Бүтээх", state: "done", time: "1 мин 52 с" },
+        { label: "Шалгалт", state: "done", time: "38 с" },
+        { label: "Шууд", state: "done" },
       ],
     },
     {
       id: "production",
-      env: "Production",
+      env: "Үндсэн орчин",
       state: "stuck",
-      target: "main",
-      updated: "38 min ago",
+      target: "үндсэн салбар",
+      updated: "38 мин өмнө",
       steps: [
-        { label: "Queue", state: "done", time: "6s" },
-        { label: "Build", state: "stuck" },
-        { label: "Checks", state: "next" },
-        { label: "Live", state: "next" },
+        { label: "Дараалал", state: "done", time: "6 с" },
+        { label: "Бүтээх", state: "stuck" },
+        { label: "Шалгалт", state: "next" },
+        { label: "Шууд", state: "next" },
       ],
       blocker: {
-        title: "Build waits on a missing setting",
-        detail: "The delivery-zone setting is not set for production, so the build stops before it starts.",
-        since: "38 min",
-        action: "Add the setting",
+        title: "Тохиргоо дутуу тул бүтээлт хүлээж байна",
+        detail: "Үндсэн орчинд хүргэлтийн бүсийн тохиргоо хийгдээгүй тул бүтээлт эхлэхээсээ өмнө зогслоо.",
+        since: "38 мин",
+        action: "Тохиргоо нэмэх",
         log: [
-          "12:42:08  build started from main",
-          "12:42:11  reading project settings",
-          "12:42:11  DELIVERY_ZONES is not set",
-          "12:42:11  waiting for settings, build paused",
+          "12:42:08  үндсэн салбараас бүтээлт эхэллээ",
+          "12:42:11  төслийн тохиргоог уншиж байна",
+          "12:42:11  DELIVERY_ZONES тохируулаагүй байна",
+          "12:42:11  тохиргоог хүлээж байна, бүтээлт түр зогслоо",
         ],
       },
     },
@@ -182,6 +182,7 @@ export const prDeployStatusDemo: PrDeployStatusData = {
 };
 
 const STEP_DONE: PdStepState[] = ["done"];
+const STEP_LABEL: Record<PdStepState, string> = { done: "дууссан", active: "ажиллаж байна", stuck: "гацсан", failed: "алдаатай", next: "дараагийнх" };
 
 function Checks({ c, L }: { c: NonNullable<PdPullRequest["checks"]>; L: PrDeployStatusLabels }) {
   const passed = c.passed ?? 0;
@@ -342,7 +343,7 @@ export function PrDeployStatus({
                       <span className="pd-node" aria-hidden="true" />
                       <span className="pd-slabel">{s.label}</span>
                       {s.time && <span className="pd-stime">{s.time}</span>}
-                      <span className="pd-sr">, {s.state}</span>
+                      <span className="pd-sr">, {STEP_LABEL[s.state] ?? s.state}</span>
                     </li>
                   ))}
                 </ol>
@@ -409,8 +410,8 @@ export function PrDeployStatus({
 }
 
 const css = `
-.pd{--pd-bg:var(--ts-surface,#fff);--pd-fg:var(--ts-fg,#18181b);--pd-muted:var(--ts-muted,#71717a);--pd-faint:var(--ts-faint,#a1a1aa);--pd-line:var(--ts-line,#ececef);--pd-soft:var(--ts-soft,#f4f4f5);--pd-accent:var(--ts-accent,#4f7cf0);--pd-accent-soft:var(--ts-accent-soft,#e8f1fe);--pd-green:var(--ts-green,#16a34a);--pd-green-soft:var(--ts-green-soft,#e9f8ee);--pd-amber:var(--ts-amber,#c2620a);--pd-amber-soft:var(--ts-amber-soft,#fff4e0);--pd-red:var(--ts-red,#dc2626);--pd-red-soft:var(--ts-red-soft,#fdecec);--pd-violet:var(--ts-violet,#7c3aed);--pd-violet-soft:var(--ts-violet-soft,#f1ebfd);--pd-code:var(--ts-code,#f7f7f8);position:relative;width:100%;max-width:640px;display:flex;flex-direction:column;gap:12px;color:var(--pd-fg);font:400 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);container:pd/inline-size;box-sizing:border-box}
-:where(.dark,[data-theme=dark]) .pd{--pd-bg:var(--ts-surface,#1b1b1e);--pd-fg:var(--ts-fg,#ececef);--pd-muted:var(--ts-muted,#a1a1aa);--pd-faint:var(--ts-faint,#71717a);--pd-line:var(--ts-line,#2e2e33);--pd-soft:var(--ts-soft,#26262a);--pd-accent:var(--ts-accent,#7c9cff);--pd-accent-soft:var(--ts-accent-soft,#1b2a44);--pd-green:var(--ts-green,#4ade80);--pd-green-soft:var(--ts-green-soft,#16301f);--pd-amber:var(--ts-amber,#eba659);--pd-amber-soft:var(--ts-amber-soft,#3a2a12);--pd-red:var(--ts-red,#f87171);--pd-red-soft:var(--ts-red-soft,#3a1d1f);--pd-violet:var(--ts-violet,#a78bfa);--pd-violet-soft:var(--ts-violet-soft,#2a2140);--pd-code:var(--ts-code,#141416);color-scheme:dark}
+.pd{--pd-bg:var(--ts-surface,#fff);--pd-fg:var(--ts-fg,#18181b);--pd-muted:var(--ts-muted,#65656d);--pd-faint:var(--ts-faint,#65656d);--pd-line:var(--ts-line,#ececef);--pd-soft:var(--ts-soft,#f4f4f5);--pd-accent:var(--ts-accent,#4f7cf0);--pd-accent-soft:var(--ts-accent-soft,#e8f1fe);--pd-green:var(--ts-green,#16a34a);--pd-green-soft:var(--ts-green-soft,#e9f8ee);--pd-amber:var(--ts-amber,#c2620a);--pd-amber-soft:var(--ts-amber-soft,#fff4e0);--pd-red:var(--ts-red,#dc2626);--pd-red-soft:var(--ts-red-soft,#fdecec);--pd-violet:var(--ts-violet,#7c3aed);--pd-violet-soft:var(--ts-violet-soft,#f1ebfd);--pd-code:var(--ts-code,#f7f7f8);position:relative;width:100%;max-width:640px;display:flex;flex-direction:column;gap:12px;color:var(--pd-fg);font:400 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);container:pd/inline-size;box-sizing:border-box}
+:where(.dark,[data-theme=dark]) .pd{--pd-bg:var(--ts-surface,#1b1b1e);--pd-fg:var(--ts-fg,#ececef);--pd-muted:var(--ts-muted,#a1a1aa);--pd-faint:var(--ts-faint,#9a9aa2);--pd-line:var(--ts-line,#2e2e33);--pd-soft:var(--ts-soft,#26262a);--pd-accent:var(--ts-accent,#7c9cff);--pd-accent-soft:var(--ts-accent-soft,#1b2a44);--pd-green:var(--ts-green,#4ade80);--pd-green-soft:var(--ts-green-soft,#16301f);--pd-amber:var(--ts-amber,#eba659);--pd-amber-soft:var(--ts-amber-soft,#3a2a12);--pd-red:var(--ts-red,#f87171);--pd-red-soft:var(--ts-red-soft,#3a1d1f);--pd-violet:var(--ts-violet,#a78bfa);--pd-violet-soft:var(--ts-violet-soft,#2a2140);--pd-code:var(--ts-code,#141416);color-scheme:dark}
 .pd *{box-sizing:border-box}:where(.pd) button{font:inherit;color:inherit;cursor:pointer}
 .pd [hidden]{display:none!important}
 .pd-box{background:var(--pd-bg);border:1px solid var(--pd-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;animation:pd-in .34s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 70ms)}

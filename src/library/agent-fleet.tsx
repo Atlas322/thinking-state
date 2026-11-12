@@ -103,12 +103,12 @@ const toolMarks: Record<FleetTool, React.ReactNode> = {
   zendesk: <svg viewBox="0 0 16 16"><path d="M3 9a5 5 0 0 1 10 0v2.5M3 9v2.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /><rect x="2" y="9" width="2.6" height="4" rx="1" fill="currentColor" /><rect x="11.4" y="9" width="2.6" height="4" rx="1" fill="currentColor" /></svg>,
 };
 
-const fmtTime = (s = 0) => `${Math.floor(s / 60)}m ${String(Math.round(s % 60)).padStart(2, "0")}s`;
+const fmtTime = (s = 0) => `${Math.floor(s / 60)} мин ${String(Math.round(s % 60)).padStart(2, "0")} с`;
 const fmtCost = (n: number) => `${Math.round(n)}k токен`;
 const branchCost = (a: FleetAgent): number => (a.cost ?? 0) + (a.children ?? []).reduce((n, c) => n + branchCost(c), 0);
 
 function Pill({ status }: { status: FleetStatus }) {
-  const label = { queued: "Queued", running: "Running", waiting: "Needs you", done: "Done", failed: "Failed", stopped: "Stopped" }[status];
+  const label = { queued: "Дараалалд", running: "Ажиллаж байна", waiting: "Таны ээлж", done: "Дууссан", failed: "Алдаатай", stopped: "Зогсоосон" }[status];
   return (
     <span className={`af-pill af-${status}`}>
       {status === "running" && <span className="af-spin" aria-hidden="true" />}
@@ -149,10 +149,10 @@ function summary(a: FleetAgent) {
   const waiting = c.filter((x) => x.status === "waiting").length;
   const failed = c.filter((x) => x.status === "failed").length;
   const running = c.filter((x) => x.status === "running").length;
-  if (waiting) return { kind: "wait", text: `${waiting} needs you` };
-  if (failed) return { kind: "fail", text: `${failed} failed` };
-  if (running) return { kind: "run", text: `${running}/${c.length} running` };
-  return { kind: "done", text: `All ${c.filter((x) => x.cost).length} done` };
+  if (waiting) return { kind: "wait", text: `${waiting} таны ээлж` };
+  if (failed) return { kind: "fail", text: `${failed} алдаатай` };
+  if (running) return { kind: "run", text: `${running}/${c.length} ажиллаж байна` };
+  return { kind: "done", text: `Бүгд дууссан (${c.filter((x) => x.cost).length})` };
 }
 
 export function AgentFleet({
@@ -162,7 +162,7 @@ export function AgentFleet({
   onOpenChange,
   onResolve,
   onSelect,
-  title = "Fleet",
+  title = "Агентын баг",
   className = "",
 }: AgentFleetProps) {
   const [inner, setInner] = React.useState<string | null>(defaultOpen === undefined ? agents.find((a) => a.id === "release")?.id ?? agents[0]?.id ?? null : defaultOpen);
@@ -188,9 +188,9 @@ export function AgentFleet({
           {title}
         </span>
         <span className="af-stats">
-          <span>{agents.length} agents / {subs} sub-agents</span>
-          <span>{running} running</span>
-          {needs > 0 && <span>{needs} needs you</span>}
+          <span>{agents.length} агент / {subs} дэд агент</span>
+          <span>{running} ажиллаж байна</span>
+          {needs > 0 && <span>{needs} таны ээлж</span>}
           <strong>{fmtCost(total)}</strong>
         </span>
       </header>
@@ -241,10 +241,10 @@ export function AgentFleet({
                         className="af-resolve"
                         onClick={(e) => { e.stopPropagation(); onResolve?.(k, k.status === "failed" ? "retry" : "approve"); }}
                       >
-                        {k.status === "failed" ? "Resolve" : "Answer"}
+                        {k.status === "failed" ? "Шийдэх" : "Хариулах"}
                       </button>
                     ) : k.steps?.length ? (
-                      <span className="af-tasks">{k.steps.length} tasks</span>
+                      <span className="af-tasks">{k.steps.length} даалгавар</span>
                     ) : null}
                   </div>
                 </div>
@@ -258,8 +258,8 @@ export function AgentFleet({
 }
 
 const css = `
-.af{--af-bg:#fff;--af-fg:#18181b;--af-muted:#71717a;--af-faint:#a1a1aa;--af-line:#ececef;--af-chip:#f4f4f5;--af-blue:#3b82f6;--af-blue-bg:#eaf2ff;--af-green:#16a34a;--af-green-bg:#e9f8ee;--af-red:#e5484d;--af-red-bg:#fdecec;--af-amber:#d97706;--af-amber-bg:#fff4e0;--af-conn:#93b8f5;width:100%;max-width:590px;color:var(--af-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .af{--af-bg:#1b1b1e;--af-fg:#ececef;--af-muted:#a1a1aa;--af-faint:#71717a;--af-line:#2e2e33;--af-chip:#2a2a2f;--af-blue-bg:#1d2a44;--af-green-bg:#16301f;--af-red-bg:#3a1c1e;--af-amber-bg:#3a2a12;--af-conn:#3f5f99;color-scheme:dark}
+.af{--af-bg:#fff;--af-fg:#18181b;--af-muted:#65656d;--af-faint:#65656d;--af-line:#ececef;--af-chip:#f4f4f5;--af-blue:#3b82f6;--af-blue-bg:#eaf2ff;--af-green:#16a34a;--af-green-bg:#e9f8ee;--af-red:#e5484d;--af-red-bg:#fdecec;--af-amber:#d97706;--af-amber-bg:#fff4e0;--af-conn:#93b8f5;width:100%;max-width:590px;color:var(--af-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .af{--af-bg:#1b1b1e;--af-fg:#ececef;--af-muted:#a1a1aa;--af-faint:#9a9aa2;--af-line:#2e2e33;--af-chip:#2a2a2f;--af-blue-bg:#1d2a44;--af-green-bg:#16301f;--af-red-bg:#3a1c1e;--af-amber-bg:#3a2a12;--af-conn:#3f5f99;color-scheme:dark}
 .af *{box-sizing:border-box}.af button{font:inherit;color:inherit;cursor:pointer}
 .af-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px 12px}
 .af-title{display:flex;align-items:center;gap:8px;font-weight:500;font-size:14px}.af-title svg{width:14px;height:14px;color:var(--af-blue)}

@@ -87,7 +87,7 @@ export function ParallelAttempts({
   const [ownPick, setOwnPick] = React.useState<string | null>(null);
   const picked = pickedProp !== undefined ? pickedProp : ownPick ?? best?.id ?? null;
   const total = attempts.reduce((s, a) => s + (a.cost ?? 0), 0);
-  const heading = title ?? `Best of ${attempts.length}`;
+  const heading = title ?? `${attempts.length} оролдлогын шилдэг`;
 
   return (
     <section className={`pa ${className}`}>
@@ -97,7 +97,7 @@ export function ParallelAttempts({
         <strong>{heading}</strong>
         <span className="pa-task">{task}</span>
         <span className="pa-count">
-          {finished.length} <span>of {attempts.length} done</span>
+          {finished.length}<span>/{attempts.length} дууссан</span>
         </span>
         <span className="pa-total">{formatCost(total)}</span>
       </header>
@@ -119,7 +119,7 @@ export function ParallelAttempts({
                   <span className="pa-appr">{a.approach}</span>
                 </div>
                 <div className="pa-note">
-                  {a.status === "running" ? <span className="pa-faint">{a.model ?? "Working…"}</span> : a.note}
+                  {a.status === "running" ? <span className="pa-faint">{a.model ?? "Ажиллаж байна…"}</span> : a.note}
                 </div>
               </div>
               <div className="pa-bar" aria-hidden="true">
@@ -130,19 +130,19 @@ export function ParallelAttempts({
                   {a.status === "running" ? (
                     <span className="pa-step">{a.step ?? `${Math.round((a.progress ?? 0) * 100)}%`}</span>
                   ) : a.status === "failed" ? (
-                    <span className="pa-fail">Failed</span>
+                    <span className="pa-fail">Алдаатай</span>
                   ) : (
                     <>
-                      {best?.id === a.id && <span className="pa-best">Best</span>}
+                      {best?.id === a.id && <span className="pa-best">Шилдэг</span>}
                       <span className="pa-score">{a.score}</span>
                     </>
                   )}
                 </div>
                 <div className="pa-bottom">
                   {isPicked ? (
-                    <span className="pa-inuse" role="radio" aria-checked="true" aria-label={`${a.name}, score ${a.score ?? "–"}`}>
+                    <span className="pa-inuse" role="radio" aria-checked="true" aria-label={`${a.name}, оноо ${a.score ?? "–"}`}>
                       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
-                      In use
+                      Сонгосон
                     </span>
                   ) : (
                     <>
@@ -156,13 +156,13 @@ export function ParallelAttempts({
                           className="pa-use"
                           role="radio"
                           aria-checked="false"
-                          aria-label={`Use ${a.name}, score ${a.score ?? "–"}`}
+                          aria-label={`Сонгох: ${a.name}, оноо ${a.score ?? "–"}`}
                           onClick={() => {
                             if (pickedProp === undefined) setOwnPick(a.id);
                             onPick?.(a);
                           }}
                         >
-                          Use this one
+                          Сонгох
                         </button>
                       )}
                     </>
@@ -178,8 +178,8 @@ export function ParallelAttempts({
 }
 
 const css = `
-.pa{--pa-bg:#fff;--pa-fg:#18181b;--pa-muted:#71717a;--pa-faint:#a1a1aa;--pa-line:#ececef;--pa-track:#f1f1f3;--pa-ok:#15803d;--pa-okbar:#7fc497;--pa-okwash:#f3fbf5;--pa-okline:#9fd3b0;--pa-bad:#ef4444;--pa-badbar:#f5c4c4;--pa-run:#3b82f6;container-type:inline-size;width:100%;max-width:720px;color:var(--pa-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .pa{--pa-bg:#1b1b1e;--pa-fg:#ececef;--pa-muted:#a1a1aa;--pa-faint:#71717a;--pa-line:#2e2e33;--pa-track:#2a2a2f;--pa-ok:#4ade80;--pa-okbar:#2f8a52;--pa-okwash:#16261c;--pa-okline:#24563a;--pa-bad:#f87171;--pa-badbar:#6b2c2c;--pa-run:#60a5fa;color-scheme:dark}
+.pa{--pa-bg:#fff;--pa-fg:#18181b;--pa-muted:#65656d;--pa-faint:#65656d;--pa-line:#ececef;--pa-track:#f1f1f3;--pa-ok:#15803d;--pa-okbar:#7fc497;--pa-okwash:#f3fbf5;--pa-okline:#9fd3b0;--pa-bad:#ef4444;--pa-badbar:#f5c4c4;--pa-run:#3b82f6;container-type:inline-size;width:100%;max-width:720px;color:var(--pa-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .pa{--pa-bg:#1b1b1e;--pa-fg:#ececef;--pa-muted:#a1a1aa;--pa-faint:#9a9aa2;--pa-line:#2e2e33;--pa-track:#2a2a2f;--pa-ok:#4ade80;--pa-okbar:#2f8a52;--pa-okwash:#16261c;--pa-okline:#24563a;--pa-bad:#f87171;--pa-badbar:#6b2c2c;--pa-run:#60a5fa;color-scheme:dark}
 .pa *{box-sizing:border-box}.pa button{font:inherit;cursor:pointer}
 .pa-head{display:flex;align-items:center;gap:8px;padding:0 2px 16px}
 .pa-head svg{width:14px;height:14px;color:var(--pa-run);flex:none}

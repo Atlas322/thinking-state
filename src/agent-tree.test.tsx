@@ -24,9 +24,9 @@ describe("Agent Tree selection and live resolution", () => {
   it("keeps embedded tree controls from submitting a host form", () => {
     const onSubmit = vi.fn((event: React.FormEvent) => event.preventDefault());
     render(<form onSubmit={onSubmit}><AgentTree root={tree} now={0} /></form>);
-    fireEvent.click(screen.getByRole("button", { name: "Needs you" }));
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
-    fireEvent.click(screen.getByRole("button", { name: "Hide 1 sub-agents of Lead" }));
+    fireEvent.click(screen.getByRole("button", { name: "Таны ээлж" }));
+    fireEvent.click(screen.getByRole("button", { name: "Батлах" }));
+    fireEvent.click(screen.getByRole("button", { name: "Lead: 1 дэд агентыг нуух" }));
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
@@ -38,35 +38,35 @@ describe("Agent Tree selection and live resolution", () => {
     fireEvent.keyDown(screen.getByRole("button", { name: "Reviewer" }), { key: "Enter" });
     expect(onSelect).toHaveBeenLastCalledWith(tree.children![0]);
     onSelect.mockClear();
-    fireEvent.click(screen.getByRole("button", { name: "Needs you" }));
+    fireEvent.click(screen.getByRole("button", { name: "Таны ээлж" }));
     expect(onSelect).not.toHaveBeenCalled();
     fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
-    fireEvent.click(screen.getByRole("button", { name: "Hide 1 sub-agents of Lead" }));
+    fireEvent.click(screen.getByRole("button", { name: "Lead: 1 дэд агентыг нуух" }));
     expect(onSelect).not.toHaveBeenCalled();
   });
 
   it("updates an open question and resolves the latest agent without resetting focus", () => {
     const onResolve = vi.fn();
     const { rerender } = render(<AgentTree root={tree} now={0} onResolve={onResolve} />);
-    fireEvent.click(screen.getByRole("button", { name: "Needs you" }));
-    const reject = screen.getByRole("button", { name: "Reject" });
+    fireEvent.click(screen.getByRole("button", { name: "Таны ээлж" }));
+    const reject = screen.getByRole("button", { name: "Татгалзах" });
     reject.focus();
     const revised = { ...tree, children: [{ ...tree.children![0], ask: "Ship version two?" }] };
     rerender(<AgentTree root={revised} now={0} onResolve={onResolve} />);
     expect(screen.getByText("Ship version two?")).toBeTruthy();
     expect(screen.queryByText("Ship version one?")).toBeNull();
     expect(document.activeElement).toBe(reject);
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
+    fireEvent.click(screen.getByRole("button", { name: "Батлах" }));
     expect(onResolve).toHaveBeenCalledWith(revised.children[0], "approve");
   });
 
   it("removes a stale question when that agent finishes or leaves the tree", () => {
     const { rerender } = render(<AgentTree root={tree} now={0} />);
-    fireEvent.click(screen.getByRole("button", { name: "Needs you" }));
+    fireEvent.click(screen.getByRole("button", { name: "Таны ээлж" }));
     rerender(<AgentTree root={{ ...tree, children: [{ ...tree.children![0], status: "done" }] }} now={0} />);
     expect(screen.queryByRole("dialog")).toBeNull();
     rerender(<AgentTree root={tree} now={0} />);
-    fireEvent.click(screen.getByRole("button", { name: "Needs you" }));
+    fireEvent.click(screen.getByRole("button", { name: "Таны ээлж" }));
     rerender(<AgentTree root={{ ...tree, children: [] }} now={0} />);
     expect(screen.queryByRole("dialog")).toBeNull();
   });

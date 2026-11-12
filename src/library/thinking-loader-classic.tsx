@@ -54,21 +54,21 @@ export type ThinkingLoaderProps = {
 };
 
 const DEFAULT_PHASES = [
-  "Thinking",
-  "Searching the web",
-  "Reading sources",
-  "Writing response",
+  "Бодож байна",
+  "Вэбээс хайж байна",
+  "Эх сурвалж уншиж байна",
+  "Хариу бичиж байна",
 ];
 const RAYS = Array.from({ length: 8 }, (_, i) => i);
-// 75s reads "1m 15s", a long run "2h 05m" or "3d 4h"
+// 75s reads "1 мин 15 с", a long run "2 цаг 05 мин" or "3 өдөр 4 цаг"
 const took = (s: number) => {
-  if (s < 60) return `${s}s`;
+  if (s < 60) return `${s} с`;
   const m = Math.floor(s / 60);
-  if (m < 60) return `${m}m ${s % 60}s`;
+  if (m < 60) return `${m} мин ${s % 60} с`;
   const h = Math.floor(m / 60);
   return h < 24
-    ? `${h}h ${String(m % 60).padStart(2, "0")}m`
-    : `${Math.floor(h / 24)}d ${h % 24}h`;
+    ? `${h} цаг ${String(m % 60).padStart(2, "0")} мин`
+    : `${Math.floor(h / 24)} өдөр ${h % 24} цаг`;
 };
 
 export function ThinkingLoader({
@@ -77,7 +77,7 @@ export function ThinkingLoader({
   phase,
   loop = false,
   done = false,
-  doneLabel = (s) => `Thought for ${took(s)}`,
+  doneLabel = (s) => `${took(s)} бодсон`,
   size = "md",
   variant = "pill",
   className,
@@ -439,7 +439,7 @@ const css = /* css */ `
 /* Dark mode: follows a .dark class or data-theme="dark" on any ancestor, e.g. <html> */
 :where(.dark, [data-theme="dark"]) .ui-tl {
   --ui-tl-ink: #ededed;
-  --ui-tl-text: #8f8f8f;
+  --ui-tl-text: #9a9aa2;
   --ui-tl-ray: #ededed;
   --ui-tl-bg: #161618;
   --ui-tl-line: rgba(255, 255, 255, 0.1);
@@ -468,7 +468,7 @@ export default function Demo() {
           lineHeight: 1.45,
         }}
       >
-        Which CRM fits a 10-person sales team best?
+        10 хүнтэй борлуулалтын багт аль CRM хамгийн сайн тохирох вэ?
       </div>
       <div style={{ alignSelf: "flex-start" }}>
         <ThinkingLoader done={done} />

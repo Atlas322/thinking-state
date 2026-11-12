@@ -3,6 +3,7 @@
  * no vendor names, no AI model names, no prices. Demo data is Mongolian and
  * generic — «Судлаач агент», «кодын агент», «төлбөрийн систем», «хувилбарын
  * хяналт». Numbers may stay when they mean something; money amounts do not.
+ * English UI labels: `englishWords` (same test).
  * Checked on the rendered text and accessible names of every catalog preview
  * (src/content.test.tsx, `npm run check:content`).
  */
@@ -32,6 +33,35 @@ export function contentHits(text: string): ContentHit[] {
   return hits;
 }
 
+/**
+ * UI labels are Mongolian (owner 2026-11-12). Latin words that may stay:
+ * acronyms (API, CRM, PR, all caps), units, product names, and anything that
+ * is code: tokens with digits, dots, slashes, @, #, _ or : (paths, emails,
+ * ids, versions, keys).
+ */
+export const LATIN_OK = [
+  "Thinking", "State", "Second", "Brain", "inai", "Atlas", "React", "TypeScript", "Inter",
+  "ms", "px", "kb", "mb", "gb", "min", "sec", "ok", "vs", "deploy", "commit", "branch", "merge", "token", "tokens", "prompt",
+  "sync", "bridge", "instance", "docs", "design", "payments", "chat", "code", "crm", "vcs", "vault", "inbox", "fixture",
+];
+const LATIN_OK_SET = new Set(LATIN_OK.map((w) => w.toLowerCase()));
+const TOKEN_RE = /\S+/g;
+const WORD_RE = /[A-Za-z]{2,}/g;
+
+/** English words in one piece of visible text (empty when the text is Mongolian or code). */
+export function englishWords(text: string): string[] {
+  const out: string[] = [];
+  for (const [token] of text.matchAll(TOKEN_RE)) {
+    if (/[0-9./@#_:\\=<>{}[\]()$]/.test(token.replace(/[.,!?:;…»«"'”“)]+$/, "").replace(/^[«"'“(]+/, ""))) continue;
+    for (const [w] of token.matchAll(WORD_RE)) {
+      if (w === w.toUpperCase()) continue; // acronym
+      if (LATIN_OK_SET.has(w.toLowerCase())) continue;
+      out.push(w);
+    }
+  }
+  return out;
+}
+
 /** Everything a person can read or hear in a rendered subtree: text, aria-label, title, alt, placeholder, value. */
 export function readableText(root: Element): string[] {
   const out: string[] = [];
@@ -41,7 +71,9 @@ export function readableText(root: Element): string[] {
       const v = el.getAttribute(a);
       if (v) out.push(v);
     }
-    if ((el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) && el.value) out.push(el.value);
+    // a checkbox's or radio's value and a hidden input are never shown
+    const shown = !(el instanceof HTMLInputElement) || !["checkbox", "radio", "hidden"].includes(el.type);
+    if ((el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) && el.value && shown) out.push(el.value);
     for (const c of el.childNodes) {
       if (c.nodeType === 3 && c.textContent?.trim()) out.push(c.textContent);
       else if (c.nodeType === 1) walk(c as Element);

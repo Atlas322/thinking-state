@@ -88,7 +88,7 @@ export function RaciView({ c, scoped, onPerson, empty }: { c: Company; scoped: C
                 {projects.map((p) => {
                   const roles = raciOf(p, a.id);
                   const viaTask = taskRaciOf(p, a.id);
-                  const label = [...roles.map((r) => LETTER[r]), ...viaTask.map((r) => `${LETTER[r]} (task-аар)`)].join(", ");
+                  const label = [...roles.map((r) => LETTER[r]), ...viaTask.map((r) => `${LETTER[r]} (даалгавараар)`)].join(", ");
                   return (
                     <td key={p.id} title={label || undefined}>
                       {roles.length || viaTask.length ? (
@@ -124,7 +124,7 @@ export function RaciView({ c, scoped, onPerson, empty }: { c: Company; scoped: C
         ))}
         {projects.some((p) => p.tasks.some((t) => t.raci)) && (
           <span>
-            <span className="cv-raci-l is-R is-task">R</span> task-аар
+            <span className="cv-raci-l is-R is-task">R</span> даалгавараар
           </span>
         )}
         {projects.some((p) => !p.raci && !p.tasks.some((t) => t.raci)) && <span className="cv-raci-note">Саарал багана = RACI бүртгэгдээгүй төсөл</span>}
@@ -156,7 +156,7 @@ export function PersonProfile({ c, person, onClose, themeClass = "" }: { c: Comp
   const coworkers = c.agents.filter(
     (a) => a.ownerId !== person.id && c.workflows.some((w) => w.steps.some((s) => s.actorId === person.id) && w.steps.some((s) => s.actorId === a.id)),
   );
-  const agents = [...owned.map((a) => ({ a, how: "эзэмшдэг" })), ...coworkers.map((a) => ({ a, how: "workflow-д хамт" }))];
+  const agents = [...owned.map((a) => ({ a, how: "эзэмшдэг" })), ...coworkers.map((a) => ({ a, how: "ажлын урсгалд хамт" }))];
   const sheet = (
     <div className="cv-sheet-wrap" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <section className="cv-sheet" role="dialog" aria-modal="true" aria-labelledby="cv-profile-name">
@@ -235,7 +235,7 @@ export function PersonProfile({ c, person, onClose, themeClass = "" }: { c: Comp
           </section>
           {respTasks.length > 0 && (
             <section>
-              <h4>Хариуцсан task</h4>
+              <h4>Хариуцсан даалгавар</h4>
               <ul className="cv-resp">
                 {respTasks.map(({ p, t, roles }) => (
                   <li key={p.id + t.id}>

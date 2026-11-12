@@ -172,18 +172,18 @@ export function IntegrationPicker({
   );
 
   return (
-    <section className={`ip ${className}`} aria-label="Integrations">
+    <section className={`ip ${className}`} aria-label="Холболтууд">
       <style>{css}</style>
       <header className="ip-head">
         <button
           type="button"
           className="ip-back"
-          aria-label="Back"
+          aria-label="Буцах"
           onClick={() => onBack?.()}
         >
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
         </button>
-        <span className="ip-crumb">Integrations</span>
+        <span className="ip-crumb">Холболтууд</span>
         <input
           ref={inputRef}
           className="ip-search"
@@ -191,8 +191,8 @@ export function IntegrationPicker({
           aria-expanded="true"
           aria-controls={`${id}-list`}
           aria-activedescendant={current ? `${id}-${current.id}` : undefined}
-          aria-label="Search integrations"
-          placeholder="Search integrations"
+          aria-label="Холболт хайх"
+          placeholder="Холболт хайх"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -217,20 +217,20 @@ export function IntegrationPicker({
       </header>
 
       <div className="ip-body">
-        <div className="ip-list" id={`${id}-list`} role="listbox" aria-label="Integrations" ref={listRef}>
+        <div className="ip-list" id={`${id}-list`} role="listbox" aria-label="Холболтууд" ref={listRef}>
           {connected.length > 0 && (
-            <div role="group" aria-label="Connected">
-              <div className="ip-group">Connected</div>
+            <div role="group" aria-label="Холбогдсон">
+              <div className="ip-group">Холбогдсон</div>
               {connected.map(row)}
             </div>
           )}
           {available.length > 0 && (
-            <div role="group" aria-label="Available">
-              <div className="ip-group">Available</div>
+            <div role="group" aria-label="Боломжтой">
+              <div className="ip-group">Боломжтой</div>
               {available.map(row)}
             </div>
           )}
-          {!flat.length && <p className="ip-empty">No integrations match “{query}”</p>}
+          {!flat.length && <p className="ip-empty">“{query}”-д тохирох холболт алга</p>}
         </div>
 
         {current && (
@@ -254,7 +254,7 @@ export function IntegrationPicker({
                   type="button"
                   role="switch"
                   aria-checked={isOn}
-                  aria-label={`${isOn ? "Disconnect" : "Connect"} ${current.name}`}
+                  aria-label={`${current.name}: ${isOn ? "салгах" : "холбох"}`}
                   className="ip-switch"
                   onClick={() => toggle(current)}
                 >
@@ -263,7 +263,7 @@ export function IntegrationPicker({
               </div>
               <div className="ip-meta">
                 {current.domain}
-                {isOn && <span className="ip-badge">Connected</span>}
+                {isOn && <span className="ip-badge">Холбогдсон</span>}
               </div>
               <p className="ip-desc">{current.description}</p>
               <ul className="ip-feats">
@@ -275,7 +275,7 @@ export function IntegrationPicker({
                 ))}
               </ul>
               <button type="button" className="ip-explore" onClick={() => onExplore?.(current.id)}>
-                Explore integration
+                Дэлгэрэнгүй үзэх
                 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" /></svg>
               </button>
             </div>
@@ -286,11 +286,11 @@ export function IntegrationPicker({
       <footer className="ip-foot">
         <span className="ip-count">
           <i />
-          {count} of {integrations.length} connected
+          {count}/{integrations.length} холбогдсон
         </span>
         <span className="ip-keys">
           <kbd>↑</kbd>
-          <kbd>↓</kbd> to move <kbd>↵</kbd> to switch
+          <kbd>↓</kbd> шилжих <kbd>↵</kbd> сэлгэх
         </span>
       </footer>
     </section>
@@ -298,8 +298,8 @@ export function IntegrationPicker({
 }
 
 const css = `
-.ip{--ip-bg:#fff;--ip-fg:#18181b;--ip-muted:#71717a;--ip-faint:#a1a1aa;--ip-line:#ececef;--ip-soft:#f4f4f5;--ip-hover:#efeff1;--ip-stage:#f7f7f8;--ip-blue:#3b82f6;--ip-green:#15803d;--ip-green-bg:#e3f6e8;width:100%;max-width:660px;background:var(--ip-bg);color:var(--ip-fg);border:1px solid var(--ip-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden;container:ip/inline-size}
-:where(.dark,[data-theme=dark]) .ip{--ip-bg:#1b1b1e;--ip-fg:#ececef;--ip-muted:#a1a1aa;--ip-faint:#71717a;--ip-line:#2e2e33;--ip-soft:#26262a;--ip-hover:#2a2a2f;--ip-stage:#222226;--ip-green:#4ade80;--ip-green-bg:#173323;color-scheme:dark}
+.ip{--ip-bg:#fff;--ip-fg:#18181b;--ip-muted:#65656d;--ip-faint:#65656d;--ip-line:#ececef;--ip-soft:#f4f4f5;--ip-hover:#efeff1;--ip-stage:#f7f7f8;--ip-blue:#3b82f6;--ip-green:#15803d;--ip-green-bg:#e3f6e8;width:100%;max-width:660px;background:var(--ip-bg);color:var(--ip-fg);border:1px solid var(--ip-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden;container:ip/inline-size}
+:where(.dark,[data-theme=dark]) .ip{--ip-bg:#1b1b1e;--ip-fg:#ececef;--ip-muted:#a1a1aa;--ip-faint:#9a9aa2;--ip-line:#2e2e33;--ip-soft:#26262a;--ip-hover:#2a2a2f;--ip-stage:#222226;--ip-green:#4ade80;--ip-green-bg:#173323;color-scheme:dark}
 .ip *{box-sizing:border-box}.ip button{font:inherit;color:inherit;cursor:pointer}
 .ip-head{display:flex;align-items:center;gap:8px;height:46px;padding:0 12px 0 10px;border-bottom:1px solid var(--ip-line)}
 .ip-back{display:grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:6px;background:none;color:var(--ip-muted)}.ip-back:hover{background:var(--ip-soft);color:var(--ip-fg)}

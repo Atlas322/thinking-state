@@ -55,10 +55,10 @@ export type TipsPanelProps = {
 };
 
 export function TipsPanel({
-  title = "Tips",
+  title = "Зөвлөмж",
   tips,
   onClose,
-  closeLabel = "Close",
+  closeLabel = "Хаах",
   className,
 }: TipsPanelProps) {
   const [done, setDone] = useState<Set<string>>(new Set());
@@ -86,7 +86,7 @@ export function TipsPanel({
             {title}
           </h3>
           <span className="ui-tpc__count" aria-live="polite">
-            {count.format(doneCount)}/{count.format(tips.length)} done
+            {count.format(doneCount)}/{count.format(tips.length)} дууссан
           </span>
         </header>
 
@@ -110,7 +110,7 @@ export function TipsPanel({
                   {isDone ? (
                     <span className="ui-tpc__done" role="status">
                       <CheckIcon />
-                      {tip.doneLabel ?? "Done"}
+                      {tip.doneLabel ?? "Дууссан"}
                     </span>
                   ) : (
                     <button

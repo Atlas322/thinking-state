@@ -50,7 +50,7 @@ export type ProgressTrackerProps = {
 };
 
 export function ProgressTracker({
-  title = "Getting started",
+  title = "Эхлэх алхмууд",
   steps: initial,
   autoPlay = false,
   interval = 2200,
@@ -132,7 +132,7 @@ export function ProgressTracker({
         aria-valuemin={0}
         aria-valuemax={total}
         aria-valuenow={count}
-        aria-valuetext={`${num.format(count)} of ${num.format(total)} done`}
+        aria-valuetext={`${num.format(count)}/${num.format(total)} дууссан`}
       >
         <span
           className="ui-progress__fill"
@@ -195,7 +195,7 @@ const css = /* css */ `
   --ui-pg-card: #ffffff;
   --ui-pg-line: #e5e5e5;
   --ui-pg-ink: #171717;
-  --ui-pg-muted: #a3a3a3;
+  --ui-pg-muted: #65656d;
   --ui-pg-ring: #8f8f8f;
   --ui-pg-focus: rgba(0, 96, 226, 0.7);
   --ui-pg-track: #f0f0f0;
@@ -441,7 +441,7 @@ const css = /* css */ `
   --ui-pg-card: #232326;
   --ui-pg-line: rgba(255, 255, 255, 0.08);
   --ui-pg-ink: #ededed;
-  --ui-pg-muted: #8f8f8f;
+  --ui-pg-muted: #9a9aa2;
   --ui-pg-ring: #6b6b70;
   --ui-pg-focus: rgba(77, 141, 255, 0.8);
   --ui-pg-track: rgba(255, 255, 255, 0.1);
@@ -461,15 +461,15 @@ const css = /* css */ `
 export default function Demo() {
   return (
     <ProgressTracker
-      title="Getting started"
+      title="Эхлэх алхмууд"
       autoPlay
       interval={2500}
       steps={[
-        { id: "tools", label: "Connect your tools" },
-        { id: "notify", label: "Turn on notifications" },
-        { id: "updates", label: "Catch up on blockers" },
-        { id: "notes", label: "Summarize priorities" },
-        { id: "project", label: "Create a project" },
+        { id: "tools", label: "Хэрэгслээ холбох" },
+        { id: "notify", label: "Мэдэгдэл асаах" },
+        { id: "updates", label: "Саадуудтай танилцах" },
+        { id: "notes", label: "Тэргүүлэх ажлыг хураангуйлах" },
+        { id: "project", label: "Төсөл үүсгэх" },
       ]}
     />
   );

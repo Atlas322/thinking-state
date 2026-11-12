@@ -32,6 +32,9 @@ export type FanoutGridProps = {
   className?: string;
 };
 
+/** Shown for each status value; the data keeps the English keys. */
+const STATUS_LABEL: Record<FanoutStatus, string> = { queued: "дараалалд", running: "ажиллаж байна", retrying: "дахин оролдож байна", done: "дууссан", failed: "алдаатай" };
+
 /** Usage credits (кр), not money. */
 const dollars = (n: number) => `${n.toFixed(2)} кр`;
 
@@ -73,7 +76,7 @@ function demoTasks(now: number): FanoutTask[] {
 
 const fmtLeft = (ms: number) => {
   const s = Math.max(0, Math.round(ms / 1000));
-  return s < 60 ? `~${s}s left` : `~${Math.floor(s / 60)}m ${s % 60}s left`;
+  return s < 60 ? `~${s} с үлдсэн` : `~${Math.floor(s / 60)} мин ${s % 60} с үлдсэн`;
 };
 
 export function FanoutGrid({
@@ -148,17 +151,17 @@ export function FanoutGrid({
             <b>{done}</b> / {tasks.length}
           </span>
           <b>{formatCost(cost)}</b>
-          <span>{complete ? "Done" : left ? fmtLeft(left) : "Starting…"}</span>
+          <span>{complete ? "Дууссан" : left ? fmtLeft(left) : "Эхэлж байна…"}</span>
         </span>
       </header>
       <div className="fo-card">
-        <div className="fo-grid" role="grid" aria-label="Tasks" onMouseLeave={() => setHover(null)}>
+        <div className="fo-grid" role="grid" aria-label="Даалгаврууд" onMouseLeave={() => setHover(null)}>
           {tasks.map((t) => (
             <button
               key={t.id}
               type="button"
               className={`fo-cell fo-${t.status} ${picked === t.id ? "on" : ""}`}
-              aria-label={`${t.label}: ${t.status}`}
+              aria-label={`${t.label}: ${STATUS_LABEL[t.status] ?? t.status}`}
               aria-pressed={picked === t.id}
               onMouseEnter={() => setHover(t.id)}
               onFocus={() => setHover(t.id)}
@@ -172,22 +175,22 @@ export function FanoutGrid({
             <div className="fo-tip">
               <span className={`fo-sw fo-${shown.status}`} />
               <b>{shown.label}</b>
-              <span>{shown.status}</span>
+              <span>{STATUS_LABEL[shown.status] ?? shown.status}</span>
               {shown.worker && <span>{shown.worker}</span>}
               {shown.start != null && (
                 <span>{(((shown.end ?? now) - shown.start) / 1000).toFixed(1)}s</span>
               )}
               {shown.cost != null && <span>{formatCost(shown.cost)}</span>}
-              {(shown.attempts ?? 1) > 1 && <span>attempt {shown.attempts}</span>}
+              {(shown.attempts ?? 1) > 1 && <span>оролдлого {shown.attempts}</span>}
               {shown.result && <span>{shown.result}</span>}
               {shown.error && <span className="fo-err">{shown.error}</span>}
             </div>
           ) : (
             <div className="fo-legend">
-              <span><i className="fo-sw fo-done" /><b>{done}</b> done</span>
-              <span><i className="fo-sw fo-running" /><b>{running}</b> running</span>
-              <span><i className="fo-sw fo-retrying" /><b>{retrying}</b> retrying</span>
-              <span><i className="fo-sw fo-failed" /><b>{failed.length}</b> failed</span>
+              <span><i className="fo-sw fo-done" /><b>{done}</b> дууссан</span>
+              <span><i className="fo-sw fo-running" /><b>{running}</b> ажиллаж байна</span>
+              <span><i className="fo-sw fo-retrying" /><b>{retrying}</b> дахин оролдож байна</span>
+              <span><i className="fo-sw fo-failed" /><b>{failed.length}</b> алдаатай</span>
             </div>
           )}
           {failed.length > 0 && (onRetry || demo) && (
@@ -203,21 +206,21 @@ export function FanoutGrid({
               <svg viewBox="0 0 16 16" aria-hidden="true">
                 <path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v2.5h-2.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
               </svg>
-              Retry failed
+              Алдаатайг дахин оролдох
             </button>
           )}
         </div>
       </div>
       <p className="fo-sr" aria-live="polite">
-        {done} of {tasks.length} done{failed.length ? `, ${failed.length} failed` : ""}.
+        {done}/{tasks.length} дууссан{failed.length ? `, ${failed.length} алдаатай` : ""}.
       </p>
     </section>
   );
 }
 
 const css = `
-.fo{--fo-bg:#fff;--fo-fg:#18181b;--fo-muted:#71717a;--fo-faint:#a1a1aa;--fo-line:#ececef;--fo-q:#f4f4f5;--fo-q-b:#ececef;--fo-d:#d3f0db;--fo-d-b:#a9dfb8;--fo-r:#e3eefc;--fo-r-b:#b9d3f6;--fo-y:#fdecc8;--fo-y-b:#f4cf86;--fo-x:#fbd9d9;--fo-x-b:#f0a7a7;--fo-red:#e5484d;--fo-accent:#3b82f6;width:100%;max-width:758px;color:var(--fo-fg);font:400 13.5px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .fo{--fo-bg:#1b1b1e;--fo-fg:#ececef;--fo-muted:#a1a1aa;--fo-faint:#71717a;--fo-line:#2e2e33;--fo-q:#26262b;--fo-q-b:#303036;--fo-d:#183a24;--fo-d-b:#2c6a42;--fo-r:#1a2c47;--fo-r-b:#2f5590;--fo-y:#3d2f10;--fo-y-b:#7a5c1c;--fo-x:#43191b;--fo-x-b:#8a3236;--fo-accent:#6aa3ff;color-scheme:dark}
+.fo{--fo-bg:#fff;--fo-fg:#18181b;--fo-muted:#65656d;--fo-faint:#65656d;--fo-line:#ececef;--fo-q:#f4f4f5;--fo-q-b:#ececef;--fo-d:#d3f0db;--fo-d-b:#a9dfb8;--fo-r:#e3eefc;--fo-r-b:#b9d3f6;--fo-y:#fdecc8;--fo-y-b:#f4cf86;--fo-x:#fbd9d9;--fo-x-b:#f0a7a7;--fo-red:#e5484d;--fo-accent:#3b82f6;width:100%;max-width:758px;color:var(--fo-fg);font:400 13.5px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .fo{--fo-bg:#1b1b1e;--fo-fg:#ececef;--fo-muted:#a1a1aa;--fo-faint:#9a9aa2;--fo-line:#2e2e33;--fo-q:#26262b;--fo-q-b:#303036;--fo-d:#183a24;--fo-d-b:#2c6a42;--fo-r:#1a2c47;--fo-r-b:#2f5590;--fo-y:#3d2f10;--fo-y-b:#7a5c1c;--fo-x:#43191b;--fo-x-b:#8a3236;--fo-accent:#6aa3ff;color-scheme:dark}
 .fo *{box-sizing:border-box}.fo button{font:inherit;color:inherit;cursor:pointer}
 .fo-bar{display:flex;align-items:center;gap:8px;padding:0 0 12px}
 .fo-ico{display:grid;place-items:center;width:16px;height:16px;color:var(--fo-accent)}.fo-ico svg{width:16px;height:16px}

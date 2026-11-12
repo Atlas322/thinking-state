@@ -114,7 +114,7 @@ export function DelegateBoard({
       const a = agents.find((x) => x.id === agentId);
       if (onAssign) onAssign(taskId, agentId);
       else setTasks((list) => list.map((x) => (x.id === taskId ? { ...x, agentId } : x)));
-      setAnnounce(`${t?.title} → ${a?.name ?? "Unassigned"}`);
+      setAnnounce(`${t?.title} → ${a?.name ?? "Хуваарилаагүй"}`);
     },
     [tasks, agents, onAssign],
   );
@@ -150,11 +150,12 @@ export function DelegateBoard({
           <path d="M6 1.5 7.2 5 10.5 6 7.2 7 6 10.5 4.8 7 1.5 6 4.8 5ZM12 9l.7 1.8 1.8.7-1.8.7L12 14l-.7-1.8-1.8-.7 1.8-.7Z" fill="currentColor" />
         </svg>
         <strong>{title}</strong>
-        <span className="dlb-hint">{mode === "auto" ? "New tasks go to whoever is free first" : "Drag a task onto an agent"}</span>
+        <span className="dlb-hint">{mode === "auto" ? "Шинэ даалгавар эхэлж чөлөөлөгдсөн агентад очно" : "Даалгаврыг агент руу чирнэ үү"}</span>
         <label className="dlb-switch">
-          Auto
+          Автомат
           <input
             type="checkbox"
+            value=""
             role="switch"
             checked={mode === "auto"}
             onChange={(e) => {
@@ -184,7 +185,7 @@ export function DelegateBoard({
           }}
         >
           <div className="dlb-pool-h">
-            Unassigned <span className="dlb-n">{unassigned.length}</span>
+            Хуваарилаагүй <span className="dlb-n">{unassigned.length}</span>
           </div>
           {unassigned.map((t) => (
             <div
@@ -192,7 +193,7 @@ export function DelegateBoard({
               className={`dlb-task${suggestion?.taskId === t.id ? " is-suggested" : ""}${picking?.task === t.id ? " is-picking" : ""}`}
               draggable
               tabIndex={0}
-              aria-label={`${t.title}, about ${t.estimate} minutes`}
+              aria-label={`${t.title}, ойролцоогоор ${t.estimate} мин`}
               onDragStart={() => setDragging(t.id)}
               onDragEnd={() => {
                 setDragging(null);
@@ -222,7 +223,7 @@ export function DelegateBoard({
               <div>
                 <div className="dlb-task-t">{t.title}</div>
                 <div className="dlb-task-m">
-                  {t.tools?.map((ic, i) => <span key={i} className="dlb-ico">{ic}</span>)}~{t.estimate} min
+                  {t.tools?.map((ic, i) => <span key={i} className="dlb-ico">{ic}</span>)}~{t.estimate} мин
                 </div>
               </div>
             </div>
@@ -230,8 +231,8 @@ export function DelegateBoard({
         </div>
         <div className="dlb-agents">
           <div className="dlb-agents-h">
-            <span>Agents</span>
-            <span>{formatCost(totalCost)} in queues</span>
+            <span>Агентууд</span>
+            <span>Дараалалд {formatCost(totalCost)}</span>
           </div>
           {agents.map((a) => {
             const q = queue(a.id);
@@ -258,11 +259,11 @@ export function DelegateBoard({
                       <div className="dlb-agent-n">{a.name}</div>
                       <div className="dlb-agent-m">
                         {a.model}
-                        {a.rate !== undefined && <span> {formatCost(a.rate)}/min</span>}
+                        {a.rate !== undefined && <span> {formatCost(a.rate)}/мин</span>}
                       </div>
                     </div>
                     <span className={`dlb-until${p ? " is-preview" : ""}`}>
-                      Busy until {p ? busyUntil(a, p.estimate) : busyUntil(a)}
+                      {p ? busyUntil(a, p.estimate) : busyUntil(a)} хүртэл завгүй
                       {p && a.rate !== undefined && <em> +{formatCost(p.estimate * a.rate)}</em>}
                     </span>
                   </div>
@@ -287,7 +288,7 @@ export function DelegateBoard({
         </div>
       </div>
       <div className="dlb-sr" aria-live="polite">
-        Drag onto an agent, or press Enter, choose with the arrow keys and press Enter again. Number keys hand it over at once.
+        Агент руу чирнэ үү, эсвэл Оруулах товч дарж, сумаар сонгоод дахин дарна уу. Тоон товчоор шууд шилжүүлнэ.
         {announce && ` ${announce}`}
       </div>
     </section>
@@ -295,8 +296,8 @@ export function DelegateBoard({
 }
 
 const css = `
-.dlb{--dlb-bg:#fff;--dlb-fg:#18181b;--dlb-muted:#71717a;--dlb-faint:#a1a1aa;--dlb-line:#ececef;--dlb-soft:#f4f4f5;--dlb-chip:#f1f1f3;--dlb-blue:#3b82f6;--dlb-blue-soft:#e8f1fe;--dlb-blue-fg:#1d6fe0;width:100%;max-width:760px;background:var(--dlb-bg);color:var(--dlb-fg);border:1px solid var(--dlb-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .dlb{--dlb-bg:#1b1b1e;--dlb-fg:#ececef;--dlb-muted:#a1a1aa;--dlb-faint:#71717a;--dlb-line:#2e2e33;--dlb-soft:#232327;--dlb-chip:#2a2a2f;--dlb-blue:#5b9cff;--dlb-blue-soft:#1b2a44;--dlb-blue-fg:#8ab8ff;color-scheme:dark}
+.dlb{--dlb-bg:#fff;--dlb-fg:#18181b;--dlb-muted:#65656d;--dlb-faint:#65656d;--dlb-line:#ececef;--dlb-soft:#f4f4f5;--dlb-chip:#f1f1f3;--dlb-blue:#3b82f6;--dlb-blue-soft:#e8f1fe;--dlb-blue-fg:#1d6fe0;width:100%;max-width:760px;background:var(--dlb-bg);color:var(--dlb-fg);border:1px solid var(--dlb-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .dlb{--dlb-bg:#1b1b1e;--dlb-fg:#ececef;--dlb-muted:#a1a1aa;--dlb-faint:#9a9aa2;--dlb-line:#2e2e33;--dlb-soft:#232327;--dlb-chip:#2a2a2f;--dlb-blue:#5b9cff;--dlb-blue-soft:#1b2a44;--dlb-blue-fg:#8ab8ff;color-scheme:dark}
 .dlb *{box-sizing:border-box}
 .dlb-bar{display:flex;align-items:center;gap:10px;height:56px;padding:0 16px 0 20px;border-bottom:1px solid var(--dlb-line)}
 .dlb-spark{width:14px;height:14px;color:var(--dlb-blue)}.dlb-bar strong{font-weight:500}

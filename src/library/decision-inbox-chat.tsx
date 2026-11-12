@@ -71,60 +71,60 @@ export type DecisionInboxChatProps = DecisionInboxChatData & {
 };
 
 const defaultLabels: DecisionInboxChatLabels = {
-  title: "Decisions",
-  open: "open",
-  allDone: "All decided. The agent carries on.",
-  chosen: "Chosen",
-  undo: "Undo",
-  recommended: "Recommended",
-  urgent: "Today",
-  due: "Due",
-  scope: "Show",
-  all: "All",
-  mine: "Mine",
+  title: "Шийдвэрүүд",
+  open: "нээлттэй",
+  allDone: "Бүгд шийдэгдсэн. Агент үргэлжлүүлж байна.",
+  chosen: "Сонгосон",
+  undo: "Буцаах",
+  recommended: "Санал болгосон",
+  urgent: "Өнөөдөр",
+  due: "Хугацаа",
+  scope: "Харах",
+  all: "Бүгд",
+  mine: "Минийх",
 };
 
 export const decisionInboxChatDemo: DecisionInboxChatData = {
-  title: "Decisions for ac.me Box",
-  me: "Anu",
+  title: "ac.me хайрцаг: шийдвэрүүд",
+  me: "Ану",
   decisions: [
     {
       id: "hero",
-      title: "Which hero image leads the winter box page?",
-      context: "Both tested well; the doorstep shot reads faster on phones.",
-      project: "Winter box launch",
-      due: "today",
+      title: "Өвлийн хайрцгийн хуудсыг аль үндсэн зураг тэргүүлэх вэ?",
+      context: "Хоёулаа сайн туршигдсан; үүдний зураг утсан дээр хурдан уншигдана.",
+      project: "Өвлийн хайрцгийн нээлт",
+      due: "өнөөдөр",
       urgent: true,
-      owner: "Anu",
+      owner: "Ану",
       options: [
-        { id: "doorstep", label: "Snowy doorstep", recommended: true },
-        { id: "unboxing", label: "Unboxing close-up" },
+        { id: "doorstep", label: "Цастай үүд", recommended: true },
+        { id: "unboxing", label: "Хайрцаг задлах ойрын зураг" },
       ],
     },
     {
       id: "pause",
-      title: "Ship the pause flow before launch?",
-      context: "One check still fails; the fix is small but needs review.",
-      project: "Winter box launch",
-      due: "Nov 14",
-      owner: "Bat",
-      sharedWith: ["Anu"],
+      title: "Түр зогсоох урсгалыг нээлтээс өмнө гаргах уу?",
+      context: "Нэг шалгалт унасан хэвээр; засвар жижиг ч хянуулах хэрэгтэй.",
+      project: "Өвлийн хайрцгийн нээлт",
+      due: "11-р сарын 14",
+      owner: "Бат",
+      sharedWith: ["Ану"],
       options: [
-        { id: "now", label: "Ship before launch", recommended: true },
-        { id: "later", label: "Right after launch" },
+        { id: "now", label: "Нээлтээс өмнө гаргах", recommended: true },
+        { id: "later", label: "Нээлтийн дараа шууд" },
       ],
     },
     {
       id: "darkhan",
-      title: "Darkhan deliveries: weekly or every two weeks?",
-      context: "Orders there are 18% of the waitlist.",
-      project: "Operations",
-      owner: "Tsetseg",
-      due: "Nov 18",
+      title: "Дархан руу хүргэлт: долоо хоног бүр үү, хоёр долоо хоног тутам уу?",
+      context: "Тэндхийн захиалга хүлээлгийн жагсаалтын 18% байна.",
+      project: "Үйл ажиллагаа",
+      owner: "Цэцэг",
+      due: "11-р сарын 18",
       options: [
-        { id: "weekly", label: "Weekly" },
-        { id: "biweekly", label: "Every two weeks", recommended: true },
-        { id: "ask", label: "Ask customers first" },
+        { id: "weekly", label: "Долоо хоног бүр" },
+        { id: "biweekly", label: "Хоёр долоо хоног тутам", recommended: true },
+        { id: "ask", label: "Эхлээд хэрэглэгчдээс асуух" },
       ],
     },
   ],
@@ -279,8 +279,8 @@ export function DecisionInboxChat({
 }
 
 const css = `
-.di{--di-bg:var(--ts-surface,#fff);--di-fg:var(--ts-fg,#18181b);--di-muted:var(--ts-muted,#71717a);--di-faint:var(--ts-faint,#a1a1aa);--di-line:var(--ts-line,#ececef);--di-soft:var(--ts-soft,#f4f4f5);--di-accent:var(--ts-accent,#4f7cf0);--di-accent-soft:var(--ts-accent-soft,#e8f1fe);--di-green:var(--ts-green,#16a34a);--di-green-soft:var(--ts-green-soft,#e9f8ee);--di-amber:var(--ts-amber,#c2620a);--di-amber-soft:var(--ts-amber-soft,#fff4e0);position:relative;width:100%;max-width:560px;color:var(--di-fg);background:var(--di-bg);border:1px solid var(--di-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);container:di/inline-size;box-sizing:border-box;overflow:hidden;animation:di-in .34s cubic-bezier(.2,.8,.3,1) both}
-:where(.dark,[data-theme=dark]) .di{--di-bg:var(--ts-surface,#1b1b1e);--di-fg:var(--ts-fg,#ececef);--di-muted:var(--ts-muted,#a1a1aa);--di-faint:var(--ts-faint,#71717a);--di-line:var(--ts-line,#2e2e33);--di-soft:var(--ts-soft,#26262a);--di-accent:var(--ts-accent,#7c9cff);--di-accent-soft:var(--ts-accent-soft,#1b2a44);--di-green:var(--ts-green,#4ade80);--di-green-soft:var(--ts-green-soft,#16301f);--di-amber:var(--ts-amber,#eba659);--di-amber-soft:var(--ts-amber-soft,#3a2a12);color-scheme:dark}
+.di{--di-bg:var(--ts-surface,#fff);--di-fg:var(--ts-fg,#18181b);--di-muted:var(--ts-muted,#65656d);--di-faint:var(--ts-faint,#65656d);--di-line:var(--ts-line,#ececef);--di-soft:var(--ts-soft,#f4f4f5);--di-accent:var(--ts-accent,#4f7cf0);--di-accent-soft:var(--ts-accent-soft,#e8f1fe);--di-green:var(--ts-green,#16a34a);--di-green-soft:var(--ts-green-soft,#e9f8ee);--di-amber:var(--ts-amber,#c2620a);--di-amber-soft:var(--ts-amber-soft,#fff4e0);position:relative;width:100%;max-width:560px;color:var(--di-fg);background:var(--di-bg);border:1px solid var(--di-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);container:di/inline-size;box-sizing:border-box;overflow:hidden;animation:di-in .34s cubic-bezier(.2,.8,.3,1) both}
+:where(.dark,[data-theme=dark]) .di{--di-bg:var(--ts-surface,#1b1b1e);--di-fg:var(--ts-fg,#ececef);--di-muted:var(--ts-muted,#a1a1aa);--di-faint:var(--ts-faint,#9a9aa2);--di-line:var(--ts-line,#2e2e33);--di-soft:var(--ts-soft,#26262a);--di-accent:var(--ts-accent,#7c9cff);--di-accent-soft:var(--ts-accent-soft,#1b2a44);--di-green:var(--ts-green,#4ade80);--di-green-soft:var(--ts-green-soft,#16301f);--di-amber:var(--ts-amber,#eba659);--di-amber-soft:var(--ts-amber-soft,#3a2a12);color-scheme:dark}
 .di *{box-sizing:border-box}
 .di-title{font-family:var(--ts-font-display,inherit)}:where(.di) button{font:inherit;color:inherit;cursor:pointer}
 .di [hidden]{display:none!important}

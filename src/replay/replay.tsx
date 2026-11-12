@@ -71,7 +71,7 @@ const css = `
 .ts-replay-body{min-width:0}
 .ts-replay[data-placement=outside]{padding-top:38px}
 .ts-replay[data-placement=outside]>.ts-replay-btn{top:0}
-.ts-replay-btn{position:absolute;top:8px;right:8px;z-index:3;display:grid;place-items:center;width:30px;height:30px;padding:0;border:1px solid var(--ts-line,#e4e4e7);border-radius:8px;background:var(--ts-surface,#fff);color:var(--ts-muted,#71717a);box-shadow:0 1px 2px #0000000f;cursor:pointer;opacity:.82;transition:opacity .15s,color .15s,background .15s,transform .2s}
+.ts-replay-btn{position:absolute;top:8px;right:8px;z-index:3;display:grid;place-items:center;width:30px;height:30px;padding:0;border:1px solid var(--ts-line,#e4e4e7);border-radius:8px;background:var(--ts-surface,#fff);color:var(--ts-muted,#65656d);box-shadow:0 1px 2px #0000000f;cursor:pointer;opacity:.82;transition:opacity .15s,color .15s,background .15s,transform .2s}
 .ts-replay-btn:hover{opacity:1;color:var(--ts-fg,#18181b);background:var(--ts-soft,#f4f4f5)}
 .ts-replay-btn:active .cv-icon{transform:rotate(-120deg)}
 .ts-replay-btn .cv-icon{transition:transform .35s cubic-bezier(.2,.8,.3,1)}

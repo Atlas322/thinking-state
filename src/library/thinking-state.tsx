@@ -39,11 +39,11 @@ export interface ThinkingStateProps {
    * `done`, and the header shows the host's `seconds`. The built-in demo timer does not run.
    */
   live?: { done: boolean; seconds: number };
-  /** Header text, for other languages: "Thinking" and "Worked for 7s". */
+  /** Header text, for other languages: defaults «Бодож байна» and «7 с ажилласан». */
   labels?: {
     thinking?: string;
     worked?: (seconds: number) => string;
-    /** Running clock next to the header – defaults to "42s". */
+    /** Running clock next to the header – defaults to «42 с». */
     time?: (seconds: number) => string;
   };
   /** Replaces the check mark on the finished row – e.g. a cross when the run failed. */
@@ -182,7 +182,7 @@ function Sources({ step }: { step: ThinkingStep }) {
             }
             onClick={() => setExpanded((value) => !value)}
           >
-            {expanded ? "Show less" : `+${extra.length} more`}
+            {expanded ? "Хураах" : `+${extra.length} бусад`}
           </button>
         </>
       )}
@@ -193,7 +193,7 @@ function Sources({ step }: { step: ThinkingStep }) {
 /** A timed, presentational thinking timeline. Remount with a new key to replay. */
 export function ThinkingState({
   steps,
-  doneLabel = "Finished thinking",
+  doneLabel = "Бодож дууссан",
   stepMs = 1300,
   loop = false,
   collapseOnDone = false,
@@ -314,14 +314,14 @@ export function ThinkingState({
         <span className="thinking-heading">
           {progress.done ? (
             (labels?.worked?.(progress.seconds) ??
-            `Worked for ${progress.seconds}s`)
+            `${progress.seconds} с ажилласан`)
           ) : (
             <>
               <span className="thinking-shimmer">
-                {labels?.thinking ?? "Thinking"}
+                {labels?.thinking ?? "Бодож байна"}
               </span>{" "}
               <span className="thinking-time">
-                {labels?.time?.(progress.seconds) ?? `${progress.seconds}s`}
+                {labels?.time?.(progress.seconds) ?? `${progress.seconds} с`}
               </span>
             </>
           )}
@@ -348,8 +348,8 @@ export function ThinkingState({
               const active = !progress.done && i === progress.visible - 1;
               const label = !active
                 ? (step.completedLabel ??
-                  (step.kind === "search" && step.label === "Searching"
-                    ? "Searched"
+                  (step.kind === "search" && (step.label === "Searching" || step.label === "Хайж байна")
+                    ? "Хайсан"
                     : step.label))
                 : step.label;
               return (

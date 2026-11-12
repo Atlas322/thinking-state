@@ -21,7 +21,7 @@ import {
  * area, skill, event, daily …) drawn like a Notion database / Obsidian Base.
  * Read-only: view, filter, group. Columns come from `fields` (kinds inferred
  * from values when only names are given). Views: table, board, calendar,
- * timeline, list. Status saved-view tabs (Inbox · Идэвхтэй · Хүлээгдэж буй ·
+ * timeline, list. Status saved-view tabs (Ирсэн · Идэвхтэй · Хүлээгдэж буй ·
  * Дууссан · Архив) with icons and counts; tasks also get This month /
  * Recent / Weekly calendar presets. Any row opens a side peek: type icon,
  * title, status, the main properties (empty ones hidden, «n more»), and the
@@ -37,16 +37,16 @@ const VIEW_META: Record<CollectionViewKind, { label: string; icon: IconName }> =
   table: { label: "Хүснэгт", icon: "table" },
   board: { label: "Самбар", icon: "kanban" },
   calendar: { label: "Хуанли", icon: "calendar-days" },
-  timeline: { label: "Timeline", icon: "gantt-chart" },
+  timeline: { label: "Цагийн хэлхээс", icon: "gantt-chart" },
   list: { label: "Жагсаалт", icon: "list" },
 };
 const VIEWS: CollectionViewKind[] = ["table", "board", "calendar", "timeline", "list"];
 
 const FIELD_LABEL: Record<string, string> = {
   status: "Төлөв",
-  priority: "Priority",
-  area: "Area",
-  subArea: "Дэд area",
+  priority: "Ач холбогдол",
+  area: "Чиглэл",
+  subArea: "Дэд чиглэл",
   project: "Төсөл",
   owner: "Эзэн",
   due: "Хугацаа",
@@ -56,12 +56,26 @@ const FIELD_LABEL: Record<string, string> = {
   role: "Үүрэг",
   unit: "Нэгж",
   company: "Компани",
-  tasks: "Task",
+  tasks: "Даалгавар",
+  projects: "Төсөл",
+  up: "Харьяа",
+  mood: "Сэтгэл санаа",
+  assignee: "Гүйцэтгэгч",
+  deadline: "Эцсийн хугацаа",
+  people: "Хүмүүс",
+  agent: "Агент",
+  manager: "Менежер",
+  related: "Холбоотой",
+  author: "Зохиогч",
+  phase: "Үе шат",
   tags: "Шошго",
   updated: "Шинэчилсэн",
   created: "Үүсгэсэн",
   confidence: "Итгэл",
 };
+/** Display labels for common vault values that are not statuses (the data keeps the raw value). */
+const VALUE_LABEL: Record<string, string> = { stated: "Хэлсэн", observed: "Ажигласан", inferred: "Дүгнэсэн", active: "Идэвхтэй" };
+const valueLabel = (v: string) => VALUE_LABEL[v] ?? v;
 const DATE_NAMES = ["due", "date", "start", "end", "deadline", "created", "updated", "day"];
 const RELATION_NAMES = ["area", "subarea", "project", "company", "unit", "owner", "assignee", "person", "people", "up", "related", "agent", "manager"];
 const ISO = /^\d{4}-\d{2}-\d{2}/;
@@ -171,7 +185,7 @@ export function StatusPill({ value }: { value: CollectionValue | undefined }) {
   if (!g) return value == null || value === "" ? null : <span className="cl-pill is-gray">{String(value)}</span>;
   const s = STATUS[g];
   return (
-    <span className={`cl-pill is-${s.tone}`} title={String(value)}>
+    <span className={`cl-pill is-${s.tone}`} title={s.label}>
       <Icon name={s.icon} size={14} />
       {s.label}
     </span>
@@ -183,7 +197,7 @@ export function PriorityBadge({ value }: { value: CollectionValue | undefined })
   if (!p) return null;
   const m = PRIORITY[p];
   return (
-    <span className={`cl-prio is-${m.tone}`} title={`Priority: ${m.label}`}>
+    <span className={`cl-prio is-${m.tone}`} title={`Ач холбогдол: ${m.label}`}>
       <Icon name={m.icon} size={14} />
       {m.label}
     </span>
@@ -214,7 +228,7 @@ export function ProgressNM({ value }: { value: CollectionValue | undefined }) {
   const pct = total ? Math.min(1, done / total) : 0;
   const C = 2 * Math.PI * 5.5;
   return (
-    <span className={`cl-nm${pct >= 1 ? " is-full" : ""}`} title={`${done}/${total} task дууссан`}>
+    <span className={`cl-nm${pct >= 1 ? " is-full" : ""}`} title={`${done}/${total} даалгавар дууссан`}>
       <svg className="cl-ring" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
         <circle cx="7" cy="7" r="5.5" className="cl-ring-bg" />
         {pct > 0 && pct < 1 && <circle cx="7" cy="7" r="5.5" className="cl-ring-arc" strokeDasharray={`${pct * C} ${C}`} transform="rotate(-90 7 7)" />}
@@ -398,7 +412,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           </a>
         ) : null;
       case "select":
-        return v == null || v === "" ? null : <span className={`cl-tag is-cat-${catOf(String(v))}`}>{String(v)}</span>;
+        return v == null || v === "" ? null : <span className={`cl-tag is-cat-${catOf(String(v))}`}>{valueLabel(String(v))}</span>;
       default:
         return v == null || v === "" ? null : <span className="cl-text">{Array.isArray(v) ? v.join(", ") : String(v)}</span>;
     }
@@ -453,7 +467,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
     if (f.kind === "priority") return PRIORITY[key as keyof typeof PRIORITY]?.label ?? key;
     if (f.kind === "relation") return resolve?.(f.name, key)?.label ?? linkLabel(key);
     if (f.kind === "date") return `${key.slice(0, 4)} оны ${Number(key.slice(5, 7))}-р сар`;
-    return key;
+    return valueLabel(key);
   };
   const groupsOf = (f: ResolvedField, list: CollectionItem[]) => {
     const keys: string[] = [];
@@ -781,7 +795,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           {groupsPresent.length > 4 && (
             <button type="button" className="cl-more" aria-expanded={moreTabs} onClick={() => setMoreTabs((m) => !m)}>
               <Icon name="ellipsis" size={14} />
-              {moreTabs ? "Цөөн" : `${groupsPresent.length - 4} more`}
+              {moreTabs ? "Цөөн" : `Бас ${groupsPresent.length - 4}`}
             </button>
           )}
         </div>
@@ -844,7 +858,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
                 <option value="">Бүгд</option>
                 {filterValues.map((v) => (
                   <option key={v} value={v}>
-                    {linkLabel(v)}
+                    {valueLabel(linkLabel(v))}
                   </option>
                 ))}
               </select>
@@ -1011,7 +1025,7 @@ function Peek({
           {filled.length > 8 && (
             <button type="button" className="cl-more-props" onClick={() => setMore((m) => !m)} aria-expanded={more}>
               <Icon name="chevron-right" size={14} className="cl-chev" />
-              {more ? "Цөөн харуулах" : `${filled.length - 8} more`}
+              {more ? "Цөөн харуулах" : `Бас ${filled.length - 8}`}
             </button>
           )}
           {rels.length > 0 && (
@@ -1031,8 +1045,8 @@ function Peek({
             </section>
           )}
           <section>
-            <h4>Frontmatter</h4>
-            <pre className="cl-fm" aria-label="Frontmatter">
+            <h4>Мета өгөгдөл</h4>
+            <pre className="cl-fm" aria-label="Мета өгөгдөл">
               {item.path ? `# ${item.path}\n` : ""}
               {frontmatterOf(item)}
             </pre>
@@ -1067,7 +1081,7 @@ function Peek({
             {onOpenInVault && (
               <button type="button" onClick={() => onOpenInVault(item, collection)}>
                 <Icon name="book-open" size={16} />
-                Vault-д нээх
+                Тэмдэглэлийн санд нээх
               </button>
             )}
             {onAskAgent && (
@@ -1096,7 +1110,8 @@ export const collectionCss = `
 .cl-tabs button:hover{color:var(--cv-fg)}
 .cl-tabs button[aria-selected=true]{background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff);border-radius:6px}
 .cl-tabs button[aria-selected=true] :is(span,.cv-icon){color:currentColor}
-.cl-tabs button[aria-selected=true] .cl-count{background:var(--ts-on-selected-soft,rgb(255 255 255 / .2));color:var(--ts-on-selected,#fff)}
+/* count on the selected tab: a white chip with the selection colour as text (5.7:1); white on a translucent white was 3.3:1 */
+.cl-tabs button[aria-selected=true] .cl-count{background:var(--ts-on-selected,#fff);color:var(--ts-selected-strong,#0a6ab0)}
 .cl-tabs button[aria-selected=true]::after{content:none}
 .cl-count{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--cv-soft);color:var(--cv-muted);font-size:11.5px;line-height:18px;text-align:center;font-variant-numeric:tabular-nums}
 .cl-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
@@ -1112,19 +1127,19 @@ export const collectionCss = `
 .cl-body{animation:cv-fade .2s ease both}
 .cl-pill{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 7px 0 5px;border-radius:11px;font-size:12px;font-weight:500;white-space:nowrap}
 .cl-pill.is-gray{background:var(--cv-soft);color:var(--cv-muted)}
-.cl-pill.is-yellow{background:var(--cv-yellow-soft);color:color-mix(in srgb,var(--cv-yellow) 80%,var(--cv-fg))}
+.cl-pill.is-yellow{background:var(--cv-yellow-soft);color:color-mix(in srgb,var(--cv-yellow) 68%,var(--cv-fg))}
 .cl-pill.is-blue{background:var(--cv-accent-soft);color:color-mix(in srgb,var(--cv-accent) 72%,var(--cv-fg))}
 .cl-pill.is-green{background:var(--cv-green-soft);color:color-mix(in srgb,var(--cv-green) 78%,var(--cv-fg))}
 .cl-pill.is-red{background:var(--cv-red-soft);color:color-mix(in srgb,var(--cv-red) 82%,var(--cv-fg))}
 .cl-prio{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 7px 0 5px;border-radius:6px;font-size:12px;font-weight:500;white-space:nowrap}
 .cl-prio.is-red{background:var(--ts-prio-high-bg,var(--cv-red-soft));color:var(--ts-prio-high,color-mix(in srgb,var(--cv-red) 82%,var(--cv-fg)))}
-.cl-prio.is-yellow{background:var(--ts-prio-medium-bg,var(--cv-yellow-soft));color:var(--ts-prio-medium,color-mix(in srgb,var(--cv-yellow) 80%,var(--cv-fg)))}
+.cl-prio.is-yellow{background:var(--ts-prio-medium-bg,var(--cv-yellow-soft));color:var(--ts-prio-medium,color-mix(in srgb,var(--cv-yellow) 68%,var(--cv-fg)))}
 .cl-prio.is-gray{background:var(--ts-prio-low-bg,var(--cv-soft));color:var(--ts-prio-low,var(--cv-muted))}
 .cl-tag.is-cat-1{background:var(--ts-cat-1-bg,var(--cv-accent-soft));color:color-mix(in srgb,var(--ts-cat-1,var(--cv-accent)) 62%,var(--cv-fg))}
 .cl-tag.is-cat-2{background:var(--ts-cat-2-bg,var(--cv-green-soft));color:color-mix(in srgb,var(--ts-cat-2,var(--cv-green)) 62%,var(--cv-fg))}
 .cl-tag.is-cat-3{background:var(--ts-cat-3-bg,var(--cv-amber-soft));color:color-mix(in srgb,var(--ts-cat-3,var(--cv-amber)) 62%,var(--cv-fg))}
 .cl-tag.is-cat-4{background:var(--ts-cat-4-bg,var(--cv-violet-soft));color:color-mix(in srgb,var(--ts-cat-4,var(--cv-violet)) 62%,var(--cv-fg))}
-.cl-fm{margin:0;padding:12px 14px;border-radius:10px;background:var(--ts-ink,#262522);color:var(--ts-ink-muted,#a3a099);font:12px/1.65 var(--ts-font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);white-space:pre-wrap;word-break:break-word}
+.cl-fm{margin:0;padding:12px 14px;border-radius:10px;background:var(--ts-ink,#262522);color:var(--ts-ink-muted,#65656d);font:12px/1.65 var(--ts-font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);white-space:pre-wrap;word-break:break-word}
 .cl-peek-actions{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--cv-line);background:var(--cv-soft)}
 .cl-peek-actions button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;border:1px solid var(--cv-line);border-radius:9px;background:var(--cv-bg);font-size:13.5px;font-weight:500}
 .cl-peek-actions button.is-primary{border-color:transparent;background:var(--ts-ink,#262522);color:#f0ede4}
@@ -1186,9 +1201,9 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-peek .cl-tabs+.cl{margin-top:8px}
 .cl-tbadge{display:inline-grid;place-items:center;flex:none;width:var(--b,20px);height:var(--b,20px);border-radius:calc(var(--b,20px) * .27);color:#fff}
 .cl-tbadge .cv-icon{stroke-width:2.25}
-.cl-tbadge.is-blue{background:#3b82f6}.cl-tbadge.is-green{background:#22a35a}.cl-tbadge.is-red{background:#e5484d}
+.cl-tbadge.is-blue{background:#3b82f6}.cl-tbadge.is-green{background:#22a35a}.cl-tbadge.is-red{background:var(--ts-red,#c2362f);color:var(--ts-on-red,#fff)}
 .cl-tbadge.is-violet{background:#8b5cf6}.cl-tbadge.is-teal{background:#14a3a3}.cl-tbadge.is-amber{background:#e08a1e}
-.cl-tbadge.is-yellow{background:#d4a017}.cl-tbadge.is-gray{background:#71717a}
+.cl-tbadge.is-yellow{background:#d4a017}.cl-tbadge.is-gray{background:#5f5f67}
 /* glyph contrast (Figma check, 2026-11-12): light fills take the dark on-cat glyph */
 .cl-tbadge.is-amber,.cl-tbadge.is-yellow{color:var(--ts-on-cat-1,#14130f)}
 .cl-tbadge.is-green,.cl-tbadge.is-teal{color:var(--ts-on-cat-3,#0b2414)}

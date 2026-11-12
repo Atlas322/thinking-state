@@ -53,7 +53,6 @@ const logos: Record<string, React.ReactNode> = {
   linear: <svg viewBox="0 0 16 16"><path d="M5.5 4h8M5.5 8h8M5.5 12h8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /><circle cx="2.6" cy="4" r=".9" fill="currentColor" /><circle cx="2.6" cy="8" r=".9" fill="currentColor" /><circle cx="2.6" cy="12" r=".9" fill="currentColor" /></svg>,
 };
 
-const past = (a: string) => (a.endsWith("y") ? a.slice(0, -1) + "ied" : a.endsWith("e") ? a + "d" : a + "ed");
 const ms = (v: Date | string | number) => new Date(v).getTime();
 const W = 772, H = 96;
 
@@ -74,14 +73,14 @@ export function AgentRecap({
   onRedo,
   limit = 3,
   replay = 1800,
-  title = "While you were away",
+  title = "Таныг байхгүй үед",
   locale,
   className = "",
 }: AgentRecapProps) {
   const t0 = ms(since);
   const t1 = ms(until ?? Date.now());
   const span = Math.max(1, t1 - t0);
-  const time = (v: Date | string | number) => new Date(v).toLocaleTimeString(locale ?? "en-US", { hour: "numeric", minute: "2-digit" });
+  const time = (v: Date | string | number) => new Date(v).toLocaleTimeString(locale ?? "mn-MN", { hour: "numeric", minute: "2-digit" });
   const hours = Math.floor(span / 3.6e6);
   const mins = Math.round((span % 3.6e6) / 6e4);
 
@@ -114,9 +113,9 @@ export function AgentRecap({
   };
 
   const lanes: { kind: RecapKind; label: string; icon: RecapKind | "user" }[] = [
-    { kind: "needs", label: "Needs you", icon: "user" },
-    { kind: "failed", label: "Failed", icon: "failed" },
-    { kind: "done", label: "Done", icon: "done" },
+    { kind: "needs", label: "Таны ээлж", icon: "user" },
+    { kind: "failed", label: "Алдаатай", icon: "failed" },
+    { kind: "done", label: "Дууссан", icon: "done" },
   ];
   const count = (k: RecapKind) => events.filter((e) => e.kind === k).length;
 
@@ -125,7 +124,7 @@ export function AgentRecap({
     try {
       await onAction?.(e, "primary");
       setActed((s) => ({ ...s, [e.id]: "done" }));
-      setLive(`${e.action ?? "Done"}: ${e.title}`);
+      setLive(`${e.action ?? "Дууссан"}: ${e.title}`);
     } catch {
       setActed((s) => { const n = { ...s }; delete n[e.id]; return n; });
     }
@@ -137,12 +136,12 @@ export function AgentRecap({
       <header className="ar-top">
         <div>
           <h3 id="ar-h">{title}</h3>
-          <p>Since {time(since)} <span className="ar-dur">{hours}h {mins}m</span></p>
+          <p>{time(since)}-аас хойш <span className="ar-dur">{hours} цаг {mins} мин</span></p>
         </div>
         <div className="ar-counts">
-          <span><Icon kind="done" /><b>{count("done")}</b> done</span>
-          <span><Icon kind="user" /><b>{count("needs")}</b> need you</span>
-          <span><Icon kind="failed" /><b>{count("failed")}</b> failed</span>
+          <span><Icon kind="done" /><b>{count("done")}</b> дууссан</span>
+          <span><Icon kind="user" /><b>{count("needs")}</b> таны ээлж</span>
+          <span><Icon kind="failed" /><b>{count("failed")}</b> алдаатай</span>
         </div>
       </header>
       <div className="ar-chart" aria-hidden="true">
@@ -175,7 +174,7 @@ export function AgentRecap({
           return (
             <div key={l.kind} className="ar-lane" style={{ minHeight: 48 + limit * 94 }}>
               <h4><Icon kind={l.icon} />{l.label}<span className="ar-n">{count(l.kind)}</span></h4>
-              {items.length === 0 && <p className="ar-empty">Nothing {l.kind === "done" ? "done" : l.kind === "failed" ? "failed" : "needs you"}</p>}
+              {items.length === 0 && <p className="ar-empty">{l.kind === "done" ? "Дууссан зүйл алга" : l.kind === "failed" ? "Алдаа алга" : "Таны ээлж алга"}</p>}
               {items.map((e) => {
                 const st = acted[e.id];
                 const isDone = e.kind === "done" ? st !== "undone" : st === "done";
@@ -200,20 +199,20 @@ export function AgentRecap({
                     <div className="ar-acts">
                       {isDone ? (
                         <>
-                          <span className="ar-done">{e.doneLabel ?? (e.kind === "done" ? "Done" : past(e.action ?? "Retry"))}</span>
+                          <span className="ar-done">{e.doneLabel ?? (e.kind === "done" ? "Дууссан" : "Хийсэн")}</span>
                           {st === "undone" ? null : (
-                            <button type="button" className="ar-ghost" aria-label={`Undo: ${e.title}`} onClick={() => { setActed((s) => ({ ...s, [e.id]: "undone" })); onUndo?.(e); }}>Undo</button>
+                            <button type="button" className="ar-ghost" aria-label={`Буцаах: ${e.title}`} onClick={() => { setActed((s) => ({ ...s, [e.id]: "undone" })); onUndo?.(e); }}>Буцаах</button>
                           )}
                         </>
                       ) : st === "undone" && e.kind === "done" ? (
-                        <button type="button" className="ar-ghost" aria-label={`Redo: ${e.title}`} onClick={() => { setActed((s) => { const n = { ...s }; delete n[e.id]; return n; }); onRedo?.(e); }}>Redo</button>
+                        <button type="button" className="ar-ghost" aria-label={`Дахин хийх: ${e.title}`} onClick={() => { setActed((s) => { const n = { ...s }; delete n[e.id]; return n; }); onRedo?.(e); }}>Дахин хийх</button>
                       ) : (
                         <>
                           {e.kind === "needs" && (
-                            <button type="button" className="ar-ghost" aria-label={`Review: ${e.title}`} onClick={() => onAction?.(e, "review")}>Review</button>
+                            <button type="button" className="ar-ghost" aria-label={`Хянах: ${e.title}`} onClick={() => onAction?.(e, "review")}>Хянах</button>
                           )}
-                          <button type="button" className="ar-btn" aria-label={`${e.action ?? "Retry"}: ${e.title}`} disabled={st === "busy"} onClick={() => run(e)}>
-                            {st === "busy" ? "Working…" : e.action ?? "Retry"}
+                          <button type="button" className="ar-btn" aria-label={`${e.action ?? "Дахин оролдох"}: ${e.title}`} disabled={st === "busy"} onClick={() => run(e)}>
+                            {st === "busy" ? "Ажиллаж байна…" : e.action ?? "Дахин оролдох"}
                           </button>
                         </>
                       )}
@@ -231,8 +230,8 @@ export function AgentRecap({
 }
 
 const css = `
-.ar{--ar-bg:#fff;--ar-fg:#18181b;--ar-muted:#71717a;--ar-faint:#a1a1aa;--ar-line:#ececef;--ar-lane:#f4f4f5;--ar-chip:#ececee;--ar-red:#e5484d;--ar-orange:#f05a28;--ar-green:#16a34a;--ar-green-bg:#e6f6ec;--ar-accent:#3b82f6;width:100%;max-width:806px;background:var(--ar-bg);color:var(--ar-fg);border:1px solid var(--ar-line);border-radius:12px;padding:16px 16px 14px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .ar{--ar-bg:#1b1b1e;--ar-fg:#ececef;--ar-muted:#a1a1aa;--ar-faint:#71717a;--ar-line:#2e2e33;--ar-lane:#232327;--ar-chip:#2f2f35;--ar-green-bg:#16301f;color-scheme:dark}
+.ar{--ar-bg:#fff;--ar-fg:#18181b;--ar-muted:#65656d;--ar-faint:#65656d;--ar-line:#ececef;--ar-lane:#f4f4f5;--ar-chip:#ececee;--ar-red:#e5484d;--ar-orange:#f05a28;--ar-green:#16a34a;--ar-green-bg:#e6f6ec;--ar-accent:#3b82f6;width:100%;max-width:806px;background:var(--ar-bg);color:var(--ar-fg);border:1px solid var(--ar-line);border-radius:12px;padding:16px 16px 14px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .ar{--ar-bg:#1b1b1e;--ar-fg:#ececef;--ar-muted:#a1a1aa;--ar-faint:#9a9aa2;--ar-line:#2e2e33;--ar-lane:#232327;--ar-chip:#2f2f35;--ar-green-bg:#16301f;color-scheme:dark}
 .ar *{box-sizing:border-box}.ar button{font:inherit;color:inherit;cursor:pointer}
 .ar-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .ar h3{margin:0;font-size:15px;font-weight:500;letter-spacing:-.01em}

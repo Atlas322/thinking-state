@@ -94,21 +94,21 @@ const clock = (ms: number) => {
   const s = Math.max(0, Math.floor(ms / 1000));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 };
-const secs = (ms: number) => `${(ms / 1000).toFixed(1)}s`;
+const secs = (ms: number) => `${(ms / 1000).toFixed(1)} с`;
 
 const tags: Record<AgentRunState, string> = {
-  idle: "Idle",
-  running: "Running",
-  waiting: "Needs you",
-  paused: "Paused",
-  finished: "Finished",
-  failed: "Failed",
-  cancelled: "Cancelled",
+  idle: "Сул",
+  running: "Ажиллаж байна",
+  waiting: "Таны ээлж",
+  paused: "Түр зогссон",
+  finished: "Дууссан",
+  failed: "Алдаатай",
+  cancelled: "Цуцлагдсан",
 };
 
 export function AgentMonitor({
   state: stateProp,
-  agent = { name: "Хувилбарын агент", role: "Үйл ажиллагааны агент · web-app v3.2", mark: monitorIcons.claude },
+  agent = { name: "Хувилбарын агент", role: "Үйл ажиллагааны агент · вэб апп v3.2", mark: monitorIcons.claude },
   steps = defaultSteps,
   current,
   since,
@@ -197,7 +197,7 @@ export function AgentMonitor({
           {agent.role && <span>{agent.role}</span>}
         </div>
         {cost != null && (
-          <span className={`am-cost ${live ? "is-live" : ""}`} aria-label={`${cost.toFixed(1)}k tokens so far`}>
+          <span className={`am-cost ${live ? "is-live" : ""}`} aria-label={`Одоогоор ${cost.toFixed(1)}k токен`}>
             {cost.toFixed(1)}k
             <span className="am-cur"> токен</span>
           </span>
@@ -206,7 +206,7 @@ export function AgentMonitor({
           <i />
           {tags[state]}
         </span>
-        <button type="button" className="am-fold" aria-label="Fold away" onClick={() => setFolded(true)}>
+        <button type="button" className="am-fold" aria-label="Хураах" onClick={() => setFolded(true)}>
           <svg viewBox="0 0 16 16"><path d="m5 6 3-3 3 3M5 10l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
       </header>
@@ -224,12 +224,12 @@ export function AgentMonitor({
           <span className="am-well-i">{well?.icon ?? monitorIcons.terminal}</span>
           <span className={`am-well-l ${state === "running" ? "is-live" : ""}`}>
             {state === "finished"
-              ? `Finished in ${Math.round(elapsed / 1000)}s${outcome?.note ? ` · ${outcome.note}` : ""}`
+              ? `${Math.round(elapsed / 1000)} с-д дууссан${outcome?.note ? ` · ${outcome.note}` : ""}`
               : state === "failed"
-                ? error ?? "Failed"
+                ? error ?? "Алдаатай"
                 : state === "cancelled"
-                  ? "Cancelled"
-                  : well?.label ?? "Waiting to start"}
+                  ? "Цуцлагдсан"
+                  : well?.label ?? "Эхлэхийг хүлээж байна"}
           </span>
           <span className="am-well-c">{clock(elapsed)}</span>
         </div>
@@ -268,7 +268,7 @@ export function AgentMonitor({
               <div className="am-info" role="dialog" aria-label={s.label}>
                 <div className="am-info-h">
                   {s.tool && <strong>{s.tool}</strong>}
-                  <button type="button" aria-label="Close" onClick={() => setOpen(null)}>
+                  <button type="button" aria-label="Хаах" onClick={() => setOpen(null)}>
                     <svg viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
                   </button>
                 </div>
@@ -284,10 +284,10 @@ export function AgentMonitor({
         {state === "waiting" ? (
           <>
             <button type="button" className="am-btn" onClick={onDecline}>
-              Decline <kbd>Esc</kbd>
+              Татгалзах <kbd>Esc</kbd>
             </button>
             <button type="button" className="am-btn is-primary" onClick={onAllow}>
-              Allow <kbd>⏎</kbd>
+              Зөвшөөрөх <kbd>⏎</kbd>
             </button>
           </>
         ) : state === "running" || state === "paused" ? (
@@ -298,26 +298,26 @@ export function AgentMonitor({
               ) : (
                 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4v8M10 4v8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
               )}
-              {state === "paused" ? "Resume" : "Pause"}
+              {state === "paused" ? "Үргэлжлүүлэх" : "Түр зогсоох"}
             </button>
             <button type="button" className="am-btn" onClick={cancel}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 5 6 6m0-6-6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
-              Cancel
+              Болих
             </button>
           </>
         ) : state === "failed" && onRetry ? (
           <button type="button" className="am-btn" onClick={onRetry}>
-            Try again
+            Дахин оролдох
           </button>
         ) : (stateProp == null && state === "cancelled") ? (
           <button type="button" className="am-btn" onClick={() => setInnerState("running")}>
-            Restart
+            Дахин эхлүүлэх
           </button>
         ) : null}
         <span className="am-count">{count}</span>
         {onOpenLog && (
           <button type="button" className="am-log" onClick={onOpenLog}>
-            Log
+            Бүртгэл
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 10.5 10.5 5.5M6.5 5.5h4v4" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
           </button>
         )}
@@ -327,8 +327,8 @@ export function AgentMonitor({
 }
 
 const css = `
-.am{--am-bg:#fff;--am-fg:#18181b;--am-muted:#71717a;--am-faint:#a1a1aa;--am-line:#ececef;--am-well:#f4f4f5;--am-bar:#e4e4e7;--am-blue:#2563eb;--am-blue-soft:#e8f0fe;width:100%;max-width:340px;background:var(--am-bg);color:var(--am-fg);border:1px solid var(--am-line);border-radius:12px;box-shadow:0 1px 3px #0000000f;font:400 13px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;outline:none}
-:where(.dark,[data-theme=dark]) .am{--am-bg:#1b1b1e;--am-fg:#ececef;--am-muted:#a1a1aa;--am-faint:#71717a;--am-line:#2e2e33;--am-well:#26262a;--am-bar:#3a3a40;--am-blue:#5b9bff;--am-blue-soft:#1d2a44;color-scheme:dark}
+.am{--am-bg:#fff;--am-fg:#18181b;--am-muted:#65656d;--am-faint:#65656d;--am-line:#ececef;--am-well:#f4f4f5;--am-bar:#e4e4e7;--am-blue:#2563eb;--am-blue-soft:#e8f0fe;width:100%;max-width:340px;background:var(--am-bg);color:var(--am-fg);border:1px solid var(--am-line);border-radius:12px;box-shadow:0 1px 3px #0000000f;font:400 13px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;outline:none}
+:where(.dark,[data-theme=dark]) .am{--am-bg:#1b1b1e;--am-fg:#ececef;--am-muted:#a1a1aa;--am-faint:#9a9aa2;--am-line:#2e2e33;--am-well:#26262a;--am-bar:#3a3a40;--am-blue:#5b9bff;--am-blue-soft:#1d2a44;color-scheme:dark}
 .am *{box-sizing:border-box}.am button{font:inherit;color:inherit;cursor:pointer}
 .am-head{display:flex;align-items:center;gap:8px;padding:12px 12px 0 12px}
 .am-mark{display:grid;place-items:center;width:28px;height:28px;flex:none;border:1px solid var(--am-line);border-radius:8px}.am-mark svg{width:15px;height:15px}

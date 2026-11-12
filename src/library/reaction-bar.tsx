@@ -46,10 +46,10 @@ export type ReactionBarProps = {
 };
 
 const labels: Record<ReactionKey, [string, string]> = {
-  like: ["Like", "likes"],
-  comment: ["Comment", "comments"],
-  repost: ["Repost", "reposts"],
-  share: ["Share", "shares"],
+  like: ["Дуртай", "хүн дуртай"],
+  comment: ["Сэтгэгдэл", "сэтгэгдэл"],
+  repost: ["Дахин нийтлэх", "удаа дахин нийтэлсэн"],
+  share: ["Хуваалцах", "удаа хуваалцсан"],
 };
 
 /** 1234 → "1.2K", like social apps – rounded so 999,950 reads "1M", not "1000K" */
@@ -112,7 +112,7 @@ export function ReactionBar({
       <div
         className={["ui-rbc", className].filter(Boolean).join(" ")}
         role="group"
-        aria-label="Reactions"
+        aria-label="Хариу үйлдэл"
       >
         {actions.map((key) => {
           const { count, active } = state[key];
@@ -124,7 +124,7 @@ export function ReactionBar({
               className="ui-rbc__btn"
               data-kind={key}
               aria-pressed={active}
-              aria-label={`${verb}${count ? `, ${exact.format(count)} ${count === 1 ? noun.slice(0, -1) : noun}` : ""}`}
+              aria-label={`${verb}${count ? `, ${exact.format(count)} ${noun}` : ""}`}
               title={
                 count >= 1000 ? `${exact.format(count)} ${noun}` : undefined
               }

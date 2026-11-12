@@ -496,8 +496,8 @@ const css = /* css */ `
   --ui-seg-line: #ececec;
   --ui-seg-ink: #171717;
   --ui-seg-text: #404040;
-  --ui-seg-soft: #737373;
-  --ui-seg-muted: #8f8f8f;
+  --ui-seg-soft: #65656d;
+  --ui-seg-muted: #65656d;
   --ui-seg-count: rgba(0, 0, 0, 0.06);
   --ui-seg-accent: #2f6bff;
   --ui-seg-accent-soft: rgba(47, 107, 255, 0.1);
@@ -679,8 +679,8 @@ const css = /* css */ `
   --ui-seg-line: #2a2a2e;
   --ui-seg-ink: #ededed;
   --ui-seg-text: #c8c8cc;
-  --ui-seg-soft: #8b8b92;
-  --ui-seg-muted: #8b8b92;
+  --ui-seg-soft: #9a9aa2;
+  --ui-seg-muted: #9a9aa2;
   --ui-seg-count: rgba(255, 255, 255, 0.08);
   --ui-seg-accent: #6d8bff;
   --ui-seg-accent-soft: rgba(109, 139, 255, 0.14);

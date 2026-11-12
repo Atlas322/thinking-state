@@ -82,9 +82,9 @@ const defaultEntries: LedgerEntry[] = [
   { id: "deals", action: "212 гэрээ шинэчилсэн", target: "4-р улирлын сунгалтууд", system: "Харилцагчийн бүртгэл", at: T0 - 70000, change: ["5 хэрэглэгчийн эрх", "10 хэрэглэгчийн эрх"], dependsOn: ["price"] },
   { id: "faq", action: "Хуудас шинэчилсэн", target: "Тарифын түгээмэл асуулт", system: "Баримтын сан", at: T0 - 80000, change: ["3 хариулт", "3 хариултыг дахин бичсэн"], dependsOn: ["price"] },
   { id: "coupon", action: "Купон үүсгэсэн", target: "LAUNCH20", system: "Төлбөрийн систем", at: T0 - 125000, detail: "Эхний жилд 20% хөнгөлөлт · 7 хоногийн дараа дуусна" },
-  { id: "price", action: "Багцын хязгаар өөрчилсөн", target: "Pro багц", system: "Төлбөрийн систем", at: T0 - 130000, change: ["сард 20 ажил", "сард 30 ажил"] },
+  { id: "price", action: "Багцын хязгаар өөрчилсөн", target: "Про багц", system: "Төлбөрийн систем", at: T0 - 130000, change: ["сард 20 ажил", "сард 30 ажил"] },
   { id: "deploy", action: "Байршуулсан", target: "вэб сайт", system: "Үүлэн сервер", at: T0 - 185000, change: ["#481", "#483 үндсэн орчинд"], dependsOn: ["merge"] },
-  { id: "merge", action: "#482 өөрчлөлтийг нэгтгэсэн", target: "Тарифын хуудас v2", system: "Хувилбарын хяналт", at: T0 - 190000, change: ["pricing-v2", "main"] },
+  { id: "merge", action: "#482 өөрчлөлтийг нэгтгэсэн", target: "Тарифын хуудас v2", system: "Хувилбарын хяналт", at: T0 - 190000, change: ["pricing-v2", "үндсэн салбар"] },
 ];
 
 /** Dependency traversal follows ids, never the current display order. Cycles terminate. */
@@ -123,7 +123,7 @@ export function AgentLedger({
   onUndo,
   onRedo,
   pointAt,
-  title = "Ledger",
+  title = "Өөрчлөлтийн бүртгэл",
   className = "",
 }: AgentLedgerProps) {
   const [internal, setInternal] = React.useState(defaultUndone);
@@ -167,10 +167,10 @@ export function AgentLedger({
       if (!mounted.current) return;
       if (undone === undefined)
         setInternal((cur) => (redo ? cur.filter((id) => !ids.includes(id)) : [...new Set([...cur, ...ids])]));
-      setAnnouncement(`${redo ? "Restored" : "Undid"} ${ids.length} change${ids.length === 1 ? "" : "s"}.`);
+      setAnnouncement(`${ids.length} өөрчлөлтийг ${redo ? "сэргээлээ" : "буцаалаа"}.`);
     } catch (failure) {
       if (mounted.current)
-        setError(failure instanceof Error ? failure.message : "Could not update these changes. Try again.");
+        setError(failure instanceof Error ? failure.message : "Эдгээр өөрчлөлтийг шинэчилж чадсангүй. Дахин оролдоно уу.");
     } finally {
       locked.current = false;
       if (mounted.current) setBusy(false);
@@ -179,7 +179,7 @@ export function AgentLedger({
 
   const relative = (at: number) => {
     const s = Math.max(0, Math.floor(((now ?? clock) - at) / 1000));
-    return s < 60 ? `${s}s ago` : s < 3600 ? `${Math.floor(s / 60)}m ago` : s < 86400 ? `${Math.floor(s / 3600)}h ago` : `${Math.floor(s / 86400)}d ago`;
+    return s < 60 ? `${s} с өмнө` : s < 3600 ? `${Math.floor(s / 60)} мин өмнө` : s < 86400 ? `${Math.floor(s / 3600)} цаг өмнө` : `${Math.floor(s / 86400)} өдрийн өмнө`;
   };
 
   return (
@@ -193,12 +193,12 @@ export function AgentLedger({
         <span id={titleId} className="ldg-title">{title}</span>
         {agent && <span className="ldg-agent">{agent}</span>}
         <span className="ldg-count">
-          <strong>{entries.length}</strong> change{entries.length === 1 ? "" : "s"}
+          <strong>{entries.length}</strong> өөрчлөлт
         </span>
       </header>
       <div className="ldg-card">
         {!entries.length ? (
-          <p className="ldg-empty">No changes yet</p>
+          <p className="ldg-empty">Өөрчлөлт алга</p>
         ) : (
           <ol className="ldg-list" aria-labelledby={titleId} aria-busy={busy}>
             {sorted.map((entry) => {
@@ -237,7 +237,7 @@ export function AgentLedger({
                       {entry.change ? (
                         <>
                           <s>{entry.change[0]}</s>
-                          <span className="ldg-arrow" aria-label="to">
+                          <span className="ldg-arrow" aria-label="болсон нь">
                             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9m-3-3 3 3-3 3" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
                           </span>
                           <span>{entry.change[1]}</span>
@@ -248,11 +248,11 @@ export function AgentLedger({
                     </div>
                   </div>
                   <div className="ldg-slot">
-                    {flag === "also" && <span className="ldg-flag ldg-also">Also undone</span>}
+                    {flag === "also" && <span className="ldg-flag ldg-also">Хамт буцна</span>}
                     {flag === "kept" && (
                       <span className="ldg-flag ldg-kept">
                         <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M5.5 7V5.5a2.5 2.5 0 0 1 5 0V7" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
-                        Can't undo
+                        Буцаах боломжгүй
                       </span>
                     )}
                     {!flag && (
@@ -265,9 +265,9 @@ export function AgentLedger({
                       <button
                         type="button"
                         className="ldg-btn"
-                        aria-label={`${isUndone ? "Redo" : "Undo"} ${entry.action}${!isUndone && dependents.length ? ` and ${dependents.length} dependent changes` : ""}`}
+                        aria-label={`${isUndone ? "Дахин хийх" : "Буцаах"}: ${entry.action}${!isUndone && dependents.length ? `, хамааралтай ${dependents.length} өөрчлөлтийн хамт` : ""}`}
                         aria-disabled={busy || (isUndone && !!dependencyUndone)}
-                        title={isUndone && dependencyUndone ? "Restore the dependency first" : undefined}
+                        title={isUndone && dependencyUndone ? "Эхлээд хамаарлыг нь сэргээнэ үү" : undefined}
                         onMouseEnter={() => setHover(entry.id)}
                         onMouseLeave={() => setHover(null)}
                         onFocus={() => setHover(entry.id)}
@@ -275,7 +275,7 @@ export function AgentLedger({
                         onClick={() => void perform(entry, isUndone)}
                       >
                         {isUndone ? <RedoIcon /> : <UndoIcon />}
-                        <span className="ldg-btn-label">{isUndone ? "Redo" : "Undo"}</span>
+                        <span className="ldg-btn-label">{isUndone ? "Дахин хийх" : "Буцаах"}</span>
                       </button>
                     )}
                   </div>
@@ -298,8 +298,8 @@ export function AgentLedger({
 }
 
 const css = `
-.ldg{--ui-ldgc-bg:#fff;--ui-ldgc-fg:#18181b;--ui-ldgc-muted:#71717a;--ui-ldgc-faint:#a1a1aa;--ui-ldgc-line:#ececef;--ui-ldgc-logo-bg:#fafafa;--ui-ldgc-accent:#4f7cf0;--ui-ldgc-also-bg:#eef3ff;--ui-ldgc-also-fg:#3b6be0;--ui-ldgc-kept-bg:#fdf3e2;--ui-ldgc-kept-fg:#b4741a;--ui-ldgc-red:#d14343;container:ldg/inline-size;width:100%;max-width:640px;color:var(--ui-ldgc-fg);font:400 12.5px/1.45 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .ldg{--ui-ldgc-bg:#1b1b1e;--ui-ldgc-fg:#ececef;--ui-ldgc-muted:#a1a1aa;--ui-ldgc-faint:#71717a;--ui-ldgc-line:#2c2c31;--ui-ldgc-logo-bg:#232327;--ui-ldgc-accent:#7c9cff;--ui-ldgc-also-bg:#1f2a44;--ui-ldgc-also-fg:#8fb0ff;--ui-ldgc-kept-bg:#3a2c14;--ui-ldgc-kept-fg:#e7b35f;color-scheme:dark}
+.ldg{--ui-ldgc-bg:#fff;--ui-ldgc-fg:#18181b;--ui-ldgc-muted:#65656d;--ui-ldgc-faint:#65656d;--ui-ldgc-line:#ececef;--ui-ldgc-logo-bg:#fafafa;--ui-ldgc-accent:#4f7cf0;--ui-ldgc-also-bg:#eef3ff;--ui-ldgc-also-fg:#3b6be0;--ui-ldgc-kept-bg:#fdf3e2;--ui-ldgc-kept-fg:#b4741a;--ui-ldgc-red:#d14343;container:ldg/inline-size;width:100%;max-width:640px;color:var(--ui-ldgc-fg);font:400 12.5px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .ldg{--ui-ldgc-bg:#1b1b1e;--ui-ldgc-fg:#ececef;--ui-ldgc-muted:#a1a1aa;--ui-ldgc-faint:#9a9aa2;--ui-ldgc-line:#2c2c31;--ui-ldgc-logo-bg:#232327;--ui-ldgc-accent:#7c9cff;--ui-ldgc-also-bg:#1f2a44;--ui-ldgc-also-fg:#8fb0ff;--ui-ldgc-kept-bg:#3a2c14;--ui-ldgc-kept-fg:#e7b35f;color-scheme:dark}
 .ldg *{box-sizing:border-box}
 .ldg-bar{display:flex;align-items:center;gap:8px;padding:0 2px 10px;font-size:13px}
 .ldg-bar-ico{width:15px;height:15px;color:var(--ui-ldgc-accent)}

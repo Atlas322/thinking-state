@@ -84,6 +84,12 @@ const defTime = (ms: number) => {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 };
 const defCost = (n: number) => `${Math.round(n)}k токен`;
+const statusLabel: Record<NonNullable<Checkpoint["status"]>, string> = {
+  running: "Ажиллаж байна",
+  done: "Дууссан",
+  failed: "Алдаатай",
+  stopped: "Зогссон",
+};
 
 export function AgentCheckpoints({
   checkpoints,
@@ -92,7 +98,7 @@ export function AgentCheckpoints({
   task = "Тарифын хуудсыг нийтлэх",
   formatTime = defTime,
   formatCost = defCost,
-  title = "Checkpoints",
+  title = "Хяналтын цэгүүд",
   className = "",
 }: AgentCheckpointsProps) {
   const [inner, setInner] = React.useState(defaultCheckpoints);
@@ -147,7 +153,7 @@ export function AgentCheckpoints({
     const at = (last?.at ?? 0) + 18000;
     setInner((l) => [
       ...l.map((x) => (x.status === "running" ? { ...x, status: "stopped" as const } : x)),
-      { id, title: `Retry from “${c.title}”`, icon: c.icon, parent: c.id, at, status: "running", cost: 3 },
+      { id, title: `Дахин оролдох: ${c.title}`, icon: c.icon, parent: c.id, at, status: "running", cost: 3 },
     ]);
     setInnerHead(id);
     window.setTimeout(() => {
@@ -180,7 +186,7 @@ export function AgentCheckpoints({
         <strong>{title}</strong>
         {task && <span className="ackc-task">{task}</span>}
         <span className="ackc-sum" aria-live="polite">
-          {list.length} checkpoint{list.length === 1 ? "" : "s"} · {attempts} attempt{attempts === 1 ? "" : "s"} · {formatCost(total)}
+          {list.length} хяналтын цэг · {attempts} оролдлого · {formatCost(total)}
         </span>
       </header>
       <div className="ackc-body">
@@ -214,7 +220,7 @@ export function AgentCheckpoints({
             );
           })}
         </svg>
-        <ol className="ackc-list" aria-label="Checkpoints">
+        <ol className="ackc-list" aria-label={title}>
           {list.map((c, i) => {
             const isHead = c.id === headId;
             const left = !onPath.has(c.id);
@@ -230,7 +236,7 @@ export function AgentCheckpoints({
                 className={`ackc-row ${left ? "is-left" : ""} ${status === "running" ? "is-running" : ""}`}
                 tabIndex={focus === i ? 0 : -1}
                 aria-current={isHead ? "step" : undefined}
-                aria-label={`${c.title}, attempt ${att}, ${status}${isHead ? ", current" : left ? ", left behind" : ""}`}
+                aria-label={`${c.title}, оролдлого ${att}, ${statusLabel[status]}${isHead ? ", одоогийн" : left ? ", орхигдсон" : ""}`}
                 onFocus={() => setFocus(i)}
                 onKeyDown={(e) => {
                   if (e.key === "ArrowDown") (e.preventDefault(), move(i + 1));
@@ -242,16 +248,16 @@ export function AgentCheckpoints({
               >
                 <span className="ackc-ico">{c.icon}</span>
                 <span className="ackc-title">{c.title}</span>
-                {status === "failed" && <span className="ackc-tag is-fail">Failed</span>}
-                {status === "stopped" && <span className="ackc-tag">Stopped</span>}
-                {firstOfAttempt && <span className="ackc-tag">Attempt {att}</span>}
+                {status === "failed" && <span className="ackc-tag is-fail">{statusLabel.failed}</span>}
+                {status === "stopped" && <span className="ackc-tag">{statusLabel.stopped}</span>}
+                {firstOfAttempt && <span className="ackc-tag">Оролдлого {att}</span>}
                 <span className="ackc-meta">
                   {c.files != null && (
                     <span className="ackc-files">
                       <svg viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M1.5 4.5a1 1 0 0 1 1-1h3.2l1.3 1.3h6.5a1 1 0 0 1 1 1v6.7a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1Z" fill="currentColor" />
                       </svg>
-                      {c.files} file{c.files === 1 ? "" : "s"}
+                      {c.files} файл
                     </span>
                   )}
                   <span className="ackc-time">{c.at != null ? formatTime(c.at) : ""}</span>
@@ -269,7 +275,7 @@ export function AgentCheckpoints({
                     <svg viewBox="0 0 16 16" aria-hidden="true">
                       <path d="M3 8a5 5 0 1 0 1.5-3.6M3 2.5V5h2.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    Rewind
+                    Буцаах
                   </button>
                 )}
               </li>
@@ -282,8 +288,8 @@ export function AgentCheckpoints({
 }
 
 const css = `
-.ackc{--ui-ackc-link:#82bcff;--ui-ackc-dim:.45;--ackc-bg:#fff;--ackc-fg:#18181b;--ackc-muted:#71717a;--ackc-faint:#a1a1aa;--ackc-line:#ececef;--ackc-chip:#f1f1f3;--ackc-head:#2563eb;width:100%;max-width:480px;background:var(--ackc-bg);color:var(--ackc-fg);border:1px solid var(--ackc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
-:where(.dark,[data-theme=dark]) .ackc{--ackc-bg:#1b1b1e;--ackc-fg:#ececef;--ackc-muted:#a1a1aa;--ackc-faint:#71717a;--ackc-line:#2e2e33;--ackc-chip:#2a2a2f;--ackc-head:#5b9bff;color-scheme:dark}
+.ackc{--ui-ackc-link:#82bcff;--ui-ackc-dim:.45;--ackc-bg:#fff;--ackc-fg:#18181b;--ackc-muted:#65656d;--ackc-faint:#65656d;--ackc-line:#ececef;--ackc-chip:#f1f1f3;--ackc-head:#2563eb;width:100%;max-width:480px;background:var(--ackc-bg);color:var(--ackc-fg);border:1px solid var(--ackc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+:where(.dark,[data-theme=dark]) .ackc{--ackc-bg:#1b1b1e;--ackc-fg:#ececef;--ackc-muted:#a1a1aa;--ackc-faint:#9a9aa2;--ackc-line:#2e2e33;--ackc-chip:#2a2a2f;--ackc-head:#5b9bff;color-scheme:dark}
 .ackc *{box-sizing:border-box}.ackc button{font:inherit;color:inherit;cursor:pointer}
 .ackc-bar{display:flex;align-items:center;gap:8px;padding:12px 16px 6px 16px;font-size:13px;white-space:nowrap}
 .ackc-mark{width:14px;height:14px;color:var(--ackc-muted);flex:none}

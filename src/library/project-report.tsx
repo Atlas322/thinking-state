@@ -116,62 +116,62 @@ export type ProjectReportProps = Partial<ProjectReportData> & {
 };
 
 const defaultLabels: ProjectReportLabels = {
-  owner: "Owner",
-  updated: "Updated",
-  progress: "Progress",
-  phases: "Phases",
-  waiting: "Waiting on you",
-  nothingWaiting: "Nothing waits on you right now.",
-  view: "View",
-  status: "Status",
-  cards: "Cards",
-  scope: "Show",
-  all: "All",
-  mine: "Mine",
-  sharedWith: "Shared with",
-  done: "Done",
-  active: "In progress",
-  blocked: "Blocked",
-  next: "Next",
+  owner: "Хариуцагч",
+  updated: "Шинэчилсэн",
+  progress: "Явц",
+  phases: "Үе шат",
+  waiting: "Таныг хүлээж байна",
+  nothingWaiting: "Одоогоор таныг хүлээж буй зүйл алга.",
+  view: "Харагдац",
+  status: "Төлөв",
+  cards: "Карт",
+  scope: "Харах",
+  all: "Бүгд",
+  mine: "Минийх",
+  sharedWith: "Хуваалцсан:",
+  done: "Дууссан",
+  active: "Хийгдэж байна",
+  blocked: "Түгжигдсэн",
+  next: "Дараагийн",
 };
 
 export const projectReportDemo: ProjectReportData = {
   project: {
-    name: "ac.me Box · Winter box launch",
-    icon: "B",
-    status: { label: "On track", tone: "green" },
-    owner: "Anu",
-    sharedWith: ["Bat", "Tsetseg", "Project agent"],
-    updated: "12 Nov, 14:20",
-    summary: "Landing page and pause flow are in review; production deploy waits on one setting.",
+    name: "ac.me хайрцаг · Өвлийн хайрцгийн нээлт",
+    icon: "Х",
+    status: { label: "Төлөвлөгөөний дагуу", tone: "green" },
+    owner: "Ану",
+    sharedWith: ["Бат", "Цэцэг", "Төслийн агент"],
+    updated: "11-р сарын 12, 14:20",
+    summary: "Нүүр хуудас ба түр зогсоох урсгал хянагдаж байна; үндсэн орчинд байршуулах нь нэг тохиргоог хүлээж байна.",
   },
-  me: "Anu",
+  me: "Ану",
   kpis: [
-    { label: "Tasks done", value: 34, unit: "/52", note: "+6 this week", tone: "green" },
-    { label: "Open PRs", value: 3, note: "1 failing check", tone: "amber" },
-    { label: "Decisions", value: 2, note: "wait for you", tone: "amber" },
-    { label: "Days to launch", value: 9, tone: "blue" },
+    { label: "Дууссан даалгавар", value: 34, unit: "/52", note: "+6 энэ долоо хоногт", tone: "green" },
+    { label: "Нээлттэй PR", value: 3, note: "1 шалгалт унасан", tone: "amber" },
+    { label: "Шийдвэр", value: 2, note: "таныг хүлээж байна", tone: "amber" },
+    { label: "Нээлт хүртэл хоног", value: 9, tone: "blue" },
   ],
   progress: {
     value: 65,
-    label: "Build phase, week 3 of 4",
+    label: "Бүтээх үе, 3/4 долоо хоног",
     milestones: [
-      { at: 20, label: "Brief" },
-      { at: 45, label: "Design" },
-      { at: 80, label: "Preview" },
-      { at: 100, label: "Launch" },
+      { at: 20, label: "Бриф" },
+      { at: 45, label: "Дизайн" },
+      { at: 80, label: "Урьдчилсан" },
+      { at: 100, label: "Нээлт" },
     ],
   },
   phases: [
-    { id: "research", title: "Customer research", state: "done", line: "27 interviews, 4 themes", date: "Oct 6", owner: "Tsetseg" },
-    { id: "design", title: "Box and landing design", state: "done", line: "Approved in review", date: "Oct 24", owner: "Anu", sharedWith: ["Tsetseg"] },
-    { id: "build", title: "Landing page and pause flow", state: "active", line: "2 of 3 PRs green", date: "Nov 14", progress: 70, owner: "Bat", sharedWith: ["Anu"] },
-    { id: "deploy", title: "Production deploy", state: "blocked", line: "Waits on one missing setting", date: "Nov 15", owner: "Bat" },
-    { id: "launch", title: "Launch and first shipments", state: "next", line: "Darkhan and Ulaanbaatar", date: "Nov 21", owner: "Anu" },
+    { id: "research", title: "Хэрэглэгчийн судалгаа", state: "done", line: "27 ярилцлага, 4 сэдэв", date: "10-р сарын 6", owner: "Цэцэг" },
+    { id: "design", title: "Хайрцаг ба нүүр хуудасны дизайн", state: "done", line: "Хянаад батлагдсан", date: "10-р сарын 24", owner: "Ану", sharedWith: ["Цэцэг"] },
+    { id: "build", title: "Нүүр хуудас ба түр зогсоох урсгал", state: "active", line: "2/3 PR ногоон", date: "11-р сарын 14", progress: 70, owner: "Бат", sharedWith: ["Ану"] },
+    { id: "deploy", title: "Үндсэн орчинд байршуулах", state: "blocked", line: "Дутуу нэг тохиргоог хүлээж байна", date: "11-р сарын 15", owner: "Бат" },
+    { id: "launch", title: "Нээлт ба анхны хүргэлт", state: "next", line: "Дархан ба Улаанбаатар", date: "11-р сарын 21", owner: "Ану" },
   ],
   waiting: [
-    { id: "copy", title: "Approve the landing copy", line: "Three headline options, one recommended", action: "Review", owner: "Anu" },
-    { id: "promote", title: "Promote preview to production", line: "Goes live once the setting is added", action: "Approve", tone: "amber", owner: "Anu", sharedWith: ["Bat"] },
+    { id: "copy", title: "Нүүр хуудасны бичвэрийг батлах", line: "Гурван гарчгийн хувилбар, нэгийг санал болгосон", action: "Хянах", owner: "Ану" },
+    { id: "promote", title: "Урьдчилсан хувилбарыг үндсэн орчинд гаргах", line: "Тохиргоо нэмэгдмэгц шууд ажиллана", action: "Батлах", tone: "amber", owner: "Ану", sharedWith: ["Бат"] },
   ],
 };
 
@@ -546,8 +546,8 @@ export function ProjectReport({
 }
 
 const css = `
-.rp{--rp-bg:var(--ts-surface,#fff);--rp-fg:var(--ts-fg,#18181b);--rp-muted:var(--ts-muted,#71717a);--rp-faint:var(--ts-faint,#a1a1aa);--rp-line:var(--ts-line,#ececef);--rp-soft:var(--ts-soft,#f4f4f5);--rp-accent:var(--ts-accent,#4f7cf0);--rp-accent-soft:var(--ts-accent-soft,#e8f1fe);--rp-green:var(--ts-green,#16a34a);--rp-green-soft:var(--ts-green-soft,#e9f8ee);--rp-amber:var(--ts-amber,#c2620a);--rp-amber-soft:var(--ts-amber-soft,#fff4e0);--rp-red:var(--ts-red,#dc2626);--rp-red-soft:var(--ts-red-soft,#fdecec);--rp-seg-on:var(--ts-seg-on,#fff);position:relative;width:100%;max-width:640px;display:flex;flex-direction:column;gap:12px;color:var(--rp-fg);font:400 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);container:rp/inline-size;box-sizing:border-box}
-:where(.dark,[data-theme=dark]) .rp{--rp-bg:var(--ts-surface,#1b1b1e);--rp-fg:var(--ts-fg,#ececef);--rp-muted:var(--ts-muted,#a1a1aa);--rp-faint:var(--ts-faint,#71717a);--rp-line:var(--ts-line,#2e2e33);--rp-soft:var(--ts-soft,#26262a);--rp-accent:var(--ts-accent,#7c9cff);--rp-accent-soft:var(--ts-accent-soft,#1b2a44);--rp-green:var(--ts-green,#4ade80);--rp-green-soft:var(--ts-green-soft,#16301f);--rp-amber:var(--ts-amber,#eba659);--rp-amber-soft:var(--ts-amber-soft,#3a2a12);--rp-red:var(--ts-red,#f87171);--rp-red-soft:var(--ts-red-soft,#3a1d1f);--rp-seg-on:var(--ts-seg-on,#3a3a40);color-scheme:dark}
+.rp{--rp-bg:var(--ts-surface,#fff);--rp-fg:var(--ts-fg,#18181b);--rp-muted:var(--ts-muted,#65656d);--rp-faint:var(--ts-faint,#65656d);--rp-line:var(--ts-line,#ececef);--rp-soft:var(--ts-soft,#f4f4f5);--rp-accent:var(--ts-accent,#4f7cf0);--rp-accent-soft:var(--ts-accent-soft,#e8f1fe);--rp-green:var(--ts-green,#16a34a);--rp-green-soft:var(--ts-green-soft,#e9f8ee);--rp-amber:var(--ts-amber,#c2620a);--rp-amber-soft:var(--ts-amber-soft,#fff4e0);--rp-red:var(--ts-red,#dc2626);--rp-red-soft:var(--ts-red-soft,#fdecec);--rp-seg-on:var(--ts-seg-on,#fff);position:relative;width:100%;max-width:640px;display:flex;flex-direction:column;gap:12px;color:var(--rp-fg);font:400 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);container:rp/inline-size;box-sizing:border-box}
+:where(.dark,[data-theme=dark]) .rp{--rp-bg:var(--ts-surface,#1b1b1e);--rp-fg:var(--ts-fg,#ececef);--rp-muted:var(--ts-muted,#a1a1aa);--rp-faint:var(--ts-faint,#9a9aa2);--rp-line:var(--ts-line,#2e2e33);--rp-soft:var(--ts-soft,#26262a);--rp-accent:var(--ts-accent,#7c9cff);--rp-accent-soft:var(--ts-accent-soft,#1b2a44);--rp-green:var(--ts-green,#4ade80);--rp-green-soft:var(--ts-green-soft,#16301f);--rp-amber:var(--ts-amber,#eba659);--rp-amber-soft:var(--ts-amber-soft,#3a2a12);--rp-red:var(--ts-red,#f87171);--rp-red-soft:var(--ts-red-soft,#3a1d1f);--rp-seg-on:var(--ts-seg-on,#3a3a40);color-scheme:dark}
 .rp *{box-sizing:border-box}
 .rp-name{font-family:var(--ts-font-display,inherit)}:where(.rp) button{font:inherit;color:inherit;cursor:pointer}
 .rp [hidden]{display:none!important}

@@ -38,7 +38,8 @@ export type Tip = {
   description: ReactNode;
   /** Button text */
   action: string;
-  /** Text after the action was taken, e.g. "Enabled" */
+  /** Text after the action was taken, e.g. "Асаалттай" */
+
   doneLabel?: string;
   /** Shows the action as the dark button – use once for the most important tip */
   primary?: boolean;
@@ -55,10 +56,10 @@ export type TipsPanelProps = {
 };
 
 export function TipsPanel({
-  title = "Tips",
+  title = "Зөвлөмж",
   tips,
   onClose,
-  closeLabel = "Close",
+  closeLabel = "Хаах",
   className,
 }: TipsPanelProps) {
   const [done, setDone] = useState<Set<string>>(new Set());
@@ -86,7 +87,7 @@ export function TipsPanel({
             {title}
           </h3>
           <span className="ui-tp__count" aria-live="polite">
-            {count.format(doneCount)}/{count.format(tips.length)} done
+            {count.format(doneCount)}/{count.format(tips.length)} дууссан
           </span>
         </header>
 
@@ -110,7 +111,7 @@ export function TipsPanel({
                   {isDone ? (
                     <span className="ui-tp__done" role="status">
                       <CheckIcon />
-                      {tip.doneLabel ?? "Done"}
+                      {tip.doneLabel ?? "Дууссан"}
                     </span>
                   ) : (
                     <button
@@ -176,7 +177,7 @@ const css = /* css */ `
   --ui-tp-card: #ffffff;
   --ui-tp-line: #ececec;
   --ui-tp-ink: #171717;
-  --ui-tp-muted: #737373;
+  --ui-tp-muted: #65656d;
   --ui-tp-ok: #2f6bff;
   --ui-tp-focus: rgba(0, 96, 226, 0.7);
   /* Height of the tip list before it scrolls */
@@ -349,7 +350,7 @@ const css = /* css */ `
   --ui-tp-card: #232326;
   --ui-tp-line: rgba(255, 255, 255, 0.08);
   --ui-tp-ink: #ededed;
-  --ui-tp-muted: #8f8f8f;
+  --ui-tp-muted: #9a9aa2;
   --ui-tp-ok: #6b95ff;
   --ui-tp-focus: rgba(77, 141, 255, 0.8);
 }

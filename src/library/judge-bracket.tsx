@@ -49,11 +49,11 @@ export const judgeIcons = {
 };
 
 const defaultContenders: Contender[] = [
-  { id: "idem", name: "Давтагдашгүй түлхүүр", icon: judgeIcons.code, meta: "Кодын агент · +18 −4 · 3 файл · 42/42 тест", output: "Захиалга бүрт нэг түлхүүр илгээдэг тул дахин оролдоход төлбөрийн систем эхний гүйлгээг буцаана, хоёр дахийг үүсгэхгүй.", code: "payments.create(params, { idempotencyKey: checkout.id })" },
+  { id: "idem", name: "Давтагдашгүй түлхүүр", icon: judgeIcons.code, meta: "Кодын агент · +18 −4 · 3 файл · 42/42 тест", output: "Захиалга бүрт нэг түлхүүр илгээдэг тул дахин оролдоход төлбөрийн систем эхний гүйлгээг буцаана, хоёр дахийг үүсгэхгүй.", code: "payments.create(params, { idempotency_key: checkout.id })" },
   { id: "guard", name: "Давталтын хамгаалалт", icon: judgeIcons.research, meta: "Судлаач агент · +22 −3 · 2 файл · 40/42 тест", output: "Сүүлийн нэг минутад тухайн захиалгын төлбөр аль хэдийн байвал дахин оролдохгүй." },
-  { id: "lock", name: "Мөрийн түгжээ", icon: judgeIcons.review, meta: "Шалгагч агент · +31 −6 · 4 файл · 42/42 тест", output: "Төлбөр авахаас өмнө захиалгын мөрийг түгждэг тул хоёр хүсэлт нэг захиалгаас давхар төлбөр авч чадахгүй.", code: "SELECT … FROM orders WHERE id = :id FOR UPDATE" },
+  { id: "lock", name: "Мөрийн түгжээ", icon: judgeIcons.review, meta: "Шалгагч агент · +31 −6 · 4 файл · 42/42 тест", output: "Төлбөр авахаас өмнө захиалгын мөрийг түгждэг тул хоёр хүсэлт нэг захиалгаас давхар төлбөр авч чадахгүй.", code: "SELECT … FROM public.orders WHERE order_id = :order_id FOR UPDATE" },
   { id: "noretry", name: "Давталтгүй", icon: judgeIcons.ops, meta: "Үйл ажиллагааны агент · +2 −9 · 1 файл · 38/42 тест", output: "Төлбөрийн дуудлагын автомат давталтыг унтраана." },
-  { id: "hook", name: "Webhook давхардал", icon: judgeIcons.code, meta: "Кодын агент · +26 −2 · 3 файл · 42/42 тест", output: "Аль хэдийн боловсруулсан үйл явдлын дугаартай webhook-ийг хаяна." },
+  { id: "hook", name: "Давхар мэдэгдэл", icon: judgeIcons.code, meta: "Кодын агент · +26 −2 · 3 файл · 42/42 тест", output: "Аль хэдийн боловсруулсан үйл явдлын дугаартай гадны мэдэгдлийг хаяна." },
   { id: "state", name: "Төлөвийн машин", icon: judgeIcons.research, meta: "Судлаач агент · +64 −20 · 6 файл · 41/42 тест", output: "Захиалгыг хүлээгдэж буй, төлж буй, төлсөн төлөвөөр шилжүүлнэ; зөвхөн хүлээгдэж буй захиалгаас төлбөр авна." },
   { id: "debounce", name: "Товчны саатал", icon: judgeIcons.review, meta: "Шалгагч агент · +6 −1 · 1 файл · 36/42 тест", output: "Дарсны дараа төлөх товчийг хоёр секунд идэвхгүй болгоно." },
   { id: "refund", name: "Дараа буцаах", icon: judgeIcons.ops, meta: "Үйл ажиллагааны агент · +40 −0 · 2 файл · 39/42 тест", output: "Шөнө бүр давхар төлбөрийг олж, хоёр дахийг нь буцаана." },
@@ -73,7 +73,7 @@ const COLGAP = 28;
 
 const roundName = (r: number, rounds: number) => {
   const left = rounds - r;
-  return left === 1 ? "Final" : left === 2 ? "Semifinal" : left === 3 ? "Quarterfinal" : `Round ${r + 1}`;
+  return left === 1 ? "Финал" : left === 2 ? "Хагас финал" : left === 3 ? "Шөвгийн найм" : `${r + 1}-р шат`;
 };
 
 export function JudgeBracket({
@@ -153,8 +153,8 @@ export function JudgeBracket({
         style={{ top, left }}
         aria-label={
           r < rounds
-            ? `${roundName(r, rounds)} ${m + 1}: ${entrants[r][m * 2]?.name ?? "TBD"} against ${entrants[r][m * 2 + 1]?.name ?? "TBD"}${v ? `, ${contenders.find((x) => x.id === v.winner)?.name} won` : isJudging ? ", being judged" : ""}`
-            : `Winner: ${c.name}`
+            ? `${roundName(r, rounds)} ${m + 1}: ${entrants[r][m * 2]?.name ?? "Тодорхойгүй"} ба ${entrants[r][m * 2 + 1]?.name ?? "Тодорхойгүй"}${v ? `, ${contenders.find((x) => x.id === v.winner)?.name} хожсон` : isJudging ? ", шүүгдэж байна" : ""}`
+            : `Ялагч: ${c.name}`
         }
         onClick={() => r < rounds && setSel(sel === key ? null : key)}
       >
@@ -205,7 +205,7 @@ export function JudgeBracket({
         {c.code && <code>{c.code}</code>}
       </div>
     ) : (
-      <div className="jb-ans is-tbd">Waiting for the match before</div>
+      <div className="jb-ans is-tbd">Өмнөх тоглолтыг хүлээж байна</div>
     );
 
   return (
@@ -220,16 +220,16 @@ export function JudgeBracket({
         {task && <span className="jb-task">{task}</span>}
         <span className={`jb-state ${champion ? "is-done" : ""}`}>
           {champion ? (
-            <>Winner · {champion.name}</>
+            <>Ялагч · {champion.name}</>
           ) : (
             <>
               <span className="jb-spin" aria-hidden="true" />
-              Judging
+              Шүүж байна
             </>
           )}
         </span>
         <span className="jb-round">
-          {champion ? "Final" : roundName(jr, rounds)} · {decidedCount}/{totalMatches}
+          {champion ? "Финал" : roundName(jr, rounds)} · {decidedCount}/{totalMatches}
         </span>
       </header>
       <div className="jb-scroll">
@@ -254,10 +254,10 @@ export function JudgeBracket({
           </strong>
           <span>
             {shownVerdict
-              ? `${judge} picked ${contenders.find((c) => c.id === shownVerdict.winner)?.name}${shownVerdict.reason ? ` – ${shownVerdict.reason}` : ""}`
+              ? `${judge} сонгосон: ${contenders.find((c) => c.id === shownVerdict.winner)?.name}${shownVerdict.reason ? ` – ${shownVerdict.reason}` : ""}`
               : shown === judging
-                ? `${judge} is comparing…`
-                : "Not judged yet"}
+                ? `${judge} харьцуулж байна…`
+                : "Хараахан шүүгээгүй"}
           </span>
         </div>
         <div className="jb-pair">
@@ -266,7 +266,7 @@ export function JudgeBracket({
         </div>
         {champion && onPick && sr === rounds - 1 && (
           <button type="button" className="jb-use" onClick={() => onPick(champion)}>
-            Use {champion.name}
+            Ашиглах: {champion.name}
           </button>
         )}
       </div>
@@ -275,8 +275,8 @@ export function JudgeBracket({
 }
 
 const css = `
-.jb{--jb-bg:#fff;--jb-fg:#18181b;--jb-muted:#71717a;--jb-faint:#a1a1aa;--jb-line:#ececef;--jb-wire:#d4d4d8;--jb-chip:#f4f4f5;--jb-blue:#3b82f6;--jb-link:#82bcff;width:100%;max-width:${3 * COLW + 2 * COLGAP}px;color:var(--jb-fg);font:400 13px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
-:where(.dark,[data-theme=dark]) .jb{--jb-bg:#1b1b1e;--jb-fg:#ececef;--jb-muted:#a1a1aa;--jb-faint:#71717a;--jb-line:#2e2e33;--jb-wire:#3f3f46;--jb-chip:#26262a;color-scheme:dark}
+.jb{--jb-bg:#fff;--jb-fg:#18181b;--jb-muted:#65656d;--jb-faint:#65656d;--jb-line:#ececef;--jb-wire:#d4d4d8;--jb-chip:#f4f4f5;--jb-blue:#3b82f6;--jb-link:#82bcff;width:100%;max-width:${3 * COLW + 2 * COLGAP}px;color:var(--jb-fg);font:400 13px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+:where(.dark,[data-theme=dark]) .jb{--jb-bg:#1b1b1e;--jb-fg:#ececef;--jb-muted:#a1a1aa;--jb-faint:#9a9aa2;--jb-line:#2e2e33;--jb-wire:#3f3f46;--jb-chip:#26262a;color-scheme:dark}
 .jb *{box-sizing:border-box}.jb button{font:inherit;color:inherit;cursor:pointer}
 .jb-bar{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .jb-mark{width:14px;height:14px;color:var(--jb-muted);flex:none}
