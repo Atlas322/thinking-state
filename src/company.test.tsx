@@ -2,7 +2,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { CompanyView } from "./company/company-view";
-import { acmeGroup, inai, companyFixtures } from "./company/fixtures";
+import { acmeGroup, inai, companyFixtures, pmbokProject } from "./company/fixtures";
+import { dueBucket } from "./company/dashboard";
 import { actorOf, modelLines, scopeCompany, subtreeIds, type Company } from "./company/types";
 
 beforeEach(() =>
@@ -76,7 +77,7 @@ describe("CompanyView", () => {
     render(<CompanyView company={inai} defaultView="agents" />);
     const panel = screen.getByRole("tabpanel");
     const lead = within(panel).getByRole("region", { name: "Удирдлага" });
-    expect(lead.textContent).toContain("itge.e");
+    expect(lead.textContent).toContain("Itgeltugs.Kh");
     expect(lead.textContent).toContain("Project");
     const knowledge = within(panel).getByRole("region", { name: "Мэдлэг" });
     expect(knowledge.textContent).toContain("Нэгжийн агент");
@@ -93,11 +94,11 @@ describe("CompanyView", () => {
     expect(steps[0].className).toContain("gate-next");
   });
 
-  it("reuses Session Board for projects and opens a Project Report", () => {
-    render(<CompanyView company={inai} defaultView="projects" />);
+  it("reuses Session Board on the dashboard and opens a Project Report", () => {
+    render(<CompanyView company={inai} defaultView="dashboard" today={new Date("2026-11-12")} />);
     const panel = screen.getByRole("tabpanel");
     expect(panel.querySelector('[data-cw-root="session-board"]')).toBeTruthy();
-    fireEvent.click(within(panel.querySelector(".cv-chips") as HTMLElement).getByRole("button", { name: /Thinking State/ }));
+    fireEvent.click(within(panel).getByRole("button", { name: /^Thinking State/ }));
     expect(panel.querySelector('[data-cw-root="project-report"]')).toBeTruthy();
     expect(within(panel).getByRole("progressbar").getAttribute("aria-valuenow")).toBe("33");
   });
@@ -112,21 +113,21 @@ describe("CompanyView", () => {
 
   it("switches template over the same data", () => {
     const onTemplateChange = vi.fn();
-    const { container } = render(<CompanyView company={acmeGroup} onTemplateChange={onTemplateChange} />);
+    const { container } = render(<CompanyView company={acmeGroup} onLayoutChange={onTemplateChange} />);
     expect(container.querySelector('[data-template="workspace"]')).toBeTruthy();
     fireEvent.click(screen.getByRole("radio", { name: "Тайлан" }));
     expect(onTemplateChange).toHaveBeenCalledWith("brief");
     expect(container.querySelector('[data-template="brief"]')).toBeTruthy();
     expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(
-      expect.arrayContaining([expect.stringContaining("Бизнес загвар"), expect.stringContaining("Workflow")]),
+      expect.arrayContaining([expect.stringContaining("OKR"), expect.stringContaining("Workflow"), expect.stringContaining("RACI")]),
     );
   });
 
   it("moves between tabs with the arrow keys", () => {
     render(<CompanyView company={inai} />);
-    const model = screen.getByRole("tab", { name: /Бизнес загвар/ });
-    fireEvent.keyDown(model, { key: "ArrowRight" });
-    expect(screen.getByRole("tab", { name: /Процесс/ }).getAttribute("aria-selected")).toBe("true");
+    const method = screen.getByRole("tab", { name: /BMC/ });
+    fireEvent.keyDown(method, { key: "ArrowRight" });
+    expect(screen.getByRole("tab", { name: /Самбар/ }).getAttribute("aria-selected")).toBe("true");
   });
 
   it("picks a unit from the process tree", () => {
@@ -153,5 +154,106 @@ describe("review fixes", () => {
       for (const m of src.matchAll(/from\s+["'](\.[^"']+)["']/g))
         expect(m[1], `${path} → ${m[1]}`).toMatch(/^\.\.?\/(company\/|library\/|[a-z-]+$)/);
     }
+  });
+});
+
+const today = new Date("2026-11-12T09:00:00");
+
+describe("dashboard, RACI, profiles", () => {
+  it("buckets due dates against today", () => {
+    expect(dueBucket("2026-11-11", false, today)).toBe("overdue");
+    expect(dueBucket("2026-11-11", true, today)).toBe("later");
+    expect(dueBucket("2026-11-20", false, today)).toBe("soon");
+    expect(dueBucket("2027-01-20", false, today)).toBe("later");
+    expect(dueBucket(undefined, false, today)).toBe("none");
+  });
+
+  it("groups by area and filters by owner and due date", () => {
+    render(<CompanyView company={inai} defaultView="dashboard" today={today} />);
+    const panel = screen.getByRole("tabpanel");
+    expect(within(panel).getAllByRole("region").map((r) => r.getAttribute("aria-label"))).toEqual(
+      expect.arrayContaining(["Бүтээгдэхүүн", "Сургалт", "Платформ"]),
+    );
+    const [, owner, due] = within(panel).getAllByRole("combobox");
+    fireEvent.change(due, { target: { value: "overdue" } });
+    expect(panel.textContent).toContain("GitHub төлбөр засах");
+    expect(panel.textContent).not.toContain("Hero «тархи ↔ апп» зураглал");
+    fireEvent.change(due, { target: { value: "all" } });
+    fireEvent.change(owner, { target: { value: "badral" } });
+    expect(panel.textContent).toContain("Хөтөлбөрийн бүтэц");
+    expect(panel.textContent).not.toContain("TENET дахин төлөвлөлт");
+    fireEvent.click(within(panel).getByRole("button", { name: "Цэвэрлэх" }));
+    expect(panel.textContent).toContain("TENET дахин төлөвлөлт");
+  });
+
+  it("draws the RACI matrix and opens a profile from it", () => {
+    render(<CompanyView company={inai} defaultView="raci" />);
+    const table = screen.getByRole("table");
+    const row = within(table).getByRole("button", { name: /Itgeltugs\.Kh/ }).closest("tr")!;
+    expect(row.textContent).toContain("A");
+    fireEvent.click(within(table).getByRole("button", { name: /Itgeltugs\.Kh/ }));
+    const dialog = screen.getByRole("dialog", { name: "Itgeltugs.Kh" });
+    expect(dialog.textContent).toContain("Bronzehero's Entertainment");
+    expect(dialog.textContent).toContain("Нийтийн холбоос алга.");
+    expect(dialog.textContent).toContain("Inai Website");
+    expect(dialog.textContent).toContain("Project");
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+
+  it("opens a profile from the process tree with empty states", () => {
+    render(<CompanyView company={acmeGroup} defaultView="structure" />);
+    fireEvent.click(screen.getByRole("button", { name: /Б\.Тэмүүлэн — профайл/ }));
+    const dialog = screen.getByRole("dialog");
+    expect(dialog.textContent).toContain("Тухай мэдээлэл бүртгэгдээгүй.");
+    expect(dialog.textContent).toContain("CV бүртгэгдээгүй.");
+    expect(dialog.textContent).toContain("R эсвэл A үүрэгтэй төсөл алга.");
+  });
+
+  it("shows an empty RACI state", () => {
+    render(<CompanyView company={{ ...inai, projects: inai.projects.map((p) => ({ ...p, raci: undefined })) }} defaultView="raci" />);
+    expect(screen.getByRole("tabpanel").textContent).toContain("RACI бүртгэгдээгүй.");
+  });
+});
+
+describe("methodology templates", () => {
+  it("draws INAI as a Business Model Canvas with projects and notes below", () => {
+    render(<CompanyView company={inai} />);
+    const panel = screen.getByRole("tabpanel");
+    for (const b of ["Key Partners", "Value Propositions", "Revenue Streams", "Cost Structure"]) expect(within(panel).getByRole("region", { name: b })).toBeTruthy();
+    expect(within(panel).getByRole("region", { name: "Нот" }).textContent).toContain("BMG шалгалт");
+  });
+
+  it("switches template to Lean Canvas with empty blocks marked", () => {
+    const onMethodologyChange = vi.fn();
+    render(<CompanyView company={inai} onMethodologyChange={onMethodologyChange} />);
+    fireEvent.click(screen.getByRole("radio", { name: "Lean" }));
+    expect(onMethodologyChange).toHaveBeenCalledWith("lean-canvas");
+    const problem = within(screen.getByRole("tabpanel")).getByRole("region", { name: "Problem" });
+    expect(problem.textContent).toContain("Бөглөөгүй");
+  });
+
+  it("draws PMBOK as a 5 × 10 matrix with Facts hub and Gantt", () => {
+    render(<CompanyView company={pmbokProject} today={today} />);
+    const panel = screen.getByRole("tabpanel");
+    const matrix = within(panel).getByRole("region", { name: "PMBOK матриц" });
+    expect(matrix.querySelectorAll("thead th")).toHaveLength(6);
+    expect(matrix.querySelectorAll("tbody tr")).toHaveLength(10);
+    const cell = within(matrix).getByRole("button", { name: /Procurement · Planning/ });
+    fireEvent.click(cell);
+    expect(panel.textContent).toContain("Худалдан авалтын төлөвлөгөө");
+    const facts = within(panel).getByRole("region", { name: "Facts hub" });
+    expect(facts.textContent).toContain("Planning");
+    expect(facts.textContent).toContain("2026-09-01 → 2027-03-31");
+    expect(panel.querySelectorAll(".cv-gantt-bar")).toHaveLength(14);
+    expect(panel.querySelector(".cv-gantt-today")).toBeTruthy();
+  });
+
+  it("draws OKR with key-result progress and the business model under it", () => {
+    render(<CompanyView company={acmeGroup} />);
+    const panel = screen.getByRole("tabpanel");
+    expect(within(panel).getByRole("article", { name: "Нэг өгөгдлийн сангаар удирдана" }).textContent).toContain("55%");
+    expect(within(panel).getByRole("progressbar", { name: "Сарын хаалт 5 ажлын өдөрт" }).getAttribute("aria-valuenow")).toBe("70");
+    expect(within(panel).getByRole("region", { name: "Бизнес загвар" })).toBeTruthy();
   });
 });

@@ -3,8 +3,8 @@
 import { CompanyView, type CompanyViewProps } from "../company/company-view";
 import { CompanyPreview } from "../company/company-preview";
 
-export function CompanyBrief(props: Omit<CompanyViewProps, "defaultTemplate">) {
-  return <CompanyView {...props} defaultTemplate="brief" />;
+export function CompanyBrief(props: Omit<CompanyViewProps, "defaultLayout">) {
+  return <CompanyView {...props} defaultLayout="brief" />;
 }
 
 export default function Preview() {
