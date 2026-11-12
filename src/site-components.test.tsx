@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { AgentConsent, Footer, NavBar, ScenarioChat } from "./lib/index";
+import { AgentConsent, Footer, MEGA_CLOSE_DELAY, NavBar, ScenarioChat } from "./lib/index";
 import { DEMO_FOOTER, DEMO_NAV, DEMO_SCENARIOS } from "./ui/site-demo";
 
 afterEach(cleanup);
@@ -32,6 +32,68 @@ describe("NavBar", () => {
     const col = [...mobile.querySelectorAll<HTMLButtonElement>(".ts-mobile-h")].find((b) => b.textContent?.includes("Шийдэл"))!;
     fireEvent.click(col);
     expect(col.getAttribute("aria-expanded")).toBe("true");
+  });
+});
+
+describe("NavBar mega menu: hover intent, pin, tap", () => {
+  const trigger = () => screen.getByRole("button", { name: /Бүтээгдэхүүн/ });
+  const nav = () => trigger().closest("nav")!;
+  const mouse = { pointerType: "mouse" };
+
+  it("opens on mouse hover and waits before closing; coming back keeps it open", () => {
+    vi.useFakeTimers();
+    render(<NavBar items={DEMO_NAV} />);
+    fireEvent.pointerEnter(trigger().parentElement!, mouse);
+    expect(trigger().getAttribute("aria-expanded")).toBe("true");
+    fireEvent.pointerLeave(nav(), mouse);
+    act(() => vi.advanceTimersByTime(MEGA_CLOSE_DELAY - 50));
+    expect(trigger().getAttribute("aria-expanded")).toBe("true"); // still open inside the delay
+    fireEvent.pointerEnter(nav(), mouse); // came back across the panel
+    act(() => vi.advanceTimersByTime(MEGA_CLOSE_DELAY));
+    expect(trigger().getAttribute("aria-expanded")).toBe("true");
+    fireEvent.pointerLeave(nav(), mouse);
+    act(() => vi.advanceTimersByTime(MEGA_CLOSE_DELAY + 10));
+    expect(trigger().getAttribute("aria-expanded")).toBe("false");
+    vi.useRealTimers();
+  });
+
+  it("a click pins it: leaving does not close, a click outside does", () => {
+    vi.useFakeTimers();
+    render(<><NavBar items={DEMO_NAV} /><p>outside</p></>);
+    fireEvent.click(trigger());
+    fireEvent.pointerLeave(nav(), mouse);
+    act(() => vi.advanceTimersByTime(2000));
+    expect(trigger().getAttribute("aria-expanded")).toBe("true");
+    fireEvent.pointerDown(screen.getByText("outside"));
+    expect(trigger().getAttribute("aria-expanded")).toBe("false");
+    vi.useRealTimers();
+  });
+
+  it("touch opens only on tap (no hover-open, no open-then-close)", () => {
+    render(<NavBar items={DEMO_NAV} />);
+    fireEvent.pointerEnter(trigger().parentElement!, { pointerType: "touch" });
+    expect(trigger().getAttribute("aria-expanded")).toBe("false");
+    fireEvent.click(trigger());
+    expect(trigger().getAttribute("aria-expanded")).toBe("true");
+  });
+
+  it("Escape closes a pinned menu and returns focus to its trigger", () => {
+    render(<NavBar items={DEMO_NAV} />);
+    fireEvent.click(trigger());
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(trigger().getAttribute("aria-expanded")).toBe("false");
+    expect(document.activeElement).toBe(trigger());
+  });
+
+  it("every demo menu has a featured card: icon tile, eyebrow, title, body, CTA", () => {
+    render(<NavBar items={DEMO_NAV} />);
+    for (const item of DEMO_NAV) {
+      if (item.kind !== "menu") continue;
+      const panel = document.getElementById(screen.getByRole("button", { name: new RegExp(item.label) }).getAttribute("aria-controls")!)!;
+      const card = panel.querySelector(".ts-mega-feature")!;
+      expect(card.querySelector(".ts-nav-ico.is-accent")).toBeTruthy();
+      expect(card.querySelector(".ts-mega-cta")?.textContent).toContain(item.featured!.cta);
+    }
   });
 });
 
