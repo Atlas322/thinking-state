@@ -220,4 +220,5 @@ const CSS = `
 .mf-enter { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
 .mf-card { padding: 16px 12px; border-radius: 12px; background: var(--mf-ink); color: #f7f5ee; font-size: 13px; font-weight: 500; }
 .mf-stress { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 6px; }
+.mf-card{animation:mfcardrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.mf-card:nth-child(1){animation-delay:0ms}.mf-card:nth-child(2){animation-delay:130ms}.mf-card:nth-child(3){animation-delay:260ms}.mf-card:nth-child(4){animation-delay:390ms}.mf-card:nth-child(5){animation-delay:520ms}.mf-card:nth-child(6){animation-delay:650ms}.mf-card:nth-child(7){animation-delay:780ms}.mf-card:nth-child(8){animation-delay:910ms}.mf-card:nth-child(9){animation-delay:1040ms}.mf-card:nth-child(10){animation-delay:1170ms}.mf-card:nth-child(11){animation-delay:1300ms}.mf-card:nth-child(12){animation-delay:1430ms}@keyframes mfcardrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.mf-card{animation:none}}
 `;

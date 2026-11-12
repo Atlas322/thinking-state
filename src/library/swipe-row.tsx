@@ -76,6 +76,7 @@ const css = `
 .swipe-row__toggle:focus-visible{width:auto;height:24px;padding:0 10px;border-radius:12px;overflow:visible;clip-path:none;background:color-mix(in srgb,var(--sr-text) 12%,transparent);font-size:12px;white-space:nowrap;transform:translateY(-50%)}
 .swipe-row__sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 @media (prefers-reduced-motion:reduce){.swipe-row__action:active .swipe-row__glyph{transform:none}}
+.swipe-row{animation:swiperowrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.swipe-row:nth-child(1){animation-delay:0ms}.swipe-row:nth-child(2){animation-delay:120ms}.swipe-row:nth-child(3){animation-delay:240ms}.swipe-row:nth-child(4){animation-delay:360ms}.swipe-row:nth-child(5){animation-delay:480ms}.swipe-row:nth-child(6){animation-delay:600ms}.swipe-row:nth-child(7){animation-delay:720ms}.swipe-row:nth-child(8){animation-delay:840ms}.swipe-row:nth-child(9){animation-delay:960ms}.swipe-row:nth-child(10){animation-delay:1080ms}.swipe-row:nth-child(11){animation-delay:1200ms}.swipe-row:nth-child(12){animation-delay:1320ms}@keyframes swiperowrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.swipe-row{animation:none}}
 `;
 
 const TrashIcon = () => (
