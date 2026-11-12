@@ -44,17 +44,19 @@ const proc = spawn(chrome, [
   `--user-data-dir=${profile}`,
   "--no-first-run",
   "--hide-scrollbars",
+  ...(process.env.CI ? ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"] : []),
   "--force-prefers-reduced-motion",
   "about:blank",
 ]);
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 let target;
-for (let i = 0; i < 50 && !target; i++) {
+for (let i = 0; i < 150 && !target; i++) {
   await wait(200);
   try {
     target = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find((t) => t.type === "page");
   } catch {}
 }
+if (!target) throw new Error(`Chrome did not expose a debugger page on port ${port}`);
 const ws = new WebSocket(target.webSocketDebuggerUrl);
 await new Promise((r) => ws.addEventListener("open", r, { once: true }));
 let id = 0;
