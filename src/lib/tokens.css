@@ -4,7 +4,7 @@
  * and falls back to its own defaults, so the tokens are optional.
  *
  * Two themes (owner 2026-11-12, final):
- *   cream  Чиглэл 1 (Figma 36:146054) — cream page, Spectral headings, Inter text
+ *   cream  Чиглэл 1 (Figma 36:146054) — cream page
  *   dark   Чиглэл 2 «Удирдлагын төв» (Figma 36:148605, TH.Dark) — near-black
  *          layered surfaces, Inter headings and text, IBM Plex Mono labels,
  *          Electric accent
@@ -18,8 +18,9 @@
  *   <div data-ts-theme="cream">…</div>
  *   <div data-ts-theme="dark" data-theme="dark">…</div>
  *
- * --ts-font-display is per theme (Spectral on cream, Inter on dark).
- * Fonts are not bundled: load Spectral, Inter and IBM Plex Mono in the app
+ * One type system on both themes (owner 2026-11-12): headings Inter Semi
+ * Bold, tracking −2 %; text Inter; labels IBM Plex Mono (--ts-font-head,
+ * --ts-type-*). Fonts are not bundled: load Inter and IBM Plex Mono in the app
  * (Google Fonts css2 without &text=, so the cyrillic-ext subset with ү, ө comes).
  */
 
@@ -68,15 +69,16 @@
   --ts-prio-medium-bg: #efe7d4;
   --ts-prio-low: #5c5a55;
   --ts-prio-low-bg: #ece8dd;
-  /* categories: methodology, technology, business, product */
-  --ts-cat-1: #3a4e8c;
-  --ts-cat-1-bg: #e4e6ee;
-  --ts-cat-2: #5e7a5f;
-  --ts-cat-2-bg: #e3eadf;
-  --ts-cat-3: #86672a;
-  --ts-cat-3-bg: #efe7d4;
-  --ts-cat-4: #7a4e6a;
-  --ts-cat-4-bg: #eee2e8;
+  /* categories (methodology, technology, business, product): always vivid on
+     small marks — icon squares, top bars, progress, chips; large areas stay neutral */
+  --ts-cat-1: #f5a524;
+  --ts-cat-1-bg: color-mix(in srgb, var(--ts-cat-1) 16%, var(--ts-surface));
+  --ts-cat-2: #0c8ce9;
+  --ts-cat-2-bg: color-mix(in srgb, var(--ts-cat-2) 16%, var(--ts-surface));
+  --ts-cat-3: #22c55e;
+  --ts-cat-3-bg: color-mix(in srgb, var(--ts-cat-3) 16%, var(--ts-surface));
+  --ts-cat-4: #a855f7;
+  --ts-cat-4-bg: color-mix(in srgb, var(--ts-cat-4) 16%, var(--ts-surface));
   /* tiles and warm dark (Next Action, frontmatter, «Таны ээлж») */
   --ts-tile-ochre: #e8e2d2;
   --ts-tile-slate: #e4e6e9;
@@ -85,7 +87,7 @@
   --ts-ink-muted: #a3a099;
   --ts-ink-label: #aebbda;
   --ts-font: "Inter", system-ui, sans-serif;
-  --ts-font-display: "Spectral", Georgia, "Times New Roman", serif;
+  --ts-font-display: var(--ts-font-head);
   --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   background: var(--ts-page);
   color: var(--ts-fg);
@@ -137,14 +139,14 @@
   --ts-prio-medium-bg: #332a17;
   --ts-prio-low: #b0ada5;
   --ts-prio-low-bg: #26252a;
-  --ts-cat-1: #9fb0e6;
-  --ts-cat-1-bg: #1e2438;
-  --ts-cat-2: #a6c4a7;
-  --ts-cat-2-bg: #1d2a1f;
-  --ts-cat-3: #d9b56a;
-  --ts-cat-3-bg: #332a17;
-  --ts-cat-4: #d4a6c4;
-  --ts-cat-4-bg: #33222d;
+  --ts-cat-1: #f5a524;
+  --ts-cat-1-bg: color-mix(in srgb, var(--ts-cat-1) 16%, var(--ts-surface));
+  --ts-cat-2: #0c8ce9;
+  --ts-cat-2-bg: color-mix(in srgb, var(--ts-cat-2) 16%, var(--ts-surface));
+  --ts-cat-3: #22c55e;
+  --ts-cat-3-bg: color-mix(in srgb, var(--ts-cat-3) 16%, var(--ts-surface));
+  --ts-cat-4: #a855f7;
+  --ts-cat-4-bg: color-mix(in srgb, var(--ts-cat-4) 16%, var(--ts-surface));
   --ts-tile-ochre: #1e1e22;
   --ts-tile-slate: #1e1e22;
   --ts-ink: #121214;
@@ -152,7 +154,7 @@
   --ts-ink-muted: #a3a099;
   --ts-ink-label: #aebbda;
   --ts-font: "Inter", system-ui, sans-serif;
-  --ts-font-display: "Inter", system-ui, sans-serif;
+  --ts-font-display: var(--ts-font-head);
   --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   color-scheme: dark;
   background: var(--ts-page);
@@ -171,6 +173,20 @@
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
+}
+
+/*
+ * Type (both themes): headings Inter Semi Bold with −2 % tracking; scale is
+ * the former serif heading sizes × 0.82 (Figma light frames, 2026-11-12).
+ */
+:where(:root) {
+  --ts-font-head: "Inter", system-ui, sans-serif;
+  --ts-head-weight: 600;
+  --ts-head-tracking: -0.02em;
+  --ts-type-display: 59px;
+  --ts-type-h1: 36px;
+  --ts-type-h2: 33px;
+  --ts-type-h3: 20px;
 }
 
 /*
