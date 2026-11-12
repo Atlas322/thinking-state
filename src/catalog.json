@@ -706,7 +706,18 @@
     "module": "src/company",
     "description": "Vault-ийн аль ч төрлийг (төсөл, task, шийдвэр, атом, хүн, area, skill, үйл явдал, өдрийн тэмдэглэл) Notion database ба Obsidian Bases шиг зурна, зөвхөн уншина. Хүснэгт, самбар, хуанли, timeline, жагсаалт гэсэн харагдацтай. Баганыг fields-ээс автоматаар үүсгэнэ. Төлвөөр шүүсэн tab-ууд тоо, icon-той. Аль ч талбараар шүүж, бүлэглэнэ. Мөр бүрд төлөв, priority, relation chip, n/m явц, харьцангуй огноо харагдана.",
     "exportName": "CompanyCollection",
-    "usage": "import { CompanyCollection } from \"./company-collection\";\nimport { inai } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyCollection collection={inai.collections![0]} />; // collection: { type, fields: (name | {name, kind})[], items: [{ id, title, path, props }] }; props: today, resolve, defaultView (table | board | calendar | timeline | list); read-only\n}"
+    "usage": "import { CompanyCollection } from \"./company-collection\";\nimport { studio } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyCollection collection={studio.collections![0]} />; // collection: { type, fields: (name | {name, kind})[], items: [{ id, title, path, props }] }; props: today, resolve, defaultView (table | board | calendar | timeline | list); read-only\n}"
+  },
+  {
+    "slug": "company-mini",
+    "name": "Компани · Preview",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/company",
+    "description": "CompanyView-ийн жижиг хувилбар (density=\"preview\"): нүүрний hero эсвэл картад. Нэг мөр толгой, icon-той 3 таб, 3 үзүүлэлт, GTD төлөв ба хугацаатай 3–4 даалгавар, ойролцоогоор 360 px. Бүрэн интерактив: таб бүр дарагдана. Табууд ээлжилж, нэг даалгавар GTD-ээр шилжих түүх тоглоно; хэрэглэгч оролцоход түр зогсож, 8 секунд идэвхгүй болоход дахин эхэлнэ. ⏸ ба ↺ товчтой.",
+    "exportName": "CompanyMini",
+    "usage": "import { CompanyMini } from \"./company-mini\";\nimport { studio } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyMini company={studio} />; // = <CompanyView company={…} density=\"preview\" />; props: today, previewLabels; read-only\n}"
   },
   {
     "slug": "motion-foundation",
