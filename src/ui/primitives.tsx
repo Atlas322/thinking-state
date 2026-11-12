@@ -148,6 +148,9 @@ export function Tabs<V extends string>({ items, value, onChange, variant = "tabs
     refs.current[next]?.focus();
   };
   const seg = variant === "segmented";
+  // Roving focus needs exactly one tabbable tab, even when `value` matches none (or a disabled one).
+  const current = items.findIndex((it) => it.value === value && !it.disabled);
+  const tabbable = current >= 0 ? current : (enabled[0] ?? -1);
   return (
     <div className={cx("ts-tabs", `is-${variant}`, `is-${size}`, className)} role={seg ? "radiogroup" : "tablist"} aria-label={label}>
       <PrimitiveStyles />
@@ -163,7 +166,7 @@ export function Tabs<V extends string>({ items, value, onChange, variant = "tabs
             role={seg ? "radio" : "tab"}
             aria-checked={seg ? on : undefined}
             aria-selected={seg ? undefined : on}
-            tabIndex={on ? 0 : -1}
+            tabIndex={i === tabbable ? 0 : -1}
             disabled={it.disabled}
             className={cx("ts-tab", on && "is-selected")}
             onClick={() => onChange(it.value)}
