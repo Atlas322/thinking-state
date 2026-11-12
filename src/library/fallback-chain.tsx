@@ -18,6 +18,10 @@ export type FallbackAttempt = {
   took?: number;
   cost?: number;
   startedAt?: number;
+  /** Display name shown instead of the model name. */
+  name?: string;
+  /** Muted one-line note under the attempt. */
+  note?: string;
 };
 export type ChainEnd = { name?: string; logo?: React.ReactNode; text?: string; details?: string[] };
 
@@ -43,6 +47,7 @@ const defaultAttempts: FallbackAttempt[] = [
 const money = (n: number) => (n === 0 ? "0 кр" : `${n.toFixed(4)} кр`);
 const ROW = 60;
 const GAP = 10;
+const NOTE = 16;
 
 function statusText(a: FallbackAttempt) {
   switch (a.status) {
@@ -86,8 +91,10 @@ export function FallbackChain({
   const totalCost = attempts.reduce((s, a) => s + (a.cost ?? 0), 0);
   const maxTime = Math.max(5, ...attempts.map(tookOf));
   const n = attempts.length;
-  const H = n * ROW + (n - 1) * GAP;
-  const cy = (i: number) => i * (ROW + GAP) + ROW / 2;
+  // A note adds one line to every row, so the wires still meet the rows' centers
+  const row = attempts.some((a) => a.note) ? ROW + NOTE : ROW;
+  const H = n * row + (n - 1) * GAP;
+  const cy = (i: number) => i * (row + GAP) + row / 2;
   const idx = trying ? attempts.indexOf(trying) + 1 : 0;
 
   const summary = answered
@@ -140,15 +147,20 @@ export function FallbackChain({
               const took = tookOf(a);
               const frac = Math.min(1, took / maxTime);
               return (
-                <li key={a.id} className={`fc-m fc-m-${a.status}`} tabIndex={0} style={{ animationDelay: `${i * 70}ms` }}>
+                <li
+                  key={a.id}
+                  className={`fc-m fc-m-${a.status}`}
+                  tabIndex={0}
+                  style={row === ROW ? { animationDelay: `${i * 70}ms` } : { animationDelay: `${i * 70}ms`, height: row }}
+                >
                   <span className="fc-logo">
-                    {a.logo ?? <b>{a.model[0]}</b>}
+                    {a.logo ?? <b>{(a.name ?? a.model)[0]}</b>}
                     <span className="fc-n">{i + 1}</span>
                   </span>
                   <span className="fc-body">
                     <span className="fc-top">
                       <span className="fc-name">
-                        {a.model} {a.provider && <small>{a.provider}</small>}
+                        {a.name ?? a.model} {a.provider && <small>{a.provider}</small>}
                       </span>
                       <span className="fc-t">{a.status === "skipped" || a.status === "waiting" ? "–" : `${took.toFixed(1)}s`}</span>
                     </span>
@@ -159,6 +171,11 @@ export function FallbackChain({
                     {a.status !== "skipped" && a.status !== "waiting" && (
                       <span className="fc-bar">
                         <span style={{ width: `${(a.status === "failed" && (a.reason?.includes("Timed") || a.reason?.includes("Хугацаа")) ? 1 : frac) * 100}%` }} />
+                      </span>
+                    )}
+                    {a.note && (
+                      <span className="fc-note" title={a.note}>
+                        {a.note}
                       </span>
                     )}
                   </span>
@@ -243,6 +260,7 @@ const css = `
 .fc-bar span{position:absolute;inset:0 auto 0 0;background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 6px);transition:width .4s}
 .fc-m-failed .fc-bar span{color:var(--fc-badbar)}.fc-m-answered .fc-bar span{color:var(--fc-okbar)}
 .fc-m-trying .fc-bar span{color:var(--fc-run);animation:fc-pulse 1s ease-in-out infinite}
+.fc-note{margin-top:3px;font-size:11px;line-height:13px;color:var(--fc-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fc-retry{display:block;margin:14px auto 0;padding:6px 14px;border:1px solid var(--fc-line);border-radius:7px;background:var(--fc-bg);color:var(--fc-fg)}
 .fc :focus-visible{outline:2px solid var(--fc-run);outline-offset:2px}
 @keyframes fc-in{from{opacity:0;transform:translateX(-6px)}}

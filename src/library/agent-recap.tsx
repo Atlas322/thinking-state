@@ -20,10 +20,19 @@ export type RecapEvent = {
   doneLabel?: string;
 };
 
+/** Labels under the chart's two ends. A missing key falls back to the window's clock time. */
+export type RecapAxis = { start?: React.ReactNode; end?: React.ReactNode };
+
 export type AgentRecapProps = {
   events?: RecapEvent[];
+  /** Start of the recap window (chart's left edge, header «…-аас хойш»). */
   since?: Date | string | number;
+  /** End of the recap window (chart's right edge). */
   until?: Date | string | number;
+  /** When true, events outside `since`…`until` are left out of the chart, lanes and counts. Default false (all events shown). */
+  clip?: boolean;
+  /** Override the time-axis labels; see {@link RecapAxis}. */
+  axis?: RecapAxis;
   onAction?: (event: RecapEvent, action: "primary" | "review") => void | Promise<unknown>;
   onUndo?: (event: RecapEvent) => void;
   onRedo?: (event: RecapEvent) => void;
@@ -65,9 +74,11 @@ function Icon({ kind }: { kind: RecapKind | "user" }) {
 }
 
 export function AgentRecap({
-  events = defaultEvents,
+  events: eventsProp = defaultEvents,
   since = d(18, 40),
   until = d(8, 10, 15),
+  clip = false,
+  axis,
   onAction,
   onUndo,
   onRedo,
@@ -83,6 +94,7 @@ export function AgentRecap({
   const time = (v: Date | string | number) => new Date(v).toLocaleTimeString(locale ?? "mn-MN", { hour: "numeric", minute: "2-digit" });
   const hours = Math.floor(span / 3.6e6);
   const mins = Math.round((span % 3.6e6) / 6e4);
+  const events = clip ? eventsProp.filter((e) => ms(e.at) >= t0 && ms(e.at) <= t1) : eventsProp;
 
   const [acted, setActed] = React.useState<Record<string, "busy" | "done" | "undone">>({});
   const [hover, setHover] = React.useState<string | null>(null);
@@ -167,7 +179,7 @@ export function AgentRecap({
           />
         ))}
       </div>
-      <div className="ar-axis"><span>{time(since)}</span><span>{time(until ?? Date.now())}</span></div>
+      <div className="ar-axis"><span>{axis?.start ?? time(since)}</span><span>{axis?.end ?? time(until ?? Date.now())}</span></div>
       <div className="ar-lanes">
         {lanes.map((l) => {
           const items = sorted.filter((e) => e.kind === l.kind).slice(0, limit);

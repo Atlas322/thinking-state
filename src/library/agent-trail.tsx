@@ -23,6 +23,8 @@ export type TrailStep = {
   startedAt?: number;
   gate?: boolean;
   substeps?: TrailSubstep[];
+  /** Replaces the state glyph in the marker (e.g. an inline svg); the default glyph stays when absent. */
+  icon?: React.ReactNode;
 };
 
 export type AgentTrailLabels = {
@@ -86,6 +88,15 @@ export function formatDuration(v: number | string | undefined): string {
 }
 
 function Marker({ step }: { step: TrailStep }) {
+  if (step.icon != null)
+    return (
+      <span
+        className={`atr-mk${step.state === "done" ? " atr-mk-done" : step.state === "failed" ? " atr-mk-fail" : ""}`}
+        aria-hidden="true"
+      >
+        {step.icon}
+      </span>
+    );
   if (step.state === "done")
     return (
       <span className="atr-mk atr-mk-done">

@@ -23,6 +23,20 @@ export type QueueJob = {
   attempt?: number;
 };
 
+/**
+ * Queue threshold. A number keeps the classic look (amber count, dashed line
+ * on the chart). `true` or `{ at, label }` also shows a needs-you warning in
+ * the header once the queue is at or over `at` (default 12). `false` turns
+ * the threshold off.
+ */
+export type QueueBackpressure = number | boolean | { at: number; label?: string };
+
+/** What the chart's horizontal axis means: `time` = queue length over the last seconds (default), `order` = each waiting job's wait, first in line to last. */
+export type QueueAxis = "time" | "order";
+
+/** Header counter overrides; a missing key falls back to the computed value. */
+export type QueueTotals = { done?: number; failed?: number; queued?: number };
+
 export type QueueWorker = { id: string; name: string; icon?: "claude" | "openai" | "gemini" | React.ReactNode };
 
 export type AgentQueueProps = {
@@ -35,9 +49,15 @@ export type AgentQueueProps = {
   onConcurrencyChange?: (workers: number) => void;
   minConcurrency?: number;
   maxConcurrency?: number;
-  backpressure?: number;
+  /** See {@link QueueBackpressure}. Default 12. */
+  backpressure?: QueueBackpressure;
   window?: number;
-  totals?: { done?: number; failed?: number };
+  /** Override the computed done / failed / queued counters. */
+  totals?: QueueTotals;
+  /** How many waiting jobs to list before a «+N» row. Default 3 (no «+N» row). */
+  depth?: number;
+  /** See {@link QueueAxis}. Default `time`. */
+  axis?: QueueAxis;
   title?: string;
   name?: string;
   className?: string;
@@ -188,6 +208,8 @@ export function AgentQueue({
   maxConcurrency = 8,
   backpressure = 12,
   totals,
+  depth: depthProp,
+  axis = "time",
   title = "Дараалал",
   name = "агентын ажлууд",
   className = "",
@@ -211,7 +233,15 @@ export function AgentQueue({
   const activeLimit = jobsProp ? rateLimits?.find((r) => t >= r.from && t < r.until) : t < demo.limitedUntil ? { until: demo.limitedUntil, from: 0 } : undefined;
   const limited = !!activeLimit;
   const p95 = Math.max(0, ...queued.map((j) => t - j.enqueuedAt)) / 1000;
-  const depth = jobsProp ? [queued.length] : demo.depth;
+  const queuedN = totals?.queued ?? queued.length;
+  const shown = Math.max(0, depthProp ?? 3);
+  const bpAt = typeof backpressure === "number" ? backpressure : typeof backpressure === "object" ? backpressure.at : 12;
+  const bpOn = backpressure !== false;
+  const bpWarn = (backpressure === true || typeof backpressure === "object") && queuedN >= bpAt;
+  const bpLabel = (typeof backpressure === "object" && backpressure.label) || "Дараалал дүүрч байна";
+  const byOrder = axis === "order";
+  const waits = queued.map((j) => Math.max(0, Math.round((t - j.enqueuedAt) / 1000)));
+  const depth = byOrder ? (waits.length ? waits : [0]) : jobsProp ? [queued.length] : demo.depth;
   const max = Math.max(24, Math.ceil(Math.max(...depth) / 12) * 12);
   const slots = workers.slice(0, concurrency);
 
@@ -249,6 +279,12 @@ export function AgentQueue({
           </span>
         )}
         {paused && !limited && <span className="agq-limit agq-paused-pill">Түр зогссон</span>}
+        {bpWarn && (
+          <span className="agq-limit agq-bp-warn" role="status">
+            <i />
+            {bpLabel} · {queuedN}
+          </span>
+        )}
         <span className="agq-ctl">
           <button type="button" className="agq-pause" aria-pressed={paused} onClick={() => setP(!paused)}>
             {paused ? (
@@ -271,9 +307,9 @@ export function AgentQueue({
       </header>
 
       <div className="agq-stats">
-        <div className={queued.length > backpressure ? "is-warn" : ""}>
+        <div className={bpOn && queuedN > bpAt ? "is-warn" : ""}>
           <span>Хүлээж байна</span>
-          <b>{queued.length}</b>
+          <b>{queuedN}</b>
         </div>
         <div>
           <span>Ажиллаж байна</span>
@@ -301,19 +337,20 @@ export function AgentQueue({
       <div className="agq-flow">
         <div className="agq-col agq-q">
           <div className="agq-h">
-            Дараалал <b>{queued.length}</b>
+            Дараалал <b>{queuedN}</b>
           </div>
           <ol className="agq-list">
-            {queued.slice(0, 3).map((j) => (
+            {queued.slice(0, shown).map((j) => (
               <li key={j.id} className={`agq-job agq-${j.kind}`}>
                 <span className="agq-kind">{kindIcon[j.kind]}</span>
                 <span className="agq-jn">{j.name}</span>
                 <span className="agq-age">{Math.max(0, (t - j.enqueuedAt) / 1000).toFixed(1)} с</span>
               </li>
             ))}
+            {depthProp !== undefined && queuedN > shown && <li className="agq-more">+{queuedN - shown}</li>}
           </ol>
-          <div className="agq-rest" aria-label={`Өөр ${Math.max(0, queued.length - 3)} хүлээж байна`}>
-            {queued.slice(3).map((j) => (
+          <div className="agq-rest" aria-label={`Өөр ${Math.max(0, queuedN - shown)} хүлээж байна`}>
+            {queued.slice(shown).map((j) => (
               <i key={j.id} className={`agq-${j.kind}`} />
             ))}
           </div>
@@ -372,24 +409,33 @@ export function AgentQueue({
       </div>
 
       <div className="agq-chart">
-        <div className="agq-h">Дарааллын урт</div>
+        <div className="agq-h">{byOrder ? "Хүлээлт, дарааллаар" : "Дарааллын урт"}</div>
         <div className="agq-plot">
           <span className="agq-y" style={{ top: 0 }}>{max}</span>
           <span className="agq-y" style={{ top: "50%" }}>{max / 2}</span>
           <span className="agq-y" style={{ top: "100%" }}>0</span>
-          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`Дарааллын урт: одоо ${queued.length} хүлээж байна, оргил ${Math.max(...depth)}`}>
+          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={byOrder ? `Хүлээлт дарааллаар: ${queued.length} ажил, хамгийн урт ${Math.max(...depth)} с` : `Дарааллын урт: одоо ${queued.length} хүлээж байна, оргил ${Math.max(...depth)}`}>
             {limitBands.map(([a, b]) => (
               <rect key={a} x={a * step} width={(b - a) * step} y="0" height={H} className="agq-band" />
             ))}
-            <line x1="0" x2={W} y1={H - (backpressure / max) * H} y2={H - (backpressure / max) * H} className="agq-bp" />
+            {bpOn && !byOrder && <line x1="0" x2={W} y1={H - (bpAt / max) * H} y2={H - (bpAt / max) * H} className="agq-bp" />}
             <path d={area} className="agq-area" />
             <path d={line} className="agq-line" vectorEffect="non-scaling-stroke" />
           </svg>
           <i className="agq-head" style={{ top: `${(pts[pts.length - 1][1] / H) * 100}%` }} />
         </div>
         <div className="agq-axis">
-          <span>{Math.round(depth.length)} с өмнө</span>
-          <span>одоо</span>
+          {byOrder ? (
+            <>
+              <span>Эхэнд</span>
+              <span>Сүүлд</span>
+            </>
+          ) : (
+            <>
+              <span>{Math.round(depth.length)} с өмнө</span>
+              <span>одоо</span>
+            </>
+          )}
         </div>
       </div>
     </section>
@@ -404,6 +450,8 @@ const css = `
 .agq-logo{width:15px;height:15px;color:#3b82f6}.agq-bar strong{font-weight:500}.agq-muted{color:var(--agq-muted)}
 .agq-limit{display:inline-flex;align-items:center;gap:6px;margin-left:4px;padding:1px 7px;border-radius:5px;background:var(--agq-amber-bg);color:var(--agq-amber);font-size:12.5px;font-variant-numeric:tabular-nums}
 .agq-limit i{width:5px;height:5px;border-radius:50%;background:currentColor}
+.agq-bp-warn{background:var(--ts-status-needs-you-bg,#fdebd6);color:var(--ts-status-needs-you-fg,#a33e0b);box-shadow:inset 0 0 0 1px var(--ts-status-needs-you-border,#f2c597)}
+.agq-more{display:flex;align-items:center;height:24px;padding:0 8px;font-size:12.5px;color:var(--agq-muted);font-variant-numeric:tabular-nums}
 .agq-ctl{margin-left:auto;display:flex;gap:6px}
 .agq-pause{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 10px;border:1px solid var(--agq-line);border-radius:7px;background:var(--agq-bg)}
 .agq-pause svg{width:14px;height:14px}.agq-pause:hover{background:var(--agq-soft)}
