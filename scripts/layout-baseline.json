@@ -148,8 +148,12 @@
   "explainer-carousel@390": {
     "overflow": 18
   },
+  "inline-diff@1440": {
+    "rows": 1
+  },
   "inline-diff@390": {
-    "wraps": 3
+    "wraps": 1,
+    "rows": 1
   },
   "judge-bracket@390": {
     "overflow": 7
@@ -184,7 +188,8 @@
     "align": 7
   },
   "review-center@390": {
-    "overflow": 29,
+    "wraps": 3,
+    "overflow": 3,
     "align": 11
   },
   "root-cause-tree@1440": {
