@@ -32,7 +32,7 @@ export type AgentRecapProps = {
   /** When true, events outside `since`…`until` are left out of the chart, lanes and counts. Default false (all events shown). */
   clip?: boolean;
   /** Override the time-axis labels; see {@link RecapAxis}. */
-  axis?: RecapAxis;
+  axis?: RecapAxis | [string, string];
   onAction?: (event: RecapEvent, action: "primary" | "review") => void | Promise<unknown>;
   onUndo?: (event: RecapEvent) => void;
   onRedo?: (event: RecapEvent) => void;
@@ -179,7 +179,7 @@ export function AgentRecap({
           />
         ))}
       </div>
-      <div className="ar-axis"><span>{axis?.start ?? time(since)}</span><span>{axis?.end ?? time(until ?? Date.now())}</span></div>
+      <div className="ar-axis"><span>{(Array.isArray(axis) ? axis[0] : axis?.start) ?? time(since)}</span><span>{(Array.isArray(axis) ? axis[1] : axis?.end) ?? time(until ?? Date.now())}</span></div>
       <div className="ar-lanes">
         {lanes.map((l) => {
           const items = sorted.filter((e) => e.kind === l.kind).slice(0, limit);

@@ -34,8 +34,8 @@ export interface ThinkingStateProps {
   collapseOnDone?: boolean;
   /** Called once when the run finishes (once per cycle when looping), with the elapsed seconds. */
   onDone?: (seconds: number) => void;
-  /** Header text when finished, from the elapsed milliseconds – e.g. «Бодсон 6 с». Wins over `labels.worked`. */
-  workedLabel?: (ms: number) => string;
+  /** Header text when finished, from the elapsed milliseconds – e.g. «Бодсон 6 с». Wins over `labels.worked`. A plain string is shown as is. */
+  workedLabel?: string | ((ms: number) => string);
   className?: string;
   variant?: "clean" | "classic";
   /**
@@ -325,7 +325,7 @@ export function ThinkingState({
         </span>
         <span className="thinking-heading">
           {progress.done ? (
-            (workedLabel?.(progress.ms) ??
+            ((typeof workedLabel === "function" ? workedLabel(progress.ms) : workedLabel) ??
             labels?.worked?.(progress.seconds) ??
             `${progress.seconds} с ажилласан`)
           ) : (

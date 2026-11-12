@@ -7,7 +7,8 @@ import * as React from "react";
 export type FallbackStatus = "waiting" | "trying" | "failed" | "answered" | "skipped";
 export type FallbackAttempt = {
   id: string;
-  model: string;
+  /** Optional when `name` is given. */
+  model?: string;
   provider?: string;
   logo?: React.ReactNode;
   status: FallbackStatus;
@@ -154,13 +155,13 @@ export function FallbackChain({
                   style={row === ROW ? { animationDelay: `${i * 70}ms` } : { animationDelay: `${i * 70}ms`, height: row }}
                 >
                   <span className="fc-logo">
-                    {a.logo ?? <b>{(a.name ?? a.model)[0]}</b>}
+                    {a.logo ?? <b>{(a.name ?? a.model ?? "?")[0]}</b>}
                     <span className="fc-n">{i + 1}</span>
                   </span>
                   <span className="fc-body">
                     <span className="fc-top">
                       <span className="fc-name">
-                        {a.name ?? a.model} {a.provider && <small>{a.provider}</small>}
+                        {a.name ?? a.model ?? "Нөөц загвар"} {a.provider && <small>{a.provider}</small>}
                       </span>
                       <span className="fc-t">{a.status === "skipped" || a.status === "waiting" ? "–" : `${took.toFixed(1)}s`}</span>
                     </span>
