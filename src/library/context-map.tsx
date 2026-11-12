@@ -451,5 +451,6 @@ const css = `
 :where(.dark,[data-theme=dark]) .cmp-tile.result{--tile-bg:#38290f;--tile-edge:#57401a;--tile-ink:#f2c27a}
 :where(.dark,[data-theme=dark]) .cmp-tile.summary{--tile-bg:#15301e;--tile-edge:#22492e;--tile-ink:#86efac}
 .cmp-footer{border-top:0;padding-top:8px;margin-top:4px;font-size:12px}
+.cmp-tile{animation:cmptilerise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.cmp-tile:nth-child(1){animation-delay:0ms}.cmp-tile:nth-child(2){animation-delay:70ms}.cmp-tile:nth-child(3){animation-delay:140ms}.cmp-tile:nth-child(4){animation-delay:210ms}.cmp-tile:nth-child(5){animation-delay:280ms}.cmp-tile:nth-child(6){animation-delay:350ms}.cmp-tile:nth-child(7){animation-delay:420ms}.cmp-tile:nth-child(8){animation-delay:490ms}.cmp-tile:nth-child(9){animation-delay:560ms}.cmp-tile:nth-child(10){animation-delay:630ms}.cmp-tile:nth-child(11){animation-delay:700ms}.cmp-tile:nth-child(12){animation-delay:770ms}@keyframes cmptilerise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.cmp-tile{animation:none}}
 `;
 export default ContextMap;

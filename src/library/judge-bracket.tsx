@@ -321,6 +321,7 @@ const css = `
 @keyframes jb-spin{to{transform:rotate(1turn)}}@keyframes jb-shim{to{background-position:-250% 0}}
 @media(max-width:560px){.jb-task,.jb-round{display:none}.jb-pair{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.jb *{animation:none!important;transition:none!important}}
+.jb-slot{animation:jbslotrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.jb-slot:nth-child(1){animation-delay:0ms}.jb-slot:nth-child(2){animation-delay:60ms}.jb-slot:nth-child(3){animation-delay:120ms}.jb-slot:nth-child(4){animation-delay:180ms}.jb-slot:nth-child(5){animation-delay:240ms}.jb-slot:nth-child(6){animation-delay:300ms}.jb-slot:nth-child(7){animation-delay:360ms}.jb-slot:nth-child(8){animation-delay:420ms}.jb-slot:nth-child(9){animation-delay:480ms}.jb-slot:nth-child(10){animation-delay:540ms}.jb-slot:nth-child(11){animation-delay:600ms}.jb-slot:nth-child(12){animation-delay:660ms}@keyframes jbslotrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.jb-slot{animation:none}}
 `;
 
 export default JudgeBracket;

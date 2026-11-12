@@ -340,6 +340,7 @@ input.apl-name:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--apl-bl
 @media(max-width:400px){.apl-hint{display:none}}
 @media(max-width:340px){.apl-head,.apl-list{padding-left:12px;padding-right:12px}.apl-foot{padding:8px 12px}}
 @media(prefers-reduced-motion:reduce){.apl *{animation:none!important;transition:none!important}}
+.apl-step{animation:aplsteprise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.apl-step:nth-child(1){animation-delay:0ms}.apl-step:nth-child(2){animation-delay:130ms}.apl-step:nth-child(3){animation-delay:260ms}.apl-step:nth-child(4){animation-delay:390ms}.apl-step:nth-child(5){animation-delay:520ms}.apl-step:nth-child(6){animation-delay:650ms}.apl-step:nth-child(7){animation-delay:780ms}.apl-step:nth-child(8){animation-delay:910ms}.apl-step:nth-child(9){animation-delay:1040ms}.apl-step:nth-child(10){animation-delay:1170ms}.apl-step:nth-child(11){animation-delay:1300ms}.apl-step:nth-child(12){animation-delay:1430ms}@keyframes aplsteprise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.apl-step{animation:none}}
 `;
 
 export default AgentPlan;

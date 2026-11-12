@@ -382,6 +382,7 @@ const css = `
 @keyframes cw-in{from{opacity:0}}
 @media(max-width:700px){.cw-row{grid-template-columns:minmax(0,1fr) 84px 54px 62px}.cw-row>.cw-num:nth-child(3),.cw-row>.cw-num:nth-child(4){display:none}.cw-stats{grid-template-columns:1fr 1fr}.cw-stats>div:nth-child(3){display:none}.cw-task{display:none}.cw-bar{flex-wrap:wrap;row-gap:6px}.cw-stats>div{padding:12px 14px 14px}.cw-v{flex-direction:column;align-items:flex-start;gap:2px;white-space:normal}}
 @media(prefers-reduced-motion:reduce){.cw *{animation:none!important;transition:none!important}}
+.cw-row{animation:cwrowrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.cw-row:nth-child(1){animation-delay:0ms}.cw-row:nth-child(2){animation-delay:80ms}.cw-row:nth-child(3){animation-delay:160ms}.cw-row:nth-child(4){animation-delay:240ms}.cw-row:nth-child(5){animation-delay:320ms}.cw-row:nth-child(6){animation-delay:400ms}.cw-row:nth-child(7){animation-delay:480ms}.cw-row:nth-child(8){animation-delay:560ms}.cw-row:nth-child(9){animation-delay:640ms}.cw-row:nth-child(10){animation-delay:720ms}.cw-row:nth-child(11){animation-delay:800ms}.cw-row:nth-child(12){animation-delay:880ms}@keyframes cwrowrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.cw-row{animation:none}}
 `;
 
 export default CostWaterfall;

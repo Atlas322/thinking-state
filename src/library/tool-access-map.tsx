@@ -570,6 +570,7 @@ const css = `
 @keyframes tam-in{from{opacity:0;transform:translateY(6px)}}
 @container (max-width:600px){.tam-map{height:auto!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tam-wires{display:none}.tam-tool,.tam-agent{position:relative;left:auto!important;top:auto!important;width:auto;transform:none}.tam-agent{grid-column:1/-1;order:-1;animation:none}.tam-calls-body{grid-template-columns:1fr}.tam-list{border-right:0;border-bottom:1px solid var(--tam-line)}.tam-tool .tam-t2{white-space:normal}.tam-stats>span:not(.tam-runtag){min-width:0}.tam-bar{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.tam *{animation:none!important;transition:none!important}.tam-wires path.glint{display:none}}
+.tam-tool{animation:tamtoolrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.tam-tool:nth-child(1){animation-delay:0ms}.tam-tool:nth-child(2){animation-delay:60ms}.tam-tool:nth-child(3){animation-delay:120ms}.tam-tool:nth-child(4){animation-delay:180ms}.tam-tool:nth-child(5){animation-delay:240ms}.tam-tool:nth-child(6){animation-delay:300ms}.tam-tool:nth-child(7){animation-delay:360ms}.tam-tool:nth-child(8){animation-delay:420ms}.tam-tool:nth-child(9){animation-delay:480ms}.tam-tool:nth-child(10){animation-delay:540ms}.tam-tool:nth-child(11){animation-delay:600ms}.tam-tool:nth-child(12){animation-delay:660ms}@keyframes tamtoolrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.tam-tool{animation:none}}
 `;
 
 export function Demo() {
