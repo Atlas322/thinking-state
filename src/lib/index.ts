@@ -49,3 +49,6 @@ export { DecisionInboxChat } from "../library/decision-inbox-chat";
 export type { DecisionInboxChatData, DecisionInboxChatProps, DecisionChatItem, DecisionChatOption } from "../library/decision-inbox-chat";
 export { SessionBoard, toSessionState } from "../library/session-board";
 export type { SessionBoardInput, SessionBoardProps, SessionBoardSession, SessionBoardGroup, SessionBoardProject } from "../library/session-board";
+
+// Motion foundation (v2): spring tokens, loop primitives, in-view playback, ↺ / ⏸
+export * from "../motion";
