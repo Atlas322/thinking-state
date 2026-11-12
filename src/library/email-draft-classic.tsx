@@ -72,6 +72,10 @@ export type EmailDraftProps = {
   link?: DraftLink | null;
   /** Milliseconds between pressing Send and onSend – the window to change one's mind (default 900) */
   sendDelay?: number;
+  /** Send button text. Default «Имэйл илгээх». */
+  sendLabel?: string;
+  /** Discard button text. Default «Хаях». */
+  discardLabel?: string;
   onSend?: (email: {
     to: DraftContact;
     body: string;
@@ -144,6 +148,8 @@ export function EmailDraft({
   tones = defaultTones,
   link = { label: "Санал харах", href: "#" },
   sendDelay = 900,
+  sendLabel = "Имэйл илгээх",
+  discardLabel = "Хаях",
   onSend,
   onDiscard,
   className,
@@ -473,7 +479,7 @@ export function EmailDraft({
                     onClick={discard}
                     disabled={phase === "sending"}
                   >
-                    Хаях
+                    {discardLabel}
                   </button>
                   <button
                     type="button"
@@ -487,7 +493,7 @@ export function EmailDraft({
                         Илгээж байна
                       </>
                     ) : (
-                      "Имэйл илгээх"
+                      sendLabel
                     )}
                   </button>
                 </div>

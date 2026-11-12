@@ -470,3 +470,16 @@ describe("studio type compat", () => {
     }
   });
 });
+
+describe("studio labels: EmailDraft send/discard, AgentRecap subtitle", () => {
+  it("takes the host's button texts and recap subtitle", async () => {
+    const { EmailDraft } = await import("./library/email-draft");
+    const { AgentRecap } = await import("./library/agent-recap");
+    render(<EmailDraft sendLabel="Илгээх" discardLabel="Болих" />);
+    expect(screen.getByRole("button", { name: "Илгээх" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Болих" })).toBeTruthy();
+    cleanup();
+    render(<AgentRecap subtitle="Өнөө шөнийн тойм" />);
+    expect(screen.getByText("Өнөө шөнийн тойм")).toBeTruthy();
+  });
+});
