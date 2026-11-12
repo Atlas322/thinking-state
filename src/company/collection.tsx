@@ -149,6 +149,21 @@ export function rangeText(a: CollectionValue | undefined, b: CollectionValue | u
   return `${f(s)} → ${f(e)}`;
 }
 
+/** A stable category colour (1–4) for a select value. */
+export const catOf = (v: string) => {
+  let h = 0;
+  for (let i = 0; i < v.length; i++) h = (h * 31 + v.charCodeAt(i)) >>> 0;
+  return (h % 4) + 1;
+};
+
+/** Item props as a raw YAML-like frontmatter block (what the vault note holds). */
+export function frontmatterOf(item: CollectionItem) {
+  const val = (v: unknown) => (Array.isArray(v) ? `[${v.join(", ")}]` : typeof v === "string" && /[:#\[\]{}]/.test(v) ? JSON.stringify(v) : String(v));
+  const lines = [`title: ${val(item.title)}`];
+  for (const [k, v] of Object.entries(item.props)) if (v != null && v !== "" && !(Array.isArray(v) && !v.length)) lines.push(`${k}: ${val(v)}`);
+  return ["---", ...lines, "---"].join("\n");
+}
+
 /* ───────── row parts ───────── */
 
 export function StatusPill({ value }: { value: CollectionValue | undefined }) {
@@ -251,11 +266,14 @@ export type CollectionViewProps = {
   siblings?: Collection[];
   /** Inside a side peek: a linked view, so no nested peek and no status tabs. */
   nested?: boolean;
+  /** Side peek actions; each button shows only when its handler is given (the app stays read-only). */
+  onOpenInVault?: (item: CollectionItem, collection: Collection) => void;
+  onAskAgent?: (item: CollectionItem, collection: Collection) => void;
 };
 
 type Preset = { id: string; label: string; icon: IconName; view: CollectionViewKind; range?: "month" | "recent"; calendar?: "week" | "month" };
 
-export function CollectionView({ collection, today = new Date(), resolve, defaultView, siblings = [], nested = false }: CollectionViewProps) {
+export function CollectionView({ collection, today = new Date(), resolve, defaultView, siblings = [], nested = false, onOpenInVault, onAskAgent }: CollectionViewProps) {
   const fields = React.useMemo(() => resolveFields(collection), [collection]);
   const status = fields.find((f) => f.kind === "status");
   const priority = fields.find((f) => f.kind === "priority");
@@ -380,7 +398,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           </a>
         ) : null;
       case "select":
-        return v == null || v === "" ? null : <span className="cl-tag">{String(v)}</span>;
+        return v == null || v === "" ? null : <span className={`cl-tag is-cat-${catOf(String(v))}`}>{String(v)}</span>;
       default:
         return v == null || v === "" ? null : <span className="cl-text">{Array.isArray(v) ? v.join(", ") : String(v)}</span>;
     }
@@ -890,6 +908,8 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           today={today}
           onClose={() => setPeek(null)}
           dark={!!rootRef.current?.closest(".dark,[data-theme=dark]")}
+          onOpenInVault={onOpenInVault}
+          onAskAgent={onAskAgent}
         />
       )}
     </div>
@@ -920,7 +940,11 @@ function Peek({
   today,
   onClose,
   dark,
+  onOpenInVault,
+  onAskAgent,
 }: {
+  onOpenInVault?: (item: CollectionItem, collection: Collection) => void;
+  onAskAgent?: (item: CollectionItem, collection: Collection) => void;
   item: CollectionItem;
   collection: Collection;
   fields: ResolvedField[];
@@ -1005,6 +1029,13 @@ function Peek({
             </section>
           )}
           <section>
+            <h4>Frontmatter</h4>
+            <pre className="cl-fm" aria-label="Frontmatter">
+              {item.path ? `# ${item.path}\n` : ""}
+              {frontmatterOf(item)}
+            </pre>
+          </section>
+          <section>
             <h4>Холбоотой</h4>
             {related.length === 0 ? (
               <p className="cv-none">Холбоотой мөр алга.</p>
@@ -1029,6 +1060,22 @@ function Peek({
             )}
           </section>
         </div>
+        {(onOpenInVault || onAskAgent) && (
+          <footer className="cl-peek-actions">
+            {onOpenInVault && (
+              <button type="button" onClick={() => onOpenInVault(item, collection)}>
+                <Icon name="book-open" size={16} />
+                Vault-д нээх
+              </button>
+            )}
+            {onAskAgent && (
+              <button type="button" className="is-primary" onClick={() => onAskAgent(item, collection)}>
+                <Icon name="bot" size={16} />
+                Агентаас асуух
+              </button>
+            )}
+          </footer>
+        )}
       </section>
     </div>
   );
@@ -1066,9 +1113,17 @@ export const collectionCss = `
 .cl-pill.is-green{background:var(--cv-green-soft);color:color-mix(in srgb,var(--cv-green) 78%,var(--cv-fg))}
 .cl-pill.is-red{background:var(--cv-red-soft);color:color-mix(in srgb,var(--cv-red) 82%,var(--cv-fg))}
 .cl-prio{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 7px 0 5px;border-radius:6px;font-size:12px;font-weight:500;white-space:nowrap}
-.cl-prio.is-red{background:var(--cv-red-soft);color:color-mix(in srgb,var(--cv-red) 82%,var(--cv-fg))}
-.cl-prio.is-yellow{background:var(--cv-yellow-soft);color:color-mix(in srgb,var(--cv-yellow) 80%,var(--cv-fg))}
-.cl-prio.is-gray{background:var(--cv-soft);color:var(--cv-muted)}
+.cl-prio.is-red{background:var(--ts-prio-high-bg,var(--cv-red-soft));color:var(--ts-prio-high,color-mix(in srgb,var(--cv-red) 82%,var(--cv-fg)))}
+.cl-prio.is-yellow{background:var(--ts-prio-medium-bg,var(--cv-yellow-soft));color:var(--ts-prio-medium,color-mix(in srgb,var(--cv-yellow) 80%,var(--cv-fg)))}
+.cl-prio.is-gray{background:var(--ts-prio-low-bg,var(--cv-soft));color:var(--ts-prio-low,var(--cv-muted))}
+.cl-tag.is-cat-1{background:var(--ts-cat-1-bg,var(--cv-accent-soft));color:var(--ts-cat-1,color-mix(in srgb,var(--cv-accent) 72%,var(--cv-fg)))}
+.cl-tag.is-cat-2{background:var(--ts-cat-2-bg,var(--cv-green-soft));color:var(--ts-cat-2,color-mix(in srgb,var(--cv-green) 75%,var(--cv-fg)))}
+.cl-tag.is-cat-3{background:var(--ts-cat-3-bg,var(--cv-amber-soft));color:var(--ts-cat-3,color-mix(in srgb,var(--cv-amber) 80%,var(--cv-fg)))}
+.cl-tag.is-cat-4{background:var(--ts-cat-4-bg,var(--cv-violet-soft));color:var(--ts-cat-4,color-mix(in srgb,var(--cv-violet) 80%,var(--cv-fg)))}
+.cl-fm{margin:0;padding:12px 14px;border-radius:10px;background:var(--ts-ink,#262522);color:var(--ts-ink-muted,#a3a099);font:12px/1.65 var(--ts-font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);white-space:pre-wrap;word-break:break-word}
+.cl-peek-actions{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--cv-line);background:var(--cv-soft)}
+.cl-peek-actions button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;border:1px solid var(--cv-line);border-radius:9px;background:var(--cv-bg);font-size:13.5px;font-weight:500}
+.cl-peek-actions button.is-primary{border-color:transparent;background:var(--ts-ink,#262522);color:#f0ede4}
 .cl-rels{display:inline-flex;flex-wrap:wrap;gap:4px}
 .cl-rel{display:inline-flex;align-items:center;gap:4px;max-width:200px;height:22px;padding:0 7px 0 5px;border:0;border-radius:6px;background:none;color:var(--cv-fg);font-size:12.5px;text-decoration:underline;text-decoration-color:var(--cv-line);text-underline-offset:3px;white-space:nowrap}
 .cl-rel span{overflow:hidden;text-overflow:ellipsis}
@@ -1083,7 +1138,7 @@ button.cl-rel:hover{background:var(--cv-soft);text-decoration-color:var(--cv-fai
 .cl-nm.is-full{color:color-mix(in srgb,var(--cv-green) 78%,var(--cv-fg))}
 .cl-date{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--cv-muted);white-space:nowrap}
 .cl-date.is-overdue{color:color-mix(in srgb,var(--cv-red) 85%,var(--cv-fg));font-weight:500}
-.cl-url{display:inline-flex;align-items:center;gap:4px;color:var(--cv-accent);font-size:12.5px;text-decoration:none}
+.cl-url{display:inline-flex;align-items:center;gap:4px;color:var(--ts-link,var(--cv-accent));font-size:12.5px;text-decoration:none}
 .cl-text{font-size:13px;color:var(--cv-fg)}
 .cl-title{display:inline-flex;align-items:center;gap:8px;min-width:0}
 .cl-title .cv-icon{color:var(--cv-muted)}
@@ -1113,8 +1168,10 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-peek-title{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.01em}
 .cl-peek-title .cv-icon{margin-top:3px;color:var(--cv-muted)}
 .cl-peek-path{align-self:flex-start;padding:2px 6px;border-radius:5px;background:var(--cv-soft);color:var(--cv-muted);font-size:11.5px;word-break:break-all}
-.cl-props{display:flex;flex-direction:column;gap:2px;margin:0}
-.cl-props>div{display:grid;grid-template-columns:140px minmax(0,1fr);align-items:center;gap:8px;min-height:32px;padding:2px 4px;border-radius:6px}
+.cl-props{flex:none;display:flex;flex-direction:column;margin:0;border:1px solid var(--cv-line);border-radius:10px;background:var(--cv-bg);overflow:hidden}
+.cl-peek .cv-sheet-body>*{flex-shrink:0}
+.cl-props>div{display:grid;grid-template-columns:140px minmax(0,1fr);align-items:center;gap:8px;min-height:40px;padding:10px 16px;border-bottom:1px solid var(--cv-line)}
+.cl-props>div:last-child{border-bottom:0}
 .cl-props>div:hover{background:var(--cv-soft)}
 .cl-props dt{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--cv-muted)}
 .cl-props dt .cv-icon{color:var(--cv-faint)}

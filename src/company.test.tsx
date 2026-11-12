@@ -574,3 +574,37 @@ describe("app-shell embedding (inai-sh PR #31)", () => {
       for (const m of s.matchAll(/grid-template-columns:([^;}]+)/g)) expect(m[1], f).not.toMatch(/(^|[\s])1(\.\d+)?fr/);
   });
 });
+
+describe("TENET 3 alignment (moodboard)", () => {
+  it("writes item props as a frontmatter block and colours select values stably", async () => {
+    const { frontmatterOf, catOf } = await import("./company/collection");
+    expect(frontmatterOf({ id: "1", title: "A: B", props: { status: "inbox", tags: ["x", "y"], empty: null } })).toBe('---\ntitle: "A: B"\nstatus: inbox\ntags: [x, y]\n---');
+    expect(catOf("Бүтээгдэхүүн")).toBe(catOf("Бүтээгдэхүүн"));
+    expect([1, 2, 3, 4]).toContain(catOf("x"));
+  });
+
+  it("shows vault and agent actions in the peek only when handlers are given", () => {
+    const onOpenInVault = vi.fn();
+    const onAskAgent = vi.fn();
+    const { unmount } = render(<CompanyView company={inai} collection="project" showTree={false} />);
+    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
+    expect(screen.queryByRole("button", { name: /Vault-д нээх/ })).toBeNull();
+    expect(screen.getByLabelText("Frontmatter").textContent).toContain("title: Inai Website");
+    unmount();
+    render(<CompanyView company={inai} collection="project" showTree={false} onOpenInVault={onOpenInVault} onAskAgent={onAskAgent} />);
+    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
+    fireEvent.click(screen.getByRole("button", { name: /Агентаас асуух/ }));
+    expect(onAskAgent).toHaveBeenCalledWith(expect.objectContaining({ title: "Inai Website" }), expect.objectContaining({ type: "project" }));
+    fireEvent.click(screen.getByRole("button", { name: /Vault-д нээх/ }));
+    expect(onOpenInVault).toHaveBeenCalled();
+  });
+
+  it("filters the dashboard by person chips", () => {
+    render(<CompanyView company={inai} defaultView="dashboard" today={new Date("2026-11-12T09:00:00")} />);
+    const chips = screen.getByRole("group", { name: "Хүнээр шүүх" });
+    fireEvent.click(within(chips).getByRole("button", { name: /Bilguun\.S/ }));
+    const panel = screen.getByRole("tabpanel");
+    expect(panel.textContent).toContain("Хөтөлбөрийн бүтэц");
+    expect(panel.textContent).not.toContain("TENET дахин төлөвлөлт");
+  });
+});

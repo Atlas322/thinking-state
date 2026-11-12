@@ -12,6 +12,8 @@ import {
   modelLines,
   rootsOf,
   scopeCompany,
+  type Collection,
+  type CollectionItem,
   type Company,
   type CompanyLevel,
   METHODOLOGIES,
@@ -135,6 +137,9 @@ export type CompanyViewProps = {
   /** Controlled vault type to show (a collection's `type`); null shows the tabs. */
   collection?: string | null;
   onCollectionChange?: (type: string | null) => void;
+  /** Side peek actions for vault items (shown only when given). */
+  onOpenInVault?: (item: CollectionItem, collection: Collection) => void;
+  onAskAgent?: (item: CollectionItem, collection: Collection) => void;
   defaultLevel?: CompanyLevel;
   /** Unit to open first; its kind decides the level. */
   defaultUnitId?: string;
@@ -437,6 +442,8 @@ export function CompanyView({
   showTree = true,
   collection: collectionProp,
   onCollectionChange,
+  onOpenInVault,
+  onAskAgent,
   defaultLevel,
   defaultUnitId,
   defaultView = "method",
@@ -736,7 +743,7 @@ export function CompanyView({
                 </button>
               ))}
             </div>
-            <CollectionView key={(collection ?? collections[0]).type} collection={collection ?? collections[0]} today={today} resolve={resolve} siblings={collections} />
+            <CollectionView key={(collection ?? collections[0]).type} collection={collection ?? collections[0]} today={today} resolve={resolve} siblings={collections} onOpenInVault={onOpenInVault} onAskAgent={onAskAgent} />
           </section>
         )}
         </div>
@@ -905,7 +912,7 @@ export function CompanyView({
         </header>
         {collection ? (
           <section className="cv-panel" aria-label={collection.label ?? typeLabel(collection.type)} key={`collection-${collection.type}`}>
-            <CollectionView collection={collection} today={today} resolve={resolve} siblings={collections} />
+            <CollectionView collection={collection} today={today} resolve={resolve} siblings={collections} onOpenInVault={onOpenInVault} onAskAgent={onAskAgent} />
           </section>
         ) : (
           <section id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${view}`} className="cv-panel" key={`${view}-${scope.unitId}`}>
