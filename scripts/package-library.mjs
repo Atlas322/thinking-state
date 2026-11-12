@@ -34,10 +34,11 @@ for (const entry of catalog) {
       ),
     );
 }
-// Module entries ship their whole folder (e.g. src/company).
-for (const dir of new Set(catalog.filter((e) => e.module).map((e) => e.module)))
+// Module entries ship their whole folder (e.g. src/company); "src/ui, src/layout"
+// lists several. Stylesheets (tokens.css) come along.
+for (const dir of new Set(catalog.filter((e) => e.module).flatMap((e) => e.module.split(",").map((d) => d.trim()))))
   for (const file of fs.readdirSync(path.join(root, dir)).sort())
-    if (file.endsWith(".ts") || file.endsWith(".tsx"))
+    if ((file.endsWith(".ts") || file.endsWith(".tsx") || file.endsWith(".css")) && !file.includes(".test."))
       add(
         `${dir.replace(/^src\//, "")}/${file}`,
         // In the ZIP the widgets sit in components/, not library/.
