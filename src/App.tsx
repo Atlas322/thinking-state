@@ -313,13 +313,13 @@ export default function App() {
         <button
           className="brand"
           onClick={() => navigate("overview")}
-          aria-label="Component Studio home"
+          aria-label="Thinking State home"
         >
           <span className="brand-mark">
-            s<span>·</span>
+            t<span>·</span>
           </span>
           <span>
-            component<span className="brand-light">studio</span>
+            thinking<span className="brand-light">state</span>
           </span>
           <span className="brand-version">01</span>
         </button>
@@ -455,7 +455,7 @@ export default function App() {
               <section className="library-hero">
                 <div className="eyebrow">
                   <span className="live-dot" />
-                  THE COMPONENT COLLECTION
+                  THINKING STATE · THE ENGINE
                 </div>
                 <h1>
                   Good interfaces.
@@ -463,8 +463,10 @@ export default function App() {
                   <span>A better starting point.</span>
                 </h1>
                 <p>
-                  {catalog.length} interactive components for agents, conversations, and the
-                  rest of your product. Explore, copy, and make them yours.
+                  Thinking State is the engine that shows an agent’s work as live
+                  widgets. {catalog.length} interactive components for agents,
+                  conversations, and the rest of your product. Explore, copy, and
+                  make them yours.
                 </p>
                 <div className="collection-stats">
                   <span>
@@ -840,7 +842,7 @@ export default function App() {
           )}
           <footer className="main-footer">
             <span>
-              Component Studio <span className="footer-dot">·</span> Built to be
+              Thinking State <span className="footer-dot">·</span> Built to be
               used.
             </span>
             <a
