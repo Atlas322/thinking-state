@@ -452,3 +452,40 @@ describe("teardown final: linked views and type badges", () => {
     expect(types.querySelector(".cl-tbadge.is-red")).toBeTruthy();
   });
 });
+
+describe("owner values resolve to agents, people or text", () => {
+  const company = {
+    ...inai,
+    collections: [
+      {
+        type: "task",
+        fields: [{ name: "owner", kind: "text" }],
+        items: [
+          { id: "1", title: "Agent by id", props: { owner: "gtd" } },
+          { id: "2", title: "Agent by role", props: { owner: "Лавлагаа, атом" } },
+          { id: "3", title: "Person", props: { owner: "Saraa.D" } },
+          { id: "4", title: "Nobody", props: { owner: "someone-else" } },
+        ],
+      },
+    ],
+  };
+
+  it("links agent short names to the agent card and leaves strangers as text", () => {
+    render(<CompanyView company={company} />);
+    fireEvent.click(within(screen.getByRole("navigation", { name: "Төрлүүд" })).getByRole("button", { name: /Task/ }));
+    const chips = Array.from(document.querySelectorAll(".cl-rel")).map((c) => c.textContent);
+    expect(chips).toEqual(expect.arrayContaining(["GTD", "Wiki", "Saraa.D"]));
+    expect(screen.getByText("someone-else").className).toBe("cl-text");
+    fireEvent.click(screen.getAllByRole("button", { name: "Wiki" }).find((b) => b.classList.contains("cl-rel"))!);
+    expect(screen.getByRole("tab", { name: /Хүн ба агент/ }).getAttribute("aria-selected")).toBe("true");
+    expect(document.querySelector('[data-agent="wiki"]')!.className).toContain("is-focus");
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("Мэдлэг");
+  });
+
+  it("links people to their profile", () => {
+    render(<CompanyView company={company} />);
+    fireEvent.click(within(screen.getByRole("navigation", { name: "Төрлүүд" })).getByRole("button", { name: /Task/ }));
+    fireEvent.click(screen.getAllByRole("button", { name: "Saraa.D" }).find((b) => b.classList.contains("cl-rel"))!);
+    expect(screen.getByRole("dialog", { name: "Saraa.D" })).toBeTruthy();
+  });
+});

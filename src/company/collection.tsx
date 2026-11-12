@@ -30,7 +30,8 @@ import {
 
 export type ResolvedField = { name: string; kind: FieldKind; label: string };
 export type CollectionViewKind = "table" | "board" | "calendar" | "timeline" | "list";
-export type Relation = { label: string; icon?: IconName; onClick?: () => void };
+/** `plain`: shown as text, not a chip (a value that matches no unit, person or agent). */
+export type Relation = { label: string; icon?: IconName; onClick?: () => void; plain?: boolean };
 
 const VIEW_META: Record<CollectionViewKind, { label: string; icon: IconName }> = {
   table: { label: "Хүснэгт", icon: "table" },
@@ -175,6 +176,7 @@ export function PriorityBadge({ value }: { value: CollectionValue | undefined })
 }
 
 export function RelationChip({ rel }: { rel: Relation }) {
+  if (rel.plain) return <span className="cl-text">{rel.label}</span>;
   const body = (
     <>
       {rel.icon && <Icon name={rel.icon} size={14} />}
