@@ -88,6 +88,7 @@ export const companyLabelsMn: CompanyViewLabels = {
   company: "Компани",
   team: "Баг",
   department: "Хэлтэс",
+  stream: "Чиглэл",
   area: "Area",
   types: "Төрлүүд",
   customers: "Үйлчлүүлэгч",

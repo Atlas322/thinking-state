@@ -6,7 +6,8 @@
 
 export type CompanySource = "acme" | "vault" | "visitor";
 /** `area` = a vault area / sub-area (PARA), shown in the tree but not a level. */
-export type UnitKind = "company" | "team" | "department" | "institution" | "area";
+/** "stream" = a direction inside a team (not a department), inai-sh #42. */
+export type UnitKind = "company" | "team" | "department" | "institution" | "area" | "stream";
 
 /** Free text, a list, or revenue streams with a share (0–1); never prices. */
 export type ModelField = string | string[] | { stream: string; share?: number }[];
@@ -18,6 +19,8 @@ export type CompanyPerson = {
   id: string;
   name: string;
   role: string;
+  /** Last vault edit, YYYY-MM-DD. */
+  updated?: string;
   unitId: string;
   /** Profile (read-only): a short about, career timeline and public links. */
   about?: string;
@@ -56,6 +59,8 @@ type Placement = {
 };
 export type TaskPriority = "high" | "medium" | "low";
 export type CompanyTask = Placement & {
+  /** Last vault edit, YYYY-MM-DD. */
+  updated?: string;
   id: string;
   title: string;
   status: string;
@@ -72,6 +77,8 @@ export type CompanyDecision = { id: string; title: string; date: string };
 /** Who is Responsible, Accountable, Consulted, Informed (person or agent ids). */
 export type Raci = { responsible: string[]; accountable?: string; consulted: string[]; informed: string[] };
 export type CompanyProject = Placement & {
+  /** Last vault edit, YYYY-MM-DD. */
+  updated?: string;
   id: string;
   name: string;
   unitId: string;
@@ -120,6 +127,8 @@ export type Collection = { type: string; label?: string; fields: CollectionField
 export type Company = {
   id: string;
   name: string;
+  /** When the vault export was made (ISO) — the «as of» of every number shown. */
+  exportedAt?: string;
   segment: string;
   /** Human label for the segment (e.g. «Agentic company team»). */
   segmentLabel?: string;
@@ -148,7 +157,7 @@ export const LEVELS: CompanyLevel[] = ["institution", "company", "team"];
 export const kindsOf: Record<CompanyLevel, UnitKind[]> = {
   institution: ["institution"],
   company: ["company"],
-  team: ["team", "department"],
+  team: ["team", "department", "stream"],
 };
 
 /** Every unit id under (and including) `rootId`. Safe against parent cycles. */
