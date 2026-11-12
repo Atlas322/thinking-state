@@ -2,7 +2,7 @@
 // company tokens, so this file is not a single-file copy.
 import * as React from "react";
 import { CollectionPanel } from "../company/company-view";
-import { inai } from "../company/fixtures";
+import { studio } from "../company/fixtures";
 import { Icon, typeIcon, typeLabel } from "../company/icons";
 
 export function CompanyCollection(props: React.ComponentProps<typeof CollectionPanel>) {
@@ -10,7 +10,7 @@ export function CompanyCollection(props: React.ComponentProps<typeof CollectionP
 }
 
 export default function Preview() {
-  const collections = inai.collections ?? [];
+  const collections = studio.collections ?? [];
   const [type, setType] = React.useState(collections[0]?.type);
   const current = collections.find((c) => c.type === type) ?? collections[0];
   if (!current) return null;

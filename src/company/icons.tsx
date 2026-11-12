@@ -135,7 +135,7 @@ function shape(s: string, i: number) {
 }
 
 /**
- * Filled variants (owner 2026-11-12): projects, folders and groups use a
+ * Filled variants (2026-11-12): projects, folders and groups use a
  * solid yellow folder (--ts-folder #E8B931) instead of Lucide's outline.
  */
 const FILLED: Partial<Record<IconName, (size: number) => React.ReactNode>> = {

@@ -1,4 +1,4 @@
-// Spacing check (owner 2026-11-12): under every control — segmented control,
+// Spacing check (2026-11-12): under every control — segmented control,
 // tab row, radiogroup — the next content must start at least --ts-gap-control
 // (16 px) below. Opens each catalog preview in headless Chrome at 1440 and 390
 // and lists the controls with less room. Warns; --strict exits 1.

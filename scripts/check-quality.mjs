@@ -1,4 +1,4 @@
-// Quality bars for every catalog preview (owner 2026-11-12):
+// Quality bars for every catalog preview (2026-11-12):
 //   --motion  the component plays a scenario by itself (the DOM changes with
 //             no input within the window) — the original 90's standard; also
 //             counts running animations

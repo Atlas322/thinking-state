@@ -4,8 +4,9 @@ import type { Collection, Company } from "./types";
  * Fixtures in the Company contract until the company-schema session's export
  * lands. Read-only data, as the app only views a vault.
  * - ac.me Group (OKR): from the ac.me world (inai-sh/acme/out).
- * - INAI (BMC): the vault's Business Model Canvas and team. Clients and
- *   vendors appear by type only; people by name with public links only.
+ * - «Нүүдэл студи» (BMC): a fictional studio (зохиомол) — team, CVs, links
+ *   and projects are made up. Real people and clients never go in fixtures;
+ *   check:content guards it (REAL_NAMES).
  * - «PMBOK төсөл» (PMBOK): structure only — no client name, no figures.
  * Some fields are left out on purpose so empty states stay visible.
  */
@@ -149,89 +150,79 @@ export const acmeGroup: Company = {
   ],
 };
 
-export const inai: Company = {
-  id: "inai",
-  name: "INAI",
+export const studio: Company = {
+  id: "nuudel",
+  name: "Нүүдэл студи",
   exportedAt: "2026-11-12T14:05:00+08:00",
   segment: "team",
   source: "vault",
   methodology: "bmc",
   model: {
-    partners: ["Курсын түнш (сургалтын байгууллага)", "AI загварын нийлүүлэгч (6 агентийн тархи)", "Дизайн, монтажийн хэрэгслийн гүүр", "Баримтын сан (синхрончлол, багийн толь)", "Клиент брэндүүд"],
+    partners: ["Курсын түнш (сургалтын байгууллага)", "AI загварын нийлүүлэгч", "Дизайн, монтажийн хэрэгслийн гүүр", "Баримтын сан (синхрончлол, багийн толь)", "Клиент брэндүүд"],
     activities: ["Судалгаа", "Брэндинг", "Агуулга", "Дизайн", "Хөгжүүлэлт", "Сургалт бэлтгэх, заах (санал)"],
-    resources: ["Тэмдэглэлийн сан (2 000+ файл, PARA)", "6 агент", "Дизайны хэрэгслийн гүүр", "Бичлэгийн студи", "Багийн үйлдлийн системийн код сан"],
-    value: "«Бизнесээ системд шилжүүл.» Нэг ажил гурван газар ажиллана: клиентэд үр дүн, бидэнд чадамж, зах зээлд нотолгоо.",
+    resources: ["Тэмдэглэлийн сан (PARA)", "6 агент", "Дизайны хэрэгслийн гүүр", "Бичлэгийн студи", "Багийн үйлдлийн системийн код сан"],
+    value: "Нэг ажил гурван үр дүнтэй: клиентэд үр дүн, багт чадамж, зах зээлд нотолгоо.",
     relationships: ["Бүлгийн сургалт (1 → 2-р улирал)", "1:1 дасгалжуулалт", "Нийгэмлэг (санал)", "Найз, танилын сүлжээ"],
-    channels: ["Хувийн сүлжээ, санал", "Вэбсайтын төслүүд (15 кейс)", "Пост, богино бичлэг", "Курс", "Бичлэг"],
-    customers: ["SMB ба үүсгэн байгуулагчид", "Сурагчид (Second Brain + AI)", "Клиент брэндүүд", "Сургалтын байгууллага"],
+    channels: ["Хувийн сүлжээ, санал", "Вэбсайтын төслүүд", "Пост, богино бичлэг", "Курс", "Бичлэг"],
+    customers: ["SMB ба үүсгэн байгуулагчид", "Сурагчид (мэдлэгийн сан + AI)", "Клиент брэндүүд", "Сургалтын байгууллага"],
     costs: ["Хэрэгслийн захиалга", "Цаг (баг + агентийн ачаалал)"],
     revenue: ["Зөвлөх үйлчилгээ", "Цахимжуулах үйлчилгээ (санал)", "Автоматжуулалт ба маркетинг", "Бүтээгдэхүүн", "Курс"],
   },
   units: [
-    { id: "inai", name: "INAI", kind: "company" },
-    { id: "lead", name: "Удирдлага", kind: "team", parentId: "inai" },
-    { id: "tech", name: "Технологи", kind: "team", parentId: "inai" },
-    { id: "gtm", name: "Маркетинг", kind: "team", parentId: "inai" },
-    { id: "ai-team", name: "AI баг", kind: "team", parentId: "inai" },
+    { id: "nuudel", name: "Нүүдэл студи", kind: "company" },
+    { id: "lead", name: "Удирдлага", kind: "team", parentId: "nuudel" },
+    { id: "tech", name: "Технологи", kind: "team", parentId: "nuudel" },
+    { id: "gtm", name: "Маркетинг", kind: "team", parentId: "nuudel" },
+    { id: "ai-team", name: "AI баг", kind: "team", parentId: "nuudel" },
     { id: "studio", name: "Бүтээл", kind: "team", parentId: "ai-team" },
     { id: "knowledge", name: "Мэдлэг", kind: "team", parentId: "ai-team" },
   ],
   people: [
+    // Fictional team (зохиомол): names, CVs and links are made up for the demo.
     {
-      id: "ganaa", name: "Ganaa.B", role: "Үүсгэн байгуулагч, CEO", unitId: "lead",
-      about: "Хамтран үүсгэн байгуулагч. 10+ жил байгууллагын технологийн борлуулалт, төслийн удирдлагаар ажилласан; стратеги, үйл ажиллагаа, бизнес хөгжлийг хариуцна.",
+      id: "ganaa", name: "Ганаа.Б", role: "Үүсгэн байгуулагч, CEO", unitId: "lead",
+      about: "Зохиомол дүр. Стратеги, үйл ажиллагаа, бизнес хөгжлийг хариуцна; өмнө нь төслийн удирдлага, борлуулалтад ажилласан.",
       cv: [
-        { period: "2026.04 – одоо", title: "Үүсгэн байгуулагч, CEO", org: "INAI" },
-        { period: "2022 – 2023", title: "Бизнес хөгжлийн менежер", org: "Тал технологи" },
-        { period: "2019 – 2022", title: "Ахлах төслийн менежер", org: "Хөх тэнгэр трейд" },
-        { period: "2016 – 2018", title: "Маркетингийн менежер", org: "Мөнх групп" },
+        { period: "2026.04 – одоо", title: "Үүсгэн байгуулагч, CEO", org: "Нүүдэл студи" },
+        { period: "2019 – 2023", title: "Ахлах төслийн менежер", org: "Тал технологи" },
+        { period: "2016 – 2018", title: "Маркетингийн менежер", org: "Хөх тэнгэр трейд" },
       ],
       links: [{ label: "Код", url: "https://example.com/ganaa" }],
     },
     {
-      id: "saraa", name: "Saraa.D", role: "Бүтээгдэхүүн хариуцсан захирал", unitId: "lead",
-      about: "owner. Банкны санхүү → бүтээгдэхүүн → бүтээлч агентлаг → цахим худалдаа гэсэн замаар ирсэн. Second Brain, Thinking State-ийн бүтээгдэхүүнийг удирдана.",
+      id: "saraa", name: "Сараа.Д", role: "Бүтээгдэхүүн хариуцсан захирал", unitId: "lead",
+      about: "Зохиомол дүр. Санхүү → бүтээгдэхүүн → бүтээлч агентлаг гэсэн замаар ирсэн; студийн бүтээгдэхүүнийг удирдана.",
       cv: [
-        { period: "2023 – 2024", title: "Бизнес хөгжүүлэгч", org: "Нар агентлаг" },
         { period: "2018 – 2023", title: "Бүтээлч агентлагийн үүсгэн байгуулагч", org: "Нар агентлаг" },
-        { period: "2017 – 2018", title: "Бүтээгдэхүүний менежер, өгөгдлийн шинжээч", org: "Өглөө банк" },
-        { period: "2015 – 2017", title: "Стартап эрхлэгч", org: "Стартап" },
+        { period: "2016 – 2018", title: "Бүтээгдэхүүний менежер", org: "Өглөө банк" },
       ],
     },
     {
-      id: "temuulen", name: "Temuulen.O", role: "Технологи хариуцсан захирал", unitId: "tech",
-      about: "Го хэл дээр ажиллаж буй системийн сервер талыг бичдэг; хамгийн хүчтэй тал нь банкны цөм систем: бүртгэлийн дэвтэр, аудит, алдаа гаргаж болохгүй системүүд.",
+      id: "temuulen", name: "Тэмүүлэн.О", role: "Технологи хариуцсан захирал", unitId: "tech",
+      about: "Зохиомол дүр. Сервер талын систем бичдэг; бүртгэлийн дэвтэр, аудит гэх мэт алдаа гаргаж болохгүй системүүд.",
       cv: [{ period: "2022 – одоо", title: "Сервер талын хөгжүүлэгч", org: "Хүрэл софт" }],
     },
     {
-      id: "nomin", name: "Nomin.E", role: "Сервер талын инженер · Аюулгүй байдал", unitId: "tech",
-      about: "Мэдээллийн аюулгүй байдал ба сервер тал. example.com-ийг барьсан.",
-      cv: [
-        { period: "2022 – 2024", title: "Мэдээллийн аюулгүй байдлын администратор", org: "Цэнхэр банк" },
-        { period: "2022", title: "Эмзэг байдлын шинжээч", org: "Аюулгүй байдлын фирм" },
-      ],
-      links: [
-        { label: "Код", url: "https://example.com/nomin" },
-        { label: "example.com", url: "https://example.com" },
-      ],
+      id: "nomin", name: "Номин.Э", role: "Сервер талын инженер · Аюулгүй байдал", unitId: "tech",
+      about: "Зохиомол дүр. Мэдээллийн аюулгүй байдал ба сервер тал.",
+      cv: [{ period: "2022 – 2024", title: "Мэдээллийн аюулгүй байдлын администратор", org: "Цэнхэр банк" }],
+      links: [{ label: "Код", url: "https://example.com/nomin" }],
     },
     {
-      id: "bilguun", name: "Bilguun.Ts", role: "Маркетинг хариуцсан захирал", unitId: "gtm",
-      about: "«Соёл». AI-г тэргүүнд тавьдаг маркетингийн стратегич: маркетингийг системтэй болгоно; AI кодын туслах, тэмдэглэлийн апп, баримтын сангийн хэрэгслийг өөрөө ашигладаг.",
+      id: "bilguun", name: "Билгүүн.Ц", role: "Маркетинг хариуцсан захирал", unitId: "gtm",
+      about: "Зохиомол дүр. Маркетингийг системтэй болгоно; AI кодын туслах, тэмдэглэлийн апп, баримтын санг өөрөө ашигладаг.",
       cv: [
-        { period: "2026 – одоо", title: "CMO", org: "INAI" },
-        { period: "2025 – 2026", title: "Маркетингийн мэргэжилтэн", org: "Мөнх групп" },
-        { period: "2023 – 2025", title: "CMO", org: "Мөнх групп" },
+        { period: "2026 – одоо", title: "CMO", org: "Нүүдэл студи" },
+        { period: "2023 – 2025", title: "Маркетингийн мэргэжилтэн", org: "Мөнх групп" },
       ],
-      links: [{ label: "Код", url: "https://example.com/bilguun" }],
     },
   ],
   agents: [
-    { id: "project", name: "Төсөл", role: "Төслийн ганц цонх", unitId: "lead", ownerId: "saraa", skills: ["Синхрончлол", "Товч", "Сешний самбар"], memory: ["TENET дахин төлөвлөлт", "Сешн удирдах дүрэм"] },
+    { id: "project", name: "Төсөл", role: "Төслийн ганц цонх", unitId: "lead", ownerId: "saraa", skills: ["Синхрончлол", "Товч", "Сешний самбар"], memory: ["Дахин төлөвлөлт", "Сешн удирдах дүрэм"] },
     { id: "gtd", name: "GTD", role: "Ирсэн, даалгавар, өдөр", unitId: "lead", ownerId: "saraa", skills: ["Ирсэн", "Даалгавар", "Долоо хоногийн тойм"], memory: ["Даалгаврын цэгцийн дүрэм"] },
-    { id: "architect", name: "Архитектор", role: "Код, ур чадвар, хэрэгсэл", unitId: "studio", ownerId: "temuulen", skills: ["Ур чадвар бичих", "Алдаа засах", "Thinking State"], memory: ["Чатын виджетүүд", "Компанийн гэрээ"] },
-    { id: "creative", name: "Бүтээлч", role: "Брэнд, дизайн, пост", unitId: "studio", ownerId: "bilguun", skills: ["fm:post", "fm:design", "Сэтгэмжийн самбар"], memory: ["inai.sh v4 дизайн"] },
-    { id: "wiki", name: "Вики", role: "Лавлагаа, атом", unitId: "knowledge", ownerId: "saraa", skills: ["fm:save", "Баримт шалгах", "глоссари"], memory: ["баримтын сангийн загвар", "Second Brain гурван түвшин"] },
+    { id: "architect", name: "Архитектор", role: "Код, ур чадвар, хэрэгсэл", unitId: "studio", ownerId: "temuulen", skills: ["Ур чадвар бичих", "Алдаа засах", "Компонентын сан"], memory: ["Чатын виджетүүд", "Компанийн гэрээ"] },
+    { id: "creative", name: "Бүтээлч", role: "Брэнд, дизайн, пост", unitId: "studio", ownerId: "bilguun", skills: ["Пост", "Дизайн", "Сэтгэмжийн самбар"], memory: ["Сайтын v4 дизайн"] },
+    { id: "wiki", name: "Вики", role: "Лавлагаа, атом", unitId: "knowledge", ownerId: "saraa", skills: ["Хадгалах", "Баримт шалгах", "глоссари"], memory: ["баримтын сангийн загвар", "Мэдлэгийн гурван түвшин"] },
     { id: "context", name: "Контекст инженер", role: "Үнэлгээ, контекст аудит", unitId: "knowledge", skills: ["Үнэлгээ", "Явцын бичлэг шалгах"], memory: [] },
   ],
   workflows: [
@@ -240,7 +231,7 @@ export const inai: Company = {
       steps: [
         { id: "s1", label: "Чатад виджет зурах", actorId: "project", output: "Чатын виджет" },
         { id: "s2", label: "Нэр өгч батлах", actorId: "saraa", output: "Шийдвэрийн атом" },
-        { id: "s3", label: "Компонент болгох", actorId: "architect", output: "Thinking State PR" },
+        { id: "s3", label: "Компонент болгох", actorId: "architect", output: "Компонентын PR" },
         { id: "s4", label: "Нэгтгэх", actorId: "saraa", output: "Каталогт шинэ компонент" },
       ],
     },
@@ -264,29 +255,29 @@ export const inai: Company = {
   ],
   projects: [
     {
-      id: "inai-website", name: "Inai вэбсайт", unitId: "lead", status: "in-progress", area: "Бүтээгдэхүүн", subArea: "inai.sh", due: "2026-12-15",
+      id: "website", name: "Вэбсайт", unitId: "lead", status: "in-progress", area: "Бүтээгдэхүүн", subArea: "Нүүр хуудас", due: "2026-12-15",
       raci: { responsible: ["project", "architect", "creative"], accountable: "saraa", consulted: ["bilguun", "ganaa"], informed: ["temuulen"] },
       tasks: [
-        { id: "t1", title: "TENET дахин төлөвлөлт", status: "completed", ownerId: "project", due: "2026-11-12" },
-        { id: "t2", title: "Нэг схем + INAI экспорт", status: "in-progress", ownerId: "architect", due: "2026-11-16", priority: "high" },
+        { id: "t1", title: "Дахин төлөвлөлт", status: "completed", ownerId: "project", due: "2026-11-12" },
+        { id: "t2", title: "Нэг схем + экспорт", status: "in-progress", ownerId: "architect", due: "2026-11-16", priority: "high" },
         { id: "t3", title: "Нүүр хэсгийн «тархи ↔ апп» зураглал", status: "planning", ownerId: "creative", due: "2026-11-24", priority: "medium" },
         { id: "t4", title: "Хувилбарын хяналтын төлбөр засах", status: "waiting", ownerId: "saraa", due: "2026-11-11", priority: "high", raci: { responsible: ["ganaa"], accountable: "ganaa", consulted: ["temuulen"], informed: ["saraa"] } },
         { id: "t5", title: "Засах эрх ба байршуулалт", status: "waiting", ownerId: "temuulen", due: "2026-11-14", priority: "high", dependsOn: ["t4"], raci: { responsible: ["temuulen"], accountable: "ganaa", consulted: [], informed: ["saraa"] } },
       ],
       decisions: [
-        { id: "d1", title: "inai.sh бол Thinking State апп", date: "2026-11-12" },
+        { id: "d1", title: "Сайт бол апп", date: "2026-11-12" },
         { id: "d2", title: "Тархийг хэмжээгээр биш, хүн бүрт бүтэн суурь", date: "2026-11-12" },
       ],
     },
     {
-      id: "thinking-state", name: "Thinking State", unitId: "studio", status: "in-progress", area: "Бүтээгдэхүүн", subArea: "Хөдөлгүүр",
+      id: "component-library", name: "Компонентын сан", unitId: "studio", status: "in-progress", area: "Бүтээгдэхүүн", subArea: "Хөдөлгүүр",
       raci: { responsible: ["architect"], accountable: "saraa", consulted: ["temuulen"], informed: ["ganaa", "bilguun"] },
       tasks: [
         { id: "t1", title: "Чатын виджетүүд", status: "completed", ownerId: "architect" },
         { id: "t2", title: "Компанийн дүрслэгч", status: "in-progress", ownerId: "architect", due: "2026-11-14", priority: "high" },
-        { id: "t3", title: "Дизайны хувилбар", status: "inbox", ownerId: "creative", dependsOn: ["inai-website-t3"] },
+        { id: "t3", title: "Дизайны хувилбар", status: "inbox", ownerId: "creative", dependsOn: ["website-t3"] },
       ],
-      decisions: [{ id: "d1", title: "Thinking State бол бүтээгдэхүүн ба хөдөлгүүр", date: "2026-11-12" }],
+      decisions: [{ id: "d1", title: "Сан бол бүтээгдэхүүн ба хөдөлгүүр", date: "2026-11-12" }],
     },
     {
       id: "season-2", name: "2-р улирлын курс", unitId: "gtm", status: "planning", area: "Сургалт", subArea: "Бүлгийн сургалт",
@@ -304,9 +295,9 @@ export const inai: Company = {
     },
   ],
   notes: [
-    { id: "n1", title: "Бизнес загварын канвас — 9 блок, нотолгоо", projectId: "inai-website", date: "2026-10-11" },
+    { id: "n1", title: "Бизнес загварын канвас — 9 блок, нотолгоо", projectId: "website", date: "2026-10-11" },
     { id: "n2", title: "BMG шалгалт: гол зардал цаг, орлого нэг удаагийн", date: "2026-11-12" },
-    { id: "n3", title: "Thinking State нь байгууллагын арга зүйгээр", projectId: "thinking-state", date: "2026-11-12" },
+    { id: "n3", title: "Сан нь байгууллагын арга зүйгээр", projectId: "thinking-state", date: "2026-11-12" },
   ],
 };
 
@@ -386,11 +377,11 @@ export const pmbokProject: Company = {
 };
 
 /**
- * INAI's vault types as collections — the shape the company-schema export
- * produces (type, fields, items with path + props). Built from the INAI
+ * The studio's vault types as collections — the shape the company-schema export
+ * produces (type, fields, items with path + props). Built from the studio
  * fixture above plus a few notes, events and dailies.
  */
-function inaiCollections(c: Company): Collection[] {
+function studioCollections(c: Company): Collection[] {
   const name = (id?: string) => [...c.people, ...c.agents].find((x) => x.id === id)?.name;
   const done = (s: string) => ["completed", "done"].includes(s);
   const projects: Collection = {
@@ -402,7 +393,7 @@ function inaiCollections(c: Company): Collection[] {
       path: `02-Projects/${p.name}/${p.name}.md`,
       props: {
         status: p.status,
-        priority: p.priority ?? (["inai-website", "thinking-state"].includes(p.id) ? "high" : "medium"),
+        priority: p.priority ?? (["website", "component-library"].includes(p.id) ? "high" : "medium"),
         area: p.area ?? null,
         subArea: p.subArea ?? null,
         owner: p.raci?.accountable ? name(p.raci.accountable) ?? null : null,
@@ -439,11 +430,11 @@ function inaiCollections(c: Company): Collection[] {
     type: "atomic",
     fields: ["date", "confidence", "tags", "up"],
     items: [
-      { id: "a1", title: "Second Brain гурван түвшин — хувь, баг, компани", props: { date: "2026-11-12", confidence: "stated", tags: ["second-brain", "inai"], up: "[[02-Projects/Inai вэбсайт/Inai вэбсайт]]" } },
+      { id: "a1", title: "Мэдлэгийн гурван түвшин — хувь, баг, компани", props: { date: "2026-11-12", confidence: "stated", tags: ["knowledge", "studio"], up: "[[02-Projects/Вэбсайт/Вэбсайт]]" } },
       { id: "a2", title: "Баримтын сангийн төслийн сан — PARA ба GTD төлөвтэй", props: { date: "2026-11-12", confidence: "observed", tags: ["docs"], up: "[[03-Areas/Products/Docs]]" } },
-      { id: "a3", title: "Төслийн шат = гол үйл ажиллагааны гүүр", props: { date: "2026-10-07", confidence: "stated", tags: ["BMC"], up: "[[03-Areas/Business/INAI/BMC]]" } },
+      { id: "a3", title: "Төслийн шат = гол үйл ажиллагааны гүүр", props: { date: "2026-10-07", confidence: "stated", tags: ["BMC"], up: "[[03-Areas/Business/BMC]]" } },
       { id: "a4", title: "Даалгаврын цэгцийн дүрэм", props: { date: "2026-10-26", confidence: "stated", tags: ["GTD"], up: "[[01-GTD/GTD]]" } },
-      { id: "a5", title: "Second Brain: багийн ганц код сан", props: { date: "2026-10-05", confidence: "stated", tags: ["FM"], up: "[[03-Areas/AI Team/AI Team]]" } },
+      { id: "a5", title: "Мэдлэгийн сан: багийн ганц код сан", props: { date: "2026-10-05", confidence: "stated", tags: ["Баг"], up: "[[03-Areas/AI Team/AI Team]]" } },
     ],
   };
   const people: Collection = {
@@ -453,16 +444,16 @@ function inaiCollections(c: Company): Collection[] {
       id: p.id,
       title: p.name,
       path: `03-Areas/People/${p.name}.md`,
-      props: { role: p.role, unit: c.units.find((u) => u.id === p.unitId)?.name ?? null, company: "INAI", status: "active" },
+      props: { role: p.role, unit: c.units.find((u) => u.id === p.unitId)?.name ?? null, company: "Нүүдэл студи", status: "active" },
     })),
   };
   const areas: Collection = {
     type: "area",
     fields: ["status", "owner", "projects"],
     items: [
-      { id: "ar1", title: "Бүтээгдэхүүн", props: { status: "ongoing", owner: "Saraa.D", projects: 2 } },
-      { id: "ar2", title: "Сургалт", props: { status: "ongoing", owner: "Ganaa.B", projects: 1 } },
-      { id: "ar3", title: "Платформ", props: { status: "ongoing", owner: "Temuulen.O", projects: 1 } },
+      { id: "ar1", title: "Бүтээгдэхүүн", props: { status: "ongoing", owner: "Сараа.Д", projects: 2 } },
+      { id: "ar2", title: "Сургалт", props: { status: "ongoing", owner: "Ганаа.Б", projects: 1 } },
+      { id: "ar3", title: "Платформ", props: { status: "ongoing", owner: "Тэмүүлэн.О", projects: 1 } },
       { id: "ar4", title: "Хувийн санхүү", props: { status: "someday", owner: null, projects: 0 } },
     ],
   };
@@ -470,11 +461,11 @@ function inaiCollections(c: Company): Collection[] {
     type: "skill",
     fields: ["owner", "tags", "status"],
     items: [
-      { id: "s1", title: "fm:post — пост, карусель", props: { owner: "Бүтээлч", tags: ["контент"], status: "active" } },
-      { id: "s2", title: "fm:design — дизайны гүүр", props: { owner: "Бүтээлч", tags: ["design"], status: "active" } },
-      { id: "s3", title: "fm:save — линкийг атом болгох", props: { owner: "Вики", tags: ["мэдлэг"], status: "active" } },
-      { id: "s4", title: "fm:update — өдрийн дүгнэлт", props: { owner: "GTD", tags: ["GTD"], status: "active" } },
-      { id: "s5", title: "chat:html — чатын виджет", props: { owner: "Архитектор", tags: ["thinking-state"], status: "planning" } },
+      { id: "s1", title: "Пост — пост, карусель", props: { owner: "Бүтээлч", tags: ["контент"], status: "active" } },
+      { id: "s2", title: "Дизайн — дизайны гүүр", props: { owner: "Бүтээлч", tags: ["design"], status: "active" } },
+      { id: "s3", title: "Хадгалах — линкийг атом болгох", props: { owner: "Вики", tags: ["мэдлэг"], status: "active" } },
+      { id: "s4", title: "Шинэчлэх — өдрийн дүгнэлт", props: { owner: "GTD", tags: ["GTD"], status: "active" } },
+      { id: "s5", title: "Чатын виджет — HTML", props: { owner: "Архитектор", tags: ["components"], status: "planning" } },
     ],
   };
   const events: Collection = {
@@ -482,9 +473,9 @@ function inaiCollections(c: Company): Collection[] {
     fields: ["date", "start", "end", "project", "status"],
     items: [
       { id: "e1", title: "2-р улирлын нээлт", props: { date: "2026-11-28", start: "2026-11-28", end: "2026-11-28", project: "2-р улирлын курс", status: "planning" } },
-      { id: "e2", title: "inai.sh v4 танилцуулга", props: { date: "2026-11-20", start: "2026-11-20", end: "2026-11-21", project: "Inai вэбсайт", status: "planning" } },
+      { id: "e2", title: "Сайтын v4 танилцуулга", props: { date: "2026-11-20", start: "2026-11-20", end: "2026-11-21", project: "Вэбсайт", status: "planning" } },
       { id: "e3", title: "Багийн долоо хоногийн тойм", props: { date: "2026-11-16", start: "2026-11-16", end: "2026-11-16", project: null, status: "planning" } },
-      { id: "e4", title: "Thinking State үзүүлэн", props: { date: "2026-11-12", start: "2026-11-12", end: "2026-11-12", project: "Thinking State", status: "done" } },
+      { id: "e4", title: "Компонентын сангийн үзүүлэн", props: { date: "2026-11-12", start: "2026-11-12", end: "2026-11-12", project: "Компонентын сан", status: "done" } },
     ],
   };
   const dailies: Collection = {
@@ -497,6 +488,6 @@ function inaiCollections(c: Company): Collection[] {
   };
   return [projects, tasks, decisions, atomic, people, areas, skills, events, dailies];
 }
-inai.collections = inaiCollections(inai);
+studio.collections = studioCollections(studio);
 
-export const companyFixtures: Company[] = [inai, acmeGroup, pmbokProject];
+export const companyFixtures: Company[] = [studio, acmeGroup, pmbokProject];

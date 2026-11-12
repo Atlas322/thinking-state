@@ -3,7 +3,7 @@
  * system for the app and the site. Every component reads its colours and
  * fonts from these --ts-* variables and falls back to its own defaults.
  *
- * Two themes (owner 2026-11-12):
+ * Two themes (2026-11-12):
  *   cream  light — cream page (Чиглэл 1, Figma 36:146054)
  *   dark   warm grey dark, the same for the site and the app: side #1F1E1D,
  *          page #262624, cards #30302E, text #ECEBE7
@@ -121,7 +121,7 @@
 }
 
 :where(.ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
-  /* warm grey dark (owner 2026-11-12): the same on the site and in the app */
+  /* warm grey dark (2026-11-12): the same on the site and in the app */
   --ts-page: #262624;
   --ts-surface: #30302e;
   --ts-soft: #3a3a37;
@@ -245,7 +245,7 @@
 }
 
 /*
- * Selected / active state (owner 2026-11-12, Figma section 09): the active
+ * Selected / active state (2026-11-12, Figma section 09): the active
  * tab, chip, segment, scenario or flow card is blue (--ts-selected-bg) with white text
  * and icons — the same on cream and dark; never indigo. A count inside a
  * selected pill uses white at 20 %. Unselected elements keep their surface.

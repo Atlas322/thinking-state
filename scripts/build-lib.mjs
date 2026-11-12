@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 // Builds the @inai/thinking-state package into lib/:
 //   1. vite library build (ESM, React external) → lib/index.js, lib/chat.js
 //   2. TypeScript declarations → lib/types
@@ -23,12 +24,14 @@ for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="dark"]', '[data-
     process.exit(1);
   }
 
-// Guard: these only exist in src/company/fixtures.ts and the vault.
+// Guard: fixture and vault data never ship. Real names are checked by hash
+// (src/real-names.json), so this file names no one.
 const banned = [
-  "Ganaa", "Saraa", "Temuulen", "Nomin", "Bilguun",
   "02-Projects/", "03-Areas/", "04-Resources/", "01-GTD/",
-  "PMBOK төсөл", "inaiCollections", "companyFixtures",
+  "PMBOK төсөл", "studioCollections", "companyFixtures",
 ];
+const realNames = new Set(JSON.parse(fs.readFileSync(path.join(root, "src/real-names.json"), "utf8")).hashes);
+const nameHash = (w) => createHash("sha256").update(w).digest("hex").slice(0, 16);
 const hits = [];
 const walk = (dir) => {
   for (const name of fs.readdirSync(dir)) {
@@ -37,6 +40,8 @@ const walk = (dir) => {
     else if (/\.(js|css|d\.ts|map)$/.test(name)) {
       const text = fs.readFileSync(p, "utf8");
       for (const b of banned) if (text.includes(b)) hits.push(`${path.relative(root, p)}: ${b}`);
+      for (const w of new Set(text.toLowerCase().normalize("NFC").match(/[\p{L}\p{N}]+/gu) ?? []))
+        if (realNames.has(nameHash(w))) hits.push(`${path.relative(root, p)}: a listed real name`);
     }
   }
 };

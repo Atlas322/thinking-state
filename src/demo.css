@@ -557,12 +557,27 @@ kbd {
   background: #9494aa;
 }
 .origin.mit {
-  color: #58856d;
+  color: #3f6b52;
   background: #6caa7c08;
   border-color: #6caa7c20;
 }
 .origin.mit .origin-dot {
   background: #689b7d;
+}
+/* Thinking State's own components (catalog `origin`) */
+.origin.original {
+  color: #1d5fb8;
+  background: #3b82f60d;
+  border-color: #3b82f626;
+}
+.origin.original .origin-dot {
+  background: #3b82f6;
+}
+[data-theme="dark"] .origin.mit {
+  color: #8fc7a3;
+}
+[data-theme="dark"] .origin.original {
+  color: #93c5fd;
 }
 .origin.recreated {
   background: var(--hover);

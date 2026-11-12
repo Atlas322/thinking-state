@@ -1,6 +1,6 @@
 /**
  * Site chrome from the one design system: Wordmark, NavBar, Footer
- * (owner 2026-11-12: the site keeps only layout and content). Data comes
+ * (2026-11-12: the site keeps only layout and content). Data comes
  * in as props — the inai.sh sitemap stays in inai-sh. Colours, type and
  * icons come from the --ts-* tokens and the system icon map.
  *
@@ -18,7 +18,7 @@ const cx = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).jo
 
 /* ───────── Wordmark ───────── */
 
-/** «inai.» — the dot carries the brand colour (kept as is until owner decides). */
+/** «inai.» — the dot carries the brand colour (kept as is until the owner decides). */
 export function Wordmark({ href = "index.html", label = "INAI — Нүүр", size = 22, className }: { href?: string | null; label?: string; size?: number; className?: string }) {
   const body = (
     <>
