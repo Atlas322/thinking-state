@@ -16,7 +16,7 @@ run("npx tsc -p tsconfig.lib.json");
 fs.copyFileSync(path.join(root, "src/lib/tokens.css"), path.join(root, "lib/tokens.css"));
 fs.copyFileSync(path.join(root, "src/lib/site.css"), path.join(root, "lib/site.css"));
 const tokens = fs.readFileSync(path.join(root, "lib/tokens.css"), "utf8");
-for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="night"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', "--ts-surface", '"Alegreya"', '"Onest"'])
+for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="dark"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', "--ts-surface", '"Spectral"', '"Inter"'])
   if (!tokens.includes(need)) {
     console.error(`tokens.css is missing ${need}`);
     process.exit(1);

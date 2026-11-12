@@ -84,8 +84,8 @@ export function CompanyPage({ company }: { company: Company }) {
   );
 }
 
-// Удирдах горим, бүлээн шөнө (data-ts-theme="manage" = night + manage, v0.1-тэй нийцнэ)
-<div data-ts-theme="night" data-ts-mode="manage" data-theme="dark">
+// Чиглэл 2 «Удирдлагын төв» dark; Удирдах горим бол data-ts-mode="manage" (индиго accent)
+<div data-ts-theme="dark" data-theme="dark">
   <CompanyView company={company} defaultView="dashboard" />
 </div>
 ```
@@ -96,26 +96,23 @@ Chat HTML export (uses `react-dom/server`): `import { renderChatHtml } from "@in
 variables (`--ts-page`, `--ts-surface`, `--ts-soft`, `--ts-line`, `--ts-fg`,
 `--ts-muted`, `--ts-faint`, `--ts-accent`, status colours with `-soft`
 pairs, `--ts-font`, `--ts-font-display`, `--ts-font-mono`) and falls back to
-its own defaults. `tokens.css` нь Theme А (Figma `39:195990`). Хоёр тэнхлэгтэй:
-гадаргуу `data-ts-theme="cream" | "night"`, горим `data-ts-mode="view" | "manage"`.
-Горим зөвхөн accent-ийг солино: Үзэх = Electric, Удирдах = индиго. Accent өнгөтэй
-текстэд `--ts-accent-fg` ашиглана. Мөн `--ts-side`, `--ts-raised`, `--ts-glow`,
-`--ts-glow-amber`, `--ts-elevation` (night дээр 1px шугам), бичгийн шатлал
-`--ts-fs-*` / `--ts-lh-*` (утсанд display 40, h1 30, h2 24) нэмэгдсэн. Хув шарыг
-зөвхөн 4 газарт хэрэглэнэ: хүний батлах дохио, Medium priority, нэг онцлох тоо,
-доод туяа. Фонт нь үүргээрээ хувьсагчтай: `--ts-font-head` (Alegreya, editorial
-сонголт хүлээгдэж байна), `--ts-font-body` (Onest), `--ts-font-code` (JetBrains
-Mono). Солих бол `:root` дээр нэг мөрөөр сольж болно. Фонт багцад орохгүй. Google
-Fonts css2-оор `&text=`-гүй ачаал, тэгвэл ү, ө үсэгтэй cyrillic-ext subset ирнэ.
+its own defaults. `tokens.css` нь хоёр theme-тэй (owner 11-12, эцсийн):
+`cream` нь Чиглэл 1 (Figma `36:146054`, Spectral гарчиг, Inter бичвэр), `dark` нь
+Чиглэл 2 «Удирдлагын төв» (Figma `36:148605`, TH.Dark): саармаг бараг хар,
+давхаргатай гадаргуу, Inter гарчиг, IBM Plex Mono шошго, Electric accent.
+`--ts-font-display` theme бүрд өөр. Горим `data-ts-mode="view" | "manage"` зөвхөн
+accent-ийг солино (Үзэх = Electric, Удирдах = индиго). Accent өнгөтэй текстэд
+`--ts-accent-fg` ашигла. `data-ts-theme="manage"` = dark + Удирдах (v0.1-тэй
+нийцнэ). Фонт багцад орохгүй: Spectral, Inter, IBM Plex Mono-г Google Fonts css2-оор
+`&text=`-гүй ачаал (ү, ө = cyrillic-ext).
 
 **Сайт (`@inai/thinking-state/site.css`).** Маркетингийн сайтад зориулсан, ижил
 token-оос үүсгэсэн файл. Wrapper шаардахгүй: `:root` нь cream,
-`:root[data-theme="dark"]` нь бүлээн шөнө, `data-ts-mode="manage"` нь индиго accent.
-Тогтвортой alias-ууд: `--ts-color-bg/side/surface/raised/tile/line/text/text-muted/
-text-faint/accent/accent-text/accent-soft/electric/indigo/link/amber/amber-soft/
-green/red`, `--ts-shadow`, `--ts-shadow-glow`, `--ts-shadow-glow-amber`,
-`--ts-font-head/body/code`, `--ts-fs-*`. tokens.css-ийг өөрчилсний дараа
-`npm run tokens:site` ажиллуул (тест зөрөхийг барина).
+`:root[data-theme="dark"]` нь Чиглэл 2 dark, `data-ts-mode="manage"` нь индиго accent.
+Тогтвортой alias-ууд: `--ts-color-bg/side/rail/surface/raised/tile/line/text/
+text-muted/text-faint/accent/accent-text/accent-soft/electric/indigo/link/amber/
+amber-soft/green/red`, `--ts-shadow`, `--ts-font-heading/text/label`. tokens.css-ийг
+өөрчилсний дараа `npm run tokens:site` ажиллуул (тест зөрөхийг барина).
 
 **Exports**
 

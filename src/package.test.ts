@@ -51,15 +51,15 @@ describe("@inai/thinking-state package", () => {
     // tokens.css itself is checked by scripts/build-lib.mjs (Vitest returns CSS imports empty).
   });
 
-  it("ships Theme А: cream / night surfaces, view / manage accent, Alegreya · Onest · JetBrains Mono", async () => {
+  it("ships cream (Чиглэл 1) and dark (Чиглэл 2, TH.Dark) with a view / manage accent", async () => {
     const fs = (await import(/* @vite-ignore */ "node:" + "fs")) as { readFileSync: (p: string, e: string) => string };
     const css = fs.readFileSync("src/lib/tokens.css", "utf8");
-    for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="night"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', '[data-ts-mode="view"]'])
+    for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="dark"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', '[data-ts-mode="view"]'])
       expect(css).toContain(need);
-    expect(css).toContain("--ts-surface: #231d17;"); // warm night surface-1
-    expect(css).toContain("--ts-electric: #1b5cff;");
-    expect(css).toContain("--ts-indigo: #6e80d0;");
-    expect(css).toMatch(/"Alegreya"[\s\S]*"Onest"|"Onest"[\s\S]*"Alegreya"/);
-    expect(css).not.toContain("Spectral");
+    for (const v of ["--ts-page: #0b0b0c;", "--ts-surface: #17171a;", "--ts-line: #26262a;", "--ts-electric: #4d7fff;", "--ts-electric-soft: #16224a;", "--ts-fg: #edebe6;"])
+      expect(css).toContain(v);
+    expect(css).toContain('--ts-font-display: "Spectral"'); // cream headings
+    expect(css).toContain('--ts-font-display: "Inter"'); // dark headings
+    expect(css).not.toMatch(/Alegreya|Onest|#17130f/i); // Theme А withdrawn
   });
 });
