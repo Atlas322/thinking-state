@@ -17,6 +17,7 @@ import {
   hasClassic,
 } from "./registry";
 import { ChatDataEditor, ChatPreview, useChatWidget } from "./chat/chat-tools";
+import { Replay } from "./replay/replay";
 
 const symbols: Record<string, string> = {
   "Компани": "◈",
@@ -651,13 +652,6 @@ export default function App() {
                         >
                           <span style={{ fontSize: 17 }}>▯</span>
                         </button>
-                        <button
-                          className="icon-button"
-                          aria-label="Replay component"
-                          onClick={() => setRun((n) => n + 1)}
-                        >
-                          <Icon name="reset" />
-                        </button>
                       </>
                     )}
                     {tab !== "preview" && (
@@ -677,7 +671,8 @@ export default function App() {
                     <div
                       className={`preview-container ${narrow ? "narrow" : ""} ${"module" in entry && !narrow ? "wide" : ""}`}
                     >
-                      <PreviewBoundary key={`${entry.slug}-${style}-${run}${chat.isChat ? `-${chat.json.length}-${chat.json.slice(-24)}` : ""}`}>
+                      <Replay key={`${entry.slug}-${style}-${run}`}>
+                      <PreviewBoundary key={`${entry.slug}-${style}${chat.isChat ? `-${chat.json.length}-${chat.json.slice(-24)}` : ""}`}>
                         <Suspense
                           fallback={
                             <div className="preview-loading">
@@ -689,6 +684,7 @@ export default function App() {
                           {chat.isChat ? <ChatPreview chat={chat} /> : Preview && <Preview />}
                         </Suspense>
                       </PreviewBoundary>
+                      </Replay>
                     </div>
                   ) : tab === "data" && chat.isChat ? (
                     <ChatDataEditor chat={chat} />

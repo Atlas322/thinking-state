@@ -32,6 +32,10 @@ export {
 } from "../company/collection";
 export type { CollectionViewKind, CollectionViewProps, Relation, ResolvedField } from "../company/collection";
 
+// Replay: ↺ re-mounts any component (entry animation and state start over)
+export { Replay, withReplay } from "../replay/replay";
+export type { ReplayProps } from "../replay/replay";
+
 // Icons (Lucide shapes, inline) and the contract
 export * from "../company/icons";
 export * from "../company/types";
