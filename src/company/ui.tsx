@@ -40,3 +40,37 @@ export function Lines({ f, empty = "Бөглөөгүй" }: { f: ModelField | nul
     </ul>
   );
 }
+
+/**
+ * A stat that counts up to its value (spring-like ease-out, ~900 ms) when it
+ * mounts or the value changes; strings that are not a plain number
+ * ("212/438") and reduced motion show the value as is.
+ */
+export function CountUp({ value, ms = 900 }: { value: number | string; ms?: number }) {
+  const target = typeof value === "number" ? value : /^\d+$/.test(value) ? Number(value) : null;
+  const reduced = typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const [shown, setShown] = React.useState(target == null || reduced ? target : 0);
+  const from = React.useRef(0);
+  React.useEffect(() => {
+    if (target == null || reduced || typeof requestAnimationFrame === "undefined") return setShown(target);
+    const start = performance.now();
+    const a = from.current;
+    let raf = 0;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / ms);
+      const e = 1 - Math.pow(1 - p, 3);
+      const v = Math.round(a + (target - a) * e);
+      setShown(v);
+      from.current = v;
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, reduced, ms]);
+  if (target == null) return <>{value}</>;
+  return (
+    <span className="cv-countup" aria-label={String(target)}>
+      <span aria-hidden="true">{shown}</span>
+    </span>
+  );
+}
