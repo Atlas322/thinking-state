@@ -1,0 +1,227 @@
+/*
+ * @inai/thinking-state/site.css — GENERATED from tokens.css (npm run tokens:site).
+ * Thinking State tokens for a whole page: cream on :root, dark (Чиглэл 2) on
+ * :root[data-theme="dark"]; Удирдах accent with data-ts-mode="manage".
+ * Use the --ts-color-* / --ts-font-heading|text|label names below: they are the stable contract.
+ */
+
+:where(:root, .ts-theme-cream, [data-ts-theme="cream"]) {
+  --ts-page: #f0ede4;
+  --ts-surface: #f7f5ee;
+  --ts-soft: #efebe1;
+  --ts-soft-2: #e8e3d6;
+  --ts-line: #d8d3c6;
+  --ts-fg: #080808;
+  --ts-muted: #5e5a52;
+  --ts-faint: #8f8a80;
+  --ts-side: #e8e4da;
+  --ts-rail: #e8e4da;
+  --ts-raised: #efebe1;
+  /* accent by mode (see [data-ts-mode] below): Үзэх = Electric, Удирдах = indigo */
+  --ts-electric: #1b5cff;
+  --ts-electric-fg: #1b5cff;
+  --ts-electric-soft: #e3e9fb;
+  --ts-indigo: #3a4e8c;
+  --ts-indigo-fg: #3a4e8c;
+  --ts-indigo-soft: #e4e6ee;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-elevation: 0 1px 2px rgb(8 8 8 / 0.06), 0 6px 18px rgb(8 8 8 / 0.05);
+  --ts-link: #1b5cff;
+  --ts-seg-on: #f7f5ee;
+  --ts-code: #ebe7dd;
+  --ts-green: #5e7a5f;
+  --ts-green-soft: #e3eadf;
+  --ts-amber: #a85a12;
+  --ts-amber-soft: #f2e3cc;
+  --ts-red: #c2362f;
+  --ts-red-soft: #f4dad6;
+  --ts-yellow: #9a7400;
+  --ts-yellow-soft: #f1e7c4;
+  --ts-violet: #6b47c9;
+  --ts-violet-soft: #e5ddf3;
+  --ts-teal: #0f7a70;
+  --ts-teal-soft: #d6e9e4;
+  /* priority */
+  --ts-prio-high: #a8483a;
+  --ts-prio-high-bg: #f1e2dc;
+  --ts-prio-medium: #86672a;
+  --ts-prio-medium-bg: #efe7d4;
+  --ts-prio-low: #5c5a55;
+  --ts-prio-low-bg: #ece8dd;
+  /* categories: methodology, technology, business, product */
+  --ts-cat-1: #3a4e8c;
+  --ts-cat-1-bg: #e4e6ee;
+  --ts-cat-2: #5e7a5f;
+  --ts-cat-2-bg: #e3eadf;
+  --ts-cat-3: #86672a;
+  --ts-cat-3-bg: #efe7d4;
+  --ts-cat-4: #7a4e6a;
+  --ts-cat-4-bg: #eee2e8;
+  /* tiles and warm dark (Next Action, frontmatter, «Таны ээлж») */
+  --ts-tile-ochre: #e8e2d2;
+  --ts-tile-slate: #e4e6e9;
+  --ts-ink: #262522;
+  --ts-ink-card: #33312d;
+  --ts-ink-muted: #a3a099;
+  --ts-ink-label: #aebbda;
+  --ts-font: "Inter", system-ui, sans-serif;
+  --ts-font-display: "Spectral", Georgia, "Times New Roman", serif;
+  --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--ts-page);
+  color: var(--ts-fg);
+}
+
+:where(:root[data-theme="dark"], :root.dark, .ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
+  /* Чиглэл 2 «Удирдлагын төв» TH.Dark — Figma 36:148605 */
+  --ts-page: #0b0b0c;
+  --ts-surface: #17171a;
+  --ts-soft: #1e1e22;
+  --ts-soft-2: #26262a;
+  --ts-line: #26262a;
+  --ts-fg: #edebe6;
+  --ts-muted: #a3a099;
+  --ts-faint: #6e6c67;
+  --ts-side: #121214;
+  --ts-raised: #1e1e22;
+  --ts-rail: #08080a;
+  --ts-electric: #4d7fff;
+  /* #4D7FFF is ~4.7:1 on #17171A; links and accent text use the lighter blue */
+  --ts-electric-fg: #7aa2ff;
+  --ts-electric-soft: #16224a;
+  --ts-indigo: #3a4e8c;
+  /* indigo is ~2.3:1 on the dark surface: indigo text uses this lighter indigo */
+  --ts-indigo-fg: #aebbda;
+  --ts-indigo-soft: #1b2133;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-elevation: 0 0 0 1px var(--ts-line);
+  --ts-seg-on: #1e1e22;
+  --ts-code: #121214;
+  --ts-green: #4ade80;
+  --ts-green-soft: #12291a;
+  --ts-amber: #eba659;
+  --ts-amber-soft: #33240f;
+  --ts-red: #f87171;
+  --ts-red-soft: #3a1d1f;
+  --ts-yellow: #e8c25a;
+  --ts-yellow-soft: #352c10;
+  --ts-violet: #a78bfa;
+  --ts-violet-soft: #2a2140;
+  --ts-teal: #5eead4;
+  --ts-teal-soft: #123330;
+  --ts-link: #7aa2ff;
+  --ts-prio-high: #e7907f;
+  --ts-prio-high-bg: #3a2420;
+  --ts-prio-medium: #d9b56a;
+  --ts-prio-medium-bg: #332a17;
+  --ts-prio-low: #b0ada5;
+  --ts-prio-low-bg: #26252a;
+  --ts-cat-1: #9fb0e6;
+  --ts-cat-1-bg: #1e2438;
+  --ts-cat-2: #a6c4a7;
+  --ts-cat-2-bg: #1d2a1f;
+  --ts-cat-3: #d9b56a;
+  --ts-cat-3-bg: #332a17;
+  --ts-cat-4: #d4a6c4;
+  --ts-cat-4-bg: #33222d;
+  --ts-tile-ochre: #1e1e22;
+  --ts-tile-slate: #1e1e22;
+  --ts-ink: #121214;
+  --ts-ink-card: #17171a;
+  --ts-ink-muted: #a3a099;
+  --ts-ink-label: #aebbda;
+  --ts-font: "Inter", system-ui, sans-serif;
+  --ts-font-display: "Inter", system-ui, sans-serif;
+  --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: dark;
+  background: var(--ts-page);
+  color: var(--ts-fg);
+}
+
+/* Mode: Удирдах = indigo accent on either theme; Үзэх = Electric. Only the accent changes.
+   The mode may sit on the themed element, inside it, or on an ancestor of it
+   (theme blocks reset the accent, so the ancestor case is listed explicitly). */
+:where(.ts-theme-manage, [data-ts-theme="manage"], [data-ts-mode="manage"], [data-ts-mode="manage"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-dark)) {
+  --ts-accent: var(--ts-indigo);
+  --ts-accent-fg: var(--ts-indigo-fg);
+  --ts-accent-soft: var(--ts-indigo-soft);
+}
+:where([data-ts-mode="view"], [data-ts-mode="view"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-dark, .ts-theme-manage)) {
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+}
+
+/*
+ * Motion (--ts-motion-*): durations, easings and springs, theme-independent.
+ * Springs are physical (src/motion/spring.ts) rendered as CSS linear() curves;
+ * pair --ts-motion-spring-NAME with --ts-motion-spring-NAME-duration.
+ * Browsers without linear() get a cubic-bezier of the same character.
+ * Generated by motionTokensCss() — package.test.ts keeps them in sync.
+ */
+:where(:root, [data-ts-theme]) {
+  --ts-motion-dur-xs: 120ms;
+  --ts-motion-dur-sm: 200ms;
+  --ts-motion-dur-md: 320ms;
+  --ts-motion-dur-lg: 560ms;
+  --ts-motion-dur-xl: 900ms;
+  --ts-motion-loop-move: 1200ms;
+  --ts-motion-loop-rest: 4000ms;
+  --ts-motion-loop-period: 5200ms;
+  --ts-motion-loop-count: 3;
+  --ts-motion-stagger: 100ms;
+  --ts-motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ts-motion-ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ts-motion-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --ts-motion-ease-loop: cubic-bezier(0.45, 0, 0.55, 1);
+  --ts-motion-spring-soft-duration: 702ms;
+  --ts-motion-spring-settle-duration: 789ms;
+  --ts-motion-spring-heavy-duration: 1160ms;
+  --ts-motion-spring-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ts-motion-spring-settle: cubic-bezier(0.25, 1.2, 0.5, 1);
+  --ts-motion-spring-heavy: cubic-bezier(0.25, 1.2, 0.5, 1);
+}
+@supports (animation-timing-function: linear(0, 1)) {
+  :where(:root, [data-ts-theme]) {
+    --ts-motion-spring-soft: linear(0, 0.004 1%, 0.023 2.5%, 0.078 5%, 0.151 7.5%, 0.462 17%, 0.56 20.5%, 0.634 23.5%, 0.698 26.5%, 0.761 30%, 0.812 33.5%, 0.858 37.5%, 0.898 42%, 0.929 47%, 0.953 52.5%, 0.971 58.5%, 0.991 73.5%, 1);
+    --ts-motion-spring-settle: linear(0, 0.008 1.5%, 0.029 3%, 0.061 4.5%, 0.101 6%, 0.197 9%, 0.529 18.5%, 0.621 21.5%, 0.701 24.5%, 0.77 27.5%, 0.836 31%, 0.881 34%, 0.922 37.5%, 0.957 41.5%, 0.98 45.5%, 0.996 50%, 1.006 55%, 1.011 65.5%, 1);
+    --ts-motion-spring-heavy: linear(0, 0.004 1%, 0.021 2.5%, 0.05 4%, 0.102 6%, 0.198 9%, 0.513 18%, 0.62 21.5%, 0.699 24.5%, 0.768 27.5%, 0.833 31%, 0.878 34%, 0.918 37.5%, 0.953 41.5%, 0.976 45.5%, 0.993 50%, 1.004 55.5%, 1.009 66.5%, 1);
+  }
+}
+
+/* Stable aliases (declared wherever a theme or mode is, so they follow it). */
+:where(:root, [data-theme="dark"], [data-ts-theme], [data-ts-mode]) {
+  --ts-color-bg: var(--ts-page);
+  --ts-color-side: var(--ts-side);
+  --ts-color-rail: var(--ts-rail);
+  --ts-color-surface: var(--ts-surface);
+  --ts-color-raised: var(--ts-raised);
+  --ts-color-tile: var(--ts-tile-ochre);
+  --ts-color-line: var(--ts-line);
+  --ts-color-text: var(--ts-fg);
+  --ts-color-text-muted: var(--ts-muted);
+  --ts-color-text-faint: var(--ts-faint);
+  --ts-color-accent: var(--ts-accent);
+  --ts-color-accent-text: var(--ts-accent-fg);
+  --ts-color-accent-soft: var(--ts-accent-soft);
+  --ts-color-electric: var(--ts-electric);
+  --ts-color-indigo: var(--ts-indigo);
+  --ts-color-link: var(--ts-link);
+  --ts-color-amber: var(--ts-amber);
+  --ts-color-amber-soft: var(--ts-amber-soft);
+  --ts-color-green: var(--ts-green);
+  --ts-color-red: var(--ts-red);
+  --ts-shadow: var(--ts-elevation);
+  --ts-font-heading: var(--ts-font-display);
+  --ts-font-text: var(--ts-font);
+  --ts-font-label: var(--ts-font-mono);
+}
+
+:where(body) {
+  background: var(--ts-page);
+  color: var(--ts-fg);
+  font-family: var(--ts-font);
+}

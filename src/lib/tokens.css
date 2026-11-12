@@ -3,19 +3,23 @@
  * Every component reads its colours and fonts from these --ts-* variables
  * and falls back to its own defaults, so the tokens are optional.
  *
- * Put a theme on any ancestor of the components:
- *   <div data-ts-theme="cream">…</div>                      inai.sh, direction 1
- *   <div data-ts-theme="manage" data-theme="dark">…</div>   Удирдах горим (dark)
+ * Two themes (itge.e 2026-11-12, final):
+ *   cream  Чиглэл 1 (Figma 36:146054) — cream page, Spectral headings, Inter text
+ *   dark   Чиглэл 2 «Удирдлагын төв» (Figma 36:148605, TH.Dark) — near-black
+ *          layered surfaces, Inter headings and text, IBM Plex Mono labels,
+ *          Electric accent
+ * and a mode that swaps only the accent:
+ *   data-ts-mode="view" (Үзэх, Electric) | "manage" (Удирдах, indigo)
+ * data-ts-theme="manage" = dark + Удирдах (kept for v0.1 hosts).
  * `data-theme="dark"` (or class "dark") also switches the components' own
  * dark details (colour-scheme, badge text).
  *
- * Palette from the inai.sh Figma «🧭 TENET 3 · Апп хэлбэр» (section 05, ref 37:2529):
- * cream page #F0EDE4, card #F7F5EE (never pure white on cream), header and
- * footer #EFEBE1, line #D8D3C6. Accent follows the mode (itge.e 2026-11-12):
- * Үзэх (cream) = Electric #1B5CFF, Удирдах (manage, dark) = indigo #3A4E8C;
- * saturated colour stays on small marks, never large areas, warm dark #262522 for
- * dark tiles; Spectral headings, Inter UI, IBM Plex Mono labels.
- * Fonts are not bundled: load Spectral, Inter and IBM Plex Mono in the app.
+ *   <div data-ts-theme="cream">…</div>
+ *   <div data-ts-theme="dark" data-theme="dark">…</div>
+ *
+ * --ts-font-display is per theme (Spectral on cream, Inter on dark).
+ * Fonts are not bundled: load Spectral, Inter and IBM Plex Mono in the app
+ * (Google Fonts css2 without &text=, so the cyrillic-ext subset with ү, ө comes).
  */
 
 :where(.ts-theme-cream, [data-ts-theme="cream"]) {
@@ -27,9 +31,20 @@
   --ts-fg: #080808;
   --ts-muted: #5e5a52;
   --ts-faint: #8f8a80;
-  --ts-accent: #1b5cff;
-  --ts-accent-soft: #e3e9fb;
-  --ts-accent-fg: #1b5cff;
+  --ts-side: #e8e4da;
+  --ts-rail: #e8e4da;
+  --ts-raised: #efebe1;
+  /* accent by mode (see [data-ts-mode] below): Үзэх = Electric, Удирдах = indigo */
+  --ts-electric: #1b5cff;
+  --ts-electric-fg: #1b5cff;
+  --ts-electric-soft: #e3e9fb;
+  --ts-indigo: #3a4e8c;
+  --ts-indigo-fg: #3a4e8c;
+  --ts-indigo-soft: #e4e6ee;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-elevation: 0 1px 2px rgb(8 8 8 / 0.06), 0 6px 18px rgb(8 8 8 / 0.05);
   --ts-link: #1b5cff;
   --ts-seg-on: #f7f5ee;
   --ts-code: #ebe7dd;
@@ -75,21 +90,33 @@
   color: var(--ts-fg);
 }
 
-:where(.ts-theme-manage, [data-ts-theme="manage"]) {
+:where(.ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
+  /* Чиглэл 2 «Удирдлагын төв» TH.Dark — Figma 36:148605 */
   --ts-page: #0b0b0c;
-  --ts-surface: #141416;
-  --ts-soft: #1e1e21;
-  --ts-soft-2: #242428;
-  --ts-line: #2b2b30;
-  --ts-fg: #f0ede4;
-  --ts-muted: #a39f95;
-  --ts-faint: #6e6a62;
-  --ts-accent: #3a4e8c;
-  --ts-accent-soft: #1b2133;
-  /* indigo is ~2.3:1 on the dark surface: text in the accent uses this lighter indigo (≥ 7:1) */
-  --ts-accent-fg: #aebbda;
-  --ts-seg-on: #2c2c31;
-  --ts-code: #0e0e10;
+  --ts-surface: #17171a;
+  --ts-soft: #1e1e22;
+  --ts-soft-2: #26262a;
+  --ts-line: #26262a;
+  --ts-fg: #edebe6;
+  --ts-muted: #a3a099;
+  --ts-faint: #6e6c67;
+  --ts-side: #121214;
+  --ts-raised: #1e1e22;
+  --ts-rail: #08080a;
+  --ts-electric: #4d7fff;
+  /* #4D7FFF is ~4.7:1 on #17171A; links and accent text use the lighter blue */
+  --ts-electric-fg: #7aa2ff;
+  --ts-electric-soft: #16224a;
+  --ts-indigo: #3a4e8c;
+  /* indigo is ~2.3:1 on the dark surface: indigo text uses this lighter indigo */
+  --ts-indigo-fg: #aebbda;
+  --ts-indigo-soft: #1b2133;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-elevation: 0 0 0 1px var(--ts-line);
+  --ts-seg-on: #1e1e22;
+  --ts-code: #121214;
   --ts-green: #4ade80;
   --ts-green-soft: #12291a;
   --ts-amber: #eba659;
@@ -117,18 +144,32 @@
   --ts-cat-3-bg: #332a17;
   --ts-cat-4: #d4a6c4;
   --ts-cat-4-bg: #33222d;
-  --ts-tile-ochre: #2e2b24;
-  --ts-tile-slate: #24262a;
-  --ts-ink: #1a1917;
-  --ts-ink-card: #262522;
+  --ts-tile-ochre: #1e1e22;
+  --ts-tile-slate: #1e1e22;
+  --ts-ink: #121214;
+  --ts-ink-card: #17171a;
   --ts-ink-muted: #a3a099;
   --ts-ink-label: #aebbda;
   --ts-font: "Inter", system-ui, sans-serif;
-  --ts-font-display: "Spectral", Georgia, "Times New Roman", serif;
+  --ts-font-display: "Inter", system-ui, sans-serif;
   --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   color-scheme: dark;
   background: var(--ts-page);
   color: var(--ts-fg);
+}
+
+/* Mode: Удирдах = indigo accent on either theme; Үзэх = Electric. Only the accent changes.
+   The mode may sit on the themed element, inside it, or on an ancestor of it
+   (theme blocks reset the accent, so the ancestor case is listed explicitly). */
+:where(.ts-theme-manage, [data-ts-theme="manage"], [data-ts-mode="manage"], [data-ts-mode="manage"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-dark)) {
+  --ts-accent: var(--ts-indigo);
+  --ts-accent-fg: var(--ts-indigo-fg);
+  --ts-accent-soft: var(--ts-indigo-soft);
+}
+:where([data-ts-mode="view"], [data-ts-mode="view"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-dark, .ts-theme-manage)) {
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
 }
 
 /*
