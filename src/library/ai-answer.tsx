@@ -256,8 +256,8 @@ export function AIAnswer({
 }
 
 const css = `
-.aa{--aa-bg:#fff;--aa-fg:#18181b;--aa-muted:#71717a;--aa-faint:#a1a1aa;--aa-line:#e9e9ec;--aa-chip:#f1f1f3;--aa-accent:#4f7cf0;width:100%;max-width:730px;background:var(--aa-bg);color:var(--aa-fg);border:1px solid var(--aa-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.6 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .aa{--aa-bg:#1b1b1e;--aa-fg:#ececef;--aa-muted:#a1a1aa;--aa-faint:#71717a;--aa-line:#2e2e33;--aa-chip:#2a2a2f;--aa-accent:#7c9cff;color-scheme:dark}
+.aa{--aa-bg:#fff;--aa-fg:#18181b;--aa-muted:#65656d;--aa-faint:#65656d;--aa-line:#e9e9ec;--aa-chip:#f1f1f3;--aa-accent:#4f7cf0;width:100%;max-width:730px;background:var(--aa-bg);color:var(--aa-fg);border:1px solid var(--aa-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.6 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .aa{--aa-bg:#1b1b1e;--aa-fg:#ececef;--aa-muted:#a1a1aa;--aa-faint:#9a9aa2;--aa-line:#2e2e33;--aa-chip:#2a2a2f;--aa-accent:#7c9cff;color-scheme:dark}
 .aa *{box-sizing:border-box}.aa button{font:inherit;color:inherit;cursor:pointer}
 .aa-body{padding:22px 26px 6px}
 .aa-q{margin:0 0 14px;font-size:16px;font-weight:500;letter-spacing:-.01em}

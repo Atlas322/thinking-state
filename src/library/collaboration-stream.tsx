@@ -489,8 +489,8 @@ export function CollaborationStream({
 }
 
 const css = `
-.cs-root{--cs-fg:#1f1f1f;--cs-muted:#8a8a8a;--cs-card:#fff;--cs-soft:#f3f3f3;--cs-line:#ececec;--cs-blue:#3d7be8;--cs-amber:#b7791f;width:100%;max-width:770px;margin:0 auto;color:var(--cs-fg);font:400 13px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;position:relative}
-:where(.dark,[data-theme=dark]) .cs-root{--cs-fg:#ececec;--cs-muted:#8f8f94;--cs-card:#1d1d20;--cs-soft:#28282c;--cs-line:#2e2e33;color-scheme:dark}
+.cs-root{--cs-fg:#1f1f1f;--cs-muted:#65656d;--cs-card:#fff;--cs-soft:#f3f3f3;--cs-line:#ececec;--cs-blue:#3d7be8;--cs-amber:#b7791f;width:100%;max-width:770px;margin:0 auto;color:var(--cs-fg);font:400 13px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;position:relative}
+:where(.dark,[data-theme=dark]) .cs-root{--cs-fg:#ececec;--cs-muted:#9a9aa2;--cs-card:#1d1d20;--cs-soft:#28282c;--cs-line:#2e2e33;color-scheme:dark}
 .cs-root *{box-sizing:border-box}.cs-root :where(button){font:inherit;color:inherit;cursor:pointer}
 .cs-root button:focus-visible,.cs-root textarea:focus-visible{outline:2px solid var(--cs-blue);outline-offset:2px}
 .cs-mark{flex:none;display:block}

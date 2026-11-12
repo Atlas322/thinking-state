@@ -213,8 +213,8 @@ export function RootCauseTree({ title = "Үндсэн шалтгаан", failure
 }
 
 const css = `
-.rct{--rct-bg:#fff;--rct-fg:#18181b;--rct-muted:#71717a;--rct-faint:#a1a1aa;--rct-line:#e6e6e9;--rct-chip:#f1f1f3;--rct-blue:#3b82f6;--rct-blue-soft:#e8f1fe;--rct-red:#e5484d;--rct-red-soft:#fdecec;--rct-green:#16a34a;width:100%;max-width:700px;color:var(--rct-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .rct{--rct-bg:#1b1b1e;--rct-fg:#ececef;--rct-muted:#a1a1aa;--rct-faint:#71717a;--rct-line:#2e2e33;--rct-chip:#2a2a2f;--rct-blue:#5b9cff;--rct-blue-soft:#1b2a44;--rct-red:#ff6b6f;--rct-red-soft:#3a1d1f;--rct-green:#4ade80;color-scheme:dark}
+.rct{--rct-bg:#fff;--rct-fg:#18181b;--rct-muted:#65656d;--rct-faint:#65656d;--rct-line:#e6e6e9;--rct-chip:#f1f1f3;--rct-blue:#3b82f6;--rct-blue-soft:#e8f1fe;--rct-red:#e5484d;--rct-red-soft:#fdecec;--rct-green:#16a34a;width:100%;max-width:700px;color:var(--rct-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .rct{--rct-bg:#1b1b1e;--rct-fg:#ececef;--rct-muted:#a1a1aa;--rct-faint:#9a9aa2;--rct-line:#2e2e33;--rct-chip:#2a2a2f;--rct-blue:#5b9cff;--rct-blue-soft:#1b2a44;--rct-red:#ff6b6f;--rct-red-soft:#3a1d1f;--rct-green:#4ade80;color-scheme:dark}
 .rct *{box-sizing:border-box}.rct button{font:inherit;color:inherit;cursor:pointer}
 .rct-bar{display:flex;align-items:center;gap:8px;padding:0 4px 14px}
 .rct-bar>svg{width:14px;height:14px;color:var(--rct-muted)}.rct-bar strong{flex:1;font-weight:500}

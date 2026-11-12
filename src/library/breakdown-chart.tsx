@@ -226,8 +226,8 @@ export function BreakdownChart({
 }
 
 const css = `
-.bc{--bc-bg:#fff;--bc-fg:#18181b;--bc-muted:#71717a;--bc-faint:#a1a1aa;--bc-line:#ececef;--bc-soft:#f4f4f5;--bc-accent:#3b82f6;width:100%;max-width:560px;background:var(--bc-bg);color:var(--bc-fg);border:1px solid var(--bc-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .bc{--bc-bg:#1b1b1e;--bc-fg:#ececef;--bc-muted:#a1a1aa;--bc-faint:#71717a;--bc-line:#2e2e33;--bc-soft:#26262b;color-scheme:dark}
+.bc{--bc-bg:#fff;--bc-fg:#18181b;--bc-muted:#65656d;--bc-faint:#65656d;--bc-line:#ececef;--bc-soft:#f4f4f5;--bc-accent:#3b82f6;width:100%;max-width:560px;background:var(--bc-bg);color:var(--bc-fg);border:1px solid var(--bc-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .bc{--bc-bg:#1b1b1e;--bc-fg:#ececef;--bc-muted:#a1a1aa;--bc-faint:#9a9aa2;--bc-line:#2e2e33;--bc-soft:#26262b;color-scheme:dark}
 .bc *{box-sizing:border-box}.bc button{font:inherit;color:inherit;cursor:pointer}
 .bc-head{display:flex;justify-content:space-between;align-items:baseline;padding:16px 16px 10px}
 .bc h3{margin:0;font-size:15px;font-weight:500}

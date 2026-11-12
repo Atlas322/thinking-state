@@ -195,7 +195,7 @@ const css = /* css */ `
   --ui-pg-card: #ffffff;
   --ui-pg-line: #e5e5e5;
   --ui-pg-ink: #171717;
-  --ui-pg-muted: #a3a3a3;
+  --ui-pg-muted: #65656d;
   --ui-pg-ring: #8f8f8f;
   --ui-pg-focus: rgba(0, 96, 226, 0.7);
   --ui-pg-track: #f0f0f0;
@@ -441,7 +441,7 @@ const css = /* css */ `
   --ui-pg-card: #232326;
   --ui-pg-line: rgba(255, 255, 255, 0.08);
   --ui-pg-ink: #ededed;
-  --ui-pg-muted: #8f8f8f;
+  --ui-pg-muted: #9a9aa2;
   --ui-pg-ring: #6b6b70;
   --ui-pg-focus: rgba(77, 141, 255, 0.8);
   --ui-pg-track: rgba(255, 255, 255, 0.1);

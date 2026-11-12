@@ -157,7 +157,7 @@ const css = /* css */ `
 /* Colors and motion as variables – override them on .ui-chk (see Theming in the docs) */
 .ui-chk {
   --ui-chk-ink: #171717;
-  --ui-chk-subtle: #8f8f8f;
+  --ui-chk-subtle: #65656d;
   --ui-chk-surface: #ffffff;
   --ui-chk-edge: #d4d4d8;
   --ui-chk-edge-hover: #a1a1aa;
@@ -252,7 +252,7 @@ const css = /* css */ `
 /* Dark mode: follows a .dark class or data-theme="dark" on any ancestor, e.g. <html> */
 :where(.dark, [data-theme="dark"]) .ui-chk {
   --ui-chk-ink: #ededed;
-  --ui-chk-subtle: #8b8b92;
+  --ui-chk-subtle: #9a9aa2;
   --ui-chk-surface: #19191b;
   --ui-chk-edge: #3a3a40;
   --ui-chk-edge-hover: #55555c;

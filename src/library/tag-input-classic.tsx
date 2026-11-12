@@ -379,8 +379,8 @@ const css = /* css */ `
   --ui-tag-title: #171717;
   --ui-tag-ink: #171717;
   --ui-tag-muted: #404040;
-  --ui-tag-subtle: #8f8f8f;
-  --ui-tag-faint: #b5b5b5;
+  --ui-tag-subtle: #65656d;
+  --ui-tag-faint: #65656d;
   --ui-tag-surface: #ffffff;
   --ui-tag-line: #e6e6e8;
   --ui-tag-edge: #d4d4d8;
@@ -535,9 +535,9 @@ const css = /* css */ `
 :where(.dark, [data-theme="dark"]) .ui-tag {
   --ui-tag-title: #ededed;
   --ui-tag-ink: #ededed;
-  --ui-tag-muted: #c8c8cc;
-  --ui-tag-subtle: #8b8b92;
-  --ui-tag-faint: #5c5c63;
+  --ui-tag-muted: #9a9aa2;
+  --ui-tag-subtle: #9a9aa2;
+  --ui-tag-faint: #9a9aa2;
   --ui-tag-surface: #19191b;
   --ui-tag-line: #2a2a2e;
   --ui-tag-edge: #3a3a40;

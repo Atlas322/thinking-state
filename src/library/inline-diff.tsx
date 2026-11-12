@@ -288,8 +288,8 @@ export function InlineDiff({
 }
 
 const css = `
-.idf-root{--idf-fg:#1f1f1f;--idf-muted:#7d7d7d;--idf-card:#fff;--idf-line:#ececec;--idf-soft:#f3f3f3;--idf-del:#c4555a;--idf-del-bg:#e5484d12;--idf-ins:#18794e;--idf-ins-bg:#30a46c1c;--idf-blue:#3d7be8;width:100%;max-width:520px;margin:0 auto;background:var(--idf-card);font-size:14.5px;border:1px solid var(--idf-line);border-radius:12px;color:var(--idf-fg);font:400 15px/1.67 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;box-shadow:0 1px 2px #00000008;position:relative}
-:where(.dark,[data-theme=dark]) .idf-root{--idf-fg:#ededed;--idf-muted:#8f8f94;--idf-card:#1b1b1e;--idf-line:#2c2c31;--idf-soft:#26262a;--idf-del:#ff6b70;--idf-del-bg:#ff6b7020;--idf-ins:#4cc38a;--idf-ins-bg:#4cc38a22;color-scheme:dark}
+.idf-root{--idf-fg:#1f1f1f;--idf-muted:#65656d;--idf-card:#fff;--idf-line:#ececec;--idf-soft:#f3f3f3;--idf-del:#c4555a;--idf-del-bg:#e5484d12;--idf-ins:#18794e;--idf-ins-bg:#30a46c1c;--idf-blue:#3d7be8;width:100%;max-width:520px;margin:0 auto;background:var(--idf-card);font-size:14.5px;border:1px solid var(--idf-line);border-radius:12px;color:var(--idf-fg);font:400 15px/1.67 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;box-shadow:0 1px 2px #00000008;position:relative}
+:where(.dark,[data-theme=dark]) .idf-root{--idf-fg:#ededed;--idf-muted:#9a9aa2;--idf-card:#1b1b1e;--idf-line:#2c2c31;--idf-soft:#26262a;--idf-del:#ff6b70;--idf-del-bg:#ff6b7020;--idf-ins:#4cc38a;--idf-ins-bg:#4cc38a22;color-scheme:dark}
 .idf-root *{box-sizing:border-box}
 .idf-root :where(button){font:inherit;color:inherit;cursor:pointer}
 .idf-label{display:flex;align-items:center;gap:8px;margin:0;padding:16px 20px 0;font-size:13px;color:color-mix(in srgb,var(--idf-fg) 75%,transparent)}

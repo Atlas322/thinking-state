@@ -277,8 +277,8 @@ export function PlanVsActual({
 }
 
 const css = `
-.pva-root{--pva-fg:#1f1f1f;--pva-muted:#8a8a8a;--pva-card:#fff;--pva-line:#eeeeee;--pva-soft:#f4f4f4;--pva-bar:#e6e6fb;--pva-bar-edge:#c5c5ef;--pva-amber:#c2660d;--pva-amber-bg:#fdecd6;--pva-green:#1f8a4c;--pva-green-bg:#dff3e6;--pva-blue:#3d7be8;--pva-name:200px;width:100%;max-width:760px;margin:0 auto;background:var(--pva-card);border:1px solid var(--pva-line);border-radius:12px;color:var(--pva-fg);font:400 13px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;box-shadow:0 1px 2px #00000008;overflow:hidden}
-:where(.dark,[data-theme=dark]) .pva-root{--pva-fg:#ececec;--pva-muted:#8f8f94;--pva-card:#1b1b1e;--pva-line:#2b2b30;--pva-soft:#25252a;--pva-bar:#34345a;--pva-bar-edge:#4c4c86;--pva-amber:#f0a35a;--pva-amber-bg:#f0a35a26;--pva-green:#5bd08c;--pva-green-bg:#5bd08c22;color-scheme:dark}
+.pva-root{--pva-fg:#1f1f1f;--pva-muted:#65656d;--pva-card:#fff;--pva-line:#eeeeee;--pva-soft:#f4f4f4;--pva-bar:#e6e6fb;--pva-bar-edge:#c5c5ef;--pva-amber:#c2660d;--pva-amber-bg:#fdecd6;--pva-green:#1f8a4c;--pva-green-bg:#dff3e6;--pva-blue:#3d7be8;--pva-name:200px;width:100%;max-width:760px;margin:0 auto;background:var(--pva-card);border:1px solid var(--pva-line);border-radius:12px;color:var(--pva-fg);font:400 13px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;box-shadow:0 1px 2px #00000008;overflow:hidden}
+:where(.dark,[data-theme=dark]) .pva-root{--pva-fg:#ececec;--pva-muted:#9a9aa2;--pva-card:#1b1b1e;--pva-line:#2b2b30;--pva-soft:#25252a;--pva-bar:#34345a;--pva-bar-edge:#4c4c86;--pva-amber:#f0a35a;--pva-amber-bg:#f0a35a26;--pva-green:#5bd08c;--pva-green-bg:#5bd08c22;color-scheme:dark}
 .pva-root *{box-sizing:border-box}
 .pva-head{display:flex;align-items:center;gap:8px;padding:12px 14px 12px 16px;border-bottom:1px solid var(--pva-line);flex-wrap:wrap}
 .pva-logo{width:15px;height:15px;flex:none}

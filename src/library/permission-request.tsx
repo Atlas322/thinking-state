@@ -263,8 +263,8 @@ export function PermissionRequest(props: PermissionRequestProps) {
 
 const css = `
 .pr-stack{display:flex;flex-direction:column;gap:8px;width:100%;max-width:422px}
-.pr{--pr-bg:#fff;--pr-fg:#18181b;--pr-muted:#71717a;--pr-faint:#a1a1aa;--pr-line:#ececef;--pr-soft:#f4f4f5;--pr-accent:#18181b;--pr-red:#dc3f1c;--pr-red-bg:#fdecea;--pr-amber:#b45309;--pr-amber-bg:#fdf3dc;width:100%;max-width:422px;background:var(--pr-bg);color:var(--pr-fg);border:1px solid var(--pr-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;outline:none}
-:where(.dark,[data-theme=dark]) .pr{--pr-bg:#1b1b1e;--pr-fg:#ececef;--pr-muted:#a1a1aa;--pr-faint:#71717a;--pr-line:#2e2e33;--pr-soft:#26262b;--pr-accent:#ececef;--pr-red:#f0603e;--pr-red-bg:#3d1a14;--pr-amber:#f2b04a;--pr-amber-bg:#3a2a10;color-scheme:dark}
+.pr{--pr-bg:#fff;--pr-fg:#18181b;--pr-muted:#65656d;--pr-faint:#65656d;--pr-line:#ececef;--pr-soft:#f4f4f5;--pr-accent:#18181b;--pr-red:#c2361a;--pr-red-bg:#fdecea;--pr-amber:#b45309;--pr-amber-bg:#fdf3dc;width:100%;max-width:422px;background:var(--pr-bg);color:var(--pr-fg);border:1px solid var(--pr-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;outline:none}
+:where(.dark,[data-theme=dark]) .pr{--pr-bg:#1b1b1e;--pr-fg:#ececef;--pr-muted:#a1a1aa;--pr-faint:#9a9aa2;--pr-line:#2e2e33;--pr-soft:#26262b;--pr-accent:#ececef;--pr-red:#f0603e;--pr-red-bg:#3d1a14;--pr-amber:#f2b04a;--pr-amber-bg:#3a2a10;color-scheme:dark}
 .pr *{box-sizing:border-box}.pr button{font:inherit;color:inherit;cursor:pointer}
 .pr-muted{color:var(--pr-muted)}.pr-small{font-size:13px}
 .pr-folded{display:flex;align-items:center;gap:12px;padding:12px 14px 12px 16px}
@@ -308,7 +308,11 @@ const css = `
 .pr-deny:hover{background:var(--pr-soft)}
 .pr-allow{border:1px solid var(--pr-accent);background:var(--pr-accent);color:var(--pr-bg)!important}
 .pr-allow kbd{background:#ffffff38;color:inherit}
+.pr-destructive .pr-allow kbd{background:none;box-shadow:inset 0 0 0 1px currentColor}
 .pr-destructive .pr-allow{background:var(--pr-red);border-color:var(--pr-red);color:#fff!important}
+/* dark: the red fill is light (#f0603e), so the label goes dark (5.3:1); white was 3.3:1 */
+:where(.dark,[data-theme=dark]) .pr-destructive .pr-allow{color:var(--pr-bg)!important}
+:where(.dark,[data-theme=dark]) .pr-destructive .pr-allow kbd{background:none;box-shadow:inset 0 0 0 1px currentColor}
 .pr-allow:hover{filter:brightness(1.08)}
 .pr :focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
 @media(max-width:440px){.pr-reason{margin-left:16px}.pr-btns button{flex:1;justify-content:center}}

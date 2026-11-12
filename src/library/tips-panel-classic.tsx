@@ -177,7 +177,7 @@ const css = /* css */ `
   --ui-tp-card: #ffffff;
   --ui-tp-line: #ececec;
   --ui-tp-ink: #171717;
-  --ui-tp-muted: #737373;
+  --ui-tp-muted: #65656d;
   --ui-tp-ok: #2f6bff;
   --ui-tp-focus: rgba(0, 96, 226, 0.7);
   /* Height of the tip list before it scrolls */
@@ -350,7 +350,7 @@ const css = /* css */ `
   --ui-tp-card: #232326;
   --ui-tp-line: rgba(255, 255, 255, 0.08);
   --ui-tp-ink: #ededed;
-  --ui-tp-muted: #8f8f8f;
+  --ui-tp-muted: #9a9aa2;
   --ui-tp-ok: #6b95ff;
   --ui-tp-focus: rgba(77, 141, 255, 0.8);
 }

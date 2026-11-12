@@ -337,8 +337,8 @@ export function Combobox({
 }
 
 const css = `
-.cb{--cb-bg:#fff;--cb-fg:#18181b;--cb-muted:#71717a;--cb-faint:#a1a1aa;--cb-line:#e7e7ea;--cb-soft:#f4f4f5;--cb-hover:#f1f1f3;--cb-accent:#3b82f6;--cb-mark:#fdf0b5;position:relative;width:100%;max-width:420px;color:var(--cb-fg);font:400 14px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .cb{--cb-bg:#1b1b1e;--cb-fg:#ececef;--cb-muted:#a1a1aa;--cb-faint:#71717a;--cb-line:#2e2e33;--cb-soft:#26262a;--cb-hover:#2a2a2f;--cb-accent:#60a5fa;--cb-mark:#5b4a12;color-scheme:dark}
+.cb{--cb-bg:#fff;--cb-fg:#18181b;--cb-muted:#65656d;--cb-faint:#65656d;--cb-line:#e7e7ea;--cb-soft:#f4f4f5;--cb-hover:#f1f1f3;--cb-accent:#3b82f6;--cb-mark:#fdf0b5;position:relative;width:100%;max-width:420px;color:var(--cb-fg);font:400 14px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .cb{--cb-bg:#1b1b1e;--cb-fg:#ececef;--cb-muted:#a1a1aa;--cb-faint:#9a9aa2;--cb-line:#2e2e33;--cb-soft:#26262a;--cb-hover:#2a2a2f;--cb-accent:#60a5fa;--cb-mark:#5b4a12;color-scheme:dark}
 .cb *{box-sizing:border-box}.cb button{font:inherit;color:inherit;cursor:pointer}
 .cb-label{display:block;margin:0 0 6px 2px;font-size:12px;font-weight:500}
 .cb-field{display:flex;align-items:center;gap:4px;min-height:34px;padding:3px 30px 3px 4px;border:1px solid var(--cb-line);border-radius:8px;background:var(--cb-bg);box-shadow:0 1px 2px #00000008;position:relative;cursor:text;overflow:hidden;transition:border-color .15s,box-shadow .15s}

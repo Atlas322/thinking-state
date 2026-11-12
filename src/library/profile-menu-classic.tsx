@@ -327,8 +327,8 @@ const css = /* css */ `
   --ui-pm-line: #ececec;
   --ui-pm-ink: #171717;
   --ui-pm-text: #404040;
-  --ui-pm-muted: #8f8f8f;
-  --ui-pm-icon: #737373;
+  --ui-pm-muted: #65656d;
+  --ui-pm-icon: #65656d;
   --ui-pm-hover: #f5f5f5;
   --ui-pm-off: #f0f0f0;
   --ui-pm-fill: #2f6bff;
@@ -548,8 +548,8 @@ const css = /* css */ `
   --ui-pm-line: rgba(255, 255, 255, 0.08);
   --ui-pm-ink: #ededed;
   --ui-pm-text: #c4c4c4;
-  --ui-pm-muted: #8f8f8f;
-  --ui-pm-icon: #8f8f8f;
+  --ui-pm-muted: #9a9aa2;
+  --ui-pm-icon: #9a9aa2;
   --ui-pm-hover: #2a2a2d;
   --ui-pm-off: #161618;
   --ui-pm-badge: #fb7185;

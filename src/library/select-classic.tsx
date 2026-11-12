@@ -499,9 +499,9 @@ const css = /* css */ `
 .ui-sel {
   --ui-sel-title: #171717;
   --ui-sel-ink: #171717;
-  --ui-sel-subtle: #8f8f8f;
-  --ui-sel-faint: #b5b5b5;
-  --ui-sel-icon: #8f8f8f;
+  --ui-sel-subtle: #65656d;
+  --ui-sel-faint: #65656d;
+  --ui-sel-icon: #65656d;
   --ui-sel-surface: #ffffff;
   --ui-sel-menu: #ffffff;
   --ui-sel-line: #e6e6e8;
@@ -670,9 +670,9 @@ const css = /* css */ `
 :where(.dark, [data-theme="dark"]) .ui-sel {
   --ui-sel-title: #ededed;
   --ui-sel-ink: #ededed;
-  --ui-sel-subtle: #8b8b92;
-  --ui-sel-faint: #5c5c63;
-  --ui-sel-icon: #8b8b92;
+  --ui-sel-subtle: #9a9aa2;
+  --ui-sel-faint: #9a9aa2;
+  --ui-sel-icon: #9a9aa2;
   --ui-sel-surface: #19191b;
   --ui-sel-menu: #19191b;
   --ui-sel-line: #2a2a2e;

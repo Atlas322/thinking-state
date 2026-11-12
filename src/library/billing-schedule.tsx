@@ -337,8 +337,8 @@ export function BillingSchedule({
 }
 
 const css = `
-.bs{--bs-bg:#fff;--bs-fg:#18181b;--bs-muted:#71717a;--bs-faint:#a1a1aa;--bs-line:#ececef;--bs-soft:#f7f7f8;--bs-accent:#3b82f6;width:100%;max-width:604px;background:var(--bs-bg);color:var(--bs-fg);border:1px solid var(--bs-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .bs{--bs-bg:#1b1b1e;--bs-fg:#ececef;--bs-muted:#a1a1aa;--bs-faint:#6b6b73;--bs-line:#2c2c31;--bs-soft:#232328;--bs-accent:#7aa2ff;color-scheme:dark}
+.bs{--bs-bg:#fff;--bs-fg:#18181b;--bs-muted:#65656d;--bs-faint:#65656d;--bs-line:#ececef;--bs-soft:#f7f7f8;--bs-accent:#3b82f6;width:100%;max-width:604px;background:var(--bs-bg);color:var(--bs-fg);border:1px solid var(--bs-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .bs{--bs-bg:#1b1b1e;--bs-fg:#ececef;--bs-muted:#a1a1aa;--bs-faint:#9a9aa2;--bs-line:#2c2c31;--bs-soft:#232328;--bs-accent:#7aa2ff;color-scheme:dark}
 .bs *{box-sizing:border-box}.bs button,.bs input,.bs select{font:inherit;color:inherit}
 .bs-head{padding:17px 15px 0}
 .bs-head h3{margin:0;font-size:16px;font-weight:500;letter-spacing:-.01em}

@@ -287,8 +287,8 @@ export function AgentPlan({
 }
 
 const css = `
-.apl{--apl-bg:#fff;--apl-fg:#18181b;--apl-muted:#71717a;--apl-faint:#a1a1aa;--apl-line:#ececef;--apl-chip:#f1f1f3;--apl-blue:#3b82f6;--apl-red:#e5484d;--apl-red-soft:#fdecec;width:100%;max-width:440px;background:var(--apl-bg);color:var(--apl-fg);border:1px solid var(--apl-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .apl{--apl-bg:#1b1b1e;--apl-fg:#ececef;--apl-muted:#a1a1aa;--apl-faint:#71717a;--apl-line:#2e2e33;--apl-chip:#2a2a2f;--apl-blue:#5b9cff;--apl-red:#ff6b6f;--apl-red-soft:#3a1d1f;color-scheme:dark}
+.apl{--apl-bg:#fff;--apl-fg:#18181b;--apl-muted:#65656d;--apl-faint:#65656d;--apl-line:#ececef;--apl-chip:#f1f1f3;--apl-blue:#3b82f6;--apl-red:#e5484d;--apl-red-soft:#fdecec;width:100%;max-width:440px;background:var(--apl-bg);color:var(--apl-fg);border:1px solid var(--apl-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .apl{--apl-bg:#1b1b1e;--apl-fg:#ececef;--apl-muted:#a1a1aa;--apl-faint:#9a9aa2;--apl-line:#2e2e33;--apl-chip:#2a2a2f;--apl-blue:#5b9cff;--apl-red:#ff6b6f;--apl-red-soft:#3a1d1f;color-scheme:dark}
 .apl *{box-sizing:border-box}.apl button,.apl input{font:inherit;color:inherit}.apl button{cursor:pointer}
 .apl-head{padding:16px 16px 6px}
 .apl-meta{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--apl-muted)}.apl-meta svg{width:14px;height:14px}

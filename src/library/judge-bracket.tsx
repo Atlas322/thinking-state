@@ -275,8 +275,8 @@ export function JudgeBracket({
 }
 
 const css = `
-.jb{--jb-bg:#fff;--jb-fg:#18181b;--jb-muted:#71717a;--jb-faint:#a1a1aa;--jb-line:#ececef;--jb-wire:#d4d4d8;--jb-chip:#f4f4f5;--jb-blue:#3b82f6;--jb-link:#82bcff;width:100%;max-width:${3 * COLW + 2 * COLGAP}px;color:var(--jb-fg);font:400 13px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
-:where(.dark,[data-theme=dark]) .jb{--jb-bg:#1b1b1e;--jb-fg:#ececef;--jb-muted:#a1a1aa;--jb-faint:#71717a;--jb-line:#2e2e33;--jb-wire:#3f3f46;--jb-chip:#26262a;color-scheme:dark}
+.jb{--jb-bg:#fff;--jb-fg:#18181b;--jb-muted:#65656d;--jb-faint:#65656d;--jb-line:#ececef;--jb-wire:#d4d4d8;--jb-chip:#f4f4f5;--jb-blue:#3b82f6;--jb-link:#82bcff;width:100%;max-width:${3 * COLW + 2 * COLGAP}px;color:var(--jb-fg);font:400 13px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+:where(.dark,[data-theme=dark]) .jb{--jb-bg:#1b1b1e;--jb-fg:#ececef;--jb-muted:#a1a1aa;--jb-faint:#9a9aa2;--jb-line:#2e2e33;--jb-wire:#3f3f46;--jb-chip:#26262a;color-scheme:dark}
 .jb *{box-sizing:border-box}.jb button{font:inherit;color:inherit;cursor:pointer}
 .jb-bar{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .jb-mark{width:14px;height:14px;color:var(--jb-muted);flex:none}

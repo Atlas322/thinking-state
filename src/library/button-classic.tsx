@@ -234,7 +234,7 @@ const css = /* css */ `
   --ui-btn-surface-hover: #fafafa;
   --ui-btn-surface-shadow: rgba(0, 0, 0, 0.06);
   --ui-btn-line: #e5e5e5;
-  --ui-btn-muted: #737373;
+  --ui-btn-muted: #65656d;
   --ui-btn-hover: #404040;
   --ui-btn-fill: #f0f0f0;
   --ui-btn-shine: rgba(255, 255, 255, 0.82);
@@ -503,7 +503,7 @@ const css = /* css */ `
   --ui-btn-surface-hover: #2a2a2d;
   --ui-btn-surface-shadow: rgba(0, 0, 0, 0.4);
   --ui-btn-line: rgba(255, 255, 255, 0.1);
-  --ui-btn-muted: #8f8f8f;
+  --ui-btn-muted: #9a9aa2;
   --ui-btn-hover: #ededed;
   --ui-btn-fill: rgba(255, 255, 255, 0.06);
   --ui-btn-shine: rgba(237, 237, 237, 0.95);

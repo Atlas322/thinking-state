@@ -396,8 +396,8 @@ export function DateRangePicker({
 }
 
 const css = `
-.drp{--drp-bg:#fff;--drp-fg:#18181b;--drp-muted:#71717a;--drp-faint:#b4b4bb;--drp-line:#ececef;--drp-soft:#f4f4f5;--drp-band:#ececee;--drp-band-pv:#f4f4f6;--drp-end:#18181b;--drp-end-fg:#fff;--drp-blue:#3b82f6;--drp-cmp:#e6effd;position:relative;display:inline-block;color:var(--drp-fg);font:400 14px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .drp{--drp-bg:#1b1b1e;--drp-fg:#ececef;--drp-muted:#a1a1aa;--drp-faint:#5c5c63;--drp-line:#2e2e33;--drp-soft:#26262a;--drp-band:#2c2c31;--drp-band-pv:#242428;--drp-end:#ececef;--drp-end-fg:#18181b;--drp-cmp:#1c2a40;color-scheme:dark}
+.drp{--drp-bg:#fff;--drp-fg:#18181b;--drp-muted:#65656d;--drp-faint:#65656d;--drp-line:#ececef;--drp-soft:#f4f4f5;--drp-band:#ececee;--drp-band-pv:#f4f4f6;--drp-end:#18181b;--drp-end-fg:#fff;--drp-blue:#3b82f6;--drp-cmp:#e6effd;position:relative;display:inline-block;color:var(--drp-fg);font:400 14px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .drp{--drp-bg:#1b1b1e;--drp-fg:#ececef;--drp-muted:#a1a1aa;--drp-faint:#9a9aa2;--drp-line:#2e2e33;--drp-soft:#26262a;--drp-band:#2c2c31;--drp-band-pv:#242428;--drp-end:#ececef;--drp-end-fg:#18181b;--drp-cmp:#1c2a40;color-scheme:dark}
 .drp *{box-sizing:border-box}.drp button{font:inherit;color:inherit;cursor:pointer}
 .drp-trigger{display:inline-flex;align-items:center;gap:9px;height:32px;padding:0 10px;border:1px solid var(--drp-line);border-radius:8px;background:var(--drp-bg);box-shadow:0 1px 2px #00000008;font-size:14px!important;white-space:nowrap}
 .drp-trigger:hover{border-color:color-mix(in srgb,var(--drp-fg) 18%,var(--drp-line))}

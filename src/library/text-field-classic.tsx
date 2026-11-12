@@ -422,8 +422,8 @@ const css = /* css */ `
 .ui-tf {
   --ui-tf-ink: #171717;
   --ui-tf-text: #404040;
-  --ui-tf-muted: #8f8f8f;
-  --ui-tf-faint: #b5b5b5;
+  --ui-tf-muted: #65656d;
+  --ui-tf-faint: #65656d;
   --ui-tf-surface: #ffffff;
   --ui-tf-line: #e6e6e8;
   --ui-tf-edge: #d4d4d8;
@@ -625,8 +625,8 @@ const css = /* css */ `
 :where(.dark, [data-theme="dark"]) .ui-tf {
   --ui-tf-ink: #ededed;
   --ui-tf-text: #c8c8cc;
-  --ui-tf-muted: #8b8b92;
-  --ui-tf-faint: #5c5c63;
+  --ui-tf-muted: #9a9aa2;
+  --ui-tf-faint: #9a9aa2;
   --ui-tf-surface: #19191b;
   --ui-tf-line: #2a2a2e;
   --ui-tf-edge: #3a3a40;

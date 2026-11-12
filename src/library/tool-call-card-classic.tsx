@@ -617,7 +617,7 @@ const css = /* css */ `
 .ui-tcl-group {
   --ui-tcl-ink: #171717;
   --ui-tcl-text: #6b6b6b;
-  --ui-tcl-muted: #8a8a8a;
+  --ui-tcl-muted: #65656d;
   --ui-tcl-bg: #ffffff;
   --ui-tcl-line: #e7e7e7;
   --ui-tcl-hover: #fafafa;
@@ -1020,7 +1020,7 @@ const css = /* css */ `
 :where(.dark, [data-theme="dark"]) .ui-tcl-group {
   --ui-tcl-ink: #ededed;
   --ui-tcl-text: #a1a1a1;
-  --ui-tcl-muted: #7c7c7c;
+  --ui-tcl-muted: #9a9aa2;
   --ui-tcl-bg: #161618;
   --ui-tcl-line: rgba(255, 255, 255, 0.1);
   --ui-tcl-hover: rgba(255, 255, 255, 0.035);
