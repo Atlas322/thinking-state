@@ -174,6 +174,18 @@
 }
 
 /*
+ * Selected / active state (itge.e 2026-11-12, Figma section 09): the active
+ * tab, chip, segment, scenario or flow card is bright blue with white text
+ * and icons — the same on cream and dark; never indigo. A count inside a
+ * selected pill uses white at 20 %. Unselected elements keep their surface.
+ */
+:where(:root) {
+  --ts-selected: #0c8ce9;
+  --ts-on-selected: #ffffff;
+  --ts-on-selected-soft: rgb(255 255 255 / 0.2);
+}
+
+/*
  * Motion (--ts-motion-*): durations, easings and springs, theme-independent.
  * Springs are physical (src/motion/spring.ts) rendered as CSS linear() curves;
  * pair --ts-motion-spring-NAME with --ts-motion-spring-NAME-duration.
