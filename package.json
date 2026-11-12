@@ -1,6 +1,6 @@
 {
   "name": "@inai/thinking-state",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Thinking State — the engine that shows an agent's work as live widgets: company renderer, vault collections, chat widgets, icons and tokens.",
   "private": true,
   "type": "module",
