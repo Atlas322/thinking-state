@@ -5,7 +5,7 @@
  *
  * Theme А (itge.e 2026-11-12, Figma «08 › Theme А · сонгогдсон» 39:195990).
  * Two independent axes on any ancestor of the components:
- *   surface  data-ts-theme="cream" | "night"   (light cream · warm night)
+ *   surface  data-ts-theme="cream" | "night"   (light cream · warm night; "dark" = night)
  *   mode     data-ts-mode="view" | "manage"     (Үзэх · Удирдах)
  * The mode swaps only the accent — Үзэх = Electric, Удирдах = indigo;
  * surfaces and lines stay. data-ts-theme="manage" = night + Удирдах (kept
@@ -84,14 +84,14 @@
   --ts-ink-card: #33312d;
   --ts-ink-muted: #a3a099;
   --ts-ink-label: #aebbda;
-  --ts-font: "Onest", system-ui, sans-serif;
-  --ts-font-display: "Alegreya", Georgia, "Times New Roman", serif;
-  --ts-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ts-font: var(--ts-font-body);
+  --ts-font-display: var(--ts-font-head);
+  --ts-font-mono: var(--ts-font-code);
   background: var(--ts-page);
   color: var(--ts-fg);
 }
 
-:where(.ts-theme-night, [data-ts-theme="night"], .ts-theme-manage, [data-ts-theme="manage"]) {
+:where(.ts-theme-night, [data-ts-theme="night"], [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
   /* «бүлээн шөнө» — warm night */
   --ts-page: #17130f;
   --ts-side: #1d1813;
@@ -111,7 +111,7 @@
   --ts-indigo-deep: #3a4e8c;
   /* #6E80D0 is ~4.3:1 on surface-1, so accent text uses a lighter indigo */
   --ts-indigo-fg: #a7b3e6;
-  --ts-indigo-soft: color-mix(in srgb, #6e80d0 18%, #231d17);
+  --ts-indigo-soft: #262b45;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
@@ -119,11 +119,11 @@
   --ts-seg-on: #3a3127;
   --ts-code: #1d1813;
   --ts-green: #9cc49a;
-  --ts-green-soft: color-mix(in srgb, #9cc49a 16%, #231d17);
+  --ts-green-soft: #22301f;
   --ts-amber: #e3a857;
   --ts-amber-soft: #3a2e1c;
   --ts-red: #e58b78;
-  --ts-red-soft: color-mix(in srgb, #e58b78 16%, #231d17);
+  --ts-red-soft: #3a231e;
   --ts-yellow: #e3c25a;
   --ts-yellow-soft: color-mix(in srgb, #e3c25a 14%, #231d17);
   --ts-violet: #b8a2f0;
@@ -153,9 +153,9 @@
   --ts-ink-card: #2d261e;
   --ts-ink-muted: #b9ad9a;
   --ts-ink-label: #a7b3e6;
-  --ts-font: "Onest", system-ui, sans-serif;
-  --ts-font-display: "Alegreya", Georgia, "Times New Roman", serif;
-  --ts-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ts-font: var(--ts-font-body);
+  --ts-font-display: var(--ts-font-head);
+  --ts-font-mono: var(--ts-font-code);
   color-scheme: dark;
   background: var(--ts-page);
   color: var(--ts-fg);
@@ -173,6 +173,19 @@
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
+}
+
+/*
+ * Fonts by role. Heading (editorial, choice pending: Alegreya now; Literata,
+ * Source Serif 4, EB Garamond proposed — Figma 39:198066) and body (Onest;
+ * Inter also discussed) are one line each. Set them on :root to override.
+ * Load with Google Fonts css2 and no &text= so the cyrillic-ext subset (ү, ө)
+ * is served.
+ */
+:where(:root) {
+  --ts-font-head: "Alegreya", Georgia, "Times New Roman", serif;
+  --ts-font-body: "Onest", system-ui, sans-serif;
+  --ts-font-code: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /* Type scale (px / line-height), theme-independent. Phones: display 40, h1 30, h2 24. */
