@@ -134,6 +134,8 @@ export type CompanyViewProps = {
   today?: Date;
   /** Workspace layout: hide the unit tree and «Төрлүүд» when the host app has its own menu (level switch and unit chips move into the header). */
   showTree?: boolean;
+  /** Public pages: canvas blocks that are not filled in are hidden (null blocks are always hidden). */
+  hideEmptyBlocks?: boolean;
   /** Controlled vault type to show (a collection's `type`); null shows the tabs. */
   collection?: string | null;
   onCollectionChange?: (type: string | null) => void;
@@ -169,12 +171,14 @@ function ModelView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyVi
     { k: L.workflows_n, v: scoped.workflows.length },
     { k: L.projects_n, v: scoped.projects.length },
   ];
-  const cells: [string, ModelField][] = [
-    [L.customers, c.model.customers],
-    [L.value, c.model.value],
-    [L.channels, c.model.channels],
-    [L.revenue, c.model.revenue],
-  ];
+  const cells = (
+    [
+      [L.customers, c.model.customers],
+      [L.value, c.model.value],
+      [L.channels, c.model.channels],
+      [L.revenue, c.model.revenue],
+    ] as [string, ModelField | null][]
+  ).filter((x): x is [string, ModelField] => x[1] !== null); // null = not published
   return (
     <div className="cv-model">
       <dl className="cv-stats">
@@ -440,6 +444,7 @@ export function CompanyView({
   showMethodologySwitch = true,
   today,
   showTree = true,
+  hideEmptyBlocks = false,
   collection: collectionProp,
   onCollectionChange,
   onOpenInVault,
@@ -594,7 +599,7 @@ export function CompanyView({
   const render = (v: CompanyViewKey) =>
     v === "method" ? (
       <>
-        <MethodologyView c={company} scoped={scoped} methodology={methodology} today={today} />
+        <MethodologyView c={company} scoped={scoped} methodology={methodology} today={today} hideEmpty={hideEmptyBlocks} />
         {methodology === "okr" && (
           <section className="cv-sub" aria-label={L.model}>
             <h4 className="cv-below-h">{L.model}</h4>
