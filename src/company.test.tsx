@@ -271,6 +271,10 @@ describe("collections (vault types)", () => {
     expect(inferKind("area", ["Бүтээгдэхүүн"])).toBe("relation");
     expect(inferKind("done", [true, false])).toBe("checkbox");
     expect(resolveFields({ type: "x", fields: ["title", { name: "n", kind: "number" }], items: [] }).map((f) => f.kind)).toEqual(["number"]);
+    // company-schema 4e6f8df: declared kinds, relation names stay relations
+    expect(
+      resolveFields({ type: "x", fields: [{ name: "area", kind: "select" }, { name: "owner", kind: "text" }, { name: "mood", kind: "select" }], items: [] }).map((f) => f.kind),
+    ).toEqual(["relation", "relation", "select"]);
   });
 
   it("formats relative days", async () => {

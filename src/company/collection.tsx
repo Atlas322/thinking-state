@@ -69,8 +69,12 @@ export function resolveFields(c: Collection): ResolvedField[] {
     const name = typeof f === "string" ? f : f.name;
     if (!name || name === "title" || name === "path" || out.some((x) => x.name === name)) continue;
     const declared = typeof f === "string" ? undefined : f.kind;
-    const kind = (["text", "number", "date", "select", "multi", "status", "priority", "relation", "checkbox", "url", "progress"] as string[]).includes(declared ?? "")
-      ? (declared as FieldKind)
+    const valid = (["text", "number", "date", "select", "multi", "status", "priority", "relation", "checkbox", "url", "progress"] as string[]).includes(declared ?? "");
+    // Exports that never emit `relation` still name relation fields (area, project, owner…): keep them clickable.
+    const kind: FieldKind = valid
+      ? (declared === "text" || declared === "select") && RELATION_NAMES.includes(name.toLowerCase())
+        ? "relation"
+        : (declared as FieldKind)
       : inferKind(name, c.items.map((i) => i.props[name]));
     out.push({ name, kind, label: (typeof f !== "string" && f.label) || FIELD_LABEL[name] || name });
   }
