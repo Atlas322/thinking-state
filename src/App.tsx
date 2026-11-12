@@ -16,8 +16,10 @@ import {
   buildPrompt,
   hasClassic,
 } from "./registry";
+import { ChatDataEditor, ChatPreview, useChatWidget } from "./chat/chat-tools";
 
 const symbols: Record<string, string> = {
+  "Chat widgets": "✦",
   Agents: "⌘",
   Chat: "◌",
   Inputs: "⊞",
@@ -199,6 +201,7 @@ export default function App() {
         .includes(query.toLowerCase()),
   );
   const Preview = entry ? previewFor(entry, style) : null;
+  const chat = useChatWidget(entry?.slug);
   useEffect(() => {
     const fn = () => setRoute(initialRoute());
     addEventListener("hashchange", fn);
@@ -590,7 +593,7 @@ export default function App() {
                     role="tablist"
                     aria-label="Component view"
                   >
-                    {["preview", "code", "usage"].map((t) => (
+                    {(chat.isChat ? ["preview", "data", "code", "usage"] : ["preview", "code", "usage"]).map((t) => (
                       <button
                         role="tab"
                         aria-selected={tab === t}
@@ -601,6 +604,8 @@ export default function App() {
                       >
                         {t === "preview" ? (
                           <span>◉</span>
+                        ) : t === "data" ? (
+                          <span>{"{}"}</span>
                         ) : t === "code" ? (
                           <Icon name="code" />
                         ) : (
@@ -654,7 +659,7 @@ export default function App() {
                     )}
                     {tab !== "preview" && (
                       <span className="filename">
-                        {tab === "code" ? fileFor(entry, style) : "usage.tsx"}
+                        {tab === "code" ? fileFor(entry, style) : tab === "data" ? "props.json" : "usage.tsx"}
                       </span>
                     )}
                   </div>
@@ -678,10 +683,12 @@ export default function App() {
                             </div>
                           }
                         >
-                          {Preview && <Preview />}
+                          {chat.isChat ? <ChatPreview chat={chat} /> : Preview && <Preview />}
                         </Suspense>
                       </PreviewBoundary>
                     </div>
+                  ) : tab === "data" && chat.isChat ? (
+                    <ChatDataEditor chat={chat} />
                   ) : (
                     <pre tabIndex={0}>
                       <code>
@@ -699,11 +706,15 @@ export default function App() {
                       ? "Interactive preview — try it out"
                       : tab === "code"
                         ? "Complete source, including styles"
-                        : "A starting point for your application"}
+                        : tab === "data"
+                          ? "The JSON an agent sends to show this widget"
+                          : "A starting point for your application"}
                   </span>
                   <span>
                     {tab === "preview"
                       ? "No backend connected"
+                      : tab === "data"
+                        ? chat.error ? "Invalid JSON" : "Valid JSON"
                       : code
                         ? `${code.split("\n").length} lines`
                         : ""}
@@ -724,6 +735,17 @@ export default function App() {
                   </div>
                 </div>
                 <div className="copy-actions">
+                  {chat.isChat && (
+                    <button
+                      className="action-button chat-export"
+                      disabled={!chat.ready || chat.busy}
+                      onClick={() => chat.exportHtml().then(() => setCopied("chat"))}
+                      title="One-file HTML with the current data, ready for an agent's chat"
+                    >
+                      <span aria-hidden="true">✦</span>
+                      {copied === "chat" ? "HTML saved!" : "Use in chat"}
+                    </button>
+                  )}
                   <button
                     className="action-button"
                     disabled={!code}
@@ -756,6 +778,8 @@ export default function App() {
               <div className="copy-feedback" role="status" aria-live="polite">
                 {copied === "prompt"
                   ? "Ready to paste into ChatGPT, Claude, Cursor, or another coding assistant."
+                  : copied === "chat"
+                    ? `${entry.slug}.html saved: one file with the widget, its data and a small script. Show it in chat or open it in a browser.`
                   : copied === "code"
                     ? "Complete component source copied."
                     : sourceError}
@@ -783,6 +807,16 @@ export default function App() {
                     See usage example <Icon name="arrow" />
                   </button>
                 </section>
+                {"origin" in entry ? (
+                <section>
+                  <h3>{entry.category === "Chat widgets" ? "Made for an agent's chat" : "An original component"}</h3>
+                  <p>
+                    {entry.category === "Chat widgets"
+                      ? "An original component that an agent shows in its chat. It takes plain JSON props (see the Data tab); Use in chat saves one HTML file with the widget, its data and a small script for theme, motion and actions. Agents can render the same file with npm run chat:html."
+                      : "An original component built on the shared tokens (tokens/tokens.json). The code here is fully available to copy and customize."}
+                  </p>
+                </section>
+                ) : (
                 <section>
                   <h3>
                     {"source" in entry
@@ -806,6 +840,7 @@ export default function App() {
                     View original reference ↗
                   </a>
                 </section>
+                )}
               </div>
               <section className="related">
                 <div className="gallery-header">

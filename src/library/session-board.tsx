@@ -166,19 +166,26 @@ const demoSessions: SessionBoardSession[] = [
   { id: "tokens", title: "Token audit", line: "Scratch notes, no owner yet", state: "idle" },
 ];
 
+/** Demo data as plain JSON props (used by the catalog's data editor and chat export). */
+export const sessionBoardDemo = { project: demoProject, groups: defaultSessionGroups, sessions: demoSessions };
+
 const reducedMotion = () =>
   typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+const useIsoLayoutEffect = typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
+
+/** Shows the final number in static markup (chat export); counts up from 0 once mounted. */
 function useCountUp(target: number, delay: number) {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(target);
   const shown = React.useRef(0);
-  React.useEffect(() => {
+  useIsoLayoutEffect(() => {
     if (reducedMotion() || typeof requestAnimationFrame === "undefined") {
       shown.current = target;
       setValue(target);
       return;
     }
     const from = shown.current;
+    setValue(from);
     let raf = 0;
     let start = 0;
     const duration = from === 0 ? 900 : 400;
@@ -202,7 +209,9 @@ function Stat({ value, label, index }: { value: number; label: string; index: nu
     <div className="sb-stat">
       <dt>{label}</dt>
       <dd>
-        <span aria-hidden="true">{shown}</span>
+        <span aria-hidden="true" data-cw-count={value} data-cw-delay={index * 90}>
+          {shown}
+        </span>
         <span className="sb-sr">{value}</span>
       </dd>
     </div>
@@ -481,7 +490,7 @@ export function SessionBoard({
   const panelId = `${uid}-panel`;
 
   return (
-    <div ref={rootRef} className={`sb ${className}`}>
+    <div ref={rootRef} className={`sb ${className}`} data-cw-root="session-board">
       <style>{css}</style>
       <section className="sb-head" aria-labelledby={`${uid}-name`}>
         <div className="sb-id">
@@ -541,7 +550,7 @@ export function SessionBoard({
             const bodyId = `${uid}-${g.id}`;
             const live = g.list.filter((s) => s.state === "running").length;
             return (
-              <section key={g.id} className={`sb-group${isCollapsed ? " is-collapsed" : ""}`} aria-labelledby={`${bodyId}-h`}>
+              <section key={g.id} className={`sb-group${isCollapsed ? " is-collapsed" : ""}`} aria-labelledby={`${bodyId}-h`} data-cw-scope="">
                 <h3 className="sb-gh">
                   <button
                     id={`${bodyId}-h`}
@@ -549,6 +558,7 @@ export function SessionBoard({
                     className="sb-gbtn"
                     aria-expanded={!isCollapsed}
                     aria-controls={bodyId}
+                    data-cw-toggle="is-collapsed"
                     onClick={() => setCollapsed((c) => ({ ...c, [g.id]: !isCollapsed }))}
                   >
                     <svg className="sb-chev" viewBox="0 0 16 16" aria-hidden="true">
