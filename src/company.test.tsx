@@ -546,3 +546,31 @@ describe("hash task ids (company-schema add10b7)", () => {
     expect(dependenciesOf(company, a, a.tasks[0], index).blocks.map((w) => w.task.title)).toEqual(["Deploy"]);
   });
 });
+
+describe("app-shell embedding (inai-sh PR #31)", () => {
+  it("showTree={false} hides the tree and types but keeps header, level switch and tabs", () => {
+    render(<CompanyView company={inai} showTree={false} />);
+    expect(screen.queryByRole("navigation", { name: "Төрлүүд" })).toBeNull();
+    expect(document.querySelector(".cv-side")).toBeNull();
+    expect(document.querySelector(".cv-ws.no-tree")).toBeTruthy();
+    expect(screen.getByRole("tablist", { name: "Харагдац" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("radio", { name: "Баг" }));
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("Удирдлага");
+  });
+
+  it("lets the host drive the vault type", () => {
+    const onCollectionChange = vi.fn();
+    const { rerender } = render(<CompanyView company={inai} showTree={false} collection="task" onCollectionChange={onCollectionChange} />);
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toContain("Task");
+    fireEvent.click(screen.getByRole("tab", { name: /Самбар/ }));
+    expect(onCollectionChange).toHaveBeenCalledWith(null);
+    rerender(<CompanyView company={inai} showTree={false} collection={null} onCollectionChange={onCollectionChange} />);
+    expect(screen.getByRole("tab", { name: /Самбар/ }).getAttribute("aria-selected")).toBe("true");
+  });
+
+  it("never uses a bare 1fr grid track (min-content blow-out)", async () => {
+    const sources = import.meta.glob<string>("./company/*.tsx", { query: "?raw", import: "default", eager: true });
+    for (const [f, s] of Object.entries(sources))
+      for (const m of s.matchAll(/grid-template-columns:([^;}]+)/g)) expect(m[1], f).not.toMatch(/(^|[\s])1(\.\d+)?fr/);
+  });
+});
