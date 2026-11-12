@@ -31,11 +31,11 @@ import { Icon, type IconName } from "./icons";
 
 export const methodologyName: Record<Methodology, string> = {
   bmc: "Бизнес загварын канвас",
-  "lean-canvas": "Лийн канвас",
+  "lean-canvas": "Lean Canvas",
   okr: "OKR",
   pmbok: "PMBOK",
 };
-export const methodologyShort: Record<Methodology, string> = { bmc: "BMC", "lean-canvas": "Лийн", okr: "OKR", pmbok: "PMBOK" };
+export const methodologyShort: Record<Methodology, string> = { bmc: "BMC", "lean-canvas": "Lean Canvas", okr: "OKR", pmbok: "PMBOK" };
 
 type Block = { key: keyof CompanyModel; area: string; title: string; hint: string };
 
@@ -472,7 +472,7 @@ export function MethodologyView({
   if (methodology === "lean-canvas")
     return (
       <div className="cv-method">
-        <Canvas c={c} blocks={LEAN} label="Лийн канвас" hideEmpty={hideEmpty} />
+        <Canvas c={c} blocks={LEAN} label="Lean Canvas" hideEmpty={hideEmpty} />
       </div>
     );
   return <BmcView c={c} scoped={scoped} hideEmpty={hideEmpty} today={today} />;

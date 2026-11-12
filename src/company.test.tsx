@@ -227,7 +227,7 @@ describe("methodology templates", () => {
   it("switches template to Lean Canvas with empty blocks marked", () => {
     const onMethodologyChange = vi.fn();
     render(<CompanyView company={studio} onMethodologyChange={onMethodologyChange} />);
-    fireEvent.click(screen.getByRole("radio", { name: "Лийн" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Lean Canvas" }));
     expect(onMethodologyChange).toHaveBeenCalledWith("lean-canvas");
     const problem = within(screen.getByRole("tabpanel")).getByRole("region", { name: "Асуудал" });
     expect(problem.textContent).toContain("Бөглөөгүй");
