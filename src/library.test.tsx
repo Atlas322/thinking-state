@@ -21,6 +21,15 @@ import { DecisionCard } from "./library/decision-card";
 import { AutonomyDial } from "./library/autonomy-dial";
 import { StepperForm } from "./library/stepper-form";
 import { AgentInbox } from "./library/agent-inbox";
+import { EmailDraft } from "./library/email-draft";
+import { EmailDraft as EmailDraftClassic } from "./library/email-draft-classic";
+import { FallbackChain } from "./library/fallback-chain";
+import { DelegateBoard } from "./library/delegate-board";
+import { AgentQueue, type QueueJob } from "./library/agent-queue";
+import { AgentRecap } from "./library/agent-recap";
+import { ThinkingState } from "./library/thinking-state";
+import { WritingAssistant } from "./library/writing-assistant";
+import { AgentTrail } from "./library/agent-trail";
 
 beforeAll(() => {
   Object.defineProperty(window, "matchMedia", {
@@ -206,5 +215,271 @@ describe("Library behavior", () => {
       invites: [],
       plan: "Pro",
     });
+  });
+});
+
+describe("studio props: email-draft", () => {
+  it.each([
+    ["clean", EmailDraft],
+    ["classic", EmailDraftClassic],
+  ])("status shows the draft state with its label and tone (%s)", (_, Draft) => {
+    render(<Draft status="failed" />);
+    const chip = screen.getByText("Амжилтгүй");
+    expect(chip.getAttribute("data-status")).toBe("failed");
+    cleanup();
+    render(<Draft status="Чөлөөт бичвэр" />);
+    expect(screen.getByText("Чөлөөт бичвэр").hasAttribute("data-status")).toBe(false);
+  });
+
+  it("link={null} hides the link row", () => {
+    render(<EmailDraft link={null} />);
+    expect(screen.queryByRole("link")).toBeNull();
+  });
+
+  it("sendDelay sets the window before onSend, and a hidden link stays out of the body", () => {
+    vi.useFakeTimers();
+    const onSend = vi.fn();
+    render(<EmailDraft sendDelay={3000} link={null} onSend={onSend} />);
+    fireEvent.click(screen.getByRole("button", { name: "Имэйл илгээх" }));
+    act(() => vi.advanceTimersByTime(2999));
+    expect(onSend).not.toHaveBeenCalled();
+    act(() => vi.advanceTimersByTime(1));
+    expect(onSend).toHaveBeenCalledTimes(1);
+    expect(onSend.mock.calls[0][0].body).not.toContain("Санал харах");
+  });
+});
+
+describe("studio props: fallback-chain", () => {
+  const attempt = {
+    id: "x1",
+    model: "Загвар А",
+    status: "answered" as const,
+    tokens: 10,
+  };
+
+  it("name replaces the generated model name", () => {
+    render(<FallbackChain attempts={[{ ...attempt, name: "Үндсэн туслах" }]} />);
+    expect(screen.getByText("Үндсэн туслах")).toBeTruthy();
+    expect(screen.queryByText("Загвар А")).toBeNull();
+  });
+
+  it("note shows a muted line under the attempt", () => {
+    render(<FallbackChain attempts={[{ ...attempt, note: "Нөөцөөс авсан хариу" }]} />);
+    expect(screen.getByText("Нөөцөөс авсан хариу").className).toBe("fc-note");
+  });
+});
+
+describe("studio props: thinking-state", () => {
+  const twoSteps = [
+    { kind: "step" as const, label: "Нэгдүгээр алхам" },
+    { kind: "step" as const, label: "Хоёрдугаар алхам" },
+  ];
+
+  it("stepMs sets the pace of the built-in run", () => {
+    vi.useFakeTimers();
+    render(<ThinkingState steps={twoSteps} stepMs={5000} />);
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    expect(screen.queryByText("Хоёрдугаар алхам")).toBeNull();
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    expect(screen.getByText("Хоёрдугаар алхам")).toBeTruthy();
+  });
+
+  it("workedLabel renders the finished header from milliseconds", () => {
+    vi.useFakeTimers();
+    render(
+      <ThinkingState
+        steps={twoSteps}
+        stepMs={3000}
+        workedLabel={(ms) => `Бодсон ${Math.round(ms / 1000)} с`}
+      />,
+    );
+    act(() => {
+      vi.advanceTimersByTime(6500);
+    });
+    expect(screen.getByText("Бодсон 6 с")).toBeTruthy();
+  });
+
+  it("onDone fires once when the run finishes", () => {
+    vi.useFakeTimers();
+    const onDone = vi.fn();
+    render(<ThinkingState steps={twoSteps} stepMs={100} onDone={onDone} />);
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(onDone).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("studio props: writing-assistant", () => {
+  it("initialMessages starts from a ready conversation", () => {
+    render(
+      <WritingAssistant
+        initialMessages={[
+          { id: 1, role: "user", text: "Захидлаа богиносгоод өгөөч" },
+          { id: 2, role: "assistant", text: "Товч хувилбарыг бэлдлээ." },
+        ]}
+      />,
+    );
+    expect(screen.getByText("Захидлаа богиносгоод өгөөч")).toBeTruthy();
+    expect(screen.getByText("Товч хувилбарыг бэлдлээ.")).toBeTruthy();
+    expect(screen.queryByText("Юу бичих вэ?")).toBeNull();
+  });
+});
+
+describe("studio props: agent-trail", () => {
+  it("icon replaces the step glyph and the default stays when absent", () => {
+    const { container } = render(
+      <AgentTrail
+        steps={[
+          { id: "a", title: "Дүрстэй алхам", state: "done", icon: <svg data-testid="step-icon" /> },
+          { id: "b", title: "Энгийн алхам", state: "done" },
+        ]}
+      />,
+    );
+    const markers = container.querySelectorAll(".atr-mk");
+    expect(markers[0].querySelector("[data-testid='step-icon']")).not.toBeNull();
+    expect(markers[1].querySelector("path")).not.toBeNull();
+  });
+});
+
+describe("studio props: delegate-board", () => {
+  it("shows an agent role under the name", () => {
+    render(<DelegateBoard mode="manual" agents={[{ id: "a", name: "Агент А", role: "Судалгааны үүрэг" }]} tasks={[]} />);
+    expect(screen.getByText("Судалгааны үүрэг")).toBeTruthy();
+  });
+  it("renders nothing for a missing estimate and keeps totals numeric", () => {
+    const { container } = render(
+      <DelegateBoard
+        mode="manual"
+        agents={[{ id: "a", name: "Агент А", rate: 1 }]}
+        tasks={[{ id: "t", title: "Хугацаагүй даалгавар", agentId: null }, { id: "u", title: "Нөгөө", agentId: "a" }]}
+      />,
+    );
+    expect(screen.getByLabelText("Хугацаагүй даалгавар").textContent).not.toContain("мин");
+    expect(container.textContent).not.toContain("NaN");
+    expect(container.textContent).toContain("Дараалалд 0.00 кр");
+  });
+});
+
+describe("studio props: agent-queue", () => {
+  const t = 1_000_000;
+  const jobs: QueueJob[] = Array.from({ length: 5 }, (_, i) => ({ id: `q${i}`, name: `Ажил ${i + 1}`, kind: "llm", status: "queued", enqueuedAt: t - (i + 1) * 1000 }));
+  it("depth lists that many jobs before +N", () => {
+    const { container } = render(<AgentQueue jobs={jobs} now={t} depth={2} />);
+    expect(container.querySelectorAll(".agq-job").length).toBe(2);
+    expect(container.querySelector(".agq-more")?.textContent).toBe("+3");
+  });
+  it("backpressure object shows a needs-you warning at the threshold", () => {
+    const { container } = render(<AgentQueue jobs={jobs} now={t} backpressure={{ at: 5, label: "Ачаалал их" }} />);
+    expect(container.querySelector(".agq-bp-warn")?.textContent).toContain("Ачаалал их");
+    cleanup();
+    const below = render(<AgentQueue jobs={jobs} now={t} backpressure={{ at: 6 }} />);
+    expect(below.container.querySelector(".agq-bp-warn")).toBeNull();
+  });
+  it("axis order relabels the chart ends", () => {
+    render(<AgentQueue jobs={jobs} now={t} axis="order" />);
+    expect(screen.getByText("Эхэнд")).toBeTruthy();
+    expect(screen.getByText("Сүүлд")).toBeTruthy();
+  });
+  it("totals.queued overrides the waiting counter", () => {
+    const { container } = render(<AgentQueue jobs={jobs} now={t} totals={{ queued: 40, done: 7 }} />);
+    expect(container.querySelector(".agq-stats b")?.textContent).toBe("40");
+    expect(container.querySelector(".agq-box b")?.textContent).toBe("7");
+  });
+});
+
+describe("studio props: agent-recap", () => {
+  const events = [
+    { id: "in", at: new Date(2026, 0, 14, 20, 0), kind: "done" as const, title: "Цонхон доторх" },
+    { id: "out", at: new Date(2026, 0, 13, 9, 0), kind: "done" as const, title: "Цонхны гадна" },
+  ];
+  const since = new Date(2026, 0, 14, 18, 0);
+  const until = new Date(2026, 0, 15, 8, 0);
+  it("axis overrides the time-axis labels", () => {
+    render(<AgentRecap events={events} since={since} until={until} axis={{ start: "Өчигдөр орой", end: "Өнөө өглөө" }} />);
+    expect(screen.getByText("Өчигдөр орой")).toBeTruthy();
+    expect(screen.getByText("Өнөө өглөө")).toBeTruthy();
+  });
+  it("since/until with clip limit events to the window", () => {
+    render(<AgentRecap events={events} since={since} until={until} clip />);
+    expect(screen.getByText("Цонхон доторх")).toBeTruthy();
+    expect(screen.queryByText("Цонхны гадна")).toBeNull();
+    cleanup();
+    render(<AgentRecap events={events} since={since} until={until} />);
+    expect(screen.getByText("Цонхны гадна")).toBeTruthy();
+  });
+});
+import { ReviewCenter, reviewIcons } from "./library/review-center";
+import { decisionIcons } from "./library/decision-tree";
+
+describe("studio type compat", () => {
+  it("icon maps take the new keys and fall back on unknown ones", () => {
+    for (const k of ["doc", "people", "check", "money", "mail"]) {
+      expect(decisionIcons[k]).toBeTruthy();
+      expect(reviewIcons[k]).toBeTruthy();
+    }
+    const key: string = "unknown";
+    expect(decisionIcons[key]).toBe(decisionIcons.agent);
+    expect(reviewIcons[key]).toBe(reviewIcons.doc);
+  });
+
+  it("FallbackChain shows the name when model is missing", () => {
+    render(<FallbackChain attempts={[{ id: "x", name: "Нөөц туслах", status: "answered" }]} />);
+    expect(screen.getByText("Нөөц туслах")).toBeTruthy();
+  });
+
+  it("AgentQueue takes a depth sparkline and custom axis labels", () => {
+    const { container } = render(<AgentQueue jobs={[]} depth={[1, 4, 2, 6]} axis={["Даваа", "Мягмар", "Лхагва"]} />);
+    expect(container.querySelector(".agq-spark")).toBeTruthy();
+    expect(screen.getByText("Мягмар")).toBeTruthy();
+  });
+
+  it("AgentRecap takes a two-label axis", () => {
+    render(<AgentRecap events={[]} since={0} until={1} axis={["Өглөө", "Орой"]} />);
+    expect(screen.getByText("Өглөө")).toBeTruthy();
+    expect(screen.getByText("Орой")).toBeTruthy();
+  });
+
+  it("ThinkingState takes a plain workedLabel", () => {
+    vi.useFakeTimers();
+    render(<ThinkingState steps={[{ kind: "step" as const, label: "Алхам" }]} stepMs={1000} workedLabel="Бэлэн" />);
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    expect(screen.getByText("Бэлэн")).toBeTruthy();
+  });
+
+  it("ReviewCenter hides missing confidence and age", () => {
+    const { container } = render(
+      <ReviewCenter items={[{ id: "a", title: "Гэрээ шалгах", agent: "Агент", type: "Баримт", risk: "low", icon: reviewIcons.doc }]} />,
+    );
+    expect(container.textContent).not.toMatch(/NaN|—/);
+    expect(container.querySelector(".rc-age")).toBeNull();
+  });
+
+  it("EmailDraft shows free status text and hides a null attachment", () => {
+    for (const Draft of [EmailDraft, EmailDraftClassic]) {
+      cleanup();
+      const { container } = render(<Draft status="34 хоног хэтэрсэн" attachment={null} link={null} />);
+      expect(screen.getByText("34 хоног хэтэрсэн")).toBeTruthy();
+      expect(container.textContent).not.toMatch(/хавсаргах|\.pdf/);
+    }
+  });
+});
+
+describe("studio labels: EmailDraft send/discard, AgentRecap subtitle", () => {
+  it("takes the host's button texts and recap subtitle", async () => {
+    const { EmailDraft } = await import("./library/email-draft");
+    const { AgentRecap } = await import("./library/agent-recap");
+    render(<EmailDraft sendLabel="Илгээх" discardLabel="Болих" />);
+    expect(screen.getByRole("button", { name: "Илгээх" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Болих" })).toBeTruthy();
+    cleanup();
+    render(<AgentRecap subtitle="Өнөө шөнийн тойм" />);
+    expect(screen.getByText("Өнөө шөнийн тойм")).toBeTruthy();
   });
 });

@@ -28,10 +28,14 @@ export interface ThinkingStep {
 export interface ThinkingStateProps {
   steps: ThinkingStep[];
   doneLabel?: string;
+  /** Milliseconds each step takes in the built-in run. Defaults to 1300. */
   stepMs?: number;
   loop?: boolean;
   collapseOnDone?: boolean;
+  /** Called once when the run finishes (once per cycle when looping), with the elapsed seconds. */
   onDone?: (seconds: number) => void;
+  /** Header text when finished, from the elapsed milliseconds – e.g. «Бодсон 6 с». Wins over `labels.worked`. A plain string is shown as is. */
+  workedLabel?: string | ((ms: number) => string);
   className?: string;
   variant?: "clean" | "classic";
   /**
@@ -198,6 +202,7 @@ export function ThinkingState({
   loop = false,
   collapseOnDone = false,
   onDone,
+  workedLabel,
   className = "",
   variant = "clean",
   live,
@@ -210,6 +215,7 @@ export function ThinkingState({
   const [timed, setProgress] = useState({
     visible: Math.min(1, steps.length),
     seconds: 0,
+    ms: 0,
     done: steps.length === 0,
     cycle: 0,
   });
@@ -252,7 +258,7 @@ export function ThinkingState({
       );
       const done = elapsed >= steps.length * duration;
       if (visible !== lastVisible || seconds !== lastSeconds || done) {
-        setProgress({ visible, seconds, done, cycle });
+        setProgress({ visible, seconds, ms: elapsed, done, cycle });
         lastVisible = visible;
         lastSeconds = seconds;
       }
@@ -280,7 +286,13 @@ export function ThinkingState({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLive, liveDone]);
   const progress = isLive
-    ? { visible: steps.length, seconds: liveSeconds, done: liveDone, cycle: 0 }
+    ? {
+        visible: steps.length,
+        seconds: liveSeconds,
+        ms: liveSeconds * 1000,
+        done: liveDone,
+        cycle: 0,
+      }
     : timed;
 
   return (
@@ -313,7 +325,8 @@ export function ThinkingState({
         </span>
         <span className="thinking-heading">
           {progress.done ? (
-            (labels?.worked?.(progress.seconds) ??
+            ((typeof workedLabel === "function" ? workedLabel(progress.ms) : workedLabel) ??
+            labels?.worked?.(progress.seconds) ??
             `${progress.seconds} с ажилласан`)
           ) : (
             <>

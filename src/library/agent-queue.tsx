@@ -23,6 +23,20 @@ export type QueueJob = {
   attempt?: number;
 };
 
+/**
+ * Queue threshold. A number keeps the classic look (amber count, dashed line
+ * on the chart). `true` or `{ at, label }` also shows a needs-you warning in
+ * the header once the queue is at or over `at` (default 12). `false` turns
+ * the threshold off.
+ */
+export type QueueBackpressure = number | boolean | { at: number; label?: string };
+
+/** What the chart's horizontal axis means: `time` = queue length over the last seconds (default), `order` = each waiting job's wait, first in line to last. */
+export type QueueAxis = "time" | "order";
+
+/** Header counter overrides; a missing key falls back to the computed value. */
+export type QueueTotals = { done?: number; failed?: number; queued?: number };
+
 export type QueueWorker = { id: string; name: string; icon?: "claude" | "openai" | "gemini" | React.ReactNode };
 
 export type AgentQueueProps = {
@@ -35,9 +49,15 @@ export type AgentQueueProps = {
   onConcurrencyChange?: (workers: number) => void;
   minConcurrency?: number;
   maxConcurrency?: number;
-  backpressure?: number;
+  /** See {@link QueueBackpressure}. Default 12. */
+  backpressure?: QueueBackpressure;
   window?: number;
-  totals?: { done?: number; failed?: number };
+  /** Override the computed done / failed / queued counters. */
+  totals?: QueueTotals;
+  /** A number: how many waiting jobs to list before a «+N» row (default 3, no «+N» row). An array: recent queue-depth samples, drawn as a small sparkline in the header. */
+  depth?: number | number[];
+  /** See {@link QueueAxis}. Default `time`. An array gives custom tick labels under the chart. */
+  axis?: QueueAxis | string[];
   title?: string;
   name?: string;
   className?: string;
@@ -188,6 +208,8 @@ export function AgentQueue({
   maxConcurrency = 8,
   backpressure = 12,
   totals,
+  depth: depthProp,
+  axis = "time",
   title = "Дараалал",
   name = "агентын ажлууд",
   className = "",
@@ -211,7 +233,17 @@ export function AgentQueue({
   const activeLimit = jobsProp ? rateLimits?.find((r) => t >= r.from && t < r.until) : t < demo.limitedUntil ? { until: demo.limitedUntil, from: 0 } : undefined;
   const limited = !!activeLimit;
   const p95 = Math.max(0, ...queued.map((j) => t - j.enqueuedAt)) / 1000;
-  const depth = jobsProp ? [queued.length] : demo.depth;
+  const queuedN = totals?.queued ?? queued.length;
+  const depthN = typeof depthProp === "number" ? depthProp : undefined;
+  const spark = Array.isArray(depthProp) ? depthProp.filter((v) => Number.isFinite(v)) : [];
+  const shown = Math.max(0, depthN ?? 3);
+  const bpAt = typeof backpressure === "number" ? backpressure : typeof backpressure === "object" ? backpressure.at : 12;
+  const bpOn = backpressure !== false;
+  const bpWarn = (backpressure === true || typeof backpressure === "object") && queuedN >= bpAt;
+  const bpLabel = (typeof backpressure === "object" && backpressure.label) || "Дараалал дүүрч байна";
+  const byOrder = axis === "order";
+  const waits = queued.map((j) => Math.max(0, Math.round((t - j.enqueuedAt) / 1000)));
+  const depth = byOrder ? (waits.length ? waits : [0]) : jobsProp ? [queued.length] : demo.depth;
   const max = Math.max(24, Math.ceil(Math.max(...depth) / 12) * 12);
   const slots = workers.slice(0, concurrency);
 
@@ -242,6 +274,15 @@ export function AgentQueue({
         </svg>
         <strong>{title}</strong>
         <span className="agq-muted">{name}</span>
+        {spark.length > 1 && (() => {
+          const hi = Math.max(1, ...spark);
+          const d = spark.map((v, i) => `${i ? "L" : "M"}${((i / (spark.length - 1)) * 48).toFixed(1)} ${(14 - (Math.max(0, v) / hi) * 12).toFixed(1)}`).join("");
+          return (
+            <svg className="agq-spark" viewBox="0 0 48 16" role="img" aria-label={`Дарааллын урт: сүүлд ${spark[spark.length - 1]}, оргил ${Math.max(...spark)}`}>
+              <path d={d} fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" strokeLinecap="round" />
+            </svg>
+          );
+        })()}
         {limited && (
           <span className="agq-limit" role="status">
             <i />
@@ -249,6 +290,12 @@ export function AgentQueue({
           </span>
         )}
         {paused && !limited && <span className="agq-limit agq-paused-pill">Түр зогссон</span>}
+        {bpWarn && (
+          <span className="agq-limit agq-bp-warn" role="status">
+            <i />
+            {bpLabel} · {queuedN}
+          </span>
+        )}
         <span className="agq-ctl">
           <button type="button" className="agq-pause" aria-pressed={paused} onClick={() => setP(!paused)}>
             {paused ? (
@@ -271,9 +318,9 @@ export function AgentQueue({
       </header>
 
       <div className="agq-stats">
-        <div className={queued.length > backpressure ? "is-warn" : ""}>
+        <div className={bpOn && queuedN > bpAt ? "is-warn" : ""}>
           <span>Хүлээж байна</span>
-          <b>{queued.length}</b>
+          <b>{queuedN}</b>
         </div>
         <div>
           <span>Ажиллаж байна</span>
@@ -301,19 +348,20 @@ export function AgentQueue({
       <div className="agq-flow">
         <div className="agq-col agq-q">
           <div className="agq-h">
-            Дараалал <b>{queued.length}</b>
+            Дараалал <b>{queuedN}</b>
           </div>
           <ol className="agq-list">
-            {queued.slice(0, 3).map((j) => (
+            {queued.slice(0, shown).map((j) => (
               <li key={j.id} className={`agq-job agq-${j.kind}`}>
                 <span className="agq-kind">{kindIcon[j.kind]}</span>
                 <span className="agq-jn">{j.name}</span>
                 <span className="agq-age">{Math.max(0, (t - j.enqueuedAt) / 1000).toFixed(1)} с</span>
               </li>
             ))}
+            {depthN !== undefined && queuedN > shown && <li className="agq-more">+{queuedN - shown}</li>}
           </ol>
-          <div className="agq-rest" aria-label={`Өөр ${Math.max(0, queued.length - 3)} хүлээж байна`}>
-            {queued.slice(3).map((j) => (
+          <div className="agq-rest" aria-label={`Өөр ${Math.max(0, queuedN - shown)} хүлээж байна`}>
+            {queued.slice(shown).map((j) => (
               <i key={j.id} className={`agq-${j.kind}`} />
             ))}
           </div>
@@ -372,24 +420,35 @@ export function AgentQueue({
       </div>
 
       <div className="agq-chart">
-        <div className="agq-h">Дарааллын урт</div>
+        <div className="agq-h">{byOrder ? "Хүлээлт, дарааллаар" : "Дарааллын урт"}</div>
         <div className="agq-plot">
           <span className="agq-y" style={{ top: 0 }}>{max}</span>
           <span className="agq-y" style={{ top: "50%" }}>{max / 2}</span>
           <span className="agq-y" style={{ top: "100%" }}>0</span>
-          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`Дарааллын урт: одоо ${queued.length} хүлээж байна, оргил ${Math.max(...depth)}`}>
+          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={byOrder ? `Хүлээлт дарааллаар: ${queued.length} ажил, хамгийн урт ${Math.max(...depth)} с` : `Дарааллын урт: одоо ${queued.length} хүлээж байна, оргил ${Math.max(...depth)}`}>
             {limitBands.map(([a, b]) => (
               <rect key={a} x={a * step} width={(b - a) * step} y="0" height={H} className="agq-band" />
             ))}
-            <line x1="0" x2={W} y1={H - (backpressure / max) * H} y2={H - (backpressure / max) * H} className="agq-bp" />
+            {bpOn && !byOrder && <line x1="0" x2={W} y1={H - (bpAt / max) * H} y2={H - (bpAt / max) * H} className="agq-bp" />}
             <path d={area} className="agq-area" />
             <path d={line} className="agq-line" vectorEffect="non-scaling-stroke" />
           </svg>
           <i className="agq-head" style={{ top: `${(pts[pts.length - 1][1] / H) * 100}%` }} />
         </div>
         <div className="agq-axis">
-          <span>{Math.round(depth.length)} с өмнө</span>
-          <span>одоо</span>
+          {Array.isArray(axis) ? (
+            axis.map((l, i) => <span key={i}>{l}</span>)
+          ) : byOrder ? (
+            <>
+              <span>Эхэнд</span>
+              <span>Сүүлд</span>
+            </>
+          ) : (
+            <>
+              <span>{Math.round(depth.length)} с өмнө</span>
+              <span>одоо</span>
+            </>
+          )}
         </div>
       </div>
     </section>
@@ -401,9 +460,11 @@ const css = `
 :where(.dark,[data-theme=dark]) .agq{--agq-bg:#1b1b1e;--agq-fg:#ececef;--agq-muted:#a1a1aa;--agq-faint:#9a9aa2;--agq-line:#2c2c31;--agq-soft:#202024;--agq-llm-bg:#26264a;--agq-llm-edge:#3d3f7a;--agq-llm:#a5b4fc;--agq-tool-bg:#16332e;--agq-tool:#5eead4;--agq-agent-bg:#262a31;--agq-agent:#94a3b8;--agq-human-bg:#1c2a44;--agq-human:#93c5fd;--agq-amber:#fdba74;--agq-amber-bg:#3a2a14;--agq-red:#f87171;--agq-green:#4ade80;color-scheme:dark}
 .agq *{box-sizing:border-box}.agq button{font:inherit;color:inherit;cursor:pointer}
 .agq-bar{display:flex;align-items:center;gap:8px;padding:11px 12px 11px 16px;border-bottom:1px solid var(--agq-line);flex-wrap:wrap}
-.agq-logo{width:15px;height:15px;color:#3b82f6}.agq-bar strong{font-weight:500}.agq-muted{color:var(--agq-muted)}
+.agq-logo{width:15px;height:15px;color:#3b82f6}.agq-spark{width:48px;height:16px;color:var(--agq-muted);flex:none}.agq-bar strong{font-weight:500}.agq-muted{color:var(--agq-muted)}
 .agq-limit{display:inline-flex;align-items:center;gap:6px;margin-left:4px;padding:1px 7px;border-radius:5px;background:var(--agq-amber-bg);color:var(--agq-amber);font-size:12.5px;font-variant-numeric:tabular-nums}
 .agq-limit i{width:5px;height:5px;border-radius:50%;background:currentColor}
+.agq-bp-warn{background:var(--ts-status-needs-you-bg,#fdebd6);color:var(--ts-status-needs-you-fg,#a33e0b);box-shadow:inset 0 0 0 1px var(--ts-status-needs-you-border,#f2c597)}
+.agq-more{display:flex;align-items:center;height:24px;padding:0 8px;font-size:12.5px;color:var(--agq-muted);font-variant-numeric:tabular-nums}
 .agq-ctl{margin-left:auto;display:flex;gap:6px}
 .agq-pause{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 10px;border:1px solid var(--agq-line);border-radius:7px;background:var(--agq-bg)}
 .agq-pause svg{width:14px;height:14px}.agq-pause:hover{background:var(--agq-soft)}

@@ -48,6 +48,11 @@ export type DraftTone = {
   body: (contact: DraftContact) => string;
 };
 
+/** The draft's own state – shown in the header chip with a Mongolian label and a status tone */
+export type DraftStatus = "draft" | "scheduled" | "sent" | "failed";
+
+export type DraftLink = { label: string; href: string };
+
 export type EmailDraftProps = {
   /** Reference of the record, e.g. a subscription or invoice number */
   reference?: string;
@@ -55,16 +60,22 @@ export type EmailDraftProps = {
   account?: string;
   /** Amount shown on the right */
   amount?: string;
-  /** Status chip next to the reference */
-  status?: string;
+  /** Status chip next to the reference – a DraftStatus key gets its label and tone, any other text shows as is */
+  status?: DraftStatus | (string & {});
   /** Who wrote the draft */
   agent?: string;
   contacts?: DraftContact[];
   attachment?: string | null;
   /** Text variants to switch between – the first one is shown first */
   tones?: DraftTone[];
-  /** Label and target of the link appended to the email */
-  link?: { label: string; href: string };
+  /** Label and target of the link appended to the email – null hides the link */
+  link?: DraftLink | null;
+  /** Milliseconds between pressing Send and onSend – the window to change one's mind (default 900) */
+  sendDelay?: number;
+  /** Send button text. Default «Имэйл илгээх». */
+  sendLabel?: string;
+  /** Discard button text. Default «Хаях». */
+  discardLabel?: string;
   onSend?: (email: {
     to: DraftContact;
     body: string;
@@ -117,6 +128,15 @@ const defaultTones: DraftTone[] = [
 
 type Phase = "draft" | "sending" | "sent" | "discarded";
 
+const draftStatuses: Record<DraftStatus, string> = {
+  draft: "Ноорог",
+  scheduled: "Товлосон",
+  sent: "Илгээсэн",
+  failed: "Амжилтгүй",
+};
+const isDraftStatus = (s: string): s is DraftStatus =>
+  Object.prototype.hasOwnProperty.call(draftStatuses, s);
+
 export function EmailDraft({
   reference = "SUB-1182",
   account = "Талын Тээвэр ХХК",
@@ -127,10 +147,15 @@ export function EmailDraft({
   attachment = "Сунгалтын-санал.pdf",
   tones = defaultTones,
   link = { label: "Санал харах", href: "#" },
+  sendDelay = 900,
+  sendLabel = "Имэйл илгээх",
+  discardLabel = "Хаях",
   onSend,
   onDiscard,
   className,
 }: EmailDraftProps) {
+  const statusKey = status && isDraftStatus(status) ? status : undefined;
+  const statusLabel = statusKey ? draftStatuses[statusKey] : status;
   const [to, setTo] = useState<DraftContact>(contacts[0] ?? NO_ONE);
   const [file, setFile] = useState<string | null>(attachment);
   const [tone, setTone] = useState(tones[0]?.id ?? "");
@@ -219,14 +244,17 @@ export function EmailDraft({
     setEditing(false);
     setPhase("sending");
     timers.current.push(
-      window.setTimeout(() => {
-        setPhase("sent");
-        onSend?.({
-          to,
-          body: `${body} ${link.label}: ${link.href}`,
-          attachment: file,
-        });
-      }, 900),
+      window.setTimeout(
+        () => {
+          setPhase("sent");
+          onSend?.({
+            to,
+            body: link ? `${body} ${link.label}: ${link.href}` : body,
+            attachment: file,
+          });
+        },
+        Math.max(0, sendDelay),
+      ),
     );
   };
 
@@ -258,9 +286,14 @@ export function EmailDraft({
           <span className="ui-ed__id" title={reference}>
             {reference}
           </span>
-          {status && (
-            <span className="ui-ed__status" dir="auto" title={status}>
-              {status}
+          {statusLabel && (
+            <span
+              className="ui-ed__status"
+              dir="auto"
+              title={statusLabel}
+              data-status={statusKey}
+            >
+              {statusLabel}
             </span>
           )}
           <span className="ui-ed__amount">{amount}</span>
@@ -399,10 +432,18 @@ export function EmailDraft({
                     onClick={startEditing}
                     title="Засахын тулд дарна уу"
                   >
-                    {body}{" "}
-                    <a href={link.href} onClick={(e) => e.stopPropagation()}>
-                      {link.label}
-                    </a>
+                    {body}
+                    {link && (
+                      <>
+                        {" "}
+                        <a
+                          href={link.href}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {link.label}
+                        </a>
+                      </>
+                    )}
                   </p>
                 )}
               </div>
@@ -438,7 +479,7 @@ export function EmailDraft({
                     onClick={discard}
                     disabled={phase === "sending"}
                   >
-                    Хаях
+                    {discardLabel}
                   </button>
                   <button
                     type="button"
@@ -452,7 +493,7 @@ export function EmailDraft({
                         Илгээж байна
                       </>
                     ) : (
-                      "Имэйл илгээх"
+                      sendLabel
                     )}
                   </button>
                 </div>
@@ -593,6 +634,11 @@ const css = /* css */ `
   color: var(--ui-ed-warn);
   white-space: nowrap;
 }
+/* The draft's own state takes the shared status tones, with the card's colors as fallbacks */
+.ui-ed__status[data-status="draft"] { background: var(--ts-status-idle-bg, var(--ui-ed-chip)); color: var(--ts-status-idle-fg, var(--ui-ed-text)); }
+.ui-ed__status[data-status="scheduled"] { background: var(--ts-status-running-bg, #e3effd); color: var(--ts-status-running-fg, #1d5fb8); }
+.ui-ed__status[data-status="sent"] { background: var(--ts-status-done-bg, var(--ui-ed-ok-bg)); color: var(--ts-status-done-fg, var(--ui-ed-ok)); }
+.ui-ed__status[data-status="failed"] { background: var(--ts-status-error-bg, #fde4e4); color: var(--ts-status-error-fg, #b4232a); }
 .ui-ed__amount { flex: none; margin-left: auto; white-space: nowrap; font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .ui-ed__account { overflow-wrap: anywhere; font-size: 13px; color: var(--ui-ed-muted); }
 

@@ -8,9 +8,9 @@ describe("scripts/quality-baseline.json", () => {
     const slugs = new Set(catalog.map((e) => e.slug));
     for (const s of [...b.motion, ...Object.keys(b.icons)]) expect(slugs.has(s), s).toBe(true);
     // new work is held to the bar: no new entries for these
-    for (const s of ["ts-primitives"]) {
+    for (const s of ["ts-primitives", "company-workspace", "company-brief", "company-collection", "site-navbar", "agent-cursors", "project-report", "session-board"]) {
       expect(b.motion).not.toContain(s);
-      expect(b.icons[s]).toBeUndefined();
+      if (s === "ts-primitives") expect(b.icons[s]).toBeUndefined();
     }
   });
 });

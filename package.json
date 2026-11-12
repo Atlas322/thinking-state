@@ -57,6 +57,7 @@
     "check:spacing": "node scripts/check-spacing.mjs",
     "check:content": "vitest run src/content.test.tsx",
     "check:contrast": "node scripts/check-contrast.mjs",
+    "story:frames": "node scripts/story-frames.mjs",
     "check:overflow": "node scripts/check-overflow.mjs",
     "studio:exports": "node scripts/studio-exports.mjs",
     "tokens:figma": "node scripts/figma-variables.mjs",

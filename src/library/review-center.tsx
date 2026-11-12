@@ -14,9 +14,10 @@ export type ReviewItem = {
   icon?: React.ReactNode;
   type: string;
   risk: "high" | "medium" | "low";
-  confidence: number;
-  /** epoch ms */
-  createdAt: number;
+  /** 0..1; omitted = not shown and never counted as unsure */
+  confidence?: number;
+  /** epoch ms; omitted = no age shown */
+  createdAt?: number;
   reasoning?: string;
   fields?: { label: string; value: ReviewText }[];
   body?: ReviewText;
@@ -50,7 +51,7 @@ const ico = (c: React.ReactNode) => (
     {c}
   </svg>
 );
-export const reviewIcons = {
+const reviewIconBase = {
   finance: ico(
     <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
       <rect x="2" y="3.5" width="12" height="9" rx="1.6" />
@@ -64,7 +65,45 @@ export const reviewIcons = {
     </g>,
   ),
   code: ico(<path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />),
+  doc: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round">
+      <path d="M4 1.8h5.2L12 4.6v9.6H4Z" />
+      <path d="M9 1.8v3h3M6 8h4M6 10.5h4" strokeLinecap="round" />
+    </g>,
+  ),
+  people: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+      <circle cx="6" cy="5.5" r="2.1" />
+      <path d="M2.2 13c.5-2.2 1.9-3.3 3.8-3.3s3.3 1.1 3.8 3.3" />
+      <circle cx="11" cy="6" r="1.7" />
+      <path d="M10.8 9.7c1.6 0 2.6 1 3 2.8" />
+    </g>,
+  ),
+  check: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="8" cy="8" r="5.8" />
+      <path d="M5.3 8.2 7.2 10l3.5-3.8" />
+    </g>,
+  ),
+  money: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+      <rect x="1.8" y="4" width="12.4" height="8" rx="1.4" />
+      <circle cx="8" cy="8" r="1.8" />
+      <path d="M4 6.5v3M12 6.5v3" />
+    </g>,
+  ),
+  mail: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round">
+      <rect x="2" y="3.5" width="12" height="9" rx="1.4" />
+      <path d="m2.5 4.5 5.5 4.3 5.5-4.3" strokeLinecap="round" />
+    </g>,
+  ),
 };
+
+/** Icon map; any string key works, unknown keys fall back to the document glyph. */
+export const reviewIcons: typeof reviewIconBase & Record<string, React.ReactElement> = new Proxy(reviewIconBase, {
+  get: (t, k) => (typeof k === "string" && !(k in t) ? t.doc : Reflect.get(t, k)),
+}) as typeof reviewIconBase & Record<string, React.ReactElement>;
 
 const T0 = Date.now();
 const m = (n: number) => T0 - n * 60000;
@@ -152,15 +191,15 @@ export function ReviewCenter({
             const r = { high: 0, medium: 1, low: 2 };
             if (r[a.risk] !== r[b.risk]) return r[a.risk] - r[b.risk];
           }
-          return a.createdAt - b.createdAt;
+          return (a.createdAt ?? Infinity) - (b.createdAt ?? Infinity) || 0;
         });
   const queue = sorted.filter((i) =>
-    filter === "high" ? i.risk === "high" : filter === "unsure" ? i.confidence < lowConfidence : true,
+    filter === "high" ? i.risk === "high" : filter === "unsure" ? i.confidence != null && i.confidence < lowConfidence : true,
   );
   const current = queue.find((i) => i.id === currentId) ?? queue[0];
   const done = reviewed + decided.length;
   const all = total ?? reviewed + items.length;
-  const oldest = waiting.reduce((n, i) => Math.min(n, i.createdAt), now);
+  const oldest = waiting.reduce((n, i) => Math.min(n, i.createdAt ?? now), now);
   const last = decided[decided.length - 1];
 
   const setFilter = (f: Filter) => {
@@ -267,7 +306,7 @@ export function ReviewCenter({
   const tabs: [Filter, string, number][] = [
     ["all", "Бүгд", waiting.length],
     ["high", "Өндөр эрсдэл", waiting.filter((i) => i.risk === "high").length],
-    ["unsure", "Эргэлзээтэй", waiting.filter((i) => i.confidence < lowConfidence).length],
+    ["unsure", "Эргэлзээтэй", waiting.filter((i) => i.confidence != null && i.confidence < lowConfidence).length],
   ];
 
   return (
@@ -315,13 +354,13 @@ export function ReviewCenter({
           </div>
           <ol className="rc-rows">
             {queue.map((i) => {
-              const age = now - i.createdAt;
+              const age = i.createdAt == null ? null : now - i.createdAt;
               return (
                 <li key={i.id}>
                   <button
                     type="button"
                     aria-current={current?.id === i.id ? "true" : undefined}
-                    aria-label={`${i.title}, ${i.type}, ${riskLabel[i.risk]} эрсдэл, ${Math.round(i.confidence * 100)}% итгэлтэй, хүлээсэн: ${waited(age)}`}
+                    aria-label={`${i.title}, ${i.type}, ${riskLabel[i.risk]} эрсдэл${i.confidence == null ? "" : `, ${Math.round(i.confidence * 100)}% итгэлтэй`}${age == null ? "" : `, хүлээсэн: ${waited(age)}`}`}
                     className={skipped.includes(i.id) ? "is-skipped" : ""}
                     onClick={() => {
                       setCurrentId(i.id);
@@ -333,7 +372,7 @@ export function ReviewCenter({
                       <span className="rc-row-t">{i.title}</span>
                       <span className="rc-row-s">{i.type}</span>
                     </span>
-                    <span className={`rc-age ${age > sla ? "is-late" : age > sla * 0.75 ? "is-warn" : ""}`}>{waited(age)}</span>
+                    {age != null && <span className={`rc-age ${age > sla ? "is-late" : age > sla * 0.75 ? "is-warn" : ""}`}>{waited(age)}</span>}
                   </button>
                 </li>
               );

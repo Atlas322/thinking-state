@@ -23,7 +23,7 @@ export const areaLabel = (c: Company, v?: string) => {
 export function isHeld(c: Company, p: CompanyProject | undefined, t: CompanyTask, index = taskIndex(c)) {
   return dependenciesOf(c, p, t, index).waitsOn.some((w) => toPhaseState(w.task.status) !== "done");
 }
-import { initials, phaseLabel, phaseTone } from "./ui";
+import { CountUp, initials, phaseLabel, phaseTone } from "./ui";
 import { Empty } from "./collection";
 
 /**
@@ -184,7 +184,9 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
         {summary.map((s, i) => (
           <div key={s.k} className={`cv-stat${s.tone ? ` is-${s.tone}` : ""}`} style={{ "--i": i } as React.CSSProperties}>
             <dt>{s.k}</dt>
-            <dd>{s.v}</dd>
+            <dd>
+              <CountUp value={s.v} />
+            </dd>
           </div>
         ))}
       </dl>

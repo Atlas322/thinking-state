@@ -42,7 +42,7 @@ const ico = (c: React.ReactNode) => (
     {c}
   </svg>
 );
-export const decisionIcons = {
+const decisionIconBase = {
   agent: ico(
     <g fill="none" stroke="currentColor" strokeWidth="1.2">
       <circle cx="8" cy="8" r="5.6" />
@@ -64,7 +64,45 @@ export const decisionIcons = {
   ),
   chat: ico(<path d="M3 3.5h10a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H7l-3 2.5v-2.5H3a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1Z" fill="none" stroke="#a855f7" strokeWidth="1.2" strokeLinejoin="round" />),
   status: ico(<><circle cx="8" cy="8" r="6" fill="#3fb950" /><path d="M5 8.5 7 10.5l4-4.5" fill="none" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" /></>),
+  doc: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round">
+      <path d="M4 1.8h5.2L12 4.6v9.6H4Z" />
+      <path d="M9 1.8v3h3M6 8h4M6 10.5h4" strokeLinecap="round" />
+    </g>,
+  ),
+  people: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+      <circle cx="6" cy="5.5" r="2.1" />
+      <path d="M2.2 13c.5-2.2 1.9-3.3 3.8-3.3s3.3 1.1 3.8 3.3" />
+      <circle cx="11" cy="6" r="1.7" />
+      <path d="M10.8 9.7c1.6 0 2.6 1 3 2.8" />
+    </g>,
+  ),
+  check: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="8" cy="8" r="5.8" />
+      <path d="M5.3 8.2 7.2 10l3.5-3.8" />
+    </g>,
+  ),
+  money: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+      <rect x="1.8" y="4" width="12.4" height="8" rx="1.4" />
+      <circle cx="8" cy="8" r="1.8" />
+      <path d="M4 6.5v3M12 6.5v3" />
+    </g>,
+  ),
+  mail: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round">
+      <rect x="2" y="3.5" width="12" height="9" rx="1.4" />
+      <path d="m2.5 4.5 5.5 4.3 5.5-4.3" strokeLinecap="round" />
+    </g>,
+  ),
 };
+
+/** Icon map; any string key works, unknown keys fall back to the agent glyph. */
+export const decisionIcons: typeof decisionIconBase & Record<string, React.ReactElement> = new Proxy(decisionIconBase, {
+  get: (t, k) => (typeof k === "string" && !(k in t) ? t.agent : Reflect.get(t, k)),
+}) as typeof decisionIconBase & Record<string, React.ReactElement>;
 
 const I = decisionIcons;
 const defaultDecisions: Decision[] = [

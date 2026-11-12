@@ -20,10 +20,21 @@ export type RecapEvent = {
   doneLabel?: string;
 };
 
+/** Labels under the chart's two ends. A missing key falls back to the window's clock time. */
+export type RecapAxis = { start?: React.ReactNode; end?: React.ReactNode };
+
 export type AgentRecapProps = {
   events?: RecapEvent[];
+  /** Start of the recap window (chart's left edge, header «…-аас хойш»). */
   since?: Date | string | number;
+  /** End of the recap window (chart's right edge). */
   until?: Date | string | number;
+  /** When true, events outside `since`…`until` are left out of the chart, lanes and counts. Default false (all events shown). */
+  clip?: boolean;
+  /** Override the time-axis labels; see {@link RecapAxis}. */
+  axis?: RecapAxis | [string, string];
+  /** A line under the title (replaces the «… -аас хойш N цаг» line). */
+  subtitle?: React.ReactNode;
   onAction?: (event: RecapEvent, action: "primary" | "review") => void | Promise<unknown>;
   onUndo?: (event: RecapEvent) => void;
   onRedo?: (event: RecapEvent) => void;
@@ -65,9 +76,12 @@ function Icon({ kind }: { kind: RecapKind | "user" }) {
 }
 
 export function AgentRecap({
-  events = defaultEvents,
+  events: eventsProp = defaultEvents,
   since = d(18, 40),
   until = d(8, 10, 15),
+  clip = false,
+  axis,
+  subtitle,
   onAction,
   onUndo,
   onRedo,
@@ -83,6 +97,7 @@ export function AgentRecap({
   const time = (v: Date | string | number) => new Date(v).toLocaleTimeString(locale ?? "mn-MN", { hour: "numeric", minute: "2-digit" });
   const hours = Math.floor(span / 3.6e6);
   const mins = Math.round((span % 3.6e6) / 6e4);
+  const events = clip ? eventsProp.filter((e) => ms(e.at) >= t0 && ms(e.at) <= t1) : eventsProp;
 
   const [acted, setActed] = React.useState<Record<string, "busy" | "done" | "undone">>({});
   const [hover, setHover] = React.useState<string | null>(null);
@@ -136,7 +151,7 @@ export function AgentRecap({
       <header className="ar-top">
         <div>
           <h3 id="ar-h">{title}</h3>
-          <p>{time(since)}-аас хойш <span className="ar-dur">{hours} цаг {mins} мин</span></p>
+          {subtitle !== undefined ? <p>{subtitle}</p> : <p>{time(since)}-аас хойш <span className="ar-dur">{hours} цаг {mins} мин</span></p>}
         </div>
         <div className="ar-counts">
           <span><Icon kind="done" /><b>{count("done")}</b> дууссан</span>
@@ -167,7 +182,7 @@ export function AgentRecap({
           />
         ))}
       </div>
-      <div className="ar-axis"><span>{time(since)}</span><span>{time(until ?? Date.now())}</span></div>
+      <div className="ar-axis"><span>{(Array.isArray(axis) ? axis[0] : axis?.start) ?? time(since)}</span><span>{(Array.isArray(axis) ? axis[1] : axis?.end) ?? time(until ?? Date.now())}</span></div>
       <div className="ar-lanes">
         {lanes.map((l) => {
           const items = sorted.filter((e) => e.kind === l.kind).slice(0, limit);
