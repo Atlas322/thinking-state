@@ -713,7 +713,7 @@
     "category": "Chat widgets",
     "pro": true,
     "origin": "Thinking State original",
-    "description": "One project's state as an agent reports it in chat – a header card with status, owner and summary, KPI tiles that count up, a progress line with milestones, the phases as a timeline or as cards, and a «Waiting on you» block with one action each; data comes in as JSON props and exports to one-file HTML",
+    "description": "Агент чатдаа нэг төслийн байдлыг тайлагнана: төлөв, эзэн, товчтой толгой карт, тоолж өсдөг KPI, үе шатуудтай явцын шугам, үе шатууд (цагийн шугам эсвэл карт), «Таныг хүлээж байна» хэсэг тус бүр нэг үйлдэлтэй. Өгөгдлийг JSON props-оор авч, нэг файлтай HTML болгон гаргана.",
     "exportName": "ProjectReport",
     "usage": "import { ProjectReport } from \"./project-report\";\n\nexport default function App() {\n  return <ProjectReport />; // props: project, kpis, progress, phases (state: done | active | blocked | next), waiting, view, onWaitingAction, labels\n}"
   },
@@ -723,7 +723,7 @@
     "category": "Chat widgets",
     "pro": true,
     "origin": "Thinking State original",
-    "description": "Where the code is – open pull requests with check rings, review state and tags, and each deploy's pipeline with the step it is stuck on, a blocker card (what, since when, one action) and a log that folds open; data comes in as JSON props and exports to one-file HTML",
+    "description": "Код хаана явж байгааг харуулна: нээлттэй PR-ууд check, review-ийн төлөвтэй; deploy бүрийн дамжлага ба гацсан алхам, гацааны карт (юу, хэзээнээс, нэг үйлдэл), нээгддэг лог. Өгөгдлийг JSON props-оор авч, нэг файлтай HTML болгон гаргана.",
     "exportName": "PrDeployStatus",
     "usage": "import { PrDeployStatus } from \"./pr-deploy-status\";\n\nexport default function App() {\n  return <PrDeployStatus />; // props: repo, prs (number, title, state, checks, review), deploys (env, state, steps, blocker), onBlockerAction, labels\n}"
   },
@@ -733,7 +733,7 @@
     "category": "Chat widgets",
     "pro": true,
     "origin": "Thinking State original",
-    "description": "The compact Decision Inbox for an agent's chat – one row per open decision with project, due date and context, options as buttons with the recommended one marked; choosing folds the row to «Chosen» with undo and sends the answer back to the chat",
+    "description": "Агентын чатад зориулсан нягт Decision Inbox: нээлттэй шийдвэр бүр төсөл, хугацаа, товч агуулгатай, сонголтууд нь товч, санал болгосныг тэмдэглэнэ. Сонгоход мөр «Сонгосон» болж хураагдана, буцаах боломжтой, хариуг чат руу илгээнэ.",
     "exportName": "DecisionInboxChat",
     "usage": "import { DecisionInboxChat } from \"./decision-inbox-chat\";\n\nexport default function App() {\n  return <DecisionInboxChat onDecide={(d, o) => console.log(d.id, o?.id)} />; // props: title, decisions (title, context, project, due, urgent, options with recommended), chosen, labels\n}"
   },
@@ -743,7 +743,7 @@
     "category": "Chat widgets",
     "pro": true,
     "origin": "Thinking State original",
-    "description": "One project's agent sessions three ways – by group (Projects, Areas, Resources, Finance), by state in tabs, or as cards – under a header card with status, owner, counters that count up and repo/prod/Figma links; each session shows a state dot that pulses while running, a one-line note, PR and state tags and a running line, with sub-sessions folding under their parent",
+    "description": "Нэг төслийн агент сешнүүдийг гурван янзаар харуулна: бүлгээр (Projects, Areas, Resources, Finance), төлвөөр tab-аар, эсвэл картаар. Толгой карт төлөв, эзэн, тоолж өсдөг тоо, холбоостой. Сешн бүр ажиллаж байхад анивчдаг төлвийн цэг, нэг мөр тайлбар, PR ба төлвийн шошготой; дэд сешнүүд эхийнхээ доор хураагдана.",
     "exportName": "SessionBoard",
     "usage": "import { SessionBoard } from \"./session-board\";\n\nexport default function App() {\n  return <SessionBoard />; // props: project, groups, sessions (group, parent, state, pr, line), onSessionClick, view, defaultView, onViewChange, views, labels\n}"
   },

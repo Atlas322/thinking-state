@@ -2,7 +2,8 @@
 /**
  * One icon set for Thinking State's company views: Lucide shapes (ISC
  * licence, see THIRD_PARTY_NOTICES.md), drawn inline so no package is
- * needed. One style everywhere: 24-unit grid, currentColor, stroke 1.75,
+ * needed. One style everywhere, shared with the inai.sh Figma icon map
+ * («09 Icon map»): 24-unit grid, currentColor, stroke 2 (1.75 below 16 px),
  * rendered at 14 / 16 / 20 px. Colour only ever comes from status or
  * priority; type icons stay in the text colour.
  *
@@ -36,6 +37,14 @@ const SHAPES = {
   "file-text": ["M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z", "M14 2v4a2 2 0 0 0 2 2h4", "M10 9H8", "M16 13H8", "M16 17H8"],
   pencil: ["M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z", "m15 5 4 4"],
   bookmark: ["m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"],
+  "users-round": ["M18 21a8 8 0 0 0-16 0", "c:10,8,5", "M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"],
+  flag: ["M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z", "M4 22v-7"],
+  "circle-help": ["c:12,12,10", "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3", "M12 17h.01"],
+  "triangle-alert": ["m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3", "M12 9v4", "M12 17h.01"],
+  "book-open": ["M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z", "M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"],
+  box: ["M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z", "m3.3 7 8.7 5 8.7-5", "M12 22V12"],
+  tag: ["M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z", "c:7.5,7.5,.5"],
+  "git-commit-horizontal": ["c:12,12,3", "M3 12h6", "M15 12h6"],
   // units
   landmark: ["M3 22h18", "M6 18v-7", "M10 18v-7", "M14 18v-7", "M18 18v-7", "p:12,2 20,7 4,7"],
   "building-2": ["M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z", "M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2", "M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2", "M10 6h4", "M10 10h4", "M10 14h4", "M10 18h4"],
@@ -109,7 +118,7 @@ export function Icon({ name, size = 16, className = "", label }: { name: IconNam
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      strokeWidth={size < 16 ? 1.75 : 2}
       strokeLinecap="round"
       strokeLinejoin="round"
       role={label ? "img" : undefined}
@@ -136,9 +145,22 @@ export const TYPE_ICON: Record<string, IconName> = {
   event: "calendar",
   daily: "sun",
   note: "pencil",
-  reference: "bookmark",
-  resource: "bookmark",
+  reference: "book-open",
+  resource: "book-open",
+  glossary: "book-open",
   agent: "bot",
+  "ai-worker": "bot",
+  workflow: "sparkles",
+  meeting: "users-round",
+  milestone: "flag",
+  ask: "circle-help",
+  risk: "triangle-alert",
+  product: "box",
+  release: "tag",
+  commit: "git-commit-horizontal",
+  output: "file-text",
+  company: "building-2",
+  inbox: "inbox",
 };
 export const TYPE_LABEL: Record<string, string> = {
   project: "Төсөл",
@@ -155,6 +177,19 @@ export const TYPE_LABEL: Record<string, string> = {
   reference: "Лавлагаа",
   resource: "Лавлагаа",
   agent: "Агент",
+  "ai-worker": "AI ажилтан",
+  workflow: "Workflow",
+  meeting: "Уулзалт",
+  milestone: "Чухал үе",
+  ask: "Асуулт",
+  risk: "Эрсдэл",
+  glossary: "Нэр томьёо",
+  product: "Бүтээгдэхүүн",
+  release: "Хувилбар",
+  commit: "Commit",
+  output: "Гаралт",
+  company: "Компани",
+  inbox: "Inbox",
 };
 export const typeIcon = (type: string): IconName => TYPE_ICON[type] ?? "file-text";
 export const typeLabel = (type: string) => TYPE_LABEL[type] ?? type;
@@ -172,7 +207,7 @@ export const STATUS_ORDER: StatusGroup[] = ["inbox", "planning", "active", "wait
 export const STATUS: Record<StatusGroup, { label: string; icon: IconName; tone: "gray" | "yellow" | "blue" | "green" | "red" }> = {
   inbox: { label: "Inbox", icon: "inbox", tone: "gray" },
   planning: { label: "Төлөвлөж буй", icon: "hourglass", tone: "gray" },
-  active: { label: "Идэвхтэй", icon: "play", tone: "yellow" },
+  active: { label: "Идэвхтэй", icon: "arrow-right", tone: "yellow" },
   waiting: { label: "Хүлээгдэж буй", icon: "hourglass", tone: "blue" },
   someday: { label: "Хэзээ нэгэн цагт", icon: "message-circle", tone: "gray" },
   done: { label: "Дууссан", icon: "check", tone: "green" },

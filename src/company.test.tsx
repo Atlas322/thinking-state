@@ -220,7 +220,7 @@ describe("methodology templates", () => {
   it("draws INAI as a Business Model Canvas with projects and notes below", () => {
     render(<CompanyView company={inai} />);
     const panel = screen.getByRole("tabpanel");
-    for (const b of ["Key Partners", "Value Propositions", "Revenue Streams", "Cost Structure"]) expect(within(panel).getByRole("region", { name: b })).toBeTruthy();
+    for (const b of ["Гол түнш", "Үнэ цэнийн санал", "Орлогын урсгал", "Зардлын бүтэц"]) expect(within(panel).getByRole("region", { name: b })).toBeTruthy();
     expect(within(panel).getByRole("region", { name: "Нот" }).textContent).toContain("BMG шалгалт");
   });
 
@@ -229,7 +229,7 @@ describe("methodology templates", () => {
     render(<CompanyView company={inai} onMethodologyChange={onMethodologyChange} />);
     fireEvent.click(screen.getByRole("radio", { name: "Lean" }));
     expect(onMethodologyChange).toHaveBeenCalledWith("lean-canvas");
-    const problem = within(screen.getByRole("tabpanel")).getByRole("region", { name: "Problem" });
+    const problem = within(screen.getByRole("tabpanel")).getByRole("region", { name: "Асуудал" });
     expect(problem.textContent).toContain("Бөглөөгүй");
   });
 

@@ -152,7 +152,7 @@ export function PersonProfile({ c, person, onClose, themeClass = "" }: { c: Comp
                   <li key={e.period + e.title + i} style={{ "--i": i } as React.CSSProperties}>
                     <span className="cv-cv-period">{e.period}</span>
                     <span className="cv-cv-title">{e.title}</span>
-                    <span className="cv-cv-org">{e.org}</span>
+                    {e.org && <span className="cv-cv-org">{e.org}</span>}
                   </li>
                 ))}
               </ol>

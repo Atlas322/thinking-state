@@ -113,7 +113,7 @@ export const companyLabelsMn: CompanyViewLabels = {
   empty: "Энэ түвшинд мэдээлэл алга.",
   person: "Хүн",
   agent: "Агент",
-  source: { acme: "ac.me", vault: "vault", visitor: "зочин" },
+  source: { acme: "ac.me ертөнц", vault: "Тэмдэглэлийн сан", visitor: "Зочин" },
   segment: { personal: "Хувь", team: "Баг", company: "Компани", institutional: "Институц" },
 };
 
