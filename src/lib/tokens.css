@@ -177,9 +177,10 @@
  * 48 64 72 96. Rhythm: stack-sm/md/lg between elements, control = the minimum
  * under a segmented control or tab row (16), section = between page sections
  * (72, Figma «Нүүр v02»). Controls carry no outer margin; the parent's gap
- * (Stack) spaces them.
+ * (Stack) spaces them. Declared on :root only, so a host's :root override
+ * reaches themed elements too.
  */
-:where(:root, [data-ts-theme]) {
+:where(:root) {
   --ts-space-1: 4px;
   --ts-space-2: 8px;
   --ts-space-3: 12px;
