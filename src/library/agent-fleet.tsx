@@ -301,6 +301,7 @@ const css = `
 @keyframes af-in{from{opacity:0;transform:translateX(-6px)}}
 @media(max-width:640px){.af-grid{flex-direction:column}.af-col{width:100%}.af-tree{margin:12px 0 0;padding-left:28px;width:100%}.af-tree::before,.af-tree::after{display:none}.af-stats span:nth-child(2),.af-stats span:nth-child(3){display:none}}
 @media(prefers-reduced-motion:reduce){.af *,.af *::before{animation:none!important;transition:none!important}}
+.af-card{animation:afcardrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.af-card:nth-child(1){animation-delay:0ms}.af-card:nth-child(2){animation-delay:110ms}.af-card:nth-child(3){animation-delay:220ms}.af-card:nth-child(4){animation-delay:330ms}.af-card:nth-child(5){animation-delay:440ms}.af-card:nth-child(6){animation-delay:550ms}.af-card:nth-child(7){animation-delay:660ms}.af-card:nth-child(8){animation-delay:770ms}.af-card:nth-child(9){animation-delay:880ms}.af-card:nth-child(10){animation-delay:990ms}.af-card:nth-child(11){animation-delay:1100ms}.af-card:nth-child(12){animation-delay:1210ms}@keyframes afcardrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.af-card{animation:none}}
 `;
 
 export default AgentFleet;

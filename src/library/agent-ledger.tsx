@@ -345,6 +345,7 @@ const css = `
 @media(hover:none){.ldg-btn{opacity:1;pointer-events:auto}.ldg-time{opacity:0}}
 @container ldg (max-width:480px){.ldg-row{height:64px;padding:0 12px}.ldg-sys{display:none}.ldg-slot{min-width:56px}.ldg-btn{width:30px;padding:0;justify-content:center;border-radius:50%}.ldg-btn-label{display:none}.ldg-l2{flex-wrap:wrap}.ldg-row[data-undone=true]::after{right:70px}}
 @media(prefers-reduced-motion:reduce){.ldg *,.ldg *::after,.ldg-row::after{animation:none!important;transition:none!important}}
+.ldg-row{animation:ldgrowrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ldg-row:nth-child(1){animation-delay:0ms}.ldg-row:nth-child(2){animation-delay:90ms}.ldg-row:nth-child(3){animation-delay:180ms}.ldg-row:nth-child(4){animation-delay:270ms}.ldg-row:nth-child(5){animation-delay:360ms}.ldg-row:nth-child(6){animation-delay:450ms}.ldg-row:nth-child(7){animation-delay:540ms}.ldg-row:nth-child(8){animation-delay:630ms}.ldg-row:nth-child(9){animation-delay:720ms}.ldg-row:nth-child(10){animation-delay:810ms}.ldg-row:nth-child(11){animation-delay:900ms}.ldg-row:nth-child(12){animation-delay:990ms}@keyframes ldgrowrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ldg-row{animation:none}}
 `;
 
 export default AgentLedger;

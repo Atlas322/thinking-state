@@ -295,6 +295,7 @@ const css = `
 @keyframes aws-rot{to{transform:rotate(360deg)}}
 @media(max-width:480px){.aws-detail{white-space:normal}.aws-head{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.aws *{animation:none!important;transition:none!important}}
+.aws-row{animation:awsrowrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.aws-row:nth-child(1){animation-delay:0ms}.aws-row:nth-child(2){animation-delay:120ms}.aws-row:nth-child(3){animation-delay:240ms}.aws-row:nth-child(4){animation-delay:360ms}.aws-row:nth-child(5){animation-delay:480ms}.aws-row:nth-child(6){animation-delay:600ms}.aws-row:nth-child(7){animation-delay:720ms}.aws-row:nth-child(8){animation-delay:840ms}.aws-row:nth-child(9){animation-delay:960ms}.aws-row:nth-child(10){animation-delay:1080ms}.aws-row:nth-child(11){animation-delay:1200ms}.aws-row:nth-child(12){animation-delay:1320ms}@keyframes awsrowrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.aws-row{animation:none}}
 `;
 
 export default AwaySummary;

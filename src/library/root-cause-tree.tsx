@@ -274,6 +274,7 @@ const css = `
 @keyframes rct-sh{from{background-position:100% 0}to{background-position:-150% 0}}
 @media(max-width:560px){.rct-card{width:140px}.rct-card.is-root{width:180px}.rct-count{display:none}}
 @media(prefers-reduced-motion:reduce){.rct *{animation:none!important;transition:none!important}}
+.rct-node{animation:rctnoderise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.rct-node:nth-child(1){animation-delay:0ms}.rct-node:nth-child(2){animation-delay:120ms}.rct-node:nth-child(3){animation-delay:240ms}.rct-node:nth-child(4){animation-delay:360ms}.rct-node:nth-child(5){animation-delay:480ms}.rct-node:nth-child(6){animation-delay:600ms}.rct-node:nth-child(7){animation-delay:720ms}.rct-node:nth-child(8){animation-delay:840ms}.rct-node:nth-child(9){animation-delay:960ms}.rct-node:nth-child(10){animation-delay:1080ms}.rct-node:nth-child(11){animation-delay:1200ms}.rct-node:nth-child(12){animation-delay:1320ms}@keyframes rctnoderise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.rct-node{animation:none}}
 `;
 
 export default RootCauseTree;
