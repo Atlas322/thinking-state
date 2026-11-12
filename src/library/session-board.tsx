@@ -29,7 +29,7 @@ export type SessionBoardSession = {
   group?: string;
   /** Parent session id; the row is indented under its parent. */
   parent?: string;
-  pr?: number | { number: number; state?: SessionPrState; href?: string };
+  pr?: number | { number: number; state?: SessionPrState };
 };
 
 export type SessionBoardGroup = { id: string; label: string; defaultCollapsed?: boolean };
@@ -145,18 +145,23 @@ const reducedMotion = () =>
 
 function useCountUp(target: number, delay: number) {
   const [value, setValue] = React.useState(0);
+  const shown = React.useRef(0);
   React.useEffect(() => {
     if (reducedMotion() || typeof requestAnimationFrame === "undefined") {
+      shown.current = target;
       setValue(target);
       return;
     }
+    const from = shown.current;
     let raf = 0;
     let start = 0;
-    const duration = 900;
+    const duration = from === 0 ? 900 : 400;
+    const wait = from === 0 ? delay : 0;
     const tick = (t: number) => {
-      if (!start) start = t + delay;
+      if (!start) start = t + wait;
       const p = Math.min(1, Math.max(0, (t - start) / duration));
-      setValue(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      shown.current = Math.round(from + (target - from) * (1 - Math.pow(1 - p, 3)));
+      setValue(shown.current);
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -225,7 +230,7 @@ function orderRows(list: SessionBoardSession[]): Row[] {
 }
 
 const prOf = (pr: SessionBoardSession["pr"]) =>
-  pr == null ? null : typeof pr === "number" ? { number: pr, state: "open" as SessionPrState } : { state: "open" as SessionPrState, ...pr };
+  pr == null ? null : typeof pr === "number" ? { number: pr, state: "open" as SessionPrState } : { number: pr.number, state: pr.state ?? "open" };
 
 export function SessionBoard({
   project = demoProject,
@@ -239,9 +244,7 @@ export function SessionBoard({
   const L = { ...defaultLabels, ...labelsProp };
   const uid = React.useId();
   const rootRef = React.useRef<HTMLDivElement>(null);
-  const [collapsed, setCollapsed] = React.useState<Record<string, boolean>>(() =>
-    Object.fromEntries(groups.map((g) => [g.id, !!g.defaultCollapsed])),
-  );
+  const [collapsed, setCollapsed] = React.useState<Record<string, boolean>>({});
   const [selectedOwn, setSelectedOwn] = React.useState<string | null>(null);
   const selected = selectedProp !== undefined ? selectedProp : selectedOwn;
 
@@ -316,7 +319,7 @@ export function SessionBoard({
 
       <div className="sb-groups">
         {buckets.map((g) => {
-          const isCollapsed = !!collapsed[g.id];
+          const isCollapsed = collapsed[g.id] ?? !!g.defaultCollapsed;
           const rows = orderRows(g.list);
           const bodyId = `${uid}-${g.id}`;
           const live = g.list.filter((s) => s.state === "running").length;
@@ -486,7 +489,7 @@ const css = `
 @keyframes sb-in{from{opacity:0;transform:translateY(6px)}}
 @keyframes sb-pulse{0%{opacity:.7;transform:scale(.6)}100%{opacity:0;transform:scale(1.5)}}
 @keyframes sb-run{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}
-@container sb (max-width:480px){.sb-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.sb-st{display:none}.is-running .sb-st,.is-waiting .sb-st{display:inline-flex}}
+@container sb (max-width:480px){.sb-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.is-done .sb-st,.is-idle .sb-st{position:absolute;width:1px;height:1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
 @container sb (max-width:380px){.sb-line{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}}
 @media(prefers-reduced-motion:reduce){.sb *,.sb{animation:none!important;transition:none!important}.sb-run::after{width:100%;opacity:.55}}
 `;
