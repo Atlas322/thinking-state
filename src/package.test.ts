@@ -30,7 +30,7 @@ function reachable(entry: string, seen = new Set<string>()) {
 describe("@inai/thinking-state package", () => {
   it("is named and exported for git installs", () => {
     expect(pkg.name).toBe("@inai/thinking-state");
-    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./tokens.css", "./site.css", "./package.json"]);
+    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./tokens.css", "./site.css", "./ts.css", "./package.json"]);
     expect(pkg.files).toContain("lib");
     expect(pkg.peerDependencies.react).toMatch(/\^19/);
     expect((pkg.dependencies as Record<string, string>).react).toBeUndefined();
@@ -51,13 +51,18 @@ describe("@inai/thinking-state package", () => {
     // tokens.css itself is checked by scripts/build-lib.mjs (Vitest returns CSS imports empty).
   });
 
-  it("ships cream (Чиглэл 1) and dark (Чиглэл 2, TH.Dark) with a view / manage accent", async () => {
+  it("ships cream and the warm grey dark with one accent and status triads", async () => {
     const fs = (await import(/* @vite-ignore */ "node:" + "fs")) as { readFileSync: (p: string, e: string) => string };
     const css = fs.readFileSync("src/lib/tokens.css", "utf8");
-    for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="dark"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', '[data-ts-mode="view"]'])
+    for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="dark"]', '[data-ts-theme="manage"]'])
       expect(css).toContain(need);
-    for (const v of ["--ts-page: #0b0b0c;", "--ts-surface: #17171a;", "--ts-line: #26262a;", "--ts-electric: #4d7fff;", "--ts-electric-soft: #16224a;", "--ts-fg: #edebe6;"])
+    // warm grey dark (itge.e 11-12), one Electric accent, no indigo
+    for (const v of ["--ts-page: #262624;", "--ts-side: #1f1e1d;", "--ts-surface: #30302e;", "--ts-fg: #ecebe7;", "--ts-electric: #4d7fff;", "--ts-accent-strong: #1b5cff;"])
       expect(css).toContain(v);
+    expect(css).not.toMatch(/--ts-indigo|data-ts-mode="manage"\]/);
+    // status triads on both themes
+    for (const st of ["running", "needs-you", "error", "done", "idle"])
+      for (const part of ["bg", "border", "fg"]) expect(css.match(new RegExp(`--ts-status-${st}-${part}: #`, "g")), `${st}-${part}`).toHaveLength(2);
     expect(css).not.toContain("Spectral"); // one heading font on both themes (itge.e 11-12)
     expect(css).toContain('--ts-font-head: "Inter"');
     expect(css.match(/--ts-font-display: var\(--ts-font-head\);/g)).toHaveLength(2);

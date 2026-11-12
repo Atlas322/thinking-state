@@ -1,3 +1,4 @@
+import * as React from "react";
 
 /**
  * One icon set for Thinking State's company views: Lucide shapes (ISC
@@ -119,7 +120,53 @@ function shape(s: string, i: number) {
   return <path key={i} d={rest} />;
 }
 
-export function Icon({ name, size = 16, className = "", label }: { name: IconName; size?: 14 | 16 | 20 | number; className?: string; label?: string }) {
+/**
+ * Filled variants (itge.e 2026-11-12): projects, folders and groups use a
+ * solid yellow folder (--ts-folder #E8B931) instead of Lucide's outline.
+ */
+const FILLED: Partial<Record<IconName, (size: number) => React.ReactNode>> = {
+  folder: () => (
+    <>
+      <path
+        d="M2.5 6.2A2.2 2.2 0 0 1 4.7 4h3.6c.6 0 1.2.25 1.6.7l1.2 1.3h8.2a2.2 2.2 0 0 1 2.2 2.2v9.6a2.2 2.2 0 0 1-2.2 2.2H4.7a2.2 2.2 0 0 1-2.2-2.2Z"
+        fill="var(--ts-folder,#e8b931)"
+      />
+      <path d="M2.5 9.2h19v8.6a2.2 2.2 0 0 1-2.2 2.2H4.7a2.2 2.2 0 0 1-2.2-2.2Z" fill="var(--ts-folder,#e8b931)" />
+      <path d="M2.5 9.2h19" stroke="color-mix(in srgb,var(--ts-folder,#e8b931) 70%,#000)" strokeOpacity=".35" strokeWidth="1" fill="none" />
+    </>
+  ),
+};
+
+export function Icon({
+  name,
+  size = 16,
+  className = "",
+  label,
+  variant = "line",
+}: {
+  name: IconName;
+  size?: 14 | 16 | 20 | number;
+  className?: string;
+  label?: string;
+  /** "filled" draws the solid variant where one exists (folder); other icons stay line. */
+  variant?: "line" | "filled";
+}) {
+  const filled = variant === "filled" ? FILLED[name] : undefined;
+  if (filled)
+    return (
+      <svg
+        className={`cv-icon is-filled ${className}`}
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        role={label ? "img" : undefined}
+        aria-label={label}
+        aria-hidden={label ? undefined : true}
+        focusable="false"
+      >
+        {filled(size)}
+      </svg>
+    );
   return (
     <svg
       className={`cv-icon ${className}`}

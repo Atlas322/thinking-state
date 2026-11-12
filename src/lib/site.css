@@ -1,7 +1,7 @@
 /*
  * @inai/thinking-state/site.css — GENERATED from tokens.css (npm run tokens:site).
  * Thinking State tokens for a whole page: cream on :root, dark (Чиглэл 2) on
- * :root[data-theme="dark"]; Удирдах accent with data-ts-mode="manage".
+ * :root[data-theme="dark"]; one Electric accent; status triads --ts-status-*.
  * Use the --ts-color-* / --ts-font-heading|text|label names below: they are the stable contract.
  */
 
@@ -12,18 +12,14 @@
   --ts-soft-2: #e8e3d6;
   --ts-line: #d8d3c6;
   --ts-fg: #080808;
-  --ts-muted: #5e5a52;
-  --ts-faint: #8f8a80;
+  --ts-muted: #45433f;
+  --ts-faint: #5c5a55;
   --ts-side: #e8e4da;
   --ts-rail: #e8e4da;
   --ts-raised: #efebe1;
-  /* accent by mode (see [data-ts-mode] below): Үзэх = Electric, Удирдах = indigo */
   --ts-electric: #1b5cff;
   --ts-electric-fg: #1b5cff;
   --ts-electric-soft: #dfe6fb;
-  --ts-indigo: #3a4e8c;
-  --ts-indigo-fg: #3a4e8c;
-  --ts-indigo-soft: #e4e6ee;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
@@ -72,35 +68,59 @@
   --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   background: var(--ts-page);
   color: var(--ts-fg);
+  --ts-accent-strong: #1b5cff;
+  --ts-btn-bg: #fbfaf6;
+  --ts-btn-line: #a8a296;
+  --ts-btn-fg: #14130f;
+  --ts-folder: #e8b931;
+  --ts-cat-1-fg: #6e5420;
+  --ts-cat-2-fg: #0b5fa5;
+  --ts-cat-3-fg: #3f5e41;
+  --ts-cat-4-fg: #6b2fa8;
+  --ts-on-cat-1: #14130f;
+  --ts-on-cat-2: #ffffff;
+  --ts-on-cat-3: #0b2414;
+  --ts-on-cat-4: #ffffff;
+  --ts-status-running-bg: #e3effd;
+  --ts-status-running-border: #b8d3f6;
+  --ts-status-running-fg: #1d5fb8;
+  --ts-status-needs-you-bg: #fdebd6;
+  --ts-status-needs-you-border: #f2c597;
+  --ts-status-needs-you-fg: #a33e0b;
+  --ts-status-error-bg: #fde4e4;
+  --ts-status-error-border: #f4b4b6;
+  --ts-status-error-fg: #b4232a;
+  --ts-status-done-bg: #e3eadf;
+  --ts-status-done-border: #bfd2bb;
+  --ts-status-done-fg: #3f5e41;
+  --ts-status-idle-bg: #efebe1;
+  --ts-status-idle-border: #d8d3c6;
+  --ts-status-idle-fg: #45433f;
 }
 
 :where(:root[data-theme="dark"], :root.dark, .ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
-  /* Чиглэл 2 «Удирдлагын төв» TH.Dark — Figma 36:148605 */
-  --ts-page: #0b0b0c;
-  --ts-surface: #17171a;
-  --ts-soft: #1e1e22;
-  --ts-soft-2: #26262a;
-  --ts-line: #26262a;
-  --ts-fg: #edebe6;
-  --ts-muted: #a3a099;
-  --ts-faint: #6e6c67;
-  --ts-side: #121214;
-  --ts-raised: #1e1e22;
-  --ts-rail: #08080a;
+  /* warm grey dark (itge.e 2026-11-12): the same on the site and in the app */
+  --ts-page: #262624;
+  --ts-surface: #30302e;
+  --ts-soft: #3a3a37;
+  --ts-soft-2: #42423f;
+  --ts-line: #3e3d3a;
+  --ts-fg: #ecebe7;
+  --ts-muted: #b7b5ae;
+  --ts-faint: #8f8c86;
+  --ts-side: #1f1e1d;
+  --ts-raised: #3a3a37;
+  --ts-rail: #1f1e1d;
   --ts-electric: #4d7fff;
-  /* #4D7FFF is ~4.7:1 on #17171A; links and accent text use the lighter blue */
+  /* #4D7FFF is for icons and large text; small accent text uses the lighter blue, filled buttons --ts-accent-strong */
   --ts-electric-fg: #7aa2ff;
-  --ts-electric-soft: #16224a;
-  --ts-indigo: #3a4e8c;
-  /* indigo is ~2.3:1 on the dark surface: indigo text uses this lighter indigo */
-  --ts-indigo-fg: #aebbda;
-  --ts-indigo-soft: #1b2133;
+  --ts-electric-soft: #233154;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
   --ts-elevation: 0 0 0 1px var(--ts-line);
-  --ts-seg-on: #1e1e22;
-  --ts-code: #121214;
+  --ts-seg-on: #3a3a37;
+  --ts-code: #1f1e1d;
   --ts-green: #4ade80;
   --ts-green-soft: #12291a;
   --ts-amber: #eba659;
@@ -128,33 +148,49 @@
   --ts-cat-3-bg: color-mix(in srgb, var(--ts-cat-3) 16%, var(--ts-surface));
   --ts-cat-4: #a855f7;
   --ts-cat-4-bg: color-mix(in srgb, var(--ts-cat-4) 16%, var(--ts-surface));
-  --ts-tile-ochre: #1e1e22;
-  --ts-tile-slate: #1e1e22;
-  --ts-ink: #121214;
-  --ts-ink-card: #17171a;
-  --ts-ink-muted: #a3a099;
-  --ts-ink-label: #aebbda;
+  --ts-tile-ochre: #3a3a37;
+  --ts-tile-slate: #3a3a37;
+  --ts-ink: #1f1e1d;
+  --ts-ink-card: #30302e;
+  --ts-ink-muted: #b7b5ae;
+  --ts-ink-label: #a9beff;
   --ts-font: "Inter", system-ui, sans-serif;
   --ts-font-display: var(--ts-font-head);
   --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   color-scheme: dark;
   background: var(--ts-page);
   color: var(--ts-fg);
+  --ts-accent-strong: #1b5cff;
+  --ts-btn-bg: #3a3a37;
+  --ts-btn-line: #55544f;
+  --ts-btn-fg: #f2f0eb;
+  --ts-folder: #e8b931;
+  --ts-cat-1-fg: #f5c46a;
+  --ts-cat-2-fg: #6fbaf5;
+  --ts-cat-3-fg: #7ddf9c;
+  --ts-cat-4-fg: #cfa1fb;
+  --ts-on-cat-1: #14130f;
+  --ts-on-cat-2: #ffffff;
+  --ts-on-cat-3: #0b2414;
+  --ts-on-cat-4: #ffffff;
+  --ts-status-running-bg: #1d2b40;
+  --ts-status-running-border: #2c4a72;
+  --ts-status-running-fg: #7fb0f5;
+  --ts-status-needs-you-bg: #3a2717;
+  --ts-status-needs-you-border: #6b4220;
+  --ts-status-needs-you-fg: #f0883e;
+  --ts-status-error-bg: #3a1e20;
+  --ts-status-error-border: #6e3033;
+  --ts-status-error-fg: #f2777b;
+  --ts-status-done-bg: #1f2d22;
+  --ts-status-done-border: #355238;
+  --ts-status-done-fg: #8fcf96;
+  --ts-status-idle-bg: #3a3a37;
+  --ts-status-idle-border: #4e4d49;
+  --ts-status-idle-fg: #b7b5ae;
 }
 
-/* Mode: Удирдах = indigo accent on either theme; Үзэх = Electric. Only the accent changes.
-   The mode may sit on the themed element, inside it, or on an ancestor of it
-   (theme blocks reset the accent, so the ancestor case is listed explicitly). */
-:where([data-ts-mode="manage"], [data-ts-mode="manage"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-dark, .ts-theme-manage)) {
-  --ts-accent: var(--ts-indigo);
-  --ts-accent-fg: var(--ts-indigo-fg);
-  --ts-accent-soft: var(--ts-indigo-soft);
-}
-:where([data-ts-mode="view"], [data-ts-mode="view"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-dark, .ts-theme-manage)) {
-  --ts-accent: var(--ts-electric);
-  --ts-accent-fg: var(--ts-electric-fg);
-  --ts-accent-soft: var(--ts-electric-soft);
-}
+/* data-ts-mode (view | manage) no longer changes colours: one accent everywhere. */
 
 /*
  * Type (both themes): headings Inter Semi Bold with −2 % tracking; scale is
@@ -168,6 +204,20 @@
   --ts-type-h1: 36px;
   --ts-type-h2: 33px;
   --ts-type-h3: 20px;
+}
+
+/*
+ * Shape: controls 8, cards 12, pills round; the block layout (marketing,
+ * Figma section 10) uses square corners for blocks, CTAs and tags. The
+ * split CTA's ↗ cell is a deeper Electric.
+ */
+:where(:root) {
+  --ts-radius-control: 8px;
+  --ts-radius-card: 12px;
+  --ts-radius-pill: 999px;
+  --ts-radius-tile: 6px;
+  --ts-radius-block: 0;
+  --ts-cta-arrow: #1550e0;
 }
 
 /*
@@ -261,7 +311,8 @@
   --ts-color-accent-text: var(--ts-accent-fg);
   --ts-color-accent-soft: var(--ts-accent-soft);
   --ts-color-electric: var(--ts-electric);
-  --ts-color-indigo: var(--ts-indigo);
+  --ts-color-accent-strong: var(--ts-accent-strong);
+  --ts-color-folder: var(--ts-folder);
   --ts-color-link: var(--ts-link);
   --ts-color-amber: var(--ts-amber);
   --ts-color-amber-soft: var(--ts-amber-soft);

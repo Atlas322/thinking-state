@@ -84,7 +84,7 @@ export function CompanyPage({ company }: { company: Company }) {
   );
 }
 
-// Чиглэл 2 «Удирдлагын төв» dark; Удирдах горим бол data-ts-mode="manage" (индиго accent)
+// бараан (бүлээн саарал), сайт ба апп-д ижил
 <div data-ts-theme="dark" data-theme="dark">
   <CompanyView company={company} defaultView="dashboard" />
 </div>
@@ -96,23 +96,40 @@ Chat HTML export (uses `react-dom/server`): `import { renderChatHtml } from "@in
 variables (`--ts-page`, `--ts-surface`, `--ts-soft`, `--ts-line`, `--ts-fg`,
 `--ts-muted`, `--ts-faint`, `--ts-accent`, status colours with `-soft`
 pairs, `--ts-font`, `--ts-font-display`, `--ts-font-mono`) and falls back to
-its own defaults. `tokens.css` нь хоёр theme-тэй (itge.e 11-12, эцсийн):
-`cream` нь Чиглэл 1 (Figma `36:146054`), `dark` нь
-Чиглэл 2 «Удирдлагын төв» (Figma `36:148605`, TH.Dark): саармаг бараг хар,
-давхаргатай гадаргуу, Inter гарчиг, IBM Plex Mono шошго, Electric accent.
-`--ts-font-display` theme бүрд өөр. Горим `data-ts-mode="view" | "manage"` зөвхөн
-accent-ийг солино (Үзэх = Electric, Удирдах = индиго). Accent өнгөтэй текстэд
-`--ts-accent-fg` ашигла. `data-ts-theme="manage"` = dark (v0.1-ийн нэр,
-нийцлийн төлөө). Индиго нь зөвхөн `data-ts-mode="manage"`-аар. Гарчиг хоёр theme-д Inter Semi Bold (`--ts-font-head`, −2%), шатлал `--ts-type-display/h1/h2/h3` = 59/36/33/20. Ангиллын `--ts-cat-1..4` үргэлж тод (#F5A524, #0C8CE9, #22C55E, #A855F7), том талбай саармаг. Сонгосон төлөв `--ts-selected` #0C8CE9, цагаан текст. Фонт багцад орохгүй: Inter, IBM Plex Mono-г Google Fonts css2-оор
-`&text=`-гүй ачаал (ү, ө = cyrillic-ext).
+its own defaults. `tokens.css` нь хоёр theme-тэй (itge.e 11-12): `cream`
+(Чиглэл 1, цөцгий) ба `dark` (бүлээн саарал бараан, сайт ба апп-д ижил: side
+#1F1E1D, page #262624, карт #30302E, текст #ECEBE7). Accent ганцхан: Electric
+(дүүргэлттэй товч `--ts-accent-strong` #1B5CFF, бараан дээрх icon/том текст
+#4D7FFF, жижиг accent текст `--ts-accent-fg`). Индиго хасагдсан, `data-ts-mode` өнгө
+солихгүй, `data-ts-theme="manage"` = dark (v0.1-ийн нэр). Палитр нь каталогийн Agent
+Lanes-ээс: саармаг гадаргуу, нимгэн шугам, төлөв бүрт гурвал
+`--ts-status-{running,needs-you,error,done,idle}-{bg,border,fg}`. Ангиллын
+`--ts-cat-1..4` тод (#F5A524, #0C8CE9, #22C55E, #A855F7) зөвхөн жижиг тэмдэгт; tint
+дээрх текст `--ts-cat-N-fg`, тод дүүргэлт дээрх текст `--ts-on-cat-N`. Хавтас
+`--ts-folder` #E8B931. Гарчиг хоёр theme-д Inter Semi Bold (`--ts-font-head`, −2%),
+шатлал `--ts-type-display/h1/h2/h3` = 59/36/33/20. Сонгосон төлөв `--ts-selected`
+#0C8CE9, цагаан текст. Фонт багцад орохгүй: Inter, IBM Plex Mono-г Google Fonts
+css2-оор `&text=`-гүй ачаал (ү, ө = cyrillic-ext).
 
 **Сайт (`@inai/thinking-state/site.css`).** Маркетингийн сайтад зориулсан, ижил
 token-оос үүсгэсэн файл. Wrapper шаардахгүй: `:root` нь cream,
-`:root[data-theme="dark"]` нь Чиглэл 2 dark, `data-ts-mode="manage"` нь индиго accent.
+`:root[data-theme="dark"]` нь бараан.
 Тогтвортой alias-ууд: `--ts-color-bg/side/rail/surface/raised/tile/line/text/
-text-muted/text-faint/accent/accent-text/accent-soft/electric/indigo/link/amber/
+text-muted/text-faint/accent/accent-text/accent-soft/accent-strong/electric/folder/link/amber/
 amber-soft/green/red`, `--ts-shadow`, `--ts-font-heading/text/label`. tokens.css-ийг
 өөрчилсний дараа `npm run tokens:site` ажиллуул (тест зөрөхийг барина).
+
+**Primitive (`src/ui`) ба `ts.css`.** Апп ба сайтын цорын ганц дизайн систем
+(itge.e 11-12). Үүнд: `Text` (display, h1–h3, body-lg, body, small, label, mono,
+caption), `Button` (primary, secondary, ghost; sm/md/lg; `href` бол линк),
+`SplitCTA` (тусдаа ↗ нүдтэй блок CTA), `Pill` (`selected`, `count`; `onClick` бол
+aria-pressed toggle), `Tabs` (`variant="tabs"` = tablist, `"segmented"` = radiogroup;
+сум, Home, End товчоор удирдана), `Badge` (`tone`, ангиллын `cat-1..4`), `Card`
+(`interactive`, `selected`, `block`), `Stack`. Сонгосон төлөв `--ts-selected`
+#0C8CE9, цагаан текст. Control гадна margin-гүй. Сайт зөвхөн
+`import "@inai/thinking-state/ts.css"` хийнэ: token (`:root` cream,
+`[data-theme=dark]`), alias, primitive, motion бүгд нэг файлд. `npm run tokens:site`
+нь site.css ба ts.css-ийг үүсгэнэ, тест хоёуланг нь шинэ эсэхийг шалгана.
 
 **Spacing.** 4px суурьтай `--ts-space-1…10` (4 8 12 16 24 32 48 64 72 96), хэмнэл
 `--ts-gap-stack-sm/md/lg` (8/16/24), `--ts-gap-control` (control-ийн доор доод тал нь
