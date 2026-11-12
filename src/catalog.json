@@ -675,6 +675,28 @@
     "usage": "import { Select } from \"./select\";\n\nexport default function App() { \nreturn (<Select label=\"Assign to\" placeholder=\"Select a teammate\" options={[{value:\"maya\",label:\"Maya Chen\",description:\"Product design\"},{value:\"jonas\",label:\"Jonas Weber\",description:\"Engineering\"},{value:\"lena\",label:\"Lena Hart\",description:\"Operations\"}]} />);\n}"
   },
   {
+    "slug": "company-workspace",
+    "name": "Company · Workspace",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/company",
+    "description": "Draws any company in the Company contract, read-only, as an app – unit tree, breadcrumb header and tabs: the organisation's own method as template (Business Model Canvas, PMBOK matrix with Facts hub and Gantt, OKR, Lean Canvas), a dashboard by area → sub-area with status, owner and due filters (Session Board + Project Report), process tree, people ↔ agents, workflows, a RACI matrix, decisions and person profiles; zoom by institution, company or team",
+    "exportName": "CompanyWorkspace",
+    "usage": "import { CompanyWorkspace } from \"./company-workspace\";\nimport { acmeGroup } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyWorkspace company={acmeGroup} />; // Company contract: units, people, agents, workflows, projects; props: methodology (bmc | pmbok | okr | lean-canvas), defaultLevel, defaultUnitId, defaultView, today, showMethodologySwitch, showLayoutSwitch, labels; read-only\n}"
+  },
+  {
+    "slug": "company-brief",
+    "name": "Company · Brief",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/company",
+    "description": "The same company data as one scrolling brief – a hero with method, level and unit switches, then numbered sections for the method (BMC, PMBOK, OKR, Lean Canvas), dashboard, process, people ↔ agents, workflows, RACI and decisions",
+    "exportName": "CompanyBrief",
+    "usage": "import { CompanyBrief } from \"./company-brief\";\nimport { acmeGroup } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyBrief company={acmeGroup} />; // Company contract: units, people, agents, workflows, projects; props: methodology (bmc | pmbok | okr | lean-canvas), defaultLevel, defaultUnitId, defaultView, today, showMethodologySwitch, showLayoutSwitch, labels; read-only\n}"
+  },
+  {
     "slug": "project-report",
     "name": "Project Report",
     "category": "Chat widgets",
