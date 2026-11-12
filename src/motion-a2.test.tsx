@@ -1,7 +1,6 @@
 // @vitest-environment jsdom
 // A2: the CompanyView board plays its story (tab → dashboard, task through GTD),
 // stats count up, and touching the board pauses the story.
-import * as React from "react";
 import { act, cleanup, fireEvent, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CompanyPreview, BOARD_STORY } from "./company/company-preview";
