@@ -348,14 +348,14 @@ const css = `
 .sr-card{position:relative;padding:7px 9px 6px;background:var(--sr-bg);border-radius:6px;box-shadow:0 0 0 1px var(--sr-line),0 1px 2px #0000000a;cursor:grab;transition:opacity .2s,box-shadow .15s;animation:sr-in .3s both;outline:0}
 .sr-card:hover{box-shadow:0 0 0 1px color-mix(in srgb,var(--sr-fg) 18%,transparent),0 2px 6px #00000010}
 .sr-card:focus-visible{box-shadow:0 0 0 2px var(--sr-blue)}
-.sr-card.is-dim{opacity:.35}.sr-card.is-past{opacity:.5;cursor:default}
+.sr-card.is-dim,.sr-card.is-past{--sr-fg:var(--sr-muted);background:transparent;box-shadow:0 0 0 1px var(--sr-line)}.sr-card.is-past{cursor:default}
 .sr-c-top{display:flex;align-items:center;gap:7px;min-width:0}
 .sr-c-top strong{font-weight:500;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sr-logo{display:grid;place-items:center;width:13px;flex:none}.sr-logo svg{width:12px;height:12px}
 .sr-c-sub{margin:3px 0 0 20px;font-size:11px;color:var(--sr-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sr-c-foot{display:flex;align-items:center;gap:10px;margin:4px 0 0 20px;font-size:11px;color:var(--sr-muted)}
+.sr-c-foot{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;margin:4px 0 0 20px;font-size:11px;color:var(--sr-muted)}
 .sr-stat{display:flex;align-items:center;gap:4px}.sr-stat svg{width:11px;height:11px}
-.sr-use{margin-left:auto;padding:0 5px;border-radius:4px;background:var(--sr-well);color:var(--sr-fg);font-variant-numeric:tabular-nums}
+.sr-use{margin-left:auto;white-space:nowrap;padding:0 5px;border-radius:4px;background:var(--sr-well);color:var(--sr-fg);font-variant-numeric:tabular-nums}
 .sr-details{margin:8px 0 2px;padding-top:7px;border-top:1px solid var(--sr-line);font-size:11.5px}.sr-details p{margin:0 0 4px;color:var(--sr-fg);line-height:1.45}.sr-details span{color:var(--sr-muted)}
 .sr-week{display:grid;gap:4px;overflow-x:auto}
 .sr-day{height:24px;display:flex;align-items:center;gap:4px;padding:0 8px;border-radius:5px;background:var(--sr-well);font-size:11.5px;letter-spacing:.04em;color:var(--sr-muted)}.sr-day b{font-weight:500;color:var(--sr-fg);letter-spacing:0;font-size:12.5px}

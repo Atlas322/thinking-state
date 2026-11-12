@@ -258,8 +258,8 @@ export function AgentFleet({
 }
 
 const css = `
-.af{--af-bg:#fff;--af-fg:#18181b;--af-muted:#65656d;--af-faint:#65656d;--af-line:#ececef;--af-chip:#f4f4f5;--af-blue:#3b82f6;--af-blue-bg:#eaf2ff;--af-green:#16a34a;--af-green-bg:#e9f8ee;--af-red:#e5484d;--af-red-bg:#fdecec;--af-amber:#d97706;--af-amber-bg:#fff4e0;--af-conn:#93b8f5;width:100%;max-width:590px;color:var(--af-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .af{--af-bg:#1b1b1e;--af-fg:#ececef;--af-muted:#a1a1aa;--af-faint:#9a9aa2;--af-line:#2e2e33;--af-chip:#2a2a2f;--af-blue-bg:#1d2a44;--af-green-bg:#16301f;--af-red-bg:#3a1c1e;--af-amber-bg:#3a2a12;--af-conn:#3f5f99;color-scheme:dark}
+.af{--af-bg:#fff;--af-fg:#18181b;--af-muted:#65656d;--af-faint:#65656d;--af-line:#ececef;--af-chip:#f4f4f5;--af-blue:#2563eb;--af-blue-bg:#eaf2ff;--af-green:#15803d;--af-green-bg:#e9f8ee;--af-red:#c62828;--af-red-bg:#fdecec;--af-amber:#b45309;--af-amber-bg:#fff4e0;--af-conn:#93b8f5;width:100%;max-width:590px;color:var(--af-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .af{--af-bg:#1b1b1e;--af-fg:#ececef;--af-muted:#a1a1aa;--af-faint:#9a9aa2;--af-line:#2e2e33;--af-chip:#2a2a2f;--af-blue:#60a5fa;--af-blue-bg:#1d2a44;--af-green:#4ade80;--af-green-bg:#16301f;--af-red:#f87171;--af-red-bg:#3a1c1e;--af-amber:#fbbf24;--af-amber-bg:#3a2a12;--af-conn:#3f5f99;color-scheme:dark}
 .af *{box-sizing:border-box}.af button{font:inherit;color:inherit;cursor:pointer}
 .af-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px 12px}
 .af-title{display:flex;align-items:center;gap:8px;font-weight:500;font-size:14px}.af-title svg{width:14px;height:14px;color:var(--af-blue)}
@@ -268,7 +268,7 @@ const css = `
 .af-col{display:flex;flex-direction:column;gap:8px;width:290px;flex:none}
 .af-card{display:block;width:100%;text-align:left;background:var(--af-bg);border:1px solid var(--af-line);border-radius:8px;padding:9px 10px 8px;box-shadow:0 1px 2px #0000000a;transition:opacity .2s,border-color .15s}
 .af-card:hover{border-color:color-mix(in srgb,var(--af-fg) 18%,transparent)}
-.af-card.is-dim{opacity:.45}.af-card.is-dim:hover{opacity:.8}
+.af-card.is-dim{--af-fg:var(--af-muted);background:var(--af-chip);border-color:transparent;box-shadow:none}.af-card.is-dim:hover{--af-fg:inherit;background:var(--af-bg);border-color:var(--af-line)}
 .af-head{display:flex;align-items:flex-start;gap:8px}
 .af-av{display:grid;place-items:center;width:22px;height:22px;flex:none;margin-top:3px;color:var(--af-fg)}.af-av svg{width:15px;height:15px}
 .af-name{display:flex;flex-direction:column;min-width:0;flex:1}.af-name strong{font-weight:500;font-size:13px}.af-name small{font-size:11px;color:var(--af-faint)}
@@ -295,7 +295,7 @@ const css = `
 .af-tree::before{content:"";position:absolute;left:0;top:var(--af-y,50%);width:28px;border-top:1.5px solid var(--af-conn)}
 .af-tree::after{content:"";position:absolute;left:-4px;top:calc(50% - 4px);width:7px;height:7px;border-radius:50%;background:var(--af-bg);border:1.5px solid var(--af-conn)}
 .af-kid .af-task{margin:5px 0 7px}
-.af-kid.af-k-queued,.af-kid.af-k-stopped{opacity:.55}
+.af-kid.af-k-queued,.af-kid.af-k-stopped{--af-fg:var(--af-muted);background:var(--af-chip);border-color:transparent;box-shadow:none}
 .af :focus-visible{outline:2px solid var(--af-blue);outline-offset:2px}
 @keyframes af-spin{to{transform:rotate(360deg)}}
 @keyframes af-in{from{opacity:0;transform:translateX(-6px)}}

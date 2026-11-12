@@ -13,11 +13,11 @@
   --surface: #fff;
   --preview: #f7f7f8;
   --fg: #242426;
-  --muted: #8a8a91;
+  --muted: #65656d;
   --soft-fg: #626269;
   --line: #ebebee;
   --hover: #f0f0f2;
-  --accent: #6b72d9;
+  --accent: #5258c8;
   --accent-bg: #eeeffb;
   --code-bg: #fafafb;
   --shadow: 0 1px 4px #00000004;
@@ -29,7 +29,7 @@
   --surface: #18181b;
   --preview: #1e1e22;
   --fg: #e8e8ec;
-  --muted: #797982;
+  --muted: #9a9aa2;
   --soft-fg: #a3a3ac;
   --line: #29292f;
   --hover: #222227;
@@ -397,7 +397,7 @@ kbd {
   font-weight: 400;
 }
 .breadcrumb > span:nth-of-type(odd) {
-  color: var(--line);
+  color: var(--muted);
 }
 .topbar-actions {
   display: flex;
@@ -486,7 +486,7 @@ kbd {
   letter-spacing: 1.2px;
 }
 .eyebrow > span:not(.live-dot) {
-  color: var(--line);
+  color: var(--muted);
   margin: 0 2px;
 }
 .heading-title {
@@ -557,12 +557,27 @@ kbd {
   background: #9494aa;
 }
 .origin.mit {
-  color: #58856d;
+  color: #3f6b52;
   background: #6caa7c08;
   border-color: #6caa7c20;
 }
 .origin.mit .origin-dot {
   background: #689b7d;
+}
+/* Thinking State's own components (catalog `origin`) */
+.origin.original {
+  color: #1d5fb8;
+  background: #3b82f60d;
+  border-color: #3b82f626;
+}
+.origin.original .origin-dot {
+  background: #3b82f6;
+}
+[data-theme="dark"] .origin.mit {
+  color: #8fc7a3;
+}
+[data-theme="dark"] .origin.original {
+  color: #93c5fd;
 }
 .origin.recreated {
   background: var(--hover);

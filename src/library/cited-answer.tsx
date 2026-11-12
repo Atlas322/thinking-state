@@ -82,7 +82,7 @@ const defaultSegments: CitedSegment[] = [
 ];
 
 const tints = ["#eef0f3", "#e3f4e8", "#e6f1fb", "#fbefe3", "#f1e8fb"];
-const inks = ["#71717a", "#2f8a4d", "#3b7dc4", "#b8701f", "#7a4fc0"];
+const inks = ["#5b5b63", "#166534", "#1d63b8", "#9a4f0c", "#6d3fb8"];
 
 function Mark({ quote, highlight }: { quote: string; highlight?: string }) {
   const i = highlight ? quote.indexOf(highlight) : -1;
@@ -289,8 +289,8 @@ const css = `
 .ca-focus .ca-seg.lit{color:var(--ca-fg);background:var(--ca-lit);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:1px 2px;margin:0 -2px}
 .ca-num{display:inline-grid;place-items:center;min-width:15px;height:15px;margin:0 2px 0 3px;padding:0 3px;vertical-align:1px;border:0;border-radius:3px;background:var(--ca-chip);font-size:10px!important;line-height:1;color:var(--ca-muted)!important;transition:background .15s}
 .ca-num:hover,.ca-num.on{background:color-mix(in srgb,var(--ca-fg) 16%,transparent);color:var(--ca-fg)!important}
-.ca-chips{display:flex;flex-wrap:nowrap;gap:4px;margin-top:16px;margin-left:-6px;overflow:hidden}
-.ca-chip{display:inline-flex;align-items:center;gap:7px;flex:0 1 auto;min-width:0;white-space:nowrap;height:28px;padding:0 8px 0 6px;border:1px solid transparent;border-radius:6px;background:none;font-size:12.5px!important;color:var(--ca-muted)!important;transition:background .15s,border-color .15s,color .15s}
+.ca-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:16px;margin-left:-6px}
+.ca-chip{display:inline-flex;align-items:center;gap:7px;flex:none;white-space:nowrap;height:28px;padding:0 8px 0 6px;border:1px solid transparent;border-radius:6px;background:none;font-size:12.5px!important;color:var(--ca-muted)!important;transition:background .15s,border-color .15s,color .15s}
 .ca-focus .ca-chip{color:var(--ca-faint)!important}
 .ca-chip:hover,.ca-chip.on,.ca-focus .ca-chip.on{background:var(--ca-chip);border-color:var(--ca-line);color:var(--ca-fg)!important}
 .ca-chip-n{font-size:10.5px;color:var(--ca-faint)}

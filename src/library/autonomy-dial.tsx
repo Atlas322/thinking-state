@@ -241,7 +241,7 @@ const css = `
 .ad-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ad-risk{display:inline-flex;align-items:center;gap:3px;height:20px;padding:0 5px;border-radius:4px;font-size:12px;flex:none}
 .ad-risk svg{width:12px;height:12px}
-.ad-risky{background:#fff1dc;color:#c2580c}.ad-destructive{background:#ffe6e6;color:#dc2626}
+.ad-risky{background:#fff1dc;color:#9a3412}.ad-destructive{background:#ffe6e6;color:#b91c1c}
 :where(.dark,[data-theme=dark]) .ad-risky{background:#3a2a12;color:#fdba74}:where(.dark,[data-theme=dark]) .ad-destructive{background:#3a1717;color:#fca5a5}
 .ad-lock{display:grid;place-items:center;width:26px;height:26px;margin-left:auto;border:0;border-radius:6px;background:none;color:var(--ad-faint);opacity:0;transition:opacity .15s,background .15s}
 .ad-row:hover .ad-lock,.ad-lock:focus-visible,.ad-lock.is-on{opacity:1}

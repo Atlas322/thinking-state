@@ -315,14 +315,14 @@ export function StepperForm({
 }
 
 const css = `
-.sf{--sf-bg:#fff;--sf-fg:#18181b;--sf-muted:#52525b;--sf-faint:#65656d;--sf-line:#ececef;--sf-field:#fff;--sf-accent:#3b82f6;--sf-red:#e5484d;--sf-green:#22a356;--sf-btn:#18181b;--sf-btn-fg:#fff;width:100%;max-width:482px;background:var(--sf-bg);color:var(--sf-fg);border:1px solid var(--sf-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+.sf{--sf-bg:#fff;--sf-fg:#18181b;--sf-muted:#52525b;--sf-faint:#65656d;--sf-line:#ececef;--sf-field:#fff;--sf-accent:#2563eb;--sf-red:#e5484d;--sf-green:#22a356;--sf-btn:#18181b;--sf-btn-fg:#fff;width:100%;max-width:482px;background:var(--sf-bg);color:var(--sf-fg);border:1px solid var(--sf-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
 :where(.dark,[data-theme=dark]) .sf{--sf-bg:#1b1b1e;--sf-fg:#ececef;--sf-muted:#a1a1aa;--sf-faint:#9a9aa2;--sf-line:#2e2e33;--sf-field:#202024;--sf-accent:#6aa3ff;--sf-btn:#ececef;--sf-btn-fg:#18181b;color-scheme:dark}
 .sf *{box-sizing:border-box}.sf button{font:inherit;color:inherit;cursor:pointer}
 .sf-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0;padding:16px 20px 0;list-style:none}
 .sf-steps li{border-top:2px solid var(--sf-line);transition:border-color .3s}
 .sf-steps li.cur,.sf-steps li.done{border-color:var(--sf-accent)}
 .sf-steps button{display:flex;align-items:center;gap:8px;width:100%;padding:8px 0 0;border:0;background:none;font-size:10.5px!important;letter-spacing:.07em;text-transform:uppercase;color:var(--sf-faint)!important;text-align:left}
-.sf-steps button:disabled{cursor:default}
+.sf-steps button:disabled{cursor:default;opacity:1}
 .sf-steps li.cur button{color:var(--sf-fg)!important;font-weight:500}
 .sf-steps li.done button{color:var(--sf-muted)!important}.sf-steps li.done button:hover{color:var(--sf-fg)!important}
 .sf-n{display:inline-grid;place-items:center;min-width:10px;font-size:10.5px;color:var(--sf-faint)}

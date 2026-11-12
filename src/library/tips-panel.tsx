@@ -177,7 +177,7 @@ const css = /* css */ `
   --ui-tpc-strong: #000000;
   --ui-tpc-ink: rgba(0, 0, 0, 0.88);
   --ui-tpc-text: rgba(0, 0, 0, 0.61);
-  --ui-tpc-muted: rgba(0, 0, 0, 0.45);
+  --ui-tpc-muted: rgba(0, 0, 0, 0.6);
   --ui-tpc-line: rgba(0, 0, 0, 0.06);
   --ui-tpc-wash: rgba(0, 0, 0, 0.015);
   --ui-tpc-hover: rgba(0, 0, 0, 0.03);

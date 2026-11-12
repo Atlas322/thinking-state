@@ -169,13 +169,13 @@ const pretty = (v: unknown) => (typeof v === "string" ? v : JSON.stringify(v, nu
 
 // geometry
 const W = 680;
-const CARD_W = 130;
+const CARD_W = 146;
 const CARD_H = 46;
 const PITCH = 58;
-const BUS_L = 185;
-const AG_X = 240;
-const AG_W = 200;
-const BUS_R = AG_X + AG_W + 55;
+const BUS_L = 195;
+const AG_X = 245;
+const AG_W = 190;
+const BUS_R = AG_X + AG_W + 45;
 const R = 7;
 
 export function ToolAccessMap({
@@ -527,7 +527,7 @@ const css = `
 .tam-t1{display:flex;align-items:center;gap:6px;min-width:0}
 .tam-name{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tam-n{margin-left:auto;color:var(--tam-faint);font-size:11.5px}
-.tam-t2{padding-left:22px;font-size:11.5px;color:var(--tam-muted);white-space:nowrap}
+.tam-t2{font-size:11.5px;color:var(--tam-muted);white-space:nowrap}
 .tam-t2.run{color:var(--tam-blue)}.tam-t2.fail{color:var(--tam-red)}
 .tam-agent{position:absolute;width:${AG_W}px;transform:translateY(-50%);padding:10px;border:1px solid var(--tam-line);border-radius:10px;background:var(--tam-bg);box-shadow:0 2px 10px #0000000d;animation:tam-up .3s ease-out}
 .tam-a1{display:flex;flex-wrap:wrap;align-items:flex-start;gap:4px 8px}

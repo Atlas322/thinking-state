@@ -444,12 +444,12 @@ a.pd-pr-btn:hover{background:var(--pd-soft)}
 .pd-pr-line code{min-width:0;overflow:hidden;text-overflow:ellipsis;font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace}
 .pd-pr-side{flex:none;display:flex;align-items:center;gap:6px}
 .pd-tag,.pd-review,.pd-dtag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:5px;font-size:11.5px;font-weight:500;white-space:nowrap}
-.pd-tag.is-open{background:var(--pd-green-soft);color:color-mix(in srgb,var(--pd-green) 78%,var(--pd-fg))}
+.pd-tag.is-open{background:var(--pd-green-soft);color:color-mix(in srgb,var(--pd-green) 70%,var(--pd-fg))}
 .pd-tag.is-draft{background:var(--pd-soft);color:var(--pd-muted)}
 .pd-tag.is-merged{background:var(--pd-violet-soft);color:color-mix(in srgb,var(--pd-violet) 80%,var(--pd-fg))}
 .pd-tag.is-closed{background:var(--pd-red-soft);color:color-mix(in srgb,var(--pd-red) 82%,var(--pd-fg))}
 .pd-review{border:1px solid var(--pd-line);color:var(--pd-muted);font-weight:400}
-.pd-review.is-approved{border-color:color-mix(in srgb,var(--pd-green) 40%,var(--pd-line));color:color-mix(in srgb,var(--pd-green) 78%,var(--pd-fg))}
+.pd-review.is-approved{border-color:color-mix(in srgb,var(--pd-green) 40%,var(--pd-line));color:color-mix(in srgb,var(--pd-green) 70%,var(--pd-fg))}
 .pd-review.is-changes{border-color:color-mix(in srgb,var(--pd-amber) 45%,var(--pd-line));color:color-mix(in srgb,var(--pd-amber) 82%,var(--pd-fg))}
 .pd-checks{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--pd-muted);font-variant-numeric:tabular-nums}
 .pd-checks.is-failed{color:color-mix(in srgb,var(--pd-red) 82%,var(--pd-fg))}
@@ -469,7 +469,7 @@ a.pd-pr-btn:hover{background:var(--pd-soft)}
 .pd-dot[data-s=stuck]::after{color:var(--pd-amber)}
 .pd-env{font-weight:600}
 .pd-target{color:var(--pd-muted);font:12px/1 ui-monospace,SFMono-Regular,Menlo,monospace}
-.pd-dtag.is-live{background:var(--pd-green-soft);color:color-mix(in srgb,var(--pd-green) 78%,var(--pd-fg))}
+.pd-dtag.is-live{background:var(--pd-green-soft);color:color-mix(in srgb,var(--pd-green) 70%,var(--pd-fg))}
 .pd-dtag.is-building,.pd-dtag.is-queued{background:var(--pd-accent-soft);color:color-mix(in srgb,var(--pd-accent) 72%,var(--pd-fg))}
 .pd-dtag.is-stuck{background:var(--pd-amber-soft);color:color-mix(in srgb,var(--pd-amber) 82%,var(--pd-fg))}
 .pd-dtag.is-failed{background:var(--pd-red-soft);color:color-mix(in srgb,var(--pd-red) 82%,var(--pd-fg))}

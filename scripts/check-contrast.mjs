@@ -3,62 +3,15 @@
 // background under them. Gradients and images are skipped (not measurable).
 //
 //   npm run dev     (another terminal; or pass --url)
-//   node scripts/check-contrast.mjs [--url http://127.0.0.1:5173] [--only a,b] [--width 1440] [--shell]
+//   node scripts/check-contrast.mjs [--url http://127.0.0.1:5173] [--only a,b] [--width 1440] [--themes light,dark] [--shell]
 // --shell also scans the catalog chrome (sidebar, header) once per theme.
-import { spawn } from "node:child_process";
-import fs from "node:fs";
-import os from "node:os";
-import path from "node:path";
+import { arg, launch, openSlug, setTheme, slugs } from "./cdp.mjs";
 
-const arg = (name, fallback) => {
-  const i = process.argv.indexOf(`--${name}`);
-  return i > 0 ? process.argv[i + 1] : fallback;
-};
 const base = arg("url", "http://127.0.0.1:5173");
 const width = Number(arg("width", "1440"));
-const only = arg("only", "");
-const chrome =
-  process.env.CHROME ||
-  [
-    "C:/Program Files/Google/Chrome/Application/chrome.exe",
-    "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    "/usr/bin/google-chrome",
-  ].find((p) => fs.existsSync(p));
-if (!chrome) throw new Error("Chrome not found; set CHROME=/path/to/chrome");
 
-const port = 9300 + Math.floor(Math.random() * 500);
-const profile = fs.mkdtempSync(path.join(os.tmpdir(), "ts-contrast-"));
-const proc = spawn(chrome, ["--headless=new", `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, "--no-first-run", "about:blank"]);
-const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-let target;
-for (let i = 0; i < 50 && !target; i++) {
-  await wait(200);
-  try {
-    target = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find((t) => t.type === "page");
-  } catch {}
-}
-const ws = new WebSocket(target.webSocketDebuggerUrl);
-await new Promise((r) => ws.addEventListener("open", r, { once: true }));
-let id = 0;
-const pending = new Map();
-ws.addEventListener("message", (e) => {
-  const m = JSON.parse(e.data);
-  if (m.id && pending.has(m.id)) pending.get(m.id)(m), pending.delete(m.id);
-});
-const send = (method, params = {}) =>
-  new Promise((resolve) => {
-    const n = ++id;
-    pending.set(n, resolve);
-    ws.send(JSON.stringify({ id: n, method, params }));
-  });
-const evaluate = async (expression) => {
-  const r = await send("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true });
-  if (r.result?.exceptionDetails) throw new Error(JSON.stringify(r.result.exceptionDetails));
-  return r.result?.result?.value;
-};
-
-const SCAN = (selector) => `(() => {
+const SCAN = (selector, exclude = "") => `(() => {
+  const exclude = ${JSON.stringify(exclude)};
   const cv = document.createElement("canvas").getContext("2d", { willReadFrequently: true });
   const rgba = (c) => { cv.clearRect(0, 0, 1, 1); cv.fillStyle = "#000"; cv.fillStyle = c; cv.fillRect(0, 0, 1, 1); const d = cv.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255]; };
   const lum = (a) => { const c = a.slice(0, 3).map((v) => v / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
@@ -82,7 +35,10 @@ const SCAN = (selector) => `(() => {
   const root = document.querySelector(${JSON.stringify(selector)});
   if (!root) return [];
   const out = new Set();
+  const skipped = { invisible: 0 };
+  const disabled = new Set();
   for (const el of root.querySelectorAll("*")) {
+    if (exclude && el.closest(exclude)) continue;
     if (el.closest("[aria-hidden=true]:not(svg)") && el.tagName !== "svg") continue;
     const isSvg = el.tagName === "svg";
     const text = isSvg ? "" : [...el.childNodes].filter((n) => n.nodeType === 3 && n.textContent.trim()).map((n) => n.textContent.trim()).join(" ");
@@ -96,40 +52,50 @@ const SCAN = (selector) => `(() => {
       const painted = [...el.querySelectorAll("path,circle,rect,line,polyline,polygon")].some((p) => { const ps = getComputedStyle(p); return ps.stroke === s.color || ps.fill === s.color; });
       if (!painted) continue;
     }
+    // WCAG 1.4.3 exempts inactive controls: listed as exceptions, not counted
+    const off = el.closest(":disabled, [aria-disabled=true], [data-disabled]:not([data-disabled=false])");
     const op = opacityOf(el);
     if (op < 0.35) continue; // deliberately faded (disabled, ghost): not measured
     const bg = bgOf(el);
     if (!bg) continue;
     let fg = rgba(s.color);
+    // transparent text is painted another way (background-clip:text) or hidden on purpose
+    if (fg[3] < 0.05) { skipped.invisible++; continue; }
     if (fg[3] < 1) fg = mix(fg, bg);
     if (op < 0.99) fg = mix([...fg.slice(0, 3), op], bg);
     const size = parseFloat(s.fontSize), weight = +s.fontWeight;
     const need = isSvg ? 3 : size >= 24 || (weight >= 700 && size >= 18.66) ? 3 : 4.5;
     const got = ratio(fg, bg);
-    if (got < need - 0.005) out.add(got.toFixed(2) + " " + hex(fg) + "/" + hex(bg) + " " + (isSvg ? "glyph" : "text") + " " + el.tagName.toLowerCase() + "." + String(el.className.baseVal ?? el.className).split(" ")[0] + (text ? " «" + text.slice(0, 32) + "»" : ""));
+    // Same colour as the background: nothing is painted where the scanner looks. Either the
+    // state hides it (an unchecked tick) or the real backdrop is a sibling, pseudo-element or
+    // image the ancestor walk cannot see. Counted, not reported; a human sees these at once.
+    if (got < 1.1) { skipped.invisible++; continue; }
+    if (got < need - 0.005 && off) disabled.add(got.toFixed(2) + " " + (isSvg ? "glyph" : "text") + " " + el.tagName.toLowerCase() + "." + String(el.className.baseVal ?? el.className).split(" ")[0] + (text ? " «" + text.slice(0, 32) + "»" : ""));
+    else if (got < need - 0.005) out.add(got.toFixed(2) + " " + hex(fg) + "/" + hex(bg) + " " + (isSvg ? "glyph" : "text") + " " + el.tagName.toLowerCase() + "." + String(el.className.baseVal ?? el.className).split(" ")[0] + (text ? " «" + text.slice(0, 32) + "»" : ""));
   }
-  return [...out];
+  return { hits: [...out], skipped, disabled: [...disabled] };
 })()`;
 
-const catalog = JSON.parse(fs.readFileSync(new URL("../src/catalog.json", import.meta.url), "utf8"));
-const slugs = catalog.map((e) => e.slug).filter((s) => !only || only.split(",").includes(s));
-await send("Emulation.setDeviceMetricsOverride", { width, height: 1000, deviceScaleFactor: 1, mobile: false });
-await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
-await send("Page.enable");
+const page = await launch();
+const list = slugs();
+await page.viewport(width);
 let total = 0;
-for (const theme of ["light", "dark"]) {
-  await send("Page.navigate", { url: `${base}/` });
-  await wait(800);
-  await evaluate(`localStorage.setItem("studio-theme", ${JSON.stringify(JSON.stringify(theme))}); localStorage.setItem("studio-theme-raw", ${JSON.stringify(theme)}); 1`);
-  for (const slug of slugs) {
-    await send("Page.navigate", { url: `${base}/#/${slug}` });
-    await wait(1200);
-    for (let i = 0; i < 20 && (await evaluate(`!!document.querySelector(".preview-loading")`)); i++) await wait(250);
-    const applied = await evaluate(`document.documentElement.dataset.theme`);
-    if (applied !== theme) await evaluate(`document.querySelector('[aria-label^="Switch to ${theme}"]')?.click(); 1`), await wait(300);
-    await wait(2500); // let scenarios reach a resting state
-    const hits = (await evaluate(SCAN(".preview-stage"))) ?? [];
-    if (process.argv.includes("--shell") && slug === slugs[0]) hits.push(...((await evaluate(SCAN("body"))) ?? []).map((h) => "shell " + h));
+let invisible = 0;
+const exceptions = [];
+let current = "";
+const scan = async (selector, exclude) => {
+  const r = (await page.evaluate(SCAN(selector, exclude))) ?? { hits: [], skipped: { invisible: 0 }, disabled: [] };
+  invisible += r.skipped.invisible;
+  exceptions.push(...r.disabled.map((d) => `${current} ${d}`));
+  return r.hits;
+};
+for (const theme of arg("themes", "light,dark").split(",")) {
+  await setTheme(page, base, theme);
+  for (const slug of list) {
+    await openSlug(page, base, slug, theme);
+    current = `${theme.padEnd(5)} ${slug}`;
+    const hits = await scan(".preview-stage");
+    if (process.argv.includes("--shell") && slug === list[0]) hits.push(...(await scan("body", ".preview-stage")).map((h) => "shell " + h));
     if (hits.length) {
       total += hits.length;
       console.log(`${theme.padEnd(5)} ${slug}`);
@@ -137,9 +103,10 @@ for (const theme of ["light", "dark"]) {
     }
   }
 }
-console.log(`contrast: ${total} below the bar`);
+if (exceptions.length) {
+  console.log(`disabled controls below the bar (exempt, WCAG 1.4.3 "inactive user interface component"): ${exceptions.length}`);
+  for (const e of exceptions) console.log("      " + e);
+}
+console.log(`contrast: ${total} below the bar (${invisible} invisible text/glyphs skipped: transparent, or the same colour as the measured background)`);
 if (total) process.exitCode = 1;
-ws.close();
-proc.kill();
-await wait(300);
-try { fs.rmSync(profile, { recursive: true, force: true }); } catch {}
+await page.close();

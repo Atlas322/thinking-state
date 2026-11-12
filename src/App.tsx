@@ -321,7 +321,7 @@ export default function App() {
           aria-label="Thinking State home"
         >
           <span className="brand-mark">
-            t<span>·</span>
+            t<span aria-hidden="true">·</span>
           </span>
           <span>
             thinking<span className="brand-light">state</span>
@@ -483,6 +483,9 @@ export default function App() {
                   <span>
                     <strong>67</strong> independent recreations
                   </span>
+                  <span>
+                    <strong>{catalog.filter((e) => "origin" in e).length}</strong> Thinking State originals
+                  </span>
                 </div>
               </section>
               <div className="gallery-header">
@@ -530,8 +533,8 @@ export default function App() {
                         <span>↗</span>
                       </h3>
                       <p>{x.description}</p>
-                      <span className={`origin ${x.pro ? "recreated" : "mit"}`}>
-                        {"source" in x ? x.source : x.pro ? "Recreated" : "MIT original"}
+                      <span className={`origin ${"origin" in x ? "original" : x.pro ? "recreated" : "mit"}`}>
+                        {"origin" in x ? "Thinking State" : "source" in x ? x.source : x.pro ? "Recreated" : "MIT original"}
                       </span>
                     </div>
                   </button>
@@ -572,7 +575,7 @@ export default function App() {
                 </div>
                 <p>{entry.description}</p>
                 <div className="component-meta">
-                  <span className={`origin ${entry.pro ? "recreated" : "mit"}`}>
+                  <span className={`origin ${"origin" in entry ? "original" : entry.pro ? "recreated" : "mit"}`}>
                     <span className="origin-dot" />
                     {"origin" in entry
                       ? entry.origin
