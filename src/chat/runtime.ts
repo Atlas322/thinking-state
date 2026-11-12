@@ -13,6 +13,8 @@
  *                             With a value (a class name) it toggles that
  *                             class on the closest [data-cw-scope] and makes
  *                             the target inert instead.
+ *   [data-cw-scope-btn=v]     All / Mine switch: sets data-scope=v on the
+ *                             widget root; CSS hides [data-cw-other] under "mine"
  *   [data-cw-choose=label]    picks an option in its [data-cw-item]
  *   [data-cw-undo]            clears that pick
  *   [data-cw-prompt=text]     sends text back to the chat via window.sendPrompt
@@ -97,6 +99,21 @@ export function chatRuntime() {
   doc.addEventListener("click", (e) => {
     const t = e.target as Element | null;
     if (!t || !t.closest) return;
+
+    const scopeBtn = t.closest("[data-cw-scope-btn]");
+    if (scopeBtn) {
+      const root = scopeBtn.closest("[data-cw-root]");
+      const v = scopeBtn.getAttribute("data-cw-scope-btn") || "all";
+      if (root) {
+        root.setAttribute("data-scope", v);
+        root.querySelectorAll("[data-cw-scope-btn]").forEach((b) => {
+          const on = b.getAttribute("data-cw-scope-btn") === v;
+          b.setAttribute("aria-pressed", String(on));
+          if (on) b.setAttribute("data-active", "");
+          else b.removeAttribute("data-active");
+        });
+      }
+    }
 
     const viewBtn = t.closest("[data-cw-view-btn]");
     if (viewBtn) {

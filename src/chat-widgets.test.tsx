@@ -227,3 +227,64 @@ describe("review fixes", () => {
     expect(html).toContain(".sb-fold{visibility:hidden");
   });
 });
+
+describe("owner, sharing and the Mine view", () => {
+  it("every widget has a schema that covers its demo props", async () => {
+    const { chatWidgetSchemas } = await import("./chat/schema");
+    for (const w of chatWidgets) {
+      const schema = chatWidgetSchemas.find((s) => s.slug === w.slug);
+      expect(schema, w.slug).toBeTruthy();
+      const { demo } = await w.load();
+      for (const key of Object.keys(demo)) expect(Object.keys(schema!.props), `${w.slug}.${key}`).toContain(key);
+    }
+  });
+
+  it("Project Report keeps only owned or shared items under Mine", () => {
+    render(
+      <ProjectReport
+        me="Anu"
+        phases={[
+          { id: "a", title: "Mine", status: "in-progress", owner: "Anu" },
+          { id: "b", title: "Shared", status: "completed", owner: "Bat", sharedWith: ["Anu"] },
+          { id: "c", title: "Theirs", status: "inbox", owner: "Bat" },
+        ]}
+      />,
+    );
+    const root = document.querySelector("[data-cw-root]")!;
+    expect(root.getAttribute("data-scope")).toBe("all");
+    fireEvent.click(screen.getByRole("button", { name: "Mine" }));
+    expect(root.getAttribute("data-scope")).toBe("mine");
+    const status = document.querySelector('[data-cw-view-panel="status"]')!;
+    const others = Array.from(status.querySelectorAll("[data-cw-other]")).map((li) => li.textContent);
+    expect(others).toHaveLength(1);
+    expect(others[0]).toContain("Theirs");
+    // vault statuses map onto phase states
+    expect(status.querySelector(".is-active")!.textContent).toContain("Mine");
+    expect(status.querySelector(".is-done")!.textContent).toContain("Shared");
+    expect(status.querySelector(".is-next")!.textContent).toContain("Theirs");
+  });
+
+  it("hides the switch without a viewer", () => {
+    render(<ProjectReport phases={[{ id: "a", title: "A", state: "next" }]} />);
+    expect(screen.queryByRole("button", { name: "Mine" })).toBeNull();
+  });
+
+  for (const slug of ["project-report", "pr-deploy-status", "decision-inbox-chat", "session-board"]) {
+    it(`${slug} switches to Mine in the static export`, async () => {
+      await mountExport(slug);
+      const root = document.querySelector("[data-cw-root]")!;
+      expect(root.querySelectorAll("[data-cw-other]").length).toBeGreaterThan(0);
+      fireEvent.click(root.querySelector('[data-cw-scope-btn="mine"]')!);
+      expect(root.getAttribute("data-scope")).toBe("mine");
+      expect(root.querySelector('[data-cw-scope-btn="mine"]')!.getAttribute("aria-pressed")).toBe("true");
+    });
+  }
+
+  it("Session Board takes vault statuses and shows the owner", async () => {
+    const { SessionBoard } = await import("./library/session-board");
+    render(<SessionBoard me="Anu" sessions={[{ id: "x", title: "Vault task", status: "waiting-on", group: "projects", owner: "Anu", sharedWith: ["Bat"] }]} />);
+    const row = screen.getByRole("button", { name: /Vault task/ });
+    expect(row.closest(".sb-row")!.className).toContain("is-waiting");
+    expect(row.textContent).toContain("Anu with Bat");
+  });
+});

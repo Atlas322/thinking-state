@@ -7,7 +7,12 @@ import * as React from "react";
  * A header card (icon, name, status, owner, updated, one-line summary), KPI
  * tiles that count up, a progress line with milestones, the phases (done,
  * active, blocked, next) and a «Waiting on you» block with one action each.
- * Two views of the same data: Status (timeline) and Cards.
+ * Two views of the same data: Status (timeline) and Cards. With `me` set, an
+ * All / Mine switch shows only what `me` owns or shares (owner OR
+ * sharedWith, the Just.Notion «owner or collaborator» filter).
+ * Field names follow the vault frontmatter: `status` and `due` work as
+ * aliases of `state` and `date`, and vault/Notion statuses (in-progress,
+ * waiting, completed, inbox, planning…) map onto the four phase states.
  * Original Thinking State chat widget. Colours follow tokens/tokens.json.
  * Data comes in as plain JSON props, so the same object renders here, in a
  * one-file HTML export and in an agent's chat.
@@ -19,6 +24,10 @@ import * as React from "react";
 export type ReportTone = "green" | "amber" | "blue" | "red" | "gray";
 export type ReportPhaseState = "done" | "active" | "blocked" | "next";
 export type ProjectReportView = "status" | "cards";
+export type ProjectReportScope = "all" | "mine";
+
+/** Who owns an item and who it is shared with (vault `owner`, Notion Owner / Collabs). */
+export type ReportShared = { owner?: string; sharedWith?: string[] };
 
 export type ProjectReportKpi = {
   label: string;
@@ -30,18 +39,23 @@ export type ProjectReportKpi = {
   tone?: ReportTone;
 };
 
-export type ProjectReportPhase = {
+export type ProjectReportPhase = ReportShared & {
   id: string;
   title: string;
-  state: ReportPhaseState;
+  /** done | active | blocked | next; vault/Notion names also work via `status`. */
+  state?: ReportPhaseState;
+  /** Vault/Notion status alias: in-progress, waiting, completed, inbox, planning… */
+  status?: string;
   line?: string;
   /** Date or period, shown as written. */
   date?: string;
+  /** Vault alias of `date`. */
+  due?: string;
   /** 0–100 for the active phase; done counts as 100. */
   progress?: number;
 };
 
-export type ProjectReportWaiting = {
+export type ProjectReportWaiting = ReportShared & {
   id: string;
   title: string;
   line?: string;
@@ -56,9 +70,13 @@ export type ProjectReportData = {
     icon?: string;
     status?: { label: string; tone?: ReportTone };
     owner?: string;
+    /** People the project is shared with (team / company layer). */
+    sharedWith?: string[];
     updated?: string;
     summary?: string;
   };
+  /** The viewer; enables the All / Mine switch. */
+  me?: string;
   kpis?: ProjectReportKpi[];
   progress?: { value: number; label?: string; milestones?: { at: number; label: string }[] };
   phases?: ProjectReportPhase[];
@@ -75,6 +93,10 @@ export type ProjectReportLabels = {
   view: string;
   status: string;
   cards: string;
+  scope: string;
+  all: string;
+  mine: string;
+  sharedWith: string;
   done: string;
   active: string;
   blocked: string;
@@ -84,6 +106,9 @@ export type ProjectReportLabels = {
 export type ProjectReportProps = Partial<ProjectReportData> & {
   view?: ProjectReportView;
   defaultView?: ProjectReportView;
+  scope?: ProjectReportScope;
+  defaultScope?: ProjectReportScope;
+  onScopeChange?: (scope: ProjectReportScope) => void;
   onViewChange?: (view: ProjectReportView) => void;
   onWaitingAction?: (item: ProjectReportWaiting) => void;
   labels?: Partial<ProjectReportLabels>;
@@ -100,6 +125,10 @@ const defaultLabels: ProjectReportLabels = {
   view: "View",
   status: "Status",
   cards: "Cards",
+  scope: "Show",
+  all: "All",
+  mine: "Mine",
+  sharedWith: "Shared with",
   done: "Done",
   active: "In progress",
   blocked: "Blocked",
@@ -111,10 +140,12 @@ export const projectReportDemo: ProjectReportData = {
     name: "ac.me Box · Winter box launch",
     icon: "B",
     status: { label: "On track", tone: "green" },
-    owner: "Project agent",
+    owner: "Anu",
+    sharedWith: ["Bat", "Tsetseg", "Project agent"],
     updated: "12 Nov, 14:20",
     summary: "Landing page and pause flow are in review; production deploy waits on one setting.",
   },
+  me: "Anu",
   kpis: [
     { label: "Tasks done", value: 34, unit: "/52", note: "+6 this week", tone: "green" },
     { label: "Open PRs", value: 3, note: "1 failing check", tone: "amber" },
@@ -132,17 +163,52 @@ export const projectReportDemo: ProjectReportData = {
     ],
   },
   phases: [
-    { id: "research", title: "Customer research", state: "done", line: "27 interviews, 4 themes", date: "Oct 6" },
-    { id: "design", title: "Box and landing design", state: "done", line: "Approved in review", date: "Oct 24" },
-    { id: "build", title: "Landing page and pause flow", state: "active", line: "2 of 3 PRs green", date: "Nov 14", progress: 70 },
-    { id: "deploy", title: "Production deploy", state: "blocked", line: "Waits on one missing setting", date: "Nov 15" },
-    { id: "launch", title: "Launch and first shipments", state: "next", line: "Darkhan and Ulaanbaatar", date: "Nov 21" },
+    { id: "research", title: "Customer research", state: "done", line: "27 interviews, 4 themes", date: "Oct 6", owner: "Tsetseg" },
+    { id: "design", title: "Box and landing design", state: "done", line: "Approved in review", date: "Oct 24", owner: "Anu", sharedWith: ["Tsetseg"] },
+    { id: "build", title: "Landing page and pause flow", state: "active", line: "2 of 3 PRs green", date: "Nov 14", progress: 70, owner: "Bat", sharedWith: ["Anu"] },
+    { id: "deploy", title: "Production deploy", state: "blocked", line: "Waits on one missing setting", date: "Nov 15", owner: "Bat" },
+    { id: "launch", title: "Launch and first shipments", state: "next", line: "Darkhan and Ulaanbaatar", date: "Nov 21", owner: "Anu" },
   ],
   waiting: [
-    { id: "copy", title: "Approve the landing copy", line: "Three headline options, one recommended", action: "Review" },
-    { id: "promote", title: "Promote preview to production", line: "Goes live once the setting is added", action: "Approve", tone: "amber" },
+    { id: "copy", title: "Approve the landing copy", line: "Three headline options, one recommended", action: "Review", owner: "Anu" },
+    { id: "promote", title: "Promote preview to production", line: "Goes live once the setting is added", action: "Approve", tone: "amber", owner: "Anu", sharedWith: ["Bat"] },
   ],
 };
+
+const PHASE_STATES: ReportPhaseState[] = ["done", "active", "blocked", "next"];
+/** Maps vault / Notion statuses onto the four phase states. */
+export function toPhaseState(value?: string): ReportPhaseState {
+  const v = (value ?? "").toLowerCase().replace(/[\s_]+/g, "-");
+  if ((PHASE_STATES as string[]).includes(v)) return v as ReportPhaseState;
+  if (["completed", "complete", "cancelled", "canceled"].includes(v)) return "done";
+  if (["in-progress", "running", "doing"].includes(v)) return "active";
+  if (["waiting", "waiting-on", "stuck", "failed"].includes(v)) return "blocked";
+  return "next"; // inbox, planning, next-action, someday, unknown
+}
+const isMine = (x: ReportShared, me?: string) => !!me && (x.owner === me || (x.sharedWith ?? []).includes(me));
+const initials = (name: string) =>
+  name.trim().split(/\s+/).map((w) => w.charAt(0)).join("").slice(0, 2).toUpperCase();
+
+function Who({ x, label }: { x: ReportShared; label: string }) {
+  if (!x.owner && !x.sharedWith?.length) return null;
+  const more = x.sharedWith?.length ?? 0;
+  const text = [x.owner, more ? `${label} ${x.sharedWith!.join(", ")}` : ""].filter(Boolean).join(" · ");
+  return (
+    <span className="rp-who" title={text}>
+      {x.owner && (
+        <span className="rp-ava" aria-hidden="true">
+          {initials(x.owner)}
+        </span>
+      )}
+      {more > 0 && (
+        <span className="rp-more" aria-hidden="true">
+          +{more}
+        </span>
+      )}
+      <span className="rp-sr">{text}</span>
+    </span>
+  );
+}
 
 const reducedMotion = () =>
   typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -222,9 +288,13 @@ export function ProjectReport({
   progress = projectReportDemo.progress,
   phases = projectReportDemo.phases,
   waiting = projectReportDemo.waiting,
+  me: meProp,
   view: viewProp,
   defaultView = "status",
   onViewChange,
+  scope: scopeProp,
+  defaultScope = "all",
+  onScopeChange,
   onWaitingAction,
   labels: labelsProp,
   className = "",
@@ -241,14 +311,27 @@ export function ProjectReport({
   const views: ProjectReportView[] = ["status", "cards"];
   const icon = project.icon ?? project.name.trim().charAt(0).toUpperCase();
   const pct = clamp(progress?.value);
-  const phaseList = phases ?? [];
+  const phaseList = (phases ?? []).map((p) => ({
+    ...p,
+    state: p.state ?? toPhaseState(p.status),
+    date: p.date ?? p.due,
+  }));
   const waitList = waiting ?? [];
+  // The demo viewer only goes with the demo data; real data passes its own `me`.
+  const me = meProp ?? (phases === projectReportDemo.phases ? projectReportDemo.me : undefined);
+  const [scopeOwn, setScopeOwn] = React.useState<ProjectReportScope>(defaultScope);
+  const scope = me ? (scopeProp ?? scopeOwn) : "all";
+  const setScope = (v: ProjectReportScope) => {
+    setScopeOwn(v);
+    onScopeChange?.(v);
+  };
+  const other = (x: ReportShared) => (me && !isMine(x, me) ? "" : undefined);
   const stateLabel = (s: ReportPhaseState) => L[s];
 
-  const phaseProgress = (p: ProjectReportPhase) => (p.state === "done" ? 100 : p.state === "next" ? 0 : clamp(p.progress));
+  const phaseProgress = (p: ProjectReportPhase & { state: ReportPhaseState }) => (p.state === "done" ? 100 : p.state === "next" ? 0 : clamp(p.progress));
 
   return (
-    <div className={`rp ${className}`} data-cw-root="project-report" data-cw-views="">
+    <div className={`rp ${className}`} data-cw-root="project-report" data-cw-views="" data-scope={scope}>
       <style>{css}</style>
       <section className="rp-head" aria-labelledby={`${uid}-name`}>
         <div className="rp-id">
@@ -259,7 +342,7 @@ export function ProjectReport({
             <h2 id={`${uid}-name`} className="rp-name">
               {project.name}
             </h2>
-            {(project.owner || project.updated) && (
+            {(project.owner || project.updated || !!project.sharedWith?.length) && (
               <p className="rp-meta">
                 {project.owner && (
                   <span>
@@ -269,6 +352,11 @@ export function ProjectReport({
                 {project.updated && (
                   <span>
                     {L.updated} {project.updated}
+                  </span>
+                )}
+                {project.sharedWith && project.sharedWith.length > 0 && (
+                  <span title={project.sharedWith.join(", ")}>
+                    {L.sharedWith} {project.sharedWith.length}
                   </span>
                 )}
               </p>
@@ -324,6 +412,23 @@ export function ProjectReport({
       {phaseList.length > 0 && (
         <div className="rp-bar">
           <h3 className="rp-h">{L.phases}</h3>
+          {me && (
+            <div className="rp-seg rp-scope" role="group" aria-label={L.scope}>
+              {(["all", "mine"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  aria-pressed={scope === v}
+                  className="rp-seg-opt"
+                  data-active={scope === v || undefined}
+                  data-cw-scope-btn={v}
+                  onClick={() => setScope(v)}
+                >
+                  {v === "all" ? L.all : L.mine}
+                </button>
+              ))}
+            </div>
+          )}
           <div
             className="rp-seg"
             role="radiogroup"
@@ -364,7 +469,7 @@ export function ProjectReport({
         <>
           <ol className="rp-phases rp-view" data-cw-view-panel="status" hidden={view !== "status"}>
             {phaseList.map((p, i) => (
-              <li key={p.id} className={`rp-phase is-${p.state}`} style={{ "--i": i } as React.CSSProperties}>
+              <li key={p.id} className={`rp-phase is-${p.state}`} style={{ "--i": i } as React.CSSProperties} data-cw-other={other(p)}>
                 <Marker state={p.state} />
                 <div className="rp-ptext">
                   <span className="rp-ptitle">{p.title}</span>
@@ -376,7 +481,10 @@ export function ProjectReport({
                   )}
                 </div>
                 <div className="rp-pside">
-                  <span className="rp-ptag">{stateLabel(p.state)}</span>
+                  <span className="rp-pside-top">
+                    <Who x={p} label={L.sharedWith} />
+                    <span className="rp-ptag">{stateLabel(p.state)}</span>
+                  </span>
                   {p.date && <span className="rp-pdate">{p.date}</span>}
                 </div>
               </li>
@@ -384,7 +492,7 @@ export function ProjectReport({
           </ol>
           <ul className="rp-cards rp-view" data-cw-view-panel="cards" hidden={view !== "cards"}>
             {phaseList.map((p, i) => (
-              <li key={p.id} className={`rp-card is-${p.state}`} style={{ "--i": i } as React.CSSProperties}>
+              <li key={p.id} className={`rp-card is-${p.state}`} style={{ "--i": i } as React.CSSProperties} data-cw-other={other(p)}>
                 <span className="rp-card-top">
                   <Marker state={p.state} />
                   <span className="rp-ptag">{stateLabel(p.state)}</span>
@@ -392,6 +500,7 @@ export function ProjectReport({
                 </span>
                 <span className="rp-ptitle">{p.title}</span>
                 {p.line && <span className="rp-pline">{p.line}</span>}
+                <Who x={p} label={L.sharedWith} />
                 <span className="rp-mini" aria-hidden="true">
                   <span style={{ width: `${phaseProgress(p)}%` }} />
                 </span>
@@ -412,7 +521,7 @@ export function ProjectReport({
         ) : (
           <ul className="rp-wait-list">
             {waitList.map((w, i) => (
-              <li key={w.id} className={`rp-witem rp-wt-${w.tone ?? "blue"}`} style={{ "--i": i } as React.CSSProperties}>
+              <li key={w.id} className={`rp-witem rp-wt-${w.tone ?? "blue"}`} style={{ "--i": i } as React.CSSProperties} data-cw-other={other(w)}>
                 <span className="rp-wtext">
                   <span className="rp-wtitle">{w.title}</span>
                   {w.line && <span className="rp-wline">{w.line}</span>}
@@ -481,7 +590,14 @@ const css = `
 .rp-miles li{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
 .rp-miles li[data-edge=start]{transform:none}.rp-miles li[data-edge=end]{transform:translateX(-100%)}
 .rp-miles li.is-past{color:var(--rp-muted)}
-.rp-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:0 2px}
+.rp-bar{display:flex;align-items:center;gap:8px;min-width:0;padding:0 2px}
+.rp-bar .rp-h{margin-right:auto}
+.rp[data-scope=mine] [data-cw-other]{display:none!important}
+.rp-pside-top{display:flex;align-items:center;gap:6px}
+.rp-who{display:inline-flex;align-items:center;gap:3px;flex:none}
+.rp-ava{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--rp-soft);border:1px solid var(--rp-line);color:var(--rp-muted);font-size:9.5px;font-weight:600;letter-spacing:.02em}
+.rp-more{font-size:11px;color:var(--rp-faint);font-variant-numeric:tabular-nums}
+.rp-card .rp-who{margin:2px 0 6px}
 .rp-h{margin:0;font-size:13px;font-weight:600;color:var(--rp-muted)}
 .rp-seg{display:inline-flex;gap:2px;padding:2px;border-radius:8px;background:var(--rp-soft)}
 .rp-seg-opt{height:28px;padding:0 10px;border:0;border-radius:6px;background:none;color:var(--rp-muted);font-size:13px;font-weight:500;white-space:nowrap;transition:color .09s,background .15s,box-shadow .15s}

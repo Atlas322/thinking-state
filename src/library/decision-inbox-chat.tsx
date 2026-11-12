@@ -10,6 +10,9 @@ import * as React from "react";
  * row to «Chosen: …» with an undo, and sends the answer back to the chat.
  * Original Thinking State chat widget. Colours follow tokens/tokens.json.
  * Data comes in as plain JSON props.
+ * With `me` set, an All / Mine switch keeps only decisions `me` owns or is
+ * shared on (owner OR sharedWith). Item fields follow the vault frontmatter
+ * (project, due, owner).
  * Motion: rows arrive one after another, a chosen row settles with a check;
  * all of it is off under prefers-reduced-motion.
  */
@@ -28,12 +31,18 @@ export type DecisionChatItem = {
   project?: string;
   due?: string;
   urgent?: boolean;
+  /** Who decides (vault `owner`). */
+  owner?: string;
+  /** Who else sees it (team / company sharing layer). */
+  sharedWith?: string[];
   options: DecisionChatOption[];
 };
 
 export type DecisionInboxChatData = {
   title?: string;
   decisions?: DecisionChatItem[];
+  /** The viewer; enables the All / Mine switch. */
+  me?: string;
 };
 
 export type DecisionInboxChatLabels = {
@@ -45,11 +54,17 @@ export type DecisionInboxChatLabels = {
   recommended: string;
   urgent: string;
   due: string;
+  scope: string;
+  all: string;
+  mine: string;
 };
 
 export type DecisionInboxChatProps = DecisionInboxChatData & {
   /** Controlled answers by decision id; defaults to internal state. */
   chosen?: Record<string, string>;
+  scope?: "all" | "mine";
+  defaultScope?: "all" | "mine";
+  onScopeChange?: (scope: "all" | "mine") => void;
   onDecide?: (decision: DecisionChatItem, option: DecisionChatOption | null) => void;
   labels?: Partial<DecisionInboxChatLabels>;
   className?: string;
@@ -64,10 +79,14 @@ const defaultLabels: DecisionInboxChatLabels = {
   recommended: "Recommended",
   urgent: "Today",
   due: "Due",
+  scope: "Show",
+  all: "All",
+  mine: "Mine",
 };
 
 export const decisionInboxChatDemo: DecisionInboxChatData = {
   title: "Decisions for ac.me Box",
+  me: "Anu",
   decisions: [
     {
       id: "hero",
@@ -76,6 +95,7 @@ export const decisionInboxChatDemo: DecisionInboxChatData = {
       project: "Winter box launch",
       due: "today",
       urgent: true,
+      owner: "Anu",
       options: [
         { id: "doorstep", label: "Snowy doorstep", recommended: true },
         { id: "unboxing", label: "Unboxing close-up" },
@@ -87,6 +107,8 @@ export const decisionInboxChatDemo: DecisionInboxChatData = {
       context: "One check still fails; the fix is small but needs review.",
       project: "Winter box launch",
       due: "Nov 14",
+      owner: "Bat",
+      sharedWith: ["Anu"],
       options: [
         { id: "now", label: "Ship before launch", recommended: true },
         { id: "later", label: "Right after launch" },
@@ -97,6 +119,7 @@ export const decisionInboxChatDemo: DecisionInboxChatData = {
       title: "Darkhan deliveries: weekly or every two weeks?",
       context: "Orders there are 18% of the waitlist.",
       project: "Operations",
+      owner: "Tsetseg",
       due: "Nov 18",
       options: [
         { id: "weekly", label: "Weekly" },
@@ -111,6 +134,10 @@ export function DecisionInboxChat({
   title,
   decisions = decisionInboxChatDemo.decisions,
   chosen: chosenProp,
+  me = decisions === decisionInboxChatDemo.decisions ? decisionInboxChatDemo.me : undefined,
+  scope: scopeProp,
+  defaultScope = "all",
+  onScopeChange,
   onDecide,
   labels: labelsProp,
   className = "",
@@ -122,6 +149,9 @@ export function DecisionInboxChat({
   const chosen = chosenProp ?? own;
   const pickOf = (d: DecisionChatItem) => d.options.find((o) => o.id === chosen[d.id]);
   const left = list.filter((d) => !pickOf(d)).length;
+  const [scopeOwn, setScopeOwn] = React.useState<"all" | "mine">(defaultScope);
+  const scope = me ? (scopeProp ?? scopeOwn) : "all";
+  const mineOf = (d: DecisionChatItem) => !!me && (d.owner === me || (d.sharedWith ?? []).includes(me));
   const heading = title ?? (decisions === decisionInboxChatDemo.decisions ? decisionInboxChatDemo.title : undefined) ?? L.title;
 
   const choose = (d: DecisionChatItem, o: DecisionChatOption | null) => {
@@ -135,12 +165,31 @@ export function DecisionInboxChat({
   };
 
   return (
-    <section className={`di ${className}`} data-cw-root="decision-inbox-chat" aria-labelledby={`${uid}-h`}>
+    <section className={`di ${className}`} data-cw-root="decision-inbox-chat" data-scope={scope} aria-labelledby={`${uid}-h`}>
       <style>{css}</style>
       <header className="di-head">
         <h3 id={`${uid}-h`} className="di-title">
           {heading}
         </h3>
+        {me && (
+          <div className="di-scope" role="group" aria-label={L.scope}>
+            {(["all", "mine"] as const).map((v) => (
+              <button
+                key={v}
+                type="button"
+                aria-pressed={scope === v}
+                data-active={scope === v || undefined}
+                data-cw-scope-btn={v}
+                onClick={() => {
+                  setScopeOwn(v);
+                  onScopeChange?.(v);
+                }}
+              >
+                {v === "all" ? L.all : L.mine}
+              </button>
+            ))}
+          </div>
+        )}
         <span className={`di-left${left ? "" : " is-zero"}`} data-cw-left="">
           <span data-cw-left-n="">{left}</span> {L.open}
         </span>
@@ -161,15 +210,22 @@ export function DecisionInboxChat({
               key={d.id}
               className={`di-item${d.urgent ? " is-urgent" : ""}`}
               data-cw-item=""
+              data-cw-other={me && !mineOf(d) ? "" : undefined}
               data-chosen={pick ? "" : undefined}
               style={{ "--i": i } as React.CSSProperties}
             >
               <div className="di-q">
                 <span className="di-qtitle">{d.title}</span>
-                {(d.project || d.due) && (
+                {(d.project || d.due || d.owner) && (
                   <span className="di-meta">
                     {d.urgent && <span className="di-urgent">{L.urgent}</span>}
                     {d.project && <span>{d.project}</span>}
+                    {d.owner && (
+                      <span title={d.sharedWith?.length ? `${d.owner} + ${d.sharedWith.join(", ")}` : d.owner}>
+                        {d.owner}
+                        {d.sharedWith?.length ? ` +${d.sharedWith.length}` : ""}
+                      </span>
+                    )}
                     {d.due && !d.urgent && (
                       <span>
                         {L.due} {d.due}
@@ -228,6 +284,11 @@ const css = `
 .di *{box-sizing:border-box}:where(.di) button{font:inherit;color:inherit;cursor:pointer}
 .di [hidden]{display:none!important}
 .di-head{display:flex;align-items:center;gap:10px;padding:11px 12px;border-bottom:1px solid var(--di-line)}
+.di[data-scope=mine] [data-cw-other]{display:none!important}
+.di-scope{display:inline-flex;gap:2px;flex:none;padding:2px;border-radius:8px;background:var(--di-soft)}
+.di-scope button{height:24px;padding:0 8px;border:0;border-radius:6px;background:none;color:var(--di-muted);font-size:12.5px;font-weight:500;transition:color .1s,background .15s}
+.di-scope button[data-active]{background:var(--di-bg);color:var(--di-fg);box-shadow:0 0 0 .5px #0000000f,0 1px 2px #0000000d}
+:where(.dark,[data-theme=dark]) .di-scope button[data-active]{background:#3a3a40}
 .di-title{flex:1;min-width:0;margin:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .di-left{flex:none;height:22px;padding:0 8px;border-radius:11px;background:var(--di-amber-soft);color:color-mix(in srgb,var(--di-amber) 82%,var(--di-fg));font-size:12px;font-weight:500;line-height:22px;font-variant-numeric:tabular-nums;transition:background .2s,color .2s}
 .di-left.is-zero{background:var(--di-green-soft);color:color-mix(in srgb,var(--di-green) 78%,var(--di-fg))}
