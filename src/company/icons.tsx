@@ -158,6 +158,7 @@ export function Icon({
   className = "",
   label,
   variant = "line",
+  animate = false,
 }: {
   name: IconName;
   size?: 14 | 16 | 20 | number;
@@ -165,11 +166,26 @@ export function Icon({
   label?: string;
   /** "filled" draws the solid variant where one exists (folder); other icons stay line. */
   variant?: "line" | "filled";
+  /**
+   * Animated Lucide (lucide-animated, MIT): true / "hover" plays the icon's
+   * motion when it or its link / button is hovered or focused; "once" plays it
+   * when it mounts. Transform, opacity and stroke only; off under reduced motion.
+   */
+  animate?: boolean | "hover" | "once";
 }) {
   const filled = variant === "filled" ? FILLED[name] : undefined;
+  const anim = animate ? { "data-anim": ANIM_OF[name] ?? "pop", "data-anim-on": animate === "once" ? "once" : "hover" } : undefined;
+  const animStyle = animate ? (
+    <style href="ts-icon-anim" precedence="default">
+      {ICON_ANIM_CSS}
+    </style>
+  ) : null;
   if (filled)
     return (
+      <>
+      {animStyle}
       <svg
+        {...anim}
         className={`cv-icon is-filled ${className}`}
         width={size}
         height={size}
@@ -181,9 +197,13 @@ export function Icon({
       >
         {filled(size)}
       </svg>
+      </>
     );
   return (
+    <>
+    {animStyle}
     <svg
+      {...anim}
       className={`cv-icon ${className}`}
       width={size}
       height={size}
@@ -200,8 +220,60 @@ export function Icon({
     >
       {SHAPES[name].map(shape)}
     </svg>
+    </>
   );
 }
+
+/* ───────── animated Lucide: one motion per icon family (lucide-animated, MIT) ───────── */
+
+type Anim = "draw" | "nudge" | "nudge-up" | "nudge-down" | "spin" | "spin-back" | "bob" | "swing" | "pop";
+const ANIM_OF: Partial<Record<IconName, Anim>> = {
+  check: "draw",
+  "circle-check": "draw",
+  "square-check": "draw",
+  "shield-check": "draw",
+  "user-check": "draw",
+  "arrow-right": "nudge",
+  "arrow-up-right": "nudge-up",
+  "chevron-right": "nudge",
+  "chevron-left": "nudge",
+  "chevron-down": "nudge-down",
+  "rotate-ccw": "spin-back",
+  sun: "spin",
+  sparkles: "pop",
+  atom: "spin",
+  bot: "bob",
+  play: "nudge",
+  mail: "bob",
+  "message-circle": "swing",
+  "triangle-alert": "swing",
+  flag: "swing",
+  calendar: "swing",
+  "calendar-days": "swing",
+  hourglass: "spin",
+  search: "swing",
+  link: "swing",
+  folder: "bob",
+  workflow: "bob",
+  "key-round": "swing",
+};
+const ICON_ANIM_CSS = `
+@keyframes ts-ia-nudge{40%{transform:translateX(3px)}}
+@keyframes ts-ia-nudge-up{40%{transform:translate(2px,-2px)}}
+@keyframes ts-ia-nudge-down{40%{transform:translateY(2px)}}
+@keyframes ts-ia-spin{to{transform:rotate(180deg)}}
+@keyframes ts-ia-spin-back{to{transform:rotate(-360deg)}}
+@keyframes ts-ia-bob{40%{transform:translateY(-2px)}}
+@keyframes ts-ia-swing{25%{transform:rotate(-12deg)}75%{transform:rotate(10deg)}}
+@keyframes ts-ia-pop{40%{transform:scale(1.18)}}
+.cv-icon[data-anim]{transform-box:fill-box;transform-origin:center}
+:is(a,button,[role=button],[role=tab],[role=radio],[role=menuitem]):is(:hover,:focus-visible) .cv-icon[data-anim-on=hover],.cv-icon[data-anim-on=hover]:hover,.cv-icon[data-anim-on=once]{animation:var(--ts-ia) var(--ts-motion-spring-soft-duration,600ms) var(--ts-motion-spring-soft,cubic-bezier(.2,.8,.3,1)) both}
+.cv-icon[data-anim=draw]{--ts-ia:ts-ia-pop}
+.cv-icon[data-anim=nudge]{--ts-ia:ts-ia-nudge}.cv-icon[data-anim=nudge-up]{--ts-ia:ts-ia-nudge-up}.cv-icon[data-anim=nudge-down]{--ts-ia:ts-ia-nudge-down}
+.cv-icon[data-anim=spin]{--ts-ia:ts-ia-spin}.cv-icon[data-anim=spin-back]{--ts-ia:ts-ia-spin-back}
+.cv-icon[data-anim=bob]{--ts-ia:ts-ia-bob}.cv-icon[data-anim=swing]{--ts-ia:ts-ia-swing}.cv-icon[data-anim=pop]{--ts-ia:ts-ia-pop}
+@media (prefers-reduced-motion:reduce){.cv-icon[data-anim]{animation:none!important}}
+`;
 
 /* ───────── maps: one place for type → icon and status → icon + tone ───────── */
 

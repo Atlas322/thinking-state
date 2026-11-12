@@ -83,7 +83,7 @@ function NavRow({ l, current, onClick }: { l: NavLink; current?: string; onClick
   return (
     <a className="ts-nav-row" href={l.href} aria-current={current === l.href ? "page" : undefined} onClick={onClick}>
       <span className="ts-nav-ico">
-        <Icon name={l.icon} size={16} />
+        <Icon name={l.icon} size={16} animate />
       </span>
       <span className="ts-nav-txt">
         <b>{l.label}</b>
@@ -209,7 +209,7 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
                           <b>{f.title}</b>
                           <small>{f.body}</small>
                           <span className="ts-mega-cta">
-                            {f.cta} <Icon name="arrow-right" size={14} />
+                            {f.cta} <Icon name="arrow-right" size={14} animate />
                           </span>
                         </a>
                       )
@@ -221,7 +221,7 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
           )}
           {inside && (
             <a className="ts-nav-link is-inside" href={inside.href}>
-              {inside.label} <Icon name="arrow-up-right" size={14} />
+              {inside.label} <Icon name="arrow-up-right" size={14} animate />
             </a>
           )}
         </nav>
@@ -282,7 +282,9 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
 
 /* ───────── Footer ───────── */
 
-export type FooterColumn = { id: string; label: string; groups: { label: string; links: { label: string; href: string }[] }[] };
+/** A footer link; `icon` (a Lucide name) sits before the label and plays its motion on hover / focus. */
+export type FooterLink = { label: string; href: string; icon?: IconName };
+export type FooterColumn = { id: string; label: string; groups: { label: string; links: FooterLink[] }[] };
 export type FooterProps = {
   brand?: React.ReactNode;
   tagline?: React.ReactNode;
@@ -312,7 +314,7 @@ export function Footer({ brand, tagline, cta, email, columns, owner, source, leg
           {cta}
           {email && (
             <a className="ts-footer-mail" href={`mailto:${email}`}>
-              <Icon name="mail" size={14} />
+              <Icon name="mail" size={14} animate />
               {email}
             </a>
           )}
@@ -325,7 +327,8 @@ export function Footer({ brand, tagline, cta, email, columns, owner, source, leg
                 <div key={g.label} className="ts-footer-group">
                   {col.groups.length > 1 && <span className="ts-footer-sub">{g.label}</span>}
                   {g.links.map((l) => (
-                    <a key={l.href} href={l.href} aria-current={l.href === current ? "page" : undefined}>
+                    <a key={l.href} href={l.href} aria-current={l.href === current ? "page" : undefined} className={l.icon ? "has-icon" : undefined}>
+                      {l.icon && <Icon name={l.icon} size={16} animate />}
                       {l.label}
                     </a>
                   ))}
@@ -374,6 +377,7 @@ export const SITE_CSS = `
 .ts-mega-trigger .cv-icon{transition:transform var(--ts-motion-dur-sm,200ms) var(--ts-motion-ease-standard,ease)}
 .ts-mega-trigger[aria-expanded=true] .cv-icon{transform:rotate(180deg)}
 .ts-mega{position:static;display:flex;align-items:center;align-self:stretch}
+.ts-footer-col a.has-icon{display:inline-flex;align-items:center;gap:8px}
 .ts-mega-panel{position:absolute;top:100%;left:0;right:0;z-index:50;display:flex;align-items:stretch;border:1px solid var(--ts-line,#d8d3c6);border-top:0;border-radius:0 0 var(--ts-radius-card,12px) var(--ts-radius-card,12px);background:var(--ts-surface,#f7f5ee);box-shadow:0 24px 48px -24px rgb(0 0 0 / .3);animation:ts-mega-in var(--ts-motion-spring-soft-duration,700ms) var(--ts-motion-spring-soft,ease-out) both}
 .ts-mega-panel[hidden]{display:none}
 .ts-mega-panel::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
