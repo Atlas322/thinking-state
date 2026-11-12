@@ -1,0 +1,128 @@
+/*
+ * Thinking State tokens (@inai/thinking-state/tokens.css).
+ * Every component reads its colours and fonts from these --ts-* variables
+ * and falls back to its own defaults, so the tokens are optional.
+ *
+ * Put a theme on any ancestor of the components:
+ *   <div data-ts-theme="cream">…</div>                      inai.sh, direction 1
+ *   <div data-ts-theme="manage" data-theme="dark">…</div>   Удирдах горим (dark)
+ * `data-theme="dark"` (or class "dark") also switches the components' own
+ * dark details (colour-scheme, badge text).
+ *
+ * Palette from the inai.sh Figma «🧭 TENET 3 · Апп хэлбэр» (section 05, ref 37:2529):
+ * cream page #F0EDE4, card #F7F5EE (never pure white on cream), header and
+ * footer #EFEBE1, line #D8D3C6, indigo accent #3A4E8C for large areas,
+ * Electric #1B5CFF only for small status and links, warm dark #262522 for
+ * dark tiles; Spectral headings, Inter UI, IBM Plex Mono labels.
+ * Fonts are not bundled: load Spectral, Inter and IBM Plex Mono in the app.
+ */
+
+:where(.ts-theme-cream, [data-ts-theme="cream"]) {
+  --ts-page: #f0ede4;
+  --ts-surface: #f7f5ee;
+  --ts-soft: #efebe1;
+  --ts-soft-2: #e8e3d6;
+  --ts-line: #d8d3c6;
+  --ts-fg: #080808;
+  --ts-muted: #5e5a52;
+  --ts-faint: #8f8a80;
+  --ts-accent: #3a4e8c;
+  --ts-accent-soft: #e4e6ee;
+  --ts-link: #1b5cff;
+  --ts-seg-on: #f7f5ee;
+  --ts-code: #ebe7dd;
+  --ts-green: #5e7a5f;
+  --ts-green-soft: #e3eadf;
+  --ts-amber: #a85a12;
+  --ts-amber-soft: #f2e3cc;
+  --ts-red: #c2362f;
+  --ts-red-soft: #f4dad6;
+  --ts-yellow: #9a7400;
+  --ts-yellow-soft: #f1e7c4;
+  --ts-violet: #6b47c9;
+  --ts-violet-soft: #e5ddf3;
+  --ts-teal: #0f7a70;
+  --ts-teal-soft: #d6e9e4;
+  /* priority */
+  --ts-prio-high: #a8483a;
+  --ts-prio-high-bg: #f1e2dc;
+  --ts-prio-medium: #86672a;
+  --ts-prio-medium-bg: #efe7d4;
+  --ts-prio-low: #5c5a55;
+  --ts-prio-low-bg: #ece8dd;
+  /* categories: methodology, technology, business, product */
+  --ts-cat-1: #3a4e8c;
+  --ts-cat-1-bg: #e4e6ee;
+  --ts-cat-2: #5e7a5f;
+  --ts-cat-2-bg: #e3eadf;
+  --ts-cat-3: #86672a;
+  --ts-cat-3-bg: #efe7d4;
+  --ts-cat-4: #7a4e6a;
+  --ts-cat-4-bg: #eee2e8;
+  /* tiles and warm dark (Next Action, frontmatter, «Таны ээлж») */
+  --ts-tile-ochre: #e8e2d2;
+  --ts-tile-slate: #e4e6e9;
+  --ts-ink: #262522;
+  --ts-ink-card: #33312d;
+  --ts-ink-muted: #a3a099;
+  --ts-ink-label: #aebbda;
+  --ts-font: "Inter", system-ui, sans-serif;
+  --ts-font-display: "Spectral", Georgia, "Times New Roman", serif;
+  --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--ts-page);
+  color: var(--ts-fg);
+}
+
+:where(.ts-theme-manage, [data-ts-theme="manage"]) {
+  --ts-page: #0b0b0c;
+  --ts-surface: #141416;
+  --ts-soft: #1e1e21;
+  --ts-soft-2: #242428;
+  --ts-line: #2b2b30;
+  --ts-fg: #f0ede4;
+  --ts-muted: #a39f95;
+  --ts-faint: #6e6a62;
+  --ts-accent: #5b87ff;
+  --ts-accent-soft: #16224a;
+  --ts-seg-on: #2c2c31;
+  --ts-code: #0e0e10;
+  --ts-green: #4ade80;
+  --ts-green-soft: #12291a;
+  --ts-amber: #eba659;
+  --ts-amber-soft: #33240f;
+  --ts-red: #f87171;
+  --ts-red-soft: #3a1d1f;
+  --ts-yellow: #e8c25a;
+  --ts-yellow-soft: #352c10;
+  --ts-violet: #a78bfa;
+  --ts-violet-soft: #2a2140;
+  --ts-teal: #5eead4;
+  --ts-teal-soft: #123330;
+  --ts-link: #7aa2ff;
+  --ts-prio-high: #e7907f;
+  --ts-prio-high-bg: #3a2420;
+  --ts-prio-medium: #d9b56a;
+  --ts-prio-medium-bg: #332a17;
+  --ts-prio-low: #b0ada5;
+  --ts-prio-low-bg: #26252a;
+  --ts-cat-1: #9fb0e6;
+  --ts-cat-1-bg: #1e2438;
+  --ts-cat-2: #a6c4a7;
+  --ts-cat-2-bg: #1d2a1f;
+  --ts-cat-3: #d9b56a;
+  --ts-cat-3-bg: #332a17;
+  --ts-cat-4: #d4a6c4;
+  --ts-cat-4-bg: #33222d;
+  --ts-tile-ochre: #2e2b24;
+  --ts-tile-slate: #24262a;
+  --ts-ink: #1a1917;
+  --ts-ink-card: #262522;
+  --ts-ink-muted: #a3a099;
+  --ts-ink-label: #aebbda;
+  --ts-font: "Inter", system-ui, sans-serif;
+  --ts-font-display: "Spectral", Georgia, "Times New Roman", serif;
+  --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: dark;
+  background: var(--ts-page);
+  color: var(--ts-fg);
+}
