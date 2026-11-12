@@ -234,6 +234,7 @@ export const UNIT_ICON: Record<string, IconName> = {
   department: "briefcase",
   team: "users",
   area: "layout-grid",
+  stream: "workflow",
 };
 
 export type StatusGroup = "inbox" | "planning" | "active" | "waiting" | "someday" | "done" | "canceled" | "archived";
