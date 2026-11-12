@@ -51,6 +51,69 @@ Named exports accept application data and callbacks. Default exports render a wo
 
 When copying an original MIT component, retain the license notice included at the top of its file. Attribution and details are in [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
+## Package: `@inai/thinking-state` (inai-sh-д хэрхэн хэрэглэх)
+
+inai.sh and other apps use Thinking State as a git package, so there is one
+source. The package holds code and tokens only: the company renderer, vault
+collections, chat widgets, icons, the Company contract types and
+`tokens.css`. No fixtures and no vault data — `npm run build:lib` fails if
+any end up in `lib/`.
+
+**Install** (pin a release tag; the tag carries the built `lib/`, so nothing
+is built on install):
+
+```bash
+npm i github:Atlas322/thinking-state#v0.1.0
+```
+
+The repository is private: the machine (or CI) that installs needs GitHub
+access to `Atlas322/thinking-state` (SSH key or a token in git credentials).
+React 19 and react-dom 19 are peer dependencies.
+
+**Use**
+
+```tsx
+import "@inai/thinking-state/tokens.css";
+import { CompanyView, CollectionPanel, type Company } from "@inai/thinking-state";
+
+export function CompanyPage({ company }: { company: Company }) {
+  return (
+    <div data-ts-theme="cream">
+      <CompanyView company={company} />
+    </div>
+  );
+}
+
+// Удирдах горим (dark)
+<div data-ts-theme="manage" data-theme="dark">
+  <CompanyView company={company} defaultView="dashboard" />
+</div>
+```
+
+Chat HTML export (uses `react-dom/server`): `import { renderChatHtml } from "@inai/thinking-state/chat"`.
+
+**Theme.** Every component reads its colours and fonts from `--ts-*`
+variables (`--ts-page`, `--ts-surface`, `--ts-soft`, `--ts-line`, `--ts-fg`,
+`--ts-muted`, `--ts-faint`, `--ts-accent`, status colours with `-soft`
+pairs, `--ts-font`, `--ts-font-display`, `--ts-font-mono`) and falls back to
+its own defaults. `tokens.css` ships two themes from the inai.sh Figma:
+`cream` (direction 1: cream, Electric blue, Spectral headings) and `manage`
+(dark). Override any variable on a wrapper to adjust. Fonts are not
+bundled — load Spectral, Inter and IBM Plex Mono in the app.
+
+**Exports**
+
+| Path | What |
+|---|---|
+| `@inai/thinking-state` | `CompanyView`, `CollectionView` / `CollectionPanel`, `Dashboard`, `RaciView`, `PersonProfile`, `MethodologyView`, row parts (`StatusPill`, `PriorityBadge`, `RelationChip`, `ProgressNM`, `RelDate`, `TypeBadge`), `Icon` and the icon maps, the Company contract types and helpers, chat widgets (`ProjectReport`, `PrDeployStatus`, `DecisionInboxChat`, `SessionBoard`) |
+| `@inai/thinking-state/chat` | `renderChatHtml`, `chatRuntime`, `chatWidgets`, `chatWidgetSchemas` |
+| `@inai/thinking-state/tokens.css` | the `--ts-*` themes |
+
+**Release** (maintainers): bump `version`, then `npm run release:lib -- vX.Y.Z`
+builds `lib/`, runs the tests, commits `lib/` on `release/vX.Y.Z`, tags it,
+and returns to your branch. Push with `git push origin release/vX.Y.Z vX.Y.Z`.
+`lib/` is git-ignored everywhere else, so it never lands in a PR.
+
 ## Validate and build
 
 ```sh

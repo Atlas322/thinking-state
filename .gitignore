@@ -10,3 +10,6 @@ test-results/
 
 /public/component-library.zip
 /work/
+
+# package build output (committed only on release/* tags)
+/lib/

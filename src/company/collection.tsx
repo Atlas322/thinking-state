@@ -103,7 +103,7 @@ export function inferKind(name: string, values: (CollectionValue | undefined)[])
   return vals.length >= 3 && distinct.size <= Math.max(2, Math.min(8, vals.length / 2)) ? "select" : "text";
 }
 
-/** "[[02-Projects/Inai Website/Inai Website|Site]]" → "Site"; paths → last segment. */
+/** "[[Projects/Site/Site|Home]]" → "Home"; paths → last segment. */
 export const linkLabel = (v: string) => {
   const inner = v.replace(/^\[\[|\]\]$/g, "");
   const alias = inner.split("|")[1];

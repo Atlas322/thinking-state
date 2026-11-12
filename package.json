@@ -1,8 +1,38 @@
 {
-  "name": "thinking-state",
-  "version": "1.0.0",
+  "name": "@inai/thinking-state",
+  "version": "0.1.0",
+  "description": "Thinking State — the engine that shows an agent's work as live widgets: company renderer, vault collections, chat widgets, icons and tokens.",
   "private": true,
   "type": "module",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./lib/types/lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/lib/index.d.ts",
+      "import": "./lib/index.js"
+    },
+    "./chat": {
+      "types": "./lib/types/lib/chat.d.ts",
+      "import": "./lib/chat.js"
+    },
+    "./tokens.css": "./lib/tokens.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE.affectui",
+    "LICENSE.simple-icons"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Atlas322/thinking-state.git"
+  },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
@@ -14,16 +44,20 @@
     "prebuild": "npm run package:library",
     "check:copy": "node scripts/check-copy.mjs",
     "chat:html": "node scripts/chat-html.mjs",
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "build:lib": "node scripts/build-lib.mjs",
+    "release:lib": "node scripts/release-lib.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",
     "@types/matter-js": "^0.20.2",
     "matter-js": "^0.20.0",
     "motion": "^14.11.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "serve-handler": "^6.1.8"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.3",
@@ -31,6 +65,8 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.0",
     "jsdom": "^31.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "typescript": "~5.9.3",
     "vite": "^7.0.0",
     "vitest": "^5.1.0"
