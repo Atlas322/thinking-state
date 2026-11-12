@@ -831,7 +831,7 @@ const css = `
 .xc-card-title{text-align:center;font-size:32px;font-weight:700;margin-bottom:8px}
 .xc-points{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
 .xc-points li{display:flex;gap:18px;align-items:center;font-size:28px;color:#E6E6EA;animation:xcUp .4s both}
-.xc-points b{width:36px;height:36px;flex:none;border-radius:50%;background:${C.blue};display:grid;place-items:center;font-size:20px}
+.xc-points b{width:36px;height:36px;flex:none;border-radius:50%;background:${C.blue};display:grid;place-items:center;font-size:20px;color:#fff}
 .xc-rule{margin-top:26px;border:1.5px solid rgba(59,130,246,.55);background:rgba(59,130,246,.10);border-radius:20px;padding:20px 30px;font-size:32px;font-weight:700}
 .xc-rule em{font-style:normal;color:${C.blue}}
 .xc-next{margin:22px 0 0;font-size:30px;font-weight:700}

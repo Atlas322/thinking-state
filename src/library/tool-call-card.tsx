@@ -630,7 +630,7 @@ const css = /* css */ `
   --ui-tclc-strong: #000000;
   --ui-tclc-ink: rgba(0, 0, 0, 0.88);
   --ui-tclc-text: rgba(0, 0, 0, 0.61);
-  --ui-tclc-muted: rgba(0, 0, 0, 0.45);
+  --ui-tclc-muted: rgba(0, 0, 0, 0.6);
   --ui-tclc-faint: rgba(0, 0, 0, 0.27);
   --ui-tclc-icon: rgba(0, 0, 0, 0.447);
   --ui-tclc-line: rgba(0, 0, 0, 0.06);
@@ -1011,7 +1011,7 @@ const css = /* css */ `
 }
 .ui-tclc-group__label.ui-tclc__shine { color: var(--ui-tclc-muted); }
 .ui-tclc-group__failed { flex: none; color: var(--ui-tclc-red); }
-.ui-tclc-group__time { flex: none; color: var(--ui-tclc-faint); font-variant-numeric: tabular-nums; }
+.ui-tclc-group__time { flex: none; color: var(--ui-tclc-muted); font-variant-numeric: tabular-nums; }
 .ui-tclc-group__list { display: grid; gap: 8px; padding: 6px 0 2px; }
 
 /* A soft light sweeping over "Using tools…" */
@@ -1074,7 +1074,7 @@ const css = /* css */ `
   --ui-tclc-strong: #ffffff;
   --ui-tclc-ink: rgba(255, 255, 255, 0.9);
   --ui-tclc-text: rgba(255, 255, 255, 0.62);
-  --ui-tclc-muted: rgba(255, 255, 255, 0.46);
+  --ui-tclc-muted: rgba(255, 255, 255, 0.52);
   --ui-tclc-faint: rgba(255, 255, 255, 0.3);
   --ui-tclc-icon: rgba(255, 255, 255, 0.5);
   --ui-tclc-line: rgba(255, 255, 255, 0.08);

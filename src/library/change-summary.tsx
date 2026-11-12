@@ -184,7 +184,7 @@ const css = /* css */ `
   --ui-csc-ink: rgba(0, 0, 0, 0.88);
   --ui-csc-strong: #000000;
   --ui-csc-text: rgba(0, 0, 0, 0.61);
-  --ui-csc-muted: rgba(0, 0, 0, 0.45);
+  --ui-csc-muted: rgba(0, 0, 0, 0.6);
   --ui-csc-icon: rgba(0, 0, 0, 0.447);
   --ui-csc-line: rgba(0, 0, 0, 0.06);
   --ui-csc-wash: rgba(0, 0, 0, 0.015);

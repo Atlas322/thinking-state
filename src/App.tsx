@@ -321,7 +321,7 @@ export default function App() {
           aria-label="Thinking State home"
         >
           <span className="brand-mark">
-            t<span>·</span>
+            t<span aria-hidden="true">·</span>
           </span>
           <span>
             thinking<span className="brand-light">state</span>

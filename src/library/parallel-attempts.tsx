@@ -178,8 +178,8 @@ export function ParallelAttempts({
 }
 
 const css = `
-.pa{--pa-bg:#fff;--pa-fg:#18181b;--pa-muted:#65656d;--pa-faint:#65656d;--pa-line:#ececef;--pa-track:#f1f1f3;--pa-ok:#15803d;--pa-okbar:#7fc497;--pa-okwash:#f3fbf5;--pa-okline:#9fd3b0;--pa-bad:#ef4444;--pa-badbar:#f5c4c4;--pa-run:#3b82f6;container-type:inline-size;width:100%;max-width:720px;color:var(--pa-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .pa{--pa-bg:#1b1b1e;--pa-fg:#ececef;--pa-muted:#a1a1aa;--pa-faint:#9a9aa2;--pa-line:#2e2e33;--pa-track:#2a2a2f;--pa-ok:#4ade80;--pa-okbar:#2f8a52;--pa-okwash:#16261c;--pa-okline:#24563a;--pa-bad:#f87171;--pa-badbar:#6b2c2c;--pa-run:#60a5fa;color-scheme:dark}
+.pa{--pa-bg:#fff;--pa-fg:#18181b;--pa-muted:#65656d;--pa-faint:#65656d;--pa-line:#ececef;--pa-track:#f1f1f3;--pa-ok:#15803d;--pa-ok-fg:#166534;--pa-okbar:#7fc497;--pa-okwash:#f3fbf5;--pa-okline:#9fd3b0;--pa-bad:#c62828;--pa-badbar:#f5c4c4;--pa-run:#3b82f6;container-type:inline-size;width:100%;max-width:720px;color:var(--pa-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .pa{--pa-bg:#1b1b1e;--pa-fg:#ececef;--pa-muted:#a1a1aa;--pa-faint:#9a9aa2;--pa-line:#2e2e33;--pa-track:#2a2a2f;--pa-ok:#4ade80;--pa-ok-fg:#4ade80;--pa-okbar:#2f8a52;--pa-okwash:#16261c;--pa-okline:#24563a;--pa-bad:#f87171;--pa-badbar:#6b2c2c;--pa-run:#60a5fa;color-scheme:dark}
 .pa *{box-sizing:border-box}.pa button{font:inherit;cursor:pointer}
 .pa-head{display:flex;align-items:center;gap:8px;padding:0 2px 16px}
 .pa-head svg{width:14px;height:14px;color:var(--pa-run);flex:none}
@@ -189,7 +189,7 @@ const css = `
 .pa-total{margin-left:6px;font-weight:500;font-variant-numeric:tabular-nums}
 .pa-rows{display:grid;gap:8px}
 .pa-row{display:grid;grid-template-columns:30px minmax(0,1fr) minmax(0,.85fr) 120px;align-items:center;gap:12px;height:62px;padding:0 16px 0 10px;border:1px solid var(--pa-line);border-radius:8px;background:var(--pa-bg);transition:opacity .25s,background .25s,border-color .25s;animation:pa-in .35s both}
-.pa-dim{opacity:.55}.pa-dim:hover,.pa-dim:focus-within{opacity:1}
+.pa-dim{color:var(--pa-muted)}.pa-dim:hover,.pa-dim:focus-within{color:var(--pa-fg)}
 .pa-picked{border-color:var(--pa-okline);background:var(--pa-okwash);box-shadow:0 0 0 1px color-mix(in srgb,var(--pa-ok) 12%,transparent)}
 .pa-ico{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;border:1px solid var(--pa-line);background:var(--pa-bg);font-weight:600;color:var(--pa-fg)}.pa-ico svg{width:15px;height:15px}
 .pa-who{min-width:0}
@@ -206,7 +206,7 @@ const css = `
 .pa-side{text-align:right;font-variant-numeric:tabular-nums}
 .pa-top{display:flex;justify-content:flex-end;align-items:center;gap:8px;height:20px}
 .pa-score{font-size:14px;font-weight:500}
-.pa-best{padding:0 5px;border-radius:4px;background:color-mix(in srgb,var(--pa-ok) 14%,transparent);color:var(--pa-ok);font-size:11px;line-height:17px}
+.pa-best{padding:0 5px;border-radius:4px;background:color-mix(in srgb,var(--pa-ok) 14%,transparent);color:var(--pa-ok-fg);font-size:11px;line-height:17px}
 .pa-fail{color:var(--pa-bad);font-size:13.5px}
 .pa-step{color:var(--pa-run);font-size:12.5px;white-space:nowrap}
 .pa-bottom{position:relative;height:18px;display:flex;justify-content:flex-end;align-items:center}
