@@ -84,8 +84,8 @@ export function CompanyPage({ company }: { company: Company }) {
   );
 }
 
-// Удирдах горим (dark)
-<div data-ts-theme="manage" data-theme="dark">
+// Чиглэл 2 «Удирдлагын төв» dark; Удирдах горим бол data-ts-mode="manage" (индиго accent)
+<div data-ts-theme="dark" data-theme="dark">
   <CompanyView company={company} defaultView="dashboard" />
 </div>
 ```
@@ -96,10 +96,23 @@ Chat HTML export (uses `react-dom/server`): `import { renderChatHtml } from "@in
 variables (`--ts-page`, `--ts-surface`, `--ts-soft`, `--ts-line`, `--ts-fg`,
 `--ts-muted`, `--ts-faint`, `--ts-accent`, status colours with `-soft`
 pairs, `--ts-font`, `--ts-font-display`, `--ts-font-mono`) and falls back to
-its own defaults. `tokens.css` ships two themes from the inai.sh Figma:
-`cream` (direction 1: cream, Electric blue, Spectral headings) and `manage`
-(dark). Override any variable on a wrapper to adjust. Fonts are not
-bundled — load Spectral, Inter and IBM Plex Mono in the app.
+its own defaults. `tokens.css` нь хоёр theme-тэй (owner 11-12, эцсийн):
+`cream` нь Чиглэл 1 (Figma `36:146054`, Spectral гарчиг, Inter бичвэр), `dark` нь
+Чиглэл 2 «Удирдлагын төв» (Figma `36:148605`, TH.Dark): саармаг бараг хар,
+давхаргатай гадаргуу, Inter гарчиг, IBM Plex Mono шошго, Electric accent.
+`--ts-font-display` theme бүрд өөр. Горим `data-ts-mode="view" | "manage"` зөвхөн
+accent-ийг солино (Үзэх = Electric, Удирдах = индиго). Accent өнгөтэй текстэд
+`--ts-accent-fg` ашигла. `data-ts-theme="manage"` = dark + Удирдах (v0.1-тэй
+нийцнэ). Фонт багцад орохгүй: Spectral, Inter, IBM Plex Mono-г Google Fonts css2-оор
+`&text=`-гүй ачаал (ү, ө = cyrillic-ext).
+
+**Сайт (`@inai/thinking-state/site.css`).** Маркетингийн сайтад зориулсан, ижил
+token-оос үүсгэсэн файл. Wrapper шаардахгүй: `:root` нь cream,
+`:root[data-theme="dark"]` нь Чиглэл 2 dark, `data-ts-mode="manage"` нь индиго accent.
+Тогтвортой alias-ууд: `--ts-color-bg/side/rail/surface/raised/tile/line/text/
+text-muted/text-faint/accent/accent-text/accent-soft/electric/indigo/link/amber/
+amber-soft/green/red`, `--ts-shadow`, `--ts-font-heading/text/label`. tokens.css-ийг
+өөрчилсний дараа `npm run tokens:site` ажиллуул (тест зөрөхийг барина).
 
 **Exports**
 

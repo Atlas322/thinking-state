@@ -30,7 +30,7 @@ function reachable(entry: string, seen = new Set<string>()) {
 describe("@inai/thinking-state package", () => {
   it("is named and exported for git installs", () => {
     expect(pkg.name).toBe("@inai/thinking-state");
-    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./tokens.css", "./package.json"]);
+    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./tokens.css", "./site.css", "./package.json"]);
     expect(pkg.files).toContain("lib");
     expect(pkg.peerDependencies.react).toMatch(/\^19/);
     expect((pkg.dependencies as Record<string, string>).react).toBeUndefined();
@@ -49,5 +49,17 @@ describe("@inai/thinking-state package", () => {
       expect(sources[f], f).toContain("var(--ts-font,");
     }
     // tokens.css itself is checked by scripts/build-lib.mjs (Vitest returns CSS imports empty).
+  });
+
+  it("ships cream (Чиглэл 1) and dark (Чиглэл 2, TH.Dark) with a view / manage accent", async () => {
+    const fs = (await import(/* @vite-ignore */ "node:" + "fs")) as { readFileSync: (p: string, e: string) => string };
+    const css = fs.readFileSync("src/lib/tokens.css", "utf8");
+    for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="dark"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', '[data-ts-mode="view"]'])
+      expect(css).toContain(need);
+    for (const v of ["--ts-page: #0b0b0c;", "--ts-surface: #17171a;", "--ts-line: #26262a;", "--ts-electric: #4d7fff;", "--ts-electric-soft: #16224a;", "--ts-fg: #edebe6;"])
+      expect(css).toContain(v);
+    expect(css).toContain('--ts-font-display: "Spectral"'); // cream headings
+    expect(css).toContain('--ts-font-display: "Inter"'); // dark headings
+    expect(css).not.toMatch(/Alegreya|Onest|#17130f/i); // Theme А withdrawn
   });
 });
