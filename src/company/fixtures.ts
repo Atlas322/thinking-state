@@ -152,6 +152,7 @@ export const acmeGroup: Company = {
 export const inai: Company = {
   id: "inai",
   name: "INAI",
+  exportedAt: "2026-11-12T14:05:00+08:00",
   segment: "team",
   source: "vault",
   methodology: "bmc",

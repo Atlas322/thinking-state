@@ -11,8 +11,9 @@
  *
  * Palette from the inai.sh Figma «🧭 TENET 3 · Апп хэлбэр» (section 05, ref 37:2529):
  * cream page #F0EDE4, card #F7F5EE (never pure white on cream), header and
- * footer #EFEBE1, line #D8D3C6, indigo accent #3A4E8C for large areas,
- * Electric #1B5CFF only for small status and links, warm dark #262522 for
+ * footer #EFEBE1, line #D8D3C6. Accent follows the mode (owner 2026-11-12):
+ * Үзэх (cream) = Electric #1B5CFF, Удирдах (manage, dark) = indigo #3A4E8C;
+ * saturated colour stays on small marks, never large areas, warm dark #262522 for
  * dark tiles; Spectral headings, Inter UI, IBM Plex Mono labels.
  * Fonts are not bundled: load Spectral, Inter and IBM Plex Mono in the app.
  */
@@ -26,8 +27,9 @@
   --ts-fg: #080808;
   --ts-muted: #5e5a52;
   --ts-faint: #8f8a80;
-  --ts-accent: #3a4e8c;
-  --ts-accent-soft: #e4e6ee;
+  --ts-accent: #1b5cff;
+  --ts-accent-soft: #e3e9fb;
+  --ts-accent-fg: #1b5cff;
   --ts-link: #1b5cff;
   --ts-seg-on: #f7f5ee;
   --ts-code: #ebe7dd;
@@ -82,8 +84,10 @@
   --ts-fg: #f0ede4;
   --ts-muted: #a39f95;
   --ts-faint: #6e6a62;
-  --ts-accent: #5b87ff;
-  --ts-accent-soft: #16224a;
+  --ts-accent: #3a4e8c;
+  --ts-accent-soft: #1b2133;
+  /* indigo is ~2.3:1 on the dark surface: text in the accent uses this lighter indigo (≥ 7:1) */
+  --ts-accent-fg: #aebbda;
   --ts-seg-on: #2c2c31;
   --ts-code: #0e0e10;
   --ts-green: #4ade80;
