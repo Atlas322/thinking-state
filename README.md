@@ -143,6 +143,7 @@ radiogroup) гадна margin-гүй. Зайг эцгийн `gap`-аар өгн�
 | Path | What |
 |---|---|
 | `@inai/thinking-state` | `CompanyView`, `CollectionView` / `CollectionPanel`, `Dashboard`, `RaciView`, `PersonProfile`, `MethodologyView`, row parts (`StatusPill`, `PriorityBadge`, `RelationChip`, `ProgressNM`, `RelDate`, `TypeBadge`), `Icon` and the icon maps, the Company contract types and helpers, chat widgets (`ProjectReport`, `PrDeployStatus`, `DecisionInboxChat`, `SessionBoard`) |
+| `@inai/thinking-state/studio` | каталогийн 98 single-file компонент export нэрээрээ (`AgentInbox`, `DecisionCard`, `PermissionRequest`…). Host-ууд хуулбар биш үүнийг хэрэглэнэ. `npm run studio:exports`-оор үүсгэнэ |
 | `@inai/thinking-state/chat` | `renderChatHtml`, `chatRuntime`, `chatWidgets`, `chatWidgetSchemas` |
 | `@inai/thinking-state/tokens.css` | the `--ts-*` themes |
 

@@ -16,6 +16,10 @@
       "types": "./lib/types/lib/chat.d.ts",
       "import": "./lib/chat.js"
     },
+    "./studio": {
+      "types": "./lib/types/lib/studio.d.ts",
+      "import": "./lib/studio.js"
+    },
     "./tokens.css": "./lib/tokens.css",
     "./site.css": "./lib/site.css",
     "./ts.css": "./lib/ts.css",
@@ -51,6 +55,7 @@
     "release:lib": "node scripts/release-lib.mjs",
     "tokens:site": "node scripts/site-css.mjs && node scripts/ts-css.mjs",
     "check:spacing": "node scripts/check-spacing.mjs",
+    "studio:exports": "node scripts/studio-exports.mjs",
     "tokens:figma": "node scripts/figma-variables.mjs"
   },
   "dependencies": {
