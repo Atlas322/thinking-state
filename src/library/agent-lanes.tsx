@@ -331,6 +331,8 @@ const css = `
 .al-agent{display:flex;align-items:center;gap:10px;height:50px}
 .al-avatar{display:grid;place-items:center;width:26px;height:26px;flex:none;border-radius:7px;background:#fff;border:1px solid var(--al-line);box-shadow:0 1px 2px #0000000f;color:#111;font-size:11px;font-weight:600}
 .al-avatar svg{width:15px;height:15px}
+/* dark: the avatar sits on the lane's chip, not a white square */
+:where(.dark,[data-theme=dark]) .al-avatar{background:var(--al-chip);color:var(--al-fg);box-shadow:none}
 .al-who{display:flex;flex-direction:column;min-width:0}
 .al-name{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:450;white-space:nowrap}
 .al-model{color:var(--al-muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -339,7 +341,8 @@ const css = `
 .al-track{position:relative;min-width:0}
 .al-ticks{position:relative;height:26px;font-size:11px;color:var(--al-faint)}
 .al-ticks span{position:absolute;top:4px;transform:translateX(-50%);white-space:nowrap}
-.al-ticks .al-now{right:0;left:auto;transform:none;top:2px;padding:0 5px;border-radius:4px;background:var(--al-blue-bg);color:var(--al-blue);font-weight:500;line-height:16px}
+.al-ticks .al-now{right:0;left:auto;transform:none;top:2px;padding:0 5px;border-radius:4px;background:var(--al-blue-bg);color:var(--ts-status-running-fg,#1d5fb8);font-weight:500;line-height:16px}
+:where(.dark,[data-theme=dark]) .al-ticks .al-now{color:var(--ts-status-running-fg,#7fb0f5)}
 .al-lanes{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 22px);mask-image:linear-gradient(90deg,transparent,#000 22px)}
 .al-vline{position:absolute;top:0;bottom:0;border-left:1px dashed var(--al-line)}
 .al-lane{position:absolute;left:0;right:0;margin:0;padding:0;list-style:none;border-bottom:1px solid var(--al-line)}
