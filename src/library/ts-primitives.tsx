@@ -76,22 +76,15 @@ export function TsPrimitives({
             ))}
           </Stack>
           <Stack direction="row" gap="stack-sm" wrap align="center">
-            <IconTile icon="layout-grid" tone="cat-1" label="Арга зүй" />
-            <IconTile icon="bot" tone="cat-2" label="Технологи" />
-            <IconTile icon="briefcase" tone="cat-3" label="Бизнес" />
-            <IconTile icon="box" tone="cat-4" label="Бүтээгдэхүүн" />
-            <IconTile icon="folder" tone="folder" label="Төсөл" />
-            <IconTile icon="arrow-up-right" tone="accent" />
-            <IconTile icon="play" tone="running" />
-            <IconTile icon="triangle-alert" tone="needs-you" />
-            <IconTile icon="x" tone="error" />
-            <IconTile icon="check" tone="done" />
-            {(["S", "M", "L"] as const).map((z) => (
-              <IconTile key={z} icon="folder" tone="folder" size={z} />
+            {/* tiles come in one by one (~120 ms apart, spring); the agent's tile follows its status */}
+            {TILES.map(([icon, tone, label, size], i) => (
+              <span key={i} className="ts-enter" style={{ display: "inline-flex", animationDelay: `${i * 120}ms` }}>
+                <IconTile icon={icon} tone={tone} label={label} size={size} />
+              </span>
             ))}
-            {(["S", "M", "L"] as const).map((z) => (
-              <IconTile key={`e${z}`} icon="layout-grid" tone="electric" size={z} />
-            ))}
+            <span key={status} className="ts-enter" style={{ display: "inline-flex" }}>
+              <IconTile icon={STATUS_ICON[status]} tone={status} label={STATUS_MN[status]} />
+            </span>
           </Stack>
         </Stack>
 
@@ -203,6 +196,23 @@ export function TsPrimitives({
     </div>
   );
 }
+
+type Tile = [IconName, React.ComponentProps<typeof IconTile>["tone"], string | undefined, React.ComponentProps<typeof IconTile>["size"]];
+const TILES: Tile[] = [
+  ["layout-grid", "cat-1", "Арга зүй", undefined],
+  ["bot", "cat-2", "Технологи", undefined],
+  ["briefcase", "cat-3", "Бизнес", undefined],
+  ["box", "cat-4", "Бүтээгдэхүүн", undefined],
+  ["folder", "folder", "Төсөл", undefined],
+  ["arrow-up-right", "accent", undefined, undefined],
+  ["folder", "folder", undefined, "S"],
+  ["folder", "folder", undefined, "M"],
+  ["folder", "folder", undefined, "L"],
+  ["layout-grid", "electric", undefined, "S"],
+  ["layout-grid", "electric", undefined, "M"],
+  ["layout-grid", "electric", undefined, "L"],
+];
+const STATUS_ICON: Record<(typeof STATUSES)[number], IconName> = { idle: "hourglass", running: "play", "needs-you": "triangle-alert", error: "x", done: "check" };
 
 /** Vault types → the system icon map (src/company/icons TYPE_ICON). */
 const CHIP_ICON: Record<string, IconName> = { Төсөл: "folder", Даалгавар: "circle-check", Шийдвэр: "git-branch", Атом: "atom" };

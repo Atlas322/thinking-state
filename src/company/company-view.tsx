@@ -23,7 +23,7 @@ import {
   type ModelField,
   type UnitKind,
 } from "./types";
-import { Avatar, Lines, initials } from "./ui";
+import { Avatar, CountUp, Lines, initials } from "./ui";
 import { CollectionView, Empty, TypeBadge, collectionCss, type Relation } from "./collection";
 import { Icon, UNIT_ICON, typeIcon, typeLabel, type IconName } from "./icons";
 
@@ -151,6 +151,8 @@ export type CompanyViewProps = {
   /** Unit to open first; its kind decides the level. */
   defaultUnitId?: string;
   defaultView?: CompanyViewKey;
+  /** Drive the open tab from outside (a catalog story); the user's own clicks still work, and leaving it undefined hands the tab back. */
+  view?: CompanyViewKey;
   onScopeChange?: (scope: { level: CompanyLevel; unitId: string | null }) => void;
   labels?: Partial<CompanyViewLabels>;
   className?: string;
@@ -207,7 +209,9 @@ function ModelView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyVi
         {stats.map((s, i) => (
           <div key={s.k} className="cv-stat" style={{ "--i": i } as React.CSSProperties}>
             <dt>{s.k}</dt>
-            <dd>{s.v}</dd>
+            <dd>
+              <CountUp value={s.v} />
+            </dd>
           </div>
         ))}
       </dl>
@@ -474,6 +478,7 @@ export function CompanyView({
   defaultLevel,
   defaultUnitId,
   defaultView = "method",
+  view: viewProp,
   onScopeChange,
   labels: labelsProp,
   className = "",
@@ -491,7 +496,10 @@ export function CompanyView({
     return { level: lv, unitId: firstUnit(lv)?.id ?? null };
   })();
   const [scope, setScopeState] = React.useState(initial);
-  const [view, setView] = React.useState<CompanyViewKey>(defaultView);
+  const [view, setView] = React.useState<CompanyViewKey>(viewProp ?? defaultView);
+  React.useEffect(() => {
+    if (viewProp) setView(viewProp);
+  }, [viewProp]);
   const [layoutOwn, setLayoutOwn] = React.useState<CompanyLayout>(defaultLayout);
   const layout = layoutProp ?? layoutOwn;
   const [methodOwn, setMethodOwn] = React.useState<Methodology>(company.methodology ?? "bmc");
