@@ -42,78 +42,49 @@ const ico = (d: string) => (
 );
 
 const defaultColumns: DataColumn[] = [
-  { key: "tool", label: "Tool", type: "title", icon: ico("M3 4.5h10M3 8h10M3 11.5h6"), width: "34%" },
+  { key: "tool", label: "Хэрэгсэл", type: "title", icon: ico("M3 4.5h10M3 8h10M3 11.5h6"), width: "34%" },
   {
     key: "category",
-    label: "Category",
+    label: "Ангилал",
     type: "tag",
     icon: ico("M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z"),
-    options: ["Design", "Issue tracking", "Hosting", "Website", "Video"],
+    options: ["Дизайн", "Ажил хянах", "Байршуулалт", "Вэб сайт", "Видео"],
     width: "25%",
   },
   {
     key: "website",
-    label: "Website",
+    label: "Холбоос",
     type: "link",
     icon: ico("M6.5 9.5l3-3M7 4.5l1-1a2.5 2.5 0 0 1 3.5 3.5l-1 1M9 11.5l-1 1A2.5 2.5 0 0 1 4.5 9l1-1"),
     width: "20%",
   },
-  { key: "renews", label: "Renews", type: "text", icon: ico("M3 4.5h10v8.5H3zM3 7h10M6 3v2.5M10 3v2.5") },
+  { key: "renews", label: "Сунгах", type: "text", icon: ico("M3 4.5h10v8.5H3zM3 7h10M6 3v2.5M10 3v2.5") },
 ];
 
-const logos: Record<string, React.ReactNode> = {
-  figma: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <circle cx="10" cy="8" r="2.5" fill="#1abcfe" />
-      <path d="M3.5 13A2.5 2.5 0 0 1 6 10.5h2.5V13a2.5 2.5 0 1 1-5 0Z" fill="#0acf83" />
-      <path d="M3.5 8A2.5 2.5 0 0 1 6 5.5h2.5v5H6A2.5 2.5 0 0 1 3.5 8Z" fill="#a259ff" />
-      <path d="M3.5 3A2.5 2.5 0 0 1 6 .5h2.5v5H6A2.5 2.5 0 0 1 3.5 3Z" fill="#f24e1e" />
-      <path d="M8.5.5H11a2.5 2.5 0 0 1 0 5H8.5Z" fill="#ff7262" />
-    </svg>
-  ),
-  linear: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <circle cx="8" cy="8" r="7" fill="#5e6ad2" />
-      <path d="M2.2 9.6 6.4 13.8M1.6 7.2l7.2 7.2M2.4 4.8l8.8 8.8M4 3l9 9M6.4 1.6l8 8" stroke="#fff" strokeWidth=".9" />
-    </svg>
-  ),
-  vercel: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M8 1.8 15 14H1Z" fill="currentColor" />
-    </svg>
-  ),
-  framer: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M3.5 1h9v4.5H8Zm0 4.5H8l4.5 4.5H8V15L3.5 10.5Z" fill="currentColor" />
-    </svg>
-  ),
-  loom: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path
-        d="M8 1v4M8 11v4M1 8h4M11 8h4M3 3l2.8 2.8M10.2 10.2 13 13M13 3l-2.8 2.8M5.8 10.2 3 13"
-        stroke="#625df5"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <circle cx="8" cy="8" r="2.2" fill="#fff" />
-    </svg>
-  ),
-};
+/** Neutral first-letter mark (no brand logos). */
+const mark = (ch: string, fill: string) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <rect x="1" y="1" width="14" height="14" rx="4" fill={fill} />
+    <text x="8" y="11.5" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="#fff" fontFamily="Inter,system-ui,sans-serif">
+      {ch}
+    </text>
+  </svg>
+);
 
 const defaultRows: DataRow[] = [
-  { id: "figma", logo: logos.figma, tool: "Figma", category: "Design", website: "figma.com", renews: "Mar 12, 2026" },
-  { id: "linear", logo: logos.linear, tool: "Linear", category: "Issue tracking", website: "linear.app", renews: "Jan 4, 2026" },
-  { id: "vercel", logo: logos.vercel, tool: "Vercel", category: "Hosting", website: "vercel.com", renews: "Aug 21, 2026" },
-  { id: "framer", logo: logos.framer, tool: "Framer", category: "Website", website: "framer.com", renews: "May 2, 2026" },
-  { id: "loom", logo: logos.loom, tool: "Loom", category: "Video", website: "loom.com", renews: "Nov 18, 2026" },
+  { id: "design", logo: mark("Д", "#8b5cf6"), tool: "Дизайны файл", category: "Дизайн", website: "design.example.mn", renews: "2026.03.12" },
+  { id: "tasks", logo: mark("А", "#5e6ad2"), tool: "Ажлын самбар", category: "Ажил хянах", website: "tasks.example.mn", renews: "2026.01.04" },
+  { id: "cloud", logo: mark("Ү", "#52525b"), tool: "Үүлэн сервер", category: "Байршуулалт", website: "cloud.example.mn", renews: "2026.08.21" },
+  { id: "site", logo: mark("В", "#db2777"), tool: "Вэб бүтээгч", category: "Вэб сайт", website: "site.example.mn", renews: "2026.05.02" },
+  { id: "video", logo: mark("Б", "#16a34a"), tool: "Бичлэгийн сан", category: "Видео", website: "video.example.mn", renews: "2026.11.18" },
 ];
 
 const defaultTones: Record<string, TagTone> = {
-  Design: "violet",
-  "Issue tracking": "blue",
-  Hosting: "gray",
-  Website: "pink",
-  Video: "green",
+  Дизайн: "violet",
+  "Ажил хянах": "blue",
+  Байршуулалт: "gray",
+  "Вэб сайт": "pink",
+  Видео: "green",
 };
 
 type Pos = { r: number; c: number };
@@ -123,7 +94,7 @@ const numberFormat = (n: number) => new Intl.NumberFormat("en-US").format(n).rep
 const text = (v: unknown) => (v == null ? "" : String(v));
 
 export function DataTable({
-  title = "Design Stack",
+  title = "Багийн хэрэгслүүд",
   icon,
   columns = defaultColumns,
   rows: initialRows = defaultRows,

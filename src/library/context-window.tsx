@@ -36,41 +36,41 @@ export type ContextWindowProps = {
 const palette = ["#3b76e6", "#86a8ef", "#c3d4f6", "#7a6fe0", "#4cb87a", "#e0a03b", "#e06f8b"];
 
 const defaultParts: ContextPart[] = [
-  { id: "system", label: "System prompt", tokens: 4200, locked: true },
-  { id: "tools", label: "Tools", tokens: 12800, locked: true },
+  { id: "system", label: "Системийн заавар", tokens: 4200, locked: true },
+  { id: "tools", label: "Хэрэгслүүд", tokens: 12800, locked: true },
   {
     id: "files",
-    label: "Files",
+    label: "Файлууд",
     items: [
-      { id: "billing", label: "billing.ts", tokens: 21300 },
+      { id: "billing", label: "plans.ts", tokens: 21300 },
       { id: "notes", label: "meeting-notes.md", tokens: 15400 },
     ],
   },
-  { id: "conversation", label: "Conversation", tokens: 30400, compact: true },
-  { id: "memory", label: "Memory", tokens: 3900 },
+  { id: "conversation", label: "Яриа", tokens: 30400, compact: true },
+  { id: "memory", label: "Санах ой", tokens: 3900 },
 ];
 
 const fmt = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(1)}K` : `${Math.round(n)}`);
 const fmtShort = (n: number) => (n >= 1000 ? `${Math.round(n / 1000)}K` : `${n}`);
 const partTokens = (p: ContextPart) => p.tokens ?? p.items?.reduce((s, i) => s + i.tokens, 0) ?? 0;
 
-const Claude = () => (
-  <svg viewBox="0 0 16 16" aria-hidden="true">
-    <g stroke="#d97757" strokeWidth="1.6" strokeLinecap="round">
-      <path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M5.3 2l5.4 12M10.7 2 5.3 14M2 5.3l12 5.4M14 5.3 2 10.7" />
-    </g>
+// Neutral agent glyph – no vendor marks.
+const AgentGlyph = () => (
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.4">
+    <rect x="2.5" y="2.5" width="11" height="11" rx="3" />
+    <circle cx="8" cy="8" r="2" fill="currentColor" stroke="none" />
   </svg>
 );
 
 export function ContextWindow({
   parts: partsProp,
   limit = 200_000,
-  title = "Context window",
-  model = "claude-sonnet-5-5",
-  modelIcon = <Claude />,
+  title = "Контекстийн цонх",
+  model = "Бичигч агент",
+  modelIcon = <AgentGlyph />,
   onRemoveItem,
   onCompact,
-  action = { label: "New chat", onClick: () => {} },
+  action = { label: "Шинэ яриа", onClick: () => {} },
   warnAt = 0.8,
   cells = 216,
   columns = 36,

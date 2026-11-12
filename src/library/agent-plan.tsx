@@ -35,21 +35,21 @@ export type AgentPlanProps = {
 };
 
 const demoSteps: PlanStep[] = [
-  { id: "pull", title: "Pull Q3 revenue and ARR", detail: "Monthly revenue, ARR and net retention", tool: "stripe.query", status: "done", duration: 1.3 },
-  { id: "launches", title: "Summarize product launches", detail: "Shipped projects and adoption", tool: "linear.search", status: "done", duration: 1.1 },
-  { id: "memo", title: "Draft the board memo", detail: "One page, wins, risks and asks", tool: "docs.write", status: "done", duration: 1.3 },
-  { id: "slides", title: "Build the KPI slides", detail: "Six charts in the board template", tool: "slides.create", status: "failed", error: "Slides API timed out after 30s" },
-  { id: "send", title: "Send the draft to Maya for review", tool: "gmail.draft", status: "pending" },
+  { id: "pull", title: "3-р улирлын орлого, жилийн давтагдах орлогыг татах", detail: "Сарын орлого, давтагдах орлого, цэвэр хадгалалт", tool: "payments.query", status: "done", duration: 1.3 },
+  { id: "launches", title: "Бүтээгдэхүүний нээлтүүдийг товчлох", detail: "Гарсан төслүүд ба хэрэглээ", tool: "issues.search", status: "done", duration: 1.1 },
+  { id: "memo", title: "ТУЗ-ийн танилцуулга ноороглох", detail: "Нэг хуудас: амжилт, эрсдэл, хүсэлт", tool: "docs.write", status: "done", duration: 1.3 },
+  { id: "slides", title: "Гол үзүүлэлтийн слайд бэлтгэх", detail: "ТУЗ-ийн загварт зургаан график", tool: "slides.create", status: "failed", error: "Слайдын API 30 секундэд хариу өгсөнгүй" },
+  { id: "send", title: "Ноорогийг Сараад хянуулахаар илгээх", tool: "mail.draft", status: "pending" },
 ];
 
 type Phase = "draft" | "running" | "done" | "stopped";
 
 export function AgentPlan({
-  title = "Prepare the Q3 board update",
+  title = "ТУЗ-д 3-р улирлын тайлан бэлтгэх",
   steps: stepsProp,
   defaultSteps = demoSteps,
   status,
-  estimate = "~2 min",
+  estimate = "~2 мин",
   stepMs = 1500,
   onChange,
   onRun,

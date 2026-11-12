@@ -1137,23 +1137,23 @@ export default function Demo() {
           lineHeight: 1.45,
         }}
       >
-        Compare CRM pricing for our 10-person team and check open deals.
+        Манай 10 хүнтэй багт тохирох харилцагчийн бүртгэлийн хэрэгслүүдийг харьцуулаад, нээлттэй хэлцлүүдийг шалгаач.
       </div>
       <ToolCallGroup duration={5000}>
         <ToolCallCard
           name="search_web"
           icon={demoSearchIcon}
-          summary="Searched the web for 'CRM pricing 2026'"
+          summary="Вэбээс «харилцагчийн бүртгэл 2026» гэж хайлаа"
           status="success"
           duration={1500}
-          args={{ query: "CRM pricing 2026 small sales team", max_results: 5 }}
+          args={{ query: "харилцагчийн бүртгэл 2026 жижиг борлуулалтын баг", max_results: 5 }}
           result={{
             results: [
-              { title: "HubSpot Sales Hub pricing", url: "https://www.hubspot.com/pricing/sales", price_per_seat: 90 },
-              { title: "Pipedrive plans and pricing", url: "https://www.pipedrive.com/en/pricing", price_per_seat: 49 },
-              { title: "Attio pricing", url: "https://attio.com/pricing", price_per_seat: 59 },
-              { title: "Salesforce Starter Suite", url: "https://www.salesforce.com/sales/pricing", price_per_seat: 25 },
-              { title: "Close CRM pricing", url: "https://www.close.com/pricing", price_per_seat: 49 },
+              { title: "Харилцагчийн бүртгэл А – багцууд", url: "https://example.com/crm-a/plans", max_seats: 25 },
+              { title: "Харилцагчийн бүртгэл Б – багцууд", url: "https://example.com/crm-b/plans", max_seats: 10 },
+              { title: "Харилцагчийн бүртгэл В – багцууд", url: "https://example.com/crm-c/plans", max_seats: 50 },
+              { title: "Борлуулалтын самбар Г", url: "https://example.com/crm-d/plans", max_seats: 5 },
+              { title: "Харилцагчийн бүртгэл Д – багцууд", url: "https://example.com/crm-e/plans", max_seats: 20 },
             ],
             total: 5,
             cached: false,
@@ -1162,24 +1162,24 @@ export default function Demo() {
         <ToolCallCard
           name="fetch_page"
           icon={demoPageIcon}
-          summary="Read hubspot.com/pricing"
+          summary="example.com/crm-a/plans хуудсыг уншлаа"
           status="success"
           duration={1000}
-          args={{ url: "https://www.hubspot.com/pricing/sales", timeout_ms: 8000 }}
-          result={{ status: 200, title: "Sales Hub Pricing", words: 2140 }}
+          args={{ url: "https://example.com/crm-a/plans", timeout_ms: 8000 }}
+          result={{ status: 200, title: "Харилцагчийн бүртгэл А – багцууд", words: 2140 }}
         />
         <ToolCallCard
           name="crm.list_deals"
           icon={demoDbIcon}
-          summary="Found 4 open deals in negotiation"
+          summary="Хэлэлцээрийн шатанд 4 нээлттэй хэлцэл олдлоо"
           status="success"
           duration={1200}
           args={{ stage: "negotiation", owner: "me", limit: 10 }}
           result={{
             count: 4,
             deals: [
-              { name: "Northwind", value: 18400 },
-              { name: "Globex", value: 9600 },
+              { name: "Хойд салхи ХХК", days_open: 18 },
+              { name: "Говь трейд ХХК", days_open: 9 },
             ],
           }}
         />

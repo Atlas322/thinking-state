@@ -48,28 +48,29 @@ const ico = (c: React.ReactNode) => (
     {c}
   </svg>
 );
+/** Neutral glyphs, no brand marks. Keys kept for API compatibility. */
 export const monitorIcons = {
-  claude: ico(
-    <g stroke="#d97757" strokeWidth="1.5" strokeLinecap="round">
-      <path d="M8 1.8v12.4M1.8 8h12.4M3.6 3.6l8.8 8.8M12.4 3.6l-8.8 8.8M5 2.4l6 11.2M11 2.4 5 13.6M2.4 5l11.2 6M13.6 5 2.4 11" />
-    </g>,
-  ),
+  claude: ico(<circle cx="8" cy="8" r="5.6" fill="none" stroke="#d97757" strokeWidth="1.6" />),
   notion: ico(
     <>
-      <rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M5.3 11V5h1l3.4 6h1V5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M3.5 1.8h6l3 3v9.4h-9Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M5.5 8h5M5.5 10.5h5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </>,
   ),
   github: ico(
-    <path
-      d="M8 1.5a6.5 6.5 0 0 0-2 12.7c.3 0 .4-.1.4-.3v-1.2c-1.8.4-2.2-.8-2.2-.8-.3-.7-.7-.9-.7-.9-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.5.7 1.9.5 0-.4.2-.7.4-.9-1.4-.2-3-.7-3-3.2 0-.7.3-1.3.7-1.8-.1-.2-.3-.8 0-1.7 0 0 .6-.2 1.8.7a6 6 0 0 1 3.2 0c1.2-.9 1.8-.7 1.8-.7.3.9.1 1.5 0 1.7.4.5.7 1.1.7 1.8 0 2.5-1.5 3-3 3.2.3.2.5.6.5 1.2v1.8c0 .2.1.4.4.3A6.5 6.5 0 0 0 8 1.5Z"
-      fill="currentColor"
-    />,
+    <>
+      <circle cx="4.5" cy="3.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="4.5" cy="12.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="11.5" cy="6" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M4.5 5v6M11.5 7.5c0 2-2 2.6-6 3.4" fill="none" stroke="currentColor" strokeWidth="1.2" />
+    </>,
   ),
   linear: ico(
     <>
-      <circle cx="8" cy="8" r="6" fill="#5e6ad2" />
-      <path d="M3 9.5 6.5 13M2.4 7.4l6.2 6.2M3.2 5.3l7.5 7.5" stroke="#fff" strokeWidth=".9" />
+      <path d="M5.5 4h8M5.5 8h8M5.5 12h8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <circle cx="2.6" cy="4" r=".9" fill="currentColor" />
+      <circle cx="2.6" cy="8" r=".9" fill="currentColor" />
+      <circle cx="2.6" cy="12" r=".9" fill="currentColor" />
     </>,
   ),
   terminal: ico(
@@ -81,12 +82,12 @@ export const monitorIcons = {
 };
 
 const defaultSteps: AgentRunStep[] = [
-  { id: "s1", label: "Collected 14 issues", icon: monitorIcons.linear, state: "done", took: 1700, tool: "Linear", detail: "Pulled every issue closed since v3.1.", output: "project = WEB AND closed > v3.1" },
-  { id: "s2", label: "Compared 38 commits", icon: monitorIcons.github, state: "done", took: 2400, tool: "GitHub", detail: "Diffed main against the last release tag.", output: "git log v3.1.0..main --oneline" },
-  { id: "s3", label: "Drafted the release notes", icon: monitorIcons.notion, state: "done", took: 2800, tool: "Notion", detail: "Grouped the changes into features and fixes.", output: "Releases / v3.2" },
-  { id: "s4", label: "Building the preview", icon: monitorIcons.terminal, kind: "run", state: "running", tool: "Terminal", output: "pnpm build --filter web" },
-  { id: "s5", label: "Run the smoke tests", state: "queued" },
-  { id: "s6", label: "Publish the release", state: "queued" },
+  { id: "s1", label: "14 асуудал цуглуулсан", icon: monitorIcons.linear, state: "done", took: 1700, tool: "Асуудлын бүртгэл", detail: "v3.1-ээс хойш хаагдсан бүх асуудлыг татсан.", output: "project = WEB AND closed > v3.1" },
+  { id: "s2", label: "38 коммит харьцуулсан", icon: monitorIcons.github, state: "done", took: 2400, tool: "Хувилбарын хяналт", detail: "Үндсэн салбарыг сүүлийн хувилбарын шошготой харьцуулсан.", output: "git log v3.1.0..main --oneline" },
+  { id: "s3", label: "Хувилбарын тэмдэглэл ноороглосон", icon: monitorIcons.notion, state: "done", took: 2800, tool: "Баримтын сан", detail: "Өөрчлөлтүүдийг шинэ боломж, засвар гэж бүлэглэсэн.", output: "Хувилбарууд / v3.2" },
+  { id: "s4", label: "Урьдчилсан хувилбар бүтээж байна", icon: monitorIcons.terminal, kind: "run", state: "running", tool: "Терминал", output: "pnpm build --filter web" },
+  { id: "s5", label: "Утааны тест ажиллуулах", state: "queued" },
+  { id: "s6", label: "Хувилбарыг нийтлэх", state: "queued" },
 ];
 
 const clock = (ms: number) => {
@@ -107,13 +108,13 @@ const tags: Record<AgentRunState, string> = {
 
 export function AgentMonitor({
   state: stateProp,
-  agent = { name: "Claude Opus 5.5", role: "Release agent · web-app v3.2", mark: monitorIcons.claude },
+  agent = { name: "Хувилбарын агент", role: "Үйл ажиллагааны агент · web-app v3.2", mark: monitorIcons.claude },
   steps = defaultSteps,
   current,
   since,
   until,
   pausedFor = 0,
-  cost = 0.055,
+  cost = 5.5,
   ask,
   outcome,
   error,
@@ -196,9 +197,9 @@ export function AgentMonitor({
           {agent.role && <span>{agent.role}</span>}
         </div>
         {cost != null && (
-          <span className={`am-cost ${live ? "is-live" : ""}`} aria-label={`${cost.toFixed(3)} dollars so far`}>
-            <span className="am-cur">$</span>
-            {cost.toFixed(3)}
+          <span className={`am-cost ${live ? "is-live" : ""}`} aria-label={`${cost.toFixed(1)}k tokens so far`}>
+            {cost.toFixed(1)}k
+            <span className="am-cur"> токен</span>
           </span>
         )}
         <span className={`am-tag am-${state}`}>

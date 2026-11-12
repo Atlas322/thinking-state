@@ -37,29 +37,29 @@ export type ApprovalGatesProps = {
 const defaultGates: ApprovalGate[] = [
   {
     id: "migrate",
-    agent: "Coder",
+    agent: "Кодын агент",
     kind: "tool",
-    action: "Run the database migration",
-    reason: "Adds the new plan columns",
+    action: "Өгөгдлийн сангийн шилжилт ажиллуулах",
+    reason: "Багцын шинэ баганууд нэмнэ",
     status: "approved",
-    at: "6m ago",
+    at: "6 мин өмнө",
     input: "pnpm db:migrate --name add_plan_tiers",
   },
   {
     id: "prices",
-    agent: "Coder",
+    agent: "Кодын агент",
     kind: "file",
-    action: "Change prices in pricing.ts",
-    reason: "Changes what customers pay from Monday",
+    action: "plans.ts дахь суудлын хязгаарыг өөрчлөх",
+    reason: "Даваа гарагаас харилцагчийн багцын хязгаар өөрчлөгдөнө",
     status: "approved",
-    at: "just now",
+    at: "саяхан",
     diff: [
       {
-        file: "src/billing/pricing.ts",
+        file: "src/plans/plans.ts",
         lines: [
           { type: "same", text: "export const plans = {" },
-          { type: "remove", text: '  pro: { seat: 8, currency: "usd" },' },
-          { type: "add", text: '  pro: { seat: 10, currency: "usd" },' },
+          { type: "remove", text: "  pro: { seats: 8, projects: 20 }," },
+          { type: "add", text: "  pro: { seats: 10, projects: 20 }," },
           { type: "same", text: "};" },
         ],
       },
@@ -67,30 +67,30 @@ const defaultGates: ApprovalGate[] = [
   },
   {
     id: "email",
-    agent: "Growth agent",
+    agent: "Өсөлтийн агент",
     kind: "message",
-    action: "Email 1,284 trial users",
-    reason: "Sends to customers outside the team",
+    action: "Туршилтын 1,284 хэрэглэгчид имэйл илгээх",
+    reason: "Багаас гадуурх харилцагчид илгээнэ",
     status: "edited",
-    at: "just now",
-    note: "Subject: Our new plans – your price stays",
+    at: "саяхан",
+    note: "Гарчиг: Шинэ багц – таны нөхцөл хэвээр",
     input:
-      "Subject: New plans, same price for you\n\nHi {first_name}, we're changing our plans on Monday. As a trial user you keep today's price for a year.",
+      "Гарчиг: Шинэ багц, таны нөхцөл хэвээр\n\nСайн байна уу, {first_name}. Даваа гарагаас багцуудаа шинэчилнэ. Туршилтын хэрэглэгчийн хувьд та өнөөдрийн нөхцөлөө нэг жил хадгална.",
   },
   {
     id: "browser",
-    agent: "Researcher",
-    role: "Sub-agent",
+    agent: "Судлаач агент",
+    role: "Туслах агент",
     kind: "agent",
-    action: "Start a browser agent",
-    reason: "Signs up for competitor trials on its own",
+    action: "Хөтчийн агент эхлүүлэх",
+    reason: "Өрсөлдөгчдийн туршилтад өөрөө бүртгүүлнэ",
     status: "open",
-    at: "just now",
+    at: "саяхан",
     blocking: true,
     input:
-      "Sign up for free trials at Linear, Notion and Figma with a fresh email and note what each checkout asks for.",
-    context: ["Searched competitor pricing", "Read 3 pricing pages"],
-    holds: ["Compare checkout flows"],
+      "Гурван өрсөлдөгчийн үнэгүй туршилтад шинэ имэйлээр бүртгүүлж, төлбөрийн алхам бүр юу асуудгийг тэмдэглэ.",
+    context: ["Өрсөлдөгчдийн үнийн бодлогыг хайсан", "3 үнийн хуудас уншсан"],
+    holds: ["Төлбөрийн алхмуудыг харьцуулах"],
   },
 ];
 
@@ -134,14 +134,14 @@ function GateBody({ gate }: { gate: ApprovalGate }) {
 
 export function ApprovalGates({
   gates: gatesProp = defaultGates,
-  task = gatesProp === defaultGates ? "Launch the new pricing page" : undefined,
+  task = gatesProp === defaultGates ? "Шинэ үнийн хуудсыг нээх" : undefined,
   live = false,
   onDecide,
   title = "Approvals",
   className = "",
 }: ApprovalGatesProps) {
   const [local, setLocal] = React.useState<Record<string, { status: GateDecision; note?: string; order: number }>>({});
-  const gates = gatesProp.map((g) => (local[g.id] ? { ...g, status: local[g.id].status, note: local[g.id].note ?? g.note, at: "just now" } : g));
+  const gates = gatesProp.map((g) => (local[g.id] ? { ...g, status: local[g.id].status, note: local[g.id].note ?? g.note, at: "саяхан" } : g));
   const open = gates.filter((g) => g.status === "open");
   const decided = gates
     .filter((g) => g.status !== "open")

@@ -899,8 +899,8 @@ import * as React from "react";
 
 /** Working example; use the named MessageActions export in your application. */
 const DEMO_VERSIONS = [
-  "Version 2.4 adds shared workspaces, cuts sync time in half and fixes the export bug on Windows.",
-  "Shared workspaces arrive in 2.4, sync is twice as fast, and exports on Windows work again.",
+  "2.4 хувилбар хамтын ажлын орчин нэмж, синк хийх хугацааг хоёр дахин богиносгож, экспортын алдааг засав.",
+  "2.4-т хамтын ажлын орчин нэмэгдэж, синк хоёр дахин хурдсан, экспорт дахин ажилладаг боллоо.",
 ];
 
 export default function Demo() {
@@ -911,14 +911,14 @@ export default function Demo() {
     <div style={{ width: 400, maxWidth: "100%", margin: "0 auto", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 12, background: "#fff", boxShadow: "0 1px 2px rgba(0,0,0,0.04)", fontSize: 13.5, lineHeight: 1.5, color: "#121213" }}>
       <div style={{ padding: "16px 16px 0", display: "flex", justifyContent: "flex-end" }}>
         <div style={{ maxWidth: "85%", background: "#f4f4f5", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 10, padding: "6px 10px" }}>
-          Summarize the 2.4 release notes in one sentence.
+          2.4 хувилбарын тэмдэглэлийг нэг өгүүлбэрт товчил.
         </div>
       </div>
       <div data-ui-message>
         <div style={{ padding: "12px 16px 14px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12.5, color: "#71717a", marginBottom: 4 }}>
-            <span style={{ width: 8, height: 8, borderRadius: 2, background: "#d97757" }} />
-            Sonnet 5.5
+            <span style={{ width: 8, height: 8, borderRadius: 2, background: "#3b82f6" }} />
+            Бичигч агент
           </div>
           <MessageText version={version}>{text}</MessageText>
         </div>

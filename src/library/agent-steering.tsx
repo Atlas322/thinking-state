@@ -34,24 +34,24 @@ export type AgentSteeringProps = {
 };
 
 const defaultSteps: SteerStep[] = [
-  { id: "s1", title: "Read schema and 14 migrations", status: "done", duration: 1.4 },
-  { id: "s2", title: "Plan the split into accounts and profiles", status: "done", duration: 4.6 },
+  { id: "s1", title: "Схем болон 14 шилжилтийг уншлаа", status: "done", duration: 1.4 },
+  { id: "s2", title: "Бүртгэл, профайл гэж хуваах төлөвлөгөө", status: "done", duration: 4.6 },
   {
     id: "s3",
     title: (
       <>
-        Write migration 0042 for <span className="as-dim">Postgres 16</span>
+        0042 дугаар шилжилт бичих — <span className="as-dim">өгөгдлийн сан 16</span>
       </>
     ),
     status: "active",
     duration: 2.0,
     notes: [
-      { id: "n1", text: "Use Postgres 16 syntax – prod isn't on 17 yet", picked: "next" },
-      { id: "n2", text: "Keep the old users view for a week", picked: "now" },
+      { id: "n1", text: "16-р хувилбарын бичиглэл ашигла – үндсэн орчин 17 болоогүй", picked: "next" },
+      { id: "n2", text: "Хуучин хэрэглэгчийн харагдацыг долоо хоног үлдээ", picked: "now" },
     ],
   },
-  { id: "s4", title: "Dry run on staging", status: "pending" },
-  { id: "s5", title: "Open a pull request for review", status: "pending" },
+  { id: "s4", title: "Туршилтын орчинд урьдчилан ажиллуулах", status: "pending" },
+  { id: "s5", title: "Хянуулахаар өөрчлөлтийн хүсэлт нээх", status: "pending" },
 ];
 
 const fmtClock = (s: number) => `${Math.floor(s / 60)}m ${String(Math.floor(s % 60)).padStart(2, "0")}s`;
@@ -86,8 +86,8 @@ const Enter = () => (
 );
 
 export function AgentSteering({
-  title = "Migrate users table",
-  agent = "Opus 5.5",
+  title = "Хэрэглэгчийн хүснэгт шилжүүлэх",
+  agent = "Кодын агент",
   steps: stepsProp,
   queue: queueProp,
   status: statusProp = "running",

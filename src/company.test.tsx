@@ -176,7 +176,7 @@ describe("dashboard, RACI, profiles", () => {
     );
     const [, owner, due] = within(panel).getAllByRole("combobox");
     fireEvent.change(due, { target: { value: "overdue" } });
-    expect(panel.textContent).toContain("GitHub төлбөр засах");
+    expect(panel.textContent).toContain("Хувилбарын хяналтын төлбөр засах");
     expect(panel.textContent).not.toContain("Hero «тархи ↔ апп» зураглал");
     fireEvent.change(due, { target: { value: "all" } });
     fireEvent.change(owner, { target: { value: "badral" } });
@@ -294,7 +294,7 @@ describe("collections (vault types)", () => {
     fireEvent.click(within(tabs).getByRole("tab", { name: /Хүлээгдэж буй/ }));
     const rows = Array.from(document.querySelectorAll(".cl-row"));
     expect(rows).toHaveLength(2);
-    const github = rows.find((r) => r.textContent?.includes("GitHub төлбөр засах"))!;
+    const github = rows.find((r) => r.textContent?.includes("Хувилбарын хяналтын төлбөр засах"))!;
     expect(github.textContent).toContain("Өндөр");
     expect(github.querySelector(".cl-date.is-overdue")?.textContent).toContain("өчигдөр");
   });
@@ -424,7 +424,7 @@ describe("collection polish (notion-teardown v2)", () => {
     const tabs = within(peek).getByRole("tablist");
     expect(within(tabs).getByRole("tab", { name: /Task/ }).textContent).toContain("5");
     expect(within(tabs).getByRole("tab", { name: /Шийдвэр/ }).textContent).toContain("2");
-    expect(peek.textContent).toContain("GitHub төлбөр засах");
+    expect(peek.textContent).toContain("Хувилбарын хяналтын төлбөр засах");
     fireEvent.keyDown(window, { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
   });
@@ -440,8 +440,8 @@ describe("teardown final: linked views and type badges", () => {
     expect(within(peek).getByRole("radiogroup", { name: "Харагдац" })).toBeTruthy();
     expect(within(peek).getByRole("button", { name: /7 хоногийн хуанли/ })).toBeTruthy();
     // titles inside are plain text, not peek buttons
-    expect(within(peek).queryByRole("button", { name: "GitHub төлбөр засах" })).toBeNull();
-    expect(peek.textContent).toContain("GitHub төлбөр засах");
+    expect(within(peek).queryByRole("button", { name: "Хувилбарын хяналтын төлбөр засах" })).toBeNull();
+    expect(peek.textContent).toContain("Хувилбарын хяналтын төлбөр засах");
   });
 
   it("tints type badges by type", () => {
@@ -500,10 +500,10 @@ describe("task dependencies and task RACI (company-schema 7b41c41)", () => {
     const billing = site.tasks.find((t) => t.id === "t4")!;
     const hero = site.tasks.find((t) => t.id === "t3")!;
     const figma = ts.tasks.find((t) => t.id === "t3")!;
-    expect(dependenciesOf(inai, site, deploy, index).waitsOn.map((w) => w.task.title)).toEqual(["GitHub төлбөр засах"]);
+    expect(dependenciesOf(inai, site, deploy, index).waitsOn.map((w) => w.task.title)).toEqual(["Хувилбарын хяналтын төлбөр засах"]);
     expect(dependenciesOf(inai, site, billing, index).blocks.map((w) => w.task.title)).toEqual(["Засвар эрх ба deploy"]);
     expect(dependenciesOf(inai, ts, figma, index).waitsOn[0].task).toBe(hero);
-    expect(dependenciesOf(inai, site, hero, index).blocks.map((b) => b.task.title)).toEqual(["Figma instance"]);
+    expect(dependenciesOf(inai, site, hero, index).blocks.map((b) => b.task.title)).toEqual(["Дизайны instance"]);
     // a bare id in another project does not count as pointing here
     expect(dependenciesOf(inai, ts, ts.tasks.find((t) => t.id === "t2")!, index).blocks).toHaveLength(0);
   });
@@ -511,7 +511,7 @@ describe("task dependencies and task RACI (company-schema 7b41c41)", () => {
   it("shows dependency lines on the dashboard and in the report", () => {
     render(<CompanyView company={inai} defaultView="dashboard" today={new Date("2026-11-12T09:00:00")} />);
     const panel = screen.getByRole("tabpanel");
-    expect(panel.textContent).toContain("⛓ хүлээж буй: GitHub төлбөр засах");
+    expect(panel.textContent).toContain("⛓ хүлээж буй: Хувилбарын хяналтын төлбөр засах");
     expect(panel.textContent).toContain("→ 1 task хүлээж байна");
     expect(panel.textContent).toContain("⛓ хүлээж буй: Inai Website › Hero «тархи ↔ апп» зураглал");
     fireEvent.click(within(panel).getByRole("button", { name: /^Inai Website/ }));

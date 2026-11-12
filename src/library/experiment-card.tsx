@@ -45,14 +45,14 @@ export type ExperimentCardProps = {
 
 const pct = (v: number) => `${v.toFixed(1)}%`;
 const defaultMetrics: ExperimentMetric[] = [
-  { id: "conversion", label: "Conversion", format: pct },
-  { id: "revenue", label: "Revenue", format: (v) => `$${v.toFixed(2)}` },
-  { id: "bounce", label: "Bounce", format: pct, lowerIsBetter: true },
+  { id: "conversion", label: "Хөрвүүлэлт", format: pct },
+  { id: "revenue", label: "Хэрэглээ", format: (v) => `${v.toFixed(2)} мин` },
+  { id: "bounce", label: "Гаралт", format: pct, lowerIsBetter: true },
 ];
 const defaultVariants: ExperimentVariant[] = [
-  { id: "a", key: "A", name: "Start free trial", control: true, values: { conversion: 4.2, revenue: 1.84, bounce: 38.2 }, color: "#a1a1aa" },
-  { id: "b", key: "B", name: "Try it free", values: { conversion: 4.7, revenue: 2.03, bounce: 35.1 }, color: "#3b82f6" },
-  { id: "c", key: "C", name: "Get started – $0", values: { conversion: 4.0, revenue: 1.71, bounce: 40.6 }, color: "#6366f1" },
+  { id: "a", key: "A", name: "Үнэгүй туршилт эхлэх", control: true, values: { conversion: 4.2, revenue: 1.84, bounce: 38.2 }, color: "#a1a1aa" },
+  { id: "b", key: "B", name: "Үнэгүй туршаад үз", values: { conversion: 4.7, revenue: 2.03, bounce: 35.1 }, color: "#3b82f6" },
+  { id: "c", key: "C", name: "Одоо эхлэх", values: { conversion: 4.0, revenue: 1.71, bounce: 40.6 }, color: "#6366f1" },
 ];
 
 const useTween = (target: number, ms = 320) => {
@@ -83,7 +83,7 @@ function Rolling({ value, format }: { value: number; format: (v: number) => stri
 }
 
 export function ExperimentCard({
-  title = "Signup button copy",
+  title = "Бүртгэлийн товчны бичвэр",
   variants = defaultVariants,
   metrics = defaultMetrics,
   metric,
@@ -92,10 +92,10 @@ export function ExperimentCard({
   winner,
   defaultWinner = null,
   onWinnerChange,
-  status = { label: "Running", tone: "green" },
-  note = "Day 9 of 14",
+  status = { label: "Явагдаж байна", tone: "green" },
+  note = "14-өөс 9 дэх өдөр",
   action,
-  hint = "Pick a winner",
+  hint = "Ялагчийг сонгох",
   trigger = "hover",
   open,
   defaultOpen = false,
