@@ -77,6 +77,23 @@ export function chatRuntime() {
     if (done) done.hidden = left > 0;
   };
 
+  // Arrow keys move the view switch, as in the React component.
+  doc.addEventListener("keydown", (e) => {
+    const t = e.target as Element | null;
+    const btn = t && t.closest ? t.closest("[data-cw-view-btn]") : null;
+    if (!btn) return;
+    const k = e.key;
+    if (k !== "ArrowRight" && k !== "ArrowLeft" && k !== "ArrowDown" && k !== "ArrowUp") return;
+    const group = btn.closest("[data-cw-views]");
+    if (!group) return;
+    const all = Array.prototype.slice.call(group.querySelectorAll("[data-cw-view-btn]")) as HTMLElement[];
+    const step = k === "ArrowRight" || k === "ArrowDown" ? 1 : -1;
+    const next = all[(all.indexOf(btn as HTMLElement) + step + all.length) % all.length];
+    e.preventDefault();
+    next.click();
+    next.focus();
+  });
+
   doc.addEventListener("click", (e) => {
     const t = e.target as Element | null;
     if (!t || !t.closest) return;

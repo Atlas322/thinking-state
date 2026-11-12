@@ -674,7 +674,7 @@ export default function App() {
                     <div
                       className={`preview-container ${narrow ? "narrow" : ""}`}
                     >
-                      <PreviewBoundary key={`${entry.slug}-${style}-${run}`}>
+                      <PreviewBoundary key={`${entry.slug}-${style}-${run}${chat.isChat ? `-${chat.json.length}-${chat.json.slice(-24)}` : ""}`}>
                         <Suspense
                           fallback={
                             <div className="preview-loading">
@@ -738,8 +738,17 @@ export default function App() {
                   {chat.isChat && (
                     <button
                       className="action-button chat-export"
-                      disabled={!chat.ready || chat.busy}
-                      onClick={() => chat.exportHtml().then(() => setCopied("chat"))}
+                      disabled={!chat.ready || chat.busy || !!chat.error}
+                      onClick={() =>
+                        chat
+                          .exportHtml()
+                          .then(() => setCopied("chat"))
+                          .catch((e) =>
+                            setCopyError(
+                              `Could not export: ${e instanceof Error ? e.message : String(e)}`,
+                            ),
+                          )
+                      }
                       title="One-file HTML with the current data, ready for an agent's chat"
                     >
                       <span aria-hidden="true">✦</span>

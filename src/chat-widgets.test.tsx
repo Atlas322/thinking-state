@@ -208,3 +208,22 @@ describe("Session Board in chat", () => {
     expect(document.getElementById(head.getAttribute("aria-controls")!)!.hasAttribute("inert")).toBe(true);
   });
 });
+
+describe("review fixes", () => {
+  it("counts a stale chosen id as still open", () => {
+    render(<DecisionInboxChat decisions={[{ id: "a", title: "A?", options: [{ id: "y", label: "Yes" }] }]} chosen={{ a: "gone" }} />);
+    expect(document.querySelector("[data-cw-left-n]")!.textContent).toBe("1");
+  });
+
+  it("moves the static view switch with arrow keys", async () => {
+    await mountExport("project-report");
+    const status = document.querySelector('[data-cw-view-btn="status"]') as HTMLElement;
+    fireEvent.keyDown(status, { key: "ArrowRight" });
+    expect((document.querySelector('[data-cw-view-panel="cards"]') as HTMLElement).hidden).toBe(false);
+  });
+
+  it("hides Session Board row-fold chevrons in the static export", async () => {
+    const html = await renderChatHtml("session-board", undefined, { fragment: true });
+    expect(html).toContain(".sb-fold{visibility:hidden");
+  });
+});

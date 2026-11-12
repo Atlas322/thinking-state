@@ -120,7 +120,8 @@ export function DecisionInboxChat({
   const list = decisions ?? [];
   const [own, setOwn] = React.useState<Record<string, string>>({});
   const chosen = chosenProp ?? own;
-  const left = list.filter((d) => !chosen[d.id]).length;
+  const pickOf = (d: DecisionChatItem) => d.options.find((o) => o.id === chosen[d.id]);
+  const left = list.filter((d) => !pickOf(d)).length;
   const heading = title ?? (decisions === decisionInboxChatDemo.decisions ? decisionInboxChatDemo.title : undefined) ?? L.title;
 
   const choose = (d: DecisionChatItem, o: DecisionChatOption | null) => {
@@ -154,7 +155,7 @@ export function DecisionInboxChat({
       </p>
       <ul className="di-list">
         {list.map((d, i) => {
-          const pick = d.options.find((o) => o.id === chosen[d.id]);
+          const pick = pickOf(d);
           return (
             <li
               key={d.id}
@@ -200,7 +201,7 @@ export function DecisionInboxChat({
                   ))}
                 </div>
               </div>
-              <div className="di-picked" role="status">
+              <div className="di-picked" role={pick ? "status" : undefined}>
                 <span className="di-check" aria-hidden="true">
                   <svg viewBox="0 0 16 16">
                     <path d="m4.5 8.2 2.3 2.3 4.7-4.9" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
