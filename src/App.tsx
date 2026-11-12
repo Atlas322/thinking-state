@@ -19,6 +19,7 @@ import {
 import { ChatDataEditor, ChatPreview, useChatWidget } from "./chat/chat-tools";
 
 const symbols: Record<string, string> = {
+  "Компани": "◈",
   "Chat widgets": "✦",
   Agents: "⌘",
   Chat: "◌",
@@ -672,7 +673,7 @@ export default function App() {
                 >
                   {tab === "preview" ? (
                     <div
-                      className={`preview-container ${narrow ? "narrow" : ""}`}
+                      className={`preview-container ${narrow ? "narrow" : ""} ${"module" in entry && !narrow ? "wide" : ""}`}
                     >
                       <PreviewBoundary key={`${entry.slug}-${style}-${run}${chat.isChat ? `-${chat.json.length}-${chat.json.slice(-24)}` : ""}`}>
                         <Suspense

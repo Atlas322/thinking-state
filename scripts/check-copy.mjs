@@ -8,6 +8,8 @@ try {
   const catalog = JSON.parse(fs.readFileSync("src/catalog.json", "utf8"));
   const files = [];
   for (const entry of catalog) {
+    // Module entries (src/company) import their folder; tsc -b checks them.
+    if (entry.module) continue;
     for (const suffix of !entry.pro || entry.slug === "thinking-state"
       ? ["", "-classic"]
       : [""]) {

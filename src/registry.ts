@@ -4,6 +4,7 @@ import data from "./catalog.json";
 export type CatalogEntry = (typeof data)[number];
 export const catalog: CatalogEntry[] = data;
 export const categories = [
+  "Компани",
   "Chat widgets",
   "Agents",
   "Chat",

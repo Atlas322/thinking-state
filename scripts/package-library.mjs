@@ -34,6 +34,15 @@ for (const entry of catalog) {
       ),
     );
 }
+// Module entries ship their whole folder (e.g. src/company).
+for (const dir of new Set(catalog.filter((e) => e.module).map((e) => e.module)))
+  for (const file of fs.readdirSync(path.join(root, dir)).sort())
+    if (file.endsWith(".ts") || file.endsWith(".tsx"))
+      add(
+        `${dir.replace(/^src\//, "")}/${file}`,
+        // In the ZIP the widgets sit in components/, not library/.
+        fs.readFileSync(path.join(root, dir, file), "utf8").replaceAll('"../library/', '"../components/'),
+      );
 add("catalog.json", JSON.stringify(catalog, null, 2));
 add("LICENSE.affectui", fs.readFileSync(path.join(root, "LICENSE.affectui")));
 add(
