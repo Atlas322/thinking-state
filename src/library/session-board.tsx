@@ -14,7 +14,7 @@ import * as React from "react";
  * shared on (owner OR sharedWith, as in the Just.Notion «my projects» view).
  * Input sessions may carry a vault/Notion `status` (in-progress, waiting,
  * completed, inbox, planning…) instead of `state`.
- * Original Component Studio component. Colours follow tokens/tokens.json
+ * Original Thinking State component. Colours follow tokens/tokens.json
  * (bg, surface/2, border/default, text/*, accent/*, status/*).
  * Motion: rows arrive one after another, groups fold smoothly, counters count
  * up; all of it is off under prefers-reduced-motion.
