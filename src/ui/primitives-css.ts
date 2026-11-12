@@ -40,8 +40,9 @@ export const PRIMITIVES_CSS = `
 .is-selected>.ts-pill-n{background:${ON_SOFT};color:${ON}}
 
 .ts-tabs{display:flex;gap:2px;max-width:100%;overflow-x:auto;scrollbar-width:none}
-.ts-tabs.is-segmented{display:inline-flex;padding:3px;border-radius:calc(var(--ts-radius-control,8px) + 2px);background:var(--ts-soft,#efebe1)}
-.ts-tabs.is-tabs{border-bottom:1px solid var(--ts-line,#d8d3c6);padding-bottom:4px}
+.ts-tabs.is-segmented{display:inline-flex;padding:4px;border-radius:calc(var(--ts-radius-control,8px) + 2px);background:var(--ts-soft,#efebe1)}
+.ts-tabs.is-tabs{border-bottom:1px solid var(--ts-line,#d8d3c6);padding:4px}
+.ts-tab:focus-visible{outline-offset:1px}
 .ts-tab{display:inline-flex;align-items:center;gap:6px;flex:none;box-sizing:border-box;border:1px solid transparent;border-radius:var(--ts-radius-control,8px);background:none;color:var(--ts-muted,#5e5a52);font-weight:500;white-space:nowrap;cursor:pointer;transition:background var(--ts-motion-dur-xs,120ms),color var(--ts-motion-dur-xs,120ms)}
 .ts-tabs.is-md .ts-tab{height:32px;padding:0 12px;font-size:13.5px}
 .ts-tabs.is-sm .ts-tab{height:26px;padding:0 9px;font-size:12.5px}
@@ -84,6 +85,9 @@ ${[1, 2, 3, 4].map((i) => `.ts-badge.is-cat-${i}{background:var(--ts-cat-${i}-bg
 .ts-text.is-faint{color:var(--ts-faint,#8f8a80)}
 .ts-text.is-accent{color:var(--ts-accent-fg,${ACC})}
 
+/* Dark: Electric #4D7FFF is ~3.7:1 under white text, so filled buttons and the CTA label go a step deeper (≥ 4.5:1). */
+:where([data-ts-theme=dark],[data-ts-theme=manage],.ts-theme-dark,.ts-theme-manage,:root[data-theme=dark]) .ts-btn.is-primary,
+:where([data-ts-theme=dark],[data-ts-theme=manage],.ts-theme-dark,.ts-theme-manage,:root[data-theme=dark]) .ts-cta.is-primary .ts-cta-label{background:color-mix(in srgb,var(--ts-accent,#4d7fff) 78%,#000)}
 @media (prefers-reduced-motion:reduce){.ts-btn,.ts-card,.ts-cta-arrow,.ts-cta-arrow svg,.ts-tab{transition:none}.ts-btn:active{transform:none}}
 `;
 

@@ -125,3 +125,11 @@ describe("styles", () => {
     expect(pkg.Tabs).toBe(Tabs);
   });
 });
+
+describe("review fixes", () => {
+  it("keeps one tab tabbable when value matches no enabled item", () => {
+    render(<Tabs label="x" value={"z" as "a" | "b" | "z"} onChange={() => {}} items={[{ value: "a", label: "A", disabled: true }, { value: "b", label: "B" }]} />);
+    expect(screen.getByRole("tab", { name: "B" }).tabIndex).toBe(0);
+    expect(screen.getByRole("tab", { name: "A" }).tabIndex).toBe(-1);
+  });
+});
