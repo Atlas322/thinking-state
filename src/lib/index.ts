@@ -56,3 +56,7 @@ export * from "../motion";
 // Layout: spacing tokens + Stack (controls carry no outer margin; the parent's gap spaces them)
 export { GAPS, SPACE, Stack, gapVar } from "../layout/stack";
 export type { GapName, SpaceStep, StackProps } from "../layout/stack";
+
+// Primitives — the one design system for the app and the site (ts.css for sites)
+export { Badge, Button, Card, Pill, PrimitiveStyles, PRIMITIVES_CSS, SplitCTA, Tabs, Text } from "../ui/primitives";
+export type { BadgeTone, ButtonProps, ButtonVariant, CardProps, PillProps, SplitCTAProps, TabItem, TabsProps, TextVariant } from "../ui/primitives";
