@@ -63,7 +63,7 @@
     "check:motion": "node scripts/check-quality.mjs --motion",
     "check:icons": "node scripts/check-quality.mjs --icons",
     "check:quality": "node scripts/check-quality.mjs --motion --icons",
-    "check:overflow": "node scripts/check-layout.mjs --overflow",
+    "check:layout": "node scripts/check-layout.mjs --overflow",
     "check:typography": "node scripts/check-layout.mjs --typography"
   },
   "dependencies": {
