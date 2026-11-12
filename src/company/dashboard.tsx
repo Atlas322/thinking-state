@@ -1,7 +1,21 @@
 import * as React from "react";
 import { SessionBoard, toSessionState, type SessionBoardInput } from "../library/session-board";
 import { ProjectReport, toPhaseState, type ProjectReportPhase } from "../library/project-report";
-import { actorOf, type Company, type CompanyProject, type CompanyTask } from "./types";
+import { actorOf, dependenciesOf, taskIndex, type Company, type CompanyProject, type CompanyTask } from "./types";
+
+/** "⛓ хүлээж буй: A, B" and "→ 2 task хүлээж байна" for a task's dependency links. */
+export function dependencyText(c: Company, p: CompanyProject | undefined, t: CompanyTask, index = taskIndex(c)) {
+  const { waitsOn, blocks } = dependenciesOf(c, p, t, index);
+  const parts: string[] = [];
+  if (waitsOn.length)
+    parts.push(`⛓ хүлээж буй: ${waitsOn.map((w) => (w.project && w.project !== p ? `${w.project.name} › ` : "") + w.task.title).join(", ")}`);
+  if (blocks.length) parts.push(`→ ${blocks.length} task хүлээж байна`);
+  return parts.join(" · ");
+}
+/** True when the task waits on something that is not done yet. */
+export function isHeld(c: Company, p: CompanyProject | undefined, t: CompanyTask, index = taskIndex(c)) {
+  return dependenciesOf(c, p, t, index).waitsOn.some((w) => toPhaseState(w.task.status) !== "done");
+}
 import { initials, phaseLabel, phaseTone } from "./ui";
 import { Empty } from "./collection";
 
@@ -59,6 +73,7 @@ export function dueBucket(due: string | undefined, done: boolean, today: Date): 
 
 /** Read-only Project Report for one contract project (also used by the Projects tab). */
 export function ProjectReportFor({ c, p, decisionsLabel = "Шийдвэр" }: { c: Company; p: CompanyProject; decisionsLabel?: string }) {
+  const index = taskIndex(c);
   const unit = c.units.find((u) => u.id === p.unitId);
   const states = p.tasks.map((t) => toPhaseState(t.status));
   const done = states.filter((s) => s === "done").length;
@@ -71,7 +86,7 @@ export function ProjectReportFor({ c, p, decisionsLabel = "Шийдвэр" }: { 
     status: t.status,
     due: t.due,
     owner: t.ownerId ? actorOf(c, t.ownerId).name : undefined,
-    line: t.ownerId ? actorOf(c, t.ownerId).role : undefined,
+    line: [t.ownerId ? actorOf(c, t.ownerId).role : "", dependencyText(c, p, t, index)].filter(Boolean).join(" · ") || undefined,
   }));
   return (
     <ProjectReport
@@ -92,8 +107,13 @@ export function ProjectReportFor({ c, p, decisionsLabel = "Шийдвэр" }: { 
       progress={{ value: p.tasks.length ? (done / p.tasks.length) * 100 : 0, label: "Явц" }}
       phases={phases}
       waiting={p.tasks
-        .filter((t) => toPhaseState(t.status) === "blocked")
-        .map((t) => ({ id: t.id, title: t.title, line: t.ownerId ? actorOf(c, t.ownerId).name : undefined, tone: "amber" as const }))}
+        .filter((t) => toPhaseState(t.status) === "blocked" || (toPhaseState(t.status) !== "done" && isHeld(c, p, t, index)))
+        .map((t) => ({
+          id: t.id,
+          title: t.title,
+          line: [t.ownerId ? actorOf(c, t.ownerId).name : "", dependenciesOf(c, p, t, index).waitsOn.length ? dependencyText(c, p, t, index).split(" · ")[0] : ""].filter(Boolean).join(" · ") || undefined,
+          tone: "amber" as const,
+        }))}
       labels={{
         owner: "Хариуцагч",
         updated: "Хугацаа",
@@ -115,6 +135,7 @@ export function ProjectReportFor({ c, p, decisionsLabel = "Шийдвэр" }: { 
 }
 
 export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company; scoped: Company; today?: Date; empty: string }) {
+  const index = taskIndex(c);
   const [status, setStatus] = React.useState<StatusFilter>("all");
   const [owner, setOwner] = React.useState("all");
   const [due, setDue] = React.useState<DueFilter>("all");
@@ -237,7 +258,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
                   group: sub || undefined,
                   parent: p.id,
                   owner: o?.name,
-                  line: [o?.name, d ? `${bucket === "overdue" ? "⚠ хэтэрсэн " : ""}${d}` : ""].filter(Boolean).join(" · ") || undefined,
+                  line: [o?.name, d ? `${bucket === "overdue" ? "⚠ хэтэрсэн " : ""}${d}` : "", dependencyText(c, p, t, index)].filter(Boolean).join(" · ") || undefined,
                 });
               }
             }

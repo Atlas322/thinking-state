@@ -1,6 +1,24 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
-import { actorOf, raciOf, type Company, type CompanyPerson } from "./types";
+import { actorOf, raciOf, type Company, type CompanyPerson, type CompanyProject, type Raci } from "./types";
+
+type Letter = "R" | "A" | "C" | "I";
+const lettersIn = (r: Raci | undefined, id: string): Letter[] => {
+  if (!r) return [];
+  const out: Letter[] = [];
+  if (r.responsible?.includes(id)) out.push("R");
+  if (r.accountable === id) out.push("A");
+  if (r.consulted?.includes(id)) out.push("C");
+  if (r.informed?.includes(id)) out.push("I");
+  return out;
+};
+/** Letters a person or agent holds only through the project's tasks (task.raci), not the project itself. */
+export function taskRaciOf(p: CompanyProject, id: string): Letter[] {
+  const own = raciOf(p, id);
+  const seen = new Set<Letter>();
+  for (const t of p.tasks) for (const l of lettersIn(t.raci, id)) if (!own.includes(l)) seen.add(l);
+  return (["R", "A", "C", "I"] as Letter[]).filter((l) => seen.has(l));
+}
 import { Avatar, initials } from "./ui";
 import { Empty } from "./collection";
 
@@ -17,10 +35,13 @@ const LETTER: Record<"R" | "A" | "C" | "I", string> = { R: "Гүйцэтгэгч
 export function RaciView({ c, scoped, onPerson, empty }: { c: Company; scoped: Company; onPerson: (id: string) => void; empty: string }) {
   const projects = scoped.projects;
   const ids = new Set<string>();
-  for (const p of projects) {
-    const r = p.raci;
-    if (!r) continue;
+  const collect = (r?: Raci) => {
+    if (!r) return;
     [...(r.responsible ?? []), r.accountable, ...(r.consulted ?? []), ...(r.informed ?? [])].forEach((id) => id && ids.add(id));
+  };
+  for (const p of projects) {
+    collect(p.raci);
+    for (const t of p.tasks) collect(t.raci);
   }
   if (!ids.size) return <Empty text={empty} icon="grid-3x3" />;
   const actors = [...ids]
@@ -36,7 +57,7 @@ export function RaciView({ c, scoped, onPerson, empty }: { c: Company; scoped: C
                 Хүн / агент
               </th>
               {projects.map((p) => (
-                <th key={p.id} scope="col" className={p.raci ? "" : "is-none"}>
+                <th key={p.id} scope="col" className={p.raci || p.tasks.some((t) => t.raci) ? "" : "is-none"}>
                   <span>{p.name}</span>
                 </th>
               ))}
@@ -66,16 +87,23 @@ export function RaciView({ c, scoped, onPerson, empty }: { c: Company; scoped: C
                 </th>
                 {projects.map((p) => {
                   const roles = raciOf(p, a.id);
+                  const viaTask = taskRaciOf(p, a.id);
+                  const label = [...roles.map((r) => LETTER[r]), ...viaTask.map((r) => `${LETTER[r]} (task-аар)`)].join(", ");
                   return (
-                    <td key={p.id} title={roles.map((r) => LETTER[r]).join(", ") || undefined}>
-                      {roles.length ? (
+                    <td key={p.id} title={label || undefined}>
+                      {roles.length || viaTask.length ? (
                         <span className="cv-raci-cell">
                           {roles.map((r) => (
                             <span key={r} className={`cv-raci-l is-${r}`}>
                               {r}
                             </span>
                           ))}
-                          <span className="cv-sr">{roles.map((r) => LETTER[r]).join(", ")}</span>
+                          {viaTask.map((r) => (
+                            <span key={`t${r}`} className={`cv-raci-l is-${r} is-task`}>
+                              {r}
+                            </span>
+                          ))}
+                          <span className="cv-sr">{label}</span>
                         </span>
                       ) : (
                         <span className="cv-raci-dot" aria-hidden="true" />
@@ -94,7 +122,12 @@ export function RaciView({ c, scoped, onPerson, empty }: { c: Company; scoped: C
             <span className={`cv-raci-l is-${r}`}>{r}</span> {LETTER[r]}
           </span>
         ))}
-        {projects.some((p) => !p.raci) && <span className="cv-raci-note">Саарал багана = RACI бүртгэгдээгүй төсөл</span>}
+        {projects.some((p) => p.tasks.some((t) => t.raci)) && (
+          <span>
+            <span className="cv-raci-l is-R is-task">R</span> task-аар
+          </span>
+        )}
+        {projects.some((p) => !p.raci && !p.tasks.some((t) => t.raci)) && <span className="cv-raci-note">Саарал багана = RACI бүртгэгдээгүй төсөл</span>}
       </p>
     </div>
   );
@@ -116,6 +149,9 @@ export function PersonProfile({ c, person, onClose, themeClass = "" }: { c: Comp
   const responsible = c.projects
     .map((p) => ({ p, roles: raciOf(p, person.id) }))
     .filter((x) => x.roles.includes("R") || x.roles.includes("A"));
+  const respTasks = c.projects.flatMap((p) =>
+    p.tasks.map((t) => ({ p, t, roles: lettersIn(t.raci, person.id) })).filter((x) => x.roles.includes("R") || x.roles.includes("A")),
+  );
   const owned = c.agents.filter((a) => a.ownerId === person.id);
   const coworkers = c.agents.filter(
     (a) => a.ownerId !== person.id && c.workflows.some((w) => w.steps.some((s) => s.actorId === person.id) && w.steps.some((s) => s.actorId === a.id)),
@@ -197,6 +233,28 @@ export function PersonProfile({ c, person, onClose, themeClass = "" }: { c: Comp
               <p className="cv-none">R эсвэл A үүрэгтэй төсөл алга.</p>
             )}
           </section>
+          {respTasks.length > 0 && (
+            <section>
+              <h4>Хариуцсан task</h4>
+              <ul className="cv-resp">
+                {respTasks.map(({ p, t, roles }) => (
+                  <li key={p.id + t.id}>
+                    <span>
+                      {t.title}
+                      <small className="cv-resp-sub">{p.name}</small>
+                    </span>
+                    <span className="cv-raci-cell">
+                      {roles.map((r) => (
+                        <span key={r} className={`cv-raci-l is-${r}`} title={LETTER[r]}>
+                          {r}
+                        </span>
+                      ))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
           <section>
             <h4>Хамтран ажилладаг агент</h4>
             {agents.length ? (
@@ -248,6 +306,8 @@ button.cv-raci-who:hover{background:var(--cv-soft)}
 .cv-raci-l.is-A{background:var(--cv-fg);color:var(--cv-bg)}
 .cv-raci-l.is-C{background:var(--cv-teal-soft);color:color-mix(in srgb,var(--cv-teal) 75%,var(--cv-fg))}
 .cv-raci-l.is-I{background:var(--cv-soft);color:var(--cv-muted)}
+.cv-raci-l.is-task{opacity:.55;box-shadow:inset 0 0 0 1px currentColor;background:none}
+.cv-resp-sub{display:block;font-size:11.5px;color:var(--cv-muted)}
 .cv-raci-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--cv-line)}
 .cv-raci-note{color:var(--cv-faint)}
 .cv-none{margin:0;color:var(--cv-faint);font-size:13px}

@@ -45,6 +45,15 @@ const SHAPES = {
   box: ["M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z", "m3.3 7 8.7 5 8.7-5", "M12 22V12"],
   tag: ["M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z", "c:7.5,7.5,.5"],
   "git-commit-horizontal": ["c:12,12,3", "M3 12h6", "M15 12h6"],
+  type: ["M4 7V4h16v3", "M9 20h6", "M12 4v16"],
+  asterisk: ["M12 6v12", "M17.2 9 6.8 15", "m6.8 9 10.4 6"],
+  "arrow-up-right": ["M7 7h10v10", "M7 17 17 7"],
+  hash: ["M4 9h16", "M4 15h16", "M10 3 8 21", "M16 3l-2 18"],
+  "square-check": ["r:3,3,18,18,2", "m9 12 2 2 4-4"],
+  "chart-pie": ["M21 12c.55 0 1-.45.95-1A10 10 0 0 0 13 2.05c-.55-.05-1 .4-1 .95v8a1 1 0 0 0 1 1z", "M21.21 15.89A10 10 0 1 1 8 2.83"],
+  "circle-dot": ["c:12,12,10", "c:12,12,1"],
+  "panel-right": ["r:3,3,18,18,2", "M15 3v18"],
+  "calendar-x": ["M8 2v4", "M16 2v4", "r:3,4,18,18,2", "M3 10h18", "m14 14-4 4", "m10 14 4 4"],
   // units
   landmark: ["M3 22h18", "M6 18v-7", "M10 18v-7", "M14 18v-7", "M18 18v-7", "p:12,2 20,7 4,7"],
   "building-2": ["M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z", "M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2", "M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2", "M10 6h4", "M10 10h4", "M10 14h4", "M10 18h4"],
@@ -191,6 +200,30 @@ export const TYPE_LABEL: Record<string, string> = {
   company: "Компани",
   inbox: "Inbox",
 };
+/** Page-level badge tint per type (Notion: Projects blue, Tasks green, Calendar red). */
+export const TYPE_TONE: Record<string, "blue" | "green" | "red" | "violet" | "teal" | "amber" | "yellow" | "gray"> = {
+  project: "blue",
+  task: "green",
+  "session-decision": "violet",
+  decision: "violet",
+  atomic: "teal",
+  person: "violet",
+  area: "gray",
+  skill: "amber",
+  event: "red",
+  meeting: "red",
+  daily: "yellow",
+  note: "gray",
+  reference: "gray",
+  resource: "gray",
+  glossary: "gray",
+  agent: "blue",
+  "ai-worker": "blue",
+  milestone: "red",
+  risk: "red",
+  product: "teal",
+  company: "blue",
+};
 export const typeIcon = (type: string): IconName => TYPE_ICON[type] ?? "file-text";
 export const typeLabel = (type: string) => TYPE_LABEL[type] ?? type;
 
@@ -243,3 +276,19 @@ export function priorityOf(value: unknown): Priority | null {
   if (["low", "l", "p3", "бага"].includes(v)) return "low";
   return null;
 }
+
+/** Property-kind icons for column headers and the side peek (Notion-style). */
+export const FIELD_ICON: Record<string, IconName> = {
+  title: "type",
+  text: "type",
+  status: "asterisk",
+  date: "calendar",
+  relation: "arrow-up-right",
+  priority: "triangle-alert",
+  select: "circle-dot",
+  multi: "tag",
+  number: "hash",
+  checkbox: "square-check",
+  url: "link",
+  progress: "chart-pie",
+};
