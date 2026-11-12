@@ -429,3 +429,26 @@ describe("collection polish (notion-teardown v2)", () => {
     expect(screen.queryByRole("dialog")).toBeNull();
   });
 });
+
+describe("teardown final: linked views and type badges", () => {
+  it("the peek's related items are a linked view without a nested peek", () => {
+    render(<CompanyView company={inai} today={new Date("2026-11-12T09:00:00")} />);
+    fireEvent.click(within(screen.getByRole("navigation", { name: "Төрлүүд" })).getByRole("button", { name: /Төсөл/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
+    const peek = screen.getByRole("dialog", { name: /Inai Website/ });
+    // the linked view has its own view switch and the task presets
+    expect(within(peek).getByRole("radiogroup", { name: "Харагдац" })).toBeTruthy();
+    expect(within(peek).getByRole("button", { name: /7 хоногийн хуанли/ })).toBeTruthy();
+    // titles inside are plain text, not peek buttons
+    expect(within(peek).queryByRole("button", { name: "GitHub төлбөр засах" })).toBeNull();
+    expect(peek.textContent).toContain("GitHub төлбөр засах");
+  });
+
+  it("tints type badges by type", () => {
+    render(<CompanyView company={inai} />);
+    const types = screen.getByRole("navigation", { name: "Төрлүүд" });
+    expect(types.querySelector(".cl-tbadge.is-blue")).toBeTruthy();
+    expect(types.querySelector(".cl-tbadge.is-green")).toBeTruthy();
+    expect(types.querySelector(".cl-tbadge.is-red")).toBeTruthy();
+  });
+});

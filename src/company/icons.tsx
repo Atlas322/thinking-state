@@ -200,6 +200,30 @@ export const TYPE_LABEL: Record<string, string> = {
   company: "Компани",
   inbox: "Inbox",
 };
+/** Page-level badge tint per type (Notion: Projects blue, Tasks green, Calendar red). */
+export const TYPE_TONE: Record<string, "blue" | "green" | "red" | "violet" | "teal" | "amber" | "yellow" | "gray"> = {
+  project: "blue",
+  task: "green",
+  "session-decision": "violet",
+  decision: "violet",
+  atomic: "teal",
+  person: "violet",
+  area: "gray",
+  skill: "amber",
+  event: "red",
+  meeting: "red",
+  daily: "yellow",
+  note: "gray",
+  reference: "gray",
+  resource: "gray",
+  glossary: "gray",
+  agent: "blue",
+  "ai-worker": "blue",
+  milestone: "red",
+  risk: "red",
+  product: "teal",
+  company: "blue",
+};
 export const typeIcon = (type: string): IconName => TYPE_ICON[type] ?? "file-text";
 export const typeLabel = (type: string) => TYPE_LABEL[type] ?? type;
 

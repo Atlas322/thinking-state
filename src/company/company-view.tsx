@@ -21,7 +21,7 @@ import {
   type UnitKind,
 } from "./types";
 import { Avatar, Lines, initials } from "./ui";
-import { CollectionView, Empty, collectionCss, type Relation } from "./collection";
+import { CollectionView, Empty, TypeBadge, collectionCss, type Relation } from "./collection";
 import { Icon, UNIT_ICON, typeIcon, typeLabel, type IconName } from "./icons";
 
 /**
@@ -778,9 +778,7 @@ export function CompanyView({
                     aria-current={collectionType === c.type ? "true" : undefined}
                     onClick={() => setCollectionType(c.type)}
                   >
-                    <span className="cv-nav-glyph">
-                      <Icon name={typeIcon(c.type)} size={16} />
-                    </span>
+                    <TypeBadge type={c.type} size={18} />
                     <span className="cv-nav-name">{c.label ?? typeLabel(c.type)}</span>
                     <span className="cv-nav-count">{c.items.length}</span>
                   </button>
@@ -816,7 +814,7 @@ export function CompanyView({
           <h2 className="cv-title">
             {collection ? (
               <>
-                <Icon name={typeIcon(collection.type)} size={20} />
+                <TypeBadge type={collection.type} size={24} />
                 {collection.label ?? typeLabel(collection.type)}
                 <span className="cv-title-n">{collection.items.length}</span>
               </>
