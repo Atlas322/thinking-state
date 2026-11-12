@@ -18,12 +18,31 @@ export const PRIMITIVES_SCENARIO: ScenarioStep<Demo>[] = [
   { state: { tab: "proof", view: "calendar", chips: ["Шийдвэр", "Атом"], status: "done" }, hold: 1800 },
 ];
 
-export function TsPrimitives({ theme = "cream", demo }: { theme?: "cream" | "dark"; /** drive the controls from a scenario step (catalog) */ demo?: Demo }) {
+export function TsPrimitives({
+  theme = "cream",
+  demo,
+  onTouch,
+}: {
+  theme?: "cream" | "dark";
+  /** drive the controls from a scenario step (catalog) */
+  demo?: Demo;
+  /** the user took over a control — the host pauses the story */
+  onTouch?: () => void;
+}) {
   const [tab, setTabOwn] = React.useState<Demo["tab"]>("search");
   const [view, setViewOwn] = React.useState<Demo["view"]>("table");
   const [chipsOwn, setChips] = React.useState<string[]>(["Төсөл"]);
-  // A scenario step wins until the user touches a control.
-  const [touched, setTouched] = React.useState(false);
+  // A scenario step wins until the user touches a control (the host then pauses and clears `demo`).
+  const [touched, setTouchedOwn] = React.useState(false);
+  const setTouched = (t: boolean) => {
+    // take over from where the story is, so nothing jumps
+    if (t && demo && !touched) (setTabOwn(demo.tab), setViewOwn(demo.view), setChips(demo.chips));
+    setTouchedOwn(t);
+    if (t) onTouch?.();
+  };
+  React.useEffect(() => {
+    if (demo) setTouchedOwn(false);
+  }, [demo]);
   const live = demo && !touched ? demo : undefined;
   const setTab = (v: Demo["tab"]) => (setTouched(true), setTabOwn(v));
   const setView = (v: Demo["view"]) => (setTouched(true), setViewOwn(v));
@@ -215,12 +234,17 @@ export default function Preview() {
     <div className="tsp">
       <style>{tokensCss + CSS}</style>
       <ScenarioRegion steps={PRIMITIVES_SCENARIO} rest={2400} controls="always" showSteps className="tsp-both">
-        {(step) => (
-          <>
-            <TsPrimitives theme="cream" demo={step} />
-            <TsPrimitives theme="dark" demo={step} />
-          </>
-        )}
+        {(step, sc) => {
+          // Touching a control pauses the story (▶ or ↺ hands it back); paused = no demo.
+          const demo = sc.paused ? undefined : step;
+          const touch = () => !sc.paused && sc.togglePaused();
+          return (
+            <>
+              <TsPrimitives theme="cream" demo={demo} onTouch={touch} />
+              <TsPrimitives theme="dark" demo={demo} onTouch={touch} />
+            </>
+          );
+        }}
       </ScenarioRegion>
     </div>
   );

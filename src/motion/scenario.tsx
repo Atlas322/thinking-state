@@ -52,6 +52,9 @@ export function useScenario<S, T extends Element = HTMLDivElement>(steps: Scenar
   const last = Math.max(0, steps.length - 1);
   const [index, setIndex] = React.useState(0);
   const [cycle, setCycle] = React.useState(0);
+  // Steps by ref: an inline steps array must not restart the hold timer on every parent render.
+  const stepsRef = React.useRef(steps);
+  stepsRef.current = steps;
   const reduced = loop.state === "reduced";
   const running = loop.state === "running";
 
@@ -66,9 +69,9 @@ export function useScenario<S, T extends Element = HTMLDivElement>(steps: Scenar
   }, [loop.state, running, cycle, loops]);
 
   React.useEffect(() => {
-    if (!running || steps.length < 2 || cycle >= loops) return;
+    if (!running || last < 1 || cycle >= loops) return;
     const atEnd = index >= last;
-    const wait = (steps[index]?.hold ?? 1000) + (atEnd ? rest : 0);
+    const wait = (stepsRef.current[index]?.hold ?? 1000) + (atEnd ? rest : 0);
     const t = setTimeout(() => {
       if (!atEnd) setIndex(index + 1);
       else if (cycle + 1 < loops) {
@@ -77,7 +80,7 @@ export function useScenario<S, T extends Element = HTMLDivElement>(steps: Scenar
       } else setCycle(loops); // done: rest on the final state
     }, wait);
     return () => clearTimeout(t);
-  }, [running, index, cycle, loops, last, rest, steps]);
+  }, [running, index, cycle, loops, last, rest]);
 
   const shown = reduced ? last : Math.min(index, last);
   const replay = React.useCallback(() => {
