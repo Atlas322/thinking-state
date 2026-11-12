@@ -4,13 +4,51 @@ import * as React from "react";
 import tokensCss from "../lib/tokens.css?inline";
 import { Badge, Button, Card, IconTile, Pill, SplitCTA, STATUSES, Tabs, Text } from "../ui/primitives";
 import { Stack } from "../layout/stack";
+import type { IconName } from "../company/icons";
+import { ScenarioRegion, type ScenarioStep } from "../motion";
 
 /** The primitives on one surface — what a page assembles from. */
-export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) {
-  const [tab, setTab] = React.useState<"search" | "flow" | "proof">("search");
-  const [view, setView] = React.useState<"table" | "board" | "calendar">("table");
-  const [chips, setChips] = React.useState<string[]>(["Төсөл"]);
-  const toggle = (c: string) => setChips((x) => (x.includes(c) ? x.filter((y) => y !== c) : [...x, c]));
+type Demo = { tab: "search" | "flow" | "proof"; view: "table" | "board" | "calendar"; chips: string[]; status: (typeof STATUSES)[number] };
+/** The preview's story: the user moves through the system — tab, view, filters — while an agent's status changes. */
+export const PRIMITIVES_SCENARIO: ScenarioStep<Demo>[] = [
+  { state: { tab: "search", view: "table", chips: ["Төсөл"], status: "idle" }, hold: 1400 },
+  { state: { tab: "flow", view: "table", chips: ["Төсөл"], status: "running" }, hold: 1400 },
+  { state: { tab: "flow", view: "board", chips: ["Төсөл", "Шийдвэр"], status: "running" }, hold: 1400 },
+  { state: { tab: "proof", view: "board", chips: ["Шийдвэр"], status: "needs-you" }, hold: 1600 },
+  { state: { tab: "proof", view: "calendar", chips: ["Шийдвэр", "Атом"], status: "done" }, hold: 1800 },
+];
+
+export function TsPrimitives({
+  theme = "cream",
+  demo,
+  onTouch,
+}: {
+  theme?: "cream" | "dark";
+  /** drive the controls from a scenario step (catalog) */
+  demo?: Demo;
+  /** the user took over a control — the host pauses the story */
+  onTouch?: () => void;
+}) {
+  const [tab, setTabOwn] = React.useState<Demo["tab"]>("search");
+  const [view, setViewOwn] = React.useState<Demo["view"]>("table");
+  const [chipsOwn, setChips] = React.useState<string[]>(["Төсөл"]);
+  // A scenario step wins until the user touches a control (the host then pauses and clears `demo`).
+  const [touched, setTouchedOwn] = React.useState(false);
+  const setTouched = (t: boolean) => {
+    // take over from where the story is, so nothing jumps
+    if (t && demo && !touched) (setTabOwn(demo.tab), setViewOwn(demo.view), setChips(demo.chips));
+    setTouchedOwn(t);
+    if (t) onTouch?.();
+  };
+  React.useEffect(() => {
+    if (demo) setTouchedOwn(false);
+  }, [demo]);
+  const live = demo && !touched ? demo : undefined;
+  const setTab = (v: Demo["tab"]) => (setTouched(true), setTabOwn(v));
+  const setView = (v: Demo["view"]) => (setTouched(true), setViewOwn(v));
+  const chips = live?.chips ?? chipsOwn;
+  const status = live?.status ?? "running";
+  const toggle = (c: string) => (setTouched(true), setChips((x) => (x.includes(c) ? x.filter((y) => y !== c) : [...x, c])));
   return (
     <div data-ts-theme={theme} data-theme={theme === "dark" ? "dark" : "light"} className="tsp-panel">
       <Stack gap="stack-lg">
@@ -24,6 +62,12 @@ export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) 
               </div>
             ))}
           </div>
+          <Stack direction="row" gap="stack-sm" wrap align="center">
+            <Text variant="caption">Агент:</Text>
+            <Badge key={status} tone={status} className="ts-enter">
+              {STATUS_MN[status]}
+            </Badge>
+          </Stack>
           <Stack direction="row" gap="stack-sm" wrap>
             {STATUSES.map((st) => (
               <Badge key={st} tone={st}>
@@ -42,11 +86,11 @@ export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) 
             <IconTile icon="triangle-alert" tone="needs-you" />
             <IconTile icon="x" tone="error" />
             <IconTile icon="check" tone="done" />
-            {([16, 20, 24, 32] as const).map((z) => (
+            {(["S", "M", "L"] as const).map((z) => (
               <IconTile key={z} icon="folder" tone="folder" size={z} />
             ))}
-            {([16, 20, 24, 32] as const).map((z) => (
-              <IconTile key={`c${z}`} icon="bot" tone="cat-2" size={z} />
+            {(["S", "M", "L"] as const).map((z) => (
+              <IconTile key={`e${z}`} icon="layout-grid" tone="electric" size={z} />
             ))}
           </Stack>
         </Stack>
@@ -82,7 +126,7 @@ export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) 
           <Text variant="label">[03] Tab ба сегмент</Text>
           <Tabs
             label="Арга зүй"
-            value={tab}
+            value={live?.tab ?? tab}
             onChange={setTab}
             items={[
               { value: "search", label: "Баримтын хайлт", icon: "search-x" },
@@ -96,7 +140,7 @@ export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) 
           <Tabs
             variant="segmented"
             label="Харагдац"
-            value={view}
+            value={live?.view ?? view}
             onChange={setView}
             items={[
               { value: "table", label: "Хүснэгт", icon: "table" },
@@ -110,19 +154,19 @@ export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) 
           <Text variant="label">[04] Chip ба badge</Text>
           <Stack direction="row" gap="stack-sm" wrap>
             {["Төсөл", "Task", "Шийдвэр", "Атом"].map((c, i) => (
-              <Pill key={c} selected={chips.includes(c)} count={[4, 11, 3, 5][i]} onClick={() => toggle(c)}>
+              <Pill key={c} icon={CHIP_ICON[c]} selected={chips.includes(c)} count={[4, 11, 3, 5][i]} onClick={() => toggle(c)}>
                 {c}
               </Pill>
             ))}
           </Stack>
           <Stack direction="row" gap="stack-sm" wrap>
-            <Badge tone="cat-1">Арга зүй</Badge>
-            <Badge tone="cat-2">Технологи</Badge>
-            <Badge tone="cat-3">Бизнес</Badge>
-            <Badge tone="cat-4">Бүтээгдэхүүн</Badge>
+            <Badge tone="cat-1" icon="layout-grid">Арга зүй</Badge>
+            <Badge tone="cat-2" icon="bot">Технологи</Badge>
+            <Badge tone="cat-3" icon="briefcase">Бизнес</Badge>
+            <Badge tone="cat-4" icon="box">Бүтээгдэхүүн</Badge>
             <Badge tone="green" icon="check">Дууссан</Badge>
-            <Badge tone="amber">Хүлээгдэж буй</Badge>
-            <Badge>Ноорог</Badge>
+            <Badge tone="amber" icon="hourglass">Хүлээгдэж буй</Badge>
+            <Badge icon="pencil">Ноорог</Badge>
           </Stack>
         </Stack>
 
@@ -160,6 +204,9 @@ export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) 
   );
 }
 
+/** Vault types → the system icon map (src/company/icons TYPE_ICON). */
+const CHIP_ICON: Record<string, IconName> = { Төсөл: "folder", Task: "circle-check", Шийдвэр: "git-branch", Атом: "atom" };
+
 const NEUTRALS: [string, string][] = [
   ["--ts-side", "side"],
   ["--ts-page", "page"],
@@ -186,14 +233,26 @@ export default function Preview() {
   return (
     <div className="tsp">
       <style>{tokensCss + CSS}</style>
-      <TsPrimitives theme="cream" />
-      <TsPrimitives theme="dark" />
+      <ScenarioRegion steps={PRIMITIVES_SCENARIO} rest={2400} controls="always" showSteps className="tsp-both">
+        {(step, sc) => {
+          // Touching a control pauses the story (▶ or ↺ hands it back); paused = no demo.
+          const demo = sc.paused ? undefined : step;
+          const touch = () => !sc.paused && sc.togglePaused();
+          return (
+            <>
+              <TsPrimitives theme="cream" demo={demo} onTouch={touch} />
+              <TsPrimitives theme="dark" demo={demo} onTouch={touch} />
+            </>
+          );
+        }}
+      </ScenarioRegion>
     </div>
   );
 }
 
 const CSS = `
-.tsp{width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.tsp{width:100%}
+.tsp-both{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;padding-bottom:24px}
 .tsp-panel{padding:24px;border-radius:14px;min-width:0}
 .tsp-swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
 .tsp-sw{display:flex;flex-direction:column;gap:4px}
