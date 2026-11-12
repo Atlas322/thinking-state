@@ -58,5 +58,5 @@ export { GAPS, SPACE, Stack, gapVar } from "../layout/stack";
 export type { GapName, SpaceStep, StackProps } from "../layout/stack";
 
 // Primitives — the one design system for the app and the site (ts.css for sites)
-export { Badge, Button, Card, IconTile, Pill, PrimitiveStyles, PRIMITIVES_CSS, SplitCTA, STATUSES, Tabs, Text } from "../ui/primitives";
+export { Badge, Button, Card, IconTile, Pill, PrimitiveStyles, PRIMITIVES_CSS, SplitCTA, STATUS_ICON, STATUSES, Tabs, Text } from "../ui/primitives";
 export type { BadgeTone, IconTileTone, StatusTone, ButtonProps, ButtonVariant, CardProps, PillProps, SplitCTAProps, TabItem, TabsProps, TextVariant } from "../ui/primitives";
