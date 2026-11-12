@@ -1092,7 +1092,7 @@ export const collectionCss = `
 .cl-tabs::-webkit-scrollbar{display:none}
 .cl-tabs button{position:relative;flex:none;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 10px;border:0;background:none;color:var(--cv-muted);font-size:13px;font-weight:500;white-space:nowrap}
 .cl-tabs button:hover{color:var(--cv-fg)}
-.cl-tabs button[aria-selected=true]{background:var(--ts-selected,#0c8ce9);color:var(--ts-on-selected,#fff);border-radius:6px}
+.cl-tabs button[aria-selected=true]{background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff);border-radius:6px}
 .cl-tabs button[aria-selected=true] :is(span,.cv-icon){color:currentColor}
 .cl-tabs button[aria-selected=true]::after{content:none}
 .cl-count{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--cv-soft);color:var(--cv-muted);font-size:11.5px;line-height:18px;text-align:center;font-variant-numeric:tabular-nums}
@@ -1102,7 +1102,7 @@ export const collectionCss = `
 .cl-seg button[data-active]{background:var(--cv-seg-on);color:var(--cv-fg);box-shadow:0 0 0 .5px #0000000f,0 1px 2px #0000000d}
 .cl-presets{display:inline-flex;flex-wrap:wrap;gap:4px}
 .cl-presets button{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 9px;border:1px solid var(--cv-line);border-radius:14px;background:var(--cv-bg);color:var(--cv-muted);font-size:12.5px}
-.cl-presets button[aria-pressed=true]{border-color:transparent;background:var(--ts-selected,#0c8ce9);color:var(--ts-on-selected,#fff)}
+.cl-presets button[aria-pressed=true]{border-color:transparent;background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff)}
 .cl-tools{display:inline-flex;flex-wrap:wrap;gap:6px;margin-left:auto}
 .cl-select{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 4px 0 8px;border:1px solid var(--cv-line);border-radius:8px;background:var(--cv-bg);color:var(--cv-muted)}
 .cl-select select{height:28px;max-width:150px;border:0;background:none;color:var(--cv-fg);font:inherit;font-size:12.5px}
