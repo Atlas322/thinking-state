@@ -18,6 +18,8 @@ import {
 } from "./registry";
 import { ChatDataEditor, ChatPreview, useChatWidget } from "./chat/chat-tools";
 import { Replay } from "./replay/replay";
+import { Autoplay } from "./motion/autoplay";
+import { autoplayScripts } from "./autoplay-scripts";
 
 const symbols: Record<string, string> = {
   "Компани": "◈",
@@ -684,7 +686,7 @@ export default function App() {
                             </div>
                           }
                         >
-                          {chat.isChat ? <ChatPreview chat={chat} /> : Preview && <Preview />}
+                          {chat.isChat ? <ChatPreview chat={chat} /> : Preview && (autoplayScripts[entry.slug] ? <Autoplay script={autoplayScripts[entry.slug]}><Preview /></Autoplay> : <Preview />)}
                         </Suspense>
                       </PreviewBoundary>
                       </Replay>
