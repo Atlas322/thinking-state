@@ -448,7 +448,7 @@ const css = `
 .drp :focus-visible{outline:2px solid var(--drp-blue);outline-offset:1px}
 @keyframes drp-in{from{opacity:0;transform:scale(.97)}}
 @keyframes drp-slide{from{opacity:.4;transform:translateX(calc(var(--drp-dir,0) * 10px))}}
-@media(max-width:600px){.drp-main{grid-template-columns:1fr}.drp-presets{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--drp-line)}.drp-presets button,.drp-custom{width:auto;flex:none}.drp-months{grid-template-columns:1fr;padding:10px 12px}.drp-month:first-child{display:none}.drp-month:last-child .drp-mhead .drp-nav-sp{display:none}.drp-foot{flex-direction:column;align-items:stretch}.drp-actions{justify-content:flex-end}}
+@media(max-width:600px){.drp-main{grid-template-columns:minmax(0,1fr)}.drp-presets{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--drp-line)}.drp-presets button,.drp-custom{width:auto;flex:none}.drp-months{grid-template-columns:minmax(0,1fr);padding:10px 12px}.drp-month:first-child{display:none}.drp-month:last-child .drp-mhead .drp-nav-sp{display:none}.drp-foot{flex-direction:column;align-items:stretch}.drp-actions{justify-content:flex-end}}
 @media(pointer:coarse){.drp-grid td{height:40px}.drp-day{width:40px;height:40px}.drp-btn{height:40px}}
 @media(prefers-reduced-motion:reduce){.drp *{animation:none!important;transition:none!important}}
 `;

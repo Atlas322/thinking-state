@@ -515,7 +515,7 @@ const css = `
 .dt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dt :focus-visible{outline:2px solid var(--dt-blue);outline-offset:2px}
 @keyframes dt-in{from{opacity:0;transform:translateX(-6px)}}@keyframes dt-out{to{opacity:0}}@keyframes dt-pop{from{opacity:0;transform:scale(.97)}}
-@container (max-width:640px){.dt-tree{grid-template-columns:1fr;gap:16px}.dt-qcol::after,.dt-opt::after{display:none}.dt-branch{grid-template-columns:1fr;gap:6px}.dt-next,.dt-effect{margin-left:12px}.dt-note{right:auto;left:0;width:240px}}
+@container (max-width:640px){.dt-tree{grid-template-columns:minmax(0,1fr);gap:16px}.dt-qcol::after,.dt-opt::after{display:none}.dt-branch{grid-template-columns:minmax(0,1fr);gap:6px}.dt-next,.dt-effect{margin-left:12px}.dt-note{right:auto;left:0;width:240px}}
 @media(prefers-reduced-motion:reduce){.dt *,.dt-tree{animation:none!important;transition:none!important}}
 .dt-branch{animation:dtbranchrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.dt-branch:nth-child(1){animation-delay:0ms}.dt-branch:nth-child(2){animation-delay:130ms}.dt-branch:nth-child(3){animation-delay:260ms}.dt-branch:nth-child(4){animation-delay:390ms}.dt-branch:nth-child(5){animation-delay:520ms}.dt-branch:nth-child(6){animation-delay:650ms}.dt-branch:nth-child(7){animation-delay:780ms}.dt-branch:nth-child(8){animation-delay:910ms}.dt-branch:nth-child(9){animation-delay:1040ms}.dt-branch:nth-child(10){animation-delay:1170ms}.dt-branch:nth-child(11){animation-delay:1300ms}.dt-branch:nth-child(12){animation-delay:1430ms}@keyframes dtbranchrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.dt-branch{animation:none}}
 `;

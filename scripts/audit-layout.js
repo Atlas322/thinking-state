@@ -28,7 +28,7 @@
       if (!n.textContent.trim()) continue;
       const range = document.createRange();
       range.selectNodeContents(n);
-      for (const r of range.getClientRects()) if (r.width > 1) lines.add(Math.round(r.top / 4));
+      for (const r of range.getClientRects()) if (r.width > 1) lines.add(Math.round((r.top + r.height / 2) / 10));
     }
     if (lines.size > 1) out.wraps.push(name(el));
     if (el.scrollWidth > el.clientWidth + 1 && cs.overflow !== "visible") out.wraps.push(name(el) + " (clipped)");
@@ -90,6 +90,9 @@
   for (const el of controls) {
     const icon = el.querySelector(":scope > svg, :scope > i, :scope > span > svg");
     if (!icon) continue;
+    // Only single-line controls have one axis; stacked cards (icon beside a title + caption) are laid out on purpose.
+    const ecs = getComputedStyle(el);
+    if (ecs.flexDirection === "column" || el.getBoundingClientRect().height > lineHeight(ecs) * 2.2) continue;
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     let t;
     while ((t = walker.nextNode()) && !t.textContent.trim());

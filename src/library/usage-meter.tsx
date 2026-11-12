@@ -288,7 +288,7 @@ const css = `
 .um-foot button{height:32px;padding:0 11px;border:0;border-radius:8px;background:var(--um-bg);box-shadow:0 0 0 1px var(--um-line),0 1px 2px #0000000f;font-size:14px;font-weight:500;color:var(--um-fg);transition:background .2s,color .2s}
 .um-foot button.is-dark{background:var(--um-fg);color:var(--um-bg);box-shadow:none}
 .um :focus-visible{outline:2px solid var(--um-blue);outline-offset:2px}
-@media(max-width:400px){.um-head{flex-direction:column}.um-limits{grid-template-columns:1fr}}
+@media(max-width:400px){.um-head{flex-direction:column}.um-limits{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.um *{transition:none!important;animation:none!important}}
 .um-limit{animation:umlimitrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.um-limit:nth-child(1){animation-delay:0ms}.um-limit:nth-child(2){animation-delay:130ms}.um-limit:nth-child(3){animation-delay:260ms}.um-limit:nth-child(4){animation-delay:390ms}.um-limit:nth-child(5){animation-delay:520ms}.um-limit:nth-child(6){animation-delay:650ms}.um-limit:nth-child(7){animation-delay:780ms}.um-limit:nth-child(8){animation-delay:910ms}.um-limit:nth-child(9){animation-delay:1040ms}.um-limit:nth-child(10){animation-delay:1170ms}.um-limit:nth-child(11){animation-delay:1300ms}.um-limit:nth-child(12){animation-delay:1430ms}@keyframes umlimitrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.um-limit{animation:none}}
 `;

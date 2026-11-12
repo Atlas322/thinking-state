@@ -383,7 +383,7 @@ const css = `
 @keyframes bs-in{from{opacity:0;transform:translateY(-4px)}}
 @keyframes bs-pop{from{opacity:0;transform:scale(.97)}}
 @keyframes bs-fade{from{opacity:0}}
-@media(max-width:520px){.bs-fields{grid-template-columns:1fr}.bs-table th:nth-child(2),.bs-table td:nth-child(2){display:none}.bs-actions{flex-wrap:wrap}.bs-grow{display:none}}
+@media(max-width:520px){.bs-fields{grid-template-columns:minmax(0,1fr)}.bs-table th:nth-child(2),.bs-table td:nth-child(2){display:none}.bs-actions{flex-wrap:wrap}.bs-grow{display:none}}
 @media(prefers-reduced-motion:reduce){.bs *{animation:none!important;transition:none!important}}
 `;
 

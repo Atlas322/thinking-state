@@ -412,7 +412,7 @@ const css = `
 .dc-sendbox{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:var(--dc-soft);color:var(--dc-faint)}
 @keyframes dc-in{from{opacity:0;transform:translateY(4px)}}
 @keyframes dc-pulse{0%{background:var(--dc-soft)}100%{background:var(--dc-bg)}}
-@media(max-width:420px){.dc-tiles{grid-template-columns:1fr}.dc-preview{display:none}}
+@media(max-width:420px){.dc-tiles{grid-template-columns:minmax(0,1fr)}.dc-preview{display:none}}
 @media(hover:none){.dc-row{min-height:44px}}
 @media(prefers-reduced-motion:reduce){.dc *,.dc-card{animation:none!important;transition:none!important}}
 `;

@@ -268,7 +268,7 @@ const css = `
 @keyframes fc-dash{to{stroke-dashoffset:-9}}
 @keyframes fc-pulse{50%{opacity:.5}}
 @media(max-width:680px){.fc-name small{display:none}.fc-grid{grid-template-columns:110px 28px minmax(0,1fr) 28px 110px}}
-@media(max-width:520px){.fc-grid{grid-template-columns:1fr;height:auto!important;gap:10px}.fc-wire{display:none}.fc-models{padding-left:14px;border-left:1px dashed var(--fc-faint)}}
+@media(max-width:520px){.fc-grid{grid-template-columns:minmax(0,1fr);height:auto!important;gap:10px}.fc-wire{display:none}.fc-models{padding-left:14px;border-left:1px dashed var(--fc-faint)}}
 @media(prefers-reduced-motion:reduce){.fc *{animation:none!important;transition:none!important}}
 .fc-m{animation:fc-in .5s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}@keyframes fc-in{from{opacity:0;transform:translateY(8px)}}.fc-m:nth-child(1){animation-delay:0ms}.fc-m:nth-child(2){animation-delay:150ms}.fc-m:nth-child(3){animation-delay:300ms}.fc-m:nth-child(4){animation-delay:450ms}.fc-m:nth-child(5){animation-delay:600ms}.fc-m:nth-child(6){animation-delay:750ms}.fc-m:nth-child(7){animation-delay:900ms}.fc-m:nth-child(8){animation-delay:1050ms}@media(prefers-reduced-motion:reduce){.fc-m{animation:none}}
 `;

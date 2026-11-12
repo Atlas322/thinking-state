@@ -513,7 +513,7 @@ const css = `
 .agq :focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
 @keyframes agq-drop{from{opacity:0;transform:translateY(-6px)}}
 @keyframes agq-in{from{opacity:0;transform:translateX(-8px)}}
-@container (max-width:600px){.agq-flow{grid-template-columns:1fr}.agq-out{flex-direction:row}.agq-worker{grid-template-columns:20px minmax(0,1fr)}.agq-wn{display:none}.agq-stats{grid-template-columns:repeat(2,1fr);row-gap:12px}.agq-stats div:nth-child(3){border-left:0}}
+@container (max-width:600px){.agq-flow{grid-template-columns:minmax(0,1fr)}.agq-out{flex-direction:row}.agq-worker{grid-template-columns:20px minmax(0,1fr)}.agq-wn{display:none}.agq-stats{grid-template-columns:repeat(2,1fr);row-gap:12px}.agq-stats div:nth-child(3){border-left:0}}
 @container (max-width:440px){.agq-ctl{margin-left:0;width:100%}}
 @media(prefers-reduced-motion:reduce){.agq *{animation:none!important;transition:none!important}}
 `;

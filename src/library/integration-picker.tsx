@@ -351,7 +351,7 @@ const css = `
 .ip :focus-visible{outline:2px solid var(--ip-blue);outline-offset:1px}
 @keyframes ip-ring{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(3.4);opacity:0}}
 @keyframes ip-swap{from{opacity:0;filter:blur(3px);transform:translateY(4px)}}
-@container ip (max-width:560px){.ip-body{grid-template-columns:1fr;height:auto}.ip-list{max-height:220px;border-right:0;border-bottom:1px solid var(--ip-line)}.ip-keys{display:none}}
+@container ip (max-width:560px){.ip-body{grid-template-columns:minmax(0,1fr);height:auto}.ip-list{max-height:220px;border-right:0;border-bottom:1px solid var(--ip-line)}.ip-keys{display:none}}
 @container ip (max-width:400px){.ip-feats{display:none}}
 @media(prefers-reduced-motion:reduce){.ip *{animation:none!important;transition:none!important}}
 `;

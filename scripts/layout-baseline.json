@@ -3,32 +3,27 @@
     "scale": 5
   },
   "agent-cursors@390": {
-    "wraps": 2,
-    "overflow": 3,
+    "wraps": 1,
     "scale": 5
   },
   "agent-findings@1440": {
-    "align": 8
+    "align": 4
   },
   "agent-findings@390": {
-    "overflow": 1,
-    "align": 8
+    "align": 4
   },
   "agent-graph@1440": {
-    "align": 13
+    "align": 8
   },
   "agent-graph@390": {
     "overflow": 1,
-    "align": 13
+    "align": 8
   },
   "agent-lanes@1440": {
     "wraps": 1
   },
   "agent-lanes@390": {
     "wraps": 1
-  },
-  "agent-recap@390": {
-    "overflow": 31
   },
   "agent-reply@1440": {
     "scale": 1
@@ -57,9 +52,6 @@
   "billing-schedule@390": {
     "overflow": 1
   },
-  "breakdown-chart@390": {
-    "overflow": 35
-  },
   "button@1440": {
     "rows": 1
   },
@@ -85,9 +77,8 @@
     "scale": 6
   },
   "collaboration-stream@390": {
-    "overflow": 2,
-    "rows": 1,
-    "scale": 6
+    "scale": 6,
+    "rows": 1
   },
   "compact-breakdown@1440": {
     "wraps": 3
@@ -95,19 +86,8 @@
   "compact-breakdown@390": {
     "wraps": 3
   },
-  "company-brief@1440": {
-    "overflow": 10
-  },
   "company-brief@390": {
-    "wraps": 8,
-    "overflow": 50,
     "align": 11
-  },
-  "company-collection@1440": {
-    "overflow": 9
-  },
-  "company-collection@390": {
-    "overflow": 2
   },
   "company-mini@390": {
     "align": 4
@@ -118,14 +98,8 @@
   "conflict-radar@390": {
     "align": 2
   },
-  "cost-waterfall@1440": {
-    "rows": 1
-  },
   "cost-waterfall@390": {
-    "rows": 3
-  },
-  "data-table@390": {
-    "overflow": 16
+    "rows": 2
   },
   "decision-card@1440": {
     "rows": 1
@@ -134,36 +108,18 @@
     "rows": 1
   },
   "delegate-board@390": {
-    "wraps": 3,
-    "align": 2
+    "wraps": 2
   },
   "experiment-card@1440": {
     "wraps": 1,
-    "align": 2
+    "align": 1
   },
   "experiment-card@390": {
     "wraps": 1,
-    "align": 2
-  },
-  "explainer-carousel@390": {
-    "overflow": 18
-  },
-  "inline-diff@1440": {
-    "rows": 1
-  },
-  "inline-diff@390": {
-    "wraps": 1,
-    "rows": 1
-  },
-  "judge-bracket@390": {
-    "overflow": 7
-  },
-  "model-picker@1440": {
-    "scale": 1
+    "align": 1
   },
   "model-picker@390": {
-    "overflow": 13,
-    "scale": 1
+    "overflow": 14
   },
   "plan-vs-actual@390": {
     "wraps": 1
@@ -183,49 +139,19 @@
   "project-card@390": {
     "scale": 1
   },
-  "review-center@1440": {
-    "wraps": 3,
-    "align": 7
-  },
   "review-center@390": {
-    "wraps": 3,
-    "overflow": 3,
-    "align": 11
-  },
-  "root-cause-tree@1440": {
-    "align": 1
-  },
-  "root-cause-tree@390": {
-    "overflow": 25,
-    "align": 1
+    "align": 4
   },
   "running-now@390": {
     "overflow": 1
   },
-  "scheduled-runs@390": {
-    "overflow": 34
-  },
-  "segmented-control@390": {
-    "overflow": 2
-  },
-  "session-board@390": {
-    "wraps": 5
-  },
-  "swipe-row@1440": {
-    "wraps": 6,
-    "overflow": 3
-  },
-  "swipe-row@390": {
-    "wraps": 6,
-    "overflow": 6
-  },
   "tag-input@1440": {
     "wraps": 1,
-    "rows": 4
+    "rows": 3
   },
   "tag-input@390": {
     "wraps": 1,
-    "rows": 5
+    "rows": 4
   },
   "tool-call-card@390": {
     "overflow": 1
@@ -236,17 +162,7 @@
   "trace-waterfall@390": {
     "scale": 1
   },
-  "ts-primitives@1440": {
-    "overflow": 2
-  },
   "ts-primitives@390": {
-    "overflow": 6,
     "rows": 2
-  },
-  "writing-assistant@1440": {
-    "overflow": 1
-  },
-  "writing-assistant@390": {
-    "overflow": 1
   }
 }

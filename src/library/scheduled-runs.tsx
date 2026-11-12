@@ -371,7 +371,7 @@ const css = `
 .sr-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .sr :focus-visible{outline:2px solid var(--sr-blue);outline-offset:2px}
 @keyframes sr-in{from{opacity:0;transform:translateY(-3px) scale(.98)}}
-@media(max-width:720px){.sr-body{grid-template-columns:1fr}.sr-head{flex-wrap:wrap}.sr-agents{display:none}}
+@media(max-width:720px){.sr-body{grid-template-columns:minmax(0,1fr)}.sr-head{flex-wrap:wrap}.sr-agents{display:none}}
 @media(prefers-reduced-motion:reduce){.sr *{animation:none!important;transition:none!important}}
 .sr-card{animation:srcardrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.sr-card:nth-child(1){animation-delay:0ms}.sr-card:nth-child(2){animation-delay:80ms}.sr-card:nth-child(3){animation-delay:160ms}.sr-card:nth-child(4){animation-delay:240ms}.sr-card:nth-child(5){animation-delay:320ms}.sr-card:nth-child(6){animation-delay:400ms}.sr-card:nth-child(7){animation-delay:480ms}.sr-card:nth-child(8){animation-delay:560ms}.sr-card:nth-child(9){animation-delay:640ms}.sr-card:nth-child(10){animation-delay:720ms}.sr-card:nth-child(11){animation-delay:800ms}.sr-card:nth-child(12){animation-delay:880ms}@keyframes srcardrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.sr-card{animation:none}}
 `;

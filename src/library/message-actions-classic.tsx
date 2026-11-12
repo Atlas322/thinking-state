@@ -777,7 +777,7 @@ const css = /* css */ `
 /* ----- Version switcher: unfolds next to Regenerate once there are two versions ----- */
 .ui-ma__regen { display: inline-flex; align-items: center; flex: none; }
 .ui-ma__versions { display: grid; grid-template-columns: 0fr; opacity: 0; transition: grid-template-columns 420ms var(--ui-ma-ease), opacity 220ms ease; }
-.ui-ma__versions[data-open] { grid-template-columns: 1fr; opacity: 1; transition: grid-template-columns 420ms var(--ui-ma-ease), opacity 320ms ease 100ms; }
+.ui-ma__versions[data-open] { grid-template-columns:minmax(0,1fr); opacity: 1; transition: grid-template-columns 420ms var(--ui-ma-ease), opacity 320ms ease 100ms; }
 .ui-ma__versions-clip { display: flex; align-items: center; min-width: 0; overflow: hidden; padding-right: 2px; }
 .ui-ma__step { display: grid; flex: none; place-items: center; width: 20px; height: 30px; border-radius: 7px; color: var(--ui-ma-muted); transition: background-color 160ms ease, color 160ms ease, opacity 160ms ease; }
 .ui-ma__step .ui-ma__glyph { width: 14px; height: 14px; }
