@@ -17,7 +17,7 @@ import {
   Venn3,
 } from "../src/library/explainer-carousel";
 
-const H = "@itge.e";
+const H = "@studio";
 const T = 12;
 const k = (n: number, m: number) => `АЛХАМ ${n} / 10 · МОДУЛЬ ${m}`;
 

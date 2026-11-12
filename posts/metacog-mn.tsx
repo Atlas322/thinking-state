@@ -11,7 +11,7 @@ import {
   FigureCard,
 } from "../src/library/explainer-carousel";
 
-const H = "@itge.e";
+const H = "@studio";
 const T = 9;
 const F = "METACOGNITION · №012 · 2026.11";
 const base = { handle: H, theme: "editorial" as const, folio: F, format: "4x5" as const, total: T, stairs: false };

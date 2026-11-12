@@ -1,0 +1,26 @@
+{
+  "note": "SHA-256 (first 16 hex) of lower-cased words that must never appear in fixtures, demo data or lib/: real people, their handles and past employers. Hashes only, so the list itself names no one. Add with: node -e \"console.log(require('crypto').createHash('sha256').update('word').digest('hex').slice(0,16))\"",
+  "hashes": [
+    "00dc50b230087a9b",
+    "121ffc06fbdf3266",
+    "16e828e263ad3789",
+    "1d28cd44f53813c4",
+    "2b96603daf9a7d78",
+    "74714d772e67bca0",
+    "7471f70bf205c81d",
+    "81ee2be8192e5c35",
+    "89600f63999d26b1",
+    "8b9c425657fb8195",
+    "a5451127af33a20c",
+    "a82951ea0c25b48c",
+    "cc019f1e2cc5716a",
+    "cd3cec170c615661",
+    "cf8b38eed931818e",
+    "d4f4648cd0a3522a",
+    "d8f193e57c9634c9",
+    "db41321089208078",
+    "ddad9ce389457f99",
+    "e164da2a0c11a1ac",
+    "fe892a675cf066d3"
+  ]
+}
