@@ -1186,6 +1186,9 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-tbadge.is-blue{background:#3b82f6}.cl-tbadge.is-green{background:#22a35a}.cl-tbadge.is-red{background:#e5484d}
 .cl-tbadge.is-violet{background:#8b5cf6}.cl-tbadge.is-teal{background:#14a3a3}.cl-tbadge.is-amber{background:#e08a1e}
 .cl-tbadge.is-yellow{background:#d4a017}.cl-tbadge.is-gray{background:#71717a}
+/* glyph contrast (Figma check, 2026-11-12): light fills take the dark on-cat glyph */
+.cl-tbadge.is-amber,.cl-tbadge.is-yellow{color:var(--ts-on-cat-1,#14130f)}
+.cl-tbadge.is-green,.cl-tbadge.is-teal{color:var(--ts-on-cat-3,#0b2414)}
 .cl-table-wrap{overflow-x:auto;border:1px solid var(--cv-line);border-radius:12px;background:var(--cv-bg)}
 .cl-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 .cl-table th,.cl-table td{padding:8px 10px;border-bottom:1px solid var(--cv-line);text-align:left;vertical-align:middle;white-space:nowrap}
@@ -1223,7 +1226,7 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-cal-grid.is-week .cl-cal-cell{min-height:180px}
 .cl-cal-cell.is-out{background:var(--cv-page);color:var(--cv-faint)}
 .cl-cal-n{font-size:12px;font-weight:500;color:var(--cv-muted)}
-.cl-cal-cell.is-today .cl-cal-n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--cv-red);color:#fff}
+.cl-cal-cell.is-today .cl-cal-n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--cv-red);color:var(--ts-on-red,#fff)}
 .cl-cal-item{display:flex;align-items:center;gap:4px;min-width:0;padding:2px 5px;border-radius:5px;background:var(--cv-soft);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cl-cal-item .cv-icon{color:var(--cv-muted)}
 .cl-cal-item.is-yellow{background:var(--cv-yellow-soft)}.cl-cal-item.is-blue{background:var(--cv-accent-soft)}.cl-cal-item.is-green{background:var(--cv-green-soft)}.cl-cal-item.is-red{background:var(--cv-red-soft)}

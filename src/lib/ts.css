@@ -98,6 +98,7 @@
   --ts-status-idle-border: #d8d3c6;
   --ts-status-idle-fg: #45433f;
   --ts-on-accent-soft: #0f3fb8;
+  --ts-on-red: #ffffff;
 }
 
 :where(:root[data-theme="dark"], :root.dark, .ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
@@ -109,7 +110,7 @@
   --ts-line: #3e3d3a;
   --ts-fg: #ecebe7;
   --ts-muted: #b7b5ae;
-  --ts-faint: #8f8c86;
+  --ts-faint: #a3a09a;
   --ts-side: #1f1e1d;
   --ts-raised: #3a3a37;
   --ts-rail: #1f1e1d;
@@ -191,6 +192,7 @@
   --ts-status-idle-border: #4e4d49;
   --ts-status-idle-fg: #b7b5ae;
   --ts-on-accent-soft: #8fb0ff;
+  --ts-on-red: #1f1e1d;
 }
 
 /* data-ts-mode (view | manage) no longer changes colours: one accent everywhere. */

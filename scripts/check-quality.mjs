@@ -93,7 +93,7 @@ const PROBE = (ms) => `new Promise((done) => {
   mo.observe(stage, { subtree: true, childList: true, attributes: true, characterData: true });
   const visible = (el) => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none"; };
   // category-like: tabs, radios, toggles, and elements whose class token is a chip / pill / tag / badge (not their containers: "chips", "tags")
-  const hasIcon = (el) => !!el.querySelector('svg, img, [class*="icon"], [class*="glyph"], [class*="dot"], [class*="avatar"]') || /\\p{Extended_Pictographic}/u.test(el.textContent || "");
+  const hasIcon = (el) => !!el.querySelector('svg, img, [class*="icon"], [class*="glyph"]') || /\\p{Extended_Pictographic}/u.test(el.textContent || "");
   const isCat = (el) => el.matches('[role="tab"], [role="radio"], button[aria-pressed]') || [...el.classList].some((c) => /(^|[-_])(chip|pill|tag|badge)$/.test(c));
   const all = [...stage.querySelectorAll("*")].filter((el) => el instanceof HTMLElement && !(el instanceof HTMLInputElement) && isCat(el));
   const cats = all.filter((el) => visible(el) && (el.textContent || "").trim().length > 1 && !all.some((o) => o !== el && el.contains(o))); // innermost
@@ -101,7 +101,8 @@ const PROBE = (ms) => `new Promise((done) => {
   setTimeout(() => {
     mo.disconnect();
     const anims = document.getAnimations().filter((a) => a.effect && a.effect.target && stage.contains(a.effect.target) && a.playState === "running").length;
-    done({ mutations, anims, categories: cats.length, noIcon });
+    // a ScenarioRegion resting between cycles is still a scenario
+    done({ mutations, anims, scenarioRegion: !!stage.querySelector("[data-ts-step]"), categories: cats.length, noIcon });
   }, ${ms});
 })`;
 
@@ -120,7 +121,7 @@ for (const slug of slugs) {
 const fails = [];
 const newBaseline = { motion: [], icons: {} };
 for (const r of results) {
-  const scenario = r.mutations > 0;
+  const scenario = r.mutations > 0 || r.scenarioRegion;
   if (doMotion && !scenario) {
     newBaseline.motion.push(r.slug);
     if (!baseline.motion.includes(r.slug)) fails.push(`motion  ${r.slug}: no scenario (DOM idle for ${windowMs} ms, ${r.anims} animations)`);
@@ -130,7 +131,7 @@ for (const r of results) {
     if (r.noIcon.length > (baseline.icons[r.slug] ?? 0)) fails.push(`icons   ${r.slug}: ${r.noIcon.length} without icon (${r.noIcon.slice(0, 4).join(" · ")})`);
   }
 }
-const pass = (k) => results.filter((r) => (k === "m" ? r.mutations > 0 : !r.noIcon.length)).length;
+const pass = (k) => results.filter((r) => (k === "m" ? r.mutations > 0 || r.scenarioRegion : !r.noIcon.length)).length;
 if (doMotion) console.log(`motion: ${pass("m")}/${results.length} play a scenario; baseline gaps ${baseline.motion.length}`);
 if (doIcons) console.log(`icons:  ${pass("i")}/${results.length} have icons on every category element; baseline gaps ${Object.keys(baseline.icons).length}`);
 for (const f of fails) console.log("NEW  " + f);

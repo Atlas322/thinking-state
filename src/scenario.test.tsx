@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import * as React from "react";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ScenarioRegion } from "./motion";
@@ -100,5 +101,26 @@ describe("useScenario", () => {
     show(true);
     expect(state()).toBe("approved");
     expect(document.querySelector("[data-ts-step]")?.getAttribute("data-ts-step")).toBe("2");
+  });
+});
+
+describe("useScenario with inline steps", () => {
+  it("parent re-renders do not restart the hold timer", () => {
+    function Parent() {
+      const [n, setN] = React.useState(0);
+      React.useEffect(() => {
+        const t = setInterval(() => setN((x) => x + 1), 300);
+        return () => clearInterval(t);
+      }, []);
+      return (
+        <ScenarioRegion steps={[{ state: `a${n >= 0 ? "" : ""}`, hold: 1000 }, { state: "b", hold: 1000 }]} controls="none">
+          {(st) => <p data-testid="s">{st}</p>}
+        </ScenarioRegion>
+      );
+    }
+    render(<Parent />);
+    show(true);
+    for (let i = 0; i < 4; i++) tick(300);
+    expect(state()).toBe("b");
   });
 });
