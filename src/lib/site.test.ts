@@ -21,7 +21,6 @@ describe("site.css", () => {
       expect(css).toContain(`${alias}: var(${token});`);
       expect(css, token).toContain(`${token}:`); // every alias points at a real token
     }
-    expect(css).toContain("--ts-font-head:");
-    expect(css).toContain("--ts-font-body:");
+    expect(css).toContain("--ts-font-heading: var(--ts-font-display);");
   });
 });
