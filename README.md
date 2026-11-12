@@ -84,8 +84,8 @@ export function CompanyPage({ company }: { company: Company }) {
   );
 }
 
-// Удирдах горим (dark)
-<div data-ts-theme="manage" data-theme="dark">
+// Удирдах горим, бүлээн шөнө (data-ts-theme="manage" = night + manage, v0.1-тэй нийцнэ)
+<div data-ts-theme="night" data-ts-mode="manage" data-theme="dark">
   <CompanyView company={company} defaultView="dashboard" />
 </div>
 ```
@@ -96,10 +96,15 @@ Chat HTML export (uses `react-dom/server`): `import { renderChatHtml } from "@in
 variables (`--ts-page`, `--ts-surface`, `--ts-soft`, `--ts-line`, `--ts-fg`,
 `--ts-muted`, `--ts-faint`, `--ts-accent`, status colours with `-soft`
 pairs, `--ts-font`, `--ts-font-display`, `--ts-font-mono`) and falls back to
-its own defaults. `tokens.css` ships two themes from the inai.sh Figma:
-`cream` (direction 1: cream, Electric blue, Spectral headings) and `manage`
-(dark). Override any variable on a wrapper to adjust. Fonts are not
-bundled — load Spectral, Inter and IBM Plex Mono in the app.
+its own defaults. `tokens.css` нь Theme А (Figma `39:195990`). Хоёр тэнхлэгтэй:
+гадаргуу `data-ts-theme="cream" | "night"`, горим `data-ts-mode="view" | "manage"`.
+Горим зөвхөн accent-ийг солино: Үзэх = Electric, Удирдах = индиго. Accent өнгөтэй
+текстэд `--ts-accent-fg` ашиглана. Мөн `--ts-side`, `--ts-raised`, `--ts-glow`,
+`--ts-glow-amber`, `--ts-elevation` (night дээр 1px шугам), бичгийн шатлал
+`--ts-fs-*` / `--ts-lh-*` (утсанд display 40, h1 30, h2 24) нэмэгдсэн. Хув шарыг
+зөвхөн 4 газарт хэрэглэнэ: хүний батлах дохио, Medium priority, нэг онцлох тоо,
+доод туяа. Фонт багцад орохгүй: Alegreya (500, quote 400), Onest (400/500/600),
+JetBrains Mono (400/500)-г апп дотроо ачаал.
 
 **Exports**
 

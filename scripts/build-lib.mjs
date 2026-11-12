@@ -15,7 +15,7 @@ run("npx vite build -c vite.lib.config.ts --logLevel warn");
 run("npx tsc -p tsconfig.lib.json");
 fs.copyFileSync(path.join(root, "src/lib/tokens.css"), path.join(root, "lib/tokens.css"));
 const tokens = fs.readFileSync(path.join(root, "lib/tokens.css"), "utf8");
-for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="manage"]', "--ts-surface", '"Spectral"'])
+for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="night"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', "--ts-surface", '"Alegreya"', '"Onest"'])
   if (!tokens.includes(need)) {
     console.error(`tokens.css is missing ${need}`);
     process.exit(1);
