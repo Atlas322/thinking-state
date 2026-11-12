@@ -1087,7 +1087,7 @@ export const collectionCss = `
 .cv-empty{display:flex;flex-direction:column;align-items:center;gap:8px}
 .cv-empty .cv-icon{color:var(--cv-faint)}
 .cv-icon{flex:none;vertical-align:-3px}
-.cl{display:flex;flex-direction:column;gap:10px;min-width:0}
+.cl{display:flex;flex-direction:column;gap:var(--ts-gap-control,16px);min-width:0}
 .cl-tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--cv-line)}
 .cl-tabs::-webkit-scrollbar{display:none}
 .cl-tabs button{position:relative;flex:none;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 10px;border:0;background:none;color:var(--cv-muted);font-size:13px;font-weight:500;white-space:nowrap}
