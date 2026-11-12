@@ -1067,6 +1067,7 @@ const css = /* css */ `
   --ui-edc-focus: rgba(77, 141, 255, 0.8);
 }
 :where(.dark, [data-theme="dark"]) .ui-edc__primary:hover:not(:disabled) { background: #ffffff; }
+.ui-edc__draft>*{animation:edcpart .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ui-edc__draft>*:nth-child(1){animation-delay:60ms}.ui-edc__draft>*:nth-child(2){animation-delay:230ms}.ui-edc__draft>*:nth-child(3){animation-delay:400ms}.ui-edc__draft>*:nth-child(4){animation-delay:570ms}@keyframes edcpart{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ui-edc__draft>*{animation:none}}.ui-edc__foot{animation:edcfoot .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ui-edc__foot:nth-child(1){animation-delay:420ms}@keyframes edcfoot{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ui-edc__foot{animation:none}}
 `;
 
 /** Working example; use the named EmailDraft export in your application. */

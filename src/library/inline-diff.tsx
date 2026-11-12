@@ -329,6 +329,7 @@ const css = `
 @media (prefers-reduced-motion:reduce){.idf-root *{animation:none!important;transition:none!important}}
 @media (max-width:360px){.idf-arrow{display:none}.idf-text{padding:6px 14px 14px}}
 @media (pointer:coarse){.idf-pop button{padding:6px 12px}.idf-pop kbd{display:none}}
+.idf-hit{animation:idfhit .5s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.idf-hit:nth-of-type(1){animation-delay:200ms}.idf-hit:nth-of-type(2){animation-delay:420ms}.idf-hit:nth-of-type(3){animation-delay:640ms}.idf-hit:nth-of-type(4){animation-delay:860ms}.idf-hit:nth-of-type(5){animation-delay:1080ms}.idf-hit:nth-of-type(6){animation-delay:1300ms}@keyframes idfhit{from{opacity:.35}}@media(prefers-reduced-motion:reduce){.idf-hit{animation:none}}
 `;
 
 export default InlineDiff;
