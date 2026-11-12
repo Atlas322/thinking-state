@@ -156,6 +156,31 @@
 }
 
 /*
+ * Spacing (theme-independent). 4 px base: --ts-space-1…10 = 4 8 12 16 24 32
+ * 48 64 72 96. Rhythm: stack-sm/md/lg between elements, control = the minimum
+ * under a segmented control or tab row (16), section = between page sections
+ * (72, Figma «Нүүр v02»). Controls carry no outer margin; the parent's gap
+ * (Stack) spaces them.
+ */
+:where(:root, [data-ts-theme]) {
+  --ts-space-1: 4px;
+  --ts-space-2: 8px;
+  --ts-space-3: 12px;
+  --ts-space-4: 16px;
+  --ts-space-5: 24px;
+  --ts-space-6: 32px;
+  --ts-space-7: 48px;
+  --ts-space-8: 64px;
+  --ts-space-9: 72px;
+  --ts-space-10: 96px;
+  --ts-gap-stack-sm: var(--ts-space-2);
+  --ts-gap-stack-md: var(--ts-space-4);
+  --ts-gap-stack-lg: var(--ts-space-5);
+  --ts-gap-control: var(--ts-space-4);
+  --ts-gap-section: var(--ts-space-9);
+}
+
+/*
  * Motion (--ts-motion-*): durations, easings and springs, theme-independent.
  * Springs are physical (src/motion/spring.ts) rendered as CSS linear() curves;
  * pair --ts-motion-spring-NAME with --ts-motion-spring-NAME-duration.

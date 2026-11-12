@@ -114,6 +114,13 @@ text-muted/text-faint/accent/accent-text/accent-soft/electric/indigo/link/amber/
 amber-soft/green/red`, `--ts-shadow`, `--ts-font-heading/text/label`. tokens.css-ийг
 өөрчилсний дараа `npm run tokens:site` ажиллуул (тест зөрөхийг барина).
 
+**Spacing.** 4px суурьтай `--ts-space-1…10` (4 8 12 16 24 32 48 64 72 96), хэмнэл
+`--ts-gap-stack-sm/md/lg` (8/16/24), `--ts-gap-control` (control-ийн доор доод тал нь
+16), `--ts-gap-section` (72, Figma «Нүүр v02»). Control (segmented, tab мөр,
+radiogroup) гадна margin-гүй. Зайг эцгийн `gap`-аар өгнө: `<Stack gap="control">`.
+`npm run check:spacing` нь каталогийн preview бүрийг 1440 ба 390-д headless Chrome-оор
+нээж, доороо 16px-ээс бага зайтай control-уудыг жагсаана (`--strict` бол exit 1).
+
 **Exports**
 
 | Path | What |
