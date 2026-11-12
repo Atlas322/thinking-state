@@ -1,6 +1,6 @@
-# Component Studio
+# Thinking State
 
-A searchable, copyable React component library covering all **90 components** listed on [affectUI](https://www.affectui.com/components). The app includes a categorized menu, live previews, light/dark themes, favorites, source code, usage examples, and **Copy prompt**.
+Thinking State is the engine that shows an agent's work as live widgets — the product layer of INAI, live at [thinkstate.site](https://thinkstate.site). This repository is its component library (formerly called Component Studio): a searchable, copyable React component library covering all **90 components** listed on [affectUI](https://www.affectui.com/components). The app includes a categorized menu, live previews, light/dark themes, favorites, source code, usage examples, and **Copy prompt**.
 
 **23 components use the original MIT source**, with Clean and Classic styles. **67 are independent recreations** of public previews and documented behavior. They are not affectUI Pro source, and they do not all match the original appearance or API. See [VISUAL_REVIEW.md](./VISUAL_REVIEW.md) for the actual browser comparison and remaining differences.
 
@@ -73,7 +73,7 @@ npm run preview
 - `src/components/` — the initial two-file Thinking State implementation, kept for compatibility.
 - `scripts/` — reproducible ZIP packaging and isolated copy validation.
 
-The app loads the selected component on demand. The surrounding Component Studio interface is a custom catalog; it is not a clone of affectUI's entire website.
+The app loads the selected component on demand. The surrounding Thinking State interface is a custom catalog; it is not a clone of affectUI's entire website.
 
 ## Deploy notifications (Railway → Resend)
 
