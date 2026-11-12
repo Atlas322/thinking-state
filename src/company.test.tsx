@@ -529,3 +529,20 @@ describe("task dependencies and task RACI (company-schema 7b41c41)", () => {
     expect(dialog.textContent).toContain("Засвар эрх ба deploy");
   });
 });
+
+describe("hash task ids (company-schema add10b7)", () => {
+  it("resolves dependsOn by full ids across projects, both ways", async () => {
+    const { dependenciesOf, taskIndex } = await import("./company/types");
+    const company = {
+      ...inai,
+      projects: [
+        { id: "prj-a1b2c3d4e5", name: "A", unitId: "inai", status: "in-progress", decisions: [], tasks: [{ id: "task-17ba66c5f7", title: "Pay", status: "waiting" }] },
+        { id: "inai-website", name: "Site", unitId: "inai", status: "in-progress", decisions: [], tasks: [{ id: "task-9f00aa11bb", title: "Deploy", status: "inbox", dependsOn: ["task-17ba66c5f7"] }] },
+      ],
+    };
+    const index = taskIndex(company);
+    const [a, site] = company.projects;
+    expect(dependenciesOf(company, site, site.tasks[0], index).waitsOn.map((w) => w.task.title)).toEqual(["Pay"]);
+    expect(dependenciesOf(company, a, a.tasks[0], index).blocks.map((w) => w.task.title)).toEqual(["Deploy"]);
+  });
+});
