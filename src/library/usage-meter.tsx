@@ -288,7 +288,7 @@ const css = `
 .um-foot button{height:32px;padding:0 11px;border:0;border-radius:8px;background:var(--um-bg);box-shadow:0 0 0 1px var(--um-line),0 1px 2px #0000000f;font-size:14px;font-weight:500;color:var(--um-fg);transition:background .2s,color .2s}
 .um-foot button.is-dark{background:var(--um-fg);color:var(--um-bg);box-shadow:none}
 .um :focus-visible{outline:2px solid var(--um-blue);outline-offset:2px}
-@media(max-width:400px){.um-head{flex-direction:column}.um-limits{grid-template-columns:1fr}}
+@media(max-width:400px){.um-head{flex-direction:column}.um-limits{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.um *{transition:none!important;animation:none!important}}
 `;
 

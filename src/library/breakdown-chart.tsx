@@ -266,7 +266,7 @@ const css = `
 .bc-legend button{display:flex;align-items:center;gap:6px;border:0;background:none;padding:0;font-size:12.5px;color:var(--bc-muted)}
 .bc-legend button[aria-pressed=false]{opacity:.4}.bc-legend button:hover{color:var(--bc-fg)}
 .bc :focus-visible{outline:2px solid var(--bc-accent);outline-offset:2px}
-@media(max-width:560px){.bc-picks{grid-template-columns:1fr}.bc-table{font-size:12.5px}}
+@media(max-width:560px){.bc-picks{grid-template-columns:minmax(0,1fr)}.bc-table{font-size:12.5px}}
 @media(prefers-reduced-motion:reduce){.bc *{transition:none!important}}
 `;
 

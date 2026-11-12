@@ -284,7 +284,7 @@ const css = `
 @keyframes ar-draw{from{stroke-dashoffset:1}}
 @keyframes ar-fade{from{opacity:0}}
 @keyframes ar-pop{from{transform:scale(0)}}
-@media(max-width:640px){.ar-lanes{grid-template-columns:1fr}.ar-lane{min-height:0!important}.ar-top{flex-direction:column}}
+@media(max-width:640px){.ar-lanes{grid-template-columns:minmax(0,1fr)}.ar-lanes>*{min-width:0}.ar-lane{min-height:0!important}.ar-top{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.ar *{animation:none!important;transition:none!important}}
 `;
 

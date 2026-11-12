@@ -515,7 +515,7 @@ const css = `
 .dt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dt :focus-visible{outline:2px solid var(--dt-blue);outline-offset:2px}
 @keyframes dt-in{from{opacity:0;transform:translateX(-6px)}}@keyframes dt-out{to{opacity:0}}@keyframes dt-pop{from{opacity:0;transform:scale(.97)}}
-@container (max-width:640px){.dt-tree{grid-template-columns:1fr;gap:16px}.dt-qcol::after,.dt-opt::after{display:none}.dt-branch{grid-template-columns:1fr;gap:6px}.dt-next,.dt-effect{margin-left:12px}.dt-note{right:auto;left:0;width:240px}}
+@container (max-width:640px){.dt-tree{grid-template-columns:minmax(0,1fr);gap:16px}.dt-qcol::after,.dt-opt::after{display:none}.dt-branch{grid-template-columns:minmax(0,1fr);gap:6px}.dt-next,.dt-effect{margin-left:12px}.dt-note{right:auto;left:0;width:240px}}
 @media(prefers-reduced-motion:reduce){.dt *,.dt-tree{animation:none!important;transition:none!important}}
 `;
 

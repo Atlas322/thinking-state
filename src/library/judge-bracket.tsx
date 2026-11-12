@@ -319,7 +319,7 @@ const css = `
 .jb-use{margin-top:12px;height:30px;padding:0 12px;border:0;border-radius:7px;background:var(--jb-fg);color:var(--jb-bg)!important;font-weight:500}
 .jb :focus-visible{outline:2px solid var(--jb-blue);outline-offset:2px}
 @keyframes jb-spin{to{transform:rotate(1turn)}}@keyframes jb-shim{to{background-position:-250% 0}}
-@media(max-width:560px){.jb-task,.jb-round{display:none}.jb-pair{grid-template-columns:1fr}}
+@media(max-width:560px){.jb-task,.jb-round{display:none}.jb-pair{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.jb *{animation:none!important;transition:none!important}}
 `;
 

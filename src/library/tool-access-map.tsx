@@ -568,7 +568,7 @@ const css = `
 @keyframes tam-spin{to{transform:rotate(360deg)}}
 @keyframes tam-up{from{opacity:0;transform:translateY(calc(-50% + 6px))}}
 @keyframes tam-in{from{opacity:0;transform:translateY(6px)}}
-@container (max-width:600px){.tam-map{height:auto!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tam-wires{display:none}.tam-tool,.tam-agent{position:relative;left:auto!important;top:auto!important;width:auto;transform:none}.tam-agent{grid-column:1/-1;order:-1;animation:none}.tam-calls-body{grid-template-columns:1fr}.tam-list{border-right:0;border-bottom:1px solid var(--tam-line)}.tam-tool .tam-t2{white-space:normal}.tam-stats>span:not(.tam-runtag){min-width:0}.tam-bar{flex-wrap:wrap}}
+@container (max-width:600px){.tam-map{height:auto!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tam-wires{display:none}.tam-tool,.tam-agent{position:relative;left:auto!important;top:auto!important;width:auto;transform:none}.tam-agent{grid-column:1/-1;order:-1;animation:none}.tam-calls-body{grid-template-columns:minmax(0,1fr)}.tam-list{border-right:0;border-bottom:1px solid var(--tam-line)}.tam-tool .tam-t2{white-space:normal}.tam-stats>span:not(.tam-runtag){min-width:0}.tam-bar{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.tam *{animation:none!important;transition:none!important}.tam-wires path.glint{display:none}}
 `;
 

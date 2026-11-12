@@ -371,7 +371,7 @@ const css = `
 .sr-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .sr :focus-visible{outline:2px solid var(--sr-blue);outline-offset:2px}
 @keyframes sr-in{from{opacity:0;transform:translateY(-3px) scale(.98)}}
-@media(max-width:720px){.sr-body{grid-template-columns:1fr}.sr-head{flex-wrap:wrap}.sr-agents{display:none}}
+@media(max-width:720px){.sr-body{grid-template-columns:minmax(0,1fr)}.sr-head{flex-wrap:wrap}.sr-agents{display:none}}
 @media(prefers-reduced-motion:reduce){.sr *{animation:none!important;transition:none!important}}
 `;
 

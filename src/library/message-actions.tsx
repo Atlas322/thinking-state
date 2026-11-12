@@ -799,7 +799,7 @@ const css = /* css */ `
 /* ----- Version switcher: unfolds next to Regenerate once there are two versions ----- */
 .ui-mac__regen { display: inline-flex; align-items: center; flex: none; }
 .ui-mac__versions { display: grid; grid-template-columns: 0fr; opacity: 0; transition: grid-template-columns 420ms var(--ui-mac-ease), opacity 220ms ease; }
-.ui-mac__versions[data-open] { grid-template-columns: 1fr; opacity: 1; transition: grid-template-columns 420ms var(--ui-mac-ease), opacity 320ms ease 100ms; }
+.ui-mac__versions[data-open] { grid-template-columns:minmax(0,1fr); opacity: 1; transition: grid-template-columns 420ms var(--ui-mac-ease), opacity 320ms ease 100ms; }
 .ui-mac__versions-clip { display: flex; align-items: center; min-width: 0; overflow: hidden; padding-right: 2px; }
 .ui-mac__step { display: grid; flex: none; place-items: center; width: 20px; height: 28px; border-radius: 6px; color: var(--ui-mac-icon); transition: background-color 160ms ease, color 160ms ease, opacity 160ms ease; }
 .ui-mac__step[data-dir="prev"] .ui-mac__glyph { transform: scaleX(-1); }
