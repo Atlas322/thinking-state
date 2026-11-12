@@ -46,4 +46,4 @@ if (hits.length) {
   process.exit(1);
 }
 const size = (f) => (fs.statSync(path.join(root, "lib", f)).size / 1024).toFixed(1);
-console.log(`lib/ ready: index.js ${size("index.js")} KB, chat.js ${size("chat.js")} KB, tokens.css ${size("tokens.css")} KB; guard clean.`);
+console.log(`lib/ ready: index.js ${size("index.js")} KB, chat.js ${size("chat.js")} KB, studio.js ${size("studio.js")} KB, tokens.css ${size("tokens.css")} KB; guard clean.`);

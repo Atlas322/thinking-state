@@ -18,11 +18,13 @@ export default defineConfig({
       entry: {
         index: resolve(import.meta.dirname, "src/lib/index.ts"),
         chat: resolve(import.meta.dirname, "src/lib/chat.ts"),
+        studio: resolve(import.meta.dirname, "src/lib/studio.ts"),
       },
       formats: ["es"],
     },
     rollupOptions: {
-      external: [/^react($|\/)/, /^react-dom($|\/)/],
+      // runtime deps stay external (package.json dependencies): consumers install them once
+      external: [/^react($|\/)/, /^react-dom($|\/)/, /^matter-js($|\/)/, /^motion($|\/)/],
       output: { chunkFileNames: "chunks/[name]-[hash].js" },
     },
   },
