@@ -19,6 +19,12 @@ export type AutoStep = {
   hover?: AutoTarget;
   type?: { target: AutoTarget; text: string };
   key?: { target?: AutoTarget; key: string };
+  /** Hide every match (they fade in later via `show`). */
+  hide?: string;
+  /** Reveal the next `count` still-hidden matches in DOM order, springing in. */
+  show?: { sel: string; count?: number };
+  /** Choose option `index` of a native <select>. */
+  pick?: { target: AutoTarget; index: number };
 };
 export type AutoScript = AutoStep[];
 
@@ -41,6 +47,14 @@ const hoverEvents = (el: HTMLElement, on: boolean) =>
   );
 
 function perform(root: HTMLElement, step: AutoStep, typing: React.MutableRefObject<number[]>) {
+  if (step.hide) root.querySelectorAll<HTMLElement>(step.hide).forEach((el) => el.setAttribute("data-ts-hide", ""));
+  if (step.show) {
+    const hidden = [...root.querySelectorAll<HTMLElement>(step.show.sel)].filter((el) => el.hasAttribute("data-ts-hide"));
+    hidden.slice(0, step.show.count ?? 1).forEach((el) => {
+      el.setAttribute("data-ts-shown", "");
+      el.removeAttribute("data-ts-hide");
+    });
+  }
   if (step.hover) {
     const el = find(root, step.hover);
     if (el) hoverEvents(el, true);
@@ -49,6 +63,14 @@ function perform(root: HTMLElement, step: AutoStep, typing: React.MutableRefObje
   if (step.key) {
     const el = step.key.target ? find(root, step.key.target) : (document.activeElement as HTMLElement | null);
     el?.dispatchEvent(new KeyboardEvent("keydown", { key: step.key.key, bubbles: true }));
+  }
+  if (step.pick) {
+    const el = find(root, step.pick.target) as HTMLSelectElement | null;
+    const value = el?.options[step.pick.index]?.value;
+    if (el && value != null) {
+      Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value")?.set?.call(el, value);
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    }
   }
   if (step.type) {
     const el = find(root, step.type.target) as HTMLInputElement | HTMLTextAreaElement | null;
@@ -83,7 +105,15 @@ export function Autoplay({ script, children }: { script: AutoScript; children: R
   React.useEffect(() => () => typing.current.forEach(clearTimeout), []);
   return (
     <div ref={ref} className="ts-autoplay" {...sc.attrs} style={{ width: "100%", minWidth: 0 }}>
+      <style>{css}</style>
       {children}
     </div>
   );
 }
+
+// Reveal choreography: opacity + a short rise on the soft spring (🎨 motion language), compositor-only.
+const css = `
+.ts-autoplay [data-ts-hide]{opacity:0;transform:translateY(8px);pointer-events:none}
+.ts-autoplay [data-ts-hide],.ts-autoplay [data-ts-shown]{transition:opacity var(--ts-motion-dur-md,320ms) var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)),transform var(--ts-motion-spring-soft-duration,560ms) var(--ts-motion-spring-soft,cubic-bezier(.2,0,0,1))}
+@media (prefers-reduced-motion:reduce){.ts-autoplay [data-ts-hide],.ts-autoplay [data-ts-shown]{transition:none}}
+`;
