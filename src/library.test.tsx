@@ -413,3 +413,60 @@ describe("studio props: agent-recap", () => {
     expect(screen.getByText("Цонхны гадна")).toBeTruthy();
   });
 });
+import { ReviewCenter, reviewIcons } from "./library/review-center";
+import { decisionIcons } from "./library/decision-tree";
+
+describe("studio type compat", () => {
+  it("icon maps take the new keys and fall back on unknown ones", () => {
+    for (const k of ["doc", "people", "check", "money", "mail"]) {
+      expect(decisionIcons[k]).toBeTruthy();
+      expect(reviewIcons[k]).toBeTruthy();
+    }
+    const key: string = "unknown";
+    expect(decisionIcons[key]).toBe(decisionIcons.agent);
+    expect(reviewIcons[key]).toBe(reviewIcons.doc);
+  });
+
+  it("FallbackChain shows the name when model is missing", () => {
+    render(<FallbackChain attempts={[{ id: "x", name: "Нөөц туслах", status: "answered" }]} />);
+    expect(screen.getByText("Нөөц туслах")).toBeTruthy();
+  });
+
+  it("AgentQueue takes a depth sparkline and custom axis labels", () => {
+    const { container } = render(<AgentQueue jobs={[]} depth={[1, 4, 2, 6]} axis={["Даваа", "Мягмар", "Лхагва"]} />);
+    expect(container.querySelector(".agq-spark")).toBeTruthy();
+    expect(screen.getByText("Мягмар")).toBeTruthy();
+  });
+
+  it("AgentRecap takes a two-label axis", () => {
+    render(<AgentRecap events={[]} since={0} until={1} axis={["Өглөө", "Орой"]} />);
+    expect(screen.getByText("Өглөө")).toBeTruthy();
+    expect(screen.getByText("Орой")).toBeTruthy();
+  });
+
+  it("ThinkingState takes a plain workedLabel", () => {
+    vi.useFakeTimers();
+    render(<ThinkingState steps={[{ kind: "step" as const, label: "Алхам" }]} stepMs={1000} workedLabel="Бэлэн" />);
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    expect(screen.getByText("Бэлэн")).toBeTruthy();
+  });
+
+  it("ReviewCenter hides missing confidence and age", () => {
+    const { container } = render(
+      <ReviewCenter items={[{ id: "a", title: "Гэрээ шалгах", agent: "Агент", type: "Баримт", risk: "low", icon: reviewIcons.doc }]} />,
+    );
+    expect(container.textContent).not.toMatch(/NaN|—/);
+    expect(container.querySelector(".rc-age")).toBeNull();
+  });
+
+  it("EmailDraft shows free status text and hides a null attachment", () => {
+    for (const Draft of [EmailDraft, EmailDraftClassic]) {
+      cleanup();
+      const { container } = render(<Draft status="34 хоног хэтэрсэн" attachment={null} link={null} />);
+      expect(screen.getByText("34 хоног хэтэрсэн")).toBeTruthy();
+      expect(container.textContent).not.toMatch(/хавсаргах|\.pdf/);
+    }
+  });
+});
