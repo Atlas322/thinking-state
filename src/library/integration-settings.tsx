@@ -24,36 +24,37 @@ export type IntegrationSettingsProps = {
   className?: string;
 };
 
-const ShopifyLogo = (
+/** Neutral shop-bag glyph (no vendor logo). */
+const ShopLogo = (
   <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M15.6 4.3 14.4 4c-.2-.6-.6-1.4-1.3-1.4-.1 0-.3 0-.4.1C12.4 2.3 12 2 11.6 2 8.9 2 7.6 5.3 7.2 7l-2 .6c-.6.2-.6.2-.7.8L3 20.4 15 22.6Z" fill="#95bf47" />
-    <path d="m15.6 4.3-.6 18.3 6-1.3s-2.4-16.4-2.4-16.5c0-.1-.1-.2-.2-.2Z" fill="#5e8e3e" />
-    <path d="M12.3 8.4 11.7 10.3s-.7-.3-1.5-.3c-1.2 0-1.2.7-1.2.9 0 1 2.7 1.4 2.7 3.8 0 1.9-1.2 3.1-2.8 3.1-1.9 0-2.9-1.2-2.9-1.2l.5-1.7s1 .9 1.9.9c.6 0 .8-.4.8-.8 0-1.3-2.2-1.4-2.2-3.6 0-1.9 1.3-3.6 4-3.6 1 0 1.5.3 1.5.3Z" fill="#fff" />
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#65a30d" />
+    <path d="M6.5 9h11l-1 9.5h-9Z" fill="#fff" />
+    <path d="M9.5 9V7.5a2.5 2.5 0 0 1 5 0V9" fill="none" stroke="#fff" strokeWidth="1.5" />
   </svg>
 );
 
 const defaultZones = [
-  "(GMT −08:00) Los Angeles",
-  "(GMT −05:00) New York",
-  "(GMT +00:00) London",
-  "(GMT +01:00) Berlin",
-  "(GMT +02:00) Athens",
-  "(GMT +05:30) Kolkata",
-  "(GMT +08:00) Singapore",
-  "(GMT +09:00) Tokyo",
+  "(GMT −08:00) Лос-Анжелес",
+  "(GMT −05:00) Нью-Йорк",
+  "(GMT +00:00) Лондон",
+  "(GMT +01:00) Берлин",
+  "(GMT +02:00) Афин",
+  "(GMT +05:30) Колката",
+  "(GMT +08:00) Улаанбаатар",
+  "(GMT +09:00) Токио",
 ];
 
 const validHost = (v: string) => /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+(\/\S*)?$/i.test(v.trim());
 const randomKey = () =>
-  "shpat_" + Array.from({ length: 28 }, () => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
+  "key_" + Array.from({ length: 28 }, () => "abcdef0123456789"[Math.floor(Math.random() * 16)]).join("");
 
 export function IntegrationSettings({
-  name = "Shopify store",
-  logo = ShopifyLogo,
+  name = "Онлайн дэлгүүр",
+  logo = ShopLogo,
   count = 128,
-  meta = "Connected on March 4, 2026 at 09:12",
+  meta = "2026.03.04-ний 09:12-д холбогдсон",
   defaultValues,
-  siteHint = "Your store's primary domain from Settings › Domains",
+  siteHint = "Дэлгүүрийн үндсэн домэйн: Тохиргоо › Домэйн",
   timeZones = defaultZones,
   onGenerateKey,
   onSave,
@@ -62,8 +63,8 @@ export function IntegrationSettings({
 }: IntegrationSettingsProps) {
   const initial: IntegrationValues = {
     enabled: true,
-    siteUrl: "lumen-studio.com",
-    timeZone: "(GMT +01:00) Berlin",
+    siteUrl: "shop.example.mn",
+    timeZone: "(GMT +08:00) Улаанбаатар",
     apiKey: "",
     ...defaultValues,
   };

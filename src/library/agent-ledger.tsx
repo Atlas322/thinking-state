@@ -29,64 +29,62 @@ export type AgentLedgerProps = {
   className?: string;
 };
 
+/** Neutral system glyphs keyed by the demo system names; no brand marks. */
 const logos: Record<string, React.ReactNode> = {
-  HubSpot: (
+  "Имэйл": (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <circle cx="10" cy="9.5" r="2.4" fill="none" stroke="#ff7a59" strokeWidth="1.5" />
-      <path d="M10 7V3.5M4 4l4.3 3.8M8 11.5 5.5 13.5" stroke="#ff7a59" strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="10" cy="3" r="1.1" fill="#ff7a59" />
-      <circle cx="3.6" cy="3.6" r="1.1" fill="#ff7a59" />
+      <rect x="1.8" y="3.2" width="12.4" height="9.6" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="m2.4 4.2 5.6 4.4 5.6-4.4" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
     </svg>
   ),
-  Slack: (
+  "Багийн чат": (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="2" y="6" width="5" height="2" rx="1" fill="#36c5f0" />
-      <rect x="6" y="2" width="2" height="5" rx="1" fill="#2eb67d" />
-      <rect x="9" y="8" width="5" height="2" rx="1" fill="#ecb22e" />
-      <rect x="8" y="9" width="2" height="5" rx="1" fill="#e01e5a" />
-      <rect x="8" y="2" width="2" height="5" rx="1" fill="#2eb67d" />
-      <rect x="6" y="9" width="2" height="5" rx="1" fill="#e01e5a" />
-      <rect x="2" y="8" width="5" height="2" rx="1" fill="#36c5f0" />
-      <rect x="9" y="6" width="5" height="2" rx="1" fill="#ecb22e" />
+      <path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
     </svg>
   ),
-  Notion: (
+  "Харилцагчийн бүртгэл": (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" />
-      <path d="M5.5 11.5v-7h1l3.5 7h1v-7" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="8" cy="5.5" r="2.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M3 13.5c.8-2.4 2.7-3.5 5-3.5s4.2 1.1 5 3.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
     </svg>
   ),
-  Stripe: (
+  "Баримтын сан": (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#635bff" />
-      <path d="M10.2 6.1c-.5-.4-1.2-.6-1.9-.6-1 0-1.6.5-1.6 1.1 0 1.6 3.6.9 3.6 3 0 .9-.8 1.6-2.1 1.6-.8 0-1.6-.3-2.1-.7" fill="none" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M3.5 1.8h6l3 3v9.4h-9Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+      <path d="M5.5 8h5M5.5 10.5h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
   ),
-  Vercel: (
+  "Төлбөрийн систем": (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M8 2.5 14.5 13.5h-13Z" fill="currentColor" />
+      <rect x="1.8" y="3.5" width="12.4" height="9" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M1.8 6.5h12.4M4.5 10h2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
   ),
-  GitHub: (
+  "Үүлэн сервер": (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M8 1a7 7 0 0 0-2.2 13.6c.35.07.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.81-.78-1.03-.78-1.03-.64-.43.05-.42.05-.42.7.05 1.07.72 1.07.72.63 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.55-.18-3.19-.78-3.19-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72a6.6 6.6 0 0 1 3.5 0c1.34-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.3v1.93c0 .19.13.41.48.34A7 7 0 0 0 8 1Z"
-      />
+      <path d="M4.5 12.5a3 3 0 0 1-.3-6 4 4 0 0 1 7.7-.7 3.4 3.4 0 0 1-.4 6.7Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+    </svg>
+  ),
+  "Хувилбарын хяналт": (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="4.5" cy="3.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="4.5" cy="12.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="11.5" cy="6" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M4.5 5v6M11.5 7.5c0 2-2 2.6-6 3.4" fill="none" stroke="currentColor" strokeWidth="1.3" />
     </svg>
   ),
 };
 
 const T0 = Date.now();
 const defaultEntries: LedgerEntry[] = [
-  { id: "email", action: "Sent email", target: "3,812 customers", system: "HubSpot", at: T0 - 37000, detail: "New price and the code LAUNCH20", dependsOn: ["coupon"], reversible: false },
-  { id: "slack", action: "Posted in #launch", target: "New pricing is live", system: "Slack", at: T0 - 62000, detail: "With a link to the pricing page", dependsOn: ["deploy"] },
-  { id: "deals", action: "Updated 212 deals", target: "Renewals in Q4", system: "HubSpot", at: T0 - 70000, change: ["$29 per seat", "$34 per seat"], dependsOn: ["price"] },
-  { id: "faq", action: "Updated page", target: "Pricing FAQ", system: "Notion", at: T0 - 80000, change: ["3 answers", "3 answers rewritten"], dependsOn: ["price"] },
-  { id: "coupon", action: "Created coupon", target: "LAUNCH20", system: "Stripe", at: T0 - 125000, detail: "20% off the first year · ends in 7 days" },
-  { id: "price", action: "Changed price", target: "Pro plan", system: "Stripe", at: T0 - 130000, change: ["$29 / month", "$34 / month"] },
-  { id: "deploy", action: "Deployed", target: "affectui.com", system: "Vercel", at: T0 - 185000, change: ["#481", "#483 in production"], dependsOn: ["merge"] },
-  { id: "merge", action: "Merged PR #482", target: "Pricing page v2", system: "GitHub", at: T0 - 190000, change: ["pricing-v2", "main"] },
+  { id: "email", action: "Имэйл илгээсэн", target: "3,812 харилцагч", system: "Имэйл", at: T0 - 37000, detail: "Шинэ тариф ба LAUNCH20 код", dependsOn: ["coupon"], reversible: false },
+  { id: "slack", action: "#launch сувагт нийтэлсэн", target: "Шинэ тариф идэвхжлээ", system: "Багийн чат", at: T0 - 62000, detail: "Тарифын хуудасны холбоостой", dependsOn: ["deploy"] },
+  { id: "deals", action: "212 гэрээ шинэчилсэн", target: "4-р улирлын сунгалтууд", system: "Харилцагчийн бүртгэл", at: T0 - 70000, change: ["5 хэрэглэгчийн эрх", "10 хэрэглэгчийн эрх"], dependsOn: ["price"] },
+  { id: "faq", action: "Хуудас шинэчилсэн", target: "Тарифын түгээмэл асуулт", system: "Баримтын сан", at: T0 - 80000, change: ["3 хариулт", "3 хариултыг дахин бичсэн"], dependsOn: ["price"] },
+  { id: "coupon", action: "Купон үүсгэсэн", target: "LAUNCH20", system: "Төлбөрийн систем", at: T0 - 125000, detail: "Эхний жилд 20% хөнгөлөлт · 7 хоногийн дараа дуусна" },
+  { id: "price", action: "Багцын хязгаар өөрчилсөн", target: "Pro багц", system: "Төлбөрийн систем", at: T0 - 130000, change: ["сард 20 ажил", "сард 30 ажил"] },
+  { id: "deploy", action: "Байршуулсан", target: "вэб сайт", system: "Үүлэн сервер", at: T0 - 185000, change: ["#481", "#483 үндсэн орчинд"], dependsOn: ["merge"] },
+  { id: "merge", action: "#482 өөрчлөлтийг нэгтгэсэн", target: "Тарифын хуудас v2", system: "Хувилбарын хяналт", at: T0 - 190000, change: ["pricing-v2", "main"] },
 ];
 
 /** Dependency traversal follows ids, never the current display order. Cycles terminate. */
@@ -118,7 +116,7 @@ const RedoIcon = () => (
 
 export function AgentLedger({
   entries = defaultEntries,
-  agent = entries === defaultEntries ? "Launch agent" : undefined,
+  agent = entries === defaultEntries ? "Нээлтийн агент" : undefined,
   now,
   undone,
   defaultUndone = [],

@@ -91,6 +91,10 @@ export function ProfileMenu({
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setFilled(true);
+      return;
+    }
     const io = new IntersectionObserver(
       ([e]) => e.isIntersecting && (setFilled(true), io.disconnect()),
       {
@@ -570,15 +574,15 @@ export default function Demo() {
   const [, setNote] = React.useState("");
   return (
     <ProfileMenu
-      name="Lena Hartmann"
-      email="lena.hartmann@fastmail.com"
+      name="Сараа Батболд"
+      email="saraa.batbold@example.mn"
       items={[
-        { id: "settings", label: "Settings", icon: <SettingsIcon />, onSelect: () => setNote("settings") },
-        { id: "docs", label: "Docs", icon: <DocsIcon />, onSelect: () => setNote("docs") },
-        { id: "apps", label: "Apps", icon: <AppsIcon />, badge: "New", onSelect: () => setNote("apps") },
-        { id: "logout", label: "Logout", icon: <LogoutIcon />, onSelect: () => setNote("logout") },
+        { id: "settings", label: "Тохиргоо", icon: <SettingsIcon />, onSelect: () => setNote("settings") },
+        { id: "docs", label: "Баримт бичиг", icon: <DocsIcon />, onSelect: () => setNote("docs") },
+        { id: "apps", label: "Аппууд", icon: <AppsIcon />, badge: "Шинэ", onSelect: () => setNote("apps") },
+        { id: "logout", label: "Гарах", icon: <LogoutIcon />, onSelect: () => setNote("logout") },
       ]}
-      setup={{ done: 3, total: 5, next: "Add a profile photo", onContinue: () => setNote("profile") }}
+      setup={{ done: 3, total: 5, next: "Профайл зураг нэмэх", onContinue: () => setNote("profile") }}
     />
   );
 }

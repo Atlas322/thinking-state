@@ -23,18 +23,18 @@ export type KPIChartProps = {
 const compact = (n: number) => {
   const a = Math.abs(n);
   const s = a >= 1e6 ? `${+(a / 1e6).toFixed(1)}M` : a >= 1e3 ? `${+(a / 1e3).toFixed(1)}k` : `${Math.round(a)}`;
-  return `${n < 0 ? "-" : ""}$${s}`;
+  return `${n < 0 ? "-" : ""}${s}`;
 };
 
-const days = ["Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7", "Mar 8", "Mar 9"];
-const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const days = ["3/3", "3/4", "3/5", "3/6", "3/7", "3/8", "3/9"];
+const weekdays = ["Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба", "Ням"];
 
 const defaultSeries: KpiSeries[] = [
-  { label: "Organic", color: "#3b82f6", values: [4200, 4600, 3900, 4500, 5100, 4900, 5800] },
-  { label: "Paid ads", color: "#ec4899", values: [3600, 3300, 4300, 4600, 3900, 4300, 4100] },
-  { label: "Referral", color: "#8b5cf6", values: [1800, 2300, 2000, 1500, 2400, 2200, 2700] },
-  { label: "Email", color: "#10b981", values: [1200, 1100, 1700, 2100, 1600, 1300, 1500] },
-  { label: "Direct", color: "#a1a1aa", values: [600, 900, 700, 800, 1000, 1400, 1100] },
+  { label: "Хайлт", color: "#3b82f6", values: [4200, 4600, 3900, 4500, 5100, 4900, 5800] },
+  { label: "Зар сурталчилгаа", color: "#ec4899", values: [3600, 3300, 4300, 4600, 3900, 4300, 4100] },
+  { label: "Санал болголт", color: "#8b5cf6", values: [1800, 2300, 2000, 1500, 2400, 2200, 2700] },
+  { label: "Имэйл", color: "#10b981", values: [1200, 1100, 1700, 2100, 1600, 1300, 1500] },
+  { label: "Шууд", color: "#a1a1aa", values: [600, 900, 700, 800, 1000, 1400, 1100] },
 ];
 
 const niceMax = (v: number) => {
@@ -45,16 +45,16 @@ const niceMax = (v: number) => {
 };
 
 export function KPIChart({
-  title = "Revenue",
-  value = "$96.4k",
+  title = "Зочилсон хүн",
+  value = "96.4k",
   delta = 7900,
   labels = days,
   tooltipLabels = days.map((d, i) => `${weekdays[i]}, ${d}`),
   series = defaultSeries,
   format = compact,
-  footer = "Top 5 channels",
+  footer = "Шилдэг 5 суваг",
   defaultIndex,
-  emptyText = "No data yet",
+  emptyText = "Одоогоор өгөгдөл алга",
   className = "",
 }: KPIChartProps) {
   const [hover, setHover] = React.useState<number | null>(null);

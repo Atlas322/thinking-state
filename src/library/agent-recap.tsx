@@ -37,19 +37,20 @@ export type AgentRecapProps = {
 const d = (h: number, m: number, day = 14) => new Date(2026, 0, day, h, m);
 
 const defaultEvents: RecapEvent[] = [
-  { id: "refund", at: d(2, 14, 15), kind: "needs", title: "Refund $240 to Acme Corp", detail: "Support agent · over the $200 auto-approve limit", logo: "slack", action: "Approve" },
-  { id: "merge", at: d(4, 37, 15), kind: "needs", title: "Merge the checkout fix", detail: "All 212 tests green · needs a code owner", logo: "github", action: "Merge" },
-  { id: "sync", at: d(3, 2, 15), kind: "failed", title: "Contact sync to the CRM", detail: "Token expired after 1,284 of 3,900 contacts", logo: "drive", action: "Retry" },
-  { id: "tickets", at: d(19, 5), kind: "done", title: "Answered support tickets", detail: "first reply in 2 min", logo: "slack", count: 38 },
-  { id: "prs", at: d(20, 10), kind: "done", title: "Closed stale pull requests", logo: "github", count: 6 },
-  { id: "issues", at: d(22, 30), kind: "done", title: "Triaged new issues", detail: "4 marked urgent", logo: "linear", count: 17 },
+  { id: "refund", at: d(2, 14, 15), kind: "needs", title: "Харилцагчид буцаалт олгох", detail: "Тусламжийн агент · автомат зөвшөөрлийн хязгаараас 20% давсан", logo: "slack", action: "Батлах", doneLabel: "Батлагдсан" },
+  { id: "merge", at: d(4, 37, 15), kind: "needs", title: "Төлбөрийн засварыг нэгтгэх", detail: "212 тест бүгд амжилттай · кодын эзэн хэрэгтэй", logo: "github", action: "Нэгтгэх", doneLabel: "Нэгтгэсэн" },
+  { id: "sync", at: d(3, 2, 15), kind: "failed", title: "Харилцагчийн бүртгэл рүү синк хийх", detail: "3,900-аас 1,284 харилцагчийн дараа токен хүчингүй болсон", logo: "drive", action: "Дахин оролдох", doneLabel: "Дахин оролдсон" },
+  { id: "tickets", at: d(19, 5), kind: "done", title: "Тусламжийн хүсэлтэд хариулсан", detail: "эхний хариу 2 минутад", logo: "slack", count: 38 },
+  { id: "prs", at: d(20, 10), kind: "done", title: "Хуучирсан хүсэлтүүдийг хаасан", logo: "github", count: 6 },
+  { id: "issues", at: d(22, 30), kind: "done", title: "Шинэ асуудлуудыг ангилсан", detail: "4 нь яаралтай", logo: "linear", count: 17 },
 ];
 
+/** Neutral glyphs (no brand marks): chat, branch, folder, list. Keys stay for API compatibility. */
 const logos: Record<string, React.ReactNode> = {
-  slack: <svg viewBox="0 0 16 16"><rect x="1" y="6" width="7" height="2.6" rx="1.3" fill="#36c5f0" /><rect x="8" y="1" width="2.6" height="7" rx="1.3" fill="#2eb67d" /><rect x="8" y="8" width="7" height="2.6" rx="1.3" fill="#ecb22e" /><rect x="5.4" y="8" width="2.6" height="7" rx="1.3" fill="#e01e5a" /></svg>,
-  github: <svg viewBox="0 0 16 16"><path d="M8 1.3a6.7 6.7 0 0 0-2.1 13c.3 0 .5-.2.5-.4v-1.3c-1.9.4-2.3-.8-2.3-.8-.3-.8-.8-1-.8-1-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.6.7 2 .5 0-.4.2-.7.4-.9-1.5-.2-3-.7-3-3.3 0-.7.2-1.3.7-1.8-.1-.2-.3-.9 0-1.8 0 0 .6-.2 1.9.7a6.4 6.4 0 0 1 3.4 0c1.3-.9 1.8-.7 1.8-.7.4.9.2 1.6.1 1.8.4.5.7 1.1.7 1.8 0 2.6-1.6 3.1-3 3.3.2.2.4.6.4 1.2v1.8c0 .2.2.4.5.4A6.7 6.7 0 0 0 8 1.3Z" fill="currentColor" /></svg>,
-  drive: <svg viewBox="0 0 16 16"><path d="M5.6 2h4.8l4.6 8h-4.8Z" fill="#fbbc04" /><path d="M5.6 2 1 10l2.4 4 4.6-8Z" fill="#34a853" /><path d="M3.4 14h9.2l2.4-4H5.8Z" fill="#4285f4" /></svg>,
-  linear: <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="#5e6ad2" /><path d="M3 9.5 6.5 13M2.4 7l6.6 6.6M3.2 4.6l8.2 8.2" stroke="#fff" strokeWidth="1" /></svg>,
+  slack: <svg viewBox="0 0 16 16"><path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /></svg>,
+  github: <svg viewBox="0 0 16 16"><circle cx="4.5" cy="3.5" r="1.6" fill="none" stroke="currentColor" strokeWidth="1.3" /><circle cx="4.5" cy="12.5" r="1.6" fill="none" stroke="currentColor" strokeWidth="1.3" /><circle cx="11.5" cy="6" r="1.6" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M4.5 5.1v5.8M11.5 7.6c0 2-2 2.6-6 3.4" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>,
+  drive: <svg viewBox="0 0 16 16"><path d="M1.8 4.2v8.3h12.4V5.6H7.6L6.2 4.2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /></svg>,
+  linear: <svg viewBox="0 0 16 16"><path d="M5.5 4h8M5.5 8h8M5.5 12h8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /><circle cx="2.6" cy="4" r=".9" fill="currentColor" /><circle cx="2.6" cy="8" r=".9" fill="currentColor" /><circle cx="2.6" cy="12" r=".9" fill="currentColor" /></svg>,
 };
 
 const past = (a: string) => (a.endsWith("y") ? a.slice(0, -1) + "ied" : a.endsWith("e") ? a + "d" : a + "ed");

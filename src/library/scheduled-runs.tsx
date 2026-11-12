@@ -45,31 +45,32 @@ const statIcons: Record<RunStat["icon"], React.ReactNode> = {
   comment: <svg viewBox="0 0 16 16" {...s}><path d="M2.5 3.5h11v7.5H6l-3.5 2.5Z" /></svg>,
   link: <svg viewBox="0 0 16 16" {...s}><path d="M6.5 9.5 9.5 6.5M7 4.5l1-1a2.5 2.5 0 0 1 3.5 3.5l-1 1M9 11.5l-1 1A2.5 2.5 0 0 1 4.5 9l1-1" /></svg>,
 };
+// Neutral marks keyed by kind of system (the keys stay for API compatibility).
 const logos: Record<string, React.ReactNode> = {
-  github: <svg viewBox="0 0 16 16"><path d="M8 1.3a6.7 6.7 0 0 0-2.1 13c.3 0 .5-.2.5-.4v-1.3c-1.9.4-2.3-.8-2.3-.8-.3-.8-.8-1-.8-1-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.6.7 2 .5 0-.4.2-.7.4-.9-1.5-.2-3-.7-3-3.3 0-.7.2-1.3.7-1.8-.1-.2-.3-.9 0-1.8 0 0 .6-.2 1.9.7a6.4 6.4 0 0 1 3.4 0c1.3-.9 1.8-.7 1.8-.7.4.9.2 1.6.1 1.8.4.5.7 1.1.7 1.8 0 2.6-1.6 3.1-3 3.3.2.2.4.6.4 1.2v1.8c0 .2.2.4.5.4A6.7 6.7 0 0 0 8 1.3Z" fill="currentColor" /></svg>,
-  notion: <svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" /><path d="M5.5 11V5h1l3.5 6h.5V5" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>,
-  slack: <svg viewBox="0 0 16 16"><rect x="1" y="6" width="7" height="2.6" rx="1.3" fill="#36c5f0" /><rect x="8" y="1" width="2.6" height="7" rx="1.3" fill="#2eb67d" /><rect x="8" y="8" width="7" height="2.6" rx="1.3" fill="#ecb22e" /><rect x="5.4" y="8" width="2.6" height="7" rx="1.3" fill="#e01e5a" /></svg>,
-  linear: <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="#5e6ad2" /><path d="M3 9.5 6.5 13M2.4 7l6.6 6.6M3.2 4.6l8.2 8.2" stroke="#fff" strokeWidth="1" /></svg>,
-  drive: <svg viewBox="0 0 16 16"><path d="M5.6 2h4.8l4.6 8h-4.8Z" fill="#fbbc04" /><path d="M5.6 2 1 10l2.4 4 4.6-8Z" fill="#34a853" /><path d="M3.4 14h9.2l2.4-4H5.8Z" fill="#4285f4" /></svg>,
+  github: <svg viewBox="0 0 16 16" {...s}><circle cx="5" cy="3.5" r="1.5" /><circle cx="5" cy="12.5" r="1.5" /><circle cx="11" cy="6" r="1.5" /><path d="M5 5v6M11 7.5c0 2-2 2.4-6 3.4" /></svg>,
+  notion: <svg viewBox="0 0 16 16" {...s}><path d="M4 2h5l3 3v9H4Z M6 8h4M6 10.5h4" /></svg>,
+  slack: <svg viewBox="0 0 16 16" {...s}><path d="M2.5 3.5h11v7.5H6l-3.5 2.5Z M5.5 6.5h5M5.5 8.5h3" /></svg>,
+  linear: <svg viewBox="0 0 16 16" {...s}><circle cx="8" cy="8" r="5.5" /><path d="M8 5v3l2 1.5" /></svg>,
+  drive: <svg viewBox="0 0 16 16" {...s}><path d="M2 4.5h4l1.5 1.5H14v6.5H2Z" /></svg>,
 };
 const agentLogos: Record<string, React.ReactNode> = {
-  "Claude Code": <svg viewBox="0 0 16 16"><path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M4.6 2.2l6.8 11.6M11.4 2.2 4.6 13.8M2.2 4.6l11.6 6.8M13.8 4.6 2.2 11.4" stroke="#d97757" strokeWidth="1.2" strokeLinecap="round" /></svg>,
-  Codex: <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="5.6" /><path d="M8 2.4v4.2l3.6 2.1M13.6 8l-3.6 2.1-3.6-2.1M8 13.6V9.4L4.4 7.3M2.4 8l3.6-2.1L9.6 8" /></svg>,
-  "Gemini CLI": <svg viewBox="0 0 16 16"><path d="M8 1c.6 3.6 3.4 6.4 7 7-3.6.6-6.4 3.4-7 7-.6-3.6-3.4-6.4-7-7 3.6-.6 6.4-3.4 7-7Z" fill="#3b7bf6" /></svg>,
+  "Кодын агент": <svg viewBox="0 0 16 16" {...s}><path d="m5.5 5-3 3 3 3M10.5 5l3 3-3 3" /></svg>,
+  "Шалгагч агент": <svg viewBox="0 0 16 16" {...s}><circle cx="8" cy="8" r="5.6" /><path d="m5.6 8.2 1.7 1.6 3.1-3.2" /></svg>,
+  "Бичигч агент": <svg viewBox="0 0 16 16" {...s}><path d="M3 13h3l7-7-3-3-7 7Z" /></svg>,
 };
 
 const defaultTasks: ScheduledTask[] = [
-  { id: "react", title: "Upgrade to React 19", agent: "Claude Code", detail: "Bump every package and fix the breaking changes across the app", logo: "github", usage: 30, stats: [{ icon: "file", value: 48 }, { icon: "pr", value: 1 }], at: { day: 0, session: 0 } },
-  { id: "triage", title: "Triage 120 open issues", agent: "Codex", detail: "Label, size and route every issue older than 30 days", logo: "linear", usage: 25, stats: [{ icon: "check", value: 120 }], at: { day: 1, session: 0 } },
-  { id: "ship", title: "Ship the v3.0 release", agent: "Claude Code", detail: "Changelog, tag and publish to npm", logo: "github", usage: 60, stats: [{ icon: "pr", value: 14 }, { icon: "file", value: 22 }], at: { day: 2, session: 0 } },
-  { id: "q4", title: "Q4 metrics report", agent: "Claude Code", detail: "Signups, churn and revenue by plan", logo: "drive", usage: 40, stats: [{ icon: "file", value: 6 }, { icon: "comment", value: 3 }], at: { day: 0, session: 1 } },
-  { id: "help", title: "Rebuild help center search", agent: "Gemini CLI", detail: "Index 340 articles with the new embeddings", logo: "notion", usage: 20, stats: [{ icon: "file", value: 340 }, { icon: "link", value: 50 }], at: { day: 1, session: 2 } },
-  { id: "oauth", title: "Migrate auth to OAuth 2.1", agent: "Claude Code", detail: "Move every login to PKCE and keep the old tokens working", logo: "github", usage: 140, stats: [{ icon: "file", value: 63 }, { icon: "check", value: 210 }] },
-  { id: "apiref", title: "Public API reference", agent: "Codex", detail: "Every endpoint with a curl and an SDK example", logo: "notion", usage: 45, stats: [{ icon: "file", value: 38 }, { icon: "link", value: 52 }] },
-  { id: "flaky", title: "Fix the flaky checkout suite", agent: "Claude Code", detail: "Find why 12 tests fail one run in twenty and fix them", logo: "github", usage: 35, stats: [{ icon: "check", value: 12 }, { icon: "pr", value: 1 }] },
-  { id: "themes", title: "Support themes for October", agent: "Gemini CLI", detail: "Cluster 480 tickets into themes, with quotes for each", logo: "slack", usage: 25, stats: [{ icon: "comment", value: 480 }] },
-  { id: "billing", title: "Split billing into a service", agent: "Claude Code", detail: "Move invoices, usage and webhooks out of the monolith", logo: "linear", usage: 90, stats: [{ icon: "file", value: 112 }, { icon: "pr", value: 3 }] },
-  { id: "changelog", title: "November changelog", agent: "Gemini CLI", detail: "Everything merged since November 1, grouped for skimmers", logo: "notion", usage: 20, stats: [{ icon: "pr", value: 46 }] },
+  { id: "react", title: "Фреймворкийг шинэ хувилбарт шилжүүлэх", agent: "Кодын агент", detail: "Бүх багцыг шинэчилж, эвдэрсэн өөрчлөлтүүдийг засна", logo: "github", usage: 30, stats: [{ icon: "file", value: 48 }, { icon: "pr", value: 1 }], at: { day: 0, session: 0 } },
+  { id: "triage", title: "Нээлттэй 120 асуудлыг ангилах", agent: "Шалгагч агент", detail: "30 хоногоос дээш хугацаатай асуудал бүрийг шошголж, хуваарилна", logo: "linear", usage: 25, stats: [{ icon: "check", value: 120 }], at: { day: 1, session: 0 } },
+  { id: "ship", title: "3.0 хувилбарыг гаргах", agent: "Кодын агент", detail: "Өөрчлөлтийн жагсаалт, шошго, нийтлэл", logo: "github", usage: 60, stats: [{ icon: "pr", value: 14 }, { icon: "file", value: 22 }], at: { day: 2, session: 0 } },
+  { id: "q4", title: "4-р улирлын үзүүлэлтийн тайлан", agent: "Бичигч агент", detail: "Бүртгэл, хэрэглэгчийн алдагдал, багц тус бүрийн өсөлт", logo: "drive", usage: 40, stats: [{ icon: "file", value: 6 }, { icon: "comment", value: 3 }], at: { day: 0, session: 1 } },
+  { id: "help", title: "Тусламжийн төвийн хайлтыг шинэчлэх", agent: "Бичигч агент", detail: "340 нийтлэлийг шинэ индексээр дахин бүртгэнэ", logo: "notion", usage: 20, stats: [{ icon: "file", value: 340 }, { icon: "link", value: 50 }], at: { day: 1, session: 2 } },
+  { id: "oauth", title: "Нэвтрэлтийг шинэ протоколд шилжүүлэх", agent: "Кодын агент", detail: "Бүх нэвтрэлтийг шилжүүлж, хуучин токенуудыг ажиллуулсаар байна", logo: "github", usage: 140, stats: [{ icon: "file", value: 63 }, { icon: "check", value: 210 }] },
+  { id: "apiref", title: "Нээлттэй API-ийн лавлах", agent: "Бичигч агент", detail: "Төгсгөлийн цэг бүрт дуудлагын жишээ", logo: "notion", usage: 45, stats: [{ icon: "file", value: 38 }, { icon: "link", value: 52 }] },
+  { id: "flaky", title: "Тогтворгүй төлбөрийн тестийг засах", agent: "Шалгагч агент", detail: "12 тест яагаад хорин удаад нэг унадгийг олж засна", logo: "github", usage: 35, stats: [{ icon: "check", value: 12 }, { icon: "pr", value: 1 }] },
+  { id: "themes", title: "10-р сарын хүсэлтийн сэдвүүд", agent: "Бичигч агент", detail: "480 хүсэлтийг сэдвээр бүлэглэж, иш татна", logo: "slack", usage: 25, stats: [{ icon: "comment", value: 480 }] },
+  { id: "billing", title: "Нэхэмжлэлийг тусдаа сервис болгох", agent: "Кодын агент", detail: "Нэхэмжлэл, хэрэглээ, мэдэгдлийг үндсэн системээс салгана", logo: "linear", usage: 90, stats: [{ icon: "file", value: 112 }, { icon: "pr", value: 3 }] },
+  { id: "changelog", title: "11-р сарын өөрчлөлтийн жагсаалт", agent: "Бичигч агент", detail: "11-р сарын 1-нээс хойш нэгтгэсэн бүх өөрчлөлт, бүлгээр", logo: "notion", usage: 20, stats: [{ icon: "pr", value: 46 }] },
 ];
 
 type Placed = { task: ScheduledTask; day: number; session: number; usage: number; part: number; parts: number; booked: boolean };
@@ -112,7 +113,7 @@ function Card({ t, usage, part, parts, past, dim, chip, onKey, draggable, onDrag
 
 export function ScheduledRuns({
   tasks = defaultTasks,
-  days = [{ name: "Tue", date: 27 }, { name: "Wed", date: 28 }, { name: "Thu", date: 29 }],
+  days = [{ name: "Мя", date: 27 }, { name: "Лх", date: 28 }, { name: "Пү", date: 29 }],
   sessions = ["07:00", "12:00", "17:00"],
   now = { day: 0, session: 1 },
   limit = 100,
@@ -120,8 +121,8 @@ export function ScheduledRuns({
   agents,
   defaultMode = "auto",
   autoRun = false,
-  title = "This week",
-  note = "5-hour sessions",
+  title = "Энэ долоо хоног",
+  note = "5 цагийн сешн",
   onScheduled,
   onPlace,
   onMove,

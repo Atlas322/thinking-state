@@ -177,27 +177,27 @@ const UNGROUPED = "__ungrouped";
 const demoProject: SessionBoardProject = {
   name: "ac.me website",
   icon: "A",
-  status: { label: "Active", tone: "green" },
-  owner: "Project agent",
+  status: { label: "Идэвхтэй", tone: "green" },
+  owner: "Төслийн агент",
   stats: { tasks: 12, decisions: 4, pages: 38, prs: 3 },
   links: [
     { label: "acme/website", href: "https://example.com/acme/website", kind: "repo" },
     { label: "ac.me", href: "https://example.com/", kind: "prod" },
-    { label: "Figma", href: "https://example.com/figma/acme", kind: "figma" },
+    { label: "дизайны файл", href: "https://example.com/design/acme", kind: "figma" },
   ],
 };
 
 const demoSessions: SessionBoardSession[] = [
-  { id: "relaunch", title: "Website relaunch", line: "Rebuilding the pricing page on the new grid", state: "running", group: "projects", pr: { number: 21, state: "open" }, owner: "Anu", sharedWith: ["Bat"] },
-  { id: "hero", title: "Hero copy pass", line: "Three headline options shipped to preview", state: "done", group: "projects", parent: "relaunch", pr: { number: 22, state: "merged" }, owner: "Tsetseg" },
-  { id: "pricing", title: "Pricing table component", line: "Wiring plan toggles to the price data", state: "running", group: "projects", parent: "relaunch", owner: "Bat" },
-  { id: "promote", title: "Promote preview to prod", line: "Needs your OK before the deploy goes live", state: "waiting", group: "projects", parent: "relaunch", pr: { number: 23, state: "draft" }, owner: "Anu" },
-  { id: "brand", title: "Brand refresh", line: "Moodboard parked until the copy settles", state: "idle", group: "projects" },
-  { id: "triage", title: "Inbox triage", line: "14 notes filed, 3 tasks created", state: "done", group: "areas" },
-  { id: "weekly", title: "Weekly review", line: "Draft ready; 2 decisions wait for you", state: "waiting", group: "areas", owner: "Anu" },
-  { id: "glossary", title: "Glossary sync", line: "Merging 6 duplicate atoms", state: "running", group: "resources", owner: "Tsetseg", sharedWith: ["Anu"] },
-  { id: "bills", title: "Monthly bills check", line: "All 9 payments recorded", state: "done", group: "finance" },
-  { id: "tokens", title: "Token audit", line: "Scratch notes, no owner yet", state: "idle" },
+  { id: "relaunch", title: "Вэбсайтыг шинэчлэх", line: "Тарифын хуудсыг шинэ сүлжээн дээр дахин бүтээж байна", state: "running", group: "projects", pr: { number: 21, state: "open" }, owner: "Anu", sharedWith: ["Bat"] },
+  { id: "hero", title: "Нүүр хэсгийн текст", line: "Гурван гарчгийн хувилбар урьдчилан харахад гарлаа", state: "done", group: "projects", parent: "relaunch", pr: { number: 22, state: "merged" }, owner: "Tsetseg" },
+  { id: "pricing", title: "Тарифын хүснэгт", line: "Багцын сонголтыг өгөгдөлтэй холбож байна", state: "running", group: "projects", parent: "relaunch", owner: "Bat" },
+  { id: "promote", title: "Урьдчилсан хувилбарыг нийтлэх", line: "Нийтлэхээс өмнө таны зөвшөөрөл хэрэгтэй", state: "waiting", group: "projects", parent: "relaunch", pr: { number: 23, state: "draft" }, owner: "Anu" },
+  { id: "brand", title: "Брэндийн шинэчлэл", line: "Текст тогтох хүртэл сэтгэгдлийн самбарыг түр зогсоосон", state: "idle", group: "projects" },
+  { id: "triage", title: "Ирсэн зүйлсийг ангилах", line: "14 тэмдэглэл ангилж, 3 даалгавар үүсгэлээ", state: "done", group: "areas" },
+  { id: "weekly", title: "Долоо хоногийн тойм", line: "Ноорог бэлэн; 2 шийдвэр таныг хүлээж байна", state: "waiting", group: "areas", owner: "Anu" },
+  { id: "glossary", title: "Нэр томьёоны сан", line: "Давхардсан 6 атомыг нэгтгэж байна", state: "running", group: "resources", owner: "Tsetseg", sharedWith: ["Anu"] },
+  { id: "bills", title: "Сарын төлбөрийн шалгалт", line: "9 төлбөр бүгд бүртгэгдсэн", state: "done", group: "finance" },
+  { id: "tokens", title: "Токены аудит", line: "Ноорог тэмдэглэл, эзэнгүй", state: "idle" },
 ];
 
 /** Demo data as plain JSON props (used by the catalog's data editor and chat export). */

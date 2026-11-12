@@ -28,11 +28,11 @@ export type RootCauseTreeProps = {
   className?: string;
 };
 
-const stripe = (
-  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#635bff" /><path d="M9.8 6.1c-.5-.3-1.1-.5-1.7-.5-.6 0-.9.2-.9.5 0 .9 3.1.5 3.1 2.8 0 1.2-1 1.9-2.4 1.9-.7 0-1.5-.2-2.1-.6v-1.5c.6.4 1.4.7 2.1.7.5 0 .8-.2.8-.5 0-1-3.1-.6-3.1-2.8 0-1.1.9-1.9 2.3-1.9.7 0 1.3.1 1.9.4Z" fill="#fff" /></svg>
+const card = (
+  <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="1.8" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M1.5 6.5h13M4 10h3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
 );
-const github = (
-  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 0 0-2.2 13.6c.4.1.5-.2.5-.4v-1.3c-2 .4-2.4-.9-2.4-.9-.3-.8-.8-1-.8-1-.6-.4.1-.4.1-.4.7 0 1.1.7 1.1.7.6 1.1 1.7.8 2.1.6 0-.5.3-.8.5-1-1.6-.2-3.2-.8-3.2-3.5 0-.8.3-1.4.7-1.9 0-.2-.3-.9.1-1.9 0 0 .6-.2 1.9.7a6.6 6.6 0 0 1 3.5 0c1.3-.9 1.9-.7 1.9-.7.4 1 .1 1.7.1 1.9.4.5.7 1.1.7 1.9 0 2.7-1.6 3.3-3.2 3.5.3.2.5.7.5 1.3v2c0 .2.1.5.5.4A7 7 0 0 0 8 1Z" fill="currentColor" /></svg>
+const branch = (
+  <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="5" cy="3.5" r="1.6" fill="none" stroke="currentColor" strokeWidth="1.2" /><circle cx="5" cy="12.5" r="1.6" fill="none" stroke="currentColor" strokeWidth="1.2" /><circle cx="11" cy="6" r="1.6" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M5 5.1v5.8M11 7.6c0 2-2 2.4-6 3.3" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>
 );
 const db = (
   <svg viewBox="0 0 16 16" aria-hidden="true"><ellipse cx="8" cy="4" rx="5" ry="2" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>
@@ -43,27 +43,27 @@ const flask = (
 
 const defaultFailure: Cause & { detail?: string } = {
   id: "checkout",
-  title: "Checkout tests failing",
+  title: "Төлбөрийн тестүүд унаж байна",
   icon: flask,
   files: ["checkout.test.ts"],
-  detail: "4 of 12",
+  detail: "12-оос 4",
   gate: "or",
   status: "checking",
   children: [
     {
       id: "coupon",
-      title: "Coupon ignored",
-      icon: stripe,
+      title: "Купон тооцогдохгүй байна",
+      icon: card,
       files: ["app/checkout/coupon.ts", "app/cart/total.ts"],
       gate: "and",
       status: "checking",
       children: [
-        { id: "amount", title: "Sent as amount", icon: stripe, files: ["coupon.ts"], status: "checking" },
-        { id: "cart", title: "Cart drops it", icon: github, files: ["total.ts", "cart.ts"], status: "open" },
+        { id: "amount", title: "Дүн хэлбэрээр илгээгдэж байна", icon: card, files: ["coupon.ts"], status: "checking" },
+        { id: "cart", title: "Сагс купоныг хаядаг", icon: branch, files: ["total.ts", "cart.ts"], status: "open" },
       ],
     },
-    { id: "stripe", title: "Stripe errors", icon: stripe, files: ["stripe.log"], status: "ruled-out", at: 177000, verdict: "No 4xx or 5xx responses during the run." },
-    { id: "fixtures", title: "Stale fixtures", icon: db, files: ["prices.json"], status: "ruled-out", at: 189000, verdict: "Fixture prices match production." },
+    { id: "payments", title: "Төлбөрийн системийн алдаа", icon: card, files: ["payments.log"], status: "ruled-out", at: 177000, verdict: "Ажиллах хугацаанд 4xx, 5xx хариу ирээгүй." },
+    { id: "fixtures", title: "Хуучирсан туршилтын өгөгдөл", icon: db, files: ["plans.json"], status: "ruled-out", at: 189000, verdict: "Туршилтын багцууд бодит орчинтой таарч байна." },
   ],
 };
 

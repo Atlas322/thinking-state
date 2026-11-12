@@ -727,41 +727,41 @@ export default function Demo() {
   const [period, setPeriod] = React.useState("yearly");
   return (
     <div style={{ width: "100%", maxWidth: 440, padding: 20, borderRadius: 12, border: "1px solid rgba(0,0,0,.08)", background: "#fff", boxSizing: "border-box" }}>
-      <p id="sc-demo-dashboard" style={demoLabel}>Dashboard</p>
+      <p id="sc-demo-dashboard" style={demoLabel}>Хянах самбар</p>
       <SegmentedControl
         aria-labelledby="sc-demo-dashboard"
         value={section}
         onChange={setSection}
         options={[
-          { value: "overview", label: "Overview" },
-          { value: "analytics", label: "Analytics" },
-          { value: "reports", label: "Reports" },
-          { value: "notifications", label: "Notifications", count: 3 },
+          { value: "overview", label: "Тойм" },
+          { value: "analytics", label: "Шинжилгээ" },
+          { value: "reports", label: "Тайлан" },
+          { value: "notifications", label: "Мэдэгдэл", count: 3 },
         ]}
       />
       <div style={demoRule} />
-      <p id="sc-demo-layout" style={demoLabel}>Layout</p>
+      <p id="sc-demo-layout" style={demoLabel}>Харагдац</p>
       <SegmentedControl
         size="sm"
         variant="tray"
         aria-labelledby="sc-demo-layout"
         defaultValue="board"
         options={[
-          { value: "list", label: "List", icon: <ListIcon /> },
-          { value: "board", label: "Board", icon: <BoardIcon /> },
-          { value: "calendar", label: "Calendar", icon: <CalendarIcon /> },
+          { value: "list", label: "Жагсаалт", icon: <ListIcon /> },
+          { value: "board", label: "Самбар", icon: <BoardIcon /> },
+          { value: "calendar", label: "Хуанли", icon: <CalendarIcon /> },
         ]}
       />
       <div style={demoRule} />
-      <p id="sc-demo-billing" style={demoLabel}>Billing</p>
+      <p id="sc-demo-billing" style={demoLabel}>Төлбөрийн давтамж</p>
       <SegmentedControl
         variant="underline"
         aria-labelledby="sc-demo-billing"
         value={period}
         onChange={setPeriod}
         options={[
-          { value: "monthly", label: "Monthly" },
-          { value: "yearly", label: "Yearly", badge: "Save 20%" },
+          { value: "monthly", label: "Сар бүр" },
+          { value: "yearly", label: "Жил бүр", badge: "20% хэмнэлт" },
         ]}
       />
     </div>

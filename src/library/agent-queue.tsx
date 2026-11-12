@@ -43,20 +43,20 @@ export type AgentQueueProps = {
   className?: string;
 };
 
+/* Neutral worker shapes, no vendor marks. Icon keys kept for API compatibility. */
 const Claude = (
   <svg viewBox="0 0 16 16" aria-hidden="true">
-    <path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M5 2.2l6 11.6M11 2.2 5 13.8M2.2 5l11.6 6M13.8 5 2.2 11" stroke="#d97757" strokeWidth="1.2" strokeLinecap="round" />
+    <circle cx="8" cy="8" r="5.5" fill="none" stroke="#d97757" strokeWidth="1.6" />
   </svg>
 );
 const OpenAI = (
-  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.1">
-    <path d="M6.2 2.3a3 3 0 0 1 4.9 1.6 3 3 0 0 1 2.5 4.4 3 3 0 0 1-2.4 4.5 3 3 0 0 1-5 .9 3 3 0 0 1-3.7-3.1 3 3 0 0 1-.3-5.3 3 3 0 0 1 4-3Z" />
-    <path d="M6 4.8v5.4l4.5 2.4M10 3.6 5.4 6.2v5.2M3 6.2l4.6 2.6 4.6-2.6M13 9.8 8.4 7.2 3.8 9.8" />
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <rect x="2.8" y="2.8" width="10.4" height="10.4" rx="2" />
   </svg>
 );
 const Gemini = (
   <svg viewBox="0 0 16 16" aria-hidden="true">
-    <path d="M8 1c.5 3.7 3.3 6.5 7 7-3.7.5-6.5 3.3-7 7-.5-3.7-3.3-6.5-7-7 3.7-.5 6.5-3.3 7-7Z" fill="#3b7cf6" />
+    <path d="M8 2.2 13.8 13H2.2Z" fill="none" stroke="#3b7cf6" strokeWidth="1.5" strokeLinejoin="round" />
   </svg>
 );
 const workerIcon = (i: QueueWorker["icon"]) => (i === "openai" ? OpenAI : i === "gemini" ? Gemini : i === "claude" || !i ? Claude : i);
@@ -88,24 +88,24 @@ const kindIcon: Record<QueueJobKind, React.ReactNode> = {
 };
 
 const defaultWorkers: QueueWorker[] = [
-  { id: "w1", name: "Sonnet 5.5", icon: "claude" },
-  { id: "w2", name: "GPT-6 Sol", icon: "openai" },
-  { id: "w3", name: "Gemini 3.8 Flash", icon: "gemini" },
-  { id: "w4", name: "Haiku 5", icon: "claude" },
+  { id: "w1", name: "Бичигч агент", icon: "claude" },
+  { id: "w2", name: "Шалгагч агент", icon: "openai" },
+  { id: "w3", name: "Судлаач агент", icon: "gemini" },
+  { id: "w4", name: "Кодын агент", icon: "claude" },
 ];
 
 const names: [string, QueueJobKind][] = [
-  ["Extract invoice fields #2215", "llm"],
-  ["Search docs: refunds", "tool"],
-  ["Embed 240 docs", "agent"],
-  ["Classify support emails", "llm"],
-  ["Triage new GitHub issues", "llm"],
-  ["Run eval suite", "agent"],
-  ["Score lead – Tailspin", "llm"],
-  ["Draft reply – Hooli", "llm"],
-  ["Summarize ticket #4964", "llm"],
-  ["Lookup CRM: Initech", "tool"],
-  ["Review refund over $500", "human"],
+  ["Нэхэмжлэлийн талбар задлах #2215", "llm"],
+  ["Баримт хайх: буцаалт", "tool"],
+  ["240 баримтыг индексжүүлэх", "agent"],
+  ["Тусламжийн имэйл ангилах", "llm"],
+  ["Хувилбарын хяналтын шинэ асуудал ангилах", "llm"],
+  ["Үнэлгээний тест ажиллуулах", "agent"],
+  ["Боломжит харилцагч үнэлэх – Тэнгэр", "llm"],
+  ["Хариу ноороглох – Од", "llm"],
+  ["#4964 хүсэлтийг товчлох", "llm"],
+  ["Харилцагчийн бүртгэл хайх: Хангай", "tool"],
+  ["Хязгаараас давсан буцаалт шалгах", "human"],
 ];
 
 /** Demo depth curve (96 samples, one per second). */

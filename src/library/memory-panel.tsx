@@ -34,15 +34,35 @@ export type MemoryPanelProps = {
 };
 
 const defaultMemories: Memory[] = [
-  { id: "m1", text: "Prefers TypeScript examples over plain JavaScript", category: "Preferences", source: "From chat", date: "Oct 12" },
-  { id: "m2", text: "Likes short answers first, details only when asked", category: "Preferences", source: "You added", date: "Oct 2", paused: true },
-  { id: "m3", text: "Designs with Inter and a 4px spacing grid", category: "Preferences", source: "From Figma", date: "Oct 7" },
-  { id: "m4", text: "Product designer and front-end developer at a small studio", category: "Work", source: "From chat", date: "Sep 28" },
-  { id: "m5", text: "Ships with React, Vite and Tailwind; deploys on Vercel", category: "Work", source: "From chat", date: "Oct 3" },
-  { id: "m6", text: "Sends release notes to clients every Friday", category: "Work", source: "From chat", date: "Oct 9" },
-  { id: "m7", text: "Redesigning the onboarding flow for a fintech client, due Oct 24", category: "Projects", source: "From chat", date: "Oct 11" },
-  { id: "m8", text: "Keeps design tokens in one tokens.json shared with the code", category: "Projects", source: "From chat", date: "Oct 5" },
+  { id: "m1", text: "Эхлээд товч хариулт, дэлгэрэнгүйг асуухад нь өгнө", category: "Шийдвэр", source: "Чатаас", date: "10/12" },
+  { id: "m2", text: "Шинэ хувилбарыг зөвхөн Мягмар гарагт гаргана", category: "Шийдвэр", source: "Та нэмсэн", date: "10/2", paused: true },
+  { id: "m3", text: "Дизайнд 4px-ийн торон систем ашиглана", category: "Шийдвэр", source: "Дизайны файлаас", date: "10/7" },
+  { id: "m4", text: "Баасан гараг бүр харилцагчдад шинэчлэлийн тойм илгээх", category: "Даалгавар", source: "Чатаас", date: "10/9" },
+  { id: "m5", text: "Бүртгэлийн урсгалыг 10/24-нөөс өмнө шинэчлэх", category: "Даалгавар", source: "Чатаас", date: "10/11" },
+  { id: "m6", text: "Сараа бүтээгдэхүүний дизайныг хариуцдаг", category: "Хүмүүс", source: "Чатаас", date: "9/28" },
+  { id: "m7", text: "Болд урьдчилан мэдэгдсэн уулзалтыг илүүд үздэг", category: "Хүмүүс", source: "Багийн чатаас", date: "10/3" },
+  { id: "m8", text: "Дизайны токенуудын тухай нийтлэлийг дуусгах", category: "Унших", source: "Чатаас", date: "10/5" },
 ];
+
+/** The «all» chip keeps its internal key; this is what it shows. */
+const ALL_LABEL = "Бүгд";
+const glyph = (d: React.ReactNode, cls: string) => (
+  <svg viewBox="0 0 16 16" className={cls} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    {d}
+  </svg>
+);
+const catPaths: Record<string, React.ReactNode> = {
+  All: <path d="M8 2.5 14 5.5 8 8.5 2 5.5ZM2 8.5l6 3 6-3M2 11l6 3 6-3" />,
+  Шийдвэр: <><circle cx="8" cy="8" r="5.5" /><path d="m5.6 8.2 1.7 1.7 3.2-3.4" /></>,
+  Даалгавар: <><rect x="2.8" y="2.8" width="10.4" height="10.4" rx="2" /><path d="M5.5 6h5M5.5 8.5h5M5.5 11h3" /></>,
+  Хүмүүс: <><circle cx="6" cy="5.8" r="2.3" /><path d="M2.2 13c.4-2.2 1.9-3.4 3.8-3.4s3.4 1.2 3.8 3.4M10.6 3.8a2.2 2.2 0 0 1 0 4.2M11.6 9.8c1.2.4 2 1.4 2.2 3.2" /></>,
+  Унших: <path d="M2.5 3.5c2 0 4 .5 5.5 1.8v8c-1.5-1.3-3.5-1.8-5.5-1.8ZM13.5 3.5c-2 0-4 .5-5.5 1.8v8c1.5-1.3 3.5-1.8 5.5-1.8Z" />,
+};
+const tagPath = <><path d="M2.5 8.2V3.2a.7.7 0 0 1 .7-.7h5l5.3 5.3a.9.9 0 0 1 0 1.3l-4 4a.9.9 0 0 1-1.3 0Z" /><circle cx="5.4" cy="5.4" r=".9" /></>;
+/** Every category gets a glyph; ones the panel doesn't know get a tag. */
+const catIcon = (c: string, cls: string) => glyph(catPaths[c] ?? tagPath, cls);
+const memoryIcon = glyph(<><path d="M8 13.5V7" /><path d="M8 7c0-2.5 1.5-4.2 4-4.5.2 2.6-1.4 4.4-4 4.5ZM8 9C8 7 6.7 5.6 4.5 5.4 4.3 7.5 5.7 8.9 8 9Z" /></>, "mp-count-icon");
+const chipLabel = (c: string) => (c === "All" ? ALL_LABEL : c);
 
 const short = (t: string) => (t.length > 24 ? `${t.slice(0, 24)}…` : t);
 const Ico = {
@@ -66,10 +86,10 @@ export function MemoryPanel({
   defaultEnabled = true,
   onEnabledChange,
   categories: categoriesProp,
-  title = "Memory",
+  title = "Санах ой",
   maxHeight = 360,
   undoFor = 5000,
-  addedSource = "You added",
+  addedSource = "Та нэмсэн",
   action,
   className = "",
 }: MemoryPanelProps) {
@@ -129,9 +149,9 @@ export function MemoryPanel({
     const memory: Memory = {
       id: `m${Date.now()}`,
       text,
-      category: newCat || (filter !== "All" ? filter : categories[0] ?? "General"),
+      category: newCat || (filter !== "All" ? filter : categories[0] ?? "Ерөнхий"),
       source: addedSource,
-      date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+      date: `${new Date().getMonth() + 1}/${new Date().getDate()}`,
     };
     commit([...list, memory]);
     onAdd?.(memory);
@@ -159,9 +179,12 @@ export function MemoryPanel({
       <header className="mp-head">
         <div className="mp-top">
           <h3>{title}</h3>
-          <span className="mp-count">{list.length}</span>
+          <span className="mp-count">
+            {memoryIcon}
+            {list.length}
+          </span>
           <label className="mp-use">
-            Use memory
+            Санах ой ашиглах
             <button
               type="button"
               role="switch"
@@ -175,14 +198,14 @@ export function MemoryPanel({
           </label>
         </div>
         <div className="mp-note" id={noteId} data-open={!enabled}>
-          <p>The assistant won't use or save memories in new chats. Nothing here is deleted.</p>
+          <p>Туслах шинэ чатад санах ойг ашиглахгүй, хадгалахгүй. Энд байгаа зүйл устахгүй.</p>
         </div>
         <div className="mp-filters">
           {searching ? (
             <input
               className="mp-search"
               autoFocus
-              placeholder="Search memories"
+              placeholder="Санах ойгоос хайх"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => {
@@ -193,7 +216,7 @@ export function MemoryPanel({
               }}
             />
           ) : (
-            <div className="mp-chips" role="radiogroup" aria-label="Category">
+            <div className="mp-chips" role="radiogroup" aria-label="Ангилал">
               {chips.map((c, i) => (
                 <button
                   key={c}
@@ -214,7 +237,8 @@ export function MemoryPanel({
                     chipRefs.current[n]?.focus();
                   }}
                 >
-                  {c}
+                  {catIcon(c, "mp-chip-icon")}
+                  {chipLabel(c)}
                   <span>{count(c)}</span>
                 </button>
               ))}
@@ -223,7 +247,7 @@ export function MemoryPanel({
           <button
             type="button"
             className="mp-icon"
-            aria-label={searching ? "Close search" : "Search memories"}
+            aria-label={searching ? "Хайлт хаах" : "Санах ойгоос хайх"}
             onClick={() => {
               setSearching(!searching);
               setQuery("");
@@ -240,12 +264,16 @@ export function MemoryPanel({
           const visible = rows.filter(matches);
           return (
             <section key={cat} className="mp-group" data-hidden={visible.length === 0} aria-label={cat} inert={visible.length === 0 ? true : undefined}>
-              <div className="mp-gh">{cat}</div>
+              <div className="mp-gh">
+                {catIcon(cat, "mp-gh-icon")}
+                {cat}
+              </div>
               {rows.map((m) => {
                 const show = matches(m);
                 return (
                   <div key={m.id} className={`mp-row ${m.paused ? "is-paused" : ""}`} data-hidden={!show} inert={!show ? true : undefined}>
                     <div className="mp-inner">
+                      {catIcon(m.category, "mp-row-icon")}
                       {editing === m.id ? (
                         <textarea
                           className="mp-edit"
@@ -269,15 +297,15 @@ export function MemoryPanel({
                         {m.source}
                         {m.source && m.date && " · "}
                         {m.date}
-                        {m.paused && <span className="mp-tag">Paused</span>}
+                        {m.paused && <span className="mp-tag">Түр зогссон</span>}
                       </div>
                       <div className="mp-acts">
-                        <button type="button" aria-label={`Edit “${short(m.text)}”`} onClick={() => { setEditing(m.id); setDraft(m.text); }}>
+                        <button type="button" aria-label={`Засах “${short(m.text)}”`} onClick={() => { setEditing(m.id); setDraft(m.text); }}>
                           {Ico.edit}
                         </button>
                         <button
                           type="button"
-                          aria-label={`${m.paused ? "Resume" : "Pause"} “${short(m.text)}”`}
+                          aria-label={`${m.paused ? "Үргэлжлүүлэх" : "Түр зогсоох"} “${short(m.text)}”`}
                           onClick={() => {
                             commit(list.map((x) => (x.id === m.id ? { ...x, paused: !x.paused } : x)));
                             onPause?.(m.id, !m.paused);
@@ -285,7 +313,7 @@ export function MemoryPanel({
                         >
                           {m.paused ? Ico.play : Ico.pause}
                         </button>
-                        <button type="button" aria-label={`Forget “${short(m.text)}”`} onClick={() => forget(m)}>
+                        <button type="button" aria-label={`Мартах “${short(m.text)}”`} onClick={() => forget(m)}>
                           {Ico.trash}
                         </button>
                       </div>
@@ -296,7 +324,7 @@ export function MemoryPanel({
             </section>
           );
         })}
-        {list.filter(matches).length === 0 && <p className="mp-empty">No memories here</p>}
+        {list.filter(matches).length === 0 && <p className="mp-empty">Энд санах ой алга</p>}
       </div>
 
       <div className="mp-new">
@@ -305,7 +333,7 @@ export function MemoryPanel({
             <textarea
               autoFocus
               rows={2}
-              placeholder="Something the assistant should remember"
+              placeholder="Туслахын санах ёстой зүйл"
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
@@ -317,24 +345,25 @@ export function MemoryPanel({
               }}
             />
             <div className="mp-ed-row">
-              <div className="mp-chips" role="radiogroup" aria-label="Category of the new memory">
+              <div className="mp-chips" role="radiogroup" aria-label="Шинэ санах ойн ангилал">
                 {categories.map((c) => {
                   const cur = newCat || (filter !== "All" ? filter : categories[0]);
                   return (
                     <button key={c} type="button" role="radio" aria-checked={cur === c} className="mp-chip" onClick={() => setNewCat(c)}>
+                      {catIcon(c, "mp-chip-icon")}
                       {c}
                     </button>
                   );
                 })}
               </div>
-              <button type="button" className="mp-btn" onClick={() => setAdding(false)}>Cancel</button>
-              <button type="button" className="mp-btn mp-primary" disabled={!draft.trim()} onClick={saveNew}>Save</button>
+              <button type="button" className="mp-btn" onClick={() => setAdding(false)}>Болих</button>
+              <button type="button" className="mp-btn mp-primary" disabled={!draft.trim()} onClick={saveNew}>Хадгалах</button>
             </div>
           </div>
         ) : (
           <button type="button" className="mp-add" onClick={() => { setAdding(true); setDraft(""); setNewCat(""); }}>
             {Ico.plus}
-            New memory
+            Шинэ санах ой
           </button>
         )}
       </div>
@@ -342,16 +371,17 @@ export function MemoryPanel({
       <footer className="mp-foot">
         <span role="status" key={undo ? "undo" : "count"} className="mp-status">
           {undo ? (
-            <>Forgot “{short(undo.memory.text)}”</>
+            <>Мартсан: “{short(undo.memory.text)}”</>
           ) : (
             <>
-              <b>{list.length}</b> {list.length === 1 ? "memory" : "memories"}
-              {paused > 0 && <> · {paused} paused</>}
+              {memoryIcon}
+              <b>{list.length}</b> санах ой
+              {paused > 0 && <> · {paused} түр зогссон</>}
             </>
           )}
         </span>
         {undo ? (
-          <button type="button" className="mp-btn" onClick={restore}>Undo</button>
+          <button type="button" className="mp-btn" onClick={restore}>Буцаах</button>
         ) : (
           action && <button type="button" className="mp-btn" onClick={action.onClick}>{action.label}</button>
         )}
@@ -367,7 +397,7 @@ const css = `
 .mp-head{padding:15px 15px 12px;border-bottom:1px solid var(--mp-line)}
 .mp-top{display:flex;align-items:center;gap:8px}
 .mp-top h3{margin:0;font-size:16px;font-weight:500;letter-spacing:-.01em}
-.mp-count{padding:0 6px;border-radius:4px;background:var(--mp-chip);font-size:11.5px;line-height:17px;color:var(--mp-muted)}
+.mp-count{display:inline-flex;align-items:center;gap:4px;padding:0 6px;border-radius:4px;background:var(--mp-chip);font-size:11.5px;line-height:17px;color:var(--mp-muted)}
 .mp-use{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--mp-muted)}
 .mp-switch{position:relative;width:26px;height:16px;padding:0;border:0;border-radius:9px;background:var(--mp-faint);transition:background .2s}
 .mp-switch[aria-checked=true]{background:var(--mp-accent)}
@@ -380,6 +410,9 @@ const css = `
 .mp-chips{display:flex;gap:4px;flex-wrap:wrap;flex:1;min-width:0}
 .mp-chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 9px;border:1px solid var(--mp-line);border-radius:5px;background:var(--mp-bg);font-size:14px;transition:background .15s}
 .mp-chip span{font-size:12px;color:var(--mp-muted)}
+.mp-count-icon,.mp-chip-icon,.mp-gh-icon,.mp-row-icon{flex:none;width:13px;height:13px;color:var(--mp-muted)}
+.mp-status{display:inline-flex;align-items:center;gap:5px}
+.mp-gh{display:flex;align-items:center;gap:6px}
 .mp-chip:hover{background:var(--mp-soft)}
 .mp-chip[aria-checked=true]{background:var(--mp-chip);border-color:var(--mp-chip)}
 .mp-icon{display:grid;place-items:center;width:28px;height:28px;margin-left:auto;border:0;border-radius:6px;background:none;color:var(--mp-muted)}
@@ -393,8 +426,11 @@ const css = `
 .mp-gh{padding:12px 15px 2px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mp-muted)}
 .mp-row{display:grid;grid-template-rows:1fr;transition:grid-template-rows .3s,opacity .3s}
 .mp-row[data-hidden=true]{grid-template-rows:0fr;opacity:0}
-.mp-inner{position:relative;overflow:hidden;padding:8px 15px 7px;min-height:0}
+.mp-inner{position:relative;overflow:hidden;padding:8px 15px 7px 37px;min-height:0}
+.mp-row-icon{position:absolute;left:15px;top:11px;width:14px;height:14px}
+.mp-row.is-paused .mp-row-icon{color:var(--mp-faint)}
 .mp-row[data-hidden=true] .mp-inner{padding-top:0;padding-bottom:0}
+.mp-row[data-hidden=true] .mp-row-icon{top:3px}
 .mp-inner:hover,.mp-inner:focus-within{background:var(--mp-soft)}
 .mp-text{margin:0;padding-right:4px}
 .mp-row.is-paused .mp-text{color:var(--mp-faint)}

@@ -1,49 +1,41 @@
 "use client";
 import * as React from "react";
 
-// Simple Icons brand paths (CC0): v16.37.0, OpenAI v14.0.0.
-const providerPaths = {
-  claude:
-    "m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z",
-  openai:
-    "M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z",
-  googlegemini:
-    "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81",
-};
+// Neutral maker mark: the first letter of the agent's model label, no brand logos.
 function ProviderMark({ model = "" }: { model?: string }) {
-  const brand = /GPT|OpenAI/i.test(model)
-    ? "openai"
-    : /Gemini/i.test(model)
-      ? "googlegemini"
-      : "claude";
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      fill={
-        brand === "claude"
-          ? "#d97757"
-          : brand === "googlegemini"
-            ? "#4f65ff"
-            : "currentColor"
-      }
-      style={{ width: "1em", height: "1em", display: "block", stroke: "none" }}
-    >
-      <path d={providerPaths[brand]} />
-    </svg>
+    <span aria-hidden="true" style={{ display: "block", fontSize: 11, fontWeight: 600, lineHeight: "16px" }}>
+      {(model.trim()[0] ?? "А").toUpperCase()}
+    </span>
   );
 }
 
-// Demo brand SVGs observed in the public preview; Simple Icons paths are CC0.
-function DemoTool({ kind }: { kind: "slack" | "notion" | "github" | "figma" | "stripe" | "hubspot" }) {
-  switch (kind) {
-    case "slack": return (<svg viewBox="0 0 49.883 49.877" fill="none" aria-hidden="true"><g transform="translate(0 0)"><path d="M18.3549 10.4784C15.4713 10.4784 13.1157 8.12279 13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V10.4784H18.3549Z" fill="#36C5F0"></path><path d="M18.3575 13.12C21.2411 13.12 23.5967 15.4756 23.5967 18.3592C23.5967 21.2428 21.2411 23.5984 18.3575 23.5984H5.2392C2.35561 23.5984 0 21.2428 0 18.3592C0 15.4756 2.35561 13.12 5.2392 13.12H18.3575Z" fill="#36C5F0"></path></g><g transform="translate(26.28 0)"><path d="M13.1244 18.3592C13.1244 15.4756 15.48 13.12 18.3636 13.12C21.2472 13.12 23.6028 15.4756 23.6028 18.3592C23.6028 21.2428 21.2472 23.5984 18.3636 23.5984H13.1244V18.3592Z" fill="#2EB67D"></path><path d="M10.4785 18.3575C10.4785 21.2411 8.12286 23.5967 5.23927 23.5967C2.35568 23.5967 7.4362e-05 21.2411 7.4362e-05 18.3575V5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0C8.12286 0 10.4785 2.35561 10.4785 5.2392V18.3575Z" fill="#2EB67D"></path></g><g transform="translate(0 26.28)"><path d="M10.4784 5.2392C10.4784 8.12279 8.12279 10.4784 5.2392 10.4784C2.35561 10.4784 0 8.12279 0 5.2392C0 2.35561 2.35561 0 5.2392 0H10.4784V5.2392Z" fill="#E01E5A"></path><path d="M13.1157 5.2392C13.1157 2.35561 15.4713 0 18.3549 0C21.2385 0 23.5941 2.35561 23.5941 5.2392V18.3575C23.5941 21.2411 21.2385 23.5967 18.3549 23.5967C15.4713 23.5967 13.1157 21.2411 13.1157 18.3575V5.2392Z" fill="#E01E5A"></path></g><g transform="translate(26.28 26.28)"><path d="M5.23927 13.1157C8.12286 13.1157 10.4785 15.4713 10.4785 18.3549C10.4785 21.2385 8.12286 23.5941 5.23927 23.5941C2.35568 23.5941 7.4362e-05 21.2385 7.4362e-05 18.3549V13.1157H5.23927Z" fill="#ECB22E"></path><path d="M5.23927 10.4784C2.35568 10.4784 7.4362e-05 8.12279 7.4362e-05 5.2392C7.4362e-05 2.35561 2.35568 0 5.23927 0H18.3576C21.2412 0 23.5968 2.35561 23.5968 5.2392C23.5968 8.12279 21.2412 10.4784 18.3576 10.4784H5.23927Z" fill="#ECB22E"></path></g></svg>);
-    case "notion": return (<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"></path></svg>);
-    case "github": return (<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>);
-    case "figma": return (<svg viewBox="0 0 38 57" aria-hidden="true"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0Z" fill="#1ABCFE"></path><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0Z" fill="#0ACF83"></path><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19Z" fill="#FF7262"></path><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z" fill="#F24E1E"></path><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z" fill="#A259FF"></path></svg>);
-    case "stripe": return (<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#635BFF"></rect><path fill="#fff" transform="translate(5 5) scale(0.5833)" d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"></path></svg>);
-    case "hubspot": return (<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#ff7a59" d="M18.164 7.93V5.084a2.198 2.198 0 001.267-1.978v-.067A2.2 2.2 0 0017.238.845h-.067a2.2 2.2 0 00-2.193 2.193v.067a2.196 2.196 0 001.252 1.973l.013.006v2.852a6.22 6.22 0 00-2.969 1.31l.012-.01-7.828-6.095A2.497 2.497 0 104.3 4.656l-.012.006 7.697 5.991a6.176 6.176 0 00-1.038 3.446c0 1.343.425 2.588 1.147 3.607l-.013-.02-2.342 2.343a1.968 1.968 0 00-.58-.095h-.002a2.033 2.033 0 102.033 2.033 1.978 1.978 0 00-.1-.595l.005.014 2.317-2.317a6.247 6.247 0 104.782-11.134l-.036-.005zm-.964 9.378a3.206 3.206 0 113.215-3.207v.002a3.206 3.206 0 01-3.207 3.207z"/></svg>);
-  }
+// Neutral demo tool glyphs (generic systems, no vendor marks).
+type DemoToolKind = "chat" | "docs" | "code" | "design" | "payments" | "crm";
+const toolGlyph: Record<DemoToolKind, React.ReactNode> = {
+  chat: <path d="M4 5h16v11H9l-5 4z" />,
+  docs: <path d="M6 3h9l4 4v14H6z" />,
+  code: <path d="M9 6 3 12l6 6 1.4-1.4L5.8 12l4.6-4.6zM15 6l-1.4 1.4 4.6 4.6-4.6 4.6L15 18l6-6z" />,
+  design: (
+    <>
+      <path d="M3 3h9v9H3z" />
+      <circle cx="16.5" cy="16.5" r="4.5" />
+    </>
+  ),
+  payments: <path fillRule="evenodd" d="M3 6h18v12H3zM3 9h18v2H3z" />,
+  crm: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21a8 7 0 0 1 16 0z" />
+    </>
+  ),
+};
+function DemoTool({ kind }: { kind: DemoToolKind }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      {toolGlyph[kind]}
+    </svg>
+  );
 }
 
 export type TreeAgent = {
@@ -98,75 +90,75 @@ function sampleTree(): TreeAgent {
   const now = Date.now();
   return {
     id: "lead",
-    name: "Orchestrator",
-    tools: [<DemoTool key="slack" kind="slack" />, <DemoTool key="notion" kind="notion" />, <DemoTool key="github" kind="github" />],
-    model: "Opus 5.5",
-    task: "Launch the new pricing page by Friday",
+    name: "Зохицуулагч агент",
+    tools: [<DemoTool key="chat" kind="chat" />, <DemoTool key="docs" kind="docs" />, <DemoTool key="code" kind="code" />],
+    model: "Гүн загвар",
+    task: "Баасан гариг гэхэд шинэ үнийн хуудсыг нээх",
     status: "running",
-    cost: 0.42,
+    cost: 42,
     started: now - 38000,
     children: [
       {
         id: "research",
-        name: "Researcher",
-    tools: [<DemoTool key="notion" kind="notion" />, <DemoTool key="slack" kind="slack" />],
-        model: "Sonnet 5.5",
-        task: "Compare the pricing of five competitors",
+        name: "Судлаач агент",
+    tools: [<DemoTool key="docs" kind="docs" />, <DemoTool key="chat" kind="chat" />],
+        model: "Дунд загвар",
+        task: "Таван өрсөлдөгчийн үнийн бодлогыг харьцуулах",
         status: "running",
-        cost: 0.13,
+        cost: 13,
         started: now - 32000,
         children: [
           {
             id: "scrape",
-            name: "Scraper",
-    tools: [<DemoTool key="notion" kind="notion" />],
-            model: "Gemini 3.8 Flash",
-            task: "Read the pricing pages of Linear, Notion and three more",
+            name: "Уншигч агент",
+    tools: [<DemoTool key="docs" kind="docs" />],
+            model: "Хурдан загвар",
+            task: "Таван өрсөлдөгчийн үнийн хуудсыг унших",
             status: "done",
-            cost: 0.03,
+            cost: 3,
             started: now - 28000,
             ended: now - 6000,
           },
           {
             id: "analyst",
-            name: "Analyst",
-    tools: [<DemoTool key="hubspot" kind="hubspot" />, <DemoTool key="notion" kind="notion" />],
-            model: "Sonnet 5.5",
-            task: "Summarize 120 G2 reviews that mention price",
+            name: "Шинжээч агент",
+    tools: [<DemoTool key="crm" kind="crm" />, <DemoTool key="docs" kind="docs" />],
+            model: "Дунд загвар",
+            task: "Үнийн тухай 120 сэтгэгдлийг нэгтгэх",
             status: "running",
-            cost: 0.05,
+            cost: 5,
             started: now - 18000,
           },
         ],
       },
       {
         id: "writer",
-        name: "Writer",
-    tools: [<DemoTool key="notion" kind="notion" />, <DemoTool key="figma" kind="figma" />],
-        model: "Sonnet 5.5",
-        task: "Write the copy for the three plans",
+        name: "Бичигч агент",
+    tools: [<DemoTool key="docs" kind="docs" />, <DemoTool key="design" kind="design" />],
+        model: "Дунд загвар",
+        task: "Гурван багцын тайлбар бичих",
         status: "running",
-        cost: 0.1,
+        cost: 10,
         started: now - 27000,
       },
       {
         id: "coder",
-        name: "Coder",
-    tools: [<DemoTool key="github" kind="github" />, <DemoTool key="stripe" kind="stripe" />, <DemoTool key="figma" kind="figma" />],
-        model: "GPT-6 Sol",
-        task: "Build the page and wire up checkout",
+        name: "Кодын агент",
+    tools: [<DemoTool key="code" kind="code" />, <DemoTool key="payments" kind="payments" />, <DemoTool key="design" kind="design" />],
+        model: "Кодын загвар",
+        task: "Хуудсыг угсарч, төлбөрийн системтэй холбох",
         status: "running",
-        cost: 0.13,
+        cost: 13,
         started: now - 22000,
         children: [
           {
             id: "tester",
-            name: "Tester",
-    tools: [<DemoTool key="github" kind="github" />],
-            model: "GPT-6 Mini",
-            task: "Write and run the checkout tests",
+            name: "Шалгагч агент",
+    tools: [<DemoTool key="code" kind="code" />],
+            model: "Жижиг загвар",
+            task: "Төлбөрийн тестүүдийг бичиж ажиллуулах",
             status: "running",
-            cost: 0.02,
+            cost: 2,
             started: now - 10000,
           },
         ],
@@ -624,4 +616,8 @@ const css = `
 @container(max-width:559px){.agt-canvas{--agt-card-width:calc(100% - var(--agt-max-depth)*32px)}.agt-depth-root>.agt-card{margin:0;left:0;width:var(--agt-card-width)}.agt-first-level{display:grid;grid-template-columns:1fr;gap:12px;margin:12px 0 0 32px}.agt-first-level .agt-card{width:calc(100% - (var(--agt-max-depth) - 1)*32px)}.agt-children:not(.agt-first-level) .agt-card{width:calc(100% - (var(--agt-max-depth) - var(--agt-depth))*32px)}.agt-header{flex-wrap:wrap}.agt-title{width:100%}.agt-header>div{margin-left:auto;gap:4px 10px}}
 @keyframes agt-spin{to{transform:rotate(360deg)}}@keyframes agt-card-in{from{opacity:0;transform:translateY(5px)}to{opacity:var(--agt-opacity,1);transform:translateY(0)}}@keyframes agt-link-in{from{stroke-dasharray:1;stroke-dashoffset:1}to{stroke-dasharray:1;stroke-dashoffset:0}}@keyframes agt-shimmer{to{background-position:-250% 0}}@media(prefers-reduced-motion:reduce){.agt-tree *{animation:none!important;transition:none!important}.agt-tree .agt-live-cost{color:var(--agt-ink);background:none}}
 `;
-export default AgentTree;
+/** Catalog preview: demo costs are token counts (thousands), never money. */
+const demoTokens = (value: number) => `${Math.round(value)}k токен`;
+export default function AgentTreePreview() {
+  return <AgentTree formatCost={demoTokens} />;
+}

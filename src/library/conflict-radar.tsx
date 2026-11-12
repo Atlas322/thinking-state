@@ -33,49 +33,50 @@ export type ConflictRadarProps = {
   className?: string;
 };
 
-const Claude = (
-  <svg viewBox="0 0 16 16" aria-hidden="true">
-    <path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M5 2.2l6 11.6M11 2.2 5 13.8M2.2 5l11.6 6M13.8 5 2.2 11" stroke="#d97757" strokeWidth="1.2" strokeLinecap="round" />
+// Neutral agent glyphs (circle, square, triangle) – no vendor marks. The "claude" | "openai" | "grok"
+// keys are kept for API compatibility and only pick a shape.
+const Circle = (
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3">
+    <circle cx="8" cy="8" r="5.5" />
   </svg>
 );
-const OpenAI = (
-  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.1">
-    <path d="M6.2 2.3a3 3 0 0 1 4.9 1.6 3 3 0 0 1 2.5 4.4 3 3 0 0 1-2.4 4.5 3 3 0 0 1-5 .9 3 3 0 0 1-3.7-3.1 3 3 0 0 1-.3-5.3 3 3 0 0 1 4-3Z" />
-    <path d="M6 4.8v5.4l4.5 2.4M10 3.6 5.4 6.2v5.2M3 6.2l4.6 2.6 4.6-2.6M13 9.8 8.4 7.2 3.8 9.8" />
+const Square = (
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3">
+    <rect x="3" y="3" width="10" height="10" rx="2" />
   </svg>
 );
-const Grok = (
-  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
-    <path d="M11.5 5.2A4.2 4.2 0 1 0 12 9.5M12.8 3.2 6 10" />
+const Triangle = (
+  <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round">
+    <path d="M8 2.5 13.5 13h-11Z" />
   </svg>
 );
-const iconOf = (i: RadarAgent["icon"]) => (i === "openai" ? OpenAI : i === "grok" ? Grok : i === "claude" || !i ? Claude : i);
+const iconOf = (i: RadarAgent["icon"]) => (i === "openai" ? Square : i === "grok" ? Triangle : i === "claude" || !i ? Circle : i);
 
 const defaultAgents: RadarAgent[] = [
-  { id: "checkout", name: "Checkout", model: "Opus 5.5", branch: "fix/flaky-checkout", icon: "claude" },
-  { id: "stripe", name: "Stripe v2", model: "GPT-5", branch: "chore/stripe-v2", icon: "openai", working: true },
-  { id: "retries", name: "Retries", model: "Grok 4", branch: "feat/payment-retry", icon: "grok", working: true },
+  { id: "checkout", name: "Төлбөрийн агент", model: "Кодын агент", branch: "fix/flaky-checkout", icon: "claude" },
+  { id: "payments", name: "Шинэ API агент", model: "Кодын агент", branch: "chore/payments-v2", icon: "openai", working: true },
+  { id: "retries", name: "Давталтын агент", model: "Шалгагч агент", branch: "feat/payment-retry", icon: "grok", working: true },
 ];
 const defaultFiles: RadarFile[] = [
   {
     path: "src/checkout/payment.ts",
     edits: [
-      { agent: "checkout", lines: [40, 68], way: "Waits for the charge to settle before the receipt renders" },
-      { agent: "stripe", lines: [52, 80], writing: true, way: "Moves to PaymentIntents.confirm with an idempotency key" },
-      { agent: "retries", lines: [44, 58], writing: true, way: "Wraps the charge in three retries with backoff" },
+      { agent: "checkout", lines: [40, 68], way: "Баримт гарахаас өмнө төлбөр баталгаажихыг хүлээнэ" },
+      { agent: "payments", lines: [52, 80], writing: true, way: "Төлбөрийн системийн шинэ API руу давхардлаас хамгаалах түлхүүртэй шилжинэ" },
+      { agent: "retries", lines: [44, 58], writing: true, way: "Төлбөрийг хойшлуулалттай гурван удаа дахин оролдоно" },
     ],
   },
   { path: "src/checkout/receipt.tsx", edits: [{ agent: "checkout", lines: [12, 30] }] },
   {
     path: "tests/checkout.spec.ts",
     edits: [
-      { agent: "checkout", lines: [8, 40], way: "Polls the order until it is paid, then checks the receipt" },
-      { agent: "retries", lines: [20, 52], way: "Adds a failing-card case and expects three attempts" },
+      { agent: "checkout", lines: [8, 40], way: "Захиалга төлөгдтөл шалгаж, дараа нь баримтыг шалгана" },
+      { agent: "retries", lines: [20, 52], way: "Татгалзсан картын тохиолдол нэмж, гурван оролдлого хүлээнэ" },
     ],
   },
-  { path: "src/lib/stripe.ts", edits: [{ agent: "stripe", lines: [1, 64], writing: true }] },
+  { path: "src/lib/payments.ts", edits: [{ agent: "payments", lines: [1, 64], writing: true }] },
   { path: "src/lib/retry.ts", edits: [{ agent: "retries", lines: [1, 40] }] },
-  { path: "package.json", edits: [{ agent: "stripe", lines: [14, 16] }] },
+  { path: "package.json", edits: [{ agent: "payments", lines: [14, 16] }] },
 ];
 
 const isConflict = (f: RadarFile) => f.edits.filter((e) => e.way).length > 1;
@@ -83,7 +84,7 @@ const isConflict = (f: RadarFile) => f.edits.filter((e) => e.way).length > 1;
 export function ConflictRadar({
   agents = defaultAgents,
   files = defaultFiles,
-  title = "Parallel work",
+  title = "Зэрэгцээ ажил",
   resolved: resolvedProp,
   onResolve,
   onMerge,

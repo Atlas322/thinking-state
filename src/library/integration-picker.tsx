@@ -30,136 +30,56 @@ export type IntegrationPickerProps = {
   className?: string;
 };
 
-const svg = (children: React.ReactNode) => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">{children}</svg>
-);
-
-const brand: Record<string, React.ReactNode> = {
-  linear: svg(
-    <>
-      <rect width="24" height="24" rx="6" fill="#5e6ad2" />
-      <circle cx="12" cy="12" r="6.5" fill="#fff" />
-      <path d="M6.6 9.2 14.8 17.4M5.6 12.2l6.2 6.2M8.2 7l8.8 8.8M10.8 5.7l7.5 7.5" stroke="#5e6ad2" strokeWidth="1.1" />
-    </>,
-  ),
-  notion: svg(
-    <>
-      <rect x=".75" y=".75" width="22.5" height="22.5" rx="5.5" fill="#fff" stroke="#e4e4e7" strokeWidth="1.5" />
-      <rect x="6" y="5.5" width="12" height="13" rx="1.4" fill="none" stroke="#111" strokeWidth="1.6" />
-      <path d="M9 15.5v-7l6 7v-7" fill="none" stroke="#111" strokeWidth="1.6" />
-    </>,
-  ),
-  stripe: svg(
-    <>
-      <rect width="24" height="24" rx="6" fill="#635bff" />
-      <path d="M15.2 8.4c-.9-.4-1.9-.7-3-.7-1.4 0-2.2.6-2.2 1.5 0 2.3 5.6 1.2 5.6 5 0 1.9-1.6 3-3.9 3-1.3 0-2.6-.3-3.7-.9" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-    </>,
-  ),
-  figma: svg(
-    <>
-      <rect x=".75" y=".75" width="22.5" height="22.5" rx="5.5" fill="#fff" stroke="#e4e4e7" strokeWidth="1.5" />
-      <rect x="8" y="4.5" width="4" height="5" rx="2" fill="#f24e1e" />
-      <rect x="12" y="4.5" width="4" height="5" rx="2" fill="#ff7262" />
-      <rect x="8" y="9.5" width="4" height="5" rx="2" fill="#a259ff" />
-      <circle cx="14" cy="12" r="2" fill="#1abcfe" />
-      <rect x="8" y="14.5" width="4" height="5" rx="2" fill="#0acf83" />
-    </>,
-  ),
-  hubspot: svg(
-    <>
-      <rect width="24" height="24" rx="6" fill="#ff7a59" />
-      <circle cx="14" cy="14" r="3" fill="none" stroke="#fff" strokeWidth="1.8" />
-      <path d="M14 11V6.5M7 7.5l4.6 4.3M11.6 16.4 8 19" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" />
-      <circle cx="14" cy="6" r="1.4" fill="#fff" />
-    </>,
-  ),
-  shopify: svg(
-    <>
-      <rect width="24" height="24" rx="6" fill="#95bf47" />
-      <path d="M7 9h10l-1 10H8Z" fill="#fff" />
-      <path d="M9.5 9V7.5a2.5 2.5 0 0 1 5 0V9" fill="none" stroke="#fff" strokeWidth="1.5" />
-      <path d="M13 12.2c-.4-.2-.8-.3-1.2-.3-.6 0-.9.3-.9.6 0 .9 2.3.5 2.3 2 0 .8-.7 1.3-1.6 1.3-.5 0-1-.1-1.5-.4" fill="none" stroke="#95bf47" strokeWidth="1" strokeLinecap="round" />
-    </>,
-  ),
-  airtable: svg(
-    <>
-      <rect x=".75" y=".75" width="22.5" height="22.5" rx="5.5" fill="#fff" stroke="#e4e4e7" strokeWidth="1.5" />
-      <path d="m12 5 7 2.8-7 2.8-7-2.8Z" fill="#fcb400" />
-      <path d="M12.8 12.2 19 9.8v6.8l-6.2 2.4Z" fill="#18bfff" />
-      <path d="M11.2 12.3 5 9.6v6.6l6.2 2.8Z" fill="#f82b60" />
-    </>,
-  ),
-  webflow: svg(
-    <>
-      <rect width="24" height="24" rx="6" fill="#146ef5" />
-      <path d="m4.5 8 3 8 3-6 2.5 6 6.5-9" fill="none" stroke="#fff" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-    </>,
-  ),
-  vercel: svg(
-    <>
-      <rect width="24" height="24" rx="6" fill="#000" />
-      <path d="m12 6.5 6.5 11h-13Z" fill="#fff" />
-    </>,
-  ),
-  clickup: svg(
-    <>
-      <rect x=".75" y=".75" width="22.5" height="22.5" rx="5.5" fill="#fff" stroke="#e4e4e7" strokeWidth="1.5" />
-      <path d="m6.5 15 2.3-1.8c1.2 1.6 2.1 2.3 3.2 2.3s2-.7 3.2-2.3l2.3 1.8c-1.8 2.4-3.4 3.4-5.5 3.4S8.3 17.4 6.5 15Z" fill="#7b68ee" />
-      <path d="m7.5 10.6 4.5-4 4.5 4-1.5 1.7-3-2.6-3 2.6Z" fill="#fd71af" />
-    </>,
-  ),
-};
-
 const defaultIntegrations: Integration[] = [
   {
-    id: "linear", name: "Linear", domain: "linear.app", category: "Project management", connected: true,
-    description: "Turn requests from chat into issues and keep their status in sync both ways.",
-    features: ["Create issues from any message", "Two-way status sync", "Link issues to customers"],
+    id: "tasks", name: "Ажлын самбар", domain: "tasks.example.mn", category: "Төслийн удирдлага", color: "#5e6ad2", connected: true,
+    description: "Чатан дахь хүсэлтийг даалгавар болгож, төлөвийг хоёр талд нь ижил байлгана.",
+    features: ["Дурын мессежээс даалгавар үүсгэх", "Төлөвийг хоёр талд шинэчлэх", "Даалгаврыг харилцагчтай холбох"],
   },
   {
-    id: "notion", name: "Notion", domain: "notion.so", category: "Docs & wiki", connected: true,
-    description: "Search your workspace and save answers as pages your team can find later.",
-    features: ["Search pages and databases", "Save answers as pages", "Keep permissions in place"],
+    id: "docs", name: "Баримтын сан", domain: "docs.example.mn", category: "Баримт ба вики", color: "#3f3f46", connected: true,
+    description: "Ажлын орчноосоо хайж, хариултыг баг тань дараа олох хуудас болгон хадгална.",
+    features: ["Хуудас ба хүснэгтээс хайх", "Хариултыг хуудас болгох", "Эрхийн тохиргоог хадгалах"],
   },
   {
-    id: "stripe", name: "Stripe", domain: "stripe.com", category: "Payments", connected: true,
-    description: "Look up customers, invoices and subscriptions without leaving the conversation.",
-    features: ["Find customers and invoices", "Refund with approval", "Revenue at a glance"],
+    id: "payments", name: "Төлбөрийн систем", domain: "pay.example.mn", category: "Төлбөр", color: "#635bff", connected: true,
+    description: "Харилцагч, нэхэмжлэл, захиалгыг ярианаас гаралгүй харна.",
+    features: ["Харилцагч ба нэхэмжлэл хайх", "Зөвшөөрөлтэй буцаалт", "Орлогын тойм"],
   },
   {
-    id: "figma", name: "Figma", domain: "figma.com", category: "Design",
-    description: "Pull frames and comments into context and share links that preview inline.",
-    features: ["Preview frames inline", "Read file comments", "Link frames to issues"],
+    id: "design", name: "Дизайны файл", domain: "design.example.mn", category: "Дизайн", color: "#a259ff",
+    description: "Фрейм, сэтгэгдлийг контекстэд татаж, шууд урьдчилан харагдах холбоос хуваалцана.",
+    features: ["Фреймийг шууд харах", "Файлын сэтгэгдэл унших", "Фреймийг даалгавартай холбох"],
   },
   {
-    id: "hubspot", name: "HubSpot", domain: "hubspot.com", category: "CRM",
-    description: "See contacts and deals next to every request and log calls automatically.",
-    features: ["Contact and deal lookup", "Log notes and calls", "Sync owners"],
+    id: "crm", name: "Харилцагчийн бүртгэл", domain: "crm.example.mn", category: "Борлуулалт", color: "#f97316",
+    description: "Хүсэлт бүрийн хажууд харилцагч, гэрээг харж, дуудлагыг автоматаар бүртгэнэ.",
+    features: ["Харилцагч ба гэрээ хайх", "Тэмдэглэл, дуудлага бүртгэх", "Хариуцагчийг ижилсгэх"],
   },
   {
-    id: "shopify", name: "Shopify", domain: "shopify.com", category: "Commerce",
-    description: "Answer order questions with live data from your store.",
-    features: ["Order and shipping status", "Product lookup", "Draft refunds"],
+    id: "shop", name: "Онлайн дэлгүүр", domain: "shop.example.mn", category: "Худалдаа", color: "#65a30d",
+    description: "Захиалгын асуултад дэлгүүрийн бодит өгөгдлөөр хариулна.",
+    features: ["Захиалга ба хүргэлтийн төлөв", "Бараа хайх", "Буцаалтын ноорог"],
   },
   {
-    id: "airtable", name: "Airtable", domain: "airtable.com", category: "Databases",
-    description: "Read and update records in your bases from a simple prompt.",
-    features: ["Query any base", "Create and update records", "Respect field types"],
+    id: "data", name: "Өгөгдлийн сан", domain: "data.example.mn", category: "Өгөгдөл", color: "#0ea5e9",
+    description: "Энгийн хүсэлтээр бичлэг уншиж, шинэчилнэ.",
+    features: ["Дурын хүснэгтээс асуух", "Бичлэг нэмэх, засах", "Талбарын төрлийг баримтлах"],
   },
   {
-    id: "webflow", name: "Webflow", domain: "webflow.com", category: "Website",
-    description: "Edit CMS items and publish changes to your site after a review.",
-    features: ["Edit CMS collections", "Stage before publishing", "Form submissions"],
+    id: "site", name: "Вэб бүтээгч", domain: "site.example.mn", category: "Вэб сайт", color: "#146ef5",
+    description: "Агуулгыг засаж, хянасны дараа сайтдаа нийтэлнэ.",
+    features: ["Агуулгын цуглуулга засах", "Нийтлэхээс өмнө бэлтгэх", "Маягтын илгээлтүүд"],
   },
   {
-    id: "vercel", name: "Vercel", domain: "vercel.com", category: "Developer tools",
-    description: "Follow deployments, read logs and roll back from the same place.",
-    features: ["Deployment status", "Runtime logs", "Instant rollback"],
+    id: "cloud", name: "Үүлэн сервер", domain: "cloud.example.mn", category: "Хөгжүүлэлт", color: "#18181b",
+    description: "Байршуулалтыг дагаж, лог уншиж, нэг дороос буцаана.",
+    features: ["Байршуулалтын төлөв", "Ажиллагааны лог", "Шуурхай буцаалт"],
   },
   {
-    id: "clickup", name: "ClickUp", domain: "clickup.com", category: "Project management",
-    description: "Create tasks from messages and keep lists in sync with the team.",
-    features: ["Tasks from messages", "Assignees and due dates", "Status sync"],
+    id: "todo", name: "Даалгаврын жагсаалт", domain: "todo.example.mn", category: "Төслийн удирдлага", color: "#7b68ee",
+    description: "Мессежээс даалгавар үүсгэж, жагсаалтыг багтайгаа ижил байлгана.",
+    features: ["Мессежээс даалгавар", "Хариуцагч ба хугацаа", "Төлөвийг ижилсгэх"],
   },
 ];
 
@@ -171,7 +91,7 @@ const appMark = (
 );
 
 const tile = (i: Integration) =>
-  i.icon ?? brand[i.id] ?? (
+  i.icon ?? (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <rect width="24" height="24" rx="6" fill={i.color ?? "#71717a"} />
       {i.path ? <path d={i.path} fill="#fff" /> : <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="600" fill="#fff">{i.name[0]}</text>}
@@ -180,7 +100,7 @@ const tile = (i: Integration) =>
 
 export function IntegrationPicker({
   integrations = defaultIntegrations,
-  appName = "affectUI",
+  appName = "Манай апп",
   appIcon = appMark,
   defaultSelected,
   onToggle,

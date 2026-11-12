@@ -32,53 +32,47 @@ const ico = (c: React.ReactNode) => (
     {c}
   </svg>
 );
+/** Neutral glyphs, no brand marks. Keys kept for API compatibility. */
 export const checkpointIcons = {
-  slack: ico(
-    <>
-      <rect x="2" y="6.5" width="5" height="2" rx="1" fill="#36c5f0" />
-      <rect x="7.5" y="2" width="2" height="5" rx="1" fill="#2eb67d" />
-      <rect x="9" y="7.5" width="5" height="2" rx="1" fill="#ecb22e" />
-      <rect x="6.5" y="9" width="2" height="5" rx="1" fill="#e01e5a" />
-    </>,
-  ),
+  slack: ico(<path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />),
   github: ico(
-    <path
-      d="M8 1.5a6.5 6.5 0 0 0-2 12.7c.3 0 .4-.1.4-.3v-1.2c-1.8.4-2.2-.8-2.2-.8-.3-.7-.7-.9-.7-.9-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.5.7 1.9.5 0-.4.2-.7.4-.9-1.4-.2-3-.7-3-3.2 0-.7.3-1.3.7-1.8-.1-.2-.3-.8 0-1.7 0 0 .6-.2 1.8.7a6 6 0 0 1 3.2 0c1.2-.9 1.8-.7 1.8-.7.3.9.1 1.5 0 1.7.4.5.7 1.1.7 1.8 0 2.5-1.5 3-3 3.2.3.2.5.6.5 1.2v1.8c0 .2.1.4.4.3A6.5 6.5 0 0 0 8 1.5Z"
-      fill="currentColor"
-    />,
+    <>
+      <circle cx="4.5" cy="3.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="4.5" cy="12.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="11.5" cy="6" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M4.5 5v6M11.5 7.5c0 2-2 2.6-6 3.4" fill="none" stroke="currentColor" strokeWidth="1.2" />
+    </>,
   ),
   notion: ico(
     <>
-      <rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M5.3 11V5h1l3.4 6h1V5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M3.5 1.8h6l3 3v9.4h-9Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M5.5 8h5M5.5 10.5h5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </>,
   ),
   figma: ico(
     <>
-      <rect x="5" y="1.5" width="3" height="4" rx="1.5" fill="#f24e1e" />
-      <rect x="8" y="1.5" width="3" height="4" rx="1.5" fill="#ff7262" />
-      <rect x="5" y="5.5" width="3" height="4" rx="1.5" fill="#a259ff" />
-      <circle cx="9.5" cy="7.5" r="1.5" fill="#1abcfe" />
-      <rect x="5" y="9.5" width="3" height="4" rx="1.5" fill="#0acf83" />
+      <rect x="2" y="2" width="12" height="12" rx="2" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M2 6h12M6 6v8" stroke="currentColor" strokeWidth="1.2" />
     </>,
   ),
   stripe: ico(
     <>
-      <rect x="2" y="2" width="12" height="12" rx="3" fill="#635bff" />
-      <path d="M10 5.8c-.5-.3-1.1-.5-1.7-.5-.9 0-1.5.4-1.5 1 0 1.5 3.1 1 3.1 2.9 0 .8-.8 1.4-1.8 1.4-.7 0-1.4-.2-1.9-.6" fill="none" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" />
+      <rect x="1.8" y="3.5" width="12.4" height="9" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M1.8 6.5h12.4M4.5 10h2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </>,
   ),
 };
 
+/** `cost` here is spend in thousands of tokens. */
 const defaultCheckpoints: Checkpoint[] = [
-  { id: "c1", title: "Read the brief", icon: checkpointIcons.slack, at: 9000, cost: 0.02 },
-  { id: "c2", title: "Scaffolded the pricing page", icon: checkpointIcons.github, parent: "c1", at: 30000, files: 4, cost: 0.06 },
-  { id: "c3", title: "Wrote the plan copy", icon: checkpointIcons.notion, parent: "c2", at: 47000, files: 1, cost: 0.05 },
-  { id: "c4", title: "Built the pricing table", icon: checkpointIcons.figma, parent: "c3", at: 81000, files: 3, cost: 0.11 },
-  { id: "c5", title: "Added Stripe checkout", icon: checkpointIcons.stripe, parent: "c4", at: 122000, files: 5, cost: 0.12 },
-  { id: "c6", title: "Tests failing – 4 of 12", icon: checkpointIcons.github, parent: "c5", at: 148000, status: "failed", cost: 0.04 },
-  { id: "c7", title: "Switched to Stripe Elements", icon: checkpointIcons.stripe, parent: "c4", at: 186000, files: 3, cost: 0.14 },
-  { id: "c8", title: "Tests pass – 12 of 12", icon: checkpointIcons.github, parent: "c7", at: 210000, cost: 0.04 },
+  { id: "c1", title: "Даалгаврыг уншсан", icon: checkpointIcons.slack, at: 9000, cost: 2 },
+  { id: "c2", title: "Тарифын хуудасны суурийг үүсгэсэн", icon: checkpointIcons.github, parent: "c1", at: 30000, files: 4, cost: 6 },
+  { id: "c3", title: "Багцын тайлбарыг бичсэн", icon: checkpointIcons.notion, parent: "c2", at: 47000, files: 1, cost: 5 },
+  { id: "c4", title: "Тарифын хүснэгтийг хийсэн", icon: checkpointIcons.figma, parent: "c3", at: 81000, files: 3, cost: 11 },
+  { id: "c5", title: "Төлбөрийн системийг холбосон", icon: checkpointIcons.stripe, parent: "c4", at: 122000, files: 5, cost: 12 },
+  { id: "c6", title: "Тест унасан – 12-оос 4", icon: checkpointIcons.github, parent: "c5", at: 148000, status: "failed", cost: 4 },
+  { id: "c7", title: "Төлбөрийн маягтыг сольсон", icon: checkpointIcons.stripe, parent: "c4", at: 186000, files: 3, cost: 14 },
+  { id: "c8", title: "Тест амжилттай – 12-оос 12", icon: checkpointIcons.github, parent: "c7", at: 210000, cost: 4 },
 ];
 
 const ROW = 30;
@@ -89,13 +83,13 @@ const defTime = (ms: number) => {
   const s = Math.round(ms / 1000);
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 };
-const defCost = (n: number) => `$${n.toFixed(2)}`;
+const defCost = (n: number) => `${Math.round(n)}k токен`;
 
 export function AgentCheckpoints({
   checkpoints,
   head,
   onRewind,
-  task = "Ship the pricing page",
+  task = "Тарифын хуудсыг нийтлэх",
   formatTime = defTime,
   formatCost = defCost,
   title = "Checkpoints",
@@ -153,7 +147,7 @@ export function AgentCheckpoints({
     const at = (last?.at ?? 0) + 18000;
     setInner((l) => [
       ...l.map((x) => (x.status === "running" ? { ...x, status: "stopped" as const } : x)),
-      { id, title: `Retry from “${c.title}”`, icon: c.icon, parent: c.id, at, status: "running", cost: 0.03 },
+      { id, title: `Retry from “${c.title}”`, icon: c.icon, parent: c.id, at, status: "running", cost: 3 },
     ]);
     setInnerHead(id);
     window.setTimeout(() => {
