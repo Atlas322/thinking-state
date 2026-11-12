@@ -1,5 +1,5 @@
 // Layout check for every catalog preview at phone and desktop widths
-// (itge.e 2026-11-12). Mongolian labels run longer than the English ones they
+// (2026-11-12). Mongolian labels run longer than the English ones they
 // replaced, so this flags text that no longer fits:
 //   overflow  text runs past its own box (and may cover a neighbour)
 //   clipped   text is cut by an overflow:hidden/clip ancestor with no ellipsis
