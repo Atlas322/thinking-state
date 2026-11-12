@@ -15,6 +15,7 @@ import {
   type PmPhase,
 } from "./types";
 import { Avatar, Lines } from "./ui";
+import { Empty } from "./collection";
 
 /**
  * Methodology templates — the same company core drawn the way the
@@ -137,7 +138,7 @@ function BmcView({ c, scoped }: { c: Company; scoped: Company }) {
 
 function OkrView({ c, scoped }: { c: Company; scoped: Company }) {
   const okrs = scoped.okrs ?? [];
-  if (!okrs.length) return <p className="cv-empty">OKR бүртгэгдээгүй.</p>;
+  if (!okrs.length) return <Empty text="OKR бүртгэгдээгүй." icon="layout-template" />;
   return (
     <div className="cv-okrs">
       {okrs.map((o, i) => {

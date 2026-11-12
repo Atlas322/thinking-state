@@ -676,25 +676,36 @@
   },
   {
     "slug": "company-workspace",
-    "name": "Company · Workspace",
+    "name": "Компани · Ажлын орчин",
     "category": "Компани",
     "pro": true,
     "origin": "Thinking State original",
     "module": "src/company",
-    "description": "Draws any company in the Company contract, read-only, as an app – unit tree, breadcrumb header and tabs: the organisation's own method as template (Business Model Canvas, PMBOK matrix with Facts hub and Gantt, OKR, Lean Canvas), a dashboard by area → sub-area with status, owner and due filters (Session Board + Project Report), process tree, people ↔ agents, workflows, a RACI matrix, decisions and person profiles; zoom by institution, company or team",
+    "description": "Company гэрээний аль ч компанийг апп хэлбэрээр зурна, зөвхөн уншина. Зүүн талд нэгжийн мод ба vault-ийн төрлүүд байна. Табуудад: байгууллагын өөрийн арга зүй (BMC, PMBOK, OKR, Lean Canvas), area → дэд area-гаар бүлэглэсэн самбар (төлөв, эзэн, хугацааны шүүлттэй), процесс, хүн ↔ агент, workflow, RACI матриц, шийдвэр, хүний профайл. Институц, компани, баг гэсэн түвшингээр томруулна.",
     "exportName": "CompanyWorkspace",
     "usage": "import { CompanyWorkspace } from \"./company-workspace\";\nimport { acmeGroup } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyWorkspace company={acmeGroup} />; // Company contract: units, people, agents, workflows, projects; props: methodology (bmc | pmbok | okr | lean-canvas), defaultLevel, defaultUnitId, defaultView, today, showMethodologySwitch, showLayoutSwitch, labels; read-only\n}"
   },
   {
     "slug": "company-brief",
-    "name": "Company · Brief",
+    "name": "Компани · Тайлан",
     "category": "Компани",
     "pro": true,
     "origin": "Thinking State original",
     "module": "src/company",
-    "description": "The same company data as one scrolling brief – a hero with method, level and unit switches, then numbered sections for the method (BMC, PMBOK, OKR, Lean Canvas), dashboard, process, people ↔ agents, workflows, RACI and decisions",
+    "description": "Ижил өгөгдлийг нэг гүйлгэх хуудсаар харуулна. Эхэнд арга зүй, түвшин, нэгж солих товчтой толгой хэсэг байна. Дараа нь арга зүй, самбар, процесс, хүн ↔ агент, workflow, RACI, шийдвэр, vault-ийн төрлүүд гэсэн дугаартай хэсгүүд үргэлжилнэ.",
     "exportName": "CompanyBrief",
     "usage": "import { CompanyBrief } from \"./company-brief\";\nimport { acmeGroup } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyBrief company={acmeGroup} />; // Company contract: units, people, agents, workflows, projects; props: methodology (bmc | pmbok | okr | lean-canvas), defaultLevel, defaultUnitId, defaultView, today, showMethodologySwitch, showLayoutSwitch, labels; read-only\n}"
+  },
+  {
+    "slug": "company-collection",
+    "name": "Компани · Collection",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/company",
+    "description": "Vault-ийн аль ч төрлийг (төсөл, task, шийдвэр, атом, хүн, area, skill, үйл явдал, өдрийн тэмдэглэл) Notion database ба Obsidian Bases шиг зурна, зөвхөн уншина. Хүснэгт, самбар, хуанли, timeline, жагсаалт гэсэн харагдацтай. Баганыг fields-ээс автоматаар үүсгэнэ. Төлвөөр шүүсэн tab-ууд тоо, icon-той. Аль ч талбараар шүүж, бүлэглэнэ. Мөр бүрд төлөв, priority, relation chip, n/m явц, харьцангуй огноо харагдана.",
+    "exportName": "CompanyCollection",
+    "usage": "import { CompanyCollection } from \"./company-collection\";\nimport { inai } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyCollection collection={inai.collections![0]} />; // collection: { type, fields: (name | {name, kind})[], items: [{ id, title, path, props }] }; props: today, resolve, defaultView (table | board | calendar | timeline | list); read-only\n}"
   },
   {
     "slug": "project-report",

@@ -1,4 +1,4 @@
-import type { Company } from "./types";
+import type { Collection, Company } from "./types";
 
 /**
  * Fixtures in the Company contract until the company-schema session's export
@@ -267,9 +267,9 @@ export const inai: Company = {
       raci: { responsible: ["project", "architect", "creative"], accountable: "saraa", consulted: ["bilguun", "ganaa"], informed: ["temuulen"] },
       tasks: [
         { id: "t1", title: "TENET дахин төлөвлөлт", status: "completed", ownerId: "project", due: "2026-11-12" },
-        { id: "t2", title: "Нэг schema + INAI экспорт", status: "in-progress", ownerId: "architect", due: "2026-11-16" },
-        { id: "t3", title: "Hero «тархи ↔ апп» зураглал", status: "planning", ownerId: "creative", due: "2026-11-24" },
-        { id: "t4", title: "GitHub төлбөр засах", status: "waiting", ownerId: "saraa", due: "2026-11-11" },
+        { id: "t2", title: "Нэг schema + INAI экспорт", status: "in-progress", ownerId: "architect", due: "2026-11-16", priority: "high" },
+        { id: "t3", title: "Hero «тархи ↔ апп» зураглал", status: "planning", ownerId: "creative", due: "2026-11-24", priority: "medium" },
+        { id: "t4", title: "GitHub төлбөр засах", status: "waiting", ownerId: "saraa", due: "2026-11-11", priority: "high" },
       ],
       decisions: [
         { id: "d1", title: "inai.sh бол Thinking State апп", date: "2026-11-12" },
@@ -281,7 +281,7 @@ export const inai: Company = {
       raci: { responsible: ["architect"], accountable: "saraa", consulted: ["temuulen"], informed: ["ganaa", "bilguun"] },
       tasks: [
         { id: "t1", title: "Chat widgets", status: "completed", ownerId: "architect" },
-        { id: "t2", title: "Компанийн renderer", status: "in-progress", ownerId: "architect", due: "2026-11-14" },
+        { id: "t2", title: "Компанийн renderer", status: "in-progress", ownerId: "architect", due: "2026-11-14", priority: "high" },
         { id: "t3", title: "Figma instance", status: "inbox", ownerId: "creative" },
       ],
       decisions: [{ id: "d1", title: "Thinking State бол бүтээгдэхүүн ба engine", date: "2026-11-12" }],
@@ -290,14 +290,14 @@ export const inai: Company = {
       id: "season-2", name: "Season 2 курс", unitId: "gtm", status: "planning", area: "Сургалт", subArea: "Cohort",
       raci: { responsible: ["bilguun"], accountable: "ganaa", consulted: ["saraa"], informed: [] },
       tasks: [
-        { id: "t1", title: "Хөтөлбөрийн бүтэц", status: "in-progress", ownerId: "bilguun", due: "2026-11-28" },
+        { id: "t1", title: "Хөтөлбөрийн бүтэц", status: "in-progress", ownerId: "bilguun", due: "2026-11-28", priority: "medium" },
         { id: "t2", title: "Бүртгэлийн хуудас", status: "inbox" },
       ],
       decisions: [],
     },
     {
       id: "security", name: "Аюулгүй байдлын аудит", unitId: "tech", status: "inbox", area: "Платформ",
-      tasks: [{ id: "t1", title: "Нууцлалын бодлогын төсөл", status: "inbox", ownerId: "nomin" }],
+      tasks: [{ id: "t1", title: "Нууцлалын бодлогын төсөл", status: "inbox", ownerId: "nomin", priority: "low" }],
       decisions: [],
     },
   ],
@@ -382,5 +382,119 @@ export const pmbokProject: Company = {
     { label: "Эх сурвалж", value: "Charter, PMP, Facts hub" },
   ],
 };
+
+/**
+ * INAI's vault types as collections — the shape the company-schema export
+ * produces (type, fields, items with path + props). Built from the INAI
+ * fixture above plus a few notes, events and dailies.
+ */
+function inaiCollections(c: Company): Collection[] {
+  const name = (id?: string) => [...c.people, ...c.agents].find((x) => x.id === id)?.name;
+  const done = (s: string) => ["completed", "done"].includes(s);
+  const projects: Collection = {
+    type: "project",
+    fields: ["status", "priority", "area", "subArea", "owner", "tasks", "due"],
+    items: c.projects.map((p) => ({
+      id: p.id,
+      title: p.name,
+      path: `02-Projects/${p.name}/${p.name}.md`,
+      props: {
+        status: p.status,
+        priority: p.priority ?? (["inai-website", "thinking-state"].includes(p.id) ? "high" : "medium"),
+        area: p.area ?? null,
+        subArea: p.subArea ?? null,
+        owner: p.raci?.accountable ? name(p.raci.accountable) ?? null : null,
+        tasks: `${p.tasks.filter((t) => done(t.status)).length}/${p.tasks.length}`,
+        due: p.due ?? null,
+      },
+    })),
+  };
+  const tasks: Collection = {
+    type: "task",
+    fields: ["status", "priority", "project", "area", "owner", "due"],
+    items: c.projects.flatMap((p) =>
+      p.tasks.map((t) => ({
+        id: `${p.id}:${t.id}`,
+        title: t.title,
+        path: `01-GTD/Tasks/${t.title}.md`,
+        props: { status: t.status, priority: t.priority ?? null, project: p.name, area: p.area ?? null, owner: name(t.ownerId) ?? null, due: t.due ?? null },
+      })),
+    ),
+  };
+  const decisions: Collection = {
+    type: "session-decision",
+    fields: ["date", "project", "confidence"],
+    items: c.projects.flatMap((p) =>
+      p.decisions.map((d) => ({
+        id: `${p.id}:${d.id}`,
+        title: d.title,
+        path: `04-Resources/Atomic/decisions/${d.date} - ${d.title}.md`,
+        props: { date: d.date, project: p.name, confidence: "stated" },
+      })),
+    ),
+  };
+  const atomic: Collection = {
+    type: "atomic",
+    fields: ["date", "confidence", "tags", "up"],
+    items: [
+      { id: "a1", title: "Second Brain гурван түвшин — хувь, баг, компани", props: { date: "2026-11-12", confidence: "stated", tags: ["second-brain", "inai"], up: "[[02-Projects/Website/Inai Website]]" } },
+      { id: "a2", title: "Just.Notion Projects DB — PARA ба GTD төлөвтэй", props: { date: "2026-11-12", confidence: "observed", tags: ["notion"], up: "[[03-Areas/Products/Just.Notion]]" } },
+      { id: "a3", title: "Төслийн шат = Key Activity гүүр", props: { date: "2026-10-07", confidence: "stated", tags: ["bmc"], up: "[[03-Areas/Business/INAI/Business Model Canvas]]" } },
+      { id: "a4", title: "Task hygiene дүрэм", props: { date: "2026-10-26", confidence: "stated", tags: ["gtd"], up: "[[01-GTD/GTD]]" } },
+      { id: "a5", title: "Founder Matrix Second Brain ганц repo", props: { date: "2026-10-05", confidence: "stated", tags: ["fm"], up: "[[03-Areas/AI Team/AI Team]]" } },
+    ],
+  };
+  const people: Collection = {
+    type: "person",
+    fields: ["role", "unit", "company", "status"],
+    items: c.people.map((p) => ({
+      id: p.id,
+      title: p.name,
+      path: `03-Areas/People/${p.name}.md`,
+      props: { role: p.role, unit: c.units.find((u) => u.id === p.unitId)?.name ?? null, company: "INAI", status: "active" },
+    })),
+  };
+  const areas: Collection = {
+    type: "area",
+    fields: ["status", "owner", "projects"],
+    items: [
+      { id: "ar1", title: "Бүтээгдэхүүн", props: { status: "ongoing", owner: "Saraa.D", projects: 2 } },
+      { id: "ar2", title: "Сургалт", props: { status: "ongoing", owner: "Ganaa.B", projects: 1 } },
+      { id: "ar3", title: "Платформ", props: { status: "ongoing", owner: "Temuulen.O", projects: 1 } },
+      { id: "ar4", title: "Хувийн санхүү", props: { status: "someday", owner: null, projects: 0 } },
+    ],
+  };
+  const skills: Collection = {
+    type: "skill",
+    fields: ["owner", "tags", "status"],
+    items: [
+      { id: "s1", title: "fm:post — пост, carousel", props: { owner: "Creative", tags: ["content"], status: "active" } },
+      { id: "s2", title: "fm:figma — Figma bridge", props: { owner: "Creative", tags: ["design"], status: "active" } },
+      { id: "s3", title: "fm:save — линкийг атом болгох", props: { owner: "Wiki", tags: ["knowledge"], status: "active" } },
+      { id: "s4", title: "fm:update — өдрийн дүгнэлт", props: { owner: "GTD", tags: ["gtd"], status: "active" } },
+      { id: "s5", title: "chat:html — чатын widget", props: { owner: "Architect", tags: ["thinking-state"], status: "planning" } },
+    ],
+  };
+  const events: Collection = {
+    type: "event",
+    fields: ["date", "start", "end", "project", "status"],
+    items: [
+      { id: "e1", title: "Season 2 нээлт", props: { date: "2026-11-28", start: "2026-11-28", end: "2026-11-28", project: "Season 2 курс", status: "planning" } },
+      { id: "e2", title: "inai.sh v4 танилцуулга", props: { date: "2026-11-20", start: "2026-11-20", end: "2026-11-21", project: "Inai Website", status: "planning" } },
+      { id: "e3", title: "Багийн долоо хоногийн тойм", props: { date: "2026-11-16", start: "2026-11-16", end: "2026-11-16", project: null, status: "planning" } },
+      { id: "e4", title: "Thinking State demo", props: { date: "2026-11-12", start: "2026-11-12", end: "2026-11-12", project: "Thinking State", status: "done" } },
+    ],
+  };
+  const dailies: Collection = {
+    type: "daily",
+    fields: ["date", "tasks", "mood"],
+    items: [6, 7, 8, 9, 10, 11, 12].map((d) => {
+      const day = `2026-11-${String(d).padStart(2, "0")}`;
+      return { id: `d${d}`, title: day, path: `01-GTD/Daily/${day}.md`, props: { date: day, tasks: `${(d % 4) + 1}/${(d % 3) + 4}`, mood: d % 2 ? "тогтуун" : "идэвхтэй" } };
+    }),
+  };
+  return [projects, tasks, decisions, atomic, people, areas, skills, events, dailies];
+}
+inai.collections = inaiCollections(inai);
 
 export const companyFixtures: Company[] = [inai, acmeGroup, pmbokProject];

@@ -21,6 +21,8 @@ import {
   type UnitKind,
 } from "./types";
 import { Avatar, Lines, initials } from "./ui";
+import { CollectionView, Empty, collectionCss, type Relation } from "./collection";
+import { Icon, UNIT_ICON, typeIcon, typeLabel, type IconName } from "./icons";
 
 /**
  * Company View — draws any company in the Company contract: business model,
@@ -66,7 +68,9 @@ export type CompanyViewLabels = Record<CompanyViewKey | CompanyLevel | UnitKind 
   empty: string;
   person: string;
   agent: string;
+  types: string;
   source: Record<string, string>;
+  segment: Record<string, string>;
 };
 
 export const companyLabelsMn: CompanyViewLabels = {
@@ -82,6 +86,8 @@ export const companyLabelsMn: CompanyViewLabels = {
   company: "Компани",
   team: "Баг",
   department: "Хэлтэс",
+  area: "Area",
+  types: "Төрлүүд",
   customers: "Үйлчлүүлэгч",
   value: "Үнэ цэнэ",
   channels: "Суваг",
@@ -108,6 +114,7 @@ export const companyLabelsMn: CompanyViewLabels = {
   person: "Хүн",
   agent: "Агент",
   source: { acme: "ac.me", vault: "vault", visitor: "зочин" },
+  segment: { personal: "Хувь", team: "Баг", company: "Компани", institutional: "Институц" },
 };
 
 export type CompanyViewProps = {
@@ -133,6 +140,15 @@ export type CompanyViewProps = {
 };
 
 const levelOfKind = (k: UnitKind): CompanyLevel => (k === "institution" ? "institution" : k === "company" ? "company" : "team");
+const TAB_ICON: Record<CompanyViewKey, IconName> = {
+  method: "layout-template",
+  dashboard: "layout-dashboard",
+  structure: "network",
+  agents: "bot",
+  workflows: "workflow",
+  raci: "grid-3x3",
+  decisions: "git-branch",
+};
 /* ───────────── views ───────────── */
 
 function ModelView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyViewLabels }) {
@@ -218,7 +234,7 @@ function StructureView({ scoped, L, onPick, onPerson, current }: { scoped: Compa
   };
   const seen = new Set<string>();
   const roots = rootsOf(scoped.units);
-  if (!roots.length) return <p className="cv-empty">{L.empty}</p>;
+  if (!roots.length) return <Empty text={L.empty} icon="network" />;
   return <ul className="cv-tree cv-tree-root">{roots.map((r) => node(r, 0, seen))}</ul>;
 }
 
@@ -276,7 +292,7 @@ function AgentsView({ c, scoped, L, onPerson }: { c: Company; scoped: Company; L
       return { u, people, loose };
     })
     .filter((s) => s.people.length || s.loose.length);
-  if (!sections.length) return <p className="cv-empty">{L.empty}</p>;
+  if (!sections.length) return <Empty text={L.empty} icon="bot" />;
   return (
     <div className="cv-agents">
       {sections.map(({ u, people, loose }, i) => (
@@ -330,7 +346,7 @@ function AgentsView({ c, scoped, L, onPerson }: { c: Company; scoped: Company; L
 }
 
 function WorkflowView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyViewLabels }) {
-  if (!scoped.workflows.length) return <p className="cv-empty">{L.empty}</p>;
+  if (!scoped.workflows.length) return <Empty text={L.empty} icon="workflow" />;
   return (
     <div className="cv-flows">
       {scoped.workflows.map((w, i) => {
@@ -388,7 +404,7 @@ function DecisionsView({ scoped, L }: { scoped: Company; L: CompanyViewLabels })
   const decisions: DecisionChatItem[] = scoped.projects
     .flatMap((p) => p.decisions.map((d) => ({ id: `${p.id}:${d.id}`, title: d.title, project: p.name, due: d.date, options: [{ id: "made", label: "Шийдсэн" }] })))
     .sort((a, b) => (b.due ?? "").localeCompare(a.due ?? ""));
-  if (!decisions.length) return <p className="cv-empty">{L.empty}</p>;
+  if (!decisions.length) return <Empty text={L.empty} icon="git-branch" />;
   return (
     <div className="cv-decisions">
       <DecisionInboxChat
@@ -437,6 +453,7 @@ export function CompanyView({
   const [methodOwn, setMethodOwn] = React.useState<Methodology>(company.methodology ?? "bmc");
   const methodology = methodologyProp ?? methodOwn;
   const [personId, setPersonId] = React.useState<string | null>(null);
+  const [collectionType, setCollectionType] = React.useState<string | null>(null);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const tabsRef = React.useRef<(HTMLButtonElement | null)[]>([]);
   const firstView = React.useRef(true);
@@ -455,6 +472,7 @@ export function CompanyView({
     setScopeState(initial);
     setMethodOwn(company.methodology ?? "bmc");
     setPersonId(null);
+    setCollectionType(null);
     // a new company resets the scope and its method
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company.id]);
@@ -474,7 +492,10 @@ export function CompanyView({
     const down = scopeCompany(company, scope.unitId).units.find((u) => kinds.includes(u.kind));
     setScope({ level: lv, unitId: (up && kinds.includes(up.kind) ? up : down ?? firstUnit(lv))?.id ?? null });
   };
-  const pickUnit = (u: CompanyUnit) => setScope({ level: levelOfKind(u.kind), unitId: u.id });
+  const pickUnit = (u: CompanyUnit) => {
+    setCollectionType(null);
+    setScope({ level: u.kind === "area" ? scope.level : levelOfKind(u.kind), unitId: u.id });
+  };
   const setLayout = (l: CompanyLayout) => {
     setLayoutOwn(l);
     onLayoutChange?.(l);
@@ -506,6 +527,26 @@ export function CompanyView({
   };
   const tabLabel = (v: CompanyViewKey) => (v === "method" ? methodologyShort[methodology] : L[v]);
   const person = company.people.find((p) => p.id === personId) ?? null;
+  const collections = company.collections ?? [];
+  const collection = collections.find((c) => c.type === collectionType) ?? null;
+  /** Relation values (ids, names or [[links]]) → chip with icon; units switch scope, people open profiles. */
+  const resolve = (field: string, raw: string): Relation | null => {
+    const v = raw.replace(/^\[\[|\]\]$/g, "").split("|")[0].split("/").pop()?.replace(/\.md$/, "") ?? raw;
+    const unitHit = company.units.find((u) => u.id === raw || u.name === v);
+    if (unitHit)
+      return { label: unitHit.name, icon: UNIT_ICON[unitHit.kind] ?? "layout-grid", onClick: () => pickUnit(unitHit) };
+    const personHit = company.people.find((x) => x.id === raw || x.name === v);
+    if (personHit) return { label: personHit.name, icon: "user", onClick: () => setPersonId(personHit.id) };
+    const agentHit = company.agents.find((x) => x.id === raw || x.name === v);
+    if (agentHit) return { label: agentHit.name, icon: "bot" };
+    const projectHit = company.projects.find((x) => x.id === raw || x.name === v);
+    if (projectHit) return { label: projectHit.name, icon: "folder" };
+    const f = field.toLowerCase();
+    if (f === "company") return { label: v, icon: "building-2" };
+    if (f.includes("area")) return { label: v, icon: "layout-grid" };
+    return null;
+  };
+  const segmentText = company.segmentLabel ?? L.segment[company.segment] ?? company.segment;
   const scopeName = unit?.name ?? company.name;
 
   const render = (v: CompanyViewKey) =>
@@ -601,8 +642,13 @@ export function CompanyView({
   );
   const tags = (
     <span className="cv-tags">
-      {unit && <span className={`cv-kind is-${unit.kind}`}>{L[unit.kind]}</span>}
-      <span className="cv-tag">{company.segment}</span>
+      {unit && (
+        <span className={`cv-kind is-${unit.kind}`}>
+          <Icon name={UNIT_ICON[unit.kind] ?? "building-2"} size={14} />
+          {L[unit.kind]}
+        </span>
+      )}
+      {segmentText !== (unit ? L[unit.kind] : "") && <span className="cv-tag">{segmentText}</span>}
       <span className="cv-tag is-src">{L.source[company.source] ?? company.source}</span>
     </span>
   );
@@ -632,12 +678,32 @@ export function CompanyView({
           <section key={v} className="cv-section" aria-labelledby={`${uid}-${v}`} style={{ "--i": i } as React.CSSProperties}>
             <h3 id={`${uid}-${v}`} className="cv-section-h">
               <span className="cv-num">{String(i + 1).padStart(2, "0")}</span>
+              <Icon name={TAB_ICON[v]} size={20} />
               {v === "method" ? methodologyName[methodology] : L[v]}
               {counts[v] != null && <span className="cv-count">{counts[v]}</span>}
             </h3>
             {render(v)}
           </section>
         ))}
+        {collections.length > 0 && (
+          <section className="cv-section" aria-labelledby={`${uid}-types`}>
+            <h3 id={`${uid}-types`} className="cv-section-h">
+              <span className="cv-num">{String(COMPANY_VIEWS.length + 1).padStart(2, "0")}</span>
+              <Icon name="database" size={20} />
+              {L.types}
+              <span className="cv-count">{collections.length}</span>
+            </h3>
+            <div className="cv-chips cv-type-chips" role="group" aria-label={L.types}>
+              {collections.map((c) => (
+                <button key={c.type} type="button" aria-pressed={(collection ?? collections[0]).type === c.type} onClick={() => setCollectionType(c.type)}>
+                  <Icon name={typeIcon(c.type)} size={14} />
+                  {c.label ?? typeLabel(c.type)} <span>{c.items.length}</span>
+                </button>
+              ))}
+            </div>
+            <CollectionView key={(collection ?? collections[0]).type} collection={collection ?? collections[0]} today={today} resolve={resolve} />
+          </section>
+        )}
         </div>
         {profile}
       </div>
@@ -659,11 +725,13 @@ export function CompanyView({
                 type="button"
                 className="cv-nav-item"
                 style={{ "--d": depth } as React.CSSProperties}
-                aria-current={u.id === scope.unitId ? "true" : undefined}
+                aria-current={u.id === scope.unitId && !collection ? "true" : undefined}
                 data-in={inScope || undefined}
                 onClick={() => pickUnit(u)}
               >
-                <span className={`cv-nav-glyph is-${u.kind}`} aria-hidden="true" />
+                <span className={`cv-nav-glyph is-${u.kind}`}>
+                  <Icon name={UNIT_ICON[u.kind] ?? "building-2"} size={16} />
+                </span>
                 <span className="cv-nav-name">{u.name}</span>
               </button>
               {tree(u.id, depth + 1, seen)}
@@ -686,7 +754,7 @@ export function CompanyView({
           <span className="cv-brand-text">
             <strong>{company.name}</strong>
             <small>
-              {company.segment} · {L.source[company.source] ?? company.source}
+              {segmentText} · {L.source[company.source] ?? company.source}
             </small>
           </span>
         </div>
@@ -695,6 +763,32 @@ export function CompanyView({
           {tree(undefined, 0)}
         </nav>
         <div className="cv-side-chips">{unitChips}</div>
+        {collections.length > 0 && (
+          <nav className="cv-types" aria-label={L.types}>
+            <h4 className="cv-types-h">
+              <Icon name="database" size={14} />
+              {L.types}
+            </h4>
+            <ul className="cv-nav-list">
+              {collections.map((c) => (
+                <li key={c.type}>
+                  <button
+                    type="button"
+                    className="cv-nav-item"
+                    aria-current={collectionType === c.type ? "true" : undefined}
+                    onClick={() => setCollectionType(c.type)}
+                  >
+                    <span className="cv-nav-glyph">
+                      <Icon name={typeIcon(c.type)} size={16} />
+                    </span>
+                    <span className="cv-nav-name">{c.label ?? typeLabel(c.type)}</span>
+                    <span className="cv-nav-count">{c.items.length}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </aside>
       <main className="cv-main">
         <header className="cv-head">
@@ -703,16 +797,34 @@ export function CompanyView({
               {path.map((u, i) => (
                 <React.Fragment key={u.id}>
                   {i > 0 && <span aria-hidden="true">/</span>}
-                  <button type="button" onClick={() => pickUnit(u)} aria-current={i === path.length - 1 ? "page" : undefined}>
+                  <button type="button" onClick={() => pickUnit(u)} aria-current={i === path.length - 1 && !collection ? "page" : undefined}>
                     {u.name}
                   </button>
                 </React.Fragment>
               ))}
+              {collection && (
+                <>
+                  <span aria-hidden="true">/</span>
+                  <span>{L.types}</span>
+                  <span aria-hidden="true">/</span>
+                  <span aria-current="page">{collection.label ?? typeLabel(collection.type)}</span>
+                </>
+              )}
             </nav>
             {switches}
           </div>
-          <h2 className="cv-title">{scopeName}</h2>
-          {tags}
+          <h2 className="cv-title">
+            {collection ? (
+              <>
+                <Icon name={typeIcon(collection.type)} size={20} />
+                {collection.label ?? typeLabel(collection.type)}
+                <span className="cv-title-n">{collection.items.length}</span>
+              </>
+            ) : (
+              scopeName
+            )}
+          </h2>
+          {!collection && tags}
           <div
             className="cv-tabs"
             role="tablist"
@@ -735,20 +847,30 @@ export function CompanyView({
                 type="button"
                 role="tab"
                 id={`${uid}-tab-${v}`}
-                aria-selected={view === v}
+                aria-selected={view === v && !collection}
                 aria-controls={`${uid}-panel`}
                 tabIndex={view === v ? 0 : -1}
-                onClick={() => setView(v)}
+                onClick={() => {
+                  setView(v);
+                  setCollectionType(null);
+                }}
               >
+                <Icon name={TAB_ICON[v]} size={16} />
                 {tabLabel(v)}
                 {counts[v] != null && <span>{counts[v]}</span>}
               </button>
             ))}
           </div>
         </header>
-        <section id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${view}`} className="cv-panel" key={`${view}-${scope.unitId}`}>
-          {render(view)}
-        </section>
+        {collection ? (
+          <section className="cv-panel" aria-label={collection.label ?? typeLabel(collection.type)} key={`collection-${collection.type}`}>
+            <CollectionView collection={collection} today={today} resolve={resolve} />
+          </section>
+        ) : (
+          <section id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${view}`} className="cv-panel" key={`${view}-${scope.unitId}`}>
+            {render(view)}
+          </section>
+        )}
       </main>
       </div>
       {profile}
@@ -757,8 +879,8 @@ export function CompanyView({
 }
 
 const baseCss = `
-.cv{--cv-bg:#fff;--cv-page:#f7f7f8;--cv-fg:#18181b;--cv-muted:#71717a;--cv-faint:#a1a1aa;--cv-line:#ececef;--cv-soft:#f4f4f5;--cv-accent:#4f7cf0;--cv-accent-soft:#e8f1fe;--cv-green:#16a34a;--cv-green-soft:#e9f8ee;--cv-amber:#c2620a;--cv-amber-soft:#fff4e0;--cv-violet:#7c3aed;--cv-violet-soft:#f1ebfd;--cv-teal:#0f8a7e;--cv-teal-soft:#e2f6f3;--cv-seg-on:#fff;position:relative;width:100%;color:var(--cv-fg);font:400 14px/1.45 Inter,system-ui,sans-serif;container:cv/inline-size;box-sizing:border-box}
-:where(.dark,[data-theme=dark]) .cv{--cv-bg:#1b1b1e;--cv-page:#141416;--cv-fg:#ececef;--cv-muted:#a1a1aa;--cv-faint:#71717a;--cv-line:#2e2e33;--cv-soft:#26262a;--cv-accent:#7c9cff;--cv-accent-soft:#1b2a44;--cv-green:#4ade80;--cv-green-soft:#16301f;--cv-amber:#eba659;--cv-amber-soft:#3a2a12;--cv-violet:#a78bfa;--cv-violet-soft:#2a2140;--cv-teal:#5eead4;--cv-teal-soft:#123330;--cv-seg-on:#3a3a40;color-scheme:dark}
+.cv{--cv-bg:#fff;--cv-page:#f7f7f8;--cv-fg:#18181b;--cv-muted:#71717a;--cv-faint:#a1a1aa;--cv-line:#ececef;--cv-soft:#f4f4f5;--cv-accent:#4f7cf0;--cv-accent-soft:#e8f1fe;--cv-green:#16a34a;--cv-green-soft:#e9f8ee;--cv-amber:#c2620a;--cv-amber-soft:#fff4e0;--cv-violet:#7c3aed;--cv-violet-soft:#f1ebfd;--cv-teal:#0f8a7e;--cv-teal-soft:#e2f6f3;--cv-yellow:#b58105;--cv-yellow-soft:#fdf6dc;--cv-red:#dc2626;--cv-red-soft:#fdecec;--cv-seg-on:#fff;position:relative;width:100%;color:var(--cv-fg);font:400 14px/1.45 Inter,system-ui,sans-serif;container:cv/inline-size;box-sizing:border-box}
+:where(.dark,[data-theme=dark]) .cv{--cv-bg:#1b1b1e;--cv-page:#141416;--cv-fg:#ececef;--cv-muted:#a1a1aa;--cv-faint:#71717a;--cv-line:#2e2e33;--cv-soft:#26262a;--cv-accent:#7c9cff;--cv-accent-soft:#1b2a44;--cv-green:#4ade80;--cv-green-soft:#16301f;--cv-amber:#eba659;--cv-amber-soft:#3a2a12;--cv-violet:#a78bfa;--cv-violet-soft:#2a2140;--cv-teal:#5eead4;--cv-teal-soft:#123330;--cv-yellow:#e8c25a;--cv-yellow-soft:#352c10;--cv-red:#f87171;--cv-red-soft:#3a1d1f;--cv-seg-on:#3a3a40;color-scheme:dark}
 .cv *{box-sizing:border-box}:where(.cv) button{font:inherit;color:inherit;cursor:pointer}
 .cv :focus-visible{outline:2px solid var(--cv-accent);outline-offset:1px}
 .cv-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -901,8 +1023,20 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 .cv-nav-item:hover{background:var(--cv-soft);color:var(--cv-fg)}
 .cv-nav-item[data-in]{color:var(--cv-fg)}
 .cv-nav-item[aria-current=true]{background:var(--cv-accent-soft);color:color-mix(in srgb,var(--cv-accent) 60%,var(--cv-fg));font-weight:500}
-.cv-nav-glyph{flex:none;width:8px;height:8px;border-radius:2px;background:var(--cv-faint)}
-.cv-nav-glyph.is-institution{background:var(--cv-violet)}.cv-nav-glyph.is-company{background:var(--cv-accent)}.cv-nav-glyph.is-department{background:var(--cv-teal);border-radius:50%}.cv-nav-glyph.is-team{background:var(--cv-amber);border-radius:50%}
+.cv-nav-glyph{display:inline-flex;flex:none;color:var(--cv-faint)}
+.cv-nav-item[data-in] .cv-nav-glyph,.cv-nav-item[aria-current=true] .cv-nav-glyph{color:currentColor}
+.cv-nav-count{margin-left:auto;font-size:11.5px;color:var(--cv-faint);font-variant-numeric:tabular-nums}
+.cv-types{margin-top:4px;padding-top:10px;border-top:1px solid var(--cv-line)}
+.cv-types-h{display:flex;align-items:center;gap:6px;margin:0 0 4px;padding:0 8px;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--cv-muted)}
+.cv-title{display:flex;align-items:center;gap:8px}
+.cv-title .cv-icon{color:var(--cv-muted)}
+.cv-title-n{font-size:14px;font-weight:500;color:var(--cv-muted)}
+.cv-tabs button .cv-icon{color:var(--cv-faint)}
+.cv-tabs button[aria-selected=true] .cv-icon{color:var(--cv-fg)}
+.cv-section-h .cv-icon{align-self:center;color:var(--cv-muted)}
+.cv-kind .cv-icon{margin-right:3px}
+.cv-kind.is-area{background:var(--cv-soft);color:var(--cv-muted)}
+.cv-type-chips{margin-bottom:10px}
 .cv-nav-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cv-side-chips{display:none}
 .cv-main{min-width:0;display:flex;flex-direction:column}
@@ -938,6 +1072,11 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 @keyframes cv-fade{from{opacity:0}}
 @keyframes cv-grow{from{transform:scaleX(0)}}
 @container cv (max-width:820px){
+.cv-types{width:100%;margin-top:0;padding-top:8px}
+.cv-types-h{display:none}
+.cv-types .cv-nav-list{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.cv-types .cv-nav-item{width:auto;min-height:30px;padding:0 10px;border:1px solid var(--cv-line);border-radius:15px;white-space:nowrap}
+.cv-types .cv-nav-count{margin-left:2px}
 .cv-ws{grid-template-columns:1fr}
 .cv-side{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px;border-right:0;border-bottom:1px solid var(--cv-line)}
 .cv-nav{display:none}
@@ -972,6 +1111,16 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 @media(prefers-reduced-motion:reduce){.cv *,.cv{animation:none!important;transition:none!important}}
 `;
 
-const css = baseCss + dashboardCss + raciCss + methodologyCss;
+const css = baseCss + dashboardCss + raciCss + methodologyCss + collectionCss;
 
 export default CompanyView;
+
+/** The Collection view on its own (catalog, inai.sh pages): tokens + styles included. */
+export function CollectionPanel({ className = "", ...props }: React.ComponentProps<typeof CollectionView> & { className?: string }) {
+  return (
+    <div className={`cv cv-standalone ${className}`}>
+      <style>{css}</style>
+      <CollectionView {...props} />
+    </div>
+  );
+}
