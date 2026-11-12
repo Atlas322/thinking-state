@@ -7,6 +7,8 @@
 
 // Company renderer (TENET phase 2)
 export { CompanyView, CollectionPanel, COMPANY_VIEWS, companyLabelsMn } from "../company/company-view";
+export { CompanyMini, companyMiniLabelsMn } from "../company/company-mini";
+export type { CompanyMiniLabels } from "../company/company-mini";
 export type { CompanyLayout, CompanyViewKey, CompanyViewLabels, CompanyViewProps } from "../company/company-view";
 export { Dashboard, ProjectReportFor, dependencyText, dueBucket, isHeld } from "../company/dashboard";
 export { MethodologyView, methodologyName, methodologyShort } from "../company/methodology";

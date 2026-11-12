@@ -3,6 +3,7 @@
 import * as React from "react";
 import { DecisionInboxChat, type DecisionChatItem } from "../library/decision-inbox-chat";
 import { Dashboard, dashboardCss } from "./dashboard";
+import { CompanyMini, companyMiniCss, type CompanyMiniLabels } from "./company-mini";
 import { MethodologyView, methodologyCss, methodologyName, methodologyShort } from "./methodology";
 import { PersonProfile, RaciView, raciCss } from "./raci";
 import {
@@ -153,6 +154,14 @@ export type CompanyViewProps = {
   onScopeChange?: (scope: { level: CompanyLevel; unitId: string | null }) => void;
   labels?: Partial<CompanyViewLabels>;
   className?: string;
+  /**
+   * "preview": a small board for a hero or a card — one header line, 3 tabs,
+   * 3 stats, 3–4 tasks, ~360 px; interactive, plays a short story that pauses
+   * while someone uses it. Default "full".
+   */
+  density?: "full" | "preview";
+  /** Preview only: texts of the small board. */
+  previewLabels?: Partial<CompanyMiniLabels>;
 };
 
 const levelOfKind = (k: UnitKind): CompanyLevel => (k === "institution" ? "institution" : k === "company" ? "company" : "team");
@@ -468,6 +477,8 @@ export function CompanyView({
   onScopeChange,
   labels: labelsProp,
   className = "",
+  density = "full",
+  previewLabels,
 }: CompanyViewProps) {
   const L = { ...companyLabelsMn, ...labelsProp };
   const uid = React.useId();
@@ -720,6 +731,14 @@ export function CompanyView({
       {L.exportedAt}: <time dateTime={company.exportedAt}>{asOfText(company.exportedAt)}</time>
     </p>
   ) : null;
+
+  if (density === "preview")
+    return (
+      <div ref={rootRef} className={`cv ${className}`} data-density="preview">
+        <style>{css + companyMiniCss}</style>
+        <CompanyMini company={company} today={today} labels={previewLabels} badge={segmentText} />
+      </div>
+    );
 
   if (layout === "brief") {
     return (

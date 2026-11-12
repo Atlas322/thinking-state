@@ -69,9 +69,9 @@ afterEach(() => {
 const modules = import.meta.glob<{ default: ComponentType }>("./library/*.tsx");
 
 describe("Complete reusable catalog", () => {
-  it("contains all 107 distinct catalog entries and 23 MIT originals", () => {
-    expect(catalog).toHaveLength(107);
-    expect(new Set(catalog.map((x) => x.slug)).size).toBe(107);
+  it("contains all 108 distinct catalog entries and 23 MIT originals", () => {
+    expect(catalog).toHaveLength(108);
+    expect(new Set(catalog.map((x) => x.slug)).size).toBe(108);
     expect(catalog.filter((x) => !x.pro)).toHaveLength(23);
   });
   for (const entry of catalog) {

@@ -121,7 +121,7 @@ function Due({ due, today }: { due?: string; today: Date }) {
   );
 }
 
-function TaskRow({ c, t, today }: { c: Company; t: CompanyTask; today: Date }) {
+export function TaskRow({ c, t, today }: { c: Company; t: CompanyTask; today: Date }) {
   const g = gtdOf(t.status);
   const closed = g === GTD.completed || g === GTD.cancelled;
   const owner = t.ownerId ? actorOf(c, t.ownerId) : null;
