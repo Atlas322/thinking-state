@@ -719,6 +719,17 @@
     "usage": "import { MotionFoundation } from \"./motion-foundation\";\n\nexport default function App() {\n  return (\n    <MotionFoundation controls=\"hover\">\n      <span className=\"ts-loop ts-loop-swing\" style={{ \"--ts-loop-origin\": \"50% 10%\" }}>🔔</span>\n    </MotionFoundation>\n  ); // = LoopRegion from src/motion; also useInViewLoop, MotionProvider (page-wide pause), animateSpring, SPRINGS, --ts-motion-* tokens\n}"
   },
   {
+    "slug": "ts-primitives",
+    "name": "Primitive · Үндсэн",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/ui, src/layout, src/lib",
+    "description": "Апп ба сайт хоёулаа хэрэглэдэг цорын ганц дизайн системийн үндсэн хэсгүүд. Үүнд: Text (display, h1–h3, body, label, mono), Button (primary, secondary, ghost), SplitCTA (тусдаа ↗ нүдтэй), Pill (сонгогддог, тоотой), Tabs (tab ба сегмент, гараар удирдана), Badge (ангиллын тод өнгөтэй), Card (энгийн, дарагддаг, сонгосон, блок). Cream ба dark theme-д зэрэгцүүлж харуулна. Сонгосон төлөв нь #0C8CE9 дэвсгэр дээр цагаан текст. Control гадна margin-гүй, зайг Stack өгнө. Сайт зөвхөн @inai/thinking-state/ts.css-ийг импортлоно.",
+    "exportName": "TsPrimitives",
+    "usage": "import { TsPrimitives } from \"./ts-primitives\";\n\nexport default function App() {\n  return <TsPrimitives theme=\"dark\" />; // primitives: Button, SplitCTA, Pill, Tabs, Badge, Card, Text, Stack from \"@inai/thinking-state\"; sites import \"@inai/thinking-state/ts.css\"\n}"
+  },
+  {
     "slug": "project-report",
     "name": "Project Report",
     "category": "Chat widgets",

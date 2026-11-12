@@ -190,6 +190,19 @@
 }
 
 /*
+ * Shape: controls 8, cards 12, pills round; the block layout (marketing,
+ * Figma section 10) uses square corners for blocks, CTAs and tags. The
+ * split CTA's ↗ cell is a deeper Electric.
+ */
+:where(:root) {
+  --ts-radius-control: 8px;
+  --ts-radius-card: 12px;
+  --ts-radius-pill: 999px;
+  --ts-radius-block: 0;
+  --ts-cta-arrow: #1550e0;
+}
+
+/*
  * Selected / active state (owner 2026-11-12, Figma section 09): the active
  * tab, chip, segment, scenario or flow card is bright blue with white text
  * and icons — the same on cream and dark; never indigo. A count inside a

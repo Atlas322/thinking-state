@@ -114,6 +114,18 @@ text-muted/text-faint/accent/accent-text/accent-soft/electric/indigo/link/amber/
 amber-soft/green/red`, `--ts-shadow`, `--ts-font-heading/text/label`. tokens.css-ийг
 өөрчилсний дараа `npm run tokens:site` ажиллуул (тест зөрөхийг барина).
 
+**Primitive (`src/ui`) ба `ts.css`.** Апп ба сайтын цорын ганц дизайн систем
+(owner 11-12). Үүнд: `Text` (display, h1–h3, body-lg, body, small, label, mono,
+caption), `Button` (primary, secondary, ghost; sm/md/lg; `href` бол линк),
+`SplitCTA` (тусдаа ↗ нүдтэй блок CTA), `Pill` (`selected`, `count`; `onClick` бол
+aria-pressed toggle), `Tabs` (`variant="tabs"` = tablist, `"segmented"` = radiogroup;
+сум, Home, End товчоор удирдана), `Badge` (`tone`, ангиллын `cat-1..4`), `Card`
+(`interactive`, `selected`, `block`), `Stack`. Сонгосон төлөв `--ts-selected`
+#0C8CE9, цагаан текст. Control гадна margin-гүй. Сайт зөвхөн
+`import "@inai/thinking-state/ts.css"` хийнэ: token (`:root` cream,
+`[data-theme=dark]`), alias, primitive, motion бүгд нэг файлд. `npm run tokens:site`
+нь site.css ба ts.css-ийг үүсгэнэ, тест хоёуланг нь шинэ эсэхийг шалгана.
+
 **Spacing.** 4px суурьтай `--ts-space-1…10` (4 8 12 16 24 32 48 64 72 96), хэмнэл
 `--ts-gap-stack-sm/md/lg` (8/16/24), `--ts-gap-control` (control-ийн доор доод тал нь
 16), `--ts-gap-section` (72, Figma «Нүүр v02»). Control (segmented, tab мөр,
