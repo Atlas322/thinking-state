@@ -10,5 +10,5 @@ export type { InViewLoop, InViewLoopOptions, LoopState } from "./use-in-view-loo
 export { LoopRegion, MotionControls, MotionStyles, motionControlLabelsMn, useLoop } from "./controls";
 export type { LoopRegionProps, MotionControlLabels, MotionControlsProps } from "./controls";
 export { animateSpring, prefersReducedMotion } from "./animate";
-export { ScenarioRegion, useScenario } from "./scenario";
+export { ScenarioRegion, UNCONTROLLED_MAX_MS, useScenario } from "./scenario";
 export type { Scenario, ScenarioOptions, ScenarioRegionProps, ScenarioStep } from "./scenario";

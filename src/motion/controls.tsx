@@ -99,7 +99,11 @@ export function MotionControls({ onReplay, paused, onTogglePause, showPause = tr
 
 export type LoopRegionProps = InViewLoopOptions & {
   children: React.ReactNode;
-  /** Where the ↺ / ⏸ controls sit. "hover" shows them on hover / focus (always on touch). */
+  /**
+   * Where the ↺ / ⏸ controls sit. "hover" shows them on hover / focus (always
+   * on touch). Default "none" (web blocks): the loops then play one cycle
+   * only, so the motion ends by itself (WCAG 2.2.2).
+   */
   controls?: "hover" | "always" | "none";
   labels?: Partial<MotionControlLabels>;
   className?: string;
@@ -110,7 +114,7 @@ export type LoopRegionProps = InViewLoopOptions & {
 
 export function LoopRegion({
   children,
-  controls = "hover",
+  controls = "none",
   labels,
   className = "",
   style,
@@ -121,7 +125,14 @@ export function LoopRegion({
   const loop = useInViewLoop<HTMLElement>(options);
   React.useEffect(() => onStateChange?.(loop.state), [loop.state, onStateChange]);
   return (
-    <Tag ref={loop.ref as React.Ref<never>} className={`ts-loop-region ${className}`} style={style} {...loop.attrs} data-controls={controls} onPointerEnter={loop.wake}>
+    <Tag
+      ref={loop.ref as React.Ref<never>}
+      className={`ts-loop-region ${className}`}
+      style={controls === "none" ? ({ "--ts-motion-loop-count": 1, ...style } as React.CSSProperties) : style}
+      {...loop.attrs}
+      data-controls={controls}
+      onPointerEnter={loop.wake}
+    >
       <MotionStyles />
       <React.Fragment key={loop.epoch}>{children}</React.Fragment>
       {controls !== "none" && loop.state !== "reduced" && (

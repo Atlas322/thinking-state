@@ -2,7 +2,7 @@
 import * as React from "react";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ScenarioRegion } from "./motion";
+import { LoopRegion, ScenarioRegion, UNCONTROLLED_MAX_MS } from "./motion";
 
 type IOCallback = (entries: { target: Element; isIntersecting: boolean; intersectionRatio: number }[]) => void;
 let ioCallbacks: IOCallback[] = [];
@@ -122,5 +122,50 @@ describe("useScenario with inline steps", () => {
     show(true);
     for (let i = 0; i < 4; i++) tick(300);
     expect(state()).toBe("b");
+  });
+});
+
+describe("web blocks without controls (WCAG 2.2.2)", () => {
+  const LONG = [
+    { state: "one", hold: 2000 },
+    { state: "two", hold: 2000 },
+    { state: "three", hold: 2000 },
+    { state: "four", hold: 2000 },
+  ];
+  it("default has no ↺ / ⏸, plays once and settles on the final state within 5 s", () => {
+    render(
+      <ScenarioRegion steps={LONG}>
+        {(s) => <p data-testid="s">{s}</p>}
+      </ScenarioRegion>,
+    );
+    expect(screen.queryByRole("button")).toBeNull();
+    show(true);
+    tick(2000);
+    expect(state()).toBe("two");
+    tick(UNCONTROLLED_MAX_MS - 2000);
+    expect(state()).toBe("four"); // cut short at 5 s on the final state
+    tick(60_000);
+    expect(state()).toBe("four"); // and it never starts again by itself
+  });
+  it("a short story still plays its single cycle in full", () => {
+    render(
+      <ScenarioRegion steps={STEPS}>
+        {(s) => <p data-testid="s">{s}</p>}
+      </ScenarioRegion>,
+    );
+    show(true);
+    tick(1000);
+    expect(state()).toBe("waiting");
+    tick(1500);
+    expect(state()).toBe("approved");
+    tick(30_000);
+    expect(state()).toBe("approved");
+  });
+  it("LoopRegion without controls runs its CSS loops once", () => {
+    const { container } = render(<LoopRegion>x</LoopRegion>);
+    const el = container.querySelector(".ts-loop-region") as HTMLElement;
+    expect(el.dataset.controls).toBe("none");
+    expect(el.style.getPropertyValue("--ts-motion-loop-count")).toBe("1");
+    expect(screen.queryByRole("button")).toBeNull();
   });
 });
