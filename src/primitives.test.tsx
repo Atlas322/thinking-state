@@ -2,7 +2,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import * as React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { Badge, Button, Card, Pill, PRIMITIVES_CSS, SplitCTA, Tabs, Text } from "./ui/primitives";
+import { Badge, Button, Card, IconTile, Pill, PRIMITIVES_CSS, SplitCTA, Tabs, Text } from "./ui/primitives";
 import { motionCss } from "./motion";
 import * as pkg from "./lib/index";
 
@@ -131,5 +131,26 @@ describe("review fixes", () => {
     render(<Tabs label="x" value={"z" as "a" | "b" | "z"} onChange={() => {}} items={[{ value: "a", label: "A", disabled: true }, { value: "b", label: "B" }]} />);
     expect(screen.getByRole("tab", { name: "B" }).tabIndex).toBe(0);
     expect(screen.getByRole("tab", { name: "A" }).tabIndex).toBe(-1);
+  });
+});
+
+describe("IconTile and status tones", () => {
+  it("tiles take a size, a tone and an optional label; folder is the filled icon", () => {
+    const { container } = render(
+      <>
+        <IconTile icon="bot" tone="cat-2" size={32} label="Технологи" />
+        <IconTile icon="folder" tone="folder" size={20} />
+      </>,
+    );
+    const tile = screen.getByRole("img", { name: "Технологи" });
+    expect(tile.className).toContain("is-cat-2");
+    expect(tile.style.getPropertyValue("--ts-tile-size")).toBe("32px");
+    expect(container.querySelector(".ts-tile.is-folder svg.is-filled")).not.toBeNull();
+  });
+
+  it("status badges use the triad tokens", () => {
+    render(<Badge tone="needs-you">Таны ээлж</Badge>);
+    expect(screen.getByText("Таны ээлж").className).toContain("is-needs-you");
+    expect(PRIMITIVES_CSS).toContain(".ts-badge.is-needs-you{background:var(--ts-status-needs-you-bg);box-shadow:inset 0 0 0 1px var(--ts-status-needs-you-border);color:var(--ts-status-needs-you-fg)}");
   });
 });

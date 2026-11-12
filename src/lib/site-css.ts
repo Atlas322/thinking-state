@@ -2,7 +2,7 @@
  * site.css — the same Thinking State tokens for a whole page (the marketing site),
  * generated from tokens.css so there is one source:
  *  - cream on :root, dark (Чиглэл 2) on :root[data-theme="dark"] / :root.dark,
- *    with no wrapper element needed; data-ts-theme / data-ts-mode still work;
+ *    with no wrapper element needed; data-ts-theme still works;
  *  - a stable alias layer (--ts-color-*, --ts-font-*) that the site uses, so
  *    internal token renames never reach it;
  *  - body background, text colour and font.
@@ -29,7 +29,8 @@ export const SITE_ALIASES: Record<string, string> = {
   "--ts-color-accent-text": "--ts-accent-fg",
   "--ts-color-accent-soft": "--ts-accent-soft",
   "--ts-color-electric": "--ts-electric",
-  "--ts-color-indigo": "--ts-indigo",
+  "--ts-color-accent-strong": "--ts-accent-strong",
+  "--ts-color-folder": "--ts-folder",
   "--ts-color-link": "--ts-link",
   "--ts-color-amber": "--ts-amber",
   "--ts-color-amber-soft": "--ts-amber-soft",
@@ -53,7 +54,7 @@ export function siteCss(tokens: string): string {
   return `/*
  * @inai/thinking-state/site.css — GENERATED from tokens.css (npm run tokens:site).
  * Thinking State tokens for a whole page: cream on :root, dark (Чиглэл 2) on
- * :root[data-theme="dark"]; Удирдах accent with data-ts-mode="manage".
+ * :root[data-theme="dark"]; one Electric accent; status triads --ts-status-*.
  * Use the --ts-color-* / --ts-font-heading|text|label names below: they are the stable contract.
  */
 ${body.replace(/^\/\*[\s\S]*?\*\/\n/, "")}

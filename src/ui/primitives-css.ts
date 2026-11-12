@@ -4,27 +4,28 @@ const SEL = "var(--ts-selected,#0c8ce9)";
 const ON = "var(--ts-on-selected,#fff)";
 const ON_SOFT = "var(--ts-on-selected-soft,rgb(255 255 255 / .2))";
 const ACC = "var(--ts-accent,#1b5cff)";
+export const STATUSES = ["running", "needs-you", "error", "done", "idle"] as const;
 
 export const PRIMITIVES_CSS = `
 .ts-btn,.ts-cta,.ts-pill,.ts-tab{-webkit-tap-highlight-color:transparent;font-family:var(--ts-font,Inter,system-ui,sans-serif)}
 .ts-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;border:1px solid transparent;border-radius:var(--ts-radius-control,8px);font-weight:500;line-height:1;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background var(--ts-motion-dur-xs,120ms),border-color var(--ts-motion-dur-xs,120ms),color var(--ts-motion-dur-xs,120ms),transform var(--ts-motion-dur-sm,200ms) var(--ts-motion-spring-soft,ease-out)}
 .ts-btn.is-sm{height:30px;padding:0 12px;font-size:13px}
-.ts-btn.is-md{height:38px;padding:0 16px;font-size:14px}
+.ts-btn.is-md{height:36px;padding:0 14px;font-size:14px}
 .ts-btn.is-lg{height:48px;padding:0 22px;font-size:15px}
 .ts-btn.is-block{display:flex;width:100%}
-.ts-btn.is-primary{background:${ACC};color:#fff}
-.ts-btn.is-primary:hover{background:color-mix(in srgb,${ACC} 88%,#000)}
-.ts-btn.is-secondary{background:var(--ts-surface,#f7f5ee);border-color:var(--ts-line,#d8d3c6);color:var(--ts-fg,#080808)}
-.ts-btn.is-secondary:hover{background:var(--ts-soft,#efebe1)}
-.ts-btn.is-ghost{background:transparent;color:var(--ts-fg,#080808)}
+.ts-btn.is-primary{background:var(--ts-accent-strong,#1b5cff);color:#fff;font-weight:600}
+.ts-btn.is-primary:hover{background:color-mix(in srgb,var(--ts-accent-strong,#1b5cff) 88%,#000)}
+.ts-btn.is-secondary{background:var(--ts-btn-bg,#fbfaf6);border-color:var(--ts-btn-line,#a8a296);color:var(--ts-btn-fg,#14130f);font-weight:600;box-shadow:0 1px 2px rgb(0 0 0 / .12)}
+.ts-btn.is-secondary:hover{background:color-mix(in srgb,var(--ts-btn-bg,#fbfaf6) 92%,var(--ts-btn-fg,#14130f))}
+.ts-btn.is-ghost{background:transparent;border-color:var(--ts-btn-line,#a8a296);color:var(--ts-btn-fg,#14130f);font-weight:600}
 .ts-btn.is-ghost:hover{background:var(--ts-soft,#efebe1)}
 .ts-btn:active{transform:scale(.97)}
 .ts-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .ts-btn:focus-visible,.ts-cta:focus-visible,.ts-pill:focus-visible,.ts-tab:focus-visible,.ts-card.is-interactive:focus-visible{outline:2px solid ${SEL};outline-offset:2px}
 
-.ts-cta{display:inline-flex;align-items:stretch;height:48px;padding:0;border:0;border-radius:var(--ts-radius-block,0);background:none;font-size:15px;font-weight:500;text-decoration:none;cursor:pointer}
-.ts-cta-label{display:inline-flex;align-items:center;padding:0 20px;background:var(--ts-electric,${ACC});color:#fff}
-.ts-cta-arrow{display:inline-grid;place-items:center;width:48px;background:var(--ts-cta-arrow,#1550e0);color:#fff;transition:transform var(--ts-motion-dur-sm,200ms) var(--ts-motion-spring-soft,ease-out)}
+.ts-cta{display:inline-flex;align-items:stretch;width:fit-content;max-width:100%;height:34px;padding:0;border:0;border-radius:var(--ts-radius-block,0);background:none;font-size:13px;font-weight:500;line-height:1;text-decoration:none;cursor:pointer}
+.ts-cta-label{display:inline-flex;align-items:center;padding:9px 14px;background:var(--ts-accent-strong,#1b5cff);color:#fff;white-space:nowrap}
+.ts-cta-arrow{display:inline-grid;place-items:center;width:34px;flex:none;background:var(--ts-cta-arrow,#1550e0);color:#fff;transition:transform var(--ts-motion-dur-sm,200ms) var(--ts-motion-spring-soft,ease-out)}
 .ts-cta:hover .ts-cta-arrow svg{transform:translate(2px,-2px)}
 .ts-cta-arrow svg{transition:transform var(--ts-motion-dur-sm,200ms) var(--ts-motion-spring-soft,ease-out)}
 .ts-cta.is-ghost .ts-cta-label,.ts-cta.is-ghost .ts-cta-arrow{background:transparent;color:var(--ts-fg,#080808);border:1px solid var(--ts-line,#d8d3c6)}
@@ -56,7 +57,14 @@ export const PRIMITIVES_CSS = `
 .ts-badge.is-amber{background:var(--ts-amber-soft,#f2e3cc);color:var(--ts-amber,#a85a12)}
 .ts-badge.is-red{background:var(--ts-red-soft,#f4dad6);color:var(--ts-red,#c2362f)}
 .ts-badge.is-violet{background:var(--ts-violet-soft,#e5ddf3);color:var(--ts-violet,#6b47c9)}
-${[1, 2, 3, 4].map((i) => `.ts-badge.is-cat-${i}{background:var(--ts-cat-${i}-bg,var(--ts-soft,#efebe1));color:color-mix(in srgb,var(--ts-cat-${i},#888) 62%,var(--ts-fg,#080808))}`).join("\n")}
+${[1, 2, 3, 4].map((i) => `.ts-badge.is-cat-${i}{background:var(--ts-cat-${i}-bg,var(--ts-soft,#efebe1));color:var(--ts-cat-${i}-fg,color-mix(in srgb,var(--ts-cat-${i},#888) 62%,var(--ts-fg,#080808)))}`).join("\n")}
+${STATUSES.map((st) => `.ts-badge.is-${st}{background:var(--ts-status-${st}-bg);box-shadow:inset 0 0 0 1px var(--ts-status-${st}-border);color:var(--ts-status-${st}-fg)}`).join("\n")}
+
+.ts-tile{display:inline-grid;place-items:center;flex:none;box-sizing:border-box;width:var(--ts-tile-size);height:var(--ts-tile-size);border-radius:min(var(--ts-radius-tile,6px),calc(var(--ts-tile-size) / 4));background:var(--ts-soft,#efebe1);color:var(--ts-fg,#080808)}
+${[1, 2, 3, 4].map((i) => `.ts-tile.is-cat-${i}{background:var(--ts-cat-${i});color:var(--ts-on-cat-${i},#fff)}`).join("\n")}
+.ts-tile.is-accent{background:var(--ts-accent-strong,#1b5cff);color:#fff}
+${STATUSES.map((st) => `.ts-tile.is-${st}{background:var(--ts-status-${st}-bg);box-shadow:inset 0 0 0 1px var(--ts-status-${st}-border);color:var(--ts-status-${st}-fg)}`).join("\n")}
+.ts-tile.is-folder{background:transparent}
 
 .ts-card{display:block;box-sizing:border-box;border:1px solid var(--ts-line,#d8d3c6);border-radius:var(--ts-radius-card,12px);background:var(--ts-surface,#f7f5ee);color:var(--ts-fg,#080808);box-shadow:var(--ts-elevation,none);text-decoration:none;min-width:0}
 .ts-card.is-pad-sm{padding:12px}
@@ -85,9 +93,6 @@ ${[1, 2, 3, 4].map((i) => `.ts-badge.is-cat-${i}{background:var(--ts-cat-${i}-bg
 .ts-text.is-faint{color:var(--ts-faint,#8f8a80)}
 .ts-text.is-accent{color:var(--ts-accent-fg,${ACC})}
 
-/* Dark: Electric #4D7FFF is ~3.7:1 under white text, so filled buttons and the CTA label go a step deeper (≥ 4.5:1). */
-:where([data-ts-theme=dark],[data-ts-theme=manage],.ts-theme-dark,.ts-theme-manage,:root[data-theme=dark]) .ts-btn.is-primary,
-:where([data-ts-theme=dark],[data-ts-theme=manage],.ts-theme-dark,.ts-theme-manage,:root[data-theme=dark]) .ts-cta.is-primary .ts-cta-label{background:color-mix(in srgb,var(--ts-accent,#4d7fff) 78%,#000)}
 @media (prefers-reduced-motion:reduce){.ts-btn,.ts-card,.ts-cta-arrow,.ts-cta-arrow svg,.ts-tab{transition:none}.ts-btn:active{transform:none}}
 `;
 
