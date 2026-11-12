@@ -10,6 +10,11 @@
  *    then it rests on the last state until it re-enters view or ↺.
  *  - ↺ restarts from the first step, ⏸ / ▶ pauses on the current state
  *    (WCAG 2.2.2) — <MotionControls> on the region.
+ *  - No controls (the default since 2026-11-13: ↺ / ⏸ belong to the chat
+ *    detail components only — ScenarioChat, ThinkingState, AgentConsent,
+ *    ToolCall, AgentLanes, the CompanyView board): the story plays once and
+ *    settles on its final state within 5 s (`maxMs`), so no control is needed
+ *    under WCAG 2.2.2.
  *  - prefers-reduced-motion: the last (final) state, no timers.
  *
  * The component renders `state`; spring transitions come from CSS on the
@@ -28,7 +33,12 @@ export type ScenarioOptions = InViewLoopOptions & {
   rest?: number;
   /** Cycles before it rests on the last state. Default LOOP.count (3). Infinity = always. */
   loops?: number;
+  /** Settle on the final state after this many ms of playing (WCAG 2.2.2 when there are no controls). */
+  maxMs?: number;
 };
+
+/** WCAG 2.2.2: moving content without a pause control stops within 5 s. */
+export const UNCONTROLLED_MAX_MS = 5000;
 
 export type Scenario<S, T extends Element> = {
   state: S;
@@ -47,7 +57,7 @@ export type Scenario<S, T extends Element> = {
 };
 
 export function useScenario<S, T extends Element = HTMLDivElement>(steps: ScenarioStep<S>[], options: ScenarioOptions = {}): Scenario<S, T> {
-  const { rest = LOOP.rest, loops = LOOP.count, ...view } = options;
+  const { rest = LOOP.rest, loops = LOOP.count, maxMs, ...view } = options;
   const loop = useInViewLoop<T>(view);
   const last = Math.max(0, steps.length - 1);
   const [index, setIndex] = React.useState(0);
@@ -82,10 +92,26 @@ export function useScenario<S, T extends Element = HTMLDivElement>(steps: Scenar
     return () => clearTimeout(t);
   }, [running, index, cycle, loops, last, rest]);
 
+  // maxMs: settle on the final state once the story has played that long (counted while running)
+  const playedRef = React.useRef(0);
+  React.useEffect(() => {
+    if (!running || maxMs == null || cycle >= loops) return;
+    const started = Date.now();
+    const t = setTimeout(() => {
+      setIndex(last);
+      setCycle(loops);
+    }, Math.max(0, maxMs - playedRef.current));
+    return () => {
+      clearTimeout(t);
+      playedRef.current += Date.now() - started;
+    };
+  }, [running, maxMs, cycle, loops, last]);
+
   const shown = reduced ? last : Math.min(index, last);
   const replay = React.useCallback(() => {
     setIndex(0);
     setCycle(0);
+    playedRef.current = 0;
     loop.replay();
   }, [loop]);
 
@@ -116,11 +142,15 @@ export type ScenarioRegionProps<S> = ScenarioOptions & {
   showSteps?: boolean;
 };
 
-/** A region that plays its scenario, with ↺ / ⏸ on top. */
+/**
+ * A region that plays its scenario. Without controls (default) it plays once
+ * and settles within 5 s; pass controls="hover" | "always" for ↺ / ⏸ (chat
+ * detail components) and the usual 3 cycles.
+ */
 export function ScenarioRegion<S>({
   steps,
   children,
-  controls = "hover",
+  controls = "none",
   labels,
   className = "",
   style,
@@ -128,7 +158,12 @@ export function ScenarioRegion<S>({
   showSteps = false,
   ...options
 }: ScenarioRegionProps<S>) {
-  const sc = useScenario<S, HTMLElement>(steps, options);
+  const free = controls === "none";
+  const sc = useScenario<S, HTMLElement>(steps, {
+    ...options,
+    loops: options.loops ?? (free ? 1 : undefined),
+    maxMs: options.maxMs ?? (free ? UNCONTROLLED_MAX_MS : undefined),
+  });
   return (
     <Tag ref={sc.ref as React.Ref<never>} className={`ts-loop-region ts-scenario ${className}`} style={style} {...sc.attrs} data-controls={controls}>
       <MotionStyles />
