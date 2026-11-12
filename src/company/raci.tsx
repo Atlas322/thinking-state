@@ -2,6 +2,7 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { actorOf, raciOf, type Company, type CompanyPerson } from "./types";
 import { Avatar, initials } from "./ui";
+import { Empty } from "./collection";
 
 /**
  * RACI — one matrix per company: rows are people and agents, columns are
@@ -21,7 +22,7 @@ export function RaciView({ c, scoped, onPerson, empty }: { c: Company; scoped: C
     if (!r) continue;
     [...(r.responsible ?? []), r.accountable, ...(r.consulted ?? []), ...(r.informed ?? [])].forEach((id) => id && ids.add(id));
   }
-  if (!ids.size) return <p className="cv-empty">{empty}</p>;
+  if (!ids.size) return <Empty text={empty} icon="grid-3x3" />;
   const actors = [...ids]
     .map((id) => actorOf(c, id))
     .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === "person" ? -1 : 1));
@@ -151,7 +152,7 @@ export function PersonProfile({ c, person, onClose, themeClass = "" }: { c: Comp
                   <li key={e.period + e.title + i} style={{ "--i": i } as React.CSSProperties}>
                     <span className="cv-cv-period">{e.period}</span>
                     <span className="cv-cv-title">{e.title}</span>
-                    <span className="cv-cv-org">{e.org}</span>
+                    {e.org && <span className="cv-cv-org">{e.org}</span>}
                   </li>
                 ))}
               </ol>

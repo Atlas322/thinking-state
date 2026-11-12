@@ -15,6 +15,7 @@ import {
   type PmPhase,
 } from "./types";
 import { Avatar, Lines } from "./ui";
+import { Empty } from "./collection";
 
 /**
  * Methodology templates — the same company core drawn the way the
@@ -37,26 +38,26 @@ export const methodologyShort: Record<Methodology, string> = { bmc: "BMC", "lean
 type Block = { key: keyof CompanyModel; area: string; title: string; hint: string };
 
 const BMC: Block[] = [
-  { key: "partners", area: "kp", title: "Key Partners", hint: "Гол түнш" },
-  { key: "activities", area: "ka", title: "Key Activities", hint: "Гол үйл ажиллагаа" },
-  { key: "resources", area: "kr", title: "Key Resources", hint: "Гол нөөц" },
-  { key: "value", area: "vp", title: "Value Propositions", hint: "Үнэ цэнийн санал" },
-  { key: "relationships", area: "cr", title: "Customer Relationships", hint: "Харилцаа" },
-  { key: "channels", area: "ch", title: "Channels", hint: "Суваг" },
-  { key: "customers", area: "cs", title: "Customer Segments", hint: "Үйлчлүүлэгч" },
-  { key: "costs", area: "co", title: "Cost Structure", hint: "Зардал" },
-  { key: "revenue", area: "rv", title: "Revenue Streams", hint: "Орлого" },
+  { key: "partners", area: "kp", title: "Гол түнш", hint: "Key Partners" },
+  { key: "activities", area: "ka", title: "Гол үйл ажиллагаа", hint: "Key Activities" },
+  { key: "resources", area: "kr", title: "Гол нөөц", hint: "Key Resources" },
+  { key: "value", area: "vp", title: "Үнэ цэнийн санал", hint: "Value Propositions" },
+  { key: "relationships", area: "cr", title: "Харилцагчтай харилцаа", hint: "Customer Relationships" },
+  { key: "channels", area: "ch", title: "Суваг", hint: "Channels" },
+  { key: "customers", area: "cs", title: "Үйлчлүүлэгчийн сегмент", hint: "Customer Segments" },
+  { key: "costs", area: "co", title: "Зардлын бүтэц", hint: "Cost Structure" },
+  { key: "revenue", area: "rv", title: "Орлогын урсгал", hint: "Revenue Streams" },
 ];
 const LEAN: Block[] = [
-  { key: "problem", area: "kp", title: "Problem", hint: "Асуудал" },
-  { key: "solution", area: "ka", title: "Solution", hint: "Шийдэл" },
-  { key: "metrics", area: "kr", title: "Key Metrics", hint: "Гол хэмжүүр" },
-  { key: "value", area: "vp", title: "Unique Value Proposition", hint: "Өвөрмөц санал" },
-  { key: "advantage", area: "cr", title: "Unfair Advantage", hint: "Давуу тал" },
-  { key: "channels", area: "ch", title: "Channels", hint: "Суваг" },
-  { key: "customers", area: "cs", title: "Customer Segments", hint: "Үйлчлүүлэгч" },
-  { key: "costs", area: "co", title: "Cost Structure", hint: "Зардал" },
-  { key: "revenue", area: "rv", title: "Revenue Streams", hint: "Орлого" },
+  { key: "problem", area: "kp", title: "Асуудал", hint: "Problem" },
+  { key: "solution", area: "ka", title: "Шийдэл", hint: "Solution" },
+  { key: "metrics", area: "kr", title: "Гол хэмжүүр", hint: "Key Metrics" },
+  { key: "value", area: "vp", title: "Өвөрмөц санал", hint: "Unique Value Proposition" },
+  { key: "advantage", area: "cr", title: "Өрсөлдөхүйц давуу тал", hint: "Unfair Advantage" },
+  { key: "channels", area: "ch", title: "Суваг", hint: "Channels" },
+  { key: "customers", area: "cs", title: "Үйлчлүүлэгчийн сегмент", hint: "Customer Segments" },
+  { key: "costs", area: "co", title: "Зардлын бүтэц", hint: "Cost Structure" },
+  { key: "revenue", area: "rv", title: "Орлогын урсгал", hint: "Revenue Streams" },
 ];
 
 function Canvas({ c, blocks, label }: { c: Company; blocks: Block[]; label: string }) {
@@ -137,7 +138,7 @@ function BmcView({ c, scoped }: { c: Company; scoped: Company }) {
 
 function OkrView({ c, scoped }: { c: Company; scoped: Company }) {
   const okrs = scoped.okrs ?? [];
-  if (!okrs.length) return <p className="cv-empty">OKR бүртгэгдээгүй.</p>;
+  if (!okrs.length) return <Empty text="OKR бүртгэгдээгүй." icon="layout-template" />;
   return (
     <div className="cv-okrs">
       {okrs.map((o, i) => {

@@ -220,7 +220,7 @@ describe("methodology templates", () => {
   it("draws INAI as a Business Model Canvas with projects and notes below", () => {
     render(<CompanyView company={inai} />);
     const panel = screen.getByRole("tabpanel");
-    for (const b of ["Key Partners", "Value Propositions", "Revenue Streams", "Cost Structure"]) expect(within(panel).getByRole("region", { name: b })).toBeTruthy();
+    for (const b of ["Гол түнш", "Үнэ цэнийн санал", "Орлогын урсгал", "Зардлын бүтэц"]) expect(within(panel).getByRole("region", { name: b })).toBeTruthy();
     expect(within(panel).getByRole("region", { name: "Нот" }).textContent).toContain("BMG шалгалт");
   });
 
@@ -229,7 +229,7 @@ describe("methodology templates", () => {
     render(<CompanyView company={inai} onMethodologyChange={onMethodologyChange} />);
     fireEvent.click(screen.getByRole("radio", { name: "Lean" }));
     expect(onMethodologyChange).toHaveBeenCalledWith("lean-canvas");
-    const problem = within(screen.getByRole("tabpanel")).getByRole("region", { name: "Problem" });
+    const problem = within(screen.getByRole("tabpanel")).getByRole("region", { name: "Асуудал" });
     expect(problem.textContent).toContain("Бөглөөгүй");
   });
 
@@ -255,5 +255,102 @@ describe("methodology templates", () => {
     expect(within(panel).getByRole("article", { name: "Нэг өгөгдлийн сангаар удирдана" }).textContent).toContain("55%");
     expect(within(panel).getByRole("progressbar", { name: "Сарын хаалт 5 ажлын өдөрт" }).getAttribute("aria-valuenow")).toBe("70");
     expect(within(panel).getByRole("region", { name: "Бизнес загвар" })).toBeTruthy();
+  });
+});
+
+describe("collections (vault types)", () => {
+  const today = new Date("2026-11-12T09:00:00");
+  const tasks = () => inai.collections!.find((c) => c.type === "task")!;
+
+  it("infers field kinds from names and values", async () => {
+    const { inferKind, resolveFields } = await import("./company/collection");
+    expect(inferKind("status", ["inbox"])).toBe("status");
+    expect(inferKind("due", ["2026-11-12"])).toBe("date");
+    expect(inferKind("tasks", ["1/3", "0/2"])).toBe("progress");
+    expect(inferKind("tags", [["a"], ["b"]])).toBe("multi");
+    expect(inferKind("area", ["Бүтээгдэхүүн"])).toBe("relation");
+    expect(inferKind("done", [true, false])).toBe("checkbox");
+    expect(resolveFields({ type: "x", fields: ["title", { name: "n", kind: "number" }], items: [] }).map((f) => f.kind)).toEqual(["number"]);
+    // company-schema 4e6f8df: declared kinds, relation names stay relations
+    expect(
+      resolveFields({ type: "x", fields: [{ name: "area", kind: "select" }, { name: "owner", kind: "text" }, { name: "mood", kind: "select" }], items: [] }).map((f) => f.kind),
+    ).toEqual(["relation", "relation", "select"]);
+  });
+
+  it("formats relative days", async () => {
+    const { relativeDay } = await import("./company/collection");
+    expect(relativeDay("2026-11-12", today)).toBe("өнөөдөр");
+    expect(relativeDay("2026-11-11", today)).toBe("өчигдөр");
+    expect(relativeDay("2025-09-11", today)).toBe("427 хоногийн өмнө");
+    expect(relativeDay("2026-11-20", today)).toBe("8 хоногийн дараа");
+  });
+
+  it("filters by status tab and shows row parts", async () => {
+    const { CollectionPanel } = await import("./company/company-view");
+    render(<CollectionPanel collection={tasks()} today={today} />);
+    const tabs = screen.getByRole("tablist");
+    const active = within(tabs).getByRole("tab", { name: /Идэвхтэй/ });
+    expect(active.textContent).toContain("3");
+    fireEvent.click(within(tabs).getByRole("tab", { name: /Хүлээгдэж буй/ }));
+    const rows = document.querySelectorAll(".cl-row");
+    expect(rows).toHaveLength(1);
+    expect(rows[0].textContent).toContain("GitHub төлбөр засах");
+    expect(rows[0].textContent).toContain("Өндөр");
+    expect(rows[0].querySelector(".cl-date.is-overdue")?.textContent).toContain("өчигдөр");
+  });
+
+  it("switches views: table, board, calendar week, timeline", async () => {
+    const { CollectionPanel } = await import("./company/company-view");
+    render(<CollectionPanel collection={tasks()} today={today} />);
+    fireEvent.click(screen.getByRole("radio", { name: /Хүснэгт/ }));
+    expect(screen.getByRole("table").querySelectorAll("tbody tr")).toHaveLength(tasks().items.length);
+    fireEvent.click(screen.getByRole("radio", { name: /Самбар/ }));
+    expect(screen.getAllByRole("listitem").filter((x) => x.classList.contains("cl-col")).length).toBeGreaterThan(2);
+    fireEvent.click(screen.getByRole("button", { name: /7 хоногийн хуанли/ }));
+    const grid = screen.getByRole("grid");
+    expect(grid.querySelectorAll("[role=gridcell]")).toHaveLength(7);
+    expect(grid.textContent).toContain("Компанийн renderer");
+    fireEvent.click(screen.getByRole("radio", { name: /Timeline/ }));
+    expect(document.querySelectorAll(".cl-tl-bar").length).toBeGreaterThan(3);
+  });
+
+  it("filters and groups by any field", async () => {
+    const { CollectionPanel } = await import("./company/company-view");
+    render(<CollectionPanel collection={tasks()} today={today} defaultView="list" />);
+    const [field] = screen.getAllByRole("combobox");
+    fireEvent.change(field, { target: { value: "owner" } });
+    fireEvent.change(screen.getAllByRole("combobox")[1], { target: { value: "Architect" } });
+    expect(document.querySelectorAll(".cl-row")).toHaveLength(3);
+    const group = screen.getAllByRole("combobox")[2];
+    fireEvent.change(group, { target: { value: "project" } });
+    expect(screen.getAllByRole("button", { name: /Inai Website|Thinking State/ }).some((b) => b.classList.contains("cl-group-h"))).toBe(true);
+  });
+
+  it("shows an empty state", async () => {
+    const { CollectionPanel } = await import("./company/company-view");
+    render(<CollectionPanel collection={{ type: "event", fields: ["date"], items: [] }} />);
+    expect(screen.getByText("Энэ харагдацад мөр алга.")).toBeTruthy();
+  });
+
+  it("lists vault types in the sidebar and opens one", () => {
+    render(<CompanyView company={inai} today={today} />);
+    const types = screen.getByRole("navigation", { name: "Төрлүүд" });
+    const project = within(types).getByRole("button", { name: /Төсөл/ });
+    expect(project.textContent).toContain("4");
+    fireEvent.click(project);
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toContain("Төсөл");
+    const nm = document.querySelector(".cl-nm");
+    expect(nm?.textContent).toMatch(/\d\/\d/);
+    // a relation chip switches scope back to a unit
+    fireEvent.click(within(types).getByRole("button", { name: /Хүн/ }));
+    fireEvent.click(screen.getAllByRole("button", { name: /Технологи/ }).find((b) => b.classList.contains("cl-rel"))!);
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("Технологи");
+  });
+
+  it("does not repeat the segment next to the kind", () => {
+    render(<CompanyView company={acmeGroup} />);
+    const tags = document.querySelector(".cv-tags")!;
+    expect(tags.textContent).not.toContain("institutional");
+    expect(tags.textContent?.match(/Институц/g)).toHaveLength(1);
   });
 });
