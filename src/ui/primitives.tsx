@@ -1,6 +1,6 @@
 /**
  * Thinking State primitives — the one design system for the app and the site
- * (itge.e 2026-11-12: «дизайн систем нэг л байна, тэр нь Thinking State»).
+ * (2026-11-12: «дизайн систем нэг л байна, тэр нь Thinking State»).
  * Button, SplitCTA, Pill, Tabs (tabs | segmented), Badge, Card, Text.
  *
  * Styling: classes `ts-*` from PRIMITIVES_CSS, read from --ts-* tokens with
@@ -218,7 +218,7 @@ export type IconTileTone = "neutral" | "accent" | "electric" | "cat-1" | "cat-2"
 const TILE: Record<string, [number, number]> = { S: [22, 14], M: [32, 18], L: [48, 26], 16: [16, 11], 20: [20, 13], 24: [24, 15], 32: [32, 18] };
 /**
  * Coloured rounded square with an icon — menus, cards, side peek, collections
- * (itge.e 2026-11-12). Colour comes from the category / status tokens; one
+ * (2026-11-12). Colour comes from the category / status tokens; one
  * radius token (--ts-radius-tile). tone="folder" shows the solid yellow folder.
  */
 export function IconTile({
