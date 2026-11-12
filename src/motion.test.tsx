@@ -149,7 +149,7 @@ describe("useInViewLoop", () => {
   });
 });
 
-describe("<LoopRegion> and <Replay>", () => {
+describe("<LoopRegion> and <MotionControls>", () => {
   it("pauses, resumes and replays (WCAG 2.2.2)", () => {
     const { container } = render(
       <LoopRegion controls="always">
