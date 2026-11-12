@@ -1,6 +1,6 @@
 /**
  * AgentConsent — an agent asks for a scoped, timed grant; a person decides
- * (itge.e 2026-11-12, the «Эрхийн хүсэлт» card held to the scenario
+ * (2026-11-12, the «Эрхийн хүсэлт» card held to the scenario
  * standard). Data in props: agent, action, target, risk, reason, what it
  * will see (preview), scopes, duration. The decision is controlled or
  * internal; `onDecide` reports it.

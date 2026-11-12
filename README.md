@@ -96,7 +96,7 @@ Chat HTML export (uses `react-dom/server`): `import { renderChatHtml } from "@in
 variables (`--ts-page`, `--ts-surface`, `--ts-soft`, `--ts-line`, `--ts-fg`,
 `--ts-muted`, `--ts-faint`, `--ts-accent`, status colours with `-soft`
 pairs, `--ts-font`, `--ts-font-display`, `--ts-font-mono`) and falls back to
-its own defaults. `tokens.css` нь хоёр theme-тэй (itge.e 11-12): `cream`
+its own defaults. `tokens.css` нь хоёр theme-тэй (11-12): `cream`
 (Чиглэл 1, цөцгий) ба `dark` (бүлээн саарал бараан, сайт ба апп-д ижил: side
 #1F1E1D, page #262624, карт #30302E, текст #ECEBE7). Accent ганцхан: Electric
 (дүүргэлттэй товч `--ts-accent-strong` #1B5CFF, бараан дээрх icon/том текст
@@ -120,7 +120,7 @@ amber-soft/green/red`, `--ts-shadow`, `--ts-font-heading/text/label`. tokens.css
 өөрчилсний дараа `npm run tokens:site` ажиллуул (тест зөрөхийг барина).
 
 **Primitive (`src/ui`) ба `ts.css`.** Апп ба сайтын цорын ганц дизайн систем
-(itge.e 11-12). Үүнд: `Text` (display, h1–h3, body-lg, body, small, label, mono,
+(11-12). Үүнд: `Text` (display, h1–h3, body-lg, body, small, label, mono,
 caption), `Button` (primary, secondary, ghost; sm/md/lg; `href` бол линк),
 `SplitCTA` (тусдаа ↗ нүдтэй блок CTA), `Pill` (`selected`, `count`; `onClick` бол
 aria-pressed toggle), `Tabs` (`variant="tabs"` = tablist, `"segmented"` = radiogroup;
@@ -132,7 +132,7 @@ aria-pressed toggle), `Tabs` (`variant="tabs"` = tablist, `"segmented"` = radiog
 нь site.css ба ts.css-ийг үүсгэнэ, тест хоёуланг нь шинэ эсэхийг шалгана.
 
 **Хувилбар (scenario) ба чанарын босго.** Thinking State-ийн компонент бүр өөрийн утга
-зүйн хувилбарыг тоглоно (itge.e 11-12). Хувилбар нь 3–5 төлөв, тэдгээрийн хооронд spring
+зүйн хувилбарыг тоглоно (11-12). Хувилбар нь 3–5 төлөв, тэдгээрийн хооронд spring
 шилжилт, амрах завсар, loop-оос бүрдэнэ. `useScenario(steps, { rest, loops })` эсвэл
 `<ScenarioRegion steps>{(state) => …}</ScenarioRegion>` ашигла. Алхмууд өгөгдлөөс
 (`{ state, hold }`) ирнэ. Хувилбар зөвхөн viewport-д харагдаж байх үед тоглоно,

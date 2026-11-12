@@ -1,5 +1,5 @@
 /**
- * Content rules for anything the library shows (itge.e 2026-11-12):
+ * Content rules for anything the library shows (2026-11-12):
  * no vendor names, no AI model names, no prices. Demo data is Mongolian and
  * generic — «Судлаач агент», «кодын агент», «төлбөрийн систем», «хувилбарын
  * хяналт». Numbers may stay when they mean something; money amounts do not.
@@ -34,7 +34,7 @@ export function contentHits(text: string): ContentHit[] {
 }
 
 /**
- * UI labels are Mongolian (itge.e 2026-11-12). Latin words that may stay:
+ * UI labels are Mongolian (2026-11-12). Latin words that may stay:
  * acronyms (API, CRM, PR, all caps), units, product names, and anything that
  * is code: tokens with digits, dots, slashes, @, #, _ or : (paths, emails,
  * ids, versions, keys).

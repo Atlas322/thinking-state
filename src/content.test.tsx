@@ -50,3 +50,29 @@ describe("catalog content: UI labels are Mongolian", () => {
         expect(english).toEqual([]);
       });
 });
+
+// Real people never go in the repo: fixtures and demo data are fictional
+// (2026-11-12, the repo is public). src/real-names.json holds hashes of the
+// names, handles and past employers to keep out, so the list names no one.
+import realNames from "./real-names.json";
+
+const tracked = import.meta.glob<string>(
+  ["./**/*.{ts,tsx,css,json}", "../scripts/*.mjs", "../posts/*.{ts,tsx}", "../*.md", "../*.html"],
+  { query: "?raw", import: "default", eager: true },
+);
+
+describe("no real people in source, fixtures or docs", () => {
+  it("no word in a source file hashes to a listed real name", async () => {
+    const banned = new Set(realNames.hashes);
+    const hex = async (w: string) =>
+      [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(w)))].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 16);
+    const hits: string[] = [];
+    for (const [file, text] of Object.entries(tracked)) {
+      if (file.endsWith("real-names.json")) continue;
+      for (const w of new Set(text.toLowerCase().normalize("NFC").match(/[\p{L}\p{N}]+/gu) ?? []))
+        if (banned.has(await hex(w))) hits.push(`${file}: ${w}`);
+    }
+    expect(Object.keys(tracked).length).toBeGreaterThan(200);
+    expect(hits).toEqual([]);
+  }, 120_000);
+});
