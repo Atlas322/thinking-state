@@ -9,6 +9,8 @@ import * as React from "react";
  * action) and an optional log that folds open.
  * Original Thinking State chat widget. Colours follow tokens/tokens.json.
  * Data comes in as plain JSON props.
+ * With `me` set, an All / Mine switch keeps the pull requests `me` authored or
+ * reviews (owner OR sharedWith).
  * Motion: rows arrive one after another, finished pipeline steps fill in,
  * the active step runs and the stuck step pulses; all of it is off under
  * prefers-reduced-motion.
@@ -20,6 +22,10 @@ export type PdDeployState = "live" | "building" | "queued" | "stuck" | "failed";
 export type PdStepState = "done" | "active" | "stuck" | "failed" | "next";
 
 export type PdPullRequest = {
+  /** Author (vault `owner`). */
+  owner?: string;
+  /** Reviewers or co-authors. */
+  sharedWith?: string[];
   number: number;
   title: string;
   state: PdPrState;
@@ -52,6 +58,8 @@ export type PdDeploy = {
 
 export type PrDeployStatusData = {
   repo?: string;
+  /** The viewer; enables the All / Mine switch on pull requests. */
+  me?: string;
   prs?: PdPullRequest[];
   deploys?: PdDeploy[];
 };
@@ -79,10 +87,16 @@ export type PrDeployStatusLabels = {
   hideLog: string;
   noPrs: string;
   noDeploys: string;
+  scope: string;
+  all: string;
+  mine: string;
 };
 
 export type PrDeployStatusProps = PrDeployStatusData & {
   onPrClick?: (pr: PdPullRequest) => void;
+  scope?: "all" | "mine";
+  defaultScope?: "all" | "mine";
+  onScopeChange?: (scope: "all" | "mine") => void;
   onBlockerAction?: (deploy: PdDeploy) => void;
   labels?: Partial<PrDeployStatusLabels>;
   className?: string;
@@ -111,15 +125,19 @@ const defaultLabels: PrDeployStatusLabels = {
   hideLog: "Hide log",
   noPrs: "No open pull requests",
   noDeploys: "No deploys yet",
+  scope: "Show",
+  all: "All",
+  mine: "Mine",
 };
 
 export const prDeployStatusDemo: PrDeployStatusData = {
   repo: "acme/box-web",
+  me: "Bat",
   prs: [
-    { number: 41, title: "Winter box landing page", state: "open", branch: "feat/winter-landing", checks: { passed: 12 }, review: "approved", updated: "18 min ago" },
-    { number: 42, title: "Subscription pause flow", state: "open", branch: "feat/pause-flow", checks: { passed: 10, failed: 1, pending: 1 }, review: "changes", updated: "1 h ago" },
-    { number: 43, title: "Darkhan delivery slots", state: "draft", branch: "feat/darkhan-slots", checks: { pending: 3 }, review: "pending", updated: "2 h ago" },
-    { number: 39, title: "Address form validation", state: "merged", branch: "fix/address-form", checks: { passed: 12 }, updated: "yesterday" },
+    { number: 41, title: "Winter box landing page", state: "open", branch: "feat/winter-landing", checks: { passed: 12 }, review: "approved", updated: "18 min ago", owner: "Anu", sharedWith: ["Bat"] },
+    { number: 42, title: "Subscription pause flow", state: "open", branch: "feat/pause-flow", checks: { passed: 10, failed: 1, pending: 1 }, review: "changes", updated: "1 h ago", owner: "Bat" },
+    { number: 43, title: "Darkhan delivery slots", state: "draft", branch: "feat/darkhan-slots", checks: { pending: 3 }, review: "pending", updated: "2 h ago", owner: "Tsetseg" },
+    { number: 39, title: "Address form validation", state: "merged", branch: "fix/address-form", checks: { passed: 12 }, updated: "yesterday", owner: "Bat" },
   ],
   deploys: [
     {
@@ -189,6 +207,10 @@ function Checks({ c, L }: { c: NonNullable<PdPullRequest["checks"]>; L: PrDeploy
 
 export function PrDeployStatus({
   repo = prDeployStatusDemo.repo,
+  me: meProp,
+  scope: scopeProp,
+  defaultScope = "all",
+  onScopeChange,
   prs = prDeployStatusDemo.prs,
   deploys = prDeployStatusDemo.deploys,
   onPrClick,
@@ -200,13 +222,18 @@ export function PrDeployStatus({
   const uid = React.useId();
   const [logOpen, setLogOpen] = React.useState<Record<string, boolean>>({});
   const prList = prs ?? [];
+  // The demo viewer only goes with the demo data; real data passes its own `me`.
+  const me = meProp ?? (prs === prDeployStatusDemo.prs ? prDeployStatusDemo.me : undefined);
+  const [scopeOwn, setScopeOwn] = React.useState<"all" | "mine">(defaultScope);
+  const scope = me ? (scopeProp ?? scopeOwn) : "all";
+  const other = (p: PdPullRequest) => (me && p.owner !== me && !(p.sharedWith ?? []).includes(me) ? "" : undefined);
   const depList = deploys ?? [];
   const prState: Record<PdPrState, string> = { open: L.open, draft: L.draft, merged: L.merged, closed: L.closed };
   const depState: Record<PdDeployState, string> = { live: L.live, building: L.building, queued: L.queued, stuck: L.stuck, failed: L.deployFailed };
   const review: Record<PdReview, string> = { approved: L.approved, changes: L.changes, pending: L.pending };
 
   return (
-    <div className={`pd ${className}`} data-cw-root="pr-deploy-status">
+    <div className={`pd ${className}`} data-cw-root="pr-deploy-status" data-scope={scope}>
       <style>{css}</style>
       <section className="pd-box" aria-labelledby={`${uid}-prs`}>
         <h3 className="pd-h" id={`${uid}-prs`}>
@@ -218,6 +245,25 @@ export function PrDeployStatus({
           </svg>
           {L.pullRequests}
           {repo && <span className="pd-repo">{repo}</span>}
+          {me && (
+            <span className="pd-scope" role="group" aria-label={L.scope}>
+              {(["all", "mine"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  aria-pressed={scope === v}
+                  data-active={scope === v || undefined}
+                  data-cw-scope-btn={v}
+                  onClick={() => {
+                    setScopeOwn(v);
+                    onScopeChange?.(v);
+                  }}
+                >
+                  {v === "all" ? L.all : L.mine}
+                </button>
+              ))}
+            </span>
+          )}
           <span className="pd-count">{prList.filter((p) => p.state === "open" || p.state === "draft").length}</span>
         </h3>
         {prList.length === 0 ? (
@@ -235,6 +281,7 @@ export function PrDeployStatus({
                     {(p.branch || p.updated) && (
                       <span className="pd-pr-line">
                         {p.branch && <code>{p.branch}</code>}
+                        {p.owner && <span>{p.owner}</span>}
                         {p.updated && <span>{p.updated}</span>}
                       </span>
                     )}
@@ -249,7 +296,7 @@ export function PrDeployStatus({
                 </>
               );
               return (
-                <li key={`${p.number}-${i}`} className={`pd-pr is-${p.state}`} style={{ "--i": i } as React.CSSProperties}>
+                <li key={`${p.number}-${i}`} className={`pd-pr is-${p.state}`} style={{ "--i": i } as React.CSSProperties} data-cw-other={other(p)}>
                   {p.href ? (
                     <a className="pd-pr-btn" href={p.href} target="_blank" rel="noreferrer noopener" onClick={() => onPrClick?.(p)}>
                       {body}
@@ -371,6 +418,12 @@ const css = `
 .pd-h svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--pd-muted);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
 .pd-h-out{padding:0 2px;border:0;color:var(--pd-muted);font-size:13px}
 .pd-repo{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--pd-muted);font:500 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace}
+.pd[data-scope=mine] [data-cw-other]{display:none!important}
+.pd-scope{display:inline-flex;gap:2px;margin-left:auto;padding:2px;border-radius:8px;background:var(--pd-soft)}
+.pd-scope button{height:22px;padding:0 8px;border:0;border-radius:6px;background:none;color:var(--pd-muted);font-size:12px;font-weight:500}
+.pd-scope button[data-active]{background:var(--pd-bg);color:var(--pd-fg);box-shadow:0 0 0 .5px #0000000f,0 1px 2px #0000000d}
+:where(.dark,[data-theme=dark]) .pd-scope button[data-active]{background:#3a3a40}
+.pd-scope+.pd-count{margin-left:0}
 .pd-count{margin-left:auto;min-width:22px;height:20px;padding:0 7px;border-radius:10px;background:var(--pd-soft);color:var(--pd-muted);font-size:12px;font-weight:500;line-height:20px;text-align:center;font-variant-numeric:tabular-nums}
 .pd-empty{margin:0;padding:12px 14px;color:var(--pd-muted);font-size:13px}
 .pd-prs{margin:0;padding:4px;list-style:none}

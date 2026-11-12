@@ -10,6 +10,10 @@ import * as React from "react";
  * line, PR and state tags, and a running line under live sessions; child
  * sessions sit indented under their parent and fold away with it.
  * Three views of the same data: by group, by state (tabs) and as cards.
+ * With `me` set, an All / Mine switch keeps the sessions `me` owns or is
+ * shared on (owner OR sharedWith, as in the Just.Notion «my projects» view).
+ * Input sessions may carry a vault/Notion `status` (in-progress, waiting,
+ * completed, inbox, planning…) instead of `state`.
  * Original Component Studio component. Colours follow tokens/tokens.json
  * (bg, surface/2, border/default, text/*, accent/*, status/*).
  * Motion: rows arrive one after another, groups fold smoothly, counters count
@@ -32,7 +36,24 @@ export type SessionBoardSession = {
   /** Parent session id; the row is indented under its parent. */
   parent?: string;
   pr?: number | { number: number; state?: SessionPrState };
+  /** Vault `owner`; shown as initials. */
+  owner?: string;
+  /** Who else works on it (team / company sharing layer). */
+  sharedWith?: string[];
 };
+
+/** What callers pass: `state`, or a vault/Notion `status` that maps onto it. */
+export type SessionBoardInput = Omit<SessionBoardSession, "state"> & { state?: SessionState; status?: string };
+
+/** Maps vault / Notion statuses onto the four session states. */
+export function toSessionState(value?: string): SessionState {
+  const v = (value ?? "").toLowerCase().replace(/[\s_]+/g, "-");
+  if (v === "running" || v === "waiting" || v === "done" || v === "idle") return v;
+  if (["in-progress", "active", "doing"].includes(v)) return "running";
+  if (["waiting-on", "blocked"].includes(v)) return "waiting";
+  if (["completed", "complete", "cancelled", "canceled", "merged"].includes(v)) return "done";
+  return "idle"; // inbox, planning, next-action, someday, unknown
+}
 
 export type SessionBoardGroup = { id: string; label: string; defaultCollapsed?: boolean };
 
@@ -81,12 +102,21 @@ export type SessionBoardLabels = {
   collapseKids: string;
   expandKids: string;
   inParent: string;
+  scope: string;
+  all: string;
+  mine: string;
+  sharedWith: string;
 };
 
 export type SessionBoardProps = {
   project?: SessionBoardProject;
   groups?: SessionBoardGroup[];
-  sessions?: SessionBoardSession[];
+  sessions?: SessionBoardInput[];
+  /** The viewer; enables the All / Mine switch. */
+  me?: string;
+  scope?: "all" | "mine";
+  defaultScope?: "all" | "mine";
+  onScopeChange?: (scope: "all" | "mine") => void;
   onSessionClick?: (session: SessionBoardSession) => void;
   /** Controlled selection (highlighted row); defaults to the last clicked row. */
   selectedId?: string | null;
@@ -129,6 +159,10 @@ const defaultLabels: SessionBoardLabels = {
   collapseKids: "Hide sub-sessions",
   expandKids: "Show sub-sessions",
   inParent: "in",
+  scope: "Show",
+  all: "All",
+  mine: "Mine",
+  sharedWith: "with",
 };
 
 export const defaultSessionGroups: SessionBoardGroup[] = [
@@ -154,20 +188,20 @@ const demoProject: SessionBoardProject = {
 };
 
 const demoSessions: SessionBoardSession[] = [
-  { id: "relaunch", title: "Website relaunch", line: "Rebuilding the pricing page on the new grid", state: "running", group: "projects", pr: { number: 21, state: "open" } },
-  { id: "hero", title: "Hero copy pass", line: "Three headline options shipped to preview", state: "done", group: "projects", parent: "relaunch", pr: { number: 22, state: "merged" } },
-  { id: "pricing", title: "Pricing table component", line: "Wiring plan toggles to the price data", state: "running", group: "projects", parent: "relaunch" },
-  { id: "promote", title: "Promote preview to prod", line: "Needs your OK before the deploy goes live", state: "waiting", group: "projects", parent: "relaunch", pr: { number: 23, state: "draft" } },
+  { id: "relaunch", title: "Website relaunch", line: "Rebuilding the pricing page on the new grid", state: "running", group: "projects", pr: { number: 21, state: "open" }, owner: "Anu", sharedWith: ["Bat"] },
+  { id: "hero", title: "Hero copy pass", line: "Three headline options shipped to preview", state: "done", group: "projects", parent: "relaunch", pr: { number: 22, state: "merged" }, owner: "Tsetseg" },
+  { id: "pricing", title: "Pricing table component", line: "Wiring plan toggles to the price data", state: "running", group: "projects", parent: "relaunch", owner: "Bat" },
+  { id: "promote", title: "Promote preview to prod", line: "Needs your OK before the deploy goes live", state: "waiting", group: "projects", parent: "relaunch", pr: { number: 23, state: "draft" }, owner: "Anu" },
   { id: "brand", title: "Brand refresh", line: "Moodboard parked until the copy settles", state: "idle", group: "projects" },
   { id: "triage", title: "Inbox triage", line: "14 notes filed, 3 tasks created", state: "done", group: "areas" },
-  { id: "weekly", title: "Weekly review", line: "Draft ready; 2 decisions wait for you", state: "waiting", group: "areas" },
-  { id: "glossary", title: "Glossary sync", line: "Merging 6 duplicate atoms", state: "running", group: "resources" },
+  { id: "weekly", title: "Weekly review", line: "Draft ready; 2 decisions wait for you", state: "waiting", group: "areas", owner: "Anu" },
+  { id: "glossary", title: "Glossary sync", line: "Merging 6 duplicate atoms", state: "running", group: "resources", owner: "Tsetseg", sharedWith: ["Anu"] },
   { id: "bills", title: "Monthly bills check", line: "All 9 payments recorded", state: "done", group: "finance" },
   { id: "tokens", title: "Token audit", line: "Scratch notes, no owner yet", state: "idle" },
 ];
 
 /** Demo data as plain JSON props (used by the catalog's data editor and chat export). */
-export const sessionBoardDemo = { project: demoProject, groups: defaultSessionGroups, sessions: demoSessions };
+export const sessionBoardDemo = { project: demoProject, groups: defaultSessionGroups, sessions: demoSessions, me: "Anu" };
 
 const reducedMotion = () =>
   typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -336,7 +370,11 @@ function Seg<T extends string>({
 export function SessionBoard({
   project = demoProject,
   groups = defaultSessionGroups,
-  sessions = demoSessions,
+  sessions: sessionsIn = demoSessions,
+  me = sessionsIn === demoSessions ? sessionBoardDemo.me : undefined,
+  scope: scopeProp,
+  defaultScope = "all",
+  onScopeChange,
   onSessionClick,
   selectedId: selectedProp,
   view: viewProp,
@@ -348,6 +386,10 @@ export function SessionBoard({
 }: SessionBoardProps) {
   const L = { ...defaultLabels, ...labelsProp };
   const uid = React.useId();
+  const sessions: SessionBoardSession[] = sessionsIn.map((s) => ({ ...s, state: s.state ?? toSessionState(s.status) }));
+  const [scopeOwn, setScopeOwn] = React.useState<"all" | "mine">(defaultScope);
+  const scope = me ? (scopeProp ?? scopeOwn) : "all";
+  const other = (s: SessionBoardSession) => (me && s.owner !== me && !(s.sharedWith ?? []).includes(me) ? "" : undefined);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = React.useState<Record<string, boolean>>({});
   const [folded, setFolded] = React.useState<Record<string, boolean>>({});
@@ -415,6 +457,18 @@ export function SessionBoard({
             </span>
           </span>
         )}
+        {s.owner && (
+          <span className="sb-who" title={s.sharedWith?.length ? `${s.owner} ${L.sharedWith} ${s.sharedWith.join(", ")}` : s.owner}>
+            <span aria-hidden="true">
+              {s.owner.trim().split(/\s+/).map((w) => w.charAt(0)).join("").slice(0, 2).toUpperCase()}
+            </span>
+            {s.sharedWith?.length ? <span className="sb-who-more" aria-hidden="true">+{s.sharedWith.length}</span> : null}
+            <span className="sb-sr">
+              {s.owner}
+              {s.sharedWith?.length ? ` ${L.sharedWith} ${s.sharedWith.join(", ")}` : ""}
+            </span>
+          </span>
+        )}
         <span className="sb-tag sb-st">{L[s.state]}</span>
       </span>
     );
@@ -431,6 +485,7 @@ export function SessionBoard({
           <li
             key={s.id}
             className={`sb-row is-${s.state}${depth ? " is-child" : ""}${kids ? " is-parent" : ""}`}
+            data-cw-other={other(s)}
             style={{ "--i": i, "--d": depth } as React.CSSProperties}
           >
             {kids > 0 ? (
@@ -490,7 +545,7 @@ export function SessionBoard({
   const panelId = `${uid}-panel`;
 
   return (
-    <div ref={rootRef} className={`sb ${className}`} data-cw-root="session-board">
+    <div ref={rootRef} className={`sb ${className}`} data-cw-root="session-board" data-scope={scope}>
       <style>{css}</style>
       <section className="sb-head" aria-labelledby={`${uid}-name`}>
         <div className="sb-id">
@@ -530,15 +585,37 @@ export function SessionBoard({
         )}
       </section>
 
-      {shownViews.length > 1 && (
+      {(shownViews.length > 1 || !!me) && (
         <div className="sb-bar">
-          <Seg<SessionBoardView>
-            kind="radio"
-            label={L.view}
-            value={view}
-            options={shownViews.map((v) => ({ value: v, label: viewLabel[v] }))}
-            onChange={setView}
-          />
+          {shownViews.length > 1 && (
+            <Seg<SessionBoardView>
+              kind="radio"
+              label={L.view}
+              value={view}
+              options={shownViews.map((v) => ({ value: v, label: viewLabel[v] }))}
+              onChange={setView}
+            />
+          )}
+          {me && (
+            <div className="sb-seg sb-scope" role="group" aria-label={L.scope}>
+              {(["all", "mine"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  aria-pressed={scope === v}
+                  className="sb-seg-opt"
+                  data-active={scope === v || undefined}
+                  data-cw-scope-btn={v}
+                  onClick={() => {
+                    setScopeOwn(v);
+                    onScopeChange?.(v);
+                  }}
+                >
+                  {v === "all" ? L.all : L.mine}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -550,7 +627,7 @@ export function SessionBoard({
             const bodyId = `${uid}-${g.id}`;
             const live = g.list.filter((s) => s.state === "running").length;
             return (
-              <section key={g.id} className={`sb-group${isCollapsed ? " is-collapsed" : ""}`} aria-labelledby={`${bodyId}-h`} data-cw-scope="">
+              <section key={g.id} className={`sb-group${isCollapsed ? " is-collapsed" : ""}`} aria-labelledby={`${bodyId}-h`} data-cw-scope="" data-cw-other={me && g.list.every((x) => other(x) !== undefined) ? "" : undefined}>
                 <h3 className="sb-gh">
                   <button
                     id={`${bodyId}-h`}
@@ -618,7 +695,7 @@ export function SessionBoard({
               const isFolded = !!folded[s.id];
               const listId = `${uid}-kids-${s.id}`;
               return (
-                <li key={s.id} className={`sb-card is-${s.state}`} style={{ "--i": i } as React.CSSProperties}>
+                <li key={s.id} className={`sb-card is-${s.state}`} style={{ "--i": i } as React.CSSProperties} data-cw-other={other(s)}>
                   <button
                     type="button"
                     className="sb-card-btn"
@@ -755,7 +832,12 @@ const css = `
 .sb-kids{margin-left:6px;font-size:11.5px;font-weight:500;color:var(--sb-muted)}
 .sb-crumb{color:var(--sb-faint)}
 .sb-grp{background:var(--sb-soft);color:var(--sb-muted);font-weight:400}
-.sb-bar{display:flex;min-width:0}
+.sb-bar{display:flex;gap:8px;min-width:0}
+.sb-scope{margin-left:auto}
+.sb[data-scope=mine] [data-cw-other]{display:none!important}
+.sb-who{display:inline-flex;align-items:center;gap:2px;height:20px}
+.sb-who>span:first-child{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--sb-soft);border:1px solid var(--sb-line);color:var(--sb-muted);font-size:9.5px;font-weight:600}
+.sb-who-more{font-size:11px;color:var(--sb-faint)}
 .sb-seg{display:inline-flex;gap:2px;max-width:100%;padding:2px;border-radius:8px;background:var(--sb-soft);overflow-x:auto;scrollbar-width:none}
 .sb-seg::-webkit-scrollbar{display:none}
 .sb-seg-opt{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:none;height:28px;padding:0 10px;border:0;border-radius:6px;background:none;color:var(--sb-muted); font-size:13px; font-weight:500; white-space:nowrap;transition:color .09s,background .15s,box-shadow .15s}
