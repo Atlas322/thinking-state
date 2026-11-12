@@ -305,6 +305,7 @@ const css = `
 @media(max-width:310px){.cw-field{grid-template-columns:repeat(24,1fr)!important}.cw-compact span{display:none}}
 @media(pointer:coarse){.cw-row{height:40px}.cw-items li{height:36px}.cw-action{height:36px}}
 @media(prefers-reduced-motion:reduce){.cw *{animation:none!important;transition:none!important}}
+.cw-parts>li{animation:cwpartslirise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.cw-parts>li:nth-child(1){animation-delay:0ms}.cw-parts>li:nth-child(2){animation-delay:100ms}.cw-parts>li:nth-child(3){animation-delay:200ms}.cw-parts>li:nth-child(4){animation-delay:300ms}.cw-parts>li:nth-child(5){animation-delay:400ms}.cw-parts>li:nth-child(6){animation-delay:500ms}.cw-parts>li:nth-child(7){animation-delay:600ms}.cw-parts>li:nth-child(8){animation-delay:700ms}.cw-parts>li:nth-child(9){animation-delay:800ms}.cw-parts>li:nth-child(10){animation-delay:900ms}.cw-parts>li:nth-child(11){animation-delay:1000ms}.cw-parts>li:nth-child(12){animation-delay:1100ms}@keyframes cwpartslirise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.cw-parts>li{animation:none}}
 `;
 
 export default ContextWindow;

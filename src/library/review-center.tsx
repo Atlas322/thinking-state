@@ -536,6 +536,7 @@ const css = `
 @container (max-width:640px){.rc-main{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:auto}.rc-queue{border-right:0;border-bottom:1px solid var(--rc-line)}.rc-rows{max-height:186px}.rc-count,.rc-prog,.rc-last{display:none}.rc-actions .rc-btn{flex:1 1 auto;justify-content:center}}
 @container (max-width:420px){.rc-btn svg{display:none}.rc-note{left:0;width:240px}}
 @media(prefers-reduced-motion:reduce){.rc *{animation:none!important;transition:none!important}}
+.rc-rows>li{animation:rcrowslirise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.rc-rows>li:nth-child(1){animation-delay:0ms}.rc-rows>li:nth-child(2){animation-delay:80ms}.rc-rows>li:nth-child(3){animation-delay:160ms}.rc-rows>li:nth-child(4){animation-delay:240ms}.rc-rows>li:nth-child(5){animation-delay:320ms}.rc-rows>li:nth-child(6){animation-delay:400ms}.rc-rows>li:nth-child(7){animation-delay:480ms}.rc-rows>li:nth-child(8){animation-delay:560ms}.rc-rows>li:nth-child(9){animation-delay:640ms}.rc-rows>li:nth-child(10){animation-delay:720ms}.rc-rows>li:nth-child(11){animation-delay:800ms}.rc-rows>li:nth-child(12){animation-delay:880ms}@keyframes rcrowslirise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.rc-rows>li{animation:none}}
 `;
 
 export default ReviewCenter;

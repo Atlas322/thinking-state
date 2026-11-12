@@ -312,6 +312,7 @@ const css = `
 @keyframes cr-pop{from{opacity:0;transform:scale(.95)}}
 @media(max-width:520px){.cr-legend span:not(.cr-sr){display:none}.cr-legend{width:42%}.cr-dir{display:none}.cr-agent{font-size:0!important}.cr-agent .cr-aico{margin:0}}
 @media(prefers-reduced-motion:reduce){.cr *,.cr *::after{animation:none!important;transition:none!important}}
+.cr-grid tbody tr{animation:crgridtbodytrrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.cr-grid tbody tr:nth-child(1){animation-delay:0ms}.cr-grid tbody tr:nth-child(2){animation-delay:130ms}.cr-grid tbody tr:nth-child(3){animation-delay:260ms}.cr-grid tbody tr:nth-child(4){animation-delay:390ms}.cr-grid tbody tr:nth-child(5){animation-delay:520ms}.cr-grid tbody tr:nth-child(6){animation-delay:650ms}.cr-grid tbody tr:nth-child(7){animation-delay:780ms}.cr-grid tbody tr:nth-child(8){animation-delay:910ms}.cr-grid tbody tr:nth-child(9){animation-delay:1040ms}.cr-grid tbody tr:nth-child(10){animation-delay:1170ms}.cr-grid tbody tr:nth-child(11){animation-delay:1300ms}.cr-grid tbody tr:nth-child(12){animation-delay:1430ms}@keyframes crgridtbodytrrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.cr-grid tbody tr{animation:none}}
 `;
 
 export default ConflictRadar;
