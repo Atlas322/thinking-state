@@ -97,13 +97,13 @@ variables (`--ts-page`, `--ts-surface`, `--ts-soft`, `--ts-line`, `--ts-fg`,
 `--ts-muted`, `--ts-faint`, `--ts-accent`, status colours with `-soft`
 pairs, `--ts-font`, `--ts-font-display`, `--ts-font-mono`) and falls back to
 its own defaults. `tokens.css` нь хоёр theme-тэй (itge.e 11-12, эцсийн):
-`cream` нь Чиглэл 1 (Figma `36:146054`, Spectral гарчиг, Inter бичвэр), `dark` нь
+`cream` нь Чиглэл 1 (Figma `36:146054`), `dark` нь
 Чиглэл 2 «Удирдлагын төв» (Figma `36:148605`, TH.Dark): саармаг бараг хар,
 давхаргатай гадаргуу, Inter гарчиг, IBM Plex Mono шошго, Electric accent.
 `--ts-font-display` theme бүрд өөр. Горим `data-ts-mode="view" | "manage"` зөвхөн
 accent-ийг солино (Үзэх = Electric, Удирдах = индиго). Accent өнгөтэй текстэд
 `--ts-accent-fg` ашигла. `data-ts-theme="manage"` = dark (v0.1-ийн нэр,
-нийцлийн төлөө). Индиго нь зөвхөн `data-ts-mode="manage"`-аар. Фонт багцад орохгүй: Spectral, Inter, IBM Plex Mono-г Google Fonts css2-оор
+нийцлийн төлөө). Индиго нь зөвхөн `data-ts-mode="manage"`-аар. Гарчиг хоёр theme-д Inter Semi Bold (`--ts-font-head`, −2%), шатлал `--ts-type-display/h1/h2/h3` = 59/36/33/20. Ангиллын `--ts-cat-1..4` үргэлж тод (#F5A524, #0C8CE9, #22C55E, #A855F7), том талбай саармаг. Сонгосон төлөв `--ts-selected` #0C8CE9, цагаан текст. Фонт багцад орохгүй: Inter, IBM Plex Mono-г Google Fonts css2-оор
 `&text=`-гүй ачаал (ү, ө = cyrillic-ext).
 
 **Сайт (`@inai/thinking-state/site.css`).** Маркетингийн сайтад зориулсан, ижил
