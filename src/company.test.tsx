@@ -546,3 +546,65 @@ describe("hash task ids (company-schema add10b7)", () => {
     expect(dependenciesOf(company, a, a.tasks[0], index).blocks.map((w) => w.task.title)).toEqual(["Deploy"]);
   });
 });
+
+describe("app-shell embedding (inai-sh PR #31)", () => {
+  it("showTree={false} hides the tree and types but keeps header, level switch and tabs", () => {
+    render(<CompanyView company={inai} showTree={false} />);
+    expect(screen.queryByRole("navigation", { name: "Төрлүүд" })).toBeNull();
+    expect(document.querySelector(".cv-side")).toBeNull();
+    expect(document.querySelector(".cv-ws.no-tree")).toBeTruthy();
+    expect(screen.getByRole("tablist", { name: "Харагдац" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("radio", { name: "Баг" }));
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("Удирдлага");
+  });
+
+  it("lets the host drive the vault type", () => {
+    const onCollectionChange = vi.fn();
+    const { rerender } = render(<CompanyView company={inai} showTree={false} collection="task" onCollectionChange={onCollectionChange} />);
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toContain("Task");
+    fireEvent.click(screen.getByRole("tab", { name: /Самбар/ }));
+    expect(onCollectionChange).toHaveBeenCalledWith(null);
+    rerender(<CompanyView company={inai} showTree={false} collection={null} onCollectionChange={onCollectionChange} />);
+    expect(screen.getByRole("tab", { name: /Самбар/ }).getAttribute("aria-selected")).toBe("true");
+  });
+
+  it("never uses a bare 1fr grid track (min-content blow-out)", async () => {
+    const sources = import.meta.glob<string>("./company/*.tsx", { query: "?raw", import: "default", eager: true });
+    for (const [f, s] of Object.entries(sources))
+      for (const m of s.matchAll(/grid-template-columns:([^;}]+)/g)) expect(m[1], f).not.toMatch(/(^|[\s])1(\.\d+)?fr/);
+  });
+});
+
+describe("TENET 3 alignment (moodboard)", () => {
+  it("writes item props as a frontmatter block and colours select values stably", async () => {
+    const { frontmatterOf, catOf } = await import("./company/collection");
+    expect(frontmatterOf({ id: "1", title: "A: B", props: { status: "inbox", tags: ["x", "y"], empty: null } })).toBe('---\ntitle: "A: B"\nstatus: inbox\ntags: [x, y]\n---');
+    expect(catOf("Бүтээгдэхүүн")).toBe(catOf("Бүтээгдэхүүн"));
+    expect([1, 2, 3, 4]).toContain(catOf("x"));
+  });
+
+  it("shows vault and agent actions in the peek only when handlers are given", () => {
+    const onOpenInVault = vi.fn();
+    const onAskAgent = vi.fn();
+    const { unmount } = render(<CompanyView company={inai} collection="project" showTree={false} />);
+    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
+    expect(screen.queryByRole("button", { name: /Vault-д нээх/ })).toBeNull();
+    expect(screen.getByLabelText("Frontmatter").textContent).toContain("title: Inai Website");
+    unmount();
+    render(<CompanyView company={inai} collection="project" showTree={false} onOpenInVault={onOpenInVault} onAskAgent={onAskAgent} />);
+    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
+    fireEvent.click(screen.getByRole("button", { name: /Агентаас асуух/ }));
+    expect(onAskAgent).toHaveBeenCalledWith(expect.objectContaining({ title: "Inai Website" }), expect.objectContaining({ type: "project" }));
+    fireEvent.click(screen.getByRole("button", { name: /Vault-д нээх/ }));
+    expect(onOpenInVault).toHaveBeenCalled();
+  });
+
+  it("filters the dashboard by person chips", () => {
+    render(<CompanyView company={inai} defaultView="dashboard" today={new Date("2026-11-12T09:00:00")} />);
+    const chips = screen.getByRole("group", { name: "Хүнээр шүүх" });
+    fireEvent.click(within(chips).getByRole("button", { name: /Badral\.S/ }));
+    const panel = screen.getByRole("tabpanel");
+    expect(panel.textContent).toContain("Хөтөлбөрийн бүтэц");
+    expect(panel.textContent).not.toContain("TENET дахин төлөвлөлт");
+  });
+});
