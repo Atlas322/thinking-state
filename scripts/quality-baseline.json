@@ -1,7 +1,6 @@
 {
   "motion": [
     "agent-checkpoints",
-    "agent-cursors",
     "agent-fleet",
     "agent-handoff",
     "agent-ledger",
@@ -60,10 +59,8 @@
     "segmented-control",
     "select",
     "motion-foundation",
-    "project-report",
     "pr-deploy-status",
     "decision-inbox-chat",
-    "session-board",
     "setup-guide",
     "smart-recommendation",
     "stepper-form",
@@ -79,7 +76,9 @@
     "writing-assistant",
     "folder-float",
     "swipe-row",
-    "explainer-carousel"
+    "explainer-carousel",
+    "progress-tracker",
+    "company-mini"
   ],
   "icons": {
     "agent-checkpoints": 2,
