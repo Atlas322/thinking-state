@@ -16,6 +16,7 @@ import {
   springKeyframes,
   useInViewLoop,
 } from "./motion";
+import { syncAnimation } from "./motion/use-in-view-loop";
 import * as pkg from "./lib/index";
 
 describe("spring physics", () => {
@@ -175,6 +176,59 @@ describe("<LoopRegion> and <MotionControls>", () => {
       </LoopRegion>,
     );
     expect(screen.queryByRole("button", { name: "Дахин тоглуулах" })).toBeNull();
+  });
+});
+
+describe("review fixes", () => {
+  it("resuming one region keeps the page-wide pause for the others", () => {
+    render(
+      <MotionProvider defaultPaused>
+        <LoopRegion controls="always">
+          <span>a</span>
+        </LoopRegion>
+        <Probe />
+      </MotionProvider>,
+    );
+    showAll(true);
+    fireEvent.click(screen.getByRole("button", { name: "Хөдөлгөөнийг үргэлжлүүлэх" }));
+    const [region, probe] = [...document.querySelectorAll<HTMLElement>("[data-ts-loop]")];
+    expect(region.dataset.tsLoop).toBe("running");
+    expect(probe.dataset.tsLoop).toBe("paused");
+  });
+
+  it("two hooks on one element both see it", () => {
+    function Twice() {
+      const a = useInViewLoop();
+      const b = useInViewLoop();
+      const ref = (n: HTMLDivElement | null) => {
+        a.ref(n);
+        b.ref(n);
+      };
+      return <div ref={ref} data-ts-loop={a.state} data-b={b.state} />;
+    }
+    const { container } = render(<Twice />);
+    showAll(true);
+    const el = container.firstElementChild as HTMLElement;
+    expect([el.dataset.tsLoop, el.dataset.b]).toEqual(["running", "running"]);
+  });
+
+  it("cancels infinite WAAPI loops instead of finish() (which throws)", () => {
+    const calls: string[] = [];
+    const fake = (endTime: number) =>
+      ({
+        effect: { getComputedTiming: () => ({ endTime }) },
+        finish: () => {
+          if (!Number.isFinite(endTime)) throw new Error("InvalidStateError");
+          calls.push("finish");
+        },
+        cancel: () => calls.push("cancel"),
+        play: () => calls.push("play"),
+        pause: () => calls.push("pause"),
+      }) as unknown as Animation;
+    syncAnimation(fake(Infinity), "paused");
+    syncAnimation(fake(400), "reduced");
+    syncAnimation(fake(Infinity), "offscreen");
+    expect(calls).toEqual(["cancel", "finish", "pause"]);
   });
 });
 
