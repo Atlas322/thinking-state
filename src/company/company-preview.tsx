@@ -1,10 +1,10 @@
 import * as React from "react";
-import { CompanyView, type CompanyTemplate } from "./company-view";
+import { CompanyView, type CompanyLayout } from "./company-view";
 import { companyFixtures } from "./fixtures";
 import type { Company } from "./types";
 
 /** Catalog preview: pick a fixture company, then render it with a template. */
-export function CompanyPreview({ template, companies = companyFixtures }: { template: CompanyTemplate; companies?: Company[] }) {
+export function CompanyPreview({ template, companies = companyFixtures }: { template: CompanyLayout; companies?: Company[] }) {
   const [id, setId] = React.useState(companies[0]?.id);
   const company = companies.find((c) => c.id === id) ?? companies[0];
   if (!company) return null;
@@ -33,7 +33,7 @@ export function CompanyPreview({ template, companies = companyFixtures }: { temp
           </button>
         ))}
       </div>
-      <CompanyView key={company.id} company={company} defaultTemplate={template} />
+      <CompanyView key={company.id} company={company} defaultLayout={template} />
     </div>
   );
 }

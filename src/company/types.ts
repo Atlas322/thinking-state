@@ -11,7 +11,18 @@ export type UnitKind = "company" | "team" | "department" | "institution";
 export type ModelField = string | string[] | { stream: string; share?: number }[];
 
 export type CompanyUnit = { id: string; name: string; kind: UnitKind; parentId?: string };
-export type CompanyPerson = { id: string; name: string; role: string; unitId: string };
+export type CvEntry = { period: string; title: string; org: string };
+export type PublicLink = { label: string; url: string };
+export type CompanyPerson = {
+  id: string;
+  name: string;
+  role: string;
+  unitId: string;
+  /** Profile (read-only): a short about, career timeline and public links. */
+  about?: string;
+  cv?: CvEntry[];
+  links?: PublicLink[];
+};
 export type CompanyAgent = {
   id: string;
   name: string;
@@ -23,28 +34,79 @@ export type CompanyAgent = {
 };
 export type WorkflowStep = { id: string; label: string; actorId: string; output: string };
 export type CompanyWorkflow = { id: string; name: string; unitId: string; trigger: string; steps: WorkflowStep[] };
-export type CompanyTask = { id: string; title: string; status: string; ownerId?: string };
+
+/** PMBOK: 5 process groups × 10 knowledge areas. */
+export type PmPhase = "initiating" | "planning" | "executing" | "monitoring" | "closing";
+export type PmKnowledgeArea =
+  | "integration" | "scope" | "schedule" | "cost" | "quality"
+  | "resource" | "communications" | "risk" | "procurement" | "stakeholder";
+export const PM_PHASES: PmPhase[] = ["initiating", "planning", "executing", "monitoring", "closing"];
+export const PM_AREAS: PmKnowledgeArea[] = ["integration", "scope", "schedule", "cost", "quality", "resource", "communications", "risk", "procurement", "stakeholder"];
+
+/** Where an item sits and when (dates are ISO YYYY-MM-DD). */
+type Placement = {
+  area?: string;
+  subArea?: string;
+  due?: string;
+  phase?: PmPhase | string;
+  knowledgeArea?: PmKnowledgeArea | string;
+  start?: string;
+  end?: string;
+};
+export type CompanyTask = Placement & { id: string; title: string; status: string; ownerId?: string };
 export type CompanyDecision = { id: string; title: string; date: string };
-export type CompanyProject = {
+/** Who is Responsible, Accountable, Consulted, Informed (person or agent ids). */
+export type Raci = { responsible: string[]; accountable?: string; consulted: string[]; informed: string[] };
+export type CompanyProject = Placement & {
   id: string;
   name: string;
   unitId: string;
   status: string;
   tasks: CompanyTask[];
   decisions: CompanyDecision[];
+  raci?: Raci;
 };
+
+export type Methodology = "bmc" | "pmbok" | "okr" | "lean-canvas";
+export const METHODOLOGIES: Methodology[] = ["bmc", "pmbok", "okr", "lean-canvas"];
+
+export type CompanyModel = {
+  customers: ModelField;
+  value: ModelField;
+  channels: ModelField;
+  revenue: ModelField;
+  /** Business Model Canvas blocks beyond the core four. */
+  partners?: ModelField;
+  activities?: ModelField;
+  resources?: ModelField;
+  relationships?: ModelField;
+  costs?: ModelField;
+  /** Lean Canvas blocks. */
+  problem?: ModelField;
+  solution?: ModelField;
+  metrics?: ModelField;
+  advantage?: ModelField;
+};
+export type Okr = { id: string; title: string; ownerId?: string; keyResults: { id: string; title: string; progress: number }[] };
+export type CompanyNote = { id: string; title: string; projectId?: string; date?: string };
 
 export type Company = {
   id: string;
   name: string;
   segment: string;
   source: CompanySource;
-  model: { customers: ModelField; value: ModelField; channels: ModelField; revenue: ModelField };
+  /** The organisation's own management method; picks the default template. */
+  methodology?: Methodology;
+  model: CompanyModel;
   units: CompanyUnit[];
   people: CompanyPerson[];
   agents: CompanyAgent[];
   workflows: CompanyWorkflow[];
   projects: CompanyProject[];
+  okrs?: Okr[];
+  notes?: CompanyNote[];
+  /** PMBOK Facts hub: key figures from one source (strings, shown as written). */
+  facts?: { label: string; value: string }[];
 };
 
 /** Levels the renderer can zoom to; team covers departments too. */
@@ -82,6 +144,8 @@ export function scopeCompany(c: Company, rootId: string | null): Company {
     agents: c.agents.filter((a) => ids.has(a.unitId)),
     workflows: c.workflows.filter((w) => ids.has(w.unitId)),
     projects: c.projects.filter((p) => ids.has(p.unitId)),
+    okrs: c.okrs?.filter((o) => !o.ownerId || [...c.people, ...c.agents].some((x) => x.id === o.ownerId && ids.has(x.unitId))),
+    notes: c.notes?.filter((n) => !n.projectId || c.projects.some((p) => p.id === n.projectId && ids.has(p.unitId))),
   };
 }
 
@@ -107,4 +171,34 @@ export function modelLines(f: ModelField | undefined): { text: string; share?: n
   return (f as (string | { stream: string; share?: number })[]).map((x) =>
     typeof x === "string" ? { text: x } : { text: x.stream, share: x.share },
   );
+}
+
+/** Every id a project names in its RACI, in R, A, C, I order. */
+export function raciOf(p: CompanyProject, id: string): ("R" | "A" | "C" | "I")[] {
+  const r = p.raci;
+  if (!r) return [];
+  const out: ("R" | "A" | "C" | "I")[] = [];
+  if (r.responsible?.includes(id)) out.push("R");
+  if (r.accountable === id) out.push("A");
+  if (r.consulted?.includes(id)) out.push("C");
+  if (r.informed?.includes(id)) out.push("I");
+  return out;
+}
+
+/** Normalises a PMBOK phase / knowledge area written in any case or language-neutral form. */
+export function toPmPhase(v?: string): PmPhase | null {
+  const k = (v ?? "").toLowerCase().replace(/[^a-z]/g, "");
+  if (k.startsWith("init")) return "initiating";
+  if (k.startsWith("plan")) return "planning";
+  if (k.startsWith("exec")) return "executing";
+  if (k.startsWith("monit") || k.startsWith("control")) return "monitoring";
+  if (k.startsWith("clos")) return "closing";
+  return null;
+}
+export function toPmArea(v?: string): PmKnowledgeArea | null {
+  const k = (v ?? "").toLowerCase().replace(/[^a-z]/g, "");
+  if (!k) return null;
+  if (k.startsWith("communic")) return "communications";
+  if (k.startsWith("stakeholder")) return "stakeholder";
+  return (PM_AREAS as string[]).find((a) => k.startsWith(a)) as PmKnowledgeArea | undefined ?? null;
 }

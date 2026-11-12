@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { SessionBoard, type SessionBoardInput } from "../library/session-board";
-import { ProjectReport, toPhaseState, type ProjectReportPhase } from "../library/project-report";
 import { DecisionInboxChat, type DecisionChatItem } from "../library/decision-inbox-chat";
+import { Dashboard, dashboardCss } from "./dashboard";
+import { MethodologyView, methodologyCss, methodologyName, methodologyShort } from "./methodology";
+import { PersonProfile, RaciView, raciCss } from "./raci";
 import {
   LEVELS,
   actorOf,
@@ -11,20 +12,23 @@ import {
   modelLines,
   rootsOf,
   scopeCompany,
-  type Actor,
   type Company,
   type CompanyLevel,
-  type CompanyProject,
+  METHODOLOGIES,
+  type Methodology,
   type CompanyUnit,
   type ModelField,
   type UnitKind,
 } from "./types";
+import { Avatar, Lines, initials } from "./ui";
 
 /**
  * Company View — draws any company in the Company contract: business model,
  * process (unit tree), people ↔ agents, workflows, projects and decisions.
  * Zoom by level (institution / company / team): the view then shows only the
- * chosen unit's subtree. Two templates over the same data:
+ * chosen unit's subtree. Read-only: it views a vault, it never writes.
+ * The template is the organisation's own method (BMC, PMBOK, OKR, Lean
+ * Canvas); the layout is one of two shells over the same data:
  *  - "workspace": the Second Brain OS app shell (unit tree on the side,
  *    breadcrumb header, tabs), after the 2026 Figma draft
  *  - "brief": one scrolling page with numbered sections, for reading
@@ -32,11 +36,11 @@ import {
  * Decision Inbox · Chat. Light and dark; motion off under reduced motion.
  */
 
-export type CompanyTemplate = "workspace" | "brief";
-export type CompanyViewKey = "model" | "structure" | "agents" | "workflows" | "projects" | "decisions";
-export const COMPANY_VIEWS: CompanyViewKey[] = ["model", "structure", "agents", "workflows", "projects", "decisions"];
+export type CompanyLayout = "workspace" | "brief";
+export type CompanyViewKey = "method" | "dashboard" | "structure" | "agents" | "workflows" | "raci" | "decisions";
+export const COMPANY_VIEWS: CompanyViewKey[] = ["method", "dashboard", "structure", "agents", "workflows", "raci", "decisions"];
 
-export type CompanyViewLabels = Record<CompanyViewKey | CompanyLevel | UnitKind, string> & {
+export type CompanyViewLabels = Record<CompanyViewKey | CompanyLevel | UnitKind | "model", string> & {
   customers: string;
   value: string;
   channels: string;
@@ -48,7 +52,8 @@ export type CompanyViewLabels = Record<CompanyViewKey | CompanyLevel | UnitKind,
   projects_n: string;
   level: string;
   views: string;
-  template: string;
+  layout: string;
+  methodology: string;
   workspace: string;
   brief: string;
   noOwner: string;
@@ -65,11 +70,13 @@ export type CompanyViewLabels = Record<CompanyViewKey | CompanyLevel | UnitKind,
 };
 
 export const companyLabelsMn: CompanyViewLabels = {
+  method: "Арга зүй",
   model: "Бизнес загвар",
+  dashboard: "Самбар",
+  raci: "RACI",
   structure: "Процесс",
   agents: "Хүн ба агент",
   workflows: "Workflow",
-  projects: "Төсөл",
   decisions: "Шийдвэр",
   institution: "Институц",
   company: "Компани",
@@ -86,7 +93,8 @@ export const companyLabelsMn: CompanyViewLabels = {
   projects_n: "Төсөл",
   level: "Түвшин",
   views: "Харагдац",
-  template: "Загвар",
+  layout: "Харагдац",
+  methodology: "Арга зүй",
   workspace: "Ажлын орчин",
   brief: "Тайлан",
   noOwner: "Нэгжийн агент",
@@ -104,11 +112,17 @@ export const companyLabelsMn: CompanyViewLabels = {
 
 export type CompanyViewProps = {
   company: Company;
-  template?: CompanyTemplate;
-  defaultTemplate?: CompanyTemplate;
-  onTemplateChange?: (t: CompanyTemplate) => void;
-  /** Hide the template switch when the host decides the layout. */
-  showTemplateSwitch?: boolean;
+  /** Shell: app workspace or one scrolling brief. */
+  layout?: CompanyLayout;
+  defaultLayout?: CompanyLayout;
+  onLayoutChange?: (l: CompanyLayout) => void;
+  showLayoutSwitch?: boolean;
+  /** Template = the organisation's method; defaults to company.methodology, then BMC. */
+  methodology?: Methodology;
+  onMethodologyChange?: (m: Methodology) => void;
+  showMethodologySwitch?: boolean;
+  /** "Today" for due-date filters and the Gantt marker. */
+  today?: Date;
   defaultLevel?: CompanyLevel;
   /** Unit to open first; its kind decides the level. */
   defaultUnitId?: string;
@@ -119,42 +133,6 @@ export type CompanyViewProps = {
 };
 
 const levelOfKind = (k: UnitKind): CompanyLevel => (k === "institution" ? "institution" : k === "company" ? "company" : "team");
-const initials = (name: string) =>
-  name.replace(/[^\p{L}\p{N}\s.]/gu, "").trim().split(/[\s.]+/).filter(Boolean).map((w) => w.charAt(0)).join("").slice(0, 2).toUpperCase() || "?";
-
-const phaseTone = { done: "green", active: "blue", blocked: "amber", next: "gray" } as const;
-const phaseLabel = { done: "Дууссан", active: "Явж байна", blocked: "Хүлээгдэж байна", next: "Төлөвлөж буй" } as const;
-
-function Avatar({ actor, size = 22 }: { actor: Pick<Actor, "name" | "kind">; size?: number }) {
-  return (
-    <span className={`cv-ava is-${actor.kind}`} style={{ "--s": `${size}px` } as React.CSSProperties} aria-hidden="true">
-      {actor.kind === "agent" ? "✦" : initials(actor.name)}
-    </span>
-  );
-}
-
-function Lines({ f }: { f: ModelField }) {
-  const lines = modelLines(f);
-  if (lines.length === 1 && lines[0].share == null) return <p className="cv-model-text">{lines[0].text}</p>;
-  return (
-    <ul className="cv-model-list">
-      {lines.map((l, i) => (
-        <li key={l.text + i} style={{ "--i": i } as React.CSSProperties}>
-          <span>{l.text}</span>
-          {l.share != null && (
-            <span className="cv-share">
-              <span className="cv-share-bar" aria-hidden="true">
-                <span style={{ width: `${Math.round(Math.max(0, Math.min(1, l.share)) * 100)}%` }} />
-              </span>
-              <span className="cv-share-n">{Math.round(l.share * 100)}%</span>
-            </span>
-          )}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 /* ───────────── views ───────────── */
 
 function ModelView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyViewLabels }) {
@@ -193,7 +171,7 @@ function ModelView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyVi
   );
 }
 
-function StructureView({ scoped, L, onPick, current }: { scoped: Company; L: CompanyViewLabels; onPick: (u: CompanyUnit) => void; current: string | null }) {
+function StructureView({ scoped, L, onPick, onPerson, current }: { scoped: Company; L: CompanyViewLabels; onPick: (u: CompanyUnit) => void; onPerson: (id: string) => void; current: string | null }) {
   const kids = (id: string) => scoped.units.filter((u) => u.parentId === id && u.id !== id);
   let order = 0;
   const node = (u: CompanyUnit, depth: number, seen: Set<string>): React.ReactNode => {
@@ -206,15 +184,19 @@ function StructureView({ scoped, L, onPick, current }: { scoped: Company; L: Com
     const i = order++;
     return (
       <li key={u.id} className={`cv-node is-${u.kind}`} style={{ "--i": i, "--d": depth } as React.CSSProperties}>
-        <button type="button" className="cv-node-card" aria-current={current === u.id ? "true" : undefined} onClick={() => onPick(u)}>
-          <span className="cv-node-top">
-            <span className={`cv-kind is-${u.kind}`}>{L[u.kind]}</span>
-            <span className="cv-node-name">{u.name}</span>
-          </span>
+        <div className="cv-node-card" aria-current={current === u.id ? "true" : undefined}>
+          <button type="button" className="cv-node-pick" onClick={() => onPick(u)}>
+            <span className="cv-node-top">
+              <span className={`cv-kind is-${u.kind}`}>{L[u.kind]}</span>
+              <span className="cv-node-name">{u.name}</span>
+            </span>
+          </button>
           <span className="cv-node-meta">
-            <span className="cv-faces" aria-label={`${people.length} ${L.people}`}>
+            <span className="cv-faces" role="group" aria-label={`${people.length} ${L.people}`}>
               {people.slice(0, 4).map((p) => (
-                <Avatar key={p.id} actor={{ name: p.name, kind: "person" }} size={20} />
+                <button key={p.id} type="button" className="cv-face" onClick={() => onPerson(p.id)} aria-label={`${p.name} — профайл`} title={p.name}>
+                  <Avatar actor={{ name: p.name, kind: "person" }} size={20} />
+                </button>
               ))}
               {people.length > 4 && <span className="cv-more">+{people.length - 4}</span>}
             </span>
@@ -229,7 +211,7 @@ function StructureView({ scoped, L, onPick, current }: { scoped: Company; L: Com
               </span>
             )}
           </span>
-        </button>
+        </div>
         {ch.length > 0 && <ul className="cv-tree">{ch.map((k) => node(k, depth + 1, seen))}</ul>}
       </li>
     );
@@ -285,7 +267,7 @@ function AgentCard({ a, c, L, showOwner }: { a: Company["agents"][number]; c: Co
   );
 }
 
-function AgentsView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyViewLabels }) {
+function AgentsView({ c, scoped, L, onPerson }: { c: Company; scoped: Company; L: CompanyViewLabels; onPerson: (id: string) => void }) {
   const inScope = new Set(scoped.people.map((p) => p.id));
   const sections = scoped.units
     .map((u) => {
@@ -306,13 +288,13 @@ function AgentsView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyV
           <ul className="cv-pairs">
             {people.map(({ p, agents }) => (
               <li key={p.id} className="cv-pair">
-                <span className="cv-person">
+                <button type="button" className="cv-person" onClick={() => onPerson(p.id)} aria-label={`${p.name}, ${p.role} — профайл`}>
                   <Avatar actor={{ name: p.name, kind: "person" }} size={30} />
                   <span>
                     <strong>{p.name}</strong>
                     <span>{p.role}</span>
                   </span>
-                </span>
+                </button>
                 <span className={`cv-link${agents.length ? "" : " is-none"}`} aria-hidden="true" />
                 <ul className="cv-agent-list">
                   {agents.map((a) => (
@@ -402,113 +384,6 @@ function WorkflowView({ c, scoped, L }: { c: Company; scoped: Company; L: Compan
   );
 }
 
-const sbLabels = {
-  owner: "Эзэн",
-  tasks: "Нээлттэй task",
-  decisions: "Шийдвэр",
-  pages: "Хуудас",
-  prs: "PR",
-  ungrouped: "Бусад",
-  sessions: "task",
-  session: "task",
-  empty: "Task алга",
-  running: "Явж байна",
-  waiting: "Хүлээж байна",
-  done: "Дууссан",
-  idle: "Эхлээгүй",
-  view: "Харагдац",
-  groupsView: "Төслөөр",
-  statusView: "Төлвөөр",
-  cardsView: "Карт",
-  subItem: "дэд task",
-  subItems: "дэд task",
-  collapseKids: "Нуух",
-  expandKids: "Харуулах",
-  inParent: "дотор",
-};
-
-function ProjectsView({ c, scoped, L, scopeName }: { c: Company; scoped: Company; L: CompanyViewLabels; scopeName: string }) {
-  const [pick, setPick] = React.useState<string | null>(null);
-  const project = scoped.projects.find((p) => p.id === pick) ?? null;
-  if (!scoped.projects.length) return <p className="cv-empty">{L.empty}</p>;
-  const sessions: SessionBoardInput[] = scoped.projects.flatMap((p) =>
-    p.tasks.map((t) => {
-      const owner = t.ownerId ? actorOf(c, t.ownerId) : null;
-      return { id: `${p.id}:${t.id}`, title: t.title, status: t.status, group: p.id, owner: owner?.name, line: owner ? `${owner.name} · ${owner.role}` : undefined };
-    }),
-  );
-  const open = scoped.projects.reduce((n, p) => n + p.tasks.filter((t) => toPhaseState(t.status) !== "done").length, 0);
-  const decisions = scoped.projects.reduce((n, p) => n + p.decisions.length, 0);
-  return (
-    <div className="cv-projects">
-      <div className="cv-chips" role="group" aria-label={L.projects}>
-        <button type="button" aria-pressed={!project} onClick={() => setPick(null)}>
-          {L.allProjects} <span>{scoped.projects.length}</span>
-        </button>
-        {scoped.projects.map((p) => (
-          <button key={p.id} type="button" aria-pressed={pick === p.id} onClick={() => setPick(p.id)}>
-            <i className={`cv-dot is-${toPhaseState(p.status)}`} aria-hidden="true" />
-            {p.name}
-          </button>
-        ))}
-      </div>
-      {project ? (
-        <ProjectReportFor c={c} p={project} L={L} key={project.id} />
-      ) : (
-        <SessionBoard
-          key={scopeName}
-          project={{ name: scopeName, icon: initials(scopeName).charAt(0), status: { label: `${scoped.projects.length} ${L.projects_n.toLowerCase()}`, tone: "blue" }, stats: { tasks: open, decisions } }}
-          groups={scoped.projects.map((p) => ({ id: p.id, label: p.name }))}
-          sessions={sessions}
-          labels={sbLabels}
-          onSessionClick={(s) => s.group && setPick(s.group)}
-        />
-      )}
-    </div>
-  );
-}
-
-function ProjectReportFor({ c, p, L }: { c: Company; p: CompanyProject; L: CompanyViewLabels }) {
-  const unit = c.units.find((u) => u.id === p.unitId);
-  const states = p.tasks.map((t) => toPhaseState(t.status));
-  const done = states.filter((s) => s === "done").length;
-  const active = states.filter((s) => s === "active").length;
-  const state = toPhaseState(p.status);
-  const phases: ProjectReportPhase[] = p.tasks.map((t) => ({ id: t.id, title: t.title, status: t.status, owner: t.ownerId ? actorOf(c, t.ownerId).name : undefined, line: t.ownerId ? actorOf(c, t.ownerId).role : undefined }));
-  return (
-    <ProjectReport
-      project={{ name: p.name, icon: initials(p.name).charAt(0), status: { label: phaseLabel[state], tone: phaseTone[state] }, owner: unit?.name, summary: `${done}/${p.tasks.length} task дууссан · ${p.decisions.length} шийдвэр` }}
-      kpis={[
-        { label: "Task", value: p.tasks.length },
-        { label: "Дууссан", value: done, tone: "green" },
-        { label: "Явж байна", value: active, tone: "blue" },
-        { label: L.decisions, value: p.decisions.length },
-      ]}
-      progress={{ value: p.tasks.length ? (done / p.tasks.length) * 100 : 0, label: "Явц" }}
-      phases={phases}
-      waiting={p.tasks
-        .filter((t) => toPhaseState(t.status) === "blocked")
-        .map((t) => ({ id: t.id, title: t.title, line: t.ownerId ? actorOf(c, t.ownerId).name : undefined, tone: "amber" as const }))}
-      labels={{
-        owner: L.units,
-        updated: "Шинэчилсэн",
-        progress: "Явц",
-        phases: "Task",
-        waiting: "Хүлээгдэж буй",
-        nothingWaiting: "Хүлээгдэж буй зүйл алга.",
-        view: "Харагдац",
-        status: "Жагсаалт",
-        cards: "Карт",
-        done: "Дууссан",
-        active: "Явж байна",
-        blocked: "Хүлээгдэж байна",
-        next: "Дараа",
-        sharedWith: "Хамт",
-      }}
-    />
-  );
-}
-
 function DecisionsView({ scoped, L }: { scoped: Company; L: CompanyViewLabels }) {
   const decisions: DecisionChatItem[] = scoped.projects
     .flatMap((p) => p.decisions.map((d) => ({ id: `${p.id}:${d.id}`, title: d.title, project: p.name, due: d.date, options: [{ id: "made", label: "Шийдсэн" }] })))
@@ -530,13 +405,17 @@ function DecisionsView({ scoped, L }: { scoped: Company; L: CompanyViewLabels })
 
 export function CompanyView({
   company,
-  template: templateProp,
-  defaultTemplate = "workspace",
-  onTemplateChange,
-  showTemplateSwitch = true,
+  layout: layoutProp,
+  defaultLayout = "workspace",
+  onLayoutChange,
+  showLayoutSwitch = true,
+  methodology: methodologyProp,
+  onMethodologyChange,
+  showMethodologySwitch = true,
+  today,
   defaultLevel,
   defaultUnitId,
-  defaultView = "model",
+  defaultView = "method",
   onScopeChange,
   labels: labelsProp,
   className = "",
@@ -553,8 +432,12 @@ export function CompanyView({
   })();
   const [scope, setScopeState] = React.useState(initial);
   const [view, setView] = React.useState<CompanyViewKey>(defaultView);
-  const [templateOwn, setTemplateOwn] = React.useState<CompanyTemplate>(defaultTemplate);
-  const template = templateProp ?? templateOwn;
+  const [layoutOwn, setLayoutOwn] = React.useState<CompanyLayout>(defaultLayout);
+  const layout = layoutProp ?? layoutOwn;
+  const [methodOwn, setMethodOwn] = React.useState<Methodology>(company.methodology ?? "bmc");
+  const methodology = methodologyProp ?? methodOwn;
+  const [personId, setPersonId] = React.useState<string | null>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
   const tabsRef = React.useRef<(HTMLButtonElement | null)[]>([]);
   const firstView = React.useRef(true);
   React.useEffect(() => {
@@ -570,7 +453,9 @@ export function CompanyView({
 
   React.useEffect(() => {
     setScopeState(initial);
-    // a new company resets the scope
+    setMethodOwn(company.methodology ?? "bmc");
+    setPersonId(null);
+    // a new company resets the scope and its method
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company.id]);
 
@@ -590,10 +475,15 @@ export function CompanyView({
     setScope({ level: lv, unitId: (up && kinds.includes(up.kind) ? up : down ?? firstUnit(lv))?.id ?? null });
   };
   const pickUnit = (u: CompanyUnit) => setScope({ level: levelOfKind(u.kind), unitId: u.id });
-  const setTemplate = (t: CompanyTemplate) => {
-    setTemplateOwn(t);
-    onTemplateChange?.(t);
+  const setLayout = (l: CompanyLayout) => {
+    setLayoutOwn(l);
+    onLayoutChange?.(l);
   };
+  const setMethodology = (m: Methodology) => {
+    setMethodOwn(m);
+    onMethodologyChange?.(m);
+  };
+  const closeProfile = React.useCallback(() => setPersonId(null), []);
 
   // A refreshed company may drop the unit in view: fall back to the start.
   React.useEffect(() => {
@@ -606,26 +496,39 @@ export function CompanyView({
   for (let u = unit, guard = 0; u && guard < 20; u = company.units.find((x) => x.id === u!.parentId) ?? null, guard++) path.unshift(u);
   const levelUnits = company.units.filter((u) => kindsOf[scope.level].includes(u.kind));
   const counts: Record<CompanyViewKey, number | null> = {
-    model: null,
+    method: null,
+    dashboard: scoped.projects.length,
     structure: scoped.units.length,
     agents: scoped.agents.length,
     workflows: scoped.workflows.length,
-    projects: scoped.projects.length,
+    raci: scoped.projects.filter((p) => p.raci).length,
     decisions: scoped.projects.reduce((n, p) => n + p.decisions.length, 0),
   };
+  const tabLabel = (v: CompanyViewKey) => (v === "method" ? methodologyShort[methodology] : L[v]);
+  const person = company.people.find((p) => p.id === personId) ?? null;
   const scopeName = unit?.name ?? company.name;
 
   const render = (v: CompanyViewKey) =>
-    v === "model" ? (
-      <ModelView c={company} scoped={scoped} L={L} />
+    v === "method" ? (
+      <>
+        <MethodologyView c={company} scoped={scoped} methodology={methodology} today={today} />
+        {methodology === "okr" && (
+          <section className="cv-sub" aria-label={L.model}>
+            <h4 className="cv-below-h">{L.model}</h4>
+            <ModelView c={company} scoped={scoped} L={L} />
+          </section>
+        )}
+      </>
+    ) : v === "dashboard" ? (
+      <Dashboard c={company} scoped={scoped} today={today} empty={L.empty} key={scope.unitId ?? "all"} />
     ) : v === "structure" ? (
-      <StructureView scoped={scoped} L={L} onPick={pickUnit} current={scope.unitId} />
+      <StructureView scoped={scoped} L={L} onPick={pickUnit} onPerson={setPersonId} current={scope.unitId} />
     ) : v === "agents" ? (
-      <AgentsView c={company} scoped={scoped} L={L} />
+      <AgentsView c={company} scoped={scoped} L={L} onPerson={setPersonId} />
     ) : v === "workflows" ? (
       <WorkflowView c={company} scoped={scoped} L={L} />
-    ) : v === "projects" ? (
-      <ProjectsView c={company} scoped={scoped} L={L} scopeName={scopeName} key={scope.unitId ?? "all"} />
+    ) : v === "raci" ? (
+      <RaciView c={company} scoped={scoped} onPerson={setPersonId} empty="RACI бүртгэгдээгүй." />
     ) : (
       <DecisionsView scoped={scoped} L={L} />
     );
@@ -647,14 +550,45 @@ export function CompanyView({
       ))}
     </div>
   );
-  const templateSwitch = showTemplateSwitch && (
-    <div className="cv-seg cv-tpl" role="radiogroup" aria-label={L.template}>
+  const methodSwitch = showMethodologySwitch && (
+    <div className="cv-seg cv-method-switch" role="radiogroup" aria-label={L.methodology}>
+      {METHODOLOGIES.map((m) => (
+        <button
+          key={m}
+          type="button"
+          role="radio"
+          aria-checked={methodology === m}
+          data-active={methodology === m || undefined}
+          title={methodologyName[m]}
+          onClick={() => setMethodology(m)}
+        >
+          {methodologyShort[m]}
+        </button>
+      ))}
+    </div>
+  );
+  const layoutSwitch = showLayoutSwitch && (
+    <div className="cv-seg cv-tpl" role="radiogroup" aria-label={L.layout}>
       {(["workspace", "brief"] as const).map((t) => (
-        <button key={t} type="button" role="radio" aria-checked={template === t} data-active={template === t || undefined} onClick={() => setTemplate(t)}>
+        <button key={t} type="button" role="radio" aria-checked={layout === t} data-active={layout === t || undefined} onClick={() => setLayout(t)}>
           {L[t]}
         </button>
       ))}
     </div>
+  );
+  const switches = (
+    <span className="cv-switches">
+      {methodSwitch}
+      {layoutSwitch}
+    </span>
+  );
+  const profile = person && (
+    <PersonProfile
+      c={company}
+      person={person}
+      onClose={closeProfile}
+      themeClass={rootRef.current?.closest(".dark,[data-theme=dark]") ? "dark" : ""}
+    />
   );
   const unitChips = (
     <div className="cv-chips cv-unit-chips" role="group" aria-label={L[scope.level]}>
@@ -673,9 +607,9 @@ export function CompanyView({
     </span>
   );
 
-  if (template === "brief") {
+  if (layout === "brief") {
     return (
-      <div className={`cv ${className}`} data-template="brief">
+      <div ref={rootRef} className={`cv ${className}`} data-template="brief" data-methodology={methodology}>
         <style>{css}</style>
         <div className="cv-brief">
         <header className="cv-hero">
@@ -684,7 +618,7 @@ export function CompanyView({
               {company.name}
               {path.length > 1 && ` / ${path.slice(1).map((u) => u.name).join(" / ")}`}
             </span>
-            {templateSwitch}
+            {switches}
           </div>
           <h2 className="cv-hero-title">{scopeName}</h2>
           {tags}
@@ -698,13 +632,14 @@ export function CompanyView({
           <section key={v} className="cv-section" aria-labelledby={`${uid}-${v}`} style={{ "--i": i } as React.CSSProperties}>
             <h3 id={`${uid}-${v}`} className="cv-section-h">
               <span className="cv-num">{String(i + 1).padStart(2, "0")}</span>
-              {L[v]}
+              {v === "method" ? methodologyName[methodology] : L[v]}
               {counts[v] != null && <span className="cv-count">{counts[v]}</span>}
             </h3>
             {render(v)}
           </section>
         ))}
         </div>
+        {profile}
       </div>
     );
   }
@@ -740,7 +675,7 @@ export function CompanyView({
   };
 
   return (
-    <div className={`cv ${className}`} data-template="workspace">
+    <div ref={rootRef} className={`cv ${className}`} data-template="workspace" data-methodology={methodology}>
       <style>{css}</style>
       <div className="cv-ws">
       <aside className="cv-side" aria-label={company.name}>
@@ -774,7 +709,7 @@ export function CompanyView({
                 </React.Fragment>
               ))}
             </nav>
-            {templateSwitch}
+            {switches}
           </div>
           <h2 className="cv-title">{scopeName}</h2>
           {tags}
@@ -805,7 +740,7 @@ export function CompanyView({
                 tabIndex={view === v ? 0 : -1}
                 onClick={() => setView(v)}
               >
-                {L[v]}
+                {tabLabel(v)}
                 {counts[v] != null && <span>{counts[v]}</span>}
               </button>
             ))}
@@ -816,11 +751,12 @@ export function CompanyView({
         </section>
       </main>
       </div>
+      {profile}
     </div>
   );
 }
 
-const css = `
+const baseCss = `
 .cv{--cv-bg:#fff;--cv-page:#f7f7f8;--cv-fg:#18181b;--cv-muted:#71717a;--cv-faint:#a1a1aa;--cv-line:#ececef;--cv-soft:#f4f4f5;--cv-accent:#4f7cf0;--cv-accent-soft:#e8f1fe;--cv-green:#16a34a;--cv-green-soft:#e9f8ee;--cv-amber:#c2620a;--cv-amber-soft:#fff4e0;--cv-violet:#7c3aed;--cv-violet-soft:#f1ebfd;--cv-teal:#0f8a7e;--cv-teal-soft:#e2f6f3;--cv-seg-on:#fff;position:relative;width:100%;color:var(--cv-fg);font:400 14px/1.45 Inter,system-ui,sans-serif;container:cv/inline-size;box-sizing:border-box}
 :where(.dark,[data-theme=dark]) .cv{--cv-bg:#1b1b1e;--cv-page:#141416;--cv-fg:#ececef;--cv-muted:#a1a1aa;--cv-faint:#71717a;--cv-line:#2e2e33;--cv-soft:#26262a;--cv-accent:#7c9cff;--cv-accent-soft:#1b2a44;--cv-green:#4ade80;--cv-green-soft:#16301f;--cv-amber:#eba659;--cv-amber-soft:#3a2a12;--cv-violet:#a78bfa;--cv-violet-soft:#2a2140;--cv-teal:#5eead4;--cv-teal-soft:#123330;--cv-seg-on:#3a3a40;color-scheme:dark}
 .cv *{box-sizing:border-box}:where(.cv) button{font:inherit;color:inherit;cursor:pointer}
@@ -878,13 +814,21 @@ const css = `
 .cv-node{position:relative;padding-top:8px;animation:cv-in .32s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 40ms)}
 .cv-tree .cv-tree>.cv-node::before{content:"";position:absolute;left:-16px;top:30px;width:14px;height:1.5px;background:var(--cv-line)}
 .cv-node-card{display:flex;flex-direction:column;gap:6px;width:min(100%,520px);padding:10px 12px;border:1px solid var(--cv-line);border-radius:10px;background:var(--cv-bg);text-align:left;transition:border-color .15s,box-shadow .15s}
+.cv-node-pick{display:block;width:100%;padding:0;border:0;background:none;text-align:left}
+.cv-face{display:inline-flex;padding:0;border:0;border-radius:50%;background:none}
+.cv-face:hover .cv-ava{border-color:var(--cv-accent);color:var(--cv-fg)}
+.cv-faces .cv-face+.cv-face{margin-left:-6px}
+button.cv-person{width:100%;border:0;text-align:left;color:inherit;transition:background .15s}
+button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,var(--cv-soft))}
+.cv-switches{display:inline-flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
+.cv-sub{margin-top:18px}
 .cv-node-card:hover{border-color:color-mix(in srgb,var(--cv-accent) 40%,var(--cv-line))}
 .cv-node-card[aria-current=true]{border-color:var(--cv-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--cv-accent) 18%,transparent)}
 .cv-node-top{display:flex;align-items:center;gap:8px;min-width:0}
 .cv-node-name{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cv-node-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .cv-faces{display:inline-flex;align-items:center}
-.cv-faces .cv-ava+.cv-ava{margin-left:-6px}
+.cv-faces .cv-ava+.cv-ava,.cv-faces .cv-face+.cv-face{margin-left:-6px}
 .cv-faces .cv-ava{box-shadow:0 0 0 2px var(--cv-bg)}
 /* agents */
 .cv-agents{display:flex;flex-direction:column;gap:10px}
@@ -1010,7 +954,7 @@ const css = `
 .cv-hero-top{align-items:flex-start}
 .cv-canvas{grid-template-columns:1fr}
 .cv-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-.cv-stat:last-child{grid-column:1/-1}
+.cv-model .cv-stat:last-child{grid-column:1/-1}
 .cv-pair{grid-template-columns:1fr}
 .cv-link{height:18px;width:2px;margin-left:24px}
 .cv-link::before{left:0;right:auto;top:2px;bottom:4px;width:1.5px;height:auto}
@@ -1027,5 +971,7 @@ const css = `
 }
 @media(prefers-reduced-motion:reduce){.cv *,.cv{animation:none!important;transition:none!important}}
 `;
+
+const css = baseCss + dashboardCss + raciCss + methodologyCss;
 
 export default CompanyView;
