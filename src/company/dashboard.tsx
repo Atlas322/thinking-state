@@ -12,6 +12,13 @@ export function dependencyText(c: Company, p: CompanyProject | undefined, t: Com
   if (blocks.length) parts.push(`→ ${blocks.length} task хүлээж байна`);
   return parts.join(" · ");
 }
+/** area / subArea may be a unit id («area-fac9e1b8f9», kind "area") or a plain name: show the name. */
+export const areaLabel = (c: Company, v?: string) => {
+  const t = v?.trim();
+  if (!t) return "";
+  return c.units.find((u) => u.id === t)?.name ?? t;
+};
+
 /** True when the task waits on something that is not done yet. */
 export function isHeld(c: Company, p: CompanyProject | undefined, t: CompanyTask, index = taskIndex(c)) {
   return dependenciesOf(c, p, t, index).waitsOn.some((w) => toPhaseState(w.task.status) !== "done");
@@ -96,7 +103,7 @@ export function ProjectReportFor({ c, p, decisionsLabel = "Шийдвэр" }: { 
         status: { label: phaseLabel[state], tone: phaseTone[state] },
         owner: accountable ?? unit?.name,
         updated: p.due,
-        summary: [p.area, p.subArea].filter(Boolean).join(" › ") || unit?.name,
+        summary: [areaLabel(c, p.area), areaLabel(c, p.subArea)].filter(Boolean).join(" › ") || unit?.name,
       }}
       kpis={[
         { label: "Task", value: p.tasks.length },
@@ -164,7 +171,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
 
   const areas = new Map<string, CompanyProject[]>();
   for (const p of scoped.projects) {
-    const key = p.area?.trim() || NO_AREA;
+    const key = areaLabel(c, p.area) || NO_AREA;
     areas.set(key, [...(areas.get(key) ?? []), p]);
   }
   const picked = scoped.projects.find((p) => p.id === pick) ?? null;
@@ -249,7 +256,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
             for (const p of projects) {
               const tasks = p.tasks.filter((t) => passes(p, t));
               if (filtering && !tasks.length) continue;
-              const sub = p.subArea?.trim() || "";
+              const sub = areaLabel(c, p.subArea);
               if (sub) subs.set(sub, sub);
               const done = p.tasks.filter((t) => isDone(t.status)).length;
               const acc = p.raci?.accountable ? actorOf(c, p.raci.accountable) : null;
