@@ -3,6 +3,7 @@ import { SessionBoard, toSessionState, type SessionBoardInput } from "../library
 import { ProjectReport, toPhaseState, type ProjectReportPhase } from "../library/project-report";
 import { actorOf, type Company, type CompanyProject, type CompanyTask } from "./types";
 import { initials, phaseLabel, phaseTone } from "./ui";
+import { Empty } from "./collection";
 
 /**
  * Dashboard — the company's projects and tasks grouped by area → sub-area,
@@ -147,7 +148,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
   }
   const picked = scoped.projects.find((p) => p.id === pick) ?? null;
 
-  if (!scoped.projects.length) return <p className="cv-empty">{empty}</p>;
+  if (!scoped.projects.length) return <Empty text={empty} icon="folder" />;
 
   return (
     <div className="cv-dash">
@@ -249,7 +250,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
                   <span className="cv-count">{projectRows.length}</span>
                 </h4>
                 {projectRows.length === 0 ? (
-                  <p className="cv-empty cv-empty-sm">Шүүлтэд тохирох зүйл алга.</p>
+                  <Empty text="Шүүлтэд тохирох зүйл алга." icon="filter" />
                 ) : (
                   <SessionBoard
                     project={{
