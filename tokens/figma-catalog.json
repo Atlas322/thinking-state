@@ -1,0 +1,1165 @@
+{
+  "$meta": {
+    "source": "src/catalog.json (npm run tokens:figma)",
+    "count": 103
+  },
+  "components": [
+    {
+      "slug": "agent-checkpoints",
+      "name": "Agent Checkpoints",
+      "category": "Agents",
+      "export": "AgentCheckpoints",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-cursors",
+      "name": "Agent Cursors",
+      "category": "Agents",
+      "export": "AgentCursors",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-findings",
+      "name": "Agent Findings",
+      "category": "Agents",
+      "export": "AgentFindings",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-fleet",
+      "name": "Agent Fleet",
+      "category": "Agents",
+      "export": "AgentFleet",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-graph",
+      "name": "Agent Graph",
+      "category": "Agents",
+      "export": "AgentGraph",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-handoff",
+      "name": "Agent Handoff",
+      "category": "Agents",
+      "export": "AgentHandoff",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-inbox",
+      "name": "Agent Inbox",
+      "category": "Agents",
+      "export": "AgentInbox",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-lanes",
+      "name": "Agent Lanes",
+      "category": "Agents",
+      "export": "AgentLanes",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-ledger",
+      "name": "Agent Ledger",
+      "category": "Agents",
+      "export": "AgentLedger",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-monitor",
+      "name": "Agent Monitor",
+      "category": "Agents",
+      "export": "AgentMonitor",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-plan",
+      "name": "Agent Plan",
+      "category": "Agents",
+      "export": "AgentPlan",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-queue",
+      "name": "Agent Queue",
+      "category": "Agents",
+      "export": "AgentQueue",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-recap",
+      "name": "Agent Recap",
+      "category": "Agents",
+      "export": "AgentRecap",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-reply",
+      "name": "Agent Reply",
+      "category": "Agents",
+      "export": "AgentReply",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-steering",
+      "name": "Agent Steering",
+      "category": "Agents",
+      "export": "AgentSteering",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-trail",
+      "name": "Agent Trail",
+      "category": "Agents",
+      "export": "AgentTrail",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "agent-tree",
+      "name": "Agent Tree",
+      "category": "Agents",
+      "export": "AgentTree",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "ai-answer",
+      "name": "AI Answer",
+      "category": "Chat",
+      "export": "AIAnswer",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "approval-card",
+      "name": "Approval Card",
+      "category": "Agents",
+      "export": "ApprovalCard",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "approval-gates",
+      "name": "Approval Gates",
+      "category": "Agents",
+      "export": "ApprovalGates",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "autonomy-dial",
+      "name": "Autonomy Dial",
+      "category": "Agents",
+      "export": "AutonomyDial",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "away-summary",
+      "name": "Away Summary",
+      "category": "Agents",
+      "export": "AwaySummary",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "billing-schedule",
+      "name": "Billing Schedule",
+      "category": "Inputs",
+      "export": "BillingSchedule",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "breakdown-chart",
+      "name": "Breakdown Chart",
+      "category": "Data display",
+      "export": "BreakdownChart",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "button",
+      "name": "Button",
+      "category": "Buttons",
+      "export": "Button",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "change-summary",
+      "name": "Change Summary",
+      "category": "Data display",
+      "export": "ChangeSummary",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "chat-composer",
+      "name": "Chat Composer",
+      "category": "Chat",
+      "export": "ChatComposer",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "checkbox",
+      "name": "Checkbox",
+      "category": "Inputs",
+      "export": "Checkbox",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "cited-answer",
+      "name": "Cited Answer",
+      "category": "Chat",
+      "export": "CitedAnswer",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "collaboration-stream",
+      "name": "Collaboration Stream",
+      "category": "Agents",
+      "export": "CollaborationStream",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "combobox",
+      "name": "Combobox",
+      "category": "Inputs",
+      "export": "Combobox",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "command-menu",
+      "name": "Command Menu",
+      "category": "Navigation",
+      "export": "CommandMenu",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "comment-thread",
+      "name": "Comment Thread",
+      "category": "Chat",
+      "export": "CommentThread",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "comments-panel",
+      "name": "Comments Panel",
+      "category": "Chat",
+      "export": "CommentsPanel",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "compact-breakdown",
+      "name": "Compact Breakdown",
+      "category": "Data display",
+      "export": "CompactBreakdown",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "conflict-radar",
+      "name": "Conflict Radar",
+      "category": "Agents",
+      "export": "ConflictRadar",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "context-map",
+      "name": "Context Map",
+      "category": "Agents",
+      "export": "ContextMap",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "context-window",
+      "name": "Context Window",
+      "category": "Agents",
+      "export": "ContextWindow",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "cost-waterfall",
+      "name": "Cost Waterfall",
+      "category": "Agents",
+      "export": "CostWaterfall",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "data-table",
+      "name": "Data Table",
+      "category": "Data display",
+      "export": "DataTable",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "date-range-picker",
+      "name": "Date Range Picker",
+      "category": "Inputs",
+      "export": "DateRangePicker",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "decision-card",
+      "name": "Decision Card",
+      "category": "Agents",
+      "export": "DecisionCard",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "decision-inbox",
+      "name": "Decision Inbox",
+      "category": "Feedback",
+      "export": "DecisionInbox",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "decision-tree",
+      "name": "Decision Tree",
+      "category": "Agents",
+      "export": "DecisionTree",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "delegate-board",
+      "name": "Delegate Board",
+      "category": "Agents",
+      "export": "DelegateBoard",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "dropzone",
+      "name": "Dropzone",
+      "category": "Inputs",
+      "export": "Dropzone",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "email-draft",
+      "name": "Email Draft",
+      "category": "Cards",
+      "export": "EmailDraft",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "experiment-card",
+      "name": "Experiment Card",
+      "category": "Data display",
+      "export": "ExperimentCard",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "fallback-chain",
+      "name": "Fallback Chain",
+      "category": "Agents",
+      "export": "FallbackChain",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "fan-out-grid",
+      "name": "Fan-out Grid",
+      "category": "Agents",
+      "export": "FanoutGrid",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "filter-menu",
+      "name": "Filter Menu",
+      "category": "Inputs",
+      "export": "FilterMenu",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "inline-diff",
+      "name": "Inline Diff",
+      "category": "Agents",
+      "export": "InlineDiff",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "integration-picker",
+      "name": "Integration Picker",
+      "category": "Navigation",
+      "export": "IntegrationPicker",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "integration-settings",
+      "name": "Integration Settings",
+      "category": "Inputs",
+      "export": "IntegrationSettings",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "judge-bracket",
+      "name": "Judge Bracket",
+      "category": "Agents",
+      "export": "JudgeBracket",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "kpi-chart",
+      "name": "KPI Chart",
+      "category": "Data display",
+      "export": "KPIChart",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "memory-panel",
+      "name": "Memory Panel",
+      "category": "Agents",
+      "export": "MemoryPanel",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "message-actions",
+      "name": "Message Actions",
+      "category": "Chat",
+      "export": "MessageActions",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "model-picker",
+      "name": "Model Picker",
+      "category": "Chat",
+      "export": "ModelPicker",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "notification-stack",
+      "name": "Notification Stack",
+      "category": "Feedback",
+      "export": "NotificationStack",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "otp-input",
+      "name": "OTP Input",
+      "category": "Inputs",
+      "export": "OtpInput",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "parallel-attempts",
+      "name": "Parallel Attempts",
+      "category": "Agents",
+      "export": "ParallelAttempts",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "permission-request",
+      "name": "Permission Request",
+      "category": "Agents",
+      "export": "PermissionRequest",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "plan-vs-actual",
+      "name": "Plan vs Actual",
+      "category": "Agents",
+      "export": "PlanVsActual",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "profile-menu",
+      "name": "Profile Menu",
+      "category": "Navigation",
+      "export": "ProfileMenu",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "progress-tracker",
+      "name": "Progress Tracker",
+      "category": "Feedback",
+      "export": "ProgressTracker",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "project-card",
+      "name": "Project Card",
+      "category": "Cards",
+      "export": "ProjectCard",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "prompt-library",
+      "name": "Prompt Library",
+      "category": "Inputs",
+      "export": "PromptLibrary",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "reaction-bar",
+      "name": "Reaction Bar",
+      "category": "Buttons",
+      "export": "ReactionBar",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "review-center",
+      "name": "Review Center",
+      "category": "Agents",
+      "export": "ReviewCenter",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "root-cause-tree",
+      "name": "Root Cause Tree",
+      "category": "Agents",
+      "export": "RootCauseTree",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "running-now",
+      "name": "Running Now",
+      "category": "Agents",
+      "export": "RunningNow",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "scheduled-runs",
+      "name": "Scheduled Runs",
+      "category": "Agents",
+      "export": "ScheduledRuns",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "segmented-control",
+      "name": "Segmented Control",
+      "category": "Navigation",
+      "export": "SegmentedControl",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "select",
+      "name": "Select",
+      "category": "Inputs",
+      "export": "Select",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "company-workspace",
+      "name": "Компани · Ажлын орчин",
+      "category": "Компани",
+      "export": "CompanyWorkspace",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/company",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "company-brief",
+      "name": "Компани · Тайлан",
+      "category": "Компани",
+      "export": "CompanyBrief",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/company",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "company-collection",
+      "name": "Компани · Collection",
+      "category": "Компани",
+      "export": "CompanyCollection",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/company",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "motion-foundation",
+      "name": "Хөдөлгөөн · Суурь",
+      "category": "Компани",
+      "export": "MotionFoundation",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/motion",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "ts-primitives",
+      "name": "Primitive · Үндсэн",
+      "category": "Компани",
+      "export": "TsPrimitives",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/ui, src/layout, src/lib",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "project-report",
+      "name": "Project Report",
+      "category": "Chat widgets",
+      "export": "ProjectReport",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "pr-deploy-status",
+      "name": "PR & Deploy Status",
+      "category": "Chat widgets",
+      "export": "PrDeployStatus",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "decision-inbox-chat",
+      "name": "Decision Inbox · Chat",
+      "category": "Chat widgets",
+      "export": "DecisionInboxChat",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "session-board",
+      "name": "Session Board",
+      "category": "Chat widgets",
+      "export": "SessionBoard",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "setup-guide",
+      "name": "Setup Guide",
+      "category": "Feedback",
+      "export": "SetupGuide",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "smart-recommendation",
+      "name": "Smart Recommendation",
+      "category": "Cards",
+      "export": "SmartRecommendation",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "stepper-form",
+      "name": "Stepper Form",
+      "category": "Inputs",
+      "export": "StepperForm",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "switch",
+      "name": "Switch",
+      "category": "Inputs",
+      "export": "Switch",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "tag-input",
+      "name": "Tag Input",
+      "category": "Inputs",
+      "export": "TagInput",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "text-area",
+      "name": "Text Area",
+      "category": "Inputs",
+      "export": "TextArea",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "text-field",
+      "name": "Text Field",
+      "category": "Inputs",
+      "export": "TextField",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "thinking-loader",
+      "name": "Thinking Loader",
+      "category": "Chat",
+      "export": "ThinkingLoader",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "thinking-state",
+      "name": "Thinking State",
+      "category": "Chat",
+      "export": "ThinkingState",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "tips-panel",
+      "name": "Tips Panel",
+      "category": "Cards",
+      "export": "TipsPanel",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "toaster",
+      "name": "Toaster",
+      "category": "Feedback",
+      "export": "Toaster",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "tool-access-map",
+      "name": "Tool Access Map",
+      "category": "Agents",
+      "export": "ToolAccessMap",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "tool-call-card",
+      "name": "Tool Call Card",
+      "category": "Agents",
+      "export": "ToolCallCard",
+      "variants": [
+        "clean",
+        "classic"
+      ],
+      "module": null,
+      "origin": "affectUI (MIT)"
+    },
+    {
+      "slug": "trace-waterfall",
+      "name": "Trace Waterfall",
+      "category": "Agents",
+      "export": "TraceWaterfall",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "usage-meter",
+      "name": "Usage Meter",
+      "category": "Data display",
+      "export": "UsageMeter",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "writing-assistant",
+      "name": "Writing Assistant",
+      "category": "Chat",
+      "export": "WritingAssistant",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "folder-float",
+      "name": "Folder Float",
+      "category": "Cards",
+      "export": "FolderFloat",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "swipe-row",
+      "name": "Swipe Row",
+      "category": "Data display",
+      "export": "SwipeRow",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    },
+    {
+      "slug": "explainer-carousel",
+      "name": "Explainer Carousel",
+      "category": "Social",
+      "export": "ExplainerSlide",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "affectUI recreation"
+    }
+  ]
+}
