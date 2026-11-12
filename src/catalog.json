@@ -680,9 +680,9 @@
     "category": "Agents",
     "pro": true,
     "origin": "Studio original",
-    "description": "One project's agent sessions at a glance – a header card with status, owner, counters that count up and repo/prod/Figma links, over collapsible Projects, Areas, Resources and Finance groups; each session row has a state dot that pulses while running, a one-line note, PR and state tags, a running line under live work and children indented under their parent",
+    "description": "One project's agent sessions three ways – by group (Projects, Areas, Resources, Finance), by state in tabs, or as cards – under a header card with status, owner, counters that count up and repo/prod/Figma links; each session shows a state dot that pulses while running, a one-line note, PR and state tags and a running line, with sub-sessions folding under their parent",
     "exportName": "SessionBoard",
-    "usage": "import { SessionBoard } from \"./session-board\";\n\nexport default function App() {\n  return <SessionBoard />; // props: project, groups, sessions (group, parent, state, pr, line), onSessionClick, labels\n}"
+    "usage": "import { SessionBoard } from \"./session-board\";\n\nexport default function App() {\n  return <SessionBoard />; // props: project, groups, sessions (group, parent, state, pr, line), onSessionClick, view, defaultView, onViewChange, views, labels\n}"
   },
   {
     "slug": "setup-guide",

@@ -29,7 +29,7 @@ describe("SessionBoard", () => {
     mockMotion(true);
     render(<SessionBoard sessions={sessions} />);
     const projects = screen.getByRole("region", { name: /Projects/ });
-    const titles = within(projects).getAllByRole("button").slice(1).map((b) => b.textContent);
+    const titles = Array.from(projects.querySelectorAll(".sb-row-btn")).map((b) => b.textContent);
     expect(titles[0]).toContain("Root task");
     expect(titles[1]).toContain("Child task");
     expect(within(projects).getByText("#7")).toBeTruthy();
@@ -54,7 +54,7 @@ describe("SessionBoard", () => {
     mockMotion(true);
     const onSessionClick = vi.fn();
     render(<SessionBoard sessions={sessions} onSessionClick={onSessionClick} />);
-    const row = screen.getByRole("button", { name: /Root task/ });
+    const row = screen.getByRole("button", { name: /^Root task/ });
     fireEvent.click(row);
     expect(onSessionClick).toHaveBeenCalledWith(expect.objectContaining({ id: "root" }));
     expect(row.getAttribute("aria-current")).toBe("true");
@@ -63,7 +63,7 @@ describe("SessionBoard", () => {
   it("moves focus between rows with arrow keys", () => {
     mockMotion(true);
     render(<SessionBoard sessions={sessions} />);
-    const root = screen.getByRole("button", { name: /Root task/ });
+    const root = screen.getByRole("button", { name: /^Root task/ });
     root.focus();
     fireEvent.keyDown(root, { key: "ArrowDown" });
     expect(document.activeElement?.textContent).toContain("Child task");
@@ -75,5 +75,44 @@ describe("SessionBoard", () => {
     const stats = document.querySelectorAll(".sb-stat dd [aria-hidden]");
     expect(Array.from(stats).map((n) => n.textContent)).toEqual(["12", "4", "38", "3"]);
     expect(screen.getAllByText("No sessions")).toHaveLength(4);
+  });
+
+  it("folds a parent's children away and back", () => {
+    mockMotion(true);
+    render(<SessionBoard sessions={sessions} />);
+    const fold = screen.getByRole("button", { name: /Hide sub-sessions: Root task/ });
+    fireEvent.click(fold);
+    expect(screen.queryByRole("button", { name: /^Child task/ })).toBeNull();
+    expect(screen.getByRole("button", { name: /^Root task/ }).getAttribute("aria-expanded")).toBe("false");
+    fireEvent.keyDown(screen.getByRole("button", { name: /^Root task/ }), { key: "ArrowRight" });
+    expect(screen.getByRole("button", { name: /^Child task/ })).toBeTruthy();
+  });
+
+  it("switches to status tabs and cards views", () => {
+    mockMotion(true);
+    const onViewChange = vi.fn();
+    render(<SessionBoard sessions={sessions} onViewChange={onViewChange} />);
+    fireEvent.click(screen.getByRole("radio", { name: "Status" }));
+    expect(onViewChange).toHaveBeenCalledWith("status");
+    const running = screen.getByRole("tab", { name: /Running/ });
+    expect(running.getAttribute("aria-selected")).toBe("true");
+    expect(screen.getByRole("tabpanel").textContent).toContain("Root task");
+    fireEvent.click(screen.getByRole("tab", { name: /Done/ }));
+    const panel = screen.getByRole("tabpanel");
+    expect(panel.textContent).toContain("Child task");
+    expect(panel.textContent).toContain("in Root task");
+    fireEvent.click(screen.getByRole("radio", { name: "Cards" }));
+    const cards = document.querySelectorAll(".sb-card");
+    expect(cards).toHaveLength(3);
+    const kids = screen.getByRole("button", { name: /1 sub-session$/ });
+    fireEvent.click(kids);
+    expect(kids.getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("hides the switch when only one view is allowed", () => {
+    mockMotion(true);
+    render(<SessionBoard sessions={sessions} views={["cards"]} defaultView="cards" />);
+    expect(screen.queryByRole("radiogroup")).toBeNull();
+    expect(document.querySelectorAll(".sb-card").length).toBeGreaterThan(0);
   });
 });
