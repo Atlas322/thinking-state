@@ -249,8 +249,6 @@ export function taskIndex(c: Company): Map<string, TaskRef> {
   return out;
 }
 
-const keysOf = (ref: TaskRef) => (ref.project ? [ref.task.id, `${ref.project.id}-${ref.task.id}`, `${ref.project.id}:${ref.task.id}`] : [ref.task.id]);
-
 /**
  * What a task waits on (its dependsOn, resolved; ids inside the task's own
  * project win over same-named ids elsewhere) and what waits on it (the
@@ -264,12 +262,17 @@ export function dependenciesOf(c: Company, project: CompanyProject | undefined, 
     const ref = own ? { project, task: own } : index.get(id);
     if (ref && ref.task !== task && !waitsOn.some((w) => w.task === ref.task)) waitsOn.push(ref);
   }
-  const me = keysOf({ project, task });
   const blocks: TaskRef[] = [];
   for (const ref of new Set(index.values())) {
     if (ref.task === task) continue;
     const deps = ref.task.dependsOn ?? [];
-    const hit = deps.some((d) => (ref.project && ref.project === project ? d === task.id : false) || me.slice(1).includes(d) || (!project && d === task.id));
+    // Same rule as waitsOn: a bare id means the depending task's own project first,
+    // otherwise whatever the index resolves it to (globally unique ids like
+    // «task-17ba66c5f7» and «project-t4» / «project:t4» forms).
+    const hit = deps.some((d) => {
+      const own = ref.project?.tasks.find((t) => t.id === d);
+      return own ? own === task : index.get(d)?.task === task;
+    });
     if (hit && !blocks.some((b) => b.task === ref.task)) blocks.push(ref);
   }
   return { waitsOn, blocks };
