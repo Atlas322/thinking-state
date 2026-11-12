@@ -11,7 +11,7 @@
   const visible = (el) => {
     const r = el.getBoundingClientRect();
     const cs = getComputedStyle(el);
-    return r.width > 0 && r.height > 0 && cs.visibility !== "hidden" && cs.display !== "none" && +cs.opacity > 0.05;
+    return r.width > 2 && r.height > 2 && cs.visibility !== "hidden" && cs.display !== "none" && +cs.opacity > 0.05;
   };
   const controls = [...root.querySelectorAll("button, [role=button], [role=tab], .chip, [class*=chip], [class*=pill], [class*=tag]:not(input)")].filter((el) => !el.closest(".ts-replay-btn, .preview-options")).filter(visible);
 
@@ -40,6 +40,13 @@
     const r = el.getBoundingClientRect();
     const cs = getComputedStyle(el);
     if (cs.position === "fixed") continue;
+    // Intentional horizontal scrollers (tab strips, carousels) may extend past the stage.
+    let scroller = false;
+    for (let p = el.parentElement; p && p !== root; p = p.parentElement) {
+      const o = getComputedStyle(p).overflowX;
+      if (o === "auto" || o === "scroll" || o === "hidden" || o === "clip") { scroller = true; break; }
+    }
+    if (scroller) continue;
     if (r.right > box.right + 1 || r.left < box.left - 1) {
       if (![...el.querySelectorAll("*")].some((c) => c.getBoundingClientRect().right > box.right + 1 && c !== el))
         out.overflow.push(name(el) + ` (${Math.round(r.left - box.left)}…${Math.round(r.right - box.left)} / ${Math.round(box.width)})`);
