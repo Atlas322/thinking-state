@@ -3,48 +3,65 @@
  * Every component reads its colours and fonts from these --ts-* variables
  * and falls back to its own defaults, so the tokens are optional.
  *
- * Put a theme on any ancestor of the components:
- *   <div data-ts-theme="cream">…</div>                      inai.sh, direction 1
- *   <div data-ts-theme="manage" data-theme="dark">…</div>   Удирдах горим (dark)
- * `data-theme="dark"` (or class "dark") also switches the components' own
- * dark details (colour-scheme, badge text).
+ * Theme А (owner 2026-11-12, Figma «08 › Theme А · сонгогдсон» 39:195990).
+ * Two independent axes on any ancestor of the components:
+ *   surface  data-ts-theme="cream" | "night"   (light cream · warm night)
+ *   mode     data-ts-mode="view" | "manage"     (Үзэх · Удирдах)
+ * The mode swaps only the accent — Үзэх = Electric, Удирдах = indigo;
+ * surfaces and lines stay. data-ts-theme="manage" = night + Удирдах (kept
+ * for v0.1 hosts). `data-theme="dark"` (or class "dark") also switches the
+ * components' own dark details (colour-scheme, badge text).
  *
- * Palette from the inai.sh Figma «🧭 TENET 3 · Апп хэлбэр» (section 05, ref 37:2529):
- * cream page #F0EDE4, card #F7F5EE (never pure white on cream), header and
- * footer #EFEBE1, line #D8D3C6. Accent follows the mode (owner 2026-11-12):
- * Үзэх (cream) = Electric #1B5CFF, Удирдах (manage, dark) = indigo #3A4E8C;
- * saturated colour stays on small marks, never large areas, warm dark #262522 for
- * dark tiles; Spectral headings, Inter UI, IBM Plex Mono labels.
- * Fonts are not bundled: load Spectral, Inter and IBM Plex Mono in the app.
+ *   <div data-ts-theme="cream">…</div>                                Үзэх, light
+ *   <div data-ts-theme="night" data-ts-mode="manage" data-theme="dark">…  Удирдах, dark
+ *
+ * Amber only in four places: a human approval cue («… батална», «Таны ээлж»),
+ * Medium priority, the one highlighted number on a screen, the bottom glow —
+ * never buttons, links, large areas or headings. In night, elevation is a
+ * 1px line + glow instead of a shadow; raised surfaces use --ts-raised.
+ * Fonts are not bundled: load Alegreya (500, 400 for quotes), Onest
+ * (400/500/600) and JetBrains Mono (400/500) in the app.
  */
 
 :where(.ts-theme-cream, [data-ts-theme="cream"]) {
   --ts-page: #f0ede4;
+  --ts-side: #e8e4da;
   --ts-surface: #f7f5ee;
   --ts-soft: #efebe1;
   --ts-soft-2: #e8e3d6;
+  --ts-raised: #efebe1;
   --ts-line: #d8d3c6;
   --ts-fg: #080808;
-  --ts-muted: #5e5a52;
-  --ts-faint: #8f8a80;
-  --ts-accent: #1b5cff;
-  --ts-accent-soft: #e3e9fb;
-  --ts-accent-fg: #1b5cff;
+  --ts-muted: #5c5a55;
+  --ts-faint: #8a877f;
+  /* accent by mode (see [data-ts-mode] below) */
+  --ts-electric: #1b5cff;
+  --ts-electric-fg: #1b5cff;
+  --ts-electric-soft: #dce5ff;
+  --ts-indigo: #3a4e8c;
+  --ts-indigo-fg: #3a4e8c;
+  --ts-indigo-soft: #e4e6ee;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
   --ts-link: #1b5cff;
   --ts-seg-on: #f7f5ee;
   --ts-code: #ebe7dd;
   --ts-green: #5e7a5f;
   --ts-green-soft: #e3eadf;
-  --ts-amber: #a85a12;
-  --ts-amber-soft: #f2e3cc;
-  --ts-red: #c2362f;
-  --ts-red-soft: #f4dad6;
+  --ts-amber: #a86a1e;
+  --ts-amber-soft: #f3e6cc;
+  --ts-red: #a8483a;
+  --ts-red-soft: #f1e2dc;
   --ts-yellow: #9a7400;
   --ts-yellow-soft: #f1e7c4;
   --ts-violet: #6b47c9;
   --ts-violet-soft: #e5ddf3;
   --ts-teal: #0f7a70;
   --ts-teal-soft: #d6e9e4;
+  --ts-glow: none;
+  --ts-glow-amber: none;
+  --ts-elevation: 0 1px 2px rgb(8 8 8 / 0.06), 0 6px 18px rgb(8 8 8 / 0.05);
   /* priority */
   --ts-prio-high: #a8483a;
   --ts-prio-high-bg: #f1e2dc;
@@ -52,7 +69,6 @@
   --ts-prio-medium-bg: #efe7d4;
   --ts-prio-low: #5c5a55;
   --ts-prio-low-bg: #ece8dd;
-  /* categories: methodology, technology, business, product */
   --ts-cat-1: #3a4e8c;
   --ts-cat-1-bg: #e4e6ee;
   --ts-cat-2: #5e7a5f;
@@ -68,41 +84,55 @@
   --ts-ink-card: #33312d;
   --ts-ink-muted: #a3a099;
   --ts-ink-label: #aebbda;
-  --ts-font: "Inter", system-ui, sans-serif;
-  --ts-font-display: "Spectral", Georgia, "Times New Roman", serif;
-  --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ts-font: "Onest", system-ui, sans-serif;
+  --ts-font-display: "Alegreya", Georgia, "Times New Roman", serif;
+  --ts-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   background: var(--ts-page);
   color: var(--ts-fg);
 }
 
-:where(.ts-theme-manage, [data-ts-theme="manage"]) {
-  --ts-page: #0b0b0c;
-  --ts-surface: #141416;
-  --ts-soft: #1e1e21;
-  --ts-soft-2: #242428;
-  --ts-line: #2b2b30;
-  --ts-fg: #f0ede4;
-  --ts-muted: #a39f95;
-  --ts-faint: #6e6a62;
-  --ts-accent: #3a4e8c;
-  --ts-accent-soft: #1b2133;
-  /* indigo is ~2.3:1 on the dark surface: text in the accent uses this lighter indigo (≥ 7:1) */
-  --ts-accent-fg: #aebbda;
-  --ts-seg-on: #2c2c31;
-  --ts-code: #0e0e10;
-  --ts-green: #4ade80;
-  --ts-green-soft: #12291a;
-  --ts-amber: #eba659;
-  --ts-amber-soft: #33240f;
-  --ts-red: #f87171;
-  --ts-red-soft: #3a1d1f;
-  --ts-yellow: #e8c25a;
-  --ts-yellow-soft: #352c10;
-  --ts-violet: #a78bfa;
-  --ts-violet-soft: #2a2140;
-  --ts-teal: #5eead4;
-  --ts-teal-soft: #123330;
-  --ts-link: #7aa2ff;
+:where(.ts-theme-night, [data-ts-theme="night"], .ts-theme-manage, [data-ts-theme="manage"]) {
+  /* «бүлээн шөнө» — warm night */
+  --ts-page: #17130f;
+  --ts-side: #1d1813;
+  --ts-surface: #231d17;
+  --ts-soft: #2d261e;
+  --ts-soft-2: #3a3127;
+  --ts-raised: #3a3127;
+  --ts-line: #3d342a;
+  --ts-fg: #f3ece0;
+  --ts-muted: #b9ad9a;
+  --ts-faint: #8a7f6e;
+  --ts-electric: #4f7bff;
+  --ts-electric-fg: #a9beff;
+  --ts-electric-soft: #1e2a4d;
+  --ts-electric-gradient: linear-gradient(135deg, #4f7bff, #1b5cff);
+  --ts-indigo: #6e80d0;
+  --ts-indigo-deep: #3a4e8c;
+  /* #6E80D0 is ~4.3:1 on surface-1, so accent text uses a lighter indigo */
+  --ts-indigo-fg: #a7b3e6;
+  --ts-indigo-soft: color-mix(in srgb, #6e80d0 18%, #231d17);
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-link: #a9beff;
+  --ts-seg-on: #3a3127;
+  --ts-code: #1d1813;
+  --ts-green: #9cc49a;
+  --ts-green-soft: color-mix(in srgb, #9cc49a 16%, #231d17);
+  --ts-amber: #e3a857;
+  --ts-amber-soft: #3a2e1c;
+  --ts-red: #e58b78;
+  --ts-red-soft: color-mix(in srgb, #e58b78 16%, #231d17);
+  --ts-yellow: #e3c25a;
+  --ts-yellow-soft: color-mix(in srgb, #e3c25a 14%, #231d17);
+  --ts-violet: #b8a2f0;
+  --ts-violet-soft: color-mix(in srgb, #b8a2f0 16%, #231d17);
+  --ts-teal: #8fcfc4;
+  --ts-teal-soft: color-mix(in srgb, #8fcfc4 14%, #231d17);
+  --ts-glow: 0 0 28px rgb(79 123 255 / 0.45);
+  --ts-glow-amber: 0 0 40px rgb(181 121 58 / 0.25);
+  --ts-elevation: 0 0 0 1px var(--ts-line);
   --ts-prio-high: #e7907f;
   --ts-prio-high-bg: #3a2420;
   --ts-prio-medium: #d9b56a;
@@ -117,18 +147,64 @@
   --ts-cat-3-bg: #332a17;
   --ts-cat-4: #d4a6c4;
   --ts-cat-4-bg: #33222d;
-  --ts-tile-ochre: #2e2b24;
-  --ts-tile-slate: #24262a;
-  --ts-ink: #1a1917;
-  --ts-ink-card: #262522;
-  --ts-ink-muted: #a3a099;
-  --ts-ink-label: #aebbda;
-  --ts-font: "Inter", system-ui, sans-serif;
-  --ts-font-display: "Spectral", Georgia, "Times New Roman", serif;
-  --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ts-tile-ochre: #2d261e;
+  --ts-tile-slate: #262620;
+  --ts-ink: #1d1813;
+  --ts-ink-card: #2d261e;
+  --ts-ink-muted: #b9ad9a;
+  --ts-ink-label: #a7b3e6;
+  --ts-font: "Onest", system-ui, sans-serif;
+  --ts-font-display: "Alegreya", Georgia, "Times New Roman", serif;
+  --ts-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   color-scheme: dark;
   background: var(--ts-page);
   color: var(--ts-fg);
+}
+
+/* Mode: Удирдах = indigo accent on either surface; Үзэх = Electric. Only the accent changes. */
+:where(.ts-theme-manage, [data-ts-theme="manage"], [data-ts-mode="manage"]) {
+  --ts-accent: var(--ts-indigo);
+  --ts-accent-fg: var(--ts-indigo-fg);
+  --ts-accent-soft: var(--ts-indigo-soft);
+}
+:where([data-ts-mode="view"]) {
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+}
+
+/* Type scale (px / line-height), theme-independent. Phones: display 40, h1 30, h2 24. */
+:where(:root, [data-ts-theme]) {
+  --ts-fs-display: 64px;
+  --ts-lh-display: 1.05;
+  --ts-fs-h1: 44px;
+  --ts-lh-h1: 1.1;
+  --ts-fs-h2: 32px;
+  --ts-lh-h2: 1.15;
+  --ts-fs-h3: 24px;
+  --ts-lh-h3: 1.2;
+  --ts-fs-quote: 20px;
+  --ts-lh-quote: 1.4;
+  --ts-fs-body-lg: 18px;
+  --ts-lh-body-lg: 1.55;
+  --ts-fs-body: 15px;
+  --ts-lh-body: 1.55;
+  --ts-fs-ui: 14px;
+  --ts-lh-ui: 1.4;
+  --ts-fs-small: 13px;
+  --ts-lh-small: 1.45;
+  --ts-fs-label: 12px;
+  --ts-ls-label: 0.05em;
+  --ts-fs-caption: 11px;
+  --ts-fw-display: 500;
+  --ts-fw-ui: 500;
+}
+@media (max-width: 600px) {
+  :where(:root, [data-ts-theme]) {
+    --ts-fs-display: 40px;
+    --ts-fs-h1: 30px;
+    --ts-fs-h2: 24px;
+  }
 }
 
 /*

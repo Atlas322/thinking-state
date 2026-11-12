@@ -50,4 +50,16 @@ describe("@inai/thinking-state package", () => {
     }
     // tokens.css itself is checked by scripts/build-lib.mjs (Vitest returns CSS imports empty).
   });
+
+  it("ships Theme А: cream / night surfaces, view / manage accent, Alegreya · Onest · JetBrains Mono", async () => {
+    const fs = (await import(/* @vite-ignore */ "node:" + "fs")) as { readFileSync: (p: string, e: string) => string };
+    const css = fs.readFileSync("src/lib/tokens.css", "utf8");
+    for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="night"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', '[data-ts-mode="view"]'])
+      expect(css).toContain(need);
+    expect(css).toContain("--ts-surface: #231d17;"); // warm night surface-1
+    expect(css).toContain("--ts-electric: #1b5cff;");
+    expect(css).toContain("--ts-indigo: #6e80d0;");
+    expect(css).toMatch(/"Alegreya"[\s\S]*"Onest"|"Onest"[\s\S]*"Alegreya"/);
+    expect(css).not.toContain("Spectral");
+  });
 });
