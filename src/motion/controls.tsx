@@ -5,7 +5,7 @@
  * <LoopRegion/>   — a box whose loops play only in view, with <MotionControls/> on it.
  */
 import * as React from "react";
-import { motionCss } from "./loops";
+import { loopAnimation, motionCss, type LoopName, type Rhythm } from "./loops";
 import { useInViewLoop, type InViewLoopOptions, type LoopState } from "./use-in-view-loop";
 
 let styles: { css: string; href: string } | undefined;
@@ -22,6 +22,27 @@ export function MotionStyles() {
       {styles.css}
     </style>
   );
+}
+
+/**
+ * A loop at its own rhythm: injects the keyframes once and returns the class
+ * + inline style to put on the moving element.
+ *   const l = useLoop("bob", { move: 900, rest: 4000, spring: "settle" });
+ *   <>{l.keyframes}<span {...l.props}>…</span></>
+ */
+export function useLoop(loop: LoopName, rhythm: Rhythm = {}, style?: React.CSSProperties) {
+  const a = loopAnimation(loop, rhythm);
+  return {
+    keyframes: (
+      <style href={a.name} precedence="default">
+        {a.css}
+      </style>
+    ),
+    props: {
+      className: `ts-loop ts-loop-${loop}`,
+      style: { animationName: a.name, animationDuration: `${a.period}ms`, ...style } as React.CSSProperties,
+    },
+  };
 }
 
 export type MotionControlLabels = { replay: string; pause: string; play: string };

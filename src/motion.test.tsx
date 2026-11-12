@@ -9,6 +9,7 @@ import {
   animateSpring,
   dampingRatio,
   motionCss,
+  loopAnimation,
   motionTokensCss,
   springAt,
   springDuration,
@@ -72,6 +73,21 @@ describe("motion tokens and loops", () => {
       .filter((p) => p !== "animation-timing-function");
     expect(new Set(props)).toEqual(new Set(["transform", "opacity"]));
     expect(css).toContain("prefers-reduced-motion: reduce");
+  });
+
+  it("gives each icon its own rhythm (move + rest)", () => {
+    const d = loopAnimation("bob");
+    expect(d.name).toBe("ts-loop-bob");
+    expect(d.period).toBe(5200);
+    const inbox = loopAnimation("bob", { move: 900, rest: 4000, spring: "settle" });
+    expect(inbox.name).toBe("ts-loop-bob-900-4000-settle");
+    expect(inbox.period).toBe(4900);
+    // motion ends at move / period, the rest is still
+    const stops = [...inbox.css.matchAll(/^\s+([\d.]+)%[, ]/gm)].map((m) => Number(m[1])); // keyframe selectors, not linear() stops
+    expect(Math.max(...stops.filter((n) => n < 100))).toBeCloseTo((900 / 4900) * 100, 0);
+    const sun = loopAnimation("spin", { move: 3000, rest: 3000 });
+    expect(sun.css).toContain("@supports (animation-timing-function: linear(0, 1))");
+    expect(loopAnimation("breathe", { move: 2000, rest: 4000 }).css).not.toContain("@supports");
   });
 
   it("is exported from the package", () => {

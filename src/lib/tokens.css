@@ -140,7 +140,9 @@
   --ts-motion-dur-md: 320ms;
   --ts-motion-dur-lg: 560ms;
   --ts-motion-dur-xl: 900ms;
-  --ts-motion-loop-period: 5000ms;
+  --ts-motion-loop-move: 1200ms;
+  --ts-motion-loop-rest: 4000ms;
+  --ts-motion-loop-period: 5200ms;
   --ts-motion-loop-count: 3;
   --ts-motion-stagger: 100ms;
   --ts-motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);

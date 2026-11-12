@@ -61,14 +61,17 @@ function Curve({ name }: { name: SpringName }) {
   );
 }
 
+/** Stagger: the 9 primitives 100 ms apart; stress-test tiles spread over the whole 5.2 s period. */
+const delay = (i: number) => (i < LOOPS.length ? `${i * 100}ms` : `${(i * 541) % 5200}ms`);
+
 function LoopTile({ name, i = 0 }: { name: LoopName; i?: number }) {
   return (
     <div className="mf-tile">
       <span className="mf-glyph">
-        {name === "pulse" && <span className="mf-ring ts-loop ts-loop-pulse" style={{ ["--ts-loop-delay" as string]: `${(i % 8) * 90}ms` }} />}
+        {name === "pulse" && <span className="mf-ring ts-loop ts-loop-pulse" style={{ ["--ts-loop-delay" as string]: delay(i) }} />}
         <span
           className={`mf-icon ts-loop ts-loop-${name === "pulse" ? "breathe" : name}`}
-          style={{ ["--ts-loop-origin" as string]: ORIGIN[name] ?? "50% 50%", ["--ts-loop-delay" as string]: `${(i % 8) * 90}ms` }}
+          style={{ ["--ts-loop-origin" as string]: ORIGIN[name] ?? "50% 50%", ["--ts-loop-delay" as string]: delay(i) }}
         >
           <Icon name={DEMO_ICON[name]} size={20} />
         </span>
@@ -156,7 +159,7 @@ export default function Preview() {
           <div className="mf-grid">
             {LOOPS.map((n) => (
               <div key={n} className="mf-cell" title={LOOP_NOTES[n]}>
-                <LoopTile name={n} />
+                <LoopTile name={n} i={LOOPS.indexOf(n)} />
                 <p>{LOOP_NOTES[n]}</p>
               </div>
             ))}
@@ -177,7 +180,7 @@ export default function Preview() {
             <h3>96 loop зэрэг</h3>
             <div className="mf-stress">
               {Array.from({ length: 96 }, (_, i) => (
-                <LoopTile key={i} name={LOOPS[i % LOOPS.length]} i={i} />
+                <LoopTile key={i} name={LOOPS[i % LOOPS.length]} i={i + LOOPS.length} />
               ))}
             </div>
           </LoopRegion>
