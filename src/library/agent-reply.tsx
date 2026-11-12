@@ -239,8 +239,8 @@ export default function Demo() {
       ]}
       choices={["Make v4a final", "Keep v4c"]}
       sources={[
-        { label: "02-Projects/Inai Website/Inai Website.md" },
-        { label: "02-Projects/Inai Website/Output/platform-v4a.html" },
+        { label: "projects/website/brief.md" },
+        { label: "projects/website/output/platform-v4a.html" },
       ]}
       onChoose={() => new Promise((r) => setTimeout(r, 400))}
     />
