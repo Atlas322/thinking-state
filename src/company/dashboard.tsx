@@ -3,13 +3,13 @@ import { SessionBoard, toSessionState, type SessionBoardInput } from "../library
 import { ProjectReport, toPhaseState, type ProjectReportPhase } from "../library/project-report";
 import { actorOf, dependenciesOf, taskIndex, type Company, type CompanyProject, type CompanyTask } from "./types";
 
-/** "⛓ хүлээж буй: A, B" and "→ 2 task хүлээж байна" for a task's dependency links. */
+/** "⛓ хүлээж буй: A, B" and "→ 2 даалгавар хүлээж байна" for a task's dependency links. */
 export function dependencyText(c: Company, p: CompanyProject | undefined, t: CompanyTask, index = taskIndex(c)) {
   const { waitsOn, blocks } = dependenciesOf(c, p, t, index);
   const parts: string[] = [];
   if (waitsOn.length)
     parts.push(`⛓ хүлээж буй: ${waitsOn.map((w) => (w.project && w.project !== p ? `${w.project.name} › ` : "") + w.task.title).join(", ")}`);
-  if (blocks.length) parts.push(`→ ${blocks.length} task хүлээж байна`);
+  if (blocks.length) parts.push(`→ ${blocks.length} даалгавар хүлээж байна`);
   return parts.join(" · ");
 }
 /** area / subArea may be a unit id («area-fac9e1b8f9», kind "area") or a plain name: show the name. */
@@ -41,11 +41,11 @@ const DAY = 86_400_000;
 
 const sbLabels = {
   owner: "Эзэн",
-  tasks: "Нээлттэй task",
+  tasks: "Нээлттэй даалгавар",
   decisions: "Шийдвэр",
   pages: "Хуудас",
   prs: "PR",
-  ungrouped: "Дэд area-гүй",
+  ungrouped: "Дэд чиглэлгүй",
   sessions: "мөр",
   session: "мөр",
   empty: "Тохирох мөр алга",
@@ -54,13 +54,13 @@ const sbLabels = {
   done: "Дууссан",
   idle: "Эхлээгүй",
   view: "Харагдац",
-  groupsView: "Дэд area",
+  groupsView: "Дэд чиглэл",
   statusView: "Төлвөөр",
   cardsView: "Карт",
-  subItem: "task",
-  subItems: "task",
-  collapseKids: "Task нуух",
-  expandKids: "Task харуулах",
+  subItem: "даалгавар",
+  subItems: "даалгавар",
+  collapseKids: "Даалгавар нуух",
+  expandKids: "Даалгавар харуулах",
   inParent: "төсөл:",
 };
 
@@ -106,7 +106,7 @@ export function ProjectReportFor({ c, p, decisionsLabel = "Шийдвэр" }: { 
         summary: [areaLabel(c, p.area), areaLabel(c, p.subArea)].filter(Boolean).join(" › ") || unit?.name,
       }}
       kpis={[
-        { label: "Task", value: p.tasks.length },
+        { label: "Даалгавар", value: p.tasks.length },
         { label: "Дууссан", value: done, tone: "green" },
         { label: "Явж байна", value: active, tone: "blue" },
         { label: decisionsLabel, value: p.decisions.length },
@@ -125,7 +125,7 @@ export function ProjectReportFor({ c, p, decisionsLabel = "Шийдвэр" }: { 
         owner: "Хариуцагч",
         updated: "Хугацаа",
         progress: "Явц",
-        phases: "Task",
+        phases: "Даалгавар",
         waiting: "Хүлээгдэж буй",
         nothingWaiting: "Хүлээгдэж буй зүйл алга.",
         view: "Харагдац",
@@ -164,7 +164,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
   const allTasks = scoped.projects.flatMap((p) => p.tasks.map((t) => ({ p, t })));
   const summary = [
     { k: "Төсөл", v: scoped.projects.length },
-    { k: "Нээлттэй task", v: allTasks.filter(({ t }) => !isDone(t.status)).length },
+    { k: "Нээлттэй даалгавар", v: allTasks.filter(({ t }) => !isDone(t.status)).length },
     { k: "Хугацаа хэтэрсэн", v: allTasks.filter(({ p, t }) => dueBucket(taskDue(p, t), isDone(t.status), today) === "overdue").length, tone: "amber" },
     { k: "14 хоногт", v: allTasks.filter(({ p, t }) => dueBucket(taskDue(p, t), isDone(t.status), today) === "soon").length },
   ];
@@ -266,7 +266,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
                 status: p.status,
                 group: sub || undefined,
                 owner: acc?.name,
-                line: [`${done}/${p.tasks.length} task`, p.due ? `хугацаа ${p.due}` : ""].filter(Boolean).join(" · "),
+                line: [`${done}/${p.tasks.length} даалгавар`, p.due ? `хугацаа ${p.due}` : ""].filter(Boolean).join(" · "),
               });
               for (const t of tasks) {
                 const o = t.ownerId ? actorOf(c, t.ownerId) : null;
@@ -285,10 +285,10 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
             }
             const projectRows = sessions.filter((s) => !s.parent);
             return (
-              <section key={area} className="cv-area" aria-label={area === NO_AREA ? "Area-гүй" : area}>
+              <section key={area} className="cv-area" aria-label={area === NO_AREA ? "Чиглэлгүй" : area}>
                 <h4 className="cv-area-h">
                   <span className="cv-area-mark" aria-hidden="true" />
-                  {area === NO_AREA ? "Area-гүй" : area}
+                  {area === NO_AREA ? "Чиглэлгүй" : area}
                   <span className="cv-count">{projectRows.length}</span>
                 </h4>
                 {projectRows.length === 0 ? (
@@ -296,7 +296,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
                 ) : (
                   <SessionBoard
                     project={{
-                      name: area === NO_AREA ? "Area-гүй" : area,
+                      name: area === NO_AREA ? "Чиглэлгүй" : area,
                       icon: area === NO_AREA ? "·" : initials(area).charAt(0),
                       stats: { tasks: sessions.filter((s) => s.parent && toSessionState(s.status) !== "done").length },
                     }}

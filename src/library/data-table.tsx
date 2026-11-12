@@ -306,7 +306,7 @@ export function DataTable({
       <button
         type="button"
         className="dt-sort"
-        aria-label={`Sort by ${col.label}${dir ? `, sorted ${dir === "asc" ? "ascending" : "descending"}` : ""}`}
+        aria-label={`Эрэмбэлэх: ${col.label}${dir ? `, ${dir === "asc" ? "өсөхөөр" : "буурахаар"} эрэмбэлсэн` : ""}`}
         onClick={() =>
           setSort(dir === null ? { key: col.key, dir: "asc" } : dir === "asc" ? { key: col.key, dir: "desc" } : null)
         }
@@ -362,10 +362,10 @@ export function DataTable({
         </span>
         <h3>{title}</h3>
         <div className="dt-history">
-          <button type="button" aria-label="Undo" disabled={!past.length} onClick={undo}>
+          <button type="button" aria-label="Буцаах" disabled={!past.length} onClick={undo}>
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4 3 7l3 3M3 7h6.5a3.5 3.5 0 0 1 0 7H8" /></svg>
           </button>
-          <button type="button" aria-label="Redo" disabled={!future.length} onClick={redo}>
+          <button type="button" aria-label="Дахин хийх" disabled={!future.length} onClick={redo}>
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4 3 3-3 3m3-3H6.5a3.5 3.5 0 0 0 0 7H8" /></svg>
           </button>
         </div>
@@ -392,7 +392,8 @@ export function DataTable({
             <span className="dt-check" role="columnheader">
               <input
                 type="checkbox"
-                aria-label="Select all rows"
+                value=""
+                aria-label="Бүх мөрийг сонгох"
                 checked={allChecked}
                 ref={(el) => {
                   if (el) el.indeterminate = someChecked;
@@ -421,7 +422,8 @@ export function DataTable({
               <span className="dt-check" role="gridcell">
                 <input
                   type="checkbox"
-                  aria-label={`Select ${text(row[columns[0].key]) || "row"}`}
+                  value=""
+                  aria-label={`Сонгох: ${text(row[columns[0].key]) || "мөр"}`}
                   checked={checked.includes(row.id)}
                   onChange={() => toggleRow(row.id)}
                 />
@@ -429,7 +431,7 @@ export function DataTable({
               {columns.map((col, c) => {
                 const isActive = active?.r === r && active?.c === c;
                 const isEditing = editing?.pos.r === r && editing.pos.c === c;
-                const label = `${text(row[columns[0].key]) || "New row"} ${col.label}`;
+                const label = `${text(row[columns[0].key]) || "Шинэ мөр"} ${col.label}`;
                 return (
                   <span
                     key={col.key}
@@ -511,10 +513,10 @@ export function DataTable({
         {editable && (
           <button type="button" className="dt-add" onClick={addRow}>
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9" /></svg>
-            Add row
+            Мөр нэмэх
           </button>
         )}
-        <span>{checked.length ? `${checked.length} selected` : editable ? "Double-click a cell to edit" : ""}</span>
+        <span>{checked.length ? `${checked.length} сонгосон` : editable ? "Засах бол нүдэн дээр давхар дарна уу" : ""}</span>
       </footer>
     </section>
   );

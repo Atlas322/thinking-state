@@ -17,8 +17,8 @@ export function Avatar({ actor, size = 22 }: { actor: Pick<Actor, "name" | "kind
   );
 }
 
-/** A model field as text, a list, or streams with share bars; "—" when empty. */
-export function Lines({ f, empty = "—" }: { f: ModelField | null | undefined; empty?: string }) {
+/** A model field as text, a list, or streams with share bars; «Бөглөөгүй» when empty. */
+export function Lines({ f, empty = "Бөглөөгүй" }: { f: ModelField | null | undefined; empty?: string }) {
   const lines = modelLines(f);
   if (!lines.length) return <p className="cv-model-text cv-none">{empty}</p>;
   if (lines.length === 1 && lines[0].share == null) return <p className="cv-model-text">{lines[0].text}</p>;

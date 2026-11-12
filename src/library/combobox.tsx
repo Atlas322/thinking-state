@@ -34,15 +34,15 @@ export type ComboboxProps = {
 };
 
 const defaultOptions: ComboboxOption[] = [
-  { value: "maya", label: "Maya Chen", hint: "Product Designer", avatar: true, group: "Design" },
-  { value: "jonas", label: "Jonas Weber", hint: "Design Lead", avatar: true, group: "Design" },
-  { value: "priya", label: "Priya Raman", hint: "Brand Designer", avatar: true, group: "Design" },
-  { value: "sara", label: "Sara Okafor", hint: "Staff Engineer", avatar: true, group: "Engineering" },
-  { value: "leo", label: "Leo Martins", hint: "Frontend", avatar: true, group: "Engineering" },
-  { value: "nina", label: "Nina Petrova", hint: "Backend", avatar: true, group: "Engineering" },
-  { value: "tom", label: "Tom Becker", hint: "iOS", avatar: true, group: "Engineering" },
-  { value: "ava", label: "Ava Lindqvist", hint: "Product Manager", avatar: true, group: "Product" },
-  { value: "omar", label: "Omar Haddad", hint: "Product Analyst", avatar: true, group: "Product" },
+  { value: "maya", label: "Мөнхзул Б.", hint: "Бүтээгдэхүүний дизайнер", avatar: true, group: "Дизайн" },
+  { value: "jonas", label: "Жаргал Т.", hint: "Дизайны ахлагч", avatar: true, group: "Дизайн" },
+  { value: "priya", label: "Пүрэвсүрэн Д.", hint: "Брэнд дизайнер", avatar: true, group: "Дизайн" },
+  { value: "sara", label: "Сарангэрэл О.", hint: "Ахлах инженер", avatar: true, group: "Хөгжүүлэлт" },
+  { value: "leo", label: "Лхагва М.", hint: "Фронтенд", avatar: true, group: "Хөгжүүлэлт" },
+  { value: "nina", label: "Нандин П.", hint: "Бэкенд", avatar: true, group: "Хөгжүүлэлт" },
+  { value: "tom", label: "Төмөр Б.", hint: "Гар утас", avatar: true, group: "Хөгжүүлэлт" },
+  { value: "ava", label: "Анужин Л.", hint: "Бүтээгдэхүүний менежер", avatar: true, group: "Бүтээгдэхүүн" },
+  { value: "omar", label: "Оюунбат Х.", hint: "Бүтээгдэхүүний шинжээч", avatar: true, group: "Бүтээгдэхүүн" },
 ];
 
 const initials = (s: string) =>
@@ -80,14 +80,14 @@ export function Combobox({
   value: valueProp,
   defaultValue = [],
   onChange,
-  placeholder = "Search…",
+  placeholder = "Хайх…",
   creatable = false,
   onCreate,
-  createLabel = (t) => `Create “${t}”`,
+  createLabel = (t) => `“${t}” үүсгэх`,
   maxVisibleTags,
   label,
   defaultOpen = false,
-  emptyText = "No results",
+  emptyText = "Илэрц алга",
   className = "",
 }: ComboboxProps) {
   const [created, setCreated] = React.useState<ComboboxOption[]>([]);
@@ -128,14 +128,14 @@ export function Combobox({
   const commit = (next: string[], msg: string) => {
     if (valueProp === undefined) setInner(next);
     onChange?.(next, next.map((v) => options.find((o) => o.value === v)).filter(Boolean) as ComboboxOption[]);
-    setAnnounce(`${msg}. ${next.length} selected.`);
+    setAnnounce(`${msg}. ${next.length} сонгосон.`);
   };
 
   const toggle = (o: ComboboxOption) => {
     const has = value.includes(o.value);
-    if (multiple) commit(has ? value.filter((v) => v !== o.value) : [...value, o.value], `${o.label} ${has ? "removed" : "added"}`);
+    if (multiple) commit(has ? value.filter((v) => v !== o.value) : [...value, o.value], `${o.label} ${has ? "хасагдлаа" : "нэмэгдлээ"}`);
     else {
-      commit(has ? [] : [o.value], `${o.label} ${has ? "removed" : "selected"}`);
+      commit(has ? [] : [o.value], `${o.label} ${has ? "хасагдлаа" : "сонгогдлоо"}`);
       setOpen(false);
     }
     setQuery("");
@@ -148,7 +148,7 @@ export function Combobox({
     const next = multiple ? [...value, made.value] : [made.value];
     if (valueProp === undefined) setInner(next);
     onChange?.(next, [...options, made].filter((o) => next.includes(o.value)));
-    setAnnounce(`${made.label} created. ${next.length} selected.`);
+    setAnnounce(`${made.label} үүслээ. ${next.length} сонгосон.`);
     setQuery("");
     if (!multiple) setOpen(false);
   };
@@ -200,7 +200,7 @@ export function Combobox({
             <button
               type="button"
               tabIndex={-1}
-              aria-label={`Remove ${o.label}`}
+              aria-label={`${o.label} хасах`}
               onMouseDown={(e) => e.preventDefault()}
               onClick={(e) => {
                 e.stopPropagation();
@@ -324,9 +324,9 @@ export function Combobox({
             {!rows.length && <div className="cb-empty">{emptyText}</div>}
           </div>
           <div className="cb-count">
-            <span>{multiple ? `${value.length} selected` : `${filtered.length} options`}</span>
+            <span>{multiple ? `${value.length} сонгосон` : `${filtered.length} сонголт`}</span>
             <span className="cb-keys">
-              <kbd>↑</kbd><kbd>↓</kbd> to move <kbd>↵</kbd> to toggle
+              <kbd>↑</kbd><kbd>↓</kbd> шилжих <kbd>↵</kbd> сонгох
             </span>
           </div>
         </div>
@@ -386,10 +386,10 @@ export function Demo() {
   return (
     <div style={{ width: "100%", maxWidth: 420, minHeight: 390 }}>
       <Combobox
-        label="Reviewers"
-        placeholder="Add reviewers…"
+        label="Хянагчид"
+        placeholder="Хянагч нэмэх…"
         creatable
-        createLabel={(t) => `Invite “${t}”`}
+        createLabel={(t) => `“${t}” урих`}
       />
     </div>
   );

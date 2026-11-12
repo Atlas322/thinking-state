@@ -85,7 +85,7 @@ function Card({ t, usage, part, parts, past, dim, chip, onKey, draggable, onDrag
       role="button"
       tabIndex={0}
       className={`sr-card${past ? " is-past" : ""}${dim ? " is-dim" : ""}${chip ? " is-chip" : ""}`}
-      aria-label={`${t.title}, ${usage}%${parts && parts > 1 ? `, part ${part} of ${parts}` : ""}${past ? ", past – can't move" : ""}`}
+      aria-label={`${t.title}, ${usage}%${parts && parts > 1 ? `, хэсэг ${part}/${parts}` : ""}${past ? ", өнгөрсөн – зөөх боломжгүй" : ""}`}
       aria-expanded={open}
       draggable={draggable && !past}
       onDragStart={onDragStart}
@@ -104,7 +104,7 @@ function Card({ t, usage, part, parts, past, dim, chip, onKey, draggable, onDrag
       {open && (
         <div className="sr-details">
           <p>{t.detail}</p>
-          <span>{t.agent} · {t.usage}% of a session{parts && parts > 1 ? ` · split in ${parts}` : ""}</span>
+          <span>{t.agent} · сешний {t.usage}%{parts && parts > 1 ? ` · ${parts} хэсэгт хуваасан` : ""}</span>
         </div>
       )}
     </div>
@@ -177,7 +177,7 @@ export function ScheduledRuns({
       onScheduled?.(list.map(({ booked: _b, ...p }) => p));
       return list;
     });
-    setLive("Stack sorted into the week");
+    setLive("Даалгавруудыг долоо хоногт хуваарилсан");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tasks, slots, limit, minPiece]);
 
@@ -203,18 +203,18 @@ export function ScheduledRuns({
       const t = tasks.find((x) => x.id === g.id);
       if (!t) return;
       const parts = fit(t, placed, { day: d, session: ss });
-      if (!parts) { setLive(`No room for ${t.title} there`); return; }
+      if (!parts) { setLive(`Тэнд зай алга: «${t.title}»`); return; }
       const next = [...placed, ...parts.map((p) => ({ ...p, booked: true }))];
       setPlaced(next);
       onPlace?.(t, parts);
-      setLive(`${t.title} placed`);
+      setLive(`«${t.title}» байрлуулсан`);
     } else {
       const p = placed[g.index];
-      if (!p || used(d, ss) + p.usage > limit) { setLive("No room there"); return; }
+      if (!p || used(d, ss) + p.usage > limit) { setLive("Тэнд зай алга"); return; }
       const next = placed.map((x, i) => (i === g.index ? { ...x, day: d, session: ss, booked: true } : x));
       setPlaced(next);
       onMove?.(p, { day: d, session: ss });
-      setLive(`${p.task.title} moved`);
+      setLive(`«${p.task.title}» зөөсөн`);
     }
   };
 
@@ -235,17 +235,17 @@ export function ScheduledRuns({
               </button>
             ))}
           </span>
-          <span className="sr-count">{tasks.length} tasks</span>
+          <span className="sr-count">{tasks.length} даалгавар</span>
           <div
             className="sr-mode"
             role="radiogroup"
-            aria-label="Scheduling mode"
+            aria-label="Хуваарилах горим"
             onKeyDown={(e) => { if (e.key === "ArrowLeft" || e.key === "ArrowRight") switchMode(mode === "auto" ? "manual" : "auto"); }}
           >
             {(["auto", "manual"] as const).map((m) => (
               <button key={m} type="button" role="radio" aria-checked={mode === m} tabIndex={mode === m ? 0 : -1} onClick={() => switchMode(m)}>
                 {m === "auto" && <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 1.5 7.2 5 10.5 6 7.2 7 6 10.5 4.8 7 1.5 6 4.8 5ZM12 9l.7 1.8 1.8.7-1.8.7L12 14l-.7-1.8-1.8-.7 1.8-.7Z" fill="currentColor" /></svg>}
-                {m === "auto" ? "Auto" : "Manual"}
+                {m === "auto" ? "Автомат" : "Гараар"}
               </button>
             ))}
           </div>
@@ -253,9 +253,9 @@ export function ScheduledRuns({
       </header>
       <div className="sr-body">
         <div className="sr-stack">
-          <div className="sr-stack-h">To schedule<span>{stack.length}</span></div>
+          <div className="sr-stack-h">Хуваарилах<span>{stack.length}</span></div>
           <div className="sr-stack-list">
-            {stack.length === 0 && <p className="sr-empty">Everything's scheduled</p>}
+            {stack.length === 0 && <p className="sr-empty">Бүгд хуваарьтай</p>}
             {stack.map((t) => (
               <Card
                 key={t.id}
@@ -268,7 +268,7 @@ export function ScheduledRuns({
             ))}
           </div>
         </div>
-        <div className="sr-week" role="grid" aria-label="Week" style={{ gridTemplateColumns: `40px repeat(${days.length}, minmax(120px, 1fr))` }}>
+        <div className="sr-week" role="grid" aria-label="Долоо хоног" style={{ gridTemplateColumns: `40px repeat(${days.length}, minmax(120px, 1fr))` }}>
           <span />
           {days.map((x, d) => {
             const n = dayName(x);

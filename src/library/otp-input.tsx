@@ -123,15 +123,15 @@ export function OtpInput({
   onChange,
   onComplete,
   status = "idle",
-  errorMessage = "That code didn't work. Try again.",
+  errorMessage = "Код тохирсонгүй. Дахин оролдоно уу.",
   clearOnError = true,
-  successLabel = "Verified",
+  successLabel = "Баталгаажсан",
   onResend,
   resendIn: resendInProp = 30,
   align = "start",
   disabled = false,
   autoFocus = false,
-  label = "Verification code",
+  label = "Баталгаажуулах код",
   className,
 }: OtpInputProps) {
   // A NaN or fractional length and a NaN countdown fall back instead of breaking the field
@@ -358,7 +358,7 @@ export function OtpInput({
     const before = prevStatus.current;
     prevStatus.current = status;
     if (status === before) return;
-    if (status === "verifying") setAnnounce("Verifying code");
+    if (status === "verifying") setAnnounce("Кодыг шалгаж байна");
     if (status === "success") setAnnounce(successLabel);
     if (status !== "error") {
       setErrorShown(false);
@@ -366,7 +366,7 @@ export function OtpInput({
     }
     setErrorShown(true);
     setAnnounce(
-      typeof errorMessage === "string" ? errorMessage : "That code didn't work",
+      typeof errorMessage === "string" ? errorMessage : "Код тохирсонгүй",
     );
     // A calm shake, then the wrong code fades out so the next try starts fresh
     if (!reduced()) {
@@ -400,7 +400,7 @@ export function OtpInput({
 
   useEffect(() => {
     if (left <= 0) {
-      if (onResend && resendIn > 0) setAnnounce("You can resend the code now");
+      if (onResend && resendIn > 0) setAnnounce("Одоо кодыг дахин илгээж болно");
       return;
     }
     const t = window.setTimeout(() => setLeft((s) => s - 1), 1000);
@@ -410,7 +410,7 @@ export function OtpInput({
   const resend = () => {
     onResend?.();
     setLeft(resendIn);
-    setAnnounce("A new code is on its way");
+    setAnnounce("Шинэ код илгээгдэж байна");
   };
 
   /* ---------- Render ---------- */
@@ -510,7 +510,7 @@ export function OtpInput({
             autoCorrect="off"
             spellCheck={false}
             enterKeyHint="done"
-            aria-label={`${label}, ${length} ${numeric ? (length === 1 ? "digit" : "digits") : length === 1 ? "character" : "characters"}`}
+            aria-label={`${label}, ${length} ${numeric ? "оронтой" : "тэмдэгттэй"}`}
             aria-invalid={showError || undefined}
             aria-describedby={showError ? `${id}-msg` : undefined}
             disabled={disabled}
@@ -557,10 +557,10 @@ export function OtpInput({
           className="ui-otpc__resend"
           data-hidden={status === "success" || undefined}
         >
-          <span className="ui-otpc__resend-q">Didn't get a code?</span>{" "}
+          <span className="ui-otpc__resend-q">Код ирээгүй юу?</span>{" "}
           {left > 0 ? (
             <span key="wait" className="ui-otpc__swap ui-otpc__wait">
-              Resend in{"\u00a0"}
+              \u0414\u0430\u0445\u0438\u043d \u0438\u043b\u0433\u044d\u044d\u0445 \u0445\u04af\u0440\u0442\u044d\u043b{"\u00a0"}
               <span className="ui-otpc__time">{clock(left)}</span>
             </span>
           ) : (
@@ -571,7 +571,7 @@ export function OtpInput({
               onClick={resend}
               disabled={disabled || busy}
             >
-              Resend code
+              Код дахин илгээх
             </button>
           )}
         </div>

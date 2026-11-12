@@ -258,7 +258,7 @@ function ToastItem({
         )}
       </div>
       {closeButton && (
-        <button type="button" className="tst-close" aria-label="Close notification" onClick={close}>
+        <button type="button" className="tst-close" aria-label="Мэдэгдлийг хаах" onClick={close}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 4.5 7 7m0-7-7 7" /></svg>
         </button>
       )}
@@ -286,7 +286,7 @@ export function Toaster({
   hotkey = "F8",
   hairline = true,
   closeButton = true,
-  label = "Notifications",
+  label = "Мэдэгдэл",
   className = "",
 }: ToasterProps) {
   const [all, setAll] = React.useState(store);

@@ -82,7 +82,7 @@ export function TagInput({
   hint,
   error,
   optional = false,
-  placeholder = "Add…",
+  placeholder = "Нэмэх…",
   validate,
   normalize = (t) => t.trim(),
   splitOnSpace = false,
@@ -146,13 +146,13 @@ export function TagInput({
         setFlash({ tag: p, n: Date.now() });
       } else if (max != null && tags.length + added.length >= max) {
         left.push(p);
-        why ||= `Up to ${max} at a time.`;
+        why ||= `Нэг дор ${max} хүртэл.`;
       } else added.push(p);
     }
     if (added.length) {
       set([...tags, ...added]);
       setSaid(
-        added.length === 1 ? `${added[0]} added` : `${added.length} added`,
+        added.length === 1 ? `${added[0]} нэмэгдлээ` : `${added.length} нэмэгдлээ`,
       );
     }
     setDraft(
@@ -165,7 +165,7 @@ export function TagInput({
 
   const remove = (tag: string, focusInput = true) => {
     set(tags.filter((t) => t !== tag));
-    setSaid(`${tag} removed`);
+    setSaid(`${tag} хасагдлаа`);
     if (focusInput) input.current?.focus();
   };
 
@@ -254,7 +254,7 @@ export function TagInput({
           <label className="ui-tag__label" id={labelId} htmlFor={inputId}>
             {label}
           </label>
-          {optional && <span className="ui-tag__optional">Optional</span>}
+          {optional && <span className="ui-tag__optional">Заавал биш</span>}
         </div>
       )}
       {/* A click on the box's empty space puts the caret in the field */}
@@ -292,7 +292,7 @@ export function TagInput({
                 type="button"
                 className="ui-tag__remove"
                 tabIndex={-1}
-                aria-label={`Remove ${t}`}
+                aria-label={`Хасах: ${t}`}
                 onPointerDown={(e) => e.preventDefault()}
                 onClick={() => remove(t)}
               >
@@ -317,7 +317,7 @@ export function TagInput({
           id={inputId}
           className="ui-tag__input"
           value={draft}
-          placeholder={full ? "" : tags.length ? "Add more…" : placeholder}
+          placeholder={full ? "" : tags.length ? "Дахин нэмэх…" : placeholder}
           disabled={disabled || full}
           dir="auto"
           autoComplete="off"
@@ -563,30 +563,30 @@ const tagDemoCss = `
 
 /** Working example; use the named TagInput export in your application. */
 export default function Demo() {
-  const [emails, setEmails] = useState<string[]>(["maya@acme.com", "jonas@acme.com"]);
-  const [labels, setLabels] = useState<string[]>(["Onboarding", "Q4 launch"]);
+  const [emails, setEmails] = useState<string[]>(["sarnai@kompani.mn", "bat@kompani.mn"]);
+  const [labels, setLabels] = useState<string[]>(["Танилцуулга", "Улирлын нээлт"]);
   return (
     <div className="tag-demo-card">
       <style>{tagDemoCss}</style>
       <TagInput
-        label="Invite people"
+        label="Хүн урих"
         value={emails}
         onChange={setEmails}
         placeholder="name@company.com"
-        hint="Paste a whole list – commas, spaces or new lines."
+        hint="Жагсаалтыг бүтнээр нь буулгаж болно – таслал, зай эсвэл шинэ мөрөөр."
         avatar
         splitOnSpace
         max={10}
         normalize={(t) => t.trim().toLowerCase()}
-        validate={(t) => (DEMO_EMAIL.test(t) ? true : `“${t}” doesn't look like an email address.`)}
+        validate={(t) => (DEMO_EMAIL.test(t) ? true : `«${t}» имэйл хаяг биш бололтой.`)}
         name="emails"
       />
       <TagInput
-        label="Labels"
+        label="Шошго"
         optional
         value={labels}
         onChange={setLabels}
-        hint="Press Enter or a comma after each one."
+        hint="Тус бүрийн дараа ENTER эсвэл таслал дарна уу."
       />
     </div>
   );

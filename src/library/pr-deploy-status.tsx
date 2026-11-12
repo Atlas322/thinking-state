@@ -103,78 +103,78 @@ export type PrDeployStatusProps = PrDeployStatusData & {
 };
 
 const defaultLabels: PrDeployStatusLabels = {
-  pullRequests: "Pull requests",
-  deploys: "Deploys",
-  open: "Open",
-  draft: "Draft",
-  merged: "Merged",
-  closed: "Closed",
-  approved: "Approved",
-  changes: "Changes requested",
-  pending: "Review pending",
-  passed: "passed",
-  failed: "failed",
-  running: "running",
-  live: "Live",
-  building: "Building",
-  queued: "Queued",
-  stuck: "Stuck",
-  deployFailed: "Failed",
-  since: "for",
-  showLog: "Show log",
-  hideLog: "Hide log",
-  noPrs: "No open pull requests",
-  noDeploys: "No deploys yet",
-  scope: "Show",
-  all: "All",
-  mine: "Mine",
+  pullRequests: "Нэгтгэх хүсэлтүүд",
+  deploys: "Байршуулалт",
+  open: "Нээлттэй",
+  draft: "Ноорог",
+  merged: "Нэгтгэсэн",
+  closed: "Хаагдсан",
+  approved: "Батлагдсан",
+  changes: "Засвар хүссэн",
+  pending: "Хяналт хүлээж байна",
+  passed: "амжилттай",
+  failed: "алдаатай",
+  running: "ажиллаж байна",
+  live: "Шууд",
+  building: "Бүтээж байна",
+  queued: "Дараалалд",
+  stuck: "Гацсан",
+  deployFailed: "Алдаатай",
+  since: "болоод",
+  showLog: "Лог харах",
+  hideLog: "Лог нуух",
+  noPrs: "Нээлттэй нэгтгэх хүсэлт алга",
+  noDeploys: "Байршуулалт хараахан алга",
+  scope: "Харах",
+  all: "Бүгд",
+  mine: "Минийх",
 };
 
 export const prDeployStatusDemo: PrDeployStatusData = {
   repo: "acme/box-web",
-  me: "Bat",
+  me: "Бат",
   prs: [
-    { number: 41, title: "Winter box landing page", state: "open", branch: "feat/winter-landing", checks: { passed: 12 }, review: "approved", updated: "18 min ago", owner: "Anu", sharedWith: ["Bat"] },
-    { number: 42, title: "Subscription pause flow", state: "open", branch: "feat/pause-flow", checks: { passed: 10, failed: 1, pending: 1 }, review: "changes", updated: "1 h ago", owner: "Bat" },
-    { number: 43, title: "Darkhan delivery slots", state: "draft", branch: "feat/darkhan-slots", checks: { pending: 3 }, review: "pending", updated: "2 h ago", owner: "Tsetseg" },
-    { number: 39, title: "Address form validation", state: "merged", branch: "fix/address-form", checks: { passed: 12 }, updated: "yesterday", owner: "Bat" },
+    { number: 41, title: "Өвлийн хайрцгийн нүүр хуудас", state: "open", branch: "feat/winter-landing", checks: { passed: 12 }, review: "approved", updated: "18 мин өмнө", owner: "Ану", sharedWith: ["Бат"] },
+    { number: 42, title: "Захиалгыг түр зогсоох урсгал", state: "open", branch: "feat/pause-flow", checks: { passed: 10, failed: 1, pending: 1 }, review: "changes", updated: "1 цаг өмнө", owner: "Бат" },
+    { number: 43, title: "Дарханы хүргэлтийн цагууд", state: "draft", branch: "feat/darkhan-slots", checks: { pending: 3 }, review: "pending", updated: "2 цаг өмнө", owner: "Цэцэг" },
+    { number: 39, title: "Хаягийн маягтын шалгалт", state: "merged", branch: "fix/address-form", checks: { passed: 12 }, updated: "өчигдөр", owner: "Бат" },
   ],
   deploys: [
     {
       id: "preview",
-      env: "Preview",
+      env: "Туршилтын орчин",
       state: "live",
       target: "PR #41",
-      updated: "16 min ago",
+      updated: "16 мин өмнө",
       steps: [
-        { label: "Queue", state: "done", time: "4s" },
-        { label: "Build", state: "done", time: "1m 52s" },
-        { label: "Checks", state: "done", time: "38s" },
-        { label: "Live", state: "done" },
+        { label: "Дараалал", state: "done", time: "4 с" },
+        { label: "Бүтээх", state: "done", time: "1 мин 52 с" },
+        { label: "Шалгалт", state: "done", time: "38 с" },
+        { label: "Шууд", state: "done" },
       ],
     },
     {
       id: "production",
-      env: "Production",
+      env: "Үндсэн орчин",
       state: "stuck",
-      target: "main",
-      updated: "38 min ago",
+      target: "үндсэн салбар",
+      updated: "38 мин өмнө",
       steps: [
-        { label: "Queue", state: "done", time: "6s" },
-        { label: "Build", state: "stuck" },
-        { label: "Checks", state: "next" },
-        { label: "Live", state: "next" },
+        { label: "Дараалал", state: "done", time: "6 с" },
+        { label: "Бүтээх", state: "stuck" },
+        { label: "Шалгалт", state: "next" },
+        { label: "Шууд", state: "next" },
       ],
       blocker: {
-        title: "Build waits on a missing setting",
-        detail: "The delivery-zone setting is not set for production, so the build stops before it starts.",
-        since: "38 min",
-        action: "Add the setting",
+        title: "Тохиргоо дутуу тул бүтээлт хүлээж байна",
+        detail: "Үндсэн орчинд хүргэлтийн бүсийн тохиргоо хийгдээгүй тул бүтээлт эхлэхээсээ өмнө зогслоо.",
+        since: "38 мин",
+        action: "Тохиргоо нэмэх",
         log: [
-          "12:42:08  build started from main",
-          "12:42:11  reading project settings",
-          "12:42:11  DELIVERY_ZONES is not set",
-          "12:42:11  waiting for settings, build paused",
+          "12:42:08  үндсэн салбараас бүтээлт эхэллээ",
+          "12:42:11  төслийн тохиргоог уншиж байна",
+          "12:42:11  DELIVERY_ZONES тохируулаагүй байна",
+          "12:42:11  тохиргоог хүлээж байна, бүтээлт түр зогслоо",
         ],
       },
     },
@@ -182,6 +182,7 @@ export const prDeployStatusDemo: PrDeployStatusData = {
 };
 
 const STEP_DONE: PdStepState[] = ["done"];
+const STEP_LABEL: Record<PdStepState, string> = { done: "дууссан", active: "ажиллаж байна", stuck: "гацсан", failed: "алдаатай", next: "дараагийнх" };
 
 function Checks({ c, L }: { c: NonNullable<PdPullRequest["checks"]>; L: PrDeployStatusLabels }) {
   const passed = c.passed ?? 0;
@@ -342,7 +343,7 @@ export function PrDeployStatus({
                       <span className="pd-node" aria-hidden="true" />
                       <span className="pd-slabel">{s.label}</span>
                       {s.time && <span className="pd-stime">{s.time}</span>}
-                      <span className="pd-sr">, {s.state}</span>
+                      <span className="pd-sr">, {STEP_LABEL[s.state] ?? s.state}</span>
                     </li>
                   ))}
                 </ol>

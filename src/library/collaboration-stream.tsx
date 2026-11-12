@@ -83,7 +83,7 @@ const defaultMessages: StreamMessage[] = [
     tools: ["web_search ×6"],
     files: [{ name: "plans-table.csv" }],
     details: {
-      meta: [["Загвар", "Хурдан загвар"], ["Токен", "41.2k"], ["Алхам", "6"], ["Хугацаа", "1m 48s"]],
+      meta: [["Загвар", "Хурдан загвар"], ["Токен", "41.2k"], ["Алхам", "6"], ["Хугацаа", "1 мин 48 с"]],
       items: [
         { title: "web_search", detail: "6 хайлт – суудлаар тооцох багцууд", kind: "tool" },
         { title: "Өрсөлдөгч А", detail: "Үнэгүй түвшин · 10 зочин", kind: "link" },
@@ -161,7 +161,7 @@ const defaultMessages: StreamMessage[] = [
     kind: "writing",
     quote: "Баасан гариг гэхэд шинэ багцын хуудсыг нээ – суудлаар тооцох багц, үнэгүй түвшинг үлдээ.",
     details: {
-      meta: [["Загвар", "Кодын загвар"], ["Хүлээж буй", "2m"], ["Барьж буй", "Нийтлэл"]],
+      meta: [["Загвар", "Кодын загвар"], ["Хүлээж буй", "2 мин"], ["Барьж буй", "Нийтлэл"]],
       items: [
         { title: "plan_team_3", detail: "Төлбөрийн систем – 3 суудал, туршилтын горим", kind: "file" },
         { title: "plan_team_10", detail: "Төлбөрийн систем – 10 суудал, туршилтын горим", kind: "file" },
@@ -308,11 +308,11 @@ export function CollaborationStream({
   const writing = all.filter((m) => m.kind === "writing").map((m) => byId(m.from)?.name);
 
   return (
-    <section className={`cs-root ${className}`} aria-label="Collaboration stream">
+    <section className={`cs-root ${className}`} aria-label="Хамтын урсгал">
       <style>{css}</style>
-      <div className="cs-tabs" role="tablist" aria-label="Filter messages">
+      <div className="cs-tabs" role="tablist" aria-label="Мессеж шүүх">
         <button type="button" role="tab" aria-selected={active === "everyone"} onClick={() => choose("everyone")}>
-          Everyone
+          Бүгд
         </button>
         {agents.map((a) => (
           <button type="button" role="tab" key={a.id} aria-selected={active === a.id} onClick={() => choose(a.id)}>
@@ -323,7 +323,7 @@ export function CollaborationStream({
         {live && (
           <span className="cs-live">
             <i aria-hidden="true" />
-            Live
+            Шууд
           </span>
         )}
       </div>
@@ -336,7 +336,7 @@ export function CollaborationStream({
             return (
               <p className="cs-event" key={m.id}>
                 <Mark agent={from} size={10} />
-                {from?.name} started <Mark agent={to} size={10} />
+                {from?.name} эхлүүлсэн: <Mark agent={to} size={10} />
                 {to?.name}
               </p>
             );
@@ -357,25 +357,25 @@ export function CollaborationStream({
                   >
                     {from?.name ?? m.from}
                   </button>
-                  {m.kind === "handoff" && <span className="cs-tag">Handoff</span>}
-                  {m.kind === "question" && m.to === you && <span className="cs-tag q">Question for you</span>}
+                  {m.kind === "handoff" && <span className="cs-tag">Шилжүүлэг</span>}
+                  {m.kind === "question" && m.to === you && <span className="cs-tag q">Танд асуулт</span>}
                   {m.time && <time>{m.time}</time>}
                 </header>
                 {to && !m.quote && (
                   <span className="cs-to">
-                    <i>to</i> <Mark agent={to} size={10} /> {to.name}
+                    <i>хэнд</i> <Mark agent={to} size={10} /> {to.name}
                   </span>
                 )}
                 {m.quote && (
                   <div className="cs-quote">
                     <span>
-                      to <Mark agent={to} size={10} /> <b>{to?.name}</b>
+                      хэнд <Mark agent={to} size={10} /> <b>{to?.name}</b>
                     </span>
                     {m.quote}
                   </div>
                 )}
                 {m.kind === "writing" ? (
-                  <p className="cs-writing">Writing…</p>
+                  <p className="cs-writing">Бичиж байна…</p>
                 ) : (
                   <p className="cs-text">{renderText(m.text)}</p>
                 )}
@@ -432,7 +432,7 @@ export function CollaborationStream({
         }}
       >
         <textarea
-          aria-label="Message"
+          aria-label="Мессеж"
           rows={2}
           value={draft}
           placeholder={placeholder}
@@ -449,7 +449,7 @@ export function CollaborationStream({
           }}
         />
         {picking && (
-          <div className="cs-picker" role="listbox" aria-label="Name an agent">
+          <div className="cs-picker" role="listbox" aria-label="Агент нэрлэх">
             {others.map((a) => (
               <button
                 type="button"
@@ -468,13 +468,13 @@ export function CollaborationStream({
           </div>
         )}
         <footer>
-          <button type="button" className="cs-at" aria-label="Name an agent" onClick={() => setPicking((p) => !p)}>
+          <button type="button" className="cs-at" aria-label="Агент нэрлэх" onClick={() => setPicking((p) => !p)}>
             @
           </button>
           <span className="cs-target">
-            to {target ? <><Mark agent={byId(target)} size={10} /> {byId(target)?.name}</> : "everyone"}
+            хэнд {target ? <><Mark agent={byId(target)} size={10} /> {byId(target)?.name}</> : "бүгдэд"}
           </span>
-          <button type="submit" className="cs-send" aria-label="Send" disabled={!draft.trim()}>
+          <button type="submit" className="cs-send" aria-label="Илгээх" disabled={!draft.trim()}>
             <svg viewBox="0 0 16 16" aria-hidden="true">
               <path d="M8 13V3M4 7l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -482,7 +482,7 @@ export function CollaborationStream({
         </footer>
       </form>
       <p className="cs-sr" role="status">
-        {writing.length ? `${writing.join(", ")} writing` : ""}
+        {writing.length ? `${writing.join(", ")} бичиж байна` : ""}
       </p>
     </section>
   );

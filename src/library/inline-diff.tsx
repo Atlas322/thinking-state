@@ -31,15 +31,15 @@ export type InlineDiffProps = {
 type Decision = "pending" | "accepted" | "rejected";
 
 const demoChanges: DiffSegment[] = [
-  { type: "equal", text: "Hi everyone, " },
-  { type: "change", remove: "we are very excited to announce that ", insert: "" },
-  { type: "equal", text: "the new dashboard is now " },
-  { type: "change", remove: "available", insert: "live" },
-  { type: "equal", text: " for all users. It loads " },
-  { type: "change", remove: "a lot faster than before", insert: "twice as fast" },
-  { type: "equal", text: ", and you can now export any report to CSV " },
-  { type: "change", remove: "with just a single", insert: "in one" },
-  { type: "equal", text: " click. Let us know what you think!" },
+  { type: "equal", text: "Сайн байцгаана уу, " },
+  { type: "change", remove: "бид баяртайгаар мэдэгдэж байна: ", insert: "" },
+  { type: "equal", text: "шинэ хяналтын самбар бүх хэрэглэгчдэд " },
+  { type: "change", remove: "ашиглах боломжтой боллоо", insert: "нээгдлээ" },
+  { type: "equal", text: ". Өмнөхөөсөө " },
+  { type: "change", remove: "хамаагүй илүү хурдан", insert: "хоёр дахин хурдан" },
+  { type: "equal", text: " ачаалдаг бөгөөд одоо дурын тайланг " },
+  { type: "change", remove: "ердөө ганцхан товшилтоор", insert: "нэг товшиж" },
+  { type: "equal", text: " CSV болгон татаж болно. Санал бодлоо хуваалцаарай!" },
 ];
 
 /** Word-level diff (LCS over words and spaces), grouped into change segments. */
@@ -76,7 +76,7 @@ export function InlineDiff({
   changes,
   onChange,
   onDone,
-  label = "Suggested by AI · Make it shorter",
+  label = "Хиймэл оюуны санал · Товчлох",
   className = "",
   ref,
 }: InlineDiffProps & { ref?: React.Ref<InlineDiffHandle> }) {
@@ -117,7 +117,7 @@ export function InlineDiff({
     setHistory((h) => [...h, decisions]);
     setDecisions(next);
     const left = next.filter((d) => d === "pending").length;
-    setAnnounce(`${message}. ${left ? `${left} left` : "All changes reviewed"}.`);
+    setAnnounce(`${message}. ${left ? `${left} үлдлээ` : "Бүх өөрчлөлтийг хянасан"}.`);
     const text = textFor(next);
     onChange?.(text);
     if (!left) {
@@ -138,18 +138,18 @@ export function InlineDiff({
   const decide = (k: number, d: Decision) => {
     if (decisions[k] !== "pending") return;
     const next = decisions.map((v, i) => (i === k ? d : v));
-    apply(next, `${d === "accepted" ? "Accepted" : "Rejected"} suggestion ${k + 1}`, k);
+    apply(next, `${k + 1}-р саналыг ${d === "accepted" ? "хүлээн авлаа" : "татгалзлаа"}`, k);
   };
   const all = (d: Decision) => {
     if (!pending) return;
-    apply(decisions.map((v) => (v === "pending" ? d : v)), d === "accepted" ? "Accepted all" : "Rejected all");
+    apply(decisions.map((v) => (v === "pending" ? d : v)), d === "accepted" ? "Бүгдийг хүлээн авлаа" : "Бүгдийг татгалзлаа");
   };
   const undo = () => {
     const prev = history.at(-1);
     if (!prev) return;
     setHistory((h) => h.slice(0, -1));
     setDecisions(prev);
-    setAnnounce(`Undone. ${prev.filter((d) => d === "pending").length} left.`);
+    setAnnounce(`Буцаалаа. ${prev.filter((d) => d === "pending").length} үлдлээ.`);
     onChange?.(textFor(prev));
   };
   const step = (dir: 1 | -1) => {
@@ -201,10 +201,10 @@ export function InlineDiff({
           const k = changeIdx.indexOf(i);
           const d = decisions[k] ?? "pending";
           const desc = s.remove && s.insert
-            ? `replace “${s.remove.trim()}” with “${s.insert.trim()}”`
+            ? `«${s.remove.trim()}»-г «${s.insert.trim()}» болгох`
             : s.remove
-              ? `remove “${s.remove.trim()}”`
-              : `add “${s.insert.trim()}”`;
+              ? `«${s.remove.trim()}»-г хасах`
+              : `«${s.insert.trim()}»-г нэмэх`;
           if (d !== "pending")
             return (
               <span key={i} className={`idf-done ${d}`}>
@@ -222,7 +222,7 @@ export function InlineDiff({
                   btns.current[k] = el;
                 }}
                 className="idf-hit"
-                aria-label={`Suggestion ${k + 1} of ${total}: ${desc}. Press Y to accept, N to reject`}
+                aria-label={`Санал ${k + 1}/${total}: ${desc}. Хүлээн авах бол Y, татгалзах бол N дарна уу`}
                 onFocus={() => setFocus(k)}
                 onMouseEnter={() => setFocus(k)}
                 onClick={() => setFocus(k)}
@@ -245,12 +245,12 @@ export function InlineDiff({
                 {s.insert && <ins>{s.insert}</ins>}
               </button>
               {active && (
-                <span className="idf-pop" role="group" aria-label={`Suggestion ${k + 1}`}>
-                  <button type="button" tabIndex={-1} aria-label="Accept" onMouseDown={(e) => e.preventDefault()} onClick={() => decide(k, "accepted")}>
-                    Accept <kbd>Y</kbd>
+                <span className="idf-pop" role="group" aria-label={`Санал ${k + 1}`}>
+                  <button type="button" tabIndex={-1} aria-label="Хүлээн авах" onMouseDown={(e) => e.preventDefault()} onClick={() => decide(k, "accepted")}>
+                    Хүлээн авах <kbd>Y</kbd>
                   </button>
-                  <button type="button" tabIndex={-1} aria-label="Reject" onMouseDown={(e) => e.preventDefault()} onClick={() => decide(k, "rejected")}>
-                    Reject <kbd>N</kbd>
+                  <button type="button" tabIndex={-1} aria-label="Татгалзах" onMouseDown={(e) => e.preventDefault()} onClick={() => decide(k, "rejected")}>
+                    Татгалзах <kbd>N</kbd>
                   </button>
                 </span>
               )}
@@ -262,22 +262,22 @@ export function InlineDiff({
         {pending ? (
           <div className="idf-tools" key="tools">
             <span className="idf-count">{pending}</span>
-            <span className="idf-word">{pending === 1 ? "suggestion" : "suggestions"}</span>
-            <button type="button" className="idf-arrow" aria-label="Previous suggestion" onClick={() => step(-1)}>
+            <span className="idf-word">санал</span>
+            <button type="button" className="idf-arrow" aria-label="Өмнөх санал" onClick={() => step(-1)}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5" /></svg>
             </button>
-            <button type="button" className="idf-arrow" aria-label="Next suggestion" onClick={() => step(1)}>
+            <button type="button" className="idf-arrow" aria-label="Дараах санал" onClick={() => step(1)}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" /></svg>
             </button>
-            <button type="button" className="idf-btn" onClick={() => all("rejected")}>Reject all</button>
-            <button type="button" className="idf-btn primary" onClick={() => all("accepted")}>Accept all</button>
+            <button type="button" className="idf-btn" onClick={() => all("rejected")}>Бүгдийг татгалзах</button>
+            <button type="button" className="idf-btn primary" onClick={() => all("accepted")}>Бүгдийг хүлээн авах</button>
           </div>
         ) : (
           <div className="idf-tools done" key="done">
             <svg viewBox="0 0 16 16" aria-hidden="true" className="idf-check"><path d="m3.5 8.5 3 3 6-7" /></svg>
-            <span className="idf-word">All changes reviewed</span>
+            <span className="idf-word">Бүх өөрчлөлтийг хянасан</span>
             <button type="button" ref={undoBtn} className="idf-btn" disabled={!history.length} onClick={undo}>
-              Undo
+              Буцаах
             </button>
           </div>
         )}

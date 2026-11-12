@@ -174,18 +174,18 @@ export function DecisionTree({
     const opt = d.options[i];
     if (opt.next && then == null) {
       setChosen(i);
-      setLive(`${opt.label} – picked. ${opt.next.question}`);
+      setLive(`${opt.label} – сонгосон. ${opt.next.question}`);
       return;
     }
     setChosen(i);
     const thenOpt = then != null ? opt.next?.options[then] : undefined;
     const r = await onChoose?.(d, { index: i, option: opt, then: thenOpt });
-    finish(typeof r === "string" ? r : `${thenOpt ? `${opt.label} · ${thenOpt.label}` : opt.label} – picked. ${d.agent} goes ahead.`);
+    finish(typeof r === "string" ? r : `${thenOpt ? `${opt.label} · ${thenOpt.label}` : opt.label} – сонгосон. ${d.agent} үргэлжлүүлнэ.`);
   };
   const sendOther = async () => {
     if (!d || !other?.trim()) return;
     const r = await onChoose?.(d, { other: other.trim() });
-    finish(typeof r === "string" ? r : `Sent to ${d.agent}: “${other.trim()}”`);
+    finish(typeof r === "string" ? r : `Илгээсэн (${d.agent}): «${other.trim()}»`);
   };
   const go = (n: number) => {
     if (!queue.length) return;
@@ -216,7 +216,7 @@ export function DecisionTree({
                 <span role="tooltip" id={`dt-note-${key}${i}`} className="dt-note">
                   <span className="dt-note-h">
                     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5 14 13H2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /><path d="M8 6.5v3M8 11.2v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
-                    Agent's note
+                    Агентын тэмдэглэл
                   </span>
                   {p.note}
                   {p.source && <span className="dt-note-s">{p.source}</span>}
@@ -272,7 +272,7 @@ export function DecisionTree({
           <path d="M5.5 8h2.5M8 8c0-3 1-4.5 2.5-4.5M8 8c0 3 1 4.5 2.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
         </svg>
         <strong>{title}</strong>
-        <span className="dt-wait">{queue.length ? `${queue.length} waiting for you` : "All decided"}</span>
+        <span className="dt-wait">{queue.length ? `${queue.length} таныг хүлээж байна` : "Бүгд шийдэгдсэн"}</span>
         {queue.length > 0 && (
           <span className="dt-pager">
             <span className="dt-dots" aria-hidden="true">
@@ -280,7 +280,7 @@ export function DecisionTree({
                 <i key={q.id} className={i === pos ? "is-on" : ""} />
               ))}
             </span>
-            {pos + 1} of {queue.length}
+            {pos + 1}/{queue.length}
           </span>
         )}
       </header>
@@ -288,7 +288,7 @@ export function DecisionTree({
       {d ? (
         <div className={`dt-tree ${outcome ? "is-done" : ""}`} key={d.id}>
           <div className="dt-qcol">
-            {d.risk && d.risk !== "low" && <span className={`dt-risk is-${d.risk}`}>{d.risk === "high" ? "High risk" : "Medium risk"}</span>}
+            {d.risk && d.risk !== "low" && <span className={`dt-risk is-${d.risk}`}>{d.risk === "high" ? "Өндөр эрсдэл" : "Дунд эрсдэл"}</span>}
             <div className="dt-q">
               <div className="dt-agent">
                 <span className="dt-agent-i">{d.icon}</span>
@@ -309,7 +309,7 @@ export function DecisionTree({
                   <button
                     type="button"
                     className={`dt-opt ${o.pick ? "is-pick" : ""}`}
-                    aria-label={`${o.label}${o.pick ? ", the agent's pick" : ""}`}
+                    aria-label={`${o.label}${o.pick ? ", агентын сонголт" : ""}`}
                     aria-keyshortcuts={String(i + 1)}
                     onClick={() => choose(i)}
                     disabled={!!outcome}
@@ -318,7 +318,7 @@ export function DecisionTree({
                     {o.icon && <span className="dt-i">{o.icon}</span>}
                     <span className="dt-ol">
                       {o.label}
-                      {o.pick && <small>Agent's pick</small>}
+                      {o.pick && <small>Агентын сонголт</small>}
                     </span>
                   </button>
                   {o.next ? (
@@ -331,12 +331,12 @@ export function DecisionTree({
                               type="button"
                               className="dt-card"
                               disabled={chosen !== i || !!outcome}
-                              aria-label={`${s.label}${s.pick ? ", the agent's pick" : ""}`}
+                              aria-label={`${s.label}${s.pick ? ", агентын сонголт" : ""}`}
                               onClick={() => choose(i, j)}
                             >
                               <span className="dt-card-t">
                                 {s.label}
-                                {s.pick && <small>Agent's pick</small>}
+                                {s.pick && <small>Агентын сонголт</small>}
                               </span>
                               <span className="dt-card-e">
                                 <span>{s.effects?.map((e, k) => <React.Fragment key={k}>{text(e, `s${i}${j}-${k}`)}</React.Fragment>)}</span>
@@ -363,7 +363,7 @@ export function DecisionTree({
                 {other == null ? (
                   <button type="button" className="dt-opt is-other" onClick={() => setOther("")} aria-keyshortcuts={String(d.options.length + 1)} disabled={!!outcome}>
                     <kbd>{d.options.length + 1}</kbd>
-                    <span className="dt-ol">Other…</span>
+                    <span className="dt-ol">Бусад…</span>
                   </button>
                 ) : (
                   <textarea
@@ -371,8 +371,8 @@ export function DecisionTree({
                     autoFocus
                     rows={2}
                     value={other}
-                    placeholder={`Tell ${d.agent} what to do`}
-                    aria-label="Your own instruction"
+                    placeholder={`${d.agent}: юу хийхийг бичнэ үү`}
+                    aria-label="Өөрийн заавар"
                     onChange={(e) => setOther(e.target.value)}
                   />
                 )}
@@ -382,7 +382,7 @@ export function DecisionTree({
           </ol>
         </div>
       ) : (
-        <div className="dt-empty">Nothing waiting – the agents carry on.</div>
+        <div className="dt-empty">Хүлээгдэж буй зүйл алга – агентууд үргэлжлүүлж байна.</div>
       )}
 
       <footer className="dt-foot">
@@ -393,10 +393,10 @@ export function DecisionTree({
           </span>
         ) : d ? (
           <>
-            Pick a branch <kbd>1</kbd> – <kbd>{d.options.length + (allowOther ? 1 : 0)}</kbd>
+            Салбар сонгох <kbd>1</kbd> – <kbd>{d.options.length + (allowOther ? 1 : 0)}</kbd>
             <span className="dt-sep">·</span>
             <button type="button" className="dt-nextbtn" onClick={() => go(1)} disabled={queue.length < 2}>
-              next <kbd>→</kbd>
+              дараах <kbd>→</kbd>
             </button>
           </>
         ) : null}

@@ -28,24 +28,24 @@ export type ChatComposerProps = {
   className?: string;
 };
 const defaultModels: ChatModel[] = [
-  { id: "auto", name: "Auto", description: "The right model for the task" },
+  { id: "auto", name: "Автомат", description: "Даалгаварт тохирох загварыг сонгоно" },
   {
     id: "claude",
-    name: "Claude",
-    description: "Thoughtful reasoning and writing",
+    name: "Нягт загвар",
+    description: "Гүнзгий бодож, сайн бичнэ",
   },
   {
     id: "chatgpt",
-    name: "ChatGPT",
-    description: "Versatile help for everyday work",
+    name: "Түргэн загвар",
+    description: "Өдөр тутмын ажилд уян хатан",
   },
 ];
 const defaultApps: ChatApp[] = [
-  { id: "gmail", name: "Gmail" },
-  { id: "slack", name: "Slack" },
-  { id: "clickup", name: "ClickUp" },
+  { id: "gmail", name: "Имэйл" },
+  { id: "slack", name: "Багийн чат" },
+  { id: "clickup", name: "Даалгаврын самбар" },
 ];
-const defaultFolders = ["Personal", "Product", "Marketing", "Engineering"];
+const defaultFolders = ["Хувийн", "Бүтээгдэхүүн", "Маркетинг", "Хөгжүүлэлт"];
 const initialConnections = ["gmail"];
 
 type GlyphName =
@@ -296,7 +296,7 @@ function Picker({
             </div>
           ))}
           {!items.length && (
-            <p className="cc-menu-empty">No options available</p>
+            <p className="cc-menu-empty">Сонголт алга</p>
           )}
         </div>
       )}
@@ -305,10 +305,10 @@ function Picker({
 }
 
 export function ChatComposer({
-  placeholder = "Start by typing...",
+  placeholder = "Бичиж эхлээрэй…",
   models = defaultModels,
   loadMs = 1300,
-  dictation = "Draft a short update for the team about what we shipped this week.",
+  dictation = "Энэ долоо хоногт юу гаргасан тухай багт товч мэдээ бичээрэй.",
   onSend,
   onModelChange,
   onAttach,
@@ -380,7 +380,7 @@ export function ChatComposer({
     if (!message.trim() || recording) return;
     const text = message.trim();
     onSend?.(text, { model: selectedModel?.id ?? "auto" });
-    setNotice(onSend ? "Message sent" : `Message ready: ${text}`);
+    setNotice(onSend ? "Мессеж илгээгдлээ" : `Мессеж бэлэн: ${text}`);
     setMessage("");
     setFiles([]);
     textarea.current?.focus();
@@ -398,7 +398,7 @@ export function ChatComposer({
       ]);
       if (mounted.current) {
         setApproval("granted");
-        setNotice("Unrestricted access selected");
+        setNotice("Хязгааргүй эрх сонгогдлоо");
       }
     } catch {
       if (approvalTimer.current) {
@@ -407,7 +407,7 @@ export function ChatComposer({
       }
       if (mounted.current) {
         setApproval("idle");
-        setApprovalError("Approval could not be completed. Try again.");
+        setApprovalError("Зөвшөөрөл авч чадсангүй. Дахин оролдоно уу.");
       }
     }
   };
@@ -417,8 +417,8 @@ export function ChatComposer({
       setMessage(
         (text) => `${text}${text && transcript ? " " : ""}${transcript}`,
       );
-      setNotice("Dictation added to your draft");
-    } else setNotice("Recording discarded");
+      setNotice("Дуут бичвэр ноорогт нэмэгдлээ");
+    } else setNotice("Бичлэгийг устгалаа");
     setRecording(false);
     setWordsHeard(0);
     (confirm ? textarea.current : voiceButton.current)?.focus();
@@ -426,7 +426,7 @@ export function ChatComposer({
   return (
     <section
       className={`cc-composer ${className}`}
-      aria-label="Chat composer"
+      aria-label="Мессеж бичих хэсэг"
       onKeyDown={(event) => {
         if (event.key === "Escape" && recording) {
           event.preventDefault();
@@ -445,18 +445,18 @@ export function ChatComposer({
           {recording ? (
             <div
               className="cc-transcript"
-              aria-label="Live transcript"
+              aria-label="Шууд бичвэр"
               aria-live="polite"
             >
               {words.slice(0, wordsHeard).map((word, index) => (
                 <span key={index}>{word} </span>
               ))}
-              {wordsHeard === 0 && <span>Listening…</span>}
+              {wordsHeard === 0 && <span>Сонсож байна…</span>}
             </div>
           ) : (
             <textarea
               ref={textarea}
-              aria-label="Message"
+              aria-label="Мессеж"
               rows={1}
               placeholder={placeholder}
               value={message}
@@ -481,7 +481,7 @@ export function ChatComposer({
                 {file.name}
                 <button
                   type="button"
-                  aria-label={`Remove ${file.name}`}
+                  aria-label={`Хасах: ${file.name}`}
                   onClick={() =>
                     setFiles((old) => old.filter((_, i) => i !== index))
                   }
@@ -509,7 +509,7 @@ export function ChatComposer({
           <button
             type="button"
             className="cc-icon-button"
-            aria-label="Attach files"
+            aria-label="Файл хавсаргах"
             onClick={() => (onAttach ? onAttach() : fileInput.current?.click())}
           >
             <Glyph name="plus" />
@@ -525,10 +525,10 @@ export function ChatComposer({
               <Glyph name={approval === "granted" ? "bolt" : "hand"} />
               <span>
                 {approval === "loading"
-                  ? "Requesting approval…"
+                  ? "Зөвшөөрөл хүсэж байна…"
                   : approval === "granted"
-                    ? "Unrestricted access"
-                    : "Request approval"}
+                    ? "Хязгааргүй эрх"
+                    : "Зөвшөөрөл хүсэх"}
               </span>
             </button>
           )}
@@ -546,11 +546,11 @@ export function ChatComposer({
                   />
                 ))}
               </span>
-              <span className="cc-recording-label">Demo dictation</span>
+              <span className="cc-recording-label">Туршилтын дуут бичвэр</span>
               <button
                 type="button"
                 className="cc-icon-button"
-                aria-label="Discard recording"
+                aria-label="Бичлэгийг устгах"
                 onClick={() => finishVoice(false)}
               >
                 <Glyph name="close" />
@@ -558,7 +558,7 @@ export function ChatComposer({
               <button
                 type="button"
                 className="cc-send"
-                aria-label="Use dictation"
+                aria-label="Дуут бичвэрийг ашиглах"
                 onClick={() => finishVoice(true)}
               >
                 <Glyph name="check" />
@@ -567,7 +567,7 @@ export function ChatComposer({
           ) : (
             <>
               <Picker
-                label="Choose model"
+                label="Загвар сонгох"
                 items={models.map((model) => ({
                   id: model.id,
                   label: model.name,
@@ -580,19 +580,19 @@ export function ChatComposer({
                   if (model) {
                     setModelId(id);
                     onModelChange?.(model);
-                    setNotice(`${model.name} selected`);
+                    setNotice(`${model.name} сонгогдлоо`);
                   }
                 }}
               >
                 {selectedModel?.logo && <span>{selectedModel.logo}</span>}
-                <span>{selectedModel?.name ?? "Auto"}</span>
+                <span>{selectedModel?.name ?? "Автомат"}</span>
                 <Glyph name="down" />
               </Picker>
               <button
                 type="button"
                 ref={voiceButton}
                 className="cc-icon-button"
-                aria-label="Start voice input"
+                aria-label="Дуугаар оруулах"
                 onClick={() => {
                   setRecording(true);
                   setWordsHeard(0);
@@ -603,7 +603,7 @@ export function ChatComposer({
               <button
                 type="button"
                 className="cc-send"
-                aria-label="Send message"
+                aria-label="Мессеж илгээх"
                 disabled={!message.trim()}
                 onClick={send}
               >
@@ -616,7 +616,7 @@ export function ChatComposer({
       <div className="cc-bottom-row">
         {folders.length > 0 && (
           <Picker
-            label="Choose folder"
+            label="Хавтас сонгох"
             className="cc-folders"
             items={folders.map((name) => ({
               id: name,
@@ -628,20 +628,20 @@ export function ChatComposer({
               const next = name === currentFolder ? null : name;
               setCurrentFolder(next);
               onFolderChange?.(next);
-              setNotice(next ? `Working in ${next}` : "Left the folder");
+              setNotice(next ? `Хавтас: ${next}` : "Хавтаснаас гарлаа");
             }}
           >
             <span className="cc-folder-ico" aria-hidden="true">
               <svg viewBox="0 0 16 16"><path d="M1.5 4.2c0-.9.7-1.6 1.6-1.6h3l1.4 1.5h5.4c.9 0 1.6.7 1.6 1.6v6.4c0 .9-.7 1.6-1.6 1.6H3.1c-.9 0-1.6-.7-1.6-1.6Z" fill="#3aa0f0" /><path d="M1.5 6.3h13v5.8c0 .9-.7 1.6-1.6 1.6H3.1c-.9 0-1.6-.7-1.6-1.6Z" fill="#5cb8ff" /></svg>
             </span>
             <span className="cc-folder-name" title={currentFolder ?? undefined}>
-              {currentFolder ?? "Work in a folder"}
+              {currentFolder ?? "Хавтсанд ажиллах"}
             </span>
           </Picker>
         )}
         {apps.length > 0 && (
           <Picker
-            label="Connect apps"
+            label="Апп холбох"
             className="cc-apps"
             align="right"
             multiple
@@ -649,8 +649,8 @@ export function ChatComposer({
               id: app.id,
               label: app.name,
               description: connections.includes(app.id)
-                ? "Connected"
-                : "Not connected",
+                ? "Холбогдсон"
+                : "Холбогдоогүй",
               selected: connections.includes(app.id),
               icon: <AppMark app={app} />,
             }))}
@@ -661,11 +661,11 @@ export function ChatComposer({
               setConnections(next);
               onAppsChange?.(next);
               setNotice(
-                `${apps.find((app) => app.id === id)?.name ?? id} ${next.includes(id) ? "connected" : "disconnected"}`,
+                `${apps.find((app) => app.id === id)?.name ?? id} ${next.includes(id) ? "холбогдлоо" : "салгагдлаа"}`,
               );
             }}
           >
-            <span>Connect apps</span>
+            <span>Апп холбох</span>
             <span className="cc-app-logos">
               {apps.slice(0, 3).map((app) => (
                 <AppMark key={app.id} app={app} />

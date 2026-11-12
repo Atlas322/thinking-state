@@ -55,7 +55,7 @@ export type TextFieldProps = Omit<
   suffix?: ReactNode;
   /** sm 28 · md 32 · lg 36 high */
   size?: "sm" | "md" | "lg";
-  /** "Optional" next to the label */
+  /** "Заавал биш" next to the label */
   optional?: boolean;
   /** A small × that empties the field while it has a value */
   clearable?: boolean;
@@ -183,7 +183,7 @@ export function TextField({
           <label className="ui-tf__label" htmlFor={inputId}>
             {label}
           </label>
-          {optional && <span className="ui-tf__optional">Optional</span>}
+          {optional && <span className="ui-tf__optional">Заавал биш</span>}
         </div>
       )}
       {/* A click anywhere on the box – the prefix, the padding – puts the caret in the input */}
@@ -259,7 +259,7 @@ export function TextField({
           <button
             type="button"
             className="ui-tf__action"
-            aria-label="Clear"
+            aria-label="Цэвэрлэх"
             tabIndex={-1}
             onClick={clear}
           >
@@ -270,7 +270,7 @@ export function TextField({
           <button
             type="button"
             className="ui-tf__action"
-            aria-label={revealed ? "Hide password" : "Show password"}
+            aria-label={revealed ? "Нууц үг нуух" : "Нууц үг харуулах"}
             aria-pressed={revealed}
             onClick={() => setRevealed((r) => !r)}
           >
@@ -284,7 +284,7 @@ export function TextField({
             type="button"
             className="ui-tf__action"
             data-copied={copied || undefined}
-            aria-label={copied ? "Copied" : "Copy"}
+            aria-label={copied ? "Хуулсан" : "Хуулах"}
             onClick={copy}
             disabled={disabled || !text}
           >
@@ -295,7 +295,7 @@ export function TextField({
         )}
         {copyable && (
           <span className="ui-tf__sr" role="status">
-            {copied ? "Copied" : ""}
+            {copied ? "Хуулсан" : ""}
           </span>
         )}
       </div>
@@ -644,7 +644,7 @@ const css = /* css */ `
 
 /** Working example; use the named TextField export in your application. */
 export default function Demo() {
-  const [slug, setSlug] = useState("maya-labs");
+  const [slug, setSlug] = useState("nomin-24");
   const valid = /^[a-z0-9-]*$/.test(slug);
   return (
     <div
@@ -659,24 +659,25 @@ export default function Demo() {
         boxShadow: "0 0 0 1px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04)",
       }}
     >
-      <TextField label="Workspace name" defaultValue="Maya Labs" maxLength={32} counter clearable required />
+      <TextField label="Ажлын орчны нэр" defaultValue="Номин студи" maxLength={32} counter clearable required />
       <TextField
-        label="Workspace URL"
+        label="Ажлын орчны URL"
         prefix="acme.app/"
         value={slug}
         onChange={(e) => setSlug(e.target.value)}
-        hint="Lowercase letters, numbers and dashes."
-        error={valid ? undefined : "Only lowercase letters, numbers and dashes."}
+        hint="Жижиг латин үсэг, тоо, зураас."
+        error={valid ? undefined : "Зөвхөн жижиг латин үсэг, тоо, зураас."}
       />
       <TextField
-        label="Billing email"
+        label="Төлбөрийн и-мэйл"
         optional
         type="email"
-        defaultValue="maya@acme"
-        error="Enter a full email, like maya@acme.com"
+        defaultValue="nomin@acme"
+        error="И-мэйлээ бүтэн бичнэ үү, жишээ нь nomin@acme.com"
       />
-      <TextField label="Password" type="password" defaultValue="correct-horse-42" autoComplete="new-password" />
-      <TextField label="API key" value="aui_demo_4f9a2c71e8b3" readOnly copyable style={{ fontFamily: "ui-monospace, monospace" }} />
+      <TextField label="Нууц үг" type="password" defaultValue="correct-horse-42" autoComplete="new-password" />
+      <TextField label="API түлхүүр" value=
+"aui_demo_4f9a2c71e8b3" readOnly copyable style={{ fontFamily: "ui-monospace, monospace" }} />
     </div>
   );
 }

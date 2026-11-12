@@ -235,13 +235,13 @@ export const TYPE_ICON: Record<string, IconName> = {
 };
 export const TYPE_LABEL: Record<string, string> = {
   project: "Төсөл",
-  task: "Task",
+  task: "Даалгавар",
   "session-decision": "Шийдвэр",
   decision: "Шийдвэр",
   atomic: "Атом",
   person: "Хүн",
-  area: "Area",
-  skill: "Skill",
+  area: "Чиглэл",
+  skill: "Ур чадвар",
   event: "Үйл явдал",
   daily: "Өдрийн тэмдэглэл",
   note: "Нот",
@@ -249,7 +249,7 @@ export const TYPE_LABEL: Record<string, string> = {
   resource: "Лавлагаа",
   agent: "Агент",
   "ai-worker": "AI ажилтан",
-  workflow: "Workflow",
+  workflow: "Ажлын урсгал",
   meeting: "Уулзалт",
   milestone: "Чухал үе",
   ask: "Асуулт",
@@ -257,10 +257,10 @@ export const TYPE_LABEL: Record<string, string> = {
   glossary: "Нэр томьёо",
   product: "Бүтээгдэхүүн",
   release: "Хувилбар",
-  commit: "Commit",
+  commit: "Коммит",
   output: "Гаралт",
   company: "Компани",
-  inbox: "Inbox",
+  inbox: "Ирсэн",
 };
 /** Page-level badge tint per type (Notion: Projects blue, Tasks green, Calendar red). */
 export const TYPE_TONE: Record<string, "blue" | "green" | "red" | "violet" | "teal" | "amber" | "yellow" | "gray"> = {
@@ -301,7 +301,7 @@ export const UNIT_ICON: Record<string, IconName> = {
 export type StatusGroup = "inbox" | "planning" | "active" | "waiting" | "someday" | "done" | "canceled" | "archived";
 export const STATUS_ORDER: StatusGroup[] = ["inbox", "planning", "active", "waiting", "someday", "done", "canceled", "archived"];
 export const STATUS: Record<StatusGroup, { label: string; icon: IconName; tone: "gray" | "yellow" | "blue" | "green" | "red" }> = {
-  inbox: { label: "Inbox", icon: "inbox", tone: "gray" },
+  inbox: { label: "Ирсэн", icon: "inbox", tone: "gray" },
   planning: { label: "Төлөвлөж буй", icon: "hourglass", tone: "gray" },
   active: { label: "Идэвхтэй", icon: "arrow-right", tone: "yellow" },
   waiting: { label: "Хүлээгдэж буй", icon: "hourglass", tone: "blue" },

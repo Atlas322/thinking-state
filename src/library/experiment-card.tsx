@@ -188,7 +188,7 @@ export function ExperimentCard({
             <div
               className="ec-switch"
               role="radiogroup"
-              aria-label="Metric"
+              aria-label="Хэмжүүр"
               onKeyDown={(e) => {
                 const i = metrics.findIndex((x) => x.id === m.id);
                 if (e.key === "ArrowRight") setMetric(metrics[(i + 1) % metrics.length].id);
@@ -203,7 +203,7 @@ export function ExperimentCard({
               ))}
             </div>
           )}
-          <div className="ec-rows" role="radiogroup" aria-label="Variants">
+          <div className="ec-rows" role="radiogroup" aria-label="Хувилбарууд">
             {variants.map((v) => {
               const d = delta(v);
               const b = m.lowerIsBetter ? -d : d;
@@ -214,7 +214,7 @@ export function ExperimentCard({
                   type="button"
                   role="radio"
                   aria-checked={picked}
-                  aria-label={`${v.key} ${v.name}, ${fmt(v.values[m.id])}${v === control ? ", baseline" : `, ${sign(d)}`}`}
+                  aria-label={`${v.key} ${v.name}, ${fmt(v.values[m.id])}${v === control ? ", суурь" : `, ${sign(d)}`}`}
                   className={`ec-row${picked ? " is-picked" : ""}${win && !picked ? " is-other" : ""}`}
                   onMouseEnter={() => setHot(v.id)}
                   onMouseLeave={() => setHot(null)}
@@ -228,7 +228,7 @@ export function ExperimentCard({
                   <span className="ec-name">{v.name}</span>
                   <span className="ec-bar"><span style={{ width: `${((v.values[m.id] ?? 0) / max) * 100}%`, background: v.color ?? "#3b82f6" }} /></span>
                   <span className="ec-val"><Rolling value={v.values[m.id] ?? 0} format={fmt} /></span>
-                  <span className={`ec-d${v === control ? "" : b >= 0 ? " is-up" : " is-down"}`}>{v === control ? "Base" : sign(d)}</span>
+                  <span className={`ec-d${v === control ? "" : b >= 0 ? " is-up" : " is-down"}`}>{v === control ? "Суурь" : sign(d)}</span>
                 </button>
               );
             })}
@@ -236,9 +236,9 @@ export function ExperimentCard({
           <div className="ec-last" aria-live="polite">
             {winV ? (
               <>
-                <span>{winV.key} picked · {winV.name}</span>
+                <span>{winV.key} сонгосон · {winV.name}</span>
                 <button type="button" className="ec-action" onClick={() => action?.onClick(winV)}>
-                  {action ? (typeof action.label === "function" ? action.label(winV) : action.label) : `Ship ${winV.key}`}
+                  {action ? (typeof action.label === "function" ? action.label(winV) : action.label) : `${winV.key} хувилбарыг нэвтрүүлэх`}
                 </button>
               </>
             ) : (

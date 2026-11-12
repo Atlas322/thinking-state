@@ -203,7 +203,7 @@ export function actorOf(c: Company, id: string | undefined): Actor {
   if (p) return { id: p.id, name: p.name, role: p.role, kind: "person" };
   const a = c.agents.find((x) => x.id === id);
   if (a) return { id: a.id, name: a.name, role: a.role, kind: "agent" };
-  return { id: id ?? "", name: id ?? "—", role: "", kind: "unknown" };
+  return { id: id ?? "", name: id ?? "Тодорхойгүй", role: "", kind: "unknown" };
 }
 
 /** Normalises any ModelField into display lines. */

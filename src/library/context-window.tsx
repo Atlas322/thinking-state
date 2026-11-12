@@ -112,7 +112,7 @@ export function ContextWindow({
 
   const compact = async (p: ContextPart) => {
     setCompacting(p.id);
-    setCaption("Compacting…");
+    setCaption("Шахаж байна…");
     const before = partTokens(p);
     if (onCompact) await onCompact(p.id);
     else await new Promise((r) => window.setTimeout(r, 1400));
@@ -123,7 +123,7 @@ export function ContextWindow({
     setCompacted((c) => ({ ...c, [p.id]: after }));
     setCompacting(null);
     setJustDone(p.id);
-    setCaption(`Saved ${fmt(before - after)} tokens`);
+    setCaption(`${fmt(before - after)} токен хэмнэлээ`);
     window.setTimeout(() => setJustDone(null), 1600);
   };
 
@@ -142,11 +142,11 @@ export function ContextWindow({
       <div className="cw-num">
         <span className="cw-big" aria-hidden="true">{fmt(big)}</span>
         <span className="cw-of" aria-hidden="true">
-          {hovered ? hovered.label.toLowerCase() : `of ${fmtShort(limit)} tokens`}
+          {hovered ? hovered.label.toLowerCase() : `/ ${fmtShort(limit)} токен`}
         </span>
         <span className={`cw-pct ${warn ? "cw-warn" : ""}`} aria-hidden="true">{Math.round(share * 100)}%</span>
         <span className="cw-sr">
-          {fmtShort(used)} of {fmtShort(limit)} tokens used, {Math.round(share * 100)} percent
+          {fmtShort(limit)} токеноос {fmtShort(used)} ашигласан, {Math.round(share * 100)} хувь
         </span>
       </div>
       <div className="cw-field" aria-hidden="true" style={{ gridTemplateColumns: `repeat(${columns},1fr)` }}>
@@ -214,7 +214,7 @@ export function ContextWindow({
                     ) : (
                       <svg viewBox="0 0 16 16"><path d="M5 2.5 8 5.5l3-3M5 13.5l3-3 3 3" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
                     )}
-                    <span>{justDone === p.id ? "Compacted" : "Compact"}</span>
+                    <span>{justDone === p.id ? "Шахсан" : "Шахах"}</span>
                   </button>
                 )}
                 <span className="cw-tok">{fmt(t)}</span>
@@ -226,7 +226,7 @@ export function ContextWindow({
                       <li key={it.id}>
                         <span className="cw-ilabel">{it.label}</span>
                         <span className="cw-itok">{fmt(it.tokens)}</span>
-                        <button type="button" aria-label={`Remove ${it.label}`} onClick={() => removeItem(p.id, it.id)}>
+                        <button type="button" aria-label={`Хасах: ${it.label}`} onClick={() => removeItem(p.id, it.id)}>
                           <svg viewBox="0 0 16 16"><path d="m5 5 6 6m0-6-6 6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
                         </button>
                       </li>
@@ -241,13 +241,13 @@ export function ContextWindow({
       <footer className="cw-foot">
         <span className={`cw-cap ${compacting ? "cw-capshim" : ""} ${warn ? "cw-capwarn" : ""}`} aria-live="polite">
           {compacting
-            ? "Compacting…"
+            ? "Шахаж байна…"
             : full
-              ? "Context window is full"
+              ? "Контекстийн цонх дүүрсэн"
               : warn
-                ? `${fmt(limit - used)} tokens left`
+                ? `${fmt(limit - used)} токен үлдсэн`
                 : saved > 0
-                  ? `Saved ${fmt(saved)} tokens`
+                  ? `${fmt(saved)} токен хэмнэсэн`
                   : caption}
         </span>
         {action && (

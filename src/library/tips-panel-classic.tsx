@@ -38,7 +38,8 @@ export type Tip = {
   description: ReactNode;
   /** Button text */
   action: string;
-  /** Text after the action was taken, e.g. "Enabled" */
+  /** Text after the action was taken, e.g. "Асаалттай" */
+
   doneLabel?: string;
   /** Shows the action as the dark button – use once for the most important tip */
   primary?: boolean;
@@ -55,10 +56,10 @@ export type TipsPanelProps = {
 };
 
 export function TipsPanel({
-  title = "Tips",
+  title = "Зөвлөмж",
   tips,
   onClose,
-  closeLabel = "Close",
+  closeLabel = "Хаах",
   className,
 }: TipsPanelProps) {
   const [done, setDone] = useState<Set<string>>(new Set());
@@ -86,7 +87,7 @@ export function TipsPanel({
             {title}
           </h3>
           <span className="ui-tp__count" aria-live="polite">
-            {count.format(doneCount)}/{count.format(tips.length)} done
+            {count.format(doneCount)}/{count.format(tips.length)} дууссан
           </span>
         </header>
 
@@ -110,7 +111,7 @@ export function TipsPanel({
                   {isDone ? (
                     <span className="ui-tp__done" role="status">
                       <CheckIcon />
-                      {tip.doneLabel ?? "Done"}
+                      {tip.doneLabel ?? "Дууссан"}
                     </span>
                   ) : (
                     <button

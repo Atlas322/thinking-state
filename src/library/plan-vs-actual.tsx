@@ -46,7 +46,7 @@ const clock = (ms: number) => {
 };
 const signed = (ms: number) => {
   const s = Math.round(ms / 1000);
-  return s === 0 ? "±0s" : `${s > 0 ? "+" : "−"}${Math.abs(s)}s`;
+  return s === 0 ? "±0 с" : `${s > 0 ? "+" : "−"}${Math.abs(s)} с`;
 };
 
 type Layout = {
@@ -155,22 +155,22 @@ export function PlanVsActual({
         <span className="pva-task">{task}</span>
         <span className="pva-stats">
           <span>
-            Time <b>{formatTime(now)}</b> / {formatTime(planTotal)}
+            Хугацаа <b>{formatTime(now)}</b> / {formatTime(planTotal)}
           </span>
           {spent && (
             <span>
-              Cost <b>${spent[0].toFixed(2)}</b> / ${spent[1].toFixed(2)}
+              Зардал <b>${spent[0].toFixed(2)}</b> / ${spent[1].toFixed(2)}
             </span>
           )}
           <span className={`pva-chip ${behind > 0 ? "late" : "early"}`}>
-            {behind > 0 ? `${signed(behind)} behind` : behind < 0 ? `${Math.round(-behind / 1000)}s ahead` : "On plan"}
+            {behind > 0 ? `${signed(behind)} хоцорсон` : behind < 0 ? `${Math.round(-behind / 1000)} с түрүүлсэн` : "Төлөвлөгөөний дагуу"}
           </span>
         </span>
       </header>
 
       <div className="pva-body">
         <div className="pva-axis" aria-hidden="true">
-          <span className="pva-name">Step</span>
+          <span className="pva-name">Алхам</span>
           <span className="pva-track">
             {ticks.map((t, i) => (
               <span key={t} className={`pva-tick ${i % 2 ? "odd" : ""}`} style={{ left: pct(t) }}>
@@ -200,10 +200,10 @@ export function PlanVsActual({
               const labelAt = Math.max(r.planEnd, r.state === "running" ? r.end : r.state === "done" ? r.end : r.end);
               const words =
                 r.state === "done"
-                  ? `took ${formatTime(r.end - r.start)} against ${formatTime(r.step.plan)} planned, ${delta > 0 ? `${Math.round(delta / 1000)}s behind` : delta < 0 ? `${Math.round(-delta / 1000)}s early` : "on plan"}`
+                  ? `${formatTime(r.end - r.start)} зарцуулсан, төлөвлөсөн ${formatTime(r.step.plan)}, ${delta > 0 ? `${Math.round(delta / 1000)} с хоцорсон` : delta < 0 ? `${Math.round(-delta / 1000)} с эрт` : "төлөвлөгөөний дагуу"}`
                   : r.state === "running"
-                    ? `running for ${formatTime(actual)} of ${formatTime(r.step.plan)} planned`
-                    : `expected to start at ${formatTime(r.start)}, ${formatTime(r.step.plan)} planned`;
+                    ? `${formatTime(actual)} ажиллаж байна, төлөвлөсөн ${formatTime(r.step.plan)}`
+                    : `эхлэх хугацаа ${formatTime(r.start)}, төлөвлөсөн ${formatTime(r.step.plan)}`;
               const dim = hover && !related(r.step.id);
               return (
                 <li
@@ -256,17 +256,17 @@ export function PlanVsActual({
 
         <footer className="pva-foot">
           <span className="pva-key" aria-hidden="true">
-            <span><i className="k-plan" />Plan</span>
-            <span><i className="k-actual" />Actual</span>
-            <span><i className="k-over" />Over plan</span>
+            <span><i className="k-plan" />Төлөвлөгөө</span>
+            <span><i className="k-actual" />Бодит</span>
+            <span><i className="k-over" />Хэтэрсэн</span>
           </span>
           <span className="pva-track">
             <span className="pva-flag plan" style={{ left: pct(planTotal) }}>
-              Plan {formatTime(planTotal)}
+              Төлөвлөгөө {formatTime(planTotal)}
             </span>
             {eta > planTotal && (
               <span className="pva-flag eta" style={{ left: pct(eta) }}>
-                ETA {formatTime(eta)}
+                Дуусах {formatTime(eta)}
               </span>
             )}
           </span>

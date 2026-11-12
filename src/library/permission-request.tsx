@@ -51,7 +51,7 @@ const Receipt = () => (
 
 const fmtLeft = (ms: number) => {
   const m = Math.max(0, Math.ceil(ms / 60000));
-  return m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m left` : `${m}m left`;
+  return m >= 60 ? `${Math.floor(m / 60)} цаг ${m % 60} мин үлдсэн` : `${m} мин үлдсэн`;
 };
 
 function Card({
@@ -106,8 +106,8 @@ function Card({
   const deny = () => decide({ allow: false, scope: "once", at: Date.now() });
 
   const label = (s: PermissionScope) =>
-    s === "once" ? "Just once" : s === "timed" ? (duration % 60 === 0 ? `${duration / 60} hour${duration === 60 ? "" : "s"}` : `${duration} min`) : "Always";
-  const allowLabel = scope === "once" ? "Allow once" : scope === "timed" ? `Allow for ${label("timed")}` : "Always allow";
+    s === "once" ? "Зөвхөн энэ удаа" : s === "timed" ? (duration % 60 === 0 ? `${duration / 60} цаг` : `${duration} мин`) : "Үргэлж";
+  const allowLabel = scope === "once" ? "Нэг удаа зөвшөөрөх" : scope === "timed" ? `${label("timed")} зөвшөөрөх` : "Үргэлж зөвшөөрөх";
 
   const expired = decision?.until != null && now >= decision.until;
   if (decision && !expired) {
@@ -122,21 +122,21 @@ function Card({
         </span>
         <span className="pr-ftext">
           <span>
-            <strong>{decision.allow ? "Allowed" : "Denied"}</strong>
+            <strong>{decision.allow ? "Зөвшөөрсөн" : "Татгалзсан"}</strong>
             <span className="pr-muted"> · {action}</span>
           </span>
           <span className="pr-muted pr-small">
             {decision.allow
               ? decision.scope === "always"
-                ? `${agent.name} can do this from now on`
+                ? `${agent.name} одооноос эхлэн үүнийг хийж болно`
                 : decision.until
                   ? `${agent.name} · ${fmtLeft(decision.until - now)}`
-                  : `${agent.name} can do it this one time`
-              : `${agent.name} was told and won't do it`}
+                  : `${agent.name} зөвхөн энэ удаа хийж болно`
+              : `Татгалзсан тул ${agent.name} үүнийг хийхгүй`}
           </span>
         </span>
         <button type="button" className="pr-link" onClick={() => decide(null)}>
-          {decision.allow && decision.scope !== "once" ? "Revoke" : "Change"}
+          {decision.allow && decision.scope !== "once" ? "Цуцлах" : "Өөрчлөх"}
         </button>
       </section>
     );
@@ -149,7 +149,7 @@ function Card({
     <section
       ref={ref}
       className={`pr ${destructive ? "pr-destructive" : ""} ${className}`}
-      aria-label={`${agent.name} wants to ${action}`}
+      aria-label={`${agent.name}: ${action} зөвшөөрөл хүсэж байна`}
       tabIndex={-1}
       onKeyDown={(e) => {
         if (e.key === "Escape") {
@@ -165,7 +165,7 @@ function Card({
         <span className="pr-av">{agent.avatar ?? (agent.name.match(/(?<![\p{L}\p{N}])[\p{L}\p{N}]/gu) ?? []).slice(0, 2).join("")}</span>
         <div className="pr-who">
           <div className="pr-title">
-            <strong>{agent.name}</strong> <span className="pr-muted">wants to</span> <strong>{action}</strong>
+            <strong>{agent.name}</strong> <strong>{action}</strong> <span className="pr-muted">зөвшөөрөл хүсэж байна</span>
           </div>
           {target && (
             <div className="pr-target">
@@ -177,7 +177,7 @@ function Card({
         {risk !== "safe" && (
           <span className={`pr-risk pr-risk-${risk}`}>
             <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M8 5v3.5M8 10.8v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
-            {destructive ? "Destructive" : "Risky"}
+            {destructive ? "Буцаах боломжгүй" : "Эрсдэлтэй"}
           </span>
         )}
       </div>
@@ -198,14 +198,14 @@ function Card({
           </ul>
           {preview.length > previewLimit && (
             <button type="button" className="pr-more" onClick={() => setShowAll((v) => !v)}>
-              {showAll ? "Show less" : `${preview.length - previewLimit} more`}
+              {showAll ? "Хураах" : `Бусад ${preview.length - previewLimit}`}
             </button>
           )}
         </div>
       )}
       <div className="pr-actions">
         {avail.length > 1 && (
-          <div className="pr-scopes" role="radiogroup" aria-label="How long">
+          <div className="pr-scopes" role="radiogroup" aria-label="Хэр удаан">
             {avail.map((s) => (
               <button key={s} type="button" role="radio" aria-checked={scope === s} onClick={() => setScope(s)}>
                 {label(s)}
@@ -213,10 +213,10 @@ function Card({
             ))}
           </div>
         )}
-        {destructive && scopes.includes("always") && <p className="pr-note">Destructive actions can't be allowed for always</p>}
+        {destructive && scopes.includes("always") && <p className="pr-note">Буцаах боломжгүй үйлдлийг үргэлж зөвшөөрөх боломжгүй</p>}
         <div className="pr-btns">
           <button type="button" className="pr-deny" onClick={deny}>
-            Deny <kbd>Esc</kbd>
+            Татгалзах <kbd>ESC</kbd>
           </button>
           <button type="button" className="pr-allow" onClick={allow}>
             {allowLabel} <kbd>↵</kbd>

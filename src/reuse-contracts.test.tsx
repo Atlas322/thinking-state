@@ -46,17 +46,17 @@ describe("Approval Card requests", () => {
     render(<ApprovalCard title="Deploy" onApprove={onApprove} />);
     fireEvent.click(screen.getByRole("checkbox"));
     await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: /Approve/ }));
+      fireEvent.click(screen.getByRole("button", { name: /Батлах/ }));
     });
     expect(screen.getByRole("alert").textContent).toBe("Offline");
     expect(onApprove).toHaveBeenCalledWith({ always: true });
-    const button = screen.getByRole("button", { name: /Approve/ });
+    const button = screen.getByRole("button", { name: /Батлах/ });
     button.focus();
     await act(async () => {
       fireEvent.click(button);
     });
-    expect(screen.queryByRole("button", { name: /Approve/ })).toBeNull();
-    expect(screen.getByRole("status").textContent).toBe("Approved: Deploy");
+    expect(screen.queryByRole("button", { name: /Батлах/ })).toBeNull();
+    expect(screen.getByRole("status").textContent).toBe("Батлагдсан: Deploy");
     expect(document.activeElement?.className).toBe("apv-resolved");
   });
   it("locks duplicate clicks until the promise finishes", async () => {
@@ -68,13 +68,13 @@ describe("Approval Card requests", () => {
         }),
     );
     render(<ApprovalCard onApprove={onApprove} />);
-    fireEvent.click(screen.getByRole("button", { name: /Approve/ }));
-    fireEvent.click(screen.getByRole("button", { name: "Approving…" }));
+    fireEvent.click(screen.getByRole("button", { name: /Батлах/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Баталж байна…" }));
     fireEvent.keyDown(screen.getByRole("group"), { key: "Escape" });
     expect(onApprove).toHaveBeenCalledTimes(1);
     expect(screen.getByRole("group").getAttribute("aria-busy")).toBe("true");
     await act(async () => resolve());
-    expect(screen.getByRole("status").textContent).toContain("Approved");
+    expect(screen.getByRole("status").textContent).toContain("Батлагдсан");
   });
   it("pauses expiration while hovered and expires once with the correct reason", () => {
     vi.useFakeTimers();
@@ -110,9 +110,9 @@ describe("Approval Card requests", () => {
       });
     });
     expect(onApprove).toHaveBeenCalledTimes(1);
-    expect(screen.getByRole("button", { name: /Approve/ })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Батлах/ })).toBeTruthy();
     view.rerender(<ApprovalCard status="approved" />);
-    expect(screen.getByRole("status").textContent).toContain("Approved");
+    expect(screen.getByRole("status").textContent).toContain("Батлагдсан");
   });
 });
 
@@ -148,23 +148,23 @@ describe("Ledger dependencies", () => {
       />,
     );
     const trigger = screen.getByRole("button", {
-      name: "Undo Change price and 1 dependent changes",
+      name: "Буцаах: Change price, хамааралтай 1 өөрчлөлтийн хамт",
     });
     fireEvent.focus(trigger);
-    expect(screen.getByText("Also undone")).toBeTruthy();
-    expect(screen.getByText("Can't undo")).toBeTruthy();
+    expect(screen.getByText("Хамт буцна")).toBeTruthy();
+    expect(screen.getByText("Буцаах боломжгүй")).toBeTruthy();
     await act(async () => fireEvent.click(trigger));
     expect(onUndo).toHaveBeenCalledExactlyOnceWith(["deals", "price"]);
     expect(
-      screen.getByRole("button", { name: "Undo Rename a file" }),
+      screen.getByRole("button", { name: "Буцаах: Rename a file" }),
     ).toBeTruthy();
-    const redoChild = screen.getByRole("button", { name: "Redo Update deals" });
+    const redoChild = screen.getByRole("button", { name: "Дахин хийх: Update deals" });
     expect(redoChild.getAttribute("aria-disabled")).toBe("true");
     await act(async () => fireEvent.click(redoChild));
     expect(onRedo).not.toHaveBeenCalled();
     await act(async () =>
       fireEvent.click(
-        screen.getByRole("button", { name: "Redo Change price" }),
+        screen.getByRole("button", { name: "Дахин хийх: Change price" }),
       ),
     );
     expect(onRedo).toHaveBeenCalledExactlyOnceWith(["deals", "price"]);
@@ -178,12 +178,12 @@ describe("Ledger dependencies", () => {
     );
     await act(async () =>
       fireEvent.click(
-        screen.getByRole("button", { name: "Undo Rename a file" }),
+        screen.getByRole("button", { name: "Буцаах: Rename a file" }),
       ),
     );
     expect(screen.getByRole("alert").textContent).toBe("Cannot revert");
     expect(
-      screen.queryByRole("button", { name: "Redo Rename a file" }),
+      screen.queryByRole("button", { name: "Дахин хийх: Rename a file" }),
     ).toBeNull();
   });
   it("terminates cyclic dependencies and respects controlled state", async () => {
@@ -195,18 +195,18 @@ describe("Ledger dependencies", () => {
     render(<AgentLedger entries={cycle} undone={[]} onUndo={onUndo} />);
     await act(async () =>
       fireEvent.click(
-        screen.getByRole("button", { name: /Undo Rename a file/ }),
+        screen.getByRole("button", { name: /Буцаах: Rename a file/ }),
       ),
     );
     expect(onUndo).toHaveBeenCalledExactlyOnceWith(["a", "b"]);
-    expect(screen.queryByRole("button", { name: /Redo/ })).toBeNull();
+    expect(screen.queryByRole("button", { name: /Дахин хийх/ })).toBeNull();
   });
 });
 
 describe("File upload lifecycle", () => {
   const drop = (files: File[]) =>
     fireEvent.drop(
-      screen.getByRole("button", { name: /Drop files here/ }),
+      screen.getByRole("button", { name: /Файлаа энд чирж оруулах/ }),
       { dataTransfer: { files } },
     );
   it("validates extensions and size before calling the upload handler", async () => {
@@ -229,10 +229,10 @@ describe("File upload lifecycle", () => {
     const list = onChange.mock.lastCall![0] as UploadItem[];
     expect(list.map((item) => [item.name, item.status, item.error])).toEqual([
       ["good.PDF", "done", undefined],
-      ["big.pdf", "error", "Too large"],
-      ["bad.exe", "error", "File type not accepted"],
+      ["big.pdf", "error", "Хэт том"],
+      ["bad.exe", "error", "Файлын төрөл зөвшөөрөгдөхгүй"],
     ]);
-    expect(screen.queryByRole("button", { name: "Retry bad.exe" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Дахин оролдох: bad.exe" })).toBeNull();
   });
   it("reports progress, retries a failure, and notifies removals", async () => {
     const onChange = vi.fn();
@@ -250,17 +250,17 @@ describe("File upload lifecycle", () => {
     await act(async () => drop([new File(["data"], "report.pdf")]));
     expect(
       screen
-        .getByRole("progressbar", { name: "Upload report.pdf" })
+        .getByRole("progressbar", { name: "Байршуулалт: report.pdf" })
         .getAttribute("aria-valuenow"),
     ).toBe("40");
     await act(async () =>
-      fireEvent.click(screen.getByRole("button", { name: "Retry report.pdf" })),
+      fireEvent.click(screen.getByRole("button", { name: "Дахин оролдох: report.pdf" })),
     );
     expect(onUpload).toHaveBeenCalledTimes(2);
     expect(screen.getByRole("progressbar").getAttribute("aria-valuenow")).toBe(
       "100",
     );
-    fireEvent.click(screen.getByRole("button", { name: "Remove report.pdf" }));
+    fireEvent.click(screen.getByRole("button", { name: "Хасах: report.pdf" }));
     expect(onChange).toHaveBeenLastCalledWith([]);
   });
   it("ignores completion and progress after a file has been removed", async () => {
@@ -278,7 +278,7 @@ describe("File upload lifecycle", () => {
       />,
     );
     await act(async () => drop([new File(["data"], "remove.pdf")]));
-    fireEvent.click(screen.getByRole("button", { name: "Remove remove.pdf" }));
+    fireEvent.click(screen.getByRole("button", { name: "Хасах: remove.pdf" }));
     const count = onChange.mock.calls.length;
     await act(async () => {
       progress(0.9);
@@ -315,7 +315,7 @@ describe("Reusable prompt templates", () => {
     expect(screen.getAllByRole("textbox", { name: "audience" })).toHaveLength(
       1,
     );
-    fireEvent.click(screen.getByRole("button", { name: "Use prompt" }));
+    fireEvent.click(screen.getByRole("button", { name: "Промпт ашиглах" }));
     expect(onUse).not.toHaveBeenCalled();
     fireEvent.change(screen.getByRole("textbox", { name: "audience" }), {
       target: { value: "designers" },
@@ -329,7 +329,7 @@ describe("Reusable prompt templates", () => {
       target: { value: "engineers" },
     });
     fireEvent.click(screen.getByRole("option", { name: "First" }));
-    fireEvent.click(screen.getByRole("button", { name: "Use prompt" }));
+    fireEvent.click(screen.getByRole("button", { name: "Промпт ашиглах" }));
     expect(onUse).toHaveBeenCalledExactlyOnceWith(
       "Write for designers in 50 words. Again: designers.",
       templates[0],
@@ -344,10 +344,10 @@ describe("Reusable prompt templates", () => {
     const onCopy = vi.fn();
     render(<PromptLibrary templates={templates} onCopy={onCopy} />);
     await act(async () =>
-      fireEvent.click(screen.getByRole("button", { name: "Copy prompt" })),
+      fireEvent.click(screen.getByRole("button", { name: "Промпт хуулах" })),
     );
     expect(onCopy).not.toHaveBeenCalled();
-    expect(screen.getByRole("alert").textContent).toContain("Select and copy");
+    expect(screen.getByRole("alert").textContent).toContain("сонгоод хуулна уу");
   });
   it("navigates templates by keyboard and keeps controlled selection with its owner", () => {
     const onSelect = vi.fn();
@@ -407,10 +407,10 @@ describe("Graph data and inspection", () => {
     expect(view.container.querySelectorAll("[data-graph-link]")).toHaveLength(
       2,
     );
-    expect(screen.getByText("1 calls/min")).toBeTruthy();
+    expect(screen.getByText("1 дуудлага/мин")).toBeTruthy();
     expect(screen.getByText("$0.30")).toBeTruthy();
     const node = screen.getByRole("button", {
-      name: "Researcher, agent, Needs you, 1 calls in the last minute",
+      name: "Researcher, агент, Таны ээлж, сүүлийн минутад 1 дуудлага",
     });
     fireEvent.click(node);
     expect(onSelect).toHaveBeenCalledWith(nodes[1]);
@@ -418,9 +418,9 @@ describe("Graph data and inspection", () => {
       within(screen.getByRole("dialog")).getByText(/Find pricing/),
     ).toBeTruthy();
     expect(document.activeElement).toBe(
-      screen.getByRole("button", { name: "Close Researcher details" }),
+      screen.getByRole("button", { name: "Researcher: дэлгэрэнгүйг хаах" }),
     );
-    expect(screen.getByText("1 calls/min")).toBeTruthy();
+    expect(screen.getByText("1 дуудлага/мин")).toBeTruthy();
     fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(onSelect).toHaveBeenLastCalledWith(null);
@@ -447,7 +447,7 @@ describe("Graph data and inspection", () => {
       view.container.querySelector<HTMLElement>('[data-node-id="lead"]')!.style
         .left,
     ).toBe("320px");
-    fireEvent.click(screen.getByRole("button", { name: /Search, tool/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Search, хэрэгсэл/ }));
     view.rerender(
       <AgentGraph
         nodes={many.filter((node) => node.id !== "search")}
@@ -473,8 +473,8 @@ describe("Graph data and inspection", () => {
     expect(
       view.container.querySelector(".agg-link")!.getAttribute("stroke-width"),
     ).toBe("1.5");
-    expect(screen.getByText("0 calls/min")).toBeTruthy();
+    expect(screen.getByText("0 дуудлага/мин")).toBeTruthy();
     view.rerender(<AgentGraph nodes={[]} calls={calls} now={100000} />);
-    expect(screen.getByText("No agents connected")).toBeTruthy();
+    expect(screen.getByText("Холбогдсон агент алга")).toBeTruthy();
   });
 });

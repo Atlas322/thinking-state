@@ -71,7 +71,7 @@ export type MessageActionsProps = {
   regenerating?: boolean;
   /** "up" or "down" when a thumb is pressed, null when it is taken back, and "down" with a reason when the feedback row is sent */
   onFeedback?: (kind: FeedbackKind | null, reason?: string) => void;
-  /** Quick reasons in the feedback row. "Other" opens a small text field */
+  /** Quick reasons in the feedback row. «Бусад» opens a small text field */
   reasons?: string[];
   /** Called with true when Read aloud starts and false when it stops */
   onSpeak?: (playing: boolean) => void;
@@ -225,11 +225,13 @@ const cleanActions = (list: unknown): MessageActionKey[] =>
 const whole = (n: unknown, fallback: number) =>
   typeof n === "number" && Number.isFinite(n) ? Math.floor(n) : fallback;
 const fmt = (n: number) => n.toLocaleString("en-US");
+/** The reason that opens the free-text field */
+const OTHER_REASON = "Бусад";
 const DEFAULT_REASONS = [
-  "Not accurate",
-  "Too long",
-  "Didn't follow instructions",
-  "Other",
+  "Буруу мэдээлэл",
+  "Хэт урт",
+  "Зааврыг дагаагүй",
+  OTHER_REASON,
 ];
 
 export function MessageActions({
@@ -248,7 +250,7 @@ export function MessageActions({
   speaking,
   speakDuration,
   quiet = true,
-  label = "Message actions",
+  label = "Мессежийн үйлдэл",
   className,
 }: MessageActionsProps) {
   const uid = useId();
@@ -290,7 +292,7 @@ export function MessageActions({
     if (next === index) return;
     if (version === undefined) setInner(next);
     onVersionChange?.(next);
-    announce(`Version ${fmt(next + 1)} of ${fmt(count)}`);
+    announce(`Хувилбар ${fmt(next + 1)}/${fmt(count)}`);
   };
 
   /* ----- Status line for screen readers ----- */
@@ -313,7 +315,7 @@ export function MessageActions({
     }
     onCopy?.(text);
     setCopied(Date.now());
-    announce("Copied");
+    announce("Хуулсан");
   };
 
   /* ----- Regenerate ----- */
@@ -321,7 +323,7 @@ export function MessageActions({
   const regenerate = () => {
     setSpin((s) => s + 1);
     onRegenerate?.();
-    announce("Regenerating");
+    announce("Дахин бичиж байна");
   };
 
   /* ----- Feedback ----- */
@@ -334,7 +336,7 @@ export function MessageActions({
     setVote("up");
     setPanel(false);
     onFeedback?.("up");
-    announce("Marked as good response");
+    announce("Сайн хариулт гэж тэмдэглэлээ");
   };
   const thumbsDown = () => {
     if (vote === "down") {
@@ -349,13 +351,13 @@ export function MessageActions({
     setReason(null);
     setOther("");
     onFeedback?.("down");
-    announce("Marked as bad response. Tell us what went wrong below");
+    announce("Муу хариулт гэж тэмдэглэлээ. Юу буруу байсныг доор бичнэ үү");
   };
   const send = () => {
     if (!reason || sent) return;
-    onFeedback?.("down", reason === "Other" ? other.trim() || "Other" : reason);
+    onFeedback?.("down", reason === OTHER_REASON ? other.trim() || OTHER_REASON : reason);
     setSent(true);
-    announce("Thanks for the feedback");
+    announce("Санал өгсөнд баярлалаа");
   };
   useEffect(() => {
     if (!sent) return;
@@ -381,7 +383,7 @@ export function MessageActions({
     const t = window.setTimeout(() => {
       setInnerSpeaking(false);
       onSpeak?.(false);
-      announce("Finished reading");
+      announce("Уншиж дууслаа");
     }, duration);
     return () => window.clearTimeout(t);
     // onSpeak is read when the timer ends – a new function each render must not restart it
@@ -391,7 +393,7 @@ export function MessageActions({
     const next = !playing;
     if (speaking === undefined) setInnerSpeaking(next);
     onSpeak?.(next);
-    announce(next ? "Reading aloud" : "Stopped reading");
+    announce(next ? "Чанга уншиж байна" : "Уншихаа зогсоолоо");
   };
 
   const active = Boolean(copied) || panel || playing || regenerating;
@@ -438,8 +440,8 @@ export function MessageActions({
     if (key === "copy")
       return button({
         key: "copy",
-        tip: copied ? "Copied" : "Copy",
-        labelText: copied ? "Copied" : "Copy message",
+        tip: copied ? "Хуулсан" : "Хуулах",
+        labelText: copied ? "Хуулсан" : "Мессеж хуулах",
         onClick: copy,
         flash: Boolean(copied),
         extra: { "data-done": copied ? "" : undefined },
@@ -462,8 +464,8 @@ export function MessageActions({
         <span className="ui-mac__regen" key="regenerate">
           {button({
             key: "regenerate",
-            tip: regenerating ? "Writing…" : "Regenerate",
-            labelText: "Regenerate response",
+            tip: regenerating ? "Бичиж байна…" : "Дахин бичих",
+            labelText: "Хариултыг дахин бичих",
             onClick: regenerate,
             extra: { "data-busy": regenerating ? "" : undefined },
             children: (
@@ -486,13 +488,13 @@ export function MessageActions({
             <span
               className="ui-mac__versions-clip"
               role="group"
-              aria-label="Versions"
+              aria-label="Хувилбарууд"
             >
               <button
                 type="button"
                 className="ui-mac__step"
                 data-dir="prev"
-                aria-label="Previous version"
+                aria-label="Өмнөх хувилбар"
                 disabled={index === 0}
                 onClick={() => goTo(index - 1)}
               >
@@ -500,7 +502,7 @@ export function MessageActions({
               </button>
               <span
                 className="ui-mac__count"
-                aria-label={`Version ${fmt(index + 1)} of ${fmt(count)}`}
+                aria-label={`Хувилбар ${fmt(index + 1)}/${fmt(count)}`}
               >
                 <Swap id={String(index)} className="ui-mac__count-now">
                   {fmt(index + 1)}
@@ -512,7 +514,7 @@ export function MessageActions({
                 type="button"
                 className="ui-mac__step"
                 data-dir="next"
-                aria-label="Next version"
+                aria-label="Дараах хувилбар"
                 disabled={index >= count - 1}
                 onClick={() => goTo(index + 1)}
               >
@@ -527,8 +529,8 @@ export function MessageActions({
         <Fragment key="feedback">
           {button({
             key: "up",
-            tip: vote === "up" ? "Thanks!" : "Good response",
-            labelText: "Good response",
+            tip: vote === "up" ? "Баярлалаа!" : "Сайн хариулт",
+            labelText: "Сайн хариулт",
             pressed: vote === "up",
             onClick: thumbsUp,
             children: (
@@ -539,8 +541,8 @@ export function MessageActions({
           })}
           {button({
             key: "down",
-            tip: "Bad response",
-            labelText: "Bad response",
+            tip: "Муу хариулт",
+            labelText: "Муу хариулт",
             pressed: vote === "down",
             expanded: panel,
             controls: `${uid}-feedback`,
@@ -556,8 +558,8 @@ export function MessageActions({
       );
     return button({
       key: "speak",
-      tip: playing ? "Stop" : "Read aloud",
-      labelText: playing ? "Stop reading" : "Read aloud",
+      tip: playing ? "Зогсоох" : "Чанга унших",
+      labelText: playing ? "Уншихаа зогсоох" : "Чанга унших",
       pressed: playing,
       onClick: speak,
       children: (
@@ -616,12 +618,12 @@ export function MessageActions({
             >
               <div className="ui-mac__panel-head">
                 <span id={`${uid}-ask`} className="ui-mac__ask">
-                  What went wrong?
+                  Юу буруу байсан бэ?
                 </span>
                 <button
                   type="button"
                   className="ui-mac__close"
-                  aria-label="Close feedback"
+                  aria-label="Санал хаах"
                   onClick={closePanel}
                 >
                   <Glyph d={icons.close} />
@@ -654,27 +656,27 @@ export function MessageActions({
                     {sent ? (
                       <>
                         <Glyph d={icons.tick} />
-                        Thanks!
+                        Баярлалаа!
                       </>
                     ) : (
-                      "Send"
+                      "Илгээх"
                     )}
                   </Swap>
                 </button>
               </div>
-              {Array.isArray(reasons) && reasons.includes("Other") && (
+              {Array.isArray(reasons) && reasons.includes(OTHER_REASON) && (
                 <div
                   className="ui-mac__fold"
-                  data-open={reason === "Other" && !sent ? "" : undefined}
-                  inert={reason !== "Other" || sent}
+                  data-open={reason === OTHER_REASON && !sent ? "" : undefined}
+                  inert={reason !== OTHER_REASON || sent}
                 >
                   <div className="ui-mac__clip">
                     <input
                       className="ui-mac__input"
                       value={other}
-                      placeholder="Tell us more (optional)"
+                      placeholder="Дэлгэрэнгүй бичих (заавал биш)"
                       dir="auto"
-                      aria-label="What went wrong, in your words"
+                      aria-label="Юу буруу байсныг өөрийн үгээр"
                       onChange={(e) => setOther(e.target.value)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") send();

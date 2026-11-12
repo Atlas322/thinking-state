@@ -131,51 +131,51 @@ export type SessionBoardProps = {
 };
 
 const defaultLabels: SessionBoardLabels = {
-  owner: "Owner",
-  tasks: "Open tasks",
-  decisions: "Decisions",
-  pages: "Pages",
-  prs: "Open PRs",
-  ungrouped: "Ungrouped",
-  sessions: "sessions",
-  session: "session",
-  empty: "No sessions",
-  running: "Running",
-  waiting: "Waiting",
-  done: "Done",
-  idle: "Idle",
-  links: "Links",
+  owner: "Эзэн",
+  tasks: "Нээлттэй даалгавар",
+  decisions: "Шийдвэр",
+  pages: "Хуудас",
+  prs: "Нээлттэй PR",
+  ungrouped: "Бүлэггүй",
+  sessions: "сешн",
+  session: "сешн",
+  empty: "Сешн алга",
+  running: "Ажиллаж байна",
+  waiting: "Хүлээж байна",
+  done: "Дууссан",
+  idle: "Сул",
+  links: "Холбоос",
   pr: "PR",
-  open: "open",
-  draft: "draft",
-  merged: "merged",
-  closed: "closed",
-  view: "View",
-  groupsView: "Groups",
-  statusView: "Status",
-  cardsView: "Cards",
-  subItem: "sub-session",
-  subItems: "sub-sessions",
-  collapseKids: "Hide sub-sessions",
-  expandKids: "Show sub-sessions",
-  inParent: "in",
-  scope: "Show",
-  all: "All",
-  mine: "Mine",
-  sharedWith: "with",
+  open: "нээлттэй",
+  draft: "ноорог",
+  merged: "нэгтгэсэн",
+  closed: "хаагдсан",
+  view: "Харагдац",
+  groupsView: "Бүлгүүд",
+  statusView: "Төлөв",
+  cardsView: "Карт",
+  subItem: "дэд сешн",
+  subItems: "дэд сешн",
+  collapseKids: "Дэд сешнийг нуух",
+  expandKids: "Дэд сешнийг харуулах",
+  inParent: "Харьяа:",
+  scope: "Харуулах",
+  all: "Бүгд",
+  mine: "Минийх",
+  sharedWith: "ба",
 };
 
 export const defaultSessionGroups: SessionBoardGroup[] = [
-  { id: "projects", label: "Projects" },
-  { id: "areas", label: "Areas" },
-  { id: "resources", label: "Resources" },
-  { id: "finance", label: "Finance" },
+  { id: "projects", label: "Төслүүд" },
+  { id: "areas", label: "Хүрээ" },
+  { id: "resources", label: "Нөөц" },
+  { id: "finance", label: "Санхүү" },
 ];
 
 const UNGROUPED = "__ungrouped";
 
 const demoProject: SessionBoardProject = {
-  name: "ac.me website",
+  name: "ac.me вэбсайт",
   icon: "A",
   status: { label: "Идэвхтэй", tone: "green" },
   owner: "Төслийн агент",
@@ -188,20 +188,21 @@ const demoProject: SessionBoardProject = {
 };
 
 const demoSessions: SessionBoardSession[] = [
-  { id: "relaunch", title: "Вэбсайтыг шинэчлэх", line: "Тарифын хуудсыг шинэ сүлжээн дээр дахин бүтээж байна", state: "running", group: "projects", pr: { number: 21, state: "open" }, owner: "Anu", sharedWith: ["Bat"] },
-  { id: "hero", title: "Нүүр хэсгийн текст", line: "Гурван гарчгийн хувилбар урьдчилан харахад гарлаа", state: "done", group: "projects", parent: "relaunch", pr: { number: 22, state: "merged" }, owner: "Tsetseg" },
-  { id: "pricing", title: "Тарифын хүснэгт", line: "Багцын сонголтыг өгөгдөлтэй холбож байна", state: "running", group: "projects", parent: "relaunch", owner: "Bat" },
-  { id: "promote", title: "Урьдчилсан хувилбарыг нийтлэх", line: "Нийтлэхээс өмнө таны зөвшөөрөл хэрэгтэй", state: "waiting", group: "projects", parent: "relaunch", pr: { number: 23, state: "draft" }, owner: "Anu" },
+  { id: "relaunch", title: "Вэбсайтыг шинэчлэх", line: "Тарифын хуудсыг шинэ сүлжээн дээр дахин бүтээж байна", state: "running", group: "projects", pr: { number: 21, state: "open" }, owner: "Ану", sharedWith: ["Бат"] },
+  { id: "hero", title: "Нүүр хэсгийн текст", line: "Гурван гарчгийн хувилбар урьдчилан харахад гарлаа", state: "done", group: "projects", parent: "relaunch", pr: { number: 22, state: "merged" }, owner: "Цэцэг" },
+  { id: "pricing", title: "Тарифын хүснэгт", line: "Багцын сонголтыг өгөгдөлтэй холбож байна", state: "running", group: "projects", parent: "relaunch", owner: "Бат" },
+  { id: "promote", title: "Урьдчилсан хувилбарыг нийтлэх", line: "Нийтлэхээс өмнө таны зөвшөөрөл хэрэгтэй", state: "waiting", group: "projects", parent: "relaunch", pr: { number: 23, state: "draft" }, owner: "Ану" },
   { id: "brand", title: "Брэндийн шинэчлэл", line: "Текст тогтох хүртэл сэтгэгдлийн самбарыг түр зогсоосон", state: "idle", group: "projects" },
   { id: "triage", title: "Ирсэн зүйлсийг ангилах", line: "14 тэмдэглэл ангилж, 3 даалгавар үүсгэлээ", state: "done", group: "areas" },
-  { id: "weekly", title: "Долоо хоногийн тойм", line: "Ноорог бэлэн; 2 шийдвэр таныг хүлээж байна", state: "waiting", group: "areas", owner: "Anu" },
-  { id: "glossary", title: "Нэр томьёоны сан", line: "Давхардсан 6 атомыг нэгтгэж байна", state: "running", group: "resources", owner: "Tsetseg", sharedWith: ["Anu"] },
+  { id: "weekly", title: "Долоо хоногийн тойм", line: "Ноорог бэлэн; 2 шийдвэр таныг хүлээж байна", state: "waiting", group: "areas", owner: "Ану" },
+  { id: "glossary", title: "Нэр томьёоны сан", line: "Давхардсан 6 атомыг нэгтгэж байна", state: "running", group: "resources", owner: "Цэцэг", sharedWith: ["Ану"] },
   { id: "bills", title: "Сарын төлбөрийн шалгалт", line: "9 төлбөр бүгд бүртгэгдсэн", state: "done", group: "finance" },
   { id: "tokens", title: "Токены аудит", line: "Ноорог тэмдэглэл, эзэнгүй", state: "idle" },
 ];
 
 /** Demo data as plain JSON props (used by the catalog's data editor and chat export). */
-export const sessionBoardDemo = { project: demoProject, groups: defaultSessionGroups, sessions: demoSessions, me: "Anu" };
+export const sessionBoardDemo = { project: demoProject, groups: defaultSessionGroups, sessions: demoSessions, me: "Ану" };
+
 
 const reducedMotion = () =>
   typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;

@@ -64,15 +64,15 @@ const tones: Record<ReplyTone, string> = {
 };
 
 const defaultLabels = {
-  findings: "Findings",
-  proposal: "Proposal",
-  outputs: "Outputs",
-  choices: "Your choice",
-  sources: "Sources",
-  open: "Open",
-  own: "Or: your own answer, an edit…",
-  send: "Send",
-  answered: "Answered — the agent continues.",
+  findings: "Олдвор",
+  proposal: "Санал",
+  outputs: "Гаралт",
+  choices: "Таны сонголт",
+  sources: "Эх сурвалж",
+  open: "Нээх",
+  own: "Эсвэл: өөрийн хариулт, засвар…",
+  send: "Илгээх",
+  answered: "Хариулсан, агент үргэлжлүүлнэ.",
 };
 
 const css = `
@@ -144,7 +144,7 @@ function Section({ title, tone, count, folded, kind, children }: {
 }
 
 export function AgentReply({
-  bare, agent = "Agent", avatar = "◆", time, summary, findings = [], proposal, sections = [], outputs = [],
+  bare, agent = "Агент", avatar = "◆", time, summary, findings = [], proposal, sections = [], outputs = [],
   choices = [], sources = [], labels, onChoose, onOpenOutput, children, className,
 }: AgentReplyProps) {
   const L = { ...defaultLabels, ...labels };
@@ -222,22 +222,22 @@ export function AgentReply({
 export default function Demo() {
   return (
     <AgentReply
-      agent="Project agent"
+      agent="Төслийн агент"
       avatar="📁"
       time="03:07"
-      summary={<>Hero direction is written into the project note. You picked <b>v4a</b> earlier, but the <b>v4c</b> task is still open — which one is final?</>}
+      summary={<>Үндсэн зургийн чиглэлийг төслийн тэмдэглэлд бичлээ. Та өмнө нь <b>v4a</b>-г сонгосон ч <b>v4c</b> даалгавар нээлттэй хэвээр байна. Аль нь эцсийнх вэ?</>}
       findings={[
-        <>v4a keeps the hero on a dark field with a pale accent <code>#E4E9F5</code> on the headline.</>,
-        <>v4c (brand tokens, paper background) was logged as decided in <code>Inai Website.md</code>, and a worker still has it claimed.</>,
-        <>The sources <code>platform.html</code> and <code>site.css</code> are unchanged.</>,
+        <>v4a нь үндсэн хэсгийг бараан дэвсгэр дээр үлдээж, гарчигт цайвар <code>#E4E9F5</code> өнгө хэрэглэдэг.</>,
+        <>v4c (брэндийн токен, цаасан дэвсгэр)-г <code>Inai Website.md</code>-д шийдсэн гэж бүртгэсэн бөгөөд нэг гүйцэтгэгч үүнийг авсан хэвээр байна.</>,
+        <>Эх файл <code>platform.html</code>, <code>site.css</code> өөрчлөгдөөгүй.</>,
       ]}
-      proposal="Close the v4c task and ship v4a; keep v4c tokens as the light theme for later."
+      proposal="v4c даалгаврыг хааж, v4a-г гаргая; v4c-ийн токенуудыг дараа цайвар загварт ашиглахаар үлдээнэ."
       outputs={[
         { label: "platform-v4a.html", kind: "site" },
-        { label: "Hero direction.md", kind: "doc" },
+        { label: "Үндсэн-чиглэл.md", kind: "doc" },
         { label: "hero-v4a@2x.png", kind: "image" },
       ]}
-      choices={["Make v4a final", "Keep v4c"]}
+      choices={["v4a-г эцсийнх болгох", "v4c-г үлдээх"]}
       sources={[
         { label: "projects/website/brief.md" },
         { label: "projects/website/output/platform-v4a.html" },

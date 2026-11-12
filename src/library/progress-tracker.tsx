@@ -52,7 +52,7 @@ export type ProgressTrackerProps = {
 };
 
 export function ProgressTracker({
-  title = "Getting started",
+  title = "Эхлэл",
   steps: initial,
   autoPlay = false,
   interval = 2200,
@@ -134,7 +134,7 @@ export function ProgressTracker({
         aria-valuemin={0}
         aria-valuemax={total}
         aria-valuenow={count}
-        aria-valuetext={`${num.format(count)} of ${num.format(total)} done`}
+        aria-valuetext={`${num.format(count)}/${num.format(total)} дууссан`}
       >
         <span
           className="ui-progressc__fill"
@@ -497,15 +497,15 @@ const css = /* css */ `
 export default function Demo() {
   return (
     <ProgressTracker
-      title="Getting started"
+      title="Эхлэл"
       autoPlay
       interval={2500}
       steps={[
-        { id: "tools", label: "Connect your tools" },
-        { id: "notify", label: "Turn on notifications" },
-        { id: "updates", label: "Catch up on blockers" },
-        { id: "notes", label: "Summarize priorities" },
-        { id: "project", label: "Create a project" },
+        { id: "tools", label: "Хэрэгслээ холбох" },
+        { id: "notify", label: "Мэдэгдэл асаах" },
+        { id: "updates", label: "Саад болж буй зүйлсийг харах" },
+        { id: "notes", label: "Тэргүүлэх ажлыг хураангуйлах" },
+        { id: "project", label: "Төсөл үүсгэх" },
       ]}
     />
   );

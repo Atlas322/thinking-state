@@ -537,30 +537,30 @@ export default function Demo() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
       <div style={group}>
-        <p style={label}>Styles</p>
+        <p style={label}>Загварууд</p>
         <div style={row}>
-          <Button>Save changes</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive" icon={Trash}>Delete</Button>
+          <Button>Өөрчлөлт хадгалах</Button>
+          <Button variant="secondary">Хоёрдогч</Button>
+          <Button variant="ghost">Тунгалаг</Button>
+          <Button variant="destructive" icon={Trash}>Устгах</Button>
         </div>
       </div>
       <div style={group}>
-        <p style={label}>Icons and sizes</p>
+        <p style={label}>Дүрс ба хэмжээ</p>
         <div style={row}>
-          <Button variant="secondary" size="sm" icon={Plus}>Add item</Button>
-          <Button iconRight={Arrow}>Continue</Button>
-          <Button variant="ghost" size="sm" icon={Dots} aria-label="More" />
-          <Button variant="secondary" size="lg">Large</Button>
+          <Button variant="secondary" size="sm" icon={Plus}>Зүйл нэмэх</Button>
+          <Button iconRight={Arrow}>Үргэлжлүүлэх</Button>
+          <Button variant="ghost" size="sm" icon={Dots} aria-label="Бусад" />
+          <Button variant="secondary" size="lg">Том</Button>
         </div>
       </div>
       <div style={group}>
-        <p style={label}>Feedback and states</p>
+        <p style={label}>Хариу ба төлөв</p>
         <div style={row}>
-          <Button variant="secondary" icon={copied ? Check : Copy} onClick={copy}>{copied ? "Copied" : "Copy link"}</Button>
-          <Button variant="secondary" icon={copied ? Check : Copy} aria-label="Copy" onClick={copy} />
-          <Button variant="secondary" icon={Upload} loading={busy} onClick={upload}>Upload file</Button>
-          <Button variant="secondary" disabled>Disabled</Button>
+          <Button variant="secondary" icon={copied ? Check : Copy} onClick={copy}>{copied ? "Хуулсан" : "Холбоос хуулах"}</Button>
+          <Button variant="secondary" icon={copied ? Check : Copy} aria-label="Хуулах" onClick={copy} />
+          <Button variant="secondary" icon={Upload} loading={busy} onClick={upload}>Файл байршуулах</Button>
+          <Button variant="secondary" disabled>Идэвхгүй</Button>
         </div>
       </div>
     </div>

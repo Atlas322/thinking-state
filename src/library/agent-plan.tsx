@@ -85,7 +85,7 @@ export function AgentPlan({
     const idx = activeIndex >= 0 ? activeIndex : steps.findIndex((s) => s.status !== "done");
     if (idx < 0) {
       setPhase("done");
-      setNote(`Plan complete in ${Math.round(elapsed)}s`);
+      setNote(`Төлөвлөгөө ${Math.round(elapsed)} с-д дууслаа`);
       return;
     }
     if (activeIndex < 0) {
@@ -96,7 +96,7 @@ export function AgentPlan({
       const secs = Math.round((stepMs / 1000) * 10) / 10;
       update(steps.map((s, i) => (i === idx ? { ...s, status: "done", duration: secs } : s)));
       setElapsed((e) => e + secs);
-      setNote(`Done: ${steps[idx].title}`);
+      setNote(`Дууссан: ${steps[idx].title}`);
     }, stepMs);
     return () => window.clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,12 +112,12 @@ export function AgentPlan({
     const [s] = next.splice(from, 1);
     next.splice(to, 0, s);
     update(next);
-    setNote(`Moved "${s.title}" to position ${to + 1} of ${steps.length}`);
+    setNote(`«${s.title}» алхмыг ${to + 1}/${steps.length} байрлалд зөөлөө`);
   };
   const remove = (i: number) => {
     const s = steps[i];
     update(steps.filter((_, j) => j !== i));
-    setNote(`Removed "${s.title}"`);
+    setNote(`«${s.title}» алхмыг хаслаа`);
     onAction?.("remove", s.id);
   };
   const add = () => {
@@ -125,7 +125,7 @@ export function AgentPlan({
     if (!t) return;
     update([...steps, { id: `step-${Date.now()}`, title: t, status: "pending" }]);
     setDraft("");
-    setNote(`Added "${t}"`);
+    setNote(`«${t}» алхмыг нэмлээ`);
     onAction?.("add", t);
   };
   const run = () => {
@@ -151,7 +151,7 @@ export function AgentPlan({
           <svg viewBox="0 0 16 16" aria-hidden="true">
             <path d="M2.5 4h1M2.5 8h1M2.5 12h1M6 4h7.5M6 8h7.5M6 12h7.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
           </svg>
-          Plan · {steps.length} step{steps.length === 1 ? "" : "s"}
+          Төлөвлөгөө · {steps.length} алхам
           {editing && estimate && <span> · {estimate}</span>}
         </div>
         <h3 className="apl-title">{title}</h3>
@@ -199,7 +199,7 @@ export function AgentPlan({
                   {editing ? (
                     <input
                       className="apl-name"
-                      aria-label={`Step ${i + 1}`}
+                      aria-label={`Алхам ${i + 1}`}
                       value={s.title}
                       onChange={(e) => update(steps.map((x, j) => (j === i ? { ...x, title: e.target.value } : x)))}
                       onKeyDown={(e) => {
@@ -210,10 +210,10 @@ export function AgentPlan({
                   ) : (
                     <span className="apl-name">{s.title}</span>
                   )}
-                  <span className="apl-sr">, {st === "done" ? "Done" : st === "failed" ? "Failed" : st === "active" ? "Running" : "Pending"}</span>
-                  {!editing && s.duration !== undefined && st === "done" && <span className="apl-time"><span className="apl-sr">took </span>{s.duration}s</span>}
+                  <span className="apl-sr">, {st === "done" ? "Дууссан" : st === "failed" ? "Алдаатай" : st === "active" ? "Ажиллаж байна" : "Хүлээж байна"}</span>
+                  {!editing && s.duration !== undefined && st === "done" && <span className="apl-time"><span className="apl-sr">зарцуулсан: </span>{s.duration} с</span>}
                   {editing && (
-                    <button type="button" className="apl-x" aria-label={`Remove ${s.title}`} onClick={() => remove(i)}>
+                    <button type="button" className="apl-x" aria-label={`Хасах: ${s.title}`} onClick={() => remove(i)}>
                       <svg viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
                     </button>
                   )}
@@ -229,7 +229,7 @@ export function AgentPlan({
                     {s.error && <div className="apl-err">{s.error}</div>}
                     <button type="button" className="apl-retry" onClick={() => retry(i)}>
                       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v2.5h-2.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
-                      Retry from here
+                      Эндээс дахин оролдох
                     </button>
                   </>
                 )}
@@ -243,44 +243,44 @@ export function AgentPlan({
         <div className="apl-add">
           <span className="apl-plus" aria-hidden="true">+</span>
           <input
-            aria-label="New step"
-            placeholder="Add step"
+            aria-label="Шинэ алхам"
+            placeholder="Алхам нэмэх"
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && add()}
           />
-          {draft && <button type="button" className="apl-btn" onClick={add}>Add</button>}
+          {draft && <button type="button" className="apl-btn" onClick={add}>Нэмэх</button>}
         </div>
       )}
 
       <footer className={`apl-foot is-${phase}`}>
         {phase === "draft" && (
           <>
-            <span className="apl-hint">Drag to reorder</span>
+            <span className="apl-hint">Чирж дарааллыг солино</span>
             {onCancel && (
-              <button type="button" className="apl-btn" onClick={() => { onCancel(); onAction?.("cancel"); }}>Cancel</button>
+              <button type="button" className="apl-btn" onClick={() => { onCancel(); onAction?.("cancel"); }}>Болих</button>
             )}
-            <button type="button" className="apl-btn is-dark" onClick={run}>Run plan</button>
+            <button type="button" className="apl-btn is-dark" onClick={run}>Төлөвлөгөө ажиллуулах</button>
           </>
         )}
         {phase === "running" && (
-          <span className="apl-shimmer">Running · {Math.min(doneCount + 1, steps.length)} of {steps.length}</span>
+          <span className="apl-shimmer">Ажиллаж байна · {Math.min(doneCount + 1, steps.length)}/{steps.length}</span>
         )}
         {phase === "done" && (
           <>
-            <span className="apl-ok">✓ Plan complete</span>
-            <button type="button" className="apl-btn" onClick={run}>Run again</button>
+            <span className="apl-ok">✓ Төлөвлөгөө дууссан</span>
+            <button type="button" className="apl-btn" onClick={run}>Дахин ажиллуулах</button>
           </>
         )}
         {phase === "stopped" && (
           <span className="apl-stop">
             <span className="apl-dot is-mini">!</span>
-            Stopped · step {failed + 1} failed
+            Зогссон · {failed + 1}-р алхам алдаатай
           </span>
         )}
       </footer>
       <div className="apl-sr" aria-live="polite">
-        {phase === "stopped" && failed >= 0 ? `Step ${failed + 1} failed: ${steps[failed].title}. ${steps[failed].error ?? ""}` : note}
+        {phase === "stopped" && failed >= 0 ? `${failed + 1}-р алхам алдаатай: ${steps[failed].title}. ${steps[failed].error ?? ""}` : note}
       </div>
     </section>
   );

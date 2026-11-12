@@ -188,8 +188,8 @@ export function AgentQueue({
   maxConcurrency = 8,
   backpressure = 12,
   totals,
-  title = "Queue",
-  name = "agent-jobs",
+  title = "Дараалал",
+  name = "агентын ажлууд",
   className = "",
 }: AgentQueueProps) {
   const [pausedState, setPaused] = React.useState(false);
@@ -245,10 +245,10 @@ export function AgentQueue({
         {limited && (
           <span className="agq-limit" role="status">
             <i />
-            Rate limited · {Math.max(0, Math.ceil((activeLimit!.until - t) / 1000))}s
+            Хурдны хязгаар · {Math.max(0, Math.ceil((activeLimit!.until - t) / 1000))} с
           </span>
         )}
-        {paused && !limited && <span className="agq-limit agq-paused-pill">Paused</span>}
+        {paused && !limited && <span className="agq-limit agq-paused-pill">Түр зогссон</span>}
         <span className="agq-ctl">
           <button type="button" className="agq-pause" aria-pressed={paused} onClick={() => setP(!paused)}>
             {paused ? (
@@ -256,14 +256,14 @@ export function AgentQueue({
             ) : (
               <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="3" width="3" height="10" rx=".8" fill="none" stroke="currentColor" strokeWidth="1.3" /><rect x="9.5" y="3" width="3" height="10" rx=".8" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
             )}
-            {paused ? "Resume" : "Pause"}
+            {paused ? "Үргэлжлүүлэх" : "Түр зогсоох"}
           </button>
           <span className="agq-step">
-            <button type="button" aria-label="Fewer workers" onClick={() => setC(concurrency - 1)}>
+            <button type="button" aria-label="Гүйцэтгэгч хасах" onClick={() => setC(concurrency - 1)}>
               <svg viewBox="0 0 16 16"><path d="M3.5 8h9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
             </button>
             <output aria-live="polite">{concurrency}</output>
-            <button type="button" aria-label="More workers" onClick={() => setC(concurrency + 1)}>
+            <button type="button" aria-label="Гүйцэтгэгч нэмэх" onClick={() => setC(concurrency + 1)}>
               <svg viewBox="0 0 16 16"><path d="M3.5 8h9M8 3.5v9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
             </button>
           </span>
@@ -272,28 +272,28 @@ export function AgentQueue({
 
       <div className="agq-stats">
         <div className={queued.length > backpressure ? "is-warn" : ""}>
-          <span>Waiting</span>
+          <span>Хүлээж байна</span>
           <b>{queued.length}</b>
         </div>
         <div>
-          <span>Running</span>
+          <span>Ажиллаж байна</span>
           <b>
             {running.length}
             <small>/{concurrency}</small>
           </b>
         </div>
         <div>
-          <span>Throughput</span>
+          <span>Хурд</span>
           <b>
             {limited || paused ? 0 : 74}
-            <small>/min</small>
+            <small>/мин</small>
           </b>
         </div>
         <div>
-          <span>Wait p95</span>
+          <span>Хүлээлт p95</span>
           <b>
             {Math.round(Math.max(p95, 1))}
-            <small>s</small>
+            <small> с</small>
           </b>
         </div>
       </div>
@@ -301,18 +301,18 @@ export function AgentQueue({
       <div className="agq-flow">
         <div className="agq-col agq-q">
           <div className="agq-h">
-            Queue <b>{queued.length}</b>
+            Дараалал <b>{queued.length}</b>
           </div>
           <ol className="agq-list">
             {queued.slice(0, 3).map((j) => (
               <li key={j.id} className={`agq-job agq-${j.kind}`}>
                 <span className="agq-kind">{kindIcon[j.kind]}</span>
                 <span className="agq-jn">{j.name}</span>
-                <span className="agq-age">{Math.max(0, (t - j.enqueuedAt) / 1000).toFixed(1)}s</span>
+                <span className="agq-age">{Math.max(0, (t - j.enqueuedAt) / 1000).toFixed(1)} с</span>
               </li>
             ))}
           </ol>
-          <div className="agq-rest" aria-label={`${Math.max(0, queued.length - 3)} more waiting`}>
+          <div className="agq-rest" aria-label={`Өөр ${Math.max(0, queued.length - 3)} хүлээж байна`}>
             {queued.slice(3).map((j) => (
               <i key={j.id} className={`agq-${j.kind}`} />
             ))}
@@ -321,7 +321,7 @@ export function AgentQueue({
 
         <div className="agq-col agq-w">
           <div className="agq-h">
-            Workers{" "}
+            Гүйцэтгэгч{" "}
             <b>
               {running.length}/{concurrency}
             </b>
@@ -339,7 +339,7 @@ export function AgentQueue({
                       <span className="agq-kind">{kindIcon[j.kind]}</span>
                       <span className="agq-jn">{j.name}</span>
                       <span className="agq-age">
-                        {limited || paused ? "Paused" : `${Math.max(0, (t - (j.startedAt ?? t)) / 1000).toFixed(1)}s`}
+                        {limited || paused ? "Түр зогссон" : `${Math.max(0, (t - (j.startedAt ?? t)) / 1000).toFixed(1)} с`}
                       </span>
                     </span>
                   )}
@@ -355,7 +355,7 @@ export function AgentQueue({
               <i className="agq-ok">
                 <svg viewBox="0 0 16 16"><path d="m4 8.5 2.5 2.5L12 5.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
               </i>
-              Done
+              Дууссан
             </span>
             <b>{done}</b>
           </div>
@@ -364,7 +364,7 @@ export function AgentQueue({
               <i className="agq-bad">
                 <svg viewBox="0 0 16 16"><path d="m5 5 6 6M11 5l-6 6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
               </i>
-              Failed
+              Алдаатай
             </span>
             <b className="agq-red">{failed}</b>
           </div>
@@ -372,12 +372,12 @@ export function AgentQueue({
       </div>
 
       <div className="agq-chart">
-        <div className="agq-h">Queue depth</div>
+        <div className="agq-h">Дарааллын урт</div>
         <div className="agq-plot">
           <span className="agq-y" style={{ top: 0 }}>{max}</span>
           <span className="agq-y" style={{ top: "50%" }}>{max / 2}</span>
           <span className="agq-y" style={{ top: "100%" }}>0</span>
-          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`Queue depth: ${queued.length} waiting now, peak ${Math.max(...depth)}`}>
+          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`Дарааллын урт: одоо ${queued.length} хүлээж байна, оргил ${Math.max(...depth)}`}>
             {limitBands.map(([a, b]) => (
               <rect key={a} x={a * step} width={(b - a) * step} y="0" height={H} className="agq-band" />
             ))}
@@ -388,8 +388,8 @@ export function AgentQueue({
           <i className="agq-head" style={{ top: `${(pts[pts.length - 1][1] / H) * 100}%` }} />
         </div>
         <div className="agq-axis">
-          <span>{Math.round(depth.length)}s ago</span>
-          <span>now</span>
+          <span>{Math.round(depth.length)} с өмнө</span>
+          <span>одоо</span>
         </div>
       </div>
     </section>

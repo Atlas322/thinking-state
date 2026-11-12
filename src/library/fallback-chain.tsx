@@ -47,15 +47,15 @@ const GAP = 10;
 function statusText(a: FallbackAttempt) {
   switch (a.status) {
     case "failed":
-      return a.reason ?? "Failed";
+      return a.reason ?? "Алдаатай";
     case "answered":
-      return `Answered${a.tokens ? ` · ${a.tokens} tokens` : ""}`;
+      return `Хариулсан${a.tokens ? ` · ${a.tokens} токен` : ""}`;
     case "trying":
-      return "Trying…";
+      return "Оролдож байна…";
     case "skipped":
-      return "Not needed";
+      return "Шаардлагагүй";
     default:
-      return "Waiting";
+      return "Хүлээж байна";
   }
 }
 
@@ -91,10 +91,10 @@ export function FallbackChain({
   const idx = trying ? attempts.indexOf(trying) + 1 : 0;
 
   const summary = answered
-    ? { cls: "ok", text: "Answered" }
+    ? { cls: "ok", text: "Хариулсан" }
     : allFailed
-      ? { cls: "bad", text: "All models failed" }
-      : { cls: "run", text: `Attempt ${idx || 1} of ${n}` };
+      ? { cls: "bad", text: "Бүх загвар алдаатай" }
+      : { cls: "run", text: `Оролдлого ${idx || 1}/${n}` };
 
   const lineClass = (a: FallbackAttempt) =>
     a.status === "answered" ? "fc-l-ok" : a.status === "failed" ? "fc-l-bad" : a.status === "trying" ? "fc-l-run" : "fc-l-idle";
@@ -110,7 +110,7 @@ export function FallbackChain({
         </span>
         <span className="fc-meta">
           <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M8 5v3l2 1.3" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
-          {totalTime.toFixed(1)}s
+          {totalTime.toFixed(1)} с
         </span>
         <span className="fc-meta fc-cost">{money(totalCost)}</span>
       </header>
@@ -124,7 +124,7 @@ export function FallbackChain({
               )}
             </span>
             <span className="fc-end-t">
-              <b>{request?.name ?? "Request"}</b>
+              <b>{request?.name ?? "Хүсэлт"}</b>
               {route && <code>{route}</code>}
             </span>
           </div>
@@ -135,7 +135,7 @@ export function FallbackChain({
             ))}
           </svg>
 
-          <ol className="fc-models" aria-label="Models in fallback order">
+          <ol className="fc-models" aria-label="Нөөц дарааллаарх загварууд">
             {attempts.map((a, i) => {
               const took = tookOf(a);
               const frac = Math.min(1, took / maxTime);
@@ -158,7 +158,7 @@ export function FallbackChain({
                     </span>
                     {a.status !== "skipped" && a.status !== "waiting" && (
                       <span className="fc-bar">
-                        <span style={{ width: `${(a.status === "failed" && a.reason?.includes("Timed") ? 1 : frac) * 100}%` }} />
+                        <span style={{ width: `${(a.status === "failed" && (a.reason?.includes("Timed") || a.reason?.includes("Хугацаа")) ? 1 : frac) * 100}%` }} />
                       </span>
                     )}
                   </span>
@@ -184,14 +184,14 @@ export function FallbackChain({
               )}
             </span>
             <span className="fc-end-t">
-              <b>{response?.name ?? "Response"}</b>
-              <em>{answered ? `${answered.tokens ?? ""} tokens` : allFailed ? "No answer" : "Waiting"}</em>
+              <b>{response?.name ?? "Хариу"}</b>
+              <em>{answered ? `${answered.tokens ?? ""} токен` : allFailed ? "Хариу алга" : "Хүлээж байна"}</em>
             </span>
           </div>
         </div>
         {allFailed && onRetry && (
           <button type="button" className="fc-retry" onClick={onRetry}>
-            Retry
+            Дахин оролдох
           </button>
         )}
       </div>

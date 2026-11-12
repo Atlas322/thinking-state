@@ -28,21 +28,21 @@ describe("SessionBoard", () => {
   it("orders children under their parent and collects ungrouped sessions", () => {
     mockMotion(true);
     render(<SessionBoard sessions={sessions} />);
-    const projects = screen.getByRole("region", { name: /Projects/ });
+    const projects = screen.getByRole("region", { name: /Төслүүд/ });
     const titles = Array.from(projects.querySelectorAll(".sb-row-btn")).map((b) => b.textContent);
     expect(titles[0]).toContain("Root task");
     expect(titles[1]).toContain("Child task");
     expect(within(projects).getByText("#7")).toBeTruthy();
-    const ungrouped = screen.getByRole("region", { name: /Ungrouped/ });
+    const ungrouped = screen.getByRole("region", { name: /Бүлэггүй/ });
     expect(ungrouped.textContent).toContain("Loose task");
     expect(ungrouped.textContent).toContain("Unknown group");
-    expect(screen.getByRole("button", { name: /^Ungrouped\W*2 sessions$/ })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /^Бүлэггүй\W*2 сешн$/ })).toBeTruthy();
   });
 
   it("collapses a group and makes its rows inert", () => {
     mockMotion(true);
     render(<SessionBoard sessions={sessions} />);
-    const head = screen.getByRole("button", { name: /^Projects/ });
+    const head = screen.getByRole("button", { name: /^Төслүүд/ });
     expect(head.getAttribute("aria-expanded")).toBe("true");
     fireEvent.click(head);
     expect(head.getAttribute("aria-expanded")).toBe("false");
@@ -74,13 +74,13 @@ describe("SessionBoard", () => {
     render(<SessionBoard project={{ name: "Demo", stats: { tasks: 12, decisions: 4, pages: 38, prs: 3 } }} sessions={[]} />);
     const stats = document.querySelectorAll(".sb-stat dd [aria-hidden]");
     expect(Array.from(stats).map((n) => n.textContent)).toEqual(["12", "4", "38", "3"]);
-    expect(screen.getAllByText("No sessions")).toHaveLength(4);
+    expect(screen.getAllByText("Сешн алга")).toHaveLength(4);
   });
 
   it("folds a parent's children away and back", () => {
     mockMotion(true);
     render(<SessionBoard sessions={sessions} />);
-    const fold = screen.getByRole("button", { name: /Hide sub-sessions: Root task/ });
+    const fold = screen.getByRole("button", { name: /Дэд сешнийг нуух: Root task/ });
     fireEvent.click(fold);
     expect(screen.queryByRole("button", { name: /^Child task/ })).toBeNull();
     expect(screen.getByRole("button", { name: /^Root task/ }).getAttribute("aria-expanded")).toBe("false");
@@ -92,19 +92,19 @@ describe("SessionBoard", () => {
     mockMotion(true);
     const onViewChange = vi.fn();
     render(<SessionBoard sessions={sessions} onViewChange={onViewChange} />);
-    fireEvent.click(screen.getByRole("radio", { name: "Status" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Төлөв" }));
     expect(onViewChange).toHaveBeenCalledWith("status");
-    const running = screen.getByRole("tab", { name: /Running/ });
+    const running = screen.getByRole("tab", { name: /Ажиллаж байна/ });
     expect(running.getAttribute("aria-selected")).toBe("true");
     expect(screen.getByRole("tabpanel").textContent).toContain("Root task");
-    fireEvent.click(screen.getByRole("tab", { name: /Done/ }));
+    fireEvent.click(screen.getByRole("tab", { name: /Дууссан/ }));
     const panel = screen.getByRole("tabpanel");
     expect(panel.textContent).toContain("Child task");
-    expect(panel.textContent).toContain("in Root task");
-    fireEvent.click(screen.getByRole("radio", { name: "Cards" }));
+    expect(panel.textContent).toContain("Харьяа: Root task");
+    fireEvent.click(screen.getByRole("radio", { name: "Карт" }));
     const cards = document.querySelectorAll(".sb-card");
     expect(cards).toHaveLength(3);
-    const kids = screen.getByRole("button", { name: /1 sub-session$/ });
+    const kids = screen.getByRole("button", { name: /1 дэд сешн$/ });
     fireEvent.click(kids);
     expect(kids.getAttribute("aria-expanded")).toBe("false");
   });

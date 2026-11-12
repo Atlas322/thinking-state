@@ -56,6 +56,7 @@
     "tokens:site": "node scripts/site-css.mjs && node scripts/ts-css.mjs",
     "check:spacing": "node scripts/check-spacing.mjs",
     "check:content": "vitest run src/content.test.tsx",
+    "check:contrast": "node scripts/check-contrast.mjs",
     "studio:exports": "node scripts/studio-exports.mjs",
     "tokens:figma": "node scripts/figma-variables.mjs",
     "check:motion": "node scripts/check-quality.mjs --motion",

@@ -278,9 +278,10 @@ export default function Demo() {
     <div className="checkbox-example">
       <style>{`.checkbox-example{width:362px;max-width:100%;padding:20px;border:1px solid #e9e9e9;background:white;border-radius:12px;color:#222;font:13px/1.5 Inter,system-ui,sans-serif}.checkbox-example fieldset{padding:0;margin:0 0 20px;border:0}.checkbox-example legend{padding:0;margin-bottom:12px}.checkbox-example .checkbox-nested{display:grid;gap:12px;margin:14px 0 0 26px}.checkbox-example>div:last-child{margin-top:18px}:where(.dark,[data-theme=dark]) .checkbox-example{background:#131315;border-color:#29292b;color:#eee}`}</style>
       <fieldset>
-        <legend>Email me about</legend>
+        <legend>Имэйлээр мэдэгдэх</legend>
         <Checkbox
-          label="Everything"
+          label="Бүгд"
+          value="1"
           checked={picked.length === 3}
           indeterminate={picked.length > 0 && picked.length < 3}
           onChange={() => setPicked(picked.length === 3 ? [] : all)}
@@ -289,18 +290,19 @@ export default function Demo() {
           {[
             {
               id: "mentions",
-              label: "Mentions",
-              description: "Someone mentions you in a chat or a file",
+              label: "Нэр дурдсан",
+              description: "Хэн нэгэн таныг чат эсвэл файлд дурдвал",
             },
             {
               id: "approvals",
-              label: "Approvals",
-              description: "An agent waits for your OK before it acts",
+              label: "Батлах хүсэлт",
+              description: "Агент ажиллахаас өмнө таны зөвшөөрлийг хүлээнэ",
             },
-            { id: "summary", label: "Weekly summary" },
+            { id: "summary", label: "Долоо хоногийн хураангуй" },
           ].map((item) => (
             <Checkbox
               key={item.id}
+              value="1"
               label={item.label}
               description={item.description}
               checked={picked.includes(item.id)}
@@ -316,17 +318,19 @@ export default function Demo() {
         </div>
       </fieldset>
       <Checkbox
-        label="Keep a copy of every run"
-        description="Inputs and outputs stay for 30 days, so you can replay a run."
+        label="Ажил бүрийн хуулбарыг хадгалах"
+        value="1"
+        description="Оролт, гаралт 30 хоног хадгалагдана, ажлыг дахин тоглуулж болно."
         variant="card"
         defaultChecked
       />
       <div>
         <Checkbox
-          label="I agree to the terms of service"
+          label="Үйлчилгээний нөхцөлийг зөвшөөрч байна"
+          value="1"
           checked={agreed}
           onChange={(event) => setAgreed(event.target.checked)}
-          error={agreed ? undefined : "Agree to the terms to continue."}
+          error={agreed ? undefined : "Үргэлжлүүлэхийн тулд нөхцөлийг зөвшөөрнө үү."}
         />
       </div>
     </div>

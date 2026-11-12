@@ -21,7 +21,7 @@ import {
  * area, skill, event, daily …) drawn like a Notion database / Obsidian Base.
  * Read-only: view, filter, group. Columns come from `fields` (kinds inferred
  * from values when only names are given). Views: table, board, calendar,
- * timeline, list. Status saved-view tabs (Inbox · Идэвхтэй · Хүлээгдэж буй ·
+ * timeline, list. Status saved-view tabs (Ирсэн · Идэвхтэй · Хүлээгдэж буй ·
  * Дууссан · Архив) with icons and counts; tasks also get This month /
  * Recent / Weekly calendar presets. Any row opens a side peek: type icon,
  * title, status, the main properties (empty ones hidden, «n more»), and the
@@ -37,16 +37,16 @@ const VIEW_META: Record<CollectionViewKind, { label: string; icon: IconName }> =
   table: { label: "Хүснэгт", icon: "table" },
   board: { label: "Самбар", icon: "kanban" },
   calendar: { label: "Хуанли", icon: "calendar-days" },
-  timeline: { label: "Timeline", icon: "gantt-chart" },
+  timeline: { label: "Цагийн хэлхээс", icon: "gantt-chart" },
   list: { label: "Жагсаалт", icon: "list" },
 };
 const VIEWS: CollectionViewKind[] = ["table", "board", "calendar", "timeline", "list"];
 
 const FIELD_LABEL: Record<string, string> = {
   status: "Төлөв",
-  priority: "Priority",
-  area: "Area",
-  subArea: "Дэд area",
+  priority: "Ач холбогдол",
+  area: "Чиглэл",
+  subArea: "Дэд чиглэл",
   project: "Төсөл",
   owner: "Эзэн",
   due: "Хугацаа",
@@ -56,12 +56,26 @@ const FIELD_LABEL: Record<string, string> = {
   role: "Үүрэг",
   unit: "Нэгж",
   company: "Компани",
-  tasks: "Task",
+  tasks: "Даалгавар",
+  projects: "Төсөл",
+  up: "Харьяа",
+  mood: "Сэтгэл санаа",
+  assignee: "Гүйцэтгэгч",
+  deadline: "Эцсийн хугацаа",
+  people: "Хүмүүс",
+  agent: "Агент",
+  manager: "Менежер",
+  related: "Холбоотой",
+  author: "Зохиогч",
+  phase: "Үе шат",
   tags: "Шошго",
   updated: "Шинэчилсэн",
   created: "Үүсгэсэн",
   confidence: "Итгэл",
 };
+/** Display labels for common vault values that are not statuses (the data keeps the raw value). */
+const VALUE_LABEL: Record<string, string> = { stated: "Хэлсэн", observed: "Ажигласан", inferred: "Дүгнэсэн", active: "Идэвхтэй" };
+const valueLabel = (v: string) => VALUE_LABEL[v] ?? v;
 const DATE_NAMES = ["due", "date", "start", "end", "deadline", "created", "updated", "day"];
 const RELATION_NAMES = ["area", "subarea", "project", "company", "unit", "owner", "assignee", "person", "people", "up", "related", "agent", "manager"];
 const ISO = /^\d{4}-\d{2}-\d{2}/;
@@ -171,7 +185,7 @@ export function StatusPill({ value }: { value: CollectionValue | undefined }) {
   if (!g) return value == null || value === "" ? null : <span className="cl-pill is-gray">{String(value)}</span>;
   const s = STATUS[g];
   return (
-    <span className={`cl-pill is-${s.tone}`} title={String(value)}>
+    <span className={`cl-pill is-${s.tone}`} title={s.label}>
       <Icon name={s.icon} size={14} />
       {s.label}
     </span>
@@ -183,7 +197,7 @@ export function PriorityBadge({ value }: { value: CollectionValue | undefined })
   if (!p) return null;
   const m = PRIORITY[p];
   return (
-    <span className={`cl-prio is-${m.tone}`} title={`Priority: ${m.label}`}>
+    <span className={`cl-prio is-${m.tone}`} title={`Ач холбогдол: ${m.label}`}>
       <Icon name={m.icon} size={14} />
       {m.label}
     </span>
@@ -214,7 +228,7 @@ export function ProgressNM({ value }: { value: CollectionValue | undefined }) {
   const pct = total ? Math.min(1, done / total) : 0;
   const C = 2 * Math.PI * 5.5;
   return (
-    <span className={`cl-nm${pct >= 1 ? " is-full" : ""}`} title={`${done}/${total} task дууссан`}>
+    <span className={`cl-nm${pct >= 1 ? " is-full" : ""}`} title={`${done}/${total} даалгавар дууссан`}>
       <svg className="cl-ring" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
         <circle cx="7" cy="7" r="5.5" className="cl-ring-bg" />
         {pct > 0 && pct < 1 && <circle cx="7" cy="7" r="5.5" className="cl-ring-arc" strokeDasharray={`${pct * C} ${C}`} transform="rotate(-90 7 7)" />}
@@ -398,7 +412,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           </a>
         ) : null;
       case "select":
-        return v == null || v === "" ? null : <span className={`cl-tag is-cat-${catOf(String(v))}`}>{String(v)}</span>;
+        return v == null || v === "" ? null : <span className={`cl-tag is-cat-${catOf(String(v))}`}>{valueLabel(String(v))}</span>;
       default:
         return v == null || v === "" ? null : <span className="cl-text">{Array.isArray(v) ? v.join(", ") : String(v)}</span>;
     }
@@ -453,7 +467,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
     if (f.kind === "priority") return PRIORITY[key as keyof typeof PRIORITY]?.label ?? key;
     if (f.kind === "relation") return resolve?.(f.name, key)?.label ?? linkLabel(key);
     if (f.kind === "date") return `${key.slice(0, 4)} оны ${Number(key.slice(5, 7))}-р сар`;
-    return key;
+    return valueLabel(key);
   };
   const groupsOf = (f: ResolvedField, list: CollectionItem[]) => {
     const keys: string[] = [];
@@ -781,7 +795,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           {groupsPresent.length > 4 && (
             <button type="button" className="cl-more" aria-expanded={moreTabs} onClick={() => setMoreTabs((m) => !m)}>
               <Icon name="ellipsis" size={14} />
-              {moreTabs ? "Цөөн" : `${groupsPresent.length - 4} more`}
+              {moreTabs ? "Цөөн" : `Бас ${groupsPresent.length - 4}`}
             </button>
           )}
         </div>
@@ -844,7 +858,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
                 <option value="">Бүгд</option>
                 {filterValues.map((v) => (
                   <option key={v} value={v}>
-                    {linkLabel(v)}
+                    {valueLabel(linkLabel(v))}
                   </option>
                 ))}
               </select>
@@ -1011,7 +1025,7 @@ function Peek({
           {filled.length > 8 && (
             <button type="button" className="cl-more-props" onClick={() => setMore((m) => !m)} aria-expanded={more}>
               <Icon name="chevron-right" size={14} className="cl-chev" />
-              {more ? "Цөөн харуулах" : `${filled.length - 8} more`}
+              {more ? "Цөөн харуулах" : `Бас ${filled.length - 8}`}
             </button>
           )}
           {rels.length > 0 && (
@@ -1031,8 +1045,8 @@ function Peek({
             </section>
           )}
           <section>
-            <h4>Frontmatter</h4>
-            <pre className="cl-fm" aria-label="Frontmatter">
+            <h4>Мета өгөгдөл</h4>
+            <pre className="cl-fm" aria-label="Мета өгөгдөл">
               {item.path ? `# ${item.path}\n` : ""}
               {frontmatterOf(item)}
             </pre>
@@ -1067,7 +1081,7 @@ function Peek({
             {onOpenInVault && (
               <button type="button" onClick={() => onOpenInVault(item, collection)}>
                 <Icon name="book-open" size={16} />
-                Vault-д нээх
+                Тэмдэглэлийн санд нээх
               </button>
             )}
             {onAskAgent && (

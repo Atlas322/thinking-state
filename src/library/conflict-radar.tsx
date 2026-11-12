@@ -79,6 +79,7 @@ const defaultFiles: RadarFile[] = [
   { path: "package.json", edits: [{ agent: "payments", lines: [14, 16] }] },
 ];
 
+const stateLabel: Record<string, string> = { kept: "хадгалсан", dropped: "хасагдсан", conflict: "зөрчил", changed: "өөрчилсөн" };
 const isConflict = (f: RadarFile) => f.edits.filter((e) => e.way).length > 1;
 
 export function ConflictRadar({
@@ -115,7 +116,7 @@ export function ConflictRadar({
     const touched = files.filter((f) => f.edits.some((e) => e.agent === id));
     const c = touched.filter((f) => isConflict(f) && !resolved[f.path] && f.edits.some((e) => e.agent === id && e.way)).length;
     const k = touched.filter((f) => resolved[f.path] === id).length;
-    return `${touched.length} files · ${c} ${c === 1 ? "conflict" : "conflicts"} · ${k} kept`;
+    return `${touched.length} файл · ${c} зөрчил · ${k} хадгалсан`;
   };
 
   return (
@@ -130,7 +131,7 @@ export function ConflictRadar({
         <strong>{title}</strong>
         {open > 0 ? (
           <span className="cr-pill">
-            {open} {open === 1 ? "conflict" : "conflicts"} to settle
+            Шийдэх {open} зөрчил
           </span>
         ) : (
           <button type="button" className="cr-merge" disabled={!allDone} onClick={onMerge}>
@@ -138,7 +139,7 @@ export function ConflictRadar({
               <path d="M5 3v10M5 6c0 3 6 2 6 6M11 12v1" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
               <circle cx="5" cy="3" r="1.4" fill="currentColor" />
             </svg>
-            {allDone ? "Merge" : "Waiting for agents"}
+            {allDone ? "Нэгтгэх" : "Агентуудыг хүлээж байна"}
           </button>
         )}
       </header>
@@ -147,16 +148,16 @@ export function ConflictRadar({
         <thead>
           <tr>
             <th className="cr-legend">
-              <span className="cr-sr">File</span>
-              <span><i className="cr-k-changed" />Changed</span>
-              <span><i className="cr-k-conflict" />Conflict</span>
-              <span><i className="cr-k-kept" />Kept</span>
+              <span className="cr-sr">Файл</span>
+              <span><i className="cr-k-changed" />Өөрчилсөн</span>
+              <span><i className="cr-k-conflict" />Зөрчил</span>
+              <span><i className="cr-k-kept" />Хадгалсан</span>
             </th>
             {agents.map((a) => (
               <th key={a.id} className="cr-agent" title={`${[a.model, a.branch].filter(Boolean).join(" · ")}\n${agentStats(a.id)}`}>
                 <span className="cr-aico">{iconOf(a.icon)}</span>
                 {a.name}
-                {a.working && <i className="cr-working" aria-label="working" />}
+                {a.working && <i className="cr-working" aria-label="ажиллаж байна" />}
               </th>
             ))}
           </tr>
@@ -175,7 +176,7 @@ export function ConflictRadar({
                   {c ? (
                     <button type="button" onClick={() => setFocus(f.path)} aria-pressed={focus === f.path}>
                       <i className={kept ? "cr-dot cr-dot-kept" : "cr-dot cr-dot-c"} />
-                      <span className="cr-sr">{kept ? "Settled:" : "Conflict:"}</span>
+                      <span className="cr-sr">{kept ? "Шийдсэн:" : "Зөрчил:"}</span>
                       <span className="cr-dir">{dir}</span>
                       {base}
                     </button>
@@ -199,10 +200,10 @@ export function ConflictRadar({
                         <span
                           className={`cr-barline cr-${state} ${e.writing ? "is-writing" : ""}`}
                           style={{ left: `${Math.min(left, 100 - w) * 0.7 + 15}%`, width: `${w * 0.7}%` }}
-                          title={`${agents[i].name} · lines ${e.lines[0]}–${e.lines[1]}${state ? ` · ${state}` : ""}`}
+                          title={`${agents[i].name} · ${e.lines[0]}–${e.lines[1]} мөр${state ? ` · ${stateLabel[state]}` : ""}`}
                         />
                       ) : (
-                        <i className="cr-empty" aria-label="untouched" />
+                        <i className="cr-empty" aria-label="хөндөөгүй" />
                       )}
                     </td>
                   );
@@ -216,13 +217,13 @@ export function ConflictRadar({
       {current && (
         <div className="cr-pick" aria-live="polite">
           <div className="cr-ph">
-            <strong>{resolved[current.path] ? "Kept" : "Pick a way"}</strong>
+            <strong>{resolved[current.path] ? "Хадгалсан" : "Хувилбар сонгох"}</strong>
             <span>
-              {split(current.path)[1]} · lines {Math.min(...current.edits.filter((e) => e.way).map((e) => e.lines[0]))}–
+              {split(current.path)[1]} · мөр {Math.min(...current.edits.filter((e) => e.way).map((e) => e.lines[0]))}–
               {Math.max(...current.edits.filter((e) => e.way).map((e) => e.lines[1]))}
             </span>
           </div>
-          <div className="cr-ways" role="radiogroup" aria-label={`Ways to settle ${current.path}`}>
+          <div className="cr-ways" role="radiogroup" aria-label={`${current.path} зөрчлийг шийдэх хувилбарууд`}>
             {current.edits
               .filter((e) => e.way)
               .map((e) => {

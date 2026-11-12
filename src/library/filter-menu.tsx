@@ -261,7 +261,7 @@ export function FilterMenu({
           disabled={chips.length === 0}
           onClick={() => commit({})}
         >
-          Clear all
+          Бүгдийг цэвэрлэх
         </button>
       </div>
 
@@ -291,7 +291,7 @@ export function FilterMenu({
               <button
                 type="button"
                 className="ui-fmc__chip-x"
-                aria-label={`Remove ${c.label}`}
+                aria-label={`Хасах: ${c.label}`}
                 onClick={() => toggle(c.group.id, c.option.id)}
               >
                 <svg viewBox="0 0 16 16" aria-hidden="true">
@@ -304,7 +304,7 @@ export function FilterMenu({
             <span
               className="ui-fmc__chip ui-fmc__more"
               title={hidden.map((c) => c.label).join(", ")}
-              aria-label={`${hidden.length} more: ${hidden.map((c) => c.label).join(", ")}`}
+              aria-label={`Бусад ${hidden.length}: ${hidden.map((c) => c.label).join(", ")}`}
             >
               <span key={hidden.length} className="ui-fmc__roll">
                 +{hidden.length}
@@ -359,7 +359,7 @@ export function FilterMenu({
                 <span className="ui-fmc__group-picked" aria-live="polite">
                   {count > 0 && (
                     <span key={count} className="ui-fmc__roll">
-                      {`${count} filter${count === 1 ? "" : "s"}`}
+                      {`${count} шүүлтүүр`}
                     </span>
                   )}
                 </span>
@@ -415,11 +415,11 @@ export function FilterMenu({
           <span className="ui-fmc__hint">
             <kbd>↑</kbd>
             <kbd>↓</kbd>
-            <span>to navigate</span>
+            <span>шилжих</span>
           </span>
           <span className="ui-fmc__hint">
             <kbd>↵</kbd>
-            <span>to select</span>
+            <span>сонгох</span>
           </span>
         </div>
       )}

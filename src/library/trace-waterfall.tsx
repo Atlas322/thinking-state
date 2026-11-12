@@ -107,10 +107,13 @@ const money = (value: number) =>
   `$${value < 0.01 ? value.toFixed(3) : value.toFixed(2)}`;
 const duration = (value: number) =>
   value >= 60000
-    ? `${Math.floor(value / 60000)}m ${Math.floor((value % 60000) / 1000)}s`
+    ? `${Math.floor(value / 60000)} мин ${Math.floor((value % 60000) / 1000)} с`
     : value >= 1000
-      ? `${Number((value / 1000).toFixed(1))}s`
-      : `${Math.round(value)}ms`;
+      ? `${Number((value / 1000).toFixed(1))} с`
+      : `${Math.round(value)} ms`;
+const KIND_LABEL: Record<TraceSpan["kind"], string> = { agent: "агент", subagent: "дэд агент", llm: "LLM", tool: "хэрэгсэл" };
+const STATUS_LABEL: Record<TraceSpan["status"], string> = { running: "ажиллаж байна", done: "дууссан", failed: "алдаатай" };
+const FIELD_LABEL = { input: "Оролт", output: "Гаралт", error: "Алдаа" } as const;
 const short = (value: number) =>
   value >= 1000 ? `${Number((value / 1000).toFixed(1))}k` : String(value);
 function example(): TraceSpan {
@@ -305,7 +308,7 @@ function example(): TraceSpan {
             status: "failed",
             start: 42800,
             end: 51200,
-            input: "pnpm test checkout",
+            input: "src/checkout/ хавтасны тестүүдийг ажиллуулах",
             error: "14 тестээс 2 нь унав – купон багцын үнэд тооцогдохгүй байна",
           },
           {
@@ -338,7 +341,7 @@ export function TraceWaterfall({
   markSlowest = true,
   minRange = 10000,
   formatCost = money,
-  title = "Trace",
+  title = "Мөрдөлт",
   className = "",
 }: TraceWaterfallProps) {
   const [demo] = React.useState(example),
@@ -490,30 +493,30 @@ export function TraceWaterfall({
         <span className="trw-description">{data.input ?? data.name}</span>
         <span className={`trw-state ${data.status}`} role="status">
           {data.status === "running"
-            ? "• Live"
+            ? "• Шууд"
             : data.status === "failed"
-              ? "Failed"
-              : "✓ Done"}
+              ? "Алдаатай"
+              : "✓ Дууссан"}
         </span>
       </header>
       <dl className="trw-totals">
         {[
-          ["Duration", duration(totalDuration)],
-          ["Cost", formatCost(aggregate(data, "cost"))],
+          ["Хугацаа", duration(totalDuration)],
+          ["Зардал", formatCost(aggregate(data, "cost"))],
           [
-            "Tokens",
+            "Токен",
             short(aggregate(data, "tokensIn") + aggregate(data, "tokensOut")),
           ],
           [
-            "LLM calls",
+            "LLM дуудлага",
             String(all.filter((span) => span.kind === "llm").length),
           ],
           [
-            "Tool calls",
+            "Хэрэгслийн дуудлага",
             String(all.filter((span) => span.kind === "tool").length),
           ],
           [
-            "Errors",
+            "Алдаа",
             String(all.filter((span) => span.status === "failed").length),
           ],
         ].map(([label, value]) => (
@@ -521,9 +524,9 @@ export function TraceWaterfall({
             <dt>{label}</dt>
             <dd
               className={
-                live && ["Duration", "Cost", "Tokens"].includes(label)
+                live && ["Хугацаа", "Зардал", "Токен"].includes(label)
                   ? "trw-shimmer"
-                  : label === "Errors" && value !== "0"
+                  : label === "Алдаа" && value !== "0"
                     ? "trw-err"
                     : ""
               }
@@ -534,7 +537,7 @@ export function TraceWaterfall({
         ))}
       </dl>
       <div className="trw-axis" aria-hidden="true">
-        <span>Span</span>
+        <span>Алхам</span>
         <div>
           {ticks.map((tick) => (
             <span key={tick} style={{ left: `${(tick / range) * 100}%` }}>
@@ -543,7 +546,7 @@ export function TraceWaterfall({
           ))}
         </div>
       </div>
-      <div className="trw-rows" role="tree" aria-label="Trace spans">
+      <div className="trw-rows" role="tree" aria-label="Мөрдөлтийн алхмууд">
         {rows.map((row, index) => {
           const span = row.span;
           const end = span.end ?? time;
@@ -566,7 +569,7 @@ export function TraceWaterfall({
               aria-expanded={
                 span.children?.length ? !hidden.includes(span.id) : undefined
               }
-              aria-label={`${span.name}, ${span.kind}, ${span.status}, ${duration(spanDuration)}, ${formatCost(cost)}`}
+              aria-label={`${span.name}, ${KIND_LABEL[span.kind] ?? span.kind}, ${STATUS_LABEL[span.status] ?? span.status}, ${duration(spanDuration)}, ${formatCost(cost)}`}
               tabIndex={focus === span.id ? 0 : -1}
               className={`trw-row ${activeId === span.id ? "selected" : ""}`}
               onFocus={() => setFocus(span.id)}
@@ -588,7 +591,7 @@ export function TraceWaterfall({
                   <button
                     type="button"
                     tabIndex={-1}
-                    aria-label={`${hidden.includes(span.id) ? "Expand" : "Collapse"} ${span.name}`}
+                    aria-label={`${span.name}: ${hidden.includes(span.id) ? "дэлгэх" : "хураах"}`}
                     onClick={(event) => {
                       event.stopPropagation();
                       fold(span);
@@ -663,7 +666,7 @@ export function TraceWaterfall({
                 >
                   {duration(spanDuration)}
                   {cost > 0 ? ` · ${formatCost(cost)}` : ""}
-                  {markSlowest && slowest?.id === span.id && <b>Slowest</b>}
+                  {markSlowest && slowest?.id === span.id && <b>Хамгийн удаан</b>}
                 </span>
               </div>
             </div>
@@ -688,27 +691,27 @@ export function TraceWaterfall({
             <span className={`trw-kind-dot ${selected.kind}`} />
             <strong>{selected.name}</strong>
             <button
-              aria-label="Close span details"
+              aria-label="Алхмын дэлгэрэнгүйг хаах"
               onClick={() => openSpan(null)}
             >
               ×
             </button>
           </header>
           <p>
-            {selected.kind} <span>·</span> {selected.status} <span>·</span>{" "}
+            {KIND_LABEL[selected.kind] ?? selected.kind} <span>·</span> {STATUS_LABEL[selected.status] ?? selected.status} <span>·</span>{" "}
             {duration(Math.max(0, (selected.end ?? time) - selected.start))}
           </p>
           <dl>
             <div>
-              <dt>Cost</dt>
+              <dt>Зардал</dt>
               <dd>{formatCost(aggregate(selected, "cost"))}</dd>
             </div>
             <div>
-              <dt>Input tokens</dt>
+              <dt>Оролтын токен</dt>
               <dd>{aggregate(selected, "tokensIn").toLocaleString()}</dd>
             </div>
             <div>
-              <dt>Output tokens</dt>
+              <dt>Гаралтын токен</dt>
               <dd>{aggregate(selected, "tokensOut").toLocaleString()}</dd>
             </div>
           </dl>
@@ -716,7 +719,7 @@ export function TraceWaterfall({
           {(["input", "output", "error"] as const).map((field) =>
             selected[field] ? (
               <div className={`trw-preview ${field}`} key={field}>
-                <h4>{field}</h4>
+                <h4>{FIELD_LABEL[field]}</h4>
                 <pre>{selected[field]}</pre>
               </div>
             ) : null,

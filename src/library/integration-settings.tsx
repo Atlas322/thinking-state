@@ -102,7 +102,7 @@ export function IntegrationSettings({
     try {
       const key = onGenerateKey ? await onGenerateKey() : randomKey();
       setV((s) => ({ ...s, apiKey: key }));
-      setSaid("New API key generated. Copy it now – it won't be shown again.");
+      setSaid("Шинэ API түлхүүр үүслээ. Одоо хуулж аваарай – дахин харагдахгүй.");
     } finally {
       setBusy(null);
     }
@@ -115,7 +115,7 @@ export function IntegrationSettings({
       await onSave?.(next);
       setSaved(next);
       setV(next);
-      setSaid("Settings saved");
+      setSaid("Тохиргоо хадгалагдлаа");
     } finally {
       setBusy(null);
     }
@@ -131,13 +131,13 @@ export function IntegrationSettings({
             <strong>{name}</strong>
             {count !== undefined && <span className="ist-count">{count}</span>}
           </div>
-          <div className="ist-meta">{v.enabled ? meta : "Paused – nothing syncs until you switch it back on"}</div>
+          <div className="ist-meta">{v.enabled ? meta : "Түр зогссон – дахин асаах хүртэл юу ч синк хийгдэхгүй"}</div>
         </div>
         <button
           type="button"
           role="switch"
           aria-checked={v.enabled}
-          aria-label={`${name} enabled`}
+          aria-label={`${name} идэвхтэй`}
           className="ist-switch"
           onClick={toggle}
         >
@@ -148,14 +148,14 @@ export function IntegrationSettings({
       <div className="ist-fold" data-open={v.enabled} aria-hidden={!v.enabled}>
         <div className="ist-fold-in">
           <div className="ist-sec">
-            <div className="ist-label">API key</div>
+            <div className="ist-label">API түлхүүр</div>
             {v.apiKey ? (
               <div className="ist-field ist-key">
                 <code>{v.apiKey}</code>
                 <button
                   type="button"
                   className="ist-ibtn"
-                  aria-label={copied ? "Copied" : "Copy API key"}
+                  aria-label={copied ? "Хуулсан" : "API түлхүүр хуулах"}
                   tabIndex={v.enabled ? 0 : -1}
                   onClick={() => {
                     navigator.clipboard?.writeText(v.apiKey).catch(() => {});
@@ -169,24 +169,24 @@ export function IntegrationSettings({
                     <svg viewBox="0 0 16 16"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M3 10.5V3.5a1 1 0 0 1 1-1h6.5" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
                   )}
                 </button>
-                <button type="button" className="ist-ibtn" aria-label="Generate a new API key" tabIndex={v.enabled ? 0 : -1} onClick={generate}>
+                <button type="button" className="ist-ibtn" aria-label="Шинэ API түлхүүр үүсгэх" tabIndex={v.enabled ? 0 : -1} onClick={generate}>
                   <svg viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v2.5h-2.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
                 </button>
               </div>
             ) : (
               <button type="button" className="ist-field ist-gen" disabled={busy === "key"} tabIndex={v.enabled ? 0 : -1} onClick={generate}>
-                {busy === "key" ? "Generating…" : "Generate a new API key"}
+                {busy === "key" ? "Үүсгэж байна…" : "Шинэ API түлхүүр үүсгэх"}
                 <svg viewBox="0 0 16 16" aria-hidden="true">
                   <circle cx="5" cy="11" r="2.8" fill="none" stroke="currentColor" strokeWidth="1.4" />
                   <path d="m7 9 6-6m-2 2 1.5 1.5M9.5 6.5 11 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
                 </svg>
               </button>
             )}
-            {v.apiKey && v.apiKey !== saved.apiKey && <p className="ist-hint">Copy it now – it won't be shown again.</p>}
+            {v.apiKey && v.apiKey !== saved.apiKey && <p className="ist-hint">Одоо хуулж аваарай – дахин харагдахгүй.</p>}
           </div>
 
           <div className="ist-sec">
-            <label className="ist-label" htmlFor={`${id}-site`}>Site address</label>
+            <label className="ist-label" htmlFor={`${id}-site`}>Сайтын хаяг</label>
             <div className="ist-field ist-url" data-invalid={invalid && touched}>
               <span className="ist-proto">https://</span>
               <input
@@ -196,7 +196,7 @@ export function IntegrationSettings({
                 tabIndex={v.enabled ? 0 : -1}
                 aria-invalid={invalid}
                 aria-describedby={`${id}-hint`}
-                placeholder="your-store.com"
+                placeholder="tanii-delguur.mn"
                 onBlur={() => setTouched(true)}
                 onChange={(e) => setV((s) => ({ ...s, siteUrl: e.target.value.replace(/^https?:\/\//, "") }))}
               />
@@ -205,12 +205,12 @@ export function IntegrationSettings({
               )}
             </div>
             <p id={`${id}-hint`} className="ist-hint" data-invalid={invalid && touched}>
-              {invalid && touched ? "Enter a domain like your-store.com" : siteHint}
+              {invalid && touched ? "Домэйнээ оруулна уу, жишээ нь tanii-delguur.mn" : siteHint}
             </p>
           </div>
 
           <div className="ist-sec">
-            <div className="ist-label" id={`${id}-tz`}>Time zone</div>
+            <div className="ist-label" id={`${id}-tz`}>Цагийн бүс</div>
             <div className="ist-tz" ref={tzRef}>
               <button
                 type="button"
@@ -253,10 +253,10 @@ export function IntegrationSettings({
 
       <div className="ist-save" data-open={dirty && v.enabled}>
         <div className="ist-save-in">
-          <span>Unsaved changes</span>
-          <button type="button" className="ist-btn" tabIndex={dirty ? 0 : -1} onClick={() => { setV(saved); setTouched(false); }}>Discard</button>
+          <span>Хадгалаагүй өөрчлөлт</span>
+          <button type="button" className="ist-btn" tabIndex={dirty ? 0 : -1} onClick={() => { setV(saved); setTouched(false); }}>Болих</button>
           <button type="button" className="ist-btn ist-primary" tabIndex={dirty ? 0 : -1} disabled={invalid || busy === "save"} onClick={save}>
-            {busy === "save" ? "Saving…" : "Save"}
+            {busy === "save" ? "Хадгалж байна…" : "Хадгалах"}
           </button>
         </div>
       </div>
