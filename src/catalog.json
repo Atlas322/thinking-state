@@ -708,6 +708,17 @@
     "usage": "import { CompanyCollection } from \"./company-collection\";\nimport { inai } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyCollection collection={inai.collections![0]} />; // collection: { type, fields: (name | {name, kind})[], items: [{ id, title, path, props }] }; props: today, resolve, defaultView (table | board | calendar | timeline | list); read-only\n}"
   },
   {
+    "slug": "motion-foundation",
+    "name": "Хөдөлгөөн · Суурь",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/motion",
+    "description": "Thinking State v2-ийн хөдөлгөөний суурь. Spring физикийг CSS linear() муруй болгон --ts-motion-* token-д гаргана. Transform ба opacity-оор 9 loop (bob, swing, breathe, float, spin, pulse, nudge, pop, shake) хийсэн. useInViewLoop нь loop-ийг зөвхөн viewport-д харагдаж байхад тоглуулна. ↺ ба ⏸ товч WCAG 2.2.2-ыг хангана. prefers-reduced-motion асаалттай үед эцсийн төлөвөөр харуулна. 96 loop-той стресс тест кадрын хэмжигчтэй.",
+    "exportName": "MotionFoundation",
+    "usage": "import { MotionFoundation } from \"./motion-foundation\";\n\nexport default function App() {\n  return (\n    <MotionFoundation controls=\"hover\">\n      <span className=\"ts-loop ts-loop-swing\" style={{ \"--ts-loop-origin\": \"50% 10%\" }}>🔔</span>\n    </MotionFoundation>\n  ); // = LoopRegion from src/motion; also useInViewLoop, MotionProvider (page-wide pause), animateSpring, SPRINGS, --ts-motion-* tokens\n}"
+  },
+  {
     "slug": "project-report",
     "name": "Project Report",
     "category": "Chat widgets",
