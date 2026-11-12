@@ -33,6 +33,8 @@ export type AgentRecapProps = {
   clip?: boolean;
   /** Override the time-axis labels; see {@link RecapAxis}. */
   axis?: RecapAxis | [string, string];
+  /** A line under the title (replaces the «… -аас хойш N цаг» line). */
+  subtitle?: React.ReactNode;
   onAction?: (event: RecapEvent, action: "primary" | "review") => void | Promise<unknown>;
   onUndo?: (event: RecapEvent) => void;
   onRedo?: (event: RecapEvent) => void;
@@ -79,6 +81,7 @@ export function AgentRecap({
   until = d(8, 10, 15),
   clip = false,
   axis,
+  subtitle,
   onAction,
   onUndo,
   onRedo,
@@ -148,7 +151,7 @@ export function AgentRecap({
       <header className="ar-top">
         <div>
           <h3 id="ar-h">{title}</h3>
-          <p>{time(since)}-аас хойш <span className="ar-dur">{hours} цаг {mins} мин</span></p>
+          {subtitle !== undefined ? <p>{subtitle}</p> : <p>{time(since)}-аас хойш <span className="ar-dur">{hours} цаг {mins} мин</span></p>}
         </div>
         <div className="ar-counts">
           <span><Icon kind="done" /><b>{count("done")}</b> дууссан</span>
