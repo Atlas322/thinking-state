@@ -759,6 +759,7 @@ img.ui-ctc__avatar { box-shadow: 0 0 0 0.5px var(--ui-ctc-avatar-ring); }
   --ui-ctc-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --ui-ctc-focus: rgba(77, 141, 255, 0.8);
 }
+.ui-ctc__msg{animation:uictcmsgrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ui-ctc__msg:nth-child(1){animation-delay:0ms}.ui-ctc__msg:nth-child(2){animation-delay:160ms}.ui-ctc__msg:nth-child(3){animation-delay:320ms}.ui-ctc__msg:nth-child(4){animation-delay:480ms}.ui-ctc__msg:nth-child(5){animation-delay:640ms}.ui-ctc__msg:nth-child(6){animation-delay:800ms}.ui-ctc__msg:nth-child(7){animation-delay:960ms}.ui-ctc__msg:nth-child(8){animation-delay:1120ms}.ui-ctc__msg:nth-child(9){animation-delay:1280ms}.ui-ctc__msg:nth-child(10){animation-delay:1440ms}.ui-ctc__msg:nth-child(11){animation-delay:1600ms}.ui-ctc__msg:nth-child(12){animation-delay:1760ms}@keyframes uictcmsgrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ui-ctc__msg{animation:none}}
 `;
 
 /** Working example; use the named CommentThread export in your application. */

@@ -554,6 +554,7 @@ const css = `
 @keyframes cs-shine{from{background-position:100% 0}to{background-position:-100% 0}}
 @media (prefers-reduced-motion:reduce){.cs-root *{animation:none!important}.cs-writing{-webkit-text-fill-color:currentColor}}
 @media (max-width:560px){.cs-stream{height:420px}.cs-msg{gap:8px}.cs-card time{padding-left:10px}.cs-details dl{grid-template-columns:1fr 1fr}}
+.cs-msg{animation:csmsgrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.cs-msg:nth-child(1){animation-delay:0ms}.cs-msg:nth-child(2){animation-delay:90ms}.cs-msg:nth-child(3){animation-delay:180ms}.cs-msg:nth-child(4){animation-delay:270ms}.cs-msg:nth-child(5){animation-delay:360ms}.cs-msg:nth-child(6){animation-delay:450ms}.cs-msg:nth-child(7){animation-delay:540ms}.cs-msg:nth-child(8){animation-delay:630ms}.cs-msg:nth-child(9){animation-delay:720ms}.cs-msg:nth-child(10){animation-delay:810ms}.cs-msg:nth-child(11){animation-delay:900ms}.cs-msg:nth-child(12){animation-delay:990ms}@keyframes csmsgrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.cs-msg{animation:none}}
 `;
 
 export default CollaborationStream;

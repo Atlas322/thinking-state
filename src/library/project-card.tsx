@@ -394,6 +394,7 @@ const css = `
 @container pc (max-width:290px){.pc-due-w{display:none}.pc-person{margin-left:-7px}}
 @media(pointer:coarse){.pc-tasks label,.pc-opt{height:44px}.pc-assignee{opacity:1}}
 @media(prefers-reduced-motion:reduce){.pc *{animation:none!important;transition:none!important}}
+.pc-person{animation:pcpersonrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.pc-person:nth-child(1){animation-delay:0ms}.pc-person:nth-child(2){animation-delay:100ms}.pc-person:nth-child(3){animation-delay:200ms}.pc-person:nth-child(4){animation-delay:300ms}.pc-person:nth-child(5){animation-delay:400ms}.pc-person:nth-child(6){animation-delay:500ms}.pc-person:nth-child(7){animation-delay:600ms}.pc-person:nth-child(8){animation-delay:700ms}.pc-person:nth-child(9){animation-delay:800ms}.pc-person:nth-child(10){animation-delay:900ms}.pc-person:nth-child(11){animation-delay:1000ms}.pc-person:nth-child(12){animation-delay:1100ms}@keyframes pcpersonrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.pc-person{animation:none}}
 `;
 
 export function Demo() {

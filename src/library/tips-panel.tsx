@@ -396,6 +396,7 @@ const css = /* css */ `
   color-scheme: dark;
 }
 :where(.dark, [data-theme="dark"]) .ui-tpc__btn:not(.ui-tpc__btn--primary) { background: #232326; }
+.ui-tpc__tip{animation:uitpctiprise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ui-tpc__tip:nth-child(1){animation-delay:0ms}.ui-tpc__tip:nth-child(2){animation-delay:70ms}.ui-tpc__tip:nth-child(3){animation-delay:140ms}.ui-tpc__tip:nth-child(4){animation-delay:210ms}.ui-tpc__tip:nth-child(5){animation-delay:280ms}.ui-tpc__tip:nth-child(6){animation-delay:350ms}.ui-tpc__tip:nth-child(7){animation-delay:420ms}.ui-tpc__tip:nth-child(8){animation-delay:490ms}.ui-tpc__tip:nth-child(9){animation-delay:560ms}.ui-tpc__tip:nth-child(10){animation-delay:630ms}.ui-tpc__tip:nth-child(11){animation-delay:700ms}.ui-tpc__tip:nth-child(12){animation-delay:770ms}@keyframes uitpctiprise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ui-tpc__tip{animation:none}}
 `;
 
 /** Working example; use the named TipsPanel export in your application. */

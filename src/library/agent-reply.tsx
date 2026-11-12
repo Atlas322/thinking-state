@@ -115,6 +115,7 @@ font:14px/1.6 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--ar-tx);displa
 .ar-ok{font-size:11.5px;color:var(--ar-green)}.ar-err{font-size:11.5px;color:var(--ar-red)}
 .ar-src a{color:var(--ar-mu)}
 @media (prefers-reduced-motion:reduce){.ar *{transition:none!important}}
+.ar-sec{animation:arsecrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ar-sec:nth-child(1){animation-delay:0ms}.ar-sec:nth-child(2){animation-delay:130ms}.ar-sec:nth-child(3){animation-delay:260ms}.ar-sec:nth-child(4){animation-delay:390ms}.ar-sec:nth-child(5){animation-delay:520ms}.ar-sec:nth-child(6){animation-delay:650ms}.ar-sec:nth-child(7){animation-delay:780ms}.ar-sec:nth-child(8){animation-delay:910ms}.ar-sec:nth-child(9){animation-delay:1040ms}.ar-sec:nth-child(10){animation-delay:1170ms}.ar-sec:nth-child(11){animation-delay:1300ms}.ar-sec:nth-child(12){animation-delay:1430ms}@keyframes arsecrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ar-sec{animation:none}}
 `;
 
 const Chevron = () => (

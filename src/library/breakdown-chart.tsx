@@ -268,6 +268,7 @@ const css = `
 .bc :focus-visible{outline:2px solid var(--bc-accent);outline-offset:2px}
 @media(max-width:560px){.bc-picks{grid-template-columns:1fr}.bc-table{font-size:12.5px}}
 @media(prefers-reduced-motion:reduce){.bc *{transition:none!important}}
+.bc-col{animation:bccolrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.bc-col:nth-child(1){animation-delay:0ms}.bc-col:nth-child(2){animation-delay:70ms}.bc-col:nth-child(3){animation-delay:140ms}.bc-col:nth-child(4){animation-delay:210ms}.bc-col:nth-child(5){animation-delay:280ms}.bc-col:nth-child(6){animation-delay:350ms}.bc-col:nth-child(7){animation-delay:420ms}.bc-col:nth-child(8){animation-delay:490ms}.bc-col:nth-child(9){animation-delay:560ms}.bc-col:nth-child(10){animation-delay:630ms}.bc-col:nth-child(11){animation-delay:700ms}.bc-col:nth-child(12){animation-delay:770ms}@keyframes bccolrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.bc-col{animation:none}}
 `;
 
 export default BreakdownChart;

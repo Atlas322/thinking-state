@@ -426,6 +426,7 @@ const css = `
 @keyframes gate-in{from{opacity:0;transform:translateY(-4px)}}
 @media(max-width:520px){.gate-stats{grid-template-columns:1fr 1fr}.gate-stats>div:nth-child(3){grid-column:1/-1;border-left:0;border-top:1px solid var(--gate-line)}.gate-row-a{display:none}.gate-row-s{margin-left:auto}.gate-card{padding:12px}.gate-foot{margin-top:24px}}
 @media(prefers-reduced-motion:reduce){.gate *,.gate *::before,.gate *::after{animation:none!important;transition:none!important}}
+.gate-row{animation:gaterowrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.gate-row:nth-child(1){animation-delay:0ms}.gate-row:nth-child(2){animation-delay:130ms}.gate-row:nth-child(3){animation-delay:260ms}.gate-row:nth-child(4){animation-delay:390ms}.gate-row:nth-child(5){animation-delay:520ms}.gate-row:nth-child(6){animation-delay:650ms}.gate-row:nth-child(7){animation-delay:780ms}.gate-row:nth-child(8){animation-delay:910ms}.gate-row:nth-child(9){animation-delay:1040ms}.gate-row:nth-child(10){animation-delay:1170ms}.gate-row:nth-child(11){animation-delay:1300ms}.gate-row:nth-child(12){animation-delay:1430ms}@keyframes gaterowrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.gate-row{animation:none}}
 `;
 
 export default ApprovalGates;

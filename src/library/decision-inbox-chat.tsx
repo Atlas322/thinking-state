@@ -331,6 +331,7 @@ const css = `
 @keyframes di-pop{from{transform:scale(.3)}}
 @container di (max-width:380px){.di-opts{flex-direction:column;align-items:stretch}.di-opt{justify-content:space-between}}
 @media(prefers-reduced-motion:reduce){.di *,.di{animation:none!important;transition:none!important}}
+.di-item{animation:diitemrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.di-item:nth-child(1){animation-delay:0ms}.di-item:nth-child(2){animation-delay:120ms}.di-item:nth-child(3){animation-delay:240ms}.di-item:nth-child(4){animation-delay:360ms}.di-item:nth-child(5){animation-delay:480ms}.di-item:nth-child(6){animation-delay:600ms}.di-item:nth-child(7){animation-delay:720ms}.di-item:nth-child(8){animation-delay:840ms}.di-item:nth-child(9){animation-delay:960ms}.di-item:nth-child(10){animation-delay:1080ms}.di-item:nth-child(11){animation-delay:1200ms}.di-item:nth-child(12){animation-delay:1320ms}@keyframes diitemrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.di-item{animation:none}}
 `;
 
 export default DecisionInboxChat;

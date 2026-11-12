@@ -232,6 +232,7 @@ const css = `
 @keyframes cp-in{from{opacity:0;transform:translateY(-3px)}}@keyframes cp-spin{to{transform:rotate(1turn)}}
 @media(max-width:380px){.cp-tabs button{padding:0 7px;font-size:13px}.cp-text,.cp-run{margin-left:0}}
 @media(prefers-reduced-motion:reduce){.cp *{animation:none!important;transition:none!important}}
+.cp-item{animation:cpitemrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.cp-item:nth-child(1){animation-delay:0ms}.cp-item:nth-child(2){animation-delay:100ms}.cp-item:nth-child(3){animation-delay:200ms}.cp-item:nth-child(4){animation-delay:300ms}.cp-item:nth-child(5){animation-delay:400ms}.cp-item:nth-child(6){animation-delay:500ms}.cp-item:nth-child(7){animation-delay:600ms}.cp-item:nth-child(8){animation-delay:700ms}.cp-item:nth-child(9){animation-delay:800ms}.cp-item:nth-child(10){animation-delay:900ms}.cp-item:nth-child(11){animation-delay:1000ms}.cp-item:nth-child(12){animation-delay:1100ms}@keyframes cpitemrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.cp-item{animation:none}}
 `;
 
 export default CommentsPanel;
