@@ -45,6 +45,8 @@ export type CompanyViewKey = "method" | "dashboard" | "structure" | "agents" | "
 export const COMPANY_VIEWS: CompanyViewKey[] = ["method", "dashboard", "structure", "agents", "workflows", "raci", "decisions"];
 
 export type CompanyViewLabels = Record<CompanyViewKey | CompanyLevel | UnitKind | "model", string> & {
+  /** «Шинэчлэгдсэн» — prefix of Company.exportedAt. */
+  exportedAt: string;
   customers: string;
   value: string;
   channels: string;
@@ -89,6 +91,7 @@ export const companyLabelsMn: CompanyViewLabels = {
   team: "Баг",
   department: "Хэлтэс",
   stream: "Чиглэл",
+  exportedAt: "Шинэчлэгдсэн",
   area: "Area",
   types: "Төрлүүд",
   customers: "Үйлчлүүлэгч",
@@ -163,6 +166,15 @@ const TAB_ICON: Record<CompanyViewKey, IconName> = {
   decisions: "git-branch",
 };
 /* ───────────── views ───────────── */
+
+/** "2026-11-12T14:05:00+08:00" → "2026-11-12 14:05" in the reader's time zone; date-only stays as is. */
+export function asOfText(iso: string) {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
 
 function ModelView({ c, scoped, L }: { c: Company; scoped: Company; L: CompanyViewLabels }) {
   const stats = [
@@ -701,6 +713,14 @@ export function CompanyView({
     </span>
   );
 
+  // «as of» for every number on the page (Company.exportedAt, ISO).
+  const asOf = company.exportedAt ? (
+    <p className="cv-asof">
+      <Icon name="clock" size={14} />
+      {L.exportedAt}: <time dateTime={company.exportedAt}>{asOfText(company.exportedAt)}</time>
+    </p>
+  ) : null;
+
   if (layout === "brief") {
     return (
       <div ref={rootRef} className={`cv ${className}`} data-template="brief" data-methodology={methodology}>
@@ -717,6 +737,7 @@ export function CompanyView({
           <h2 className="cv-hero-title">{scopeName}</h2>
           {tags}
           <p className="cv-hero-line">{modelLines(company.model.value)[0]?.text}</p>
+          {asOf}
           <div className="cv-hero-bar">
             {levelSwitch}
             {unitChips}
@@ -873,6 +894,7 @@ export function CompanyView({
             )}
           </h2>
           {!collection && tags}
+          {asOf}
           {!showTree && (
             <div className="cv-head-scope">
               {levelSwitch}
@@ -1118,6 +1140,7 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 .cv-panel{padding:18px 20px 22px;animation:cv-fade .22s ease both}
 /* brief template */
 .cv-brief{display:flex;flex-direction:column;gap:22px}
+.cv-asof{display:flex;align-items:center;gap:6px;margin:6px 0 0;font:500 12px/1.3 var(--ts-font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);color:var(--cv-faint)}
 .cv-hero{padding:22px;border-radius:16px;background:radial-gradient(120% 140% at 100% 0%,var(--cv-accent-soft),transparent 55%),var(--cv-bg);border:1px solid var(--cv-line);animation:cv-in .4s cubic-bezier(.2,.8,.3,1) both}
 .cv-hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .cv-eyebrow{min-width:0;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cv-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

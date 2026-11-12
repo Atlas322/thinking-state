@@ -2,6 +2,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { MethodologyView } from "./company/methodology";
+import { CompanyView, asOfText } from "./company/company-view";
 import { acmeGroup } from "./company/fixtures";
 import { Replay } from "./replay/replay";
 import type { Company } from "./company/types";
@@ -53,5 +54,28 @@ describe("<Replay placement>", () => {
     );
     expect(container.querySelector(".ts-replay")?.getAttribute("data-placement")).toBe("outside");
     expect(screen.getByRole("button", { name: "Дахин тоглуулах" })).toBeTruthy();
+  });
+});
+
+describe("exportedAt «as of»", () => {
+  it("shows when the numbers are from, in both layouts", () => {
+    const c: Company = { ...acmeGroup, exportedAt: "2026-11-12" };
+    for (const layout of ["workspace", "brief"] as const) {
+      const { container, unmount } = render(<CompanyView company={c} layout={layout} />);
+      expect(container.querySelector(".cv-asof time")?.getAttribute("dateTime")).toBe("2026-11-12");
+      expect(container.querySelector(".cv-asof")?.textContent).toContain("Шинэчлэгдсэн: 2026-11-12");
+      unmount();
+    }
+  });
+
+  it("formats ISO times and leaves bad input alone", () => {
+    expect(asOfText("2026-11-12")).toBe("2026-11-12");
+    expect(asOfText("2026-11-12T06:05:00Z")).toMatch(/^2026-11-1[23] \d{2}:05$/);
+    expect(asOfText("soon")).toBe("soon");
+  });
+
+  it("is absent without exportedAt", () => {
+    const { container } = render(<CompanyView company={acmeGroup} />);
+    expect(container.querySelector(".cv-asof")).toBeNull();
   });
 });
