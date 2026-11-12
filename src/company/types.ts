@@ -12,7 +12,7 @@ export type UnitKind = "company" | "team" | "department" | "institution" | "area
 export type ModelField = string | string[] | { stream: string; share?: number }[];
 
 export type CompanyUnit = { id: string; name: string; kind: UnitKind; parentId?: string };
-export type CvEntry = { period: string; title: string; org: string };
+export type CvEntry = { period: string; title: string; org?: string };
 export type PublicLink = { label: string; url: string };
 export type CompanyPerson = {
   id: string;
