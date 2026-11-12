@@ -20,6 +20,7 @@
     const text = (el.innerText || "").trim();
     if (!text || text.includes("\n")) continue;
     const cs = getComputedStyle(el);
+    if (cs.display.startsWith("inline") && !cs.display.includes("flex") && !/flex|grid/.test(getComputedStyle(el.parentElement).display)) continue; // inline controls inside running text wrap with it
     // Count text lines from text nodes only (icons sit on their own box and would look like a second line).
     const lines = new Set();
     const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);

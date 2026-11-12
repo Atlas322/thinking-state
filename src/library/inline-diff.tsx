@@ -312,11 +312,11 @@ const css = `
 .idf-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:32px;animation:idf-fade .25s ease-out}
 .idf-count{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:5px;background:var(--idf-soft);font-size:13px;font-variant-numeric:tabular-nums}
 .idf-word{font-size:15px;color:color-mix(in srgb,var(--idf-fg) 80%,transparent);margin-left:4px;margin-right:auto}
-.idf-arrow{width:30px;height:30px;display:grid;place-items:center;border:0;background:none;border-radius:6px;color:var(--idf-muted)!important}
+.idf-arrow{width:32px;height:32px;display:grid;place-items:center;border:0;background:none;border-radius:6px;color:var(--idf-muted)!important}
 .idf-arrow:hover{background:var(--idf-soft);color:var(--idf-fg)!important}
 .idf-arrow svg,.idf-check{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .idf-check{color:var(--idf-ins);stroke-dasharray:16;animation:idf-draw .4s ease-out both}
-.idf-btn{height:32px;padding:0 12px;border:1px solid var(--idf-line);background:var(--idf-card);border-radius:7px;font-size:15px!important;box-shadow:0 1px 2px #0000000a}
+.idf-btn{height:32px;padding:0 12px;border:1px solid var(--idf-line);background:var(--idf-card);border-radius:7px;font-size:13px!important;line-height:1;white-space:nowrap;box-shadow:0 1px 2px #0000000a}
 .idf-btn:hover{background:var(--idf-soft)}
 .idf-btn.primary{background:var(--idf-fg);border-color:var(--idf-fg);color:var(--idf-card)!important}
 .idf-btn.primary:hover{opacity:.88}
