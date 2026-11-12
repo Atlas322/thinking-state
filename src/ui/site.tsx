@@ -188,8 +188,8 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
                 </button>
                 <div id={`${uid}-mega-${item.id}`} className="ts-mega-panel" hidden={menu !== item.id}>
                   <div className="ts-mega-groups">
-                    {item.groups.map((g) => (
-                      <div key={g.label} className="ts-mega-group">
+                    {item.groups.map((g, gi) => (
+                      <div key={g.label} className="ts-mega-group" style={{ ["--g" as string]: gi }}>
                         <span className="ts-mega-h">{g.label}</span>
                         {g.links.map((l) => (
                           <NavRow key={l.href} l={l} current={current} onClick={() => close()} />
@@ -201,7 +201,7 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
                     const f = featuredOf(item);
                     return (
                       f && (
-                        <a className="ts-mega-feature" href={f.href} onClick={() => close()}>
+                        <a className="ts-mega-feature" href={f.href} onClick={() => close()} style={{ ["--g" as string]: item.groups.length }}>
                           <span className="ts-nav-ico is-accent">
                             <Icon name={f.icon} size={18} />
                           </span>
@@ -379,6 +379,10 @@ export const SITE_CSS = `
 .ts-mega-panel::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
 .ts-mega-trigger.is-pinned{box-shadow:inset 0 -2px 0 var(--ts-selected,#0c8ce9)}
 @keyframes ts-mega-in{from{opacity:0;transform:translateY(-6px)}}
+/* the menu reads in order: each group's heading and rows come in one by one (spring), the feature card last */
+.ts-nav-desktop .ts-mega-group>*,.ts-nav-desktop .ts-mega-feature{animation:ts-mega-item var(--ts-motion-spring-soft-duration,700ms) var(--ts-motion-spring-soft,ease-out) both;animation-delay:calc((var(--g,0) * 3 + var(--n,0)) * 90ms)}
+.ts-mega-group>:nth-child(2){--n:1}.ts-mega-group>:nth-child(3){--n:2}.ts-mega-group>:nth-child(4){--n:3}.ts-mega-group>:nth-child(5){--n:4}.ts-mega-group>:nth-child(n+6){--n:5}
+@keyframes ts-mega-item{from{opacity:0;transform:translateY(4px)}}
 .ts-mega-groups{flex:1;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);padding:20px 8px 20px 16px;min-width:0}
 .ts-mega-group{display:grid;align-content:start;gap:2px;min-width:0;padding:0 16px}
 .ts-mega-group+.ts-mega-group{border-left:1px solid var(--ts-line,#d8d3c6)}
@@ -440,7 +444,7 @@ export const SITE_CSS = `
 @media (max-width:1000px){.ts-footer-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ts-footer-brand{grid-column:1/-1}.ts-footer-col:nth-of-type(3n+1){padding-left:0;border-left:0}}
 @media (max-width:640px){.ts-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 0;padding:var(--ts-space-6,32px) var(--ts-space-4,16px) 0}.ts-footer-col{padding:0 16px}.ts-footer-col:nth-of-type(2n+1){padding-left:0;border-left:0}.ts-footer-bottom{flex-direction:column;align-items:flex-start;padding:16px var(--ts-space-4,16px) 24px}.ts-footer-end{padding-left:0;border-left:0}}
 @media (pointer:coarse){.ts-footer-group a,.ts-footer-legal a{min-height:44px}}
-@media (prefers-reduced-motion:reduce){.ts-mega-panel{animation:none}.ts-nav-ico,.ts-mega-cta .cv-icon,.ts-mega-trigger .cv-icon{transition:none}}
+@media (prefers-reduced-motion:reduce){.ts-mega-panel,.ts-nav-desktop .ts-mega-group>*,.ts-nav-desktop .ts-mega-feature{animation:none}.ts-nav-ico,.ts-mega-cta .cv-icon,.ts-mega-trigger .cv-icon{transition:none}}
 `;
 
 let href: string | undefined;
