@@ -9,6 +9,7 @@ import {
   STATUS_ORDER,
   priorityOf,
   statusGroup,
+  TYPE_TONE,
   typeIcon,
   typeLabel,
   type IconName,
@@ -227,6 +228,15 @@ export function Empty({ text, icon = "search-x" }: { text: string; icon?: IconNa
   );
 }
 
+/** Page-level type icon: white glyph in a rounded square tinted by type (Notion database icons). */
+export function TypeBadge({ type, size = 20 }: { type: string; size?: 16 | 20 | 24 | number }) {
+  return (
+    <span className={`cl-tbadge is-${TYPE_TONE[type] ?? "gray"}`} style={{ "--b": `${size}px` } as React.CSSProperties} aria-hidden="true">
+      <Icon name={typeIcon(type)} size={Math.round(size * 0.7)} />
+    </span>
+  );
+}
+
 /* ───────── the view ───────── */
 
 export type CollectionViewProps = {
@@ -237,11 +247,13 @@ export type CollectionViewProps = {
   defaultView?: CollectionViewKind;
   /** Other collections of the same company; the side peek lists their items that point at a row. */
   siblings?: Collection[];
+  /** Inside a side peek: a linked view, so no nested peek and no status tabs. */
+  nested?: boolean;
 };
 
 type Preset = { id: string; label: string; icon: IconName; view: CollectionViewKind; range?: "month" | "recent"; calendar?: "week" | "month" };
 
-export function CollectionView({ collection, today = new Date(), resolve, defaultView, siblings = [] }: CollectionViewProps) {
+export function CollectionView({ collection, today = new Date(), resolve, defaultView, siblings = [], nested = false }: CollectionViewProps) {
   const fields = React.useMemo(() => resolveFields(collection), [collection]);
   const status = fields.find((f) => f.kind === "status");
   const priority = fields.find((f) => f.kind === "priority");
@@ -375,13 +387,21 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
   const title = (i: CollectionItem) => (
     <span className="cl-title">
       <Icon name={itemIcon(i)} size={16} className={collection.type === "task" && isDone(i) ? "is-done" : ""} />
-      <button type="button" className="cl-title-t" title={i.path ?? i.title} onClick={() => setPeek(i.id)}>
-        {i.title}
-      </button>
-      <button type="button" className="cl-open" onClick={() => setPeek(i.id)} aria-label={`${i.title} — нээх`} tabIndex={-1}>
-        <Icon name="panel-right" size={14} />
-        Нээх
-      </button>
+      {nested ? (
+        <span className="cl-title-t" title={i.path ?? i.title}>
+          {i.title}
+        </span>
+      ) : (
+        <>
+          <button type="button" className="cl-title-t" title={i.path ?? i.title} onClick={() => setPeek(i.id)}>
+            {i.title}
+          </button>
+          <button type="button" className="cl-open" onClick={() => setPeek(i.id)} aria-label={`${i.title} — нээх`} tabIndex={-1}>
+            <Icon name="panel-right" size={14} />
+            Нээх
+          </button>
+        </>
+      )}
     </span>
   );
   const dateOf = (i: CollectionItem) => {
@@ -724,7 +744,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
 
   return (
     <div className="cl" data-type={collection.type} ref={rootRef}>
-      {status && groupsPresent.length > 0 && (
+      {!nested && status && groupsPresent.length > 0 && (
         <div className="cl-tabs" role="tablist" aria-label={`${label} — төлөв`}>
           <button type="button" role="tab" aria-selected={tab === "all"} onClick={() => setTab("all")}>
             <Icon name="list" size={14} />
@@ -856,7 +876,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           timeline()
         )}
       </div>
-      {peekItem && (
+      {!nested && peekItem && (
         <Peek
           item={peekItem}
           collection={collection}
@@ -933,7 +953,7 @@ function Peek({
       <section className="cv-sheet cl-peek" role="dialog" aria-modal="true" aria-labelledby="cl-peek-title">
         <header className="cl-peek-head">
           <span className="cl-peek-type">
-            <Icon name={typeIcon(collection.type)} size={14} />
+            <TypeBadge type={collection.type} size={20} />
             {collection.label ?? typeLabel(collection.type)}
           </span>
           <button ref={closeRef} type="button" className="cv-sheet-close" onClick={onClose} aria-label="Хаах">
@@ -996,22 +1016,13 @@ function Peek({
                     </button>
                   ))}
                 </div>
-                <ul className="cl-peek-list">
-                  {group.items.map((i) => {
-                    const st = Object.entries(i.props).find(([k]) => k.toLowerCase() === "status")?.[1];
-                    const dt = ["due", "date", "start", "end"].map((k) => i.props[k]).find((v) => parseDay(v) != null);
-                    return (
-                      <li key={i.id}>
-                        {st != null && <StatusPill value={st} />}
-                        <span className="cl-title">
-                          <Icon name={typeIcon(group.collection.type)} size={16} />
-                          <span className="cl-title-t">{i.title}</span>
-                        </span>
-                        <RelDate value={dt} today={today} />
-                      </li>
-                    );
-                  })}
-                </ul>
+                <CollectionView
+                  key={group.collection.type}
+                  collection={{ ...group.collection, items: group.items }}
+                  today={today}
+                  nested
+                  defaultView={group.collection.type === "task" ? "list" : undefined}
+                />
               </>
             )}
           </section>
@@ -1096,6 +1107,7 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-peek-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--cv-line)}
 .cl-peek-type{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--cv-muted)}
 .cl-peek .cv-sheet-body{gap:14px}
+.cl-peek .cv-sheet-body>.cl-pill{align-self:flex-start}
 .cl-peek-title{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.01em}
 .cl-peek-title .cv-icon{margin-top:3px;color:var(--cv-muted)}
 .cl-peek-path{align-self:flex-start;padding:2px 6px;border-radius:5px;background:var(--cv-soft);color:var(--cv-muted);font-size:11.5px;word-break:break-all}
@@ -1107,10 +1119,13 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-props dd{margin:0;min-width:0}
 .cl-more-props{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;height:28px;padding:0 8px;border:0;border-radius:6px;background:none;color:var(--cv-muted);font-size:13px}
 .cl-more-props[aria-expanded=true] .cl-chev{transform:rotate(90deg)}
-.cl-peek-list{display:flex;flex-direction:column;gap:2px;margin:8px 0 0;padding:0;list-style:none}
-.cl-peek-list li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:7px 8px;border-radius:8px}
-.cl-peek-list li:hover{background:var(--cv-soft)}
-.cl-peek-list .cl-title{flex:1 1 160px}
+.cl-peek .cl .cl{margin-top:8px}
+.cl-peek .cl-tabs+.cl{margin-top:8px}
+.cl-tbadge{display:inline-grid;place-items:center;flex:none;width:var(--b,20px);height:var(--b,20px);border-radius:calc(var(--b,20px) * .27);color:#fff}
+.cl-tbadge .cv-icon{stroke-width:2.25}
+.cl-tbadge.is-blue{background:#3b82f6}.cl-tbadge.is-green{background:#22a35a}.cl-tbadge.is-red{background:#e5484d}
+.cl-tbadge.is-violet{background:#8b5cf6}.cl-tbadge.is-teal{background:#14a3a3}.cl-tbadge.is-amber{background:#e08a1e}
+.cl-tbadge.is-yellow{background:#d4a017}.cl-tbadge.is-gray{background:#71717a}
 .cl-table-wrap{overflow-x:auto;border:1px solid var(--cv-line);border-radius:12px;background:var(--cv-bg)}
 .cl-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 .cl-table th,.cl-table td{padding:8px 10px;border-bottom:1px solid var(--cv-line);text-align:left;vertical-align:middle;white-space:nowrap}
