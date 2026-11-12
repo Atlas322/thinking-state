@@ -40,7 +40,7 @@ export function contentHits(text: string): ContentHit[] {
  * ids, versions, keys).
  */
 export const LATIN_OK = [
-  "Thinking", "State", "Second", "Brain", "inai", "Atlas", "React", "TypeScript", "Inter",
+  "Thinking", "State", "Second", "Brain", "Lean", "Canvas", "inai", "Atlas", "React", "TypeScript", "Inter",
   "ms", "px", "kb", "mb", "gb", "min", "sec", "ok", "vs", "deploy", "commit", "branch", "merge", "token", "tokens", "prompt",
   "sync", "bridge", "instance", "docs", "design", "payments", "chat", "code", "crm", "vcs", "vault", "inbox", "fixture",
 ];
