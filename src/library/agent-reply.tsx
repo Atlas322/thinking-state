@@ -239,8 +239,8 @@ export default function Demo() {
       ]}
       choices={["Make v4a final", "Keep v4c"]}
       sources={[
-        { label: "02-Projects/Website/Website.md" },
-        { label: "02-Projects/Website/Output/page.html" },
+        { label: "projects/website/brief.md" },
+        { label: "projects/website/output/page.html" },
       ]}
       onChoose={() => new Promise((r) => setTimeout(r, 400))}
     />
