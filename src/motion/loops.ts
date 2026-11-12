@@ -3,7 +3,9 @@
  * opacity only (compositor, no layout or paint per frame).
  *
  * Each ambient loop is one impulse + a physical settle + rest, repeated every
- * `--ts-loop-period` (default `--ts-motion-loop`, 3.2 s). Apply with a class:
+ * `--ts-motion-loop` (3.2 s). Keyframe offsets are fixed against 3.2 s, so
+ * `--ts-loop-period` scales the whole loop — springs included — and is meant
+ * for gentle tempo changes (≈ 0.8–1.5×), not for a different physics. Apply:
  *
  *   <svg class="ts-loop ts-loop-swing" style="--ts-loop-origin: 50% 8%">…
  *
