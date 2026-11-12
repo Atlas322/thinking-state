@@ -100,7 +100,7 @@ export function LoopRegion({
   const loop = useInViewLoop<HTMLElement>(options);
   React.useEffect(() => onStateChange?.(loop.state), [loop.state, onStateChange]);
   return (
-    <Tag ref={loop.ref as React.Ref<never>} className={`ts-loop-region ${className}`} style={style} {...loop.attrs} data-controls={controls}>
+    <Tag ref={loop.ref as React.Ref<never>} className={`ts-loop-region ${className}`} style={style} {...loop.attrs} data-controls={controls} onPointerEnter={loop.wake}>
       <MotionStyles />
       <React.Fragment key={loop.epoch}>{children}</React.Fragment>
       {controls !== "none" && loop.state !== "reduced" && (
@@ -121,7 +121,7 @@ const REPLAY_CSS = `
   border: 1px solid var(--ts-ctl-line);
   color: var(--ts-ctl-fg);
   backdrop-filter: blur(6px);
-  transition: opacity var(--ts-motion-fast, 160ms) var(--ts-motion-ease-standard, ease);
+  transition: opacity var(--ts-motion-dur-xs, 120ms) var(--ts-motion-ease-standard, ease);
 }
 .ts-motion-ctl-btn {
   all: unset; box-sizing: border-box; cursor: pointer;
@@ -130,7 +130,7 @@ const REPLAY_CSS = `
 .ts-motion-ctl-btn:hover { background: var(--ts-ctl-hover); color: var(--ts-ctl-strong); }
 .ts-motion-ctl-btn:focus-visible { outline: 2px solid var(--ts-link, #1b5cff); outline-offset: 1px; }
 .ts-motion-ctl-btn:active svg { transform: scale(0.88); }
-.ts-motion-ctl-btn svg { transition: transform var(--ts-motion-spring-snappy-duration, 420ms) var(--ts-motion-spring-snappy, ease-out); }
+.ts-motion-ctl-btn svg { transition: transform var(--ts-motion-dur-sm, 200ms) var(--ts-motion-ease-standard, ease-out); }
 .ts-loop-region[data-controls="hover"] > .ts-motion-ctl { opacity: 0; }
 .ts-loop-region[data-controls="hover"]:is(:hover, :focus-within) > .ts-motion-ctl,
 .ts-loop-region[data-controls="hover"][data-ts-loop="paused"] > .ts-motion-ctl { opacity: 1; }

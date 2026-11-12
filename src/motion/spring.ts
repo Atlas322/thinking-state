@@ -151,18 +151,17 @@ export function springKeyframes(spring: Spring, from: number, to: number, frames
 }
 
 /**
- * The Thinking State springs. Provisional until the 🎨 motion language note
- * (TENET 3 · компонентын бүртгэл ба хөдөлгөөн) lands; names stay, numbers may move.
- *  - gentle:  calm settle, no visible overshoot — panels, peeks, layout.
- *  - snappy:  quick with a hint of overshoot — buttons, toggles, chips.
- *  - bouncy:  clear overshoot — icon hops, success ticks.
- *  - wobble:  low damping — pendulum swings, bells, shakes.
+ * The Thinking State springs — from the 🎨 motion language (TENET 3 ·
+ * компонентын бүртгэл ба хөдөлгөөн §1, Figma 39:169513). Calm, never bouncy:
+ * every spring keeps a damping ratio ≥ 0.7 (1–2 px of overshoot at most).
+ *  - soft:   UI cards, chips — almost no overshoot (ζ ≈ 1).
+ *  - settle: landing, coming to rest — inbox, cards (ζ ≈ 0.82).
+ *  - heavy:  things with weight — hammer, archive, folder (m 1.6, ζ ≈ 0.83).
  */
 export const SPRINGS = {
-  gentle: { stiffness: 170, damping: 26, mass: 1 },
-  snappy: { stiffness: 380, damping: 30, mass: 1 },
-  bouncy: { stiffness: 300, damping: 15, mass: 1 },
-  wobble: { stiffness: 180, damping: 7, mass: 1 },
+  soft: { stiffness: 170, damping: 26, mass: 1 },
+  settle: { stiffness: 120, damping: 18, mass: 1 },
+  heavy: { stiffness: 90, damping: 20, mass: 1.6 },
 } as const satisfies Record<string, Spring>;
 
 export type SpringName = keyof typeof SPRINGS;
