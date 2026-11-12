@@ -675,6 +675,28 @@
     "usage": "import { Select } from \"./select\";\n\nexport default function App() { \nreturn (<Select label=\"Assign to\" placeholder=\"Select a teammate\" options={[{value:\"maya\",label:\"Maya Chen\",description:\"Product design\"},{value:\"jonas\",label:\"Jonas Weber\",description:\"Engineering\"},{value:\"lena\",label:\"Lena Hart\",description:\"Operations\"}]} />);\n}"
   },
   {
+    "slug": "company-workspace",
+    "name": "Company · Workspace",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/company",
+    "description": "Draws any company in the Company contract as an app – unit tree on the side, breadcrumb header and tabs for business model, process (unit tree), people ↔ agents, workflows, projects (Session Board, Project Report) and decisions; zoom by institution, company or team",
+    "exportName": "CompanyWorkspace",
+    "usage": "import { CompanyWorkspace } from \"./company-workspace\";\nimport { acmeGroup } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyWorkspace company={acmeGroup} />; // Company contract: units, people, agents, workflows, projects; props: defaultLevel, defaultUnitId, defaultView, showTemplateSwitch, labels\n}"
+  },
+  {
+    "slug": "company-brief",
+    "name": "Company · Brief",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/company",
+    "description": "The same company data as one scrolling brief – a hero with level and unit switches, then numbered sections for business model, process, people ↔ agents, workflows, projects and decisions",
+    "exportName": "CompanyBrief",
+    "usage": "import { CompanyBrief } from \"./company-brief\";\nimport { acmeGroup } from \"../company/fixtures\";\n\nexport default function App() {\n  return <CompanyBrief company={acmeGroup} />; // Company contract: units, people, agents, workflows, projects; props: defaultLevel, defaultUnitId, defaultView, showTemplateSwitch, labels\n}"
+  },
+  {
     "slug": "project-report",
     "name": "Project Report",
     "category": "Chat widgets",

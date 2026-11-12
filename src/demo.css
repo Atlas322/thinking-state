@@ -662,6 +662,10 @@ kbd {
 .preview-container.narrow {
   max-width: 340px;
 }
+/* Module entries (Компани) draw a whole app: use the full stage. */
+.preview-container.wide {
+  max-width: none;
+}
 .code-stage {
   background: var(--code-bg);
   height: 485px;
