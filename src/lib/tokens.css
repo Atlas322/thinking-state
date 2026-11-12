@@ -161,13 +161,15 @@
   color: var(--ts-fg);
 }
 
-/* Mode: Удирдах = indigo accent on either surface; Үзэх = Electric. Only the accent changes. */
-:where(.ts-theme-manage, [data-ts-theme="manage"], [data-ts-mode="manage"]) {
+/* Mode: Удирдах = indigo accent on either surface; Үзэх = Electric. Only the accent changes.
+   The mode may sit on the themed element, inside it, or on an ancestor of it
+   (theme blocks reset the accent, so the ancestor case is listed explicitly). */
+:where(.ts-theme-manage, [data-ts-theme="manage"], [data-ts-mode="manage"], [data-ts-mode="manage"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-night)) {
   --ts-accent: var(--ts-indigo);
   --ts-accent-fg: var(--ts-indigo-fg);
   --ts-accent-soft: var(--ts-indigo-soft);
 }
-:where([data-ts-mode="view"]) {
+:where([data-ts-mode="view"], [data-ts-mode="view"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-night, .ts-theme-manage)) {
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
