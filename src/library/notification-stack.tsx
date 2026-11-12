@@ -516,6 +516,7 @@ const css = /* css */ `
   --ui-nsc-shadow-hover: 0 0 0 0.5px rgba(255, 255, 255, 0.16), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
 }
 :where(.dark, [data-theme="dark"]) .ui-nsc .ui-nsc__btn { background: rgba(255, 255, 255, 0.04); }
+.ui-nsc__card{animation:nscfade .6s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ui-nsc__card:nth-child(1){animation-delay:0ms}.ui-nsc__card:nth-child(2){animation-delay:200ms}.ui-nsc__card:nth-child(3){animation-delay:400ms}@keyframes nscfade{from{opacity:0}}@media(prefers-reduced-motion:reduce){.ui-nsc__card{animation:none}}
 `;
 
 

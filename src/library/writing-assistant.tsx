@@ -265,6 +265,7 @@ const css = `
 @keyframes wra-bar{50%{transform:scaleY(.35)}}
 @media(max-width:400px){.wra-stage{height:300px}.wra-scroll{padding:12px 12px 4px}}
 @media(prefers-reduced-motion:reduce){.wra *{animation:none!important;transition:none!important}}
+.wra-head{animation:wrahead .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.wra-head:nth-child(1){animation-delay:0ms}@keyframes wrahead{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.wra-head{animation:none}}.wra-stage{animation:wrastage .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.wra-stage:nth-child(1){animation-delay:160ms}@keyframes wrastage{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.wra-stage{animation:none}}
 `;
 
 export default WritingAssistant;
