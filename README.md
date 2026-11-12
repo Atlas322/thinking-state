@@ -102,8 +102,8 @@ its own defaults. `tokens.css` нь хоёр theme-тэй (owner 11-12, эцси
 давхаргатай гадаргуу, Inter гарчиг, IBM Plex Mono шошго, Electric accent.
 `--ts-font-display` theme бүрд өөр. Горим `data-ts-mode="view" | "manage"` зөвхөн
 accent-ийг солино (Үзэх = Electric, Удирдах = индиго). Accent өнгөтэй текстэд
-`--ts-accent-fg` ашигла. `data-ts-theme="manage"` = dark + Удирдах (v0.1-тэй
-нийцнэ). Фонт багцад орохгүй: Spectral, Inter, IBM Plex Mono-г Google Fonts css2-оор
+`--ts-accent-fg` ашигла. `data-ts-theme="manage"` = dark (v0.1-ийн нэр,
+нийцлийн төлөө). Индиго нь зөвхөн `data-ts-mode="manage"`-аар. Фонт багцад орохгүй: Spectral, Inter, IBM Plex Mono-г Google Fonts css2-оор
 `&text=`-гүй ачаал (ү, ө = cyrillic-ext).
 
 **Сайт (`@inai/thinking-state/site.css`).** Маркетингийн сайтад зориулсан, ижил

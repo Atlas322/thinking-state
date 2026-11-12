@@ -10,7 +10,8 @@
  *          Electric accent
  * and a mode that swaps only the accent:
  *   data-ts-mode="view" (Үзэх, Electric) | "manage" (Удирдах, indigo)
- * data-ts-theme="manage" = dark + Удирдах (kept for v0.1 hosts).
+ * data-ts-theme="manage" = dark (the v0.1 name, kept for hosts); the Удирдах
+ * indigo comes only from data-ts-mode="manage".
  * `data-theme="dark"` (or class "dark") also switches the components' own
  * dark details (colour-scheme, badge text).
  *
@@ -37,7 +38,7 @@
   /* accent by mode (see [data-ts-mode] below): Үзэх = Electric, Удирдах = indigo */
   --ts-electric: #1b5cff;
   --ts-electric-fg: #1b5cff;
-  --ts-electric-soft: #e3e9fb;
+  --ts-electric-soft: #dfe6fb;
   --ts-indigo: #3a4e8c;
   --ts-indigo-fg: #3a4e8c;
   --ts-indigo-soft: #e4e6ee;
@@ -161,7 +162,7 @@
 /* Mode: Удирдах = indigo accent on either theme; Үзэх = Electric. Only the accent changes.
    The mode may sit on the themed element, inside it, or on an ancestor of it
    (theme blocks reset the accent, so the ancestor case is listed explicitly). */
-:where(.ts-theme-manage, [data-ts-theme="manage"], [data-ts-mode="manage"], [data-ts-mode="manage"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-dark)) {
+:where([data-ts-mode="manage"], [data-ts-mode="manage"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-dark, .ts-theme-manage)) {
   --ts-accent: var(--ts-indigo);
   --ts-accent-fg: var(--ts-indigo-fg);
   --ts-accent-soft: var(--ts-indigo-soft);
