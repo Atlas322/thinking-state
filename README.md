@@ -131,6 +131,20 @@ aria-pressed toggle), `Tabs` (`variant="tabs"` = tablist, `"segmented"` = radiog
 `[data-theme=dark]`), alias, primitive, motion бүгд нэг файлд. `npm run tokens:site`
 нь site.css ба ts.css-ийг үүсгэнэ, тест хоёуланг нь шинэ эсэхийг шалгана.
 
+**Хувилбар (scenario) ба чанарын босго.** Thinking State-ийн компонент бүр өөрийн утга
+зүйн хувилбарыг тоглоно (itge.e 11-12). Хувилбар нь 3–5 төлөв, тэдгээрийн хооронд spring
+шилжилт, амрах завсар, loop-оос бүрдэнэ. `useScenario(steps, { rest, loops })` эсвэл
+`<ScenarioRegion steps>{(state) => …}</ScenarioRegion>` ашигла. Алхмууд өгөгдлөөс
+(`{ state, hold }`) ирнэ. Хувилбар зөвхөн viewport-д харагдаж байх үед тоглоно,
+хамгийн ихдээ 3 давталт хийнэ, ↺ ба ⏸ товчтой, reduced-motion үед эцсийн төлөвийг
+харуулна. Input-ууд (checkbox, switch, select…) runtime дээр зөвхөн хэрэглэгчийн
+үйлдлээр хөдөлнө, demo хувилбар нь зөвхөн preview давхаргад байна.
+`npm run check:quality` (`check:motion`, `check:icons`) нь каталогийн preview бүрийг
+headless Chrome-оор нээж хоёр зүйлийг шалгана: 6.5 с-д DOM өөрөө өөрчлөгдөж байна уу
+(хувилбар), ангилал илэрхийлдэг tab/radio/toggle/chip/pill/tag/badge бүр icon-той юу.
+Мэдэгдэж буй дутагдал `scripts/quality-baseline.json`-д бүртгэлтэй. Шинэ дутагдал гарвал
+exit 1 буцаана, засварласны дараа `--update-baseline` ажиллуул.
+
 **Spacing.** 4px суурьтай `--ts-space-1…10` (4 8 12 16 24 32 48 64 72 96), хэмнэл
 `--ts-gap-stack-sm/md/lg` (8/16/24), `--ts-gap-control` (control-ийн доор доод тал нь
 16), `--ts-gap-section` (72, Figma «Нүүр v02»). Control (segmented, tab мөр,

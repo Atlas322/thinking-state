@@ -39,7 +39,7 @@
   --ts-raised: #efebe1;
   --ts-electric: #1b5cff;
   --ts-electric-fg: #1b5cff;
-  --ts-electric-soft: #dfe6fb;
+  --ts-electric-soft: #dce5ff;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
@@ -116,6 +116,7 @@
   --ts-status-idle-bg: #efebe1;
   --ts-status-idle-border: #d8d3c6;
   --ts-status-idle-fg: #45433f;
+  --ts-on-accent-soft: #0f3fb8;
 }
 
 :where(.ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
@@ -134,7 +135,7 @@
   --ts-electric: #4d7fff;
   /* #4D7FFF is for icons and large text; small accent text uses the lighter blue, filled buttons --ts-accent-strong */
   --ts-electric-fg: #7aa2ff;
-  --ts-electric-soft: #233154;
+  --ts-electric-soft: #16224a;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
@@ -208,6 +209,7 @@
   --ts-status-idle-bg: #3a3a37;
   --ts-status-idle-border: #4e4d49;
   --ts-status-idle-fg: #b7b5ae;
+  --ts-on-accent-soft: #8fb0ff;
 }
 
 /* data-ts-mode (view | manage) no longer changes colours: one accent everywhere. */
@@ -242,12 +244,15 @@
 
 /*
  * Selected / active state (itge.e 2026-11-12, Figma section 09): the active
- * tab, chip, segment, scenario or flow card is bright blue with white text
+ * tab, chip, segment, scenario or flow card is blue (--ts-selected-bg) with white text
  * and icons — the same on cream and dark; never indigo. A count inside a
  * selected pill uses white at 20 %. Unselected elements keep their surface.
  */
 :where(:root) {
   --ts-selected: #0c8ce9;
+  /* filled selected state under white text: same hue, lightest with >= 4.5:1
+     (#0C8CE9 is 3.5:1). #0C8CE9 stays for focus rings, borders, indicators. */
+  --ts-selected-bg: #0a7acb;
   --ts-on-selected: #ffffff;
   --ts-on-selected-soft: rgb(255 255 255 / 0.2);
 }

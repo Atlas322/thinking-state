@@ -191,11 +191,21 @@ export function Tabs<V extends string>({ items, value, onChange, variant = "tabs
 
 export type StatusTone = "running" | "needs-you" | "error" | "done" | "idle";
 export type BadgeTone = "neutral" | "blue" | "green" | "amber" | "red" | "violet" | "cat-1" | "cat-2" | "cat-3" | "cat-4" | StatusTone;
+/** Status badges show their icon unless one is given (icon coverage rule). */
+export const STATUS_ICON: Record<StatusTone, IconName> = {
+  running: "play",
+  "needs-you": "circle-help",
+  error: "x",
+  done: "check",
+  idle: "hourglass",
+};
+
 export function Badge({ children, tone = "neutral", icon, className }: { children: React.ReactNode; tone?: BadgeTone; icon?: IconName; className?: string }) {
+  const glyph = icon ?? (tone in STATUS_ICON ? STATUS_ICON[tone as StatusTone] : undefined);
   return (
     <span className={cx("ts-badge", `is-${tone}`, className)}>
       <PrimitiveStyles />
-      {icon && <Icon name={icon} size={14} />}
+      {glyph && <Icon name={glyph} size={14} />}
       {children}
     </span>
   );
@@ -203,8 +213,9 @@ export function Badge({ children, tone = "neutral", icon, className }: { childre
 
 /* ───────── IconTile ───────── */
 
-export type IconTileTone = "neutral" | "accent" | "cat-1" | "cat-2" | "cat-3" | "cat-4" | "folder" | StatusTone;
-const TILE_ICON: Record<number, number> = { 16: 11, 20: 13, 24: 15, 32: 20 };
+export type IconTileTone = "neutral" | "accent" | "electric" | "cat-1" | "cat-2" | "cat-3" | "cat-4" | "folder" | StatusTone;
+/** Figma IconTile (40:207752): S 22 / M 32 / L 48 with 14 / 18 / 26 px glyphs; 16 / 20 / 24 kept for dense rows. */
+const TILE: Record<string, [number, number]> = { S: [22, 14], M: [32, 18], L: [48, 26], 16: [16, 11], 20: [20, 13], 24: [24, 15], 32: [32, 18] };
 /**
  * Coloured rounded square with an icon — menus, cards, side peek, collections
  * (itge.e 2026-11-12). Colour comes from the category / status tokens; one
@@ -219,21 +230,22 @@ export function IconTile({
 }: {
   icon: IconName;
   tone?: IconTileTone;
-  size?: 16 | 20 | 24 | 32;
+  size?: "S" | "M" | "L" | 16 | 20 | 24 | 32;
   label?: string;
   className?: string;
 }) {
   const folder = tone === "folder";
+  const [px, glyph] = TILE[String(size)] ?? TILE.M;
   return (
     <span
       className={cx("ts-tile", `is-${tone}`, className)}
-      style={{ ["--ts-tile-size" as string]: `${size}px` }}
+      style={{ ["--ts-tile-size" as string]: `${px}px` }}
       role={label ? "img" : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : true}
     >
       <PrimitiveStyles />
-      <Icon name={folder ? "folder" : icon} variant={folder ? "filled" : "line"} size={folder ? size : TILE_ICON[size]} />
+      <Icon name={folder ? "folder" : icon} variant={folder ? "filled" : "line"} size={folder ? px : glyph} />
     </span>
   );
 }
