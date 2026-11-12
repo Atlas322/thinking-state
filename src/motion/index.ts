@@ -12,3 +12,5 @@ export type { LoopRegionProps, MotionControlLabels, MotionControlsProps } from "
 export { animateSpring, prefersReducedMotion } from "./animate";
 export { ScenarioRegion, UNCONTROLLED_MAX_MS, useScenario } from "./scenario";
 export type { Scenario, ScenarioOptions, ScenarioRegionProps, ScenarioStep } from "./scenario";
+export { Autoplay } from "./autoplay";
+export type { AutoScript, AutoStep, AutoTarget } from "./autoplay";
