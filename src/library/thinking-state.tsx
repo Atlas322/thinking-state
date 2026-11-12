@@ -34,6 +34,20 @@ export interface ThinkingStateProps {
   onDone?: (seconds: number) => void;
   className?: string;
   variant?: "clean" | "classic";
+  /**
+   * Live mode: a real run owns the progress. Every step in `steps` is shown, the last one is active until
+   * `done`, and the header shows the host's `seconds`. The built-in demo timer does not run.
+   */
+  live?: { done: boolean; seconds: number };
+  /** Header text, for other languages: "Thinking" and "Worked for 7s". */
+  labels?: {
+    thinking?: string;
+    worked?: (seconds: number) => string;
+    /** Running clock next to the header – defaults to "42s". */
+    time?: (seconds: number) => string;
+  };
+  /** Replaces the check mark on the finished row – e.g. a cross when the run failed. */
+  doneIcon?: ReactNode;
 }
 
 function SearchIcon() {
@@ -186,14 +200,23 @@ export function ThinkingState({
   onDone,
   className = "",
   variant = "clean",
+  live,
+  labels,
+  doneIcon,
 }: ThinkingStateProps) {
-  const [progress, setProgress] = useState({
+  const isLive = live !== undefined;
+  const liveDone = live?.done ?? false;
+  const liveSeconds = live?.seconds ?? 0;
+  const [timed, setProgress] = useState({
     visible: Math.min(1, steps.length),
     seconds: 0,
     done: steps.length === 0,
     cycle: 0,
   });
-  const [expanded, setExpanded] = useState(true);
+  // A run that is already finished when it mounts (chat history) starts folded – no collapse animation per row.
+  const [expanded, setExpanded] = useState(
+    () => !(live?.done && collapseOnDone),
+  );
   const bodyId = useId();
   const doneCallback = useRef(onDone);
   const autoCollapse = useRef(collapseOnDone);
@@ -204,6 +227,7 @@ export function ThinkingState({
   const duration = Number.isFinite(stepMs) ? Math.max(1, stepMs) : 1300;
   // The clock depends on the length, not array identity, so inline data and callback updates don't restart it.
   useEffect(() => {
+    if (isLive) return;
     let started = performance.now();
     let completedAt: number | null = null;
     let cycle = 0;
@@ -247,7 +271,17 @@ export function ThinkingState({
       window.clearTimeout(initialTick);
       window.clearInterval(timer);
     };
-  }, [steps.length, duration, loop]);
+  }, [steps.length, duration, loop, isLive]);
+  // Live mode: completion comes from the host, once per run.
+  useEffect(() => {
+    if (!isLive || !liveDone) return;
+    if (autoCollapse.current) setExpanded(false);
+    doneCallback.current?.(liveSeconds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLive, liveDone]);
+  const progress = isLive
+    ? { visible: steps.length, seconds: liveSeconds, done: liveDone, cycle: 0 }
+    : timed;
 
   return (
     <div
@@ -279,11 +313,16 @@ export function ThinkingState({
         </span>
         <span className="thinking-heading">
           {progress.done ? (
-            `Worked for ${progress.seconds}s`
+            (labels?.worked?.(progress.seconds) ??
+            `Worked for ${progress.seconds}s`)
           ) : (
             <>
-              <span className="thinking-shimmer">Thinking</span>{" "}
-              <span className="thinking-time">{progress.seconds}s</span>
+              <span className="thinking-shimmer">
+                {labels?.thinking ?? "Thinking"}
+              </span>{" "}
+              <span className="thinking-time">
+                {labels?.time?.(progress.seconds) ?? `${progress.seconds}s`}
+              </span>
             </>
           )}
         </span>
@@ -342,7 +381,7 @@ export function ThinkingState({
             {progress.done && (
               <li className="thinking-item thinking-finished">
                 <span className="thinking-node" aria-hidden="true">
-                  <CheckIcon />
+                  {doneIcon ?? <CheckIcon />}
                 </span>
                 <span>{doneLabel}</span>
               </li>
