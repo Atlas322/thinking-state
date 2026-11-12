@@ -730,6 +730,50 @@
     "usage": "import { TsPrimitives } from \"./ts-primitives\";\n\nexport default function App() {\n  return <TsPrimitives theme=\"dark\" />; // primitives: Button, SplitCTA, Pill, Tabs, Badge, Card, Text, Stack from \"@inai/thinking-state\"; sites import \"@inai/thinking-state/ts.css\"\n}"
   },
   {
+    "slug": "site-navbar",
+    "name": "Сайт · NavBar",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/ui, src/layout, src/lib, src/motion",
+    "description": "Сайтын толгой хэсэг. Wordmark, холбоосууд болон mega-menu агуулна. Mega-menu нь бүлэг тус бүрд icon-той мөрүүд, нэг онцлох алхамтай. «Апп руу» гадагш холбоос болон actions хэсэг (theme toggle, CTA) бий. Утсанд цэс accordion болж нэг багана нээгдэнэ, Escape дарахад хаагдана. Өгөгдлийг prop-оор авна. Preview хувилбар нь цэснүүдийг дараалан нээж, «та энд байна»-г шилжүүлнэ.",
+    "exportName": "SiteNavBar",
+    "usage": "import { SiteNavBar } from \"./site-navbar\";\n\nexport default function App() {\n  return <SiteNavBar items={[{ kind: \"link\", label: \"Үнэ\", href: \"#pricing\", icon: \"tag\" }]} current=\"#pricing\" />; // = NavBar from \"@inai/thinking-state\"\n}"
+  },
+  {
+    "slug": "site-footer",
+    "name": "Сайт · Footer",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/ui, src/layout, src/lib, src/motion",
+    "description": "Сайтын хөл хэсэг. Брэнд, CTA, сайтын бүтэн газрын зураг (баганууд, бүлэг) агуулна. Доод мөрөнд тоонуудын эх сурвалж болон шинэчлэгдсэн огноо гарна. Хоосон утга харуулахгүй. Preview хувилбар «та энд байна» тэмдэглэгээг газрын зураг дагуу шилжүүлнэ.",
+    "exportName": "SiteFooter",
+    "usage": "import { SiteFooter } from \"./site-footer\";\n\nexport default function App() {\n  return <SiteFooter columns={[]} owner=\"© 2026\" />; // = Footer from \"@inai/thinking-state\"\n}"
+  },
+  {
+    "slug": "scenario-chat",
+    "name": "Хувилбарт чат · ScenarioChat",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/ui, src/layout, src/lib, src/motion",
+    "description": "Албан тушаалын асуултад компанийн өөрийн өгөгдлөөс эх сурвалжтай хариулна. Өгөгдлийг Company.scenarios гэрээнээс авна. Хувилбар нь асуулт, эх сурвалжууд (төрлийн tile, огноо), алхам, хариулт, хамгаалалт (хүн батлах эсвэл эрх) гэсэн дарааллаар тоглоод дараагийн асуулт руу шилжинэ. Хамгийн ихдээ 3 асуулт тоглоно. Асуулт сонговол бүтэн хариулт харагдана. ↺ ба ⏸ товчтой.",
+    "exportName": "ScenarioChatView",
+    "usage": "import { ScenarioChatView } from \"./scenario-chat\";\n\nexport default function App() {\n  return <ScenarioChatView scenarios={company.scenarios ?? []} />; // = ScenarioChat from \"@inai/thinking-state\"\n}"
+  },
+  {
+    "slug": "agent-consent",
+    "name": "Агентын эрх · AgentConsent",
+    "category": "Компани",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/ui, src/layout, src/lib, src/motion",
+    "description": "Агент хамрах хүрээтэй, хугацаатай эрх хүснэ, хүн шийдвэрлэнэ. Карт нь агент, үйлдэл, эрсдэл, шалтгаан, юу харагдах, хамрах хүрээ (нэг удаа, хугацаатай, үргэлж) гэсэн мэдээлэлтэй. Буцаах боломжгүй үйлдэлд «үргэлж» сонголт гарахгүй. Хувилбар нь хүсэлт, хүрээ, хүлээлгэ, шийдвэр, «Зөвшөөрлөө · … · Өөрчлөх» гэсэн дарааллаар тоглоно.",
+    "exportName": "AgentConsentCard",
+    "usage": "import { AgentConsentCard } from \"./agent-consent\";\n\nexport default function App() {\n  return <AgentConsentCard agent={{ name: \"Туслах\" }} action=\"файл унших\" target=\"Drive\" />; // = AgentConsent from \"@inai/thinking-state\"\n}"
+  },
+  {
     "slug": "project-report",
     "name": "Project Report",
     "category": "Chat widgets",

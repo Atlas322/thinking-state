@@ -1,7 +1,7 @@
 {
   "$meta": {
     "source": "src/catalog.json (npm run tokens:figma)",
-    "count": 103
+    "count": 107
   },
   "components": [
     {
@@ -897,6 +897,50 @@
         "clean"
       ],
       "module": "src/ui, src/layout, src/lib",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "site-navbar",
+      "name": "Сайт · NavBar",
+      "category": "Компани",
+      "export": "SiteNavBar",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/ui, src/layout, src/lib, src/motion",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "site-footer",
+      "name": "Сайт · Footer",
+      "category": "Компани",
+      "export": "SiteFooter",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/ui, src/layout, src/lib, src/motion",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "scenario-chat",
+      "name": "Хувилбарт чат · ScenarioChat",
+      "category": "Компани",
+      "export": "ScenarioChatView",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/ui, src/layout, src/lib, src/motion",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "agent-consent",
+      "name": "Агентын эрх · AgentConsent",
+      "category": "Компани",
+      "export": "AgentConsentCard",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/ui, src/layout, src/lib, src/motion",
       "origin": "Thinking State original"
     },
     {

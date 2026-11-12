@@ -36,7 +36,7 @@ export const PRIMITIVES_CSS = `
 .ts-pill.is-md{height:30px;padding:0 12px;font-size:13px}
 .ts-pill.is-interactive{cursor:pointer}
 .ts-pill.is-interactive:hover:not(.is-selected){background:var(--ts-soft,#efebe1)}
-.ts-pill.is-selected,.ts-tab.is-selected{border-color:transparent;background:${SEL};color:${ON}}
+.ts-pill.is-selected,.ts-tab.is-selected{border-color:transparent;background:var(--ts-selected-bg,#0a7acb);color:${ON}}
 .ts-pill-n{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;background:var(--ts-soft,#efebe1);color:var(--ts-muted,#5e5a52);font-size:11px;font-variant-numeric:tabular-nums}
 .is-selected>.ts-pill-n{background:${ON_SOFT};color:${ON}}
 
@@ -52,7 +52,7 @@ export const PRIMITIVES_CSS = `
 .ts-tab:disabled{opacity:.4;cursor:not-allowed}
 
 .ts-badge{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;box-sizing:border-box;border-radius:6px;font-size:12px;font-weight:500;line-height:1;white-space:nowrap;background:var(--ts-soft,#efebe1);color:var(--ts-muted,#5e5a52)}
-.ts-badge.is-blue{background:var(--ts-accent-soft,#e3e9fb);color:var(--ts-accent-fg,${ACC})}
+.ts-badge.is-blue{background:var(--ts-accent-soft,#dce5ff);color:var(--ts-on-accent-soft,#0f3fb8)}
 .ts-badge.is-green{background:var(--ts-green-soft,#e3eadf);color:var(--ts-green,#5e7a5f)}
 .ts-badge.is-amber{background:var(--ts-amber-soft,#f2e3cc);color:var(--ts-amber,#a85a12)}
 .ts-badge.is-red{background:var(--ts-red-soft,#f4dad6);color:var(--ts-red,#c2362f)}
@@ -60,9 +60,9 @@ export const PRIMITIVES_CSS = `
 ${[1, 2, 3, 4].map((i) => `.ts-badge.is-cat-${i}{background:var(--ts-cat-${i}-bg,var(--ts-soft,#efebe1));color:var(--ts-cat-${i}-fg,color-mix(in srgb,var(--ts-cat-${i},#888) 62%,var(--ts-fg,#080808)))}`).join("\n")}
 ${STATUSES.map((st) => `.ts-badge.is-${st}{background:var(--ts-status-${st}-bg);box-shadow:inset 0 0 0 1px var(--ts-status-${st}-border);color:var(--ts-status-${st}-fg)}`).join("\n")}
 
-.ts-tile{display:inline-grid;place-items:center;flex:none;box-sizing:border-box;width:var(--ts-tile-size);height:var(--ts-tile-size);border-radius:min(var(--ts-radius-tile,6px),calc(var(--ts-tile-size) / 4));background:var(--ts-soft,#efebe1);color:var(--ts-fg,#080808)}
+.ts-tile{display:inline-grid;place-items:center;flex:none;box-sizing:border-box;width:var(--ts-tile-size);height:var(--ts-tile-size);border-radius:var(--ts-radius-tile,6px);background:var(--ts-soft,#efebe1);color:var(--ts-fg,#080808)}
 ${[1, 2, 3, 4].map((i) => `.ts-tile.is-cat-${i}{background:var(--ts-cat-${i});color:var(--ts-on-cat-${i},#fff)}`).join("\n")}
-.ts-tile.is-accent{background:var(--ts-accent-strong,#1b5cff);color:#fff}
+.ts-tile:is(.is-accent,.is-electric){background:var(--ts-accent-strong,#1b5cff);color:#fff}
 ${STATUSES.map((st) => `.ts-tile.is-${st}{background:var(--ts-status-${st}-bg);box-shadow:inset 0 0 0 1px var(--ts-status-${st}-border);color:var(--ts-status-${st}-fg)}`).join("\n")}
 .ts-tile.is-folder{background:transparent}
 
