@@ -355,8 +355,8 @@ const css = /* css */ `
 .ui-tac {
   --ui-tac-title: rgba(0, 0, 0, 0.88);
   --ui-tac-ink: rgba(0, 0, 0, 0.88);
-  --ui-tac-muted: rgba(0, 0, 0, 0.61);
-  --ui-tac-subtle: rgba(0, 0, 0, 0.45);
+  --ui-tac-muted: rgba(0, 0, 0, 0.7);
+  --ui-tac-subtle: rgba(0, 0, 0, 0.6);
   --ui-tac-faint: rgba(0, 0, 0, 0.3);
   --ui-tac-icon: rgba(0, 0, 0, 0.447);
   --ui-tac-surface: #ffffff;
@@ -365,7 +365,7 @@ const css = /* css */ `
   --ui-tac-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 1px -1px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --ui-tac-shadow-hover: 0 0 0 0.5px rgba(0, 0, 0, 0.13), 0 1px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --ui-tac-shadow-focus: 0 0 0 1px rgba(0, 0, 0, 0.28), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --ui-tac-danger: #d93d42;
+  --ui-tac-danger: #c62828;
   --ui-tac-danger-edge: rgba(229, 72, 77, 0.55);
   --ui-tac-danger-edge-focus: rgba(229, 72, 77, 0.8);
   --ui-tac-focus: rgba(0, 96, 226, 0.7);
@@ -483,7 +483,7 @@ const css = /* css */ `
   animation: ui-tac-message 260ms var(--ui-tac-ease);
 }
 .ui-tac[data-invalid] .ui-tac__message { color: var(--ui-tac-danger); }
-.ui-tac__count { flex: none; margin-left: auto; font-size: 12px; line-height: 16px; font-variant-numeric: tabular-nums; color: var(--ui-tac-faint); transition: color 140ms ease; }
+.ui-tac__count { flex: none; margin-left: auto; font-size: 12px; line-height: 16px; font-variant-numeric: tabular-nums; color: var(--ui-tac-subtle); transition: color 140ms ease; }
 .ui-tac__count[data-full] { color: var(--ui-tac-muted); }
 .ui-tac__count[data-over] { color: var(--ui-tac-danger); }
 

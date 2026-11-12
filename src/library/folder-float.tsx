@@ -52,6 +52,8 @@ const css = `
 .folder-float__paper{position:absolute;top:10%;z-index:1;right:8%;left:8%;height:50%;border-radius:6px;background:var(--ff-paper);opacity:0;transform:translateY(10px);transition:transform var(--ff-close) var(--ff-ease-out),opacity var(--ff-close) ease}
 .folder-float__front{position:absolute;right:0;bottom:0;left:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;height:76%;padding:14px 16px;box-sizing:border-box;border-radius:var(--ff-r);background:linear-gradient(180deg,color-mix(in srgb,var(--ff-front) 92%,#fff),var(--ff-front) 60%);color:var(--ff-label);box-shadow:0 -10px 24px rgba(0,0,0,.28);transform:perspective(600px) rotateX(calc(-1 * var(--ff-rest)));transform-origin:50% 100%;transition:transform var(--ff-open) var(--ff-ease-out)}
 .folder-float__label{font-size:13px;font-weight:500}
+.folder-float-note{color:#65656d;font:12px Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .folder-float-note{color:#9a9aa2}
 .folder-float__sub{font-size:11px;opacity:.55}
 .folder-float__trigger{position:absolute;right:0;bottom:0;left:0;z-index:3;height:76%;margin:0;padding:0;border:0;border-radius:var(--ff-r);background:transparent;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
 .folder-float__trigger:focus-visible{outline:2px solid var(--ff-paper);outline-offset:3px}
@@ -449,7 +451,7 @@ export default function Demo() {
         trigger="click"
         onSelect={(value) => setPicked(value)}
       />
-      <small style={{ color: "#71717a", font: "12px Inter, system-ui, sans-serif" }}>
+      <small className="folder-float-note">
         {picked ? `Сонгосон: ${picked}` : "Хавтсан дээр дараад тэмдэглэлээ чирэх эсвэл сонгоно уу"}
       </small>
     </div>

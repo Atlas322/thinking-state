@@ -449,9 +449,9 @@ const css = /* css */ `
   --ui-ctc-card: #ffffff;
   --ui-ctc-strong: #000000;
   --ui-ctc-ink: rgba(0, 0, 0, 0.88);
-  --ui-ctc-text: rgba(0, 0, 0, 0.61);
-  --ui-ctc-muted: rgba(0, 0, 0, 0.45);
-  --ui-ctc-faint: rgba(0, 0, 0, 0.27);
+  --ui-ctc-text: rgba(0, 0, 0, 0.72);
+  --ui-ctc-muted: rgba(0, 0, 0, 0.66);
+  --ui-ctc-faint: rgba(0, 0, 0, 0.6);
   --ui-ctc-icon: rgba(0, 0, 0, 0.447);
   --ui-ctc-line: rgba(0, 0, 0, 0.06);
   --ui-ctc-tree: rgba(0, 0, 0, 0.1);
@@ -742,9 +742,9 @@ img.ui-ctc__avatar { box-shadow: 0 0 0 0.5px var(--ui-ctc-avatar-ring); }
   --ui-ctc-card: #1c1c1e;
   --ui-ctc-strong: #ffffff;
   --ui-ctc-ink: rgba(255, 255, 255, 0.9);
-  --ui-ctc-text: rgba(255, 255, 255, 0.62);
-  --ui-ctc-muted: rgba(255, 255, 255, 0.46);
-  --ui-ctc-faint: rgba(255, 255, 255, 0.3);
+  --ui-ctc-text: rgba(255, 255, 255, 0.68);
+  --ui-ctc-muted: rgba(255, 255, 255, 0.6);
+  --ui-ctc-faint: rgba(255, 255, 255, 0.52);
   --ui-ctc-icon: rgba(255, 255, 255, 0.5);
   --ui-ctc-line: rgba(255, 255, 255, 0.08);
   --ui-ctc-tree: rgba(255, 255, 255, 0.14);

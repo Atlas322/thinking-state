@@ -213,7 +213,7 @@ export function RootCauseTree({ title = "Үндсэн шалтгаан", failure
 }
 
 const css = `
-.rct{--rct-bg:#fff;--rct-fg:#18181b;--rct-muted:#65656d;--rct-faint:#65656d;--rct-line:#e6e6e9;--rct-chip:#f1f1f3;--rct-blue:#3b82f6;--rct-blue-soft:#e8f1fe;--rct-red:#e5484d;--rct-red-soft:#fdecec;--rct-green:#16a34a;width:100%;max-width:700px;color:var(--rct-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
+.rct{--rct-bg:#fff;--rct-fg:#18181b;--rct-muted:#65656d;--rct-faint:#65656d;--rct-line:#e6e6e9;--rct-chip:#f1f1f3;--rct-blue:#2563eb;--rct-blue-soft:#e8f1fe;--rct-red:#c62828;--rct-red-soft:#fdecec;--rct-green:#16a34a;width:100%;max-width:700px;color:var(--rct-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
 :where(.dark,[data-theme=dark]) .rct{--rct-bg:#1b1b1e;--rct-fg:#ececef;--rct-muted:#a1a1aa;--rct-faint:#9a9aa2;--rct-line:#2e2e33;--rct-chip:#2a2a2f;--rct-blue:#5b9cff;--rct-blue-soft:#1b2a44;--rct-red:#ff6b6f;--rct-red-soft:#3a1d1f;--rct-green:#4ade80;color-scheme:dark}
 .rct *{box-sizing:border-box}.rct button{font:inherit;color:inherit;cursor:pointer}
 .rct-bar{display:flex;align-items:center;gap:8px;padding:0 4px 14px}
@@ -241,8 +241,8 @@ const css = `
 .rct-card.is-root{width:204px}
 .rct-card:hover{border-color:color-mix(in srgb,var(--rct-fg) 25%,transparent)}
 .rct-card.is-selected{border-color:color-mix(in srgb,var(--rct-fg) 30%,transparent)}
-.rct-card.is-ruled-out{box-shadow:none;background:color-mix(in srgb,var(--rct-bg) 55%,transparent)}.rct-card.is-ruled-out .rct-files,.rct-card.is-ruled-out .rct-status{opacity:.8}
-.rct-card.is-ruled-out .rct-title{color:var(--rct-muted)}.rct-card.is-ruled-out .rct-ico{filter:grayscale(1);opacity:.6}
+.rct-card.is-ruled-out{box-shadow:none;background:color-mix(in srgb,var(--rct-bg) 55%,transparent)}.rct-card.is-ruled-out .rct-files{opacity:.8}
+.rct-card.is-ruled-out .rct-title{color:var(--rct-muted)}.rct-card.is-ruled-out .rct-ico{filter:grayscale(1);opacity:.85}
 .rct-card.is-confirmed{border-color:var(--rct-green)}
 .rct-title{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:400;line-height:1.3}
 .rct-ico{display:grid;place-items:center;width:14px;height:14px;flex:none}.rct-ico svg{width:13px;height:13px}

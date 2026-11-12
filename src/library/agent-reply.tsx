@@ -77,10 +77,10 @@ const defaultLabels = {
 
 const css = `
 .ar{--ar-tx:#18181b;--ar-mu:#65656d;--ar-dim:#65656d;--ar-bd:#e4e4e7;--ar-s1:#fafafa;--ar-s2:#f4f4f5;
---ar-blue:#2563eb;--ar-green:#16a34a;--ar-amber:#d97706;--ar-red:#dc2626;
+--ar-blue:#2563eb;--ar-green:#15803d;--ar-amber:#92400e;--ar-on-amber:#fff;--ar-red:#dc2626;
 font:14px/1.6 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--ar-tx);display:flex;gap:12px;max-width:680px}
 :where(.dark,[data-theme=dark]) .ar{--ar-tx:#f4f4f5;--ar-mu:#a1a1aa;--ar-dim:#9a9aa2;--ar-bd:#27272a;--ar-s1:#111113;--ar-s2:#18181b;
---ar-blue:#60a5fa;--ar-green:#4ade80;--ar-amber:#f59e0b;--ar-red:#f87171}
+--ar-blue:#60a5fa;--ar-green:#4ade80;--ar-amber:#f59e0b;--ar-on-amber:#000;--ar-red:#f87171}
 .ar-av{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--ar-s2);border:1px solid var(--ar-bd);font-size:14px}
 .ar-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:10px}
 .ar-head{display:flex;align-items:baseline;gap:8px}
@@ -105,7 +105,7 @@ font:14px/1.6 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--ar-tx);displa
 .ar-opt{all:unset;cursor:pointer;padding:4px 12px;border-radius:999px;border:1px solid var(--ar-amber);font-size:12.5px;transition:background .15s,opacity .15s}
 .ar-opt:hover:not(:disabled){background:color-mix(in srgb,var(--ar-amber) 16%,transparent)}
 .ar-opt:focus-visible{outline:2px solid var(--ar-amber);outline-offset:2px}
-.ar-opt[aria-pressed=true]{background:var(--ar-amber);color:#000}
+.ar-opt[aria-pressed=true]{background:var(--ar-amber);color:var(--ar-on-amber)}
 .ar-opt:disabled{cursor:default}.ar-opt.dim{opacity:.4}
 .ar-own{display:flex;gap:6px}
 .ar-own input{flex:1;min-width:0;padding:4px 12px;border-radius:999px;border:1px solid var(--ar-bd);background:transparent;color:inherit;font:inherit;font-size:12.5px;outline:none}

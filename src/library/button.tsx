@@ -235,7 +235,7 @@ const css = /* css */ `
   --ui-btnc-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 1px 1px -1px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --ui-btnc-shadow-hover: 0 0 0 0.5px rgba(0, 0, 0, 0.1), 0 1px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.07);
   --ui-btnc-wash: rgba(0, 0, 0, 0.03);
-  --ui-btnc-danger: #e5484d;
+  --ui-btnc-danger: #c62828;
   --ui-btnc-danger-bg: rgba(229, 72, 77, 0.08);
   --ui-btnc-danger-bg-hover: rgba(229, 72, 77, 0.12);
   --ui-btnc-shine: rgba(255, 255, 255, 0.82);
@@ -497,6 +497,7 @@ const css = /* css */ `
 }
 
 /* Dark mode: follows a .dark class or data-theme="dark" on any ancestor, e.g. <html> */
+:where(.dark, [data-theme="dark"]) .ui-buttonc-demo { --ui-btnc-demo-label: #9a9aa2; }
 :where(.dark, [data-theme="dark"]) .ui-buttonc {
   /* primary inverts: a light chip with dark text */
   --ui-btnc-solid: rgba(255, 255, 255, 0.9);
@@ -538,11 +539,11 @@ export default function Demo() {
   const Upload = svg(<><path d="M12 15V3M7 8l5-5 5 5" /><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" /></>);
   const group: React.CSSProperties = { display: "flex", flexDirection: "column", alignItems: "center", gap: 10 };
   const row: React.CSSProperties = { display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", justifyContent: "center" };
-  const label: React.CSSProperties = { fontSize: 13, color: "#71717a", margin: 0 };
+  const label: React.CSSProperties = { fontSize: 13, color: "var(--ui-btnc-demo-label, #65656d)", margin: 0 };
   const copy = () => { setCopied(true); setTimeout(() => setCopied(false), 1500); };
   const upload = () => { setBusy(true); setTimeout(() => setBusy(false), 2000); };
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
+    <div className="ui-buttonc-demo" style={{ display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
       <div style={group}>
         <p style={label}>Хэв маяг</p>
         <div style={row}>

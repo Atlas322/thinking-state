@@ -498,7 +498,7 @@ const css = /* css */ `
   --ui-segc-track: rgba(0, 0, 0, 0.04);
   --ui-segc-card: #ffffff;
   --ui-segc-card-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 1px 1px -1px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --ui-segc-accent: rgba(0, 96, 226, 0.765);
+  --ui-segc-accent: #0060e2;
   --ui-segc-accent-soft: rgba(0, 96, 226, 0.08);
   --ui-segc-focus: rgba(0, 96, 226, 0.7);
   --ui-segc-ease: cubic-bezier(0.25, 0.9, 0.3, 1);
@@ -699,7 +699,7 @@ const css = /* css */ `
   --ui-segc-track: rgba(255, 255, 255, 0.05);
   --ui-segc-card: #2c2c2f;
   --ui-segc-card-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 1px 2px rgba(0, 0, 0, 0.4);
-  --ui-segc-accent: #4d8dff;
+  --ui-segc-accent: #8ab4ff;
   --ui-segc-accent-soft: rgba(77, 141, 255, 0.14);
   --ui-segc-focus: rgba(77, 141, 255, 0.8);
 }
@@ -719,14 +719,14 @@ const ListIcon = () => demoIcon("M6 4h7M6 8h7M6 12h7M3 4h.01M3 8h.01M3 12h.01");
 const BoardIcon = () => demoIcon("M3 3h4v10H3zM9 3h4v6H9z");
 const CalendarIcon = () => demoIcon("M3 4.5h10v8.5H3zM3 7h10M6 3v3M10 3v3");
 
-const demoLabel: React.CSSProperties = { margin: "0 0 8px", fontSize: 13, color: "#6b6b6b" };
+const demoLabel: React.CSSProperties = { margin: "0 0 8px", fontSize: 13, color: "color-mix(in srgb, CanvasText 62%, Canvas)" };
 const demoRule: React.CSSProperties = { height: 1, background: "rgba(0,0,0,.08)", margin: "20px 0" };
 
 export default function Demo() {
   const [section, setSection] = React.useState("overview");
   const [period, setPeriod] = React.useState("yearly");
   return (
-    <div style={{ width: "100%", maxWidth: 440, padding: 20, borderRadius: 12, border: "1px solid rgba(0,0,0,.08)", background: "#fff", boxSizing: "border-box" }}>
+    <div style={{ width: "100%", maxWidth: 440, padding: 20, borderRadius: 12, border: "1px solid rgba(0,0,0,.08)", background: "Canvas", boxSizing: "border-box" }}>
       <p id="sc-demo-dashboard" style={demoLabel}>Хянах самбар</p>
       <SegmentedControl
         aria-labelledby="sc-demo-dashboard"

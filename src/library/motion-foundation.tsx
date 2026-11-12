@@ -194,7 +194,7 @@ export default function Preview() {
 }
 
 const CSS = `
-.mf { --mf-fg: var(--ts-fg, #080808); --mf-muted: var(--ts-muted, #5e5a52); --mf-faint: var(--ts-faint, #8f8a80); --mf-line: var(--ts-line, #d8d3c6); --mf-surface: var(--ts-surface, #f7f5ee); --mf-soft: var(--ts-soft, #efebe1); --mf-accent: var(--ts-accent, #3a4e8c); --mf-ink: var(--ts-ink, #262522); }
+.mf { --mf-fg: var(--ts-fg, #080808); --mf-muted: var(--ts-muted, #5e5a52); --mf-faint: var(--ts-faint, #66625a); --mf-line: var(--ts-line, #d8d3c6); --mf-surface: var(--ts-surface, #f7f5ee); --mf-soft: var(--ts-soft, #efebe1); --mf-accent: var(--ts-accent, #3a4e8c); --mf-ink: var(--ts-ink, #262522); }
 :where(.dark, [data-theme=dark]) .mf { --mf-fg: var(--ts-fg, #ececef); --mf-muted: var(--ts-muted, #a1a1aa); --mf-faint: var(--ts-faint, #9a9aa2); --mf-line: var(--ts-line, #2b2b30); --mf-surface: var(--ts-surface, #141416); --mf-soft: var(--ts-soft, #1e1e21); --mf-accent: var(--ts-accent, #9fb0e6); --mf-ink: var(--ts-ink, #2a2926); }
 .mf { width: 100%; display: flex; flex-direction: column; gap: 16px; font-family: var(--ts-font, Inter, system-ui, sans-serif); color: var(--mf-fg); }
 .mf h3 { margin: 0 0 10px; font: 600 13px/1.3 var(--ts-font, Inter, system-ui, sans-serif); color: var(--mf-muted); letter-spacing: .02em; }

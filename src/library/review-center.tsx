@@ -434,7 +434,7 @@ const css = `
 .rc{--rc-bg:#fff;--rc-fg:#18181b;--rc-muted:#65656d;--rc-faint:#65656d;--rc-line:#ececef;--rc-chip:#f4f4f5;--rc-blue:#3b82f6;--rc-amber:#fde68a;width:100%;max-width:760px;display:flex;flex-direction:column;background:var(--rc-bg);color:var(--rc-fg);border:1px solid var(--rc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;outline:none;container-type:inline-size}
 :where(.dark,[data-theme=dark]) .rc{--rc-bg:#1b1b1e;--rc-fg:#ececef;--rc-muted:#a1a1aa;--rc-faint:#9a9aa2;--rc-line:#2e2e33;--rc-chip:#26262a;--rc-amber:#6b5310;color-scheme:dark}
 .rc *{box-sizing:border-box}.rc button,.rc textarea{font:inherit;color:inherit}.rc button{cursor:pointer}
-.rc-bar{display:flex;align-items:center;gap:10px;height:48px;padding:0 16px;border-bottom:1px solid var(--rc-line);font-size:13px;white-space:nowrap}
+.rc-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;min-height:48px;padding:8px 16px;border-bottom:1px solid var(--rc-line);font-size:13px;white-space:nowrap}
 .rc-logo{width:16px;height:16px;color:var(--rc-blue);flex:none}
 .rc-bar strong{font-weight:500;font-size:14px}
 .rc-prog{width:64px;height:4px;margin-left:2px;border-radius:2px;background:var(--rc-line);overflow:hidden;flex:none}
@@ -468,7 +468,7 @@ const css = `
 .rc-agent-n{display:flex;align-items:center;gap:8px;font-weight:500}
 .rc-model{font-size:12px;color:var(--rc-muted)}
 .rc-risk{padding:1px 6px;border-radius:4px;font-size:13px;font-weight:400}
-.rc-risk.is-high{background:#ffe8e3;color:#e5484d}.rc-risk.is-medium{background:#fff1dc;color:#c2580c}
+.rc-risk.is-high{background:#ffe8e3;color:#c62828}.rc-risk.is-medium{background:#fff1dc;color:#b45309}
 .rc-title{margin:18px 0 0;font-size:16px;font-weight:500;letter-spacing:-.01em}
 .rc-edit{display:block;width:100%;margin-top:14px;padding:8px 10px;border:1px solid var(--rc-blue);border-radius:8px;background:var(--rc-bg);font-size:15px;resize:vertical;outline:none}
 .rc-why{margin:10px 0 0;color:var(--rc-muted);font-size:14px}.rc-why b{font-weight:500;color:var(--rc-fg)}
@@ -484,17 +484,17 @@ const css = `
 .rc-sources{display:flex;flex-wrap:wrap;gap:16px;margin-top:20px;font-size:12px;color:var(--rc-muted)}
 .rc-sources span{display:inline-flex;align-items:center;gap:6px}.rc-sources svg{width:12px;height:12px;color:var(--rc-faint)}
 .rc-empty{flex:1;display:grid;place-items:center;color:var(--rc-faint)}
-.rc-actions{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--rc-line)}
+.rc-actions{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-top:1px solid var(--rc-line)}
 .rc-reasons{display:flex;flex-wrap:wrap;gap:8px}
 .rc-btn{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 6px 0 8px;border:0;border-radius:7px;background:var(--rc-bg);box-shadow:0 0 0 1px var(--rc-line),0 1px 2px #0000000d;font-size:14px;font-weight:500;transition:background .15s}
 .rc-btn:hover{background:var(--rc-chip)}.rc-btn:disabled{opacity:.45;cursor:default}
 .rc-btn svg{width:13px;height:13px;color:var(--rc-muted)}
 .rc-btn.is-primary{background:var(--rc-fg);color:var(--rc-bg);box-shadow:none}.rc-btn.is-primary svg{color:inherit}
-.rc-btn.is-primary kbd{background:#ffffff26;color:#ffffffb3}
+.rc-btn.is-primary kbd{background:#ffffff26;color:#ffffffb3}:where(.dark,[data-theme=dark]) .rc .rc-btn.is-primary kbd{background:#0000001a;color:#000000a6}
 .rc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .rc :focus-visible{outline:2px solid var(--rc-blue);outline-offset:2px}
 @keyframes rc-in{from{opacity:0}}@keyframes rc-up{from{opacity:0;transform:translateY(6px)}}@keyframes rc-pop{from{opacity:0;transform:scale(.97)}}
-@container (max-width:640px){.rc-main{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:auto}.rc-queue{border-right:0;border-bottom:1px solid var(--rc-line)}.rc-rows{max-height:186px}.rc-count,.rc-prog,.rc-last{display:none}.rc-actions .rc-btn{flex:1;justify-content:center}}
+@container (max-width:640px){.rc-main{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:auto}.rc-queue{border-right:0;border-bottom:1px solid var(--rc-line)}.rc-rows{max-height:186px}.rc-count,.rc-prog,.rc-last{display:none}.rc-actions .rc-btn{flex:1 1 auto;justify-content:center}}
 @container (max-width:420px){.rc-btn svg{display:none}.rc-note{left:0;width:240px}}
 @media(prefers-reduced-motion:reduce){.rc *{animation:none!important;transition:none!important}}
 `;

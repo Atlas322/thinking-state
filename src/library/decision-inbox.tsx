@@ -253,7 +253,7 @@ const css = /* css */ `
   --ui-dic-faint: rgba(0, 0, 0, 0.27);
   --ui-dic-line: rgba(0, 0, 0, 0.06);
   --ui-dic-wash: rgba(0, 0, 0, 0.03);
-  --ui-dic-alert: #e8a20c;
+  --ui-dic-alert: #b45309;
   --ui-dic-ok: #1a9a52;
   --ui-dic-ok-bg: rgba(26, 154, 82, 0.08);
   --ui-dic-solid: rgba(0, 0, 0, 0.88);

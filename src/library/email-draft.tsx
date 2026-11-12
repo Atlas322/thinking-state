@@ -553,9 +553,9 @@ const css = /* css */ `
   --ui-edc-card: #ffffff;
   --ui-edc-strong: #000000;
   --ui-edc-ink: rgba(0, 0, 0, 0.88);
-  --ui-edc-text: rgba(0, 0, 0, 0.61);
-  --ui-edc-muted: rgba(0, 0, 0, 0.45);
-  --ui-edc-faint: rgba(0, 0, 0, 0.27);
+  --ui-edc-text: rgba(0, 0, 0, 0.7);
+  --ui-edc-muted: rgba(0, 0, 0, 0.62);
+  --ui-edc-faint: rgba(0, 0, 0, 0.6);
   --ui-edc-icon: rgba(0, 0, 0, 0.447);
   --ui-edc-line: rgba(0, 0, 0, 0.06);
   --ui-edc-fill: rgba(0, 0, 0, 0.06);
@@ -563,9 +563,9 @@ const css = /* css */ `
   --ui-edc-solid: rgba(0, 0, 0, 0.88);
   --ui-edc-on-solid: #fcfcfc;
   --ui-edc-accent: rgba(0, 96, 226, 0.765);
-  --ui-edc-ok: #1a9a52;
+  --ui-edc-ok: #15803d;
   --ui-edc-ok-bg: rgba(26, 154, 82, 0.08);
-  --ui-edc-warn: #b47a06;
+  --ui-edc-warn: #b45309;
   --ui-edc-warn-bg: rgba(232, 162, 12, 0.12);
   /* Strokes are shadows: a 0.5px hairline plus a soft lift */
   --ui-edc-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 1px 1px -1px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -1002,9 +1002,9 @@ const css = /* css */ `
   --ui-edc-card: #1c1c1e;
   --ui-edc-strong: #ffffff;
   --ui-edc-ink: rgba(255, 255, 255, 0.9);
-  --ui-edc-text: rgba(255, 255, 255, 0.62);
-  --ui-edc-muted: rgba(255, 255, 255, 0.46);
-  --ui-edc-faint: rgba(255, 255, 255, 0.3);
+  --ui-edc-text: rgba(255, 255, 255, 0.7);
+  --ui-edc-muted: rgba(255, 255, 255, 0.62);
+  --ui-edc-faint: rgba(255, 255, 255, 0.58);
   --ui-edc-icon: rgba(255, 255, 255, 0.5);
   --ui-edc-line: rgba(255, 255, 255, 0.08);
   --ui-edc-fill: rgba(255, 255, 255, 0.08);

@@ -262,7 +262,7 @@ export function ContextWindow({
 }
 
 const css = `
-.cw{--cw-bg:#fff;--cw-fg:#18181b;--cw-muted:#65656d;--cw-faint:#65656d;--cw-line:#ececef;--cw-chip:#f3f3f5;--cw-empty:#ececef;--cw-ok:#16a34a;--cw-warn:#d97706;width:100%;max-width:360px;background:var(--cw-bg);color:var(--cw-fg);border:1px solid var(--cw-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+.cw{--cw-bg:#fff;--cw-fg:#18181b;--cw-muted:#65656d;--cw-faint:#65656d;--cw-line:#ececef;--cw-chip:#f3f3f5;--cw-empty:#ececef;--cw-ok:#15803d;--cw-warn:#b45309;width:100%;max-width:360px;background:var(--cw-bg);color:var(--cw-fg);border:1px solid var(--cw-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
 :where(.dark,[data-theme=dark]) .cw{--cw-bg:#1b1b1e;--cw-fg:#ececef;--cw-muted:#a1a1aa;--cw-faint:#9a9aa2;--cw-line:#2e2e33;--cw-chip:#2a2a2f;--cw-empty:#2c2c31;--cw-ok:#4ade80;--cw-warn:#fbbf24;color-scheme:dark}
 .cw *{box-sizing:border-box}.cw button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
 .cw-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px 0}
