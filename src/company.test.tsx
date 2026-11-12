@@ -608,3 +608,19 @@ describe("TENET 3 alignment (moodboard)", () => {
     expect(panel.textContent).not.toContain("TENET дахин төлөвлөлт");
   });
 });
+
+describe("area ids show unit names (inai-sh #28 export)", () => {
+  it("groups and labels by the area unit's name", () => {
+    const company = {
+      ...inai,
+      units: [...inai.units, { id: "area-fac9e1b8f9", name: "Бүтээгдэхүүн хөгжүүлэлт", kind: "area" as const }, { id: "area-0123456789", name: "Сайт", kind: "area" as const, parentId: "area-fac9e1b8f9" }],
+      projects: inai.projects.map((p, i) => (i === 0 ? { ...p, area: "area-fac9e1b8f9", subArea: "area-0123456789" } : p)),
+    };
+    render(<CompanyView company={company} defaultView="dashboard" today={new Date("2026-11-12T09:00:00")} />);
+    const panel = screen.getByRole("tabpanel");
+    expect(panel.textContent).not.toContain("area-fac9e1b8f9");
+    expect(within(panel).getAllByRole("region", { name: "Бүтээгдэхүүн хөгжүүлэлт" }).length).toBeGreaterThan(0);
+    fireEvent.click(within(panel).getByRole("button", { name: /^Inai Website/ }));
+    expect(panel.textContent).toContain("Бүтээгдэхүүн хөгжүүлэлт › Сайт");
+  });
+});
