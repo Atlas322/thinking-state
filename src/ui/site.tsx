@@ -89,6 +89,7 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
   const owner = items.find((i) => i.kind === "menu" && i.groups.some((g) => g.links.some((l) => l.href === current)));
   const [section, setSection] = React.useState<string | null>(owner && owner.kind === "menu" ? owner.id : null);
   const toggle = React.useRef<HTMLButtonElement>(null);
+  const uid = React.useId(); // two bars on one page must not share ids
   React.useEffect(() => {
     if (!phone && !menu) return;
     const onKey = (e: KeyboardEvent) => {
@@ -118,12 +119,12 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
                   type="button"
                   className={cx("ts-mega-trigger", owner === item && "is-here")}
                   aria-expanded={menu === item.id}
-                  aria-controls={`ts-mega-${item.id}`}
+                  aria-controls={`${uid}-mega-${item.id}`}
                   onClick={() => setMenu(menu === item.id ? null : item.id)}
                 >
                   {item.label} <Icon name="chevron-down" size={14} />
                 </button>
-                <div id={`ts-mega-${item.id}`} className="ts-mega-panel" hidden={menu !== item.id}>
+                <div id={`${uid}-mega-${item.id}`} className="ts-mega-panel" hidden={menu !== item.id}>
                   <div className="ts-mega-groups">
                     {item.groups.map((g) => (
                       <div key={g.label} className="ts-mega-group">
@@ -164,7 +165,7 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
             type="button"
             className="ts-nav-toggle"
             aria-expanded={phone}
-            aria-controls="ts-nav-mobile"
+            aria-controls={`${uid}-mobile`}
             aria-label={phone ? L.close : L.open}
             onClick={() => setPhone(!phone)}
           >
@@ -172,7 +173,7 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
           </button>
         </div>
       </div>
-      <nav id="ts-nav-mobile" className="ts-nav-mobile" aria-label={L.mobile} hidden={!phone}>
+      <nav id={`${uid}-mobile`} className="ts-nav-mobile" aria-label={L.mobile} hidden={!phone}>
         {inside && (
           <a className="ts-nav-link is-inside" href={inside.href} onClick={() => setPhone(false)}>
             {inside.label} <Icon name="arrow-up-right" size={16} />
@@ -189,12 +190,12 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
                 type="button"
                 className="ts-mobile-h"
                 aria-expanded={section === item.id}
-                aria-controls={`ts-mobile-${item.id}`}
+                aria-controls={`${uid}-mobile-${item.id}`}
                 onClick={() => setSection(section === item.id ? null : item.id)}
               >
                 {item.label} <Icon name="chevron-down" size={18} />
               </button>
-              <div id={`ts-mobile-${item.id}`} className="ts-mobile-body" hidden={section !== item.id}>
+              <div id={`${uid}-mobile-${item.id}`} className="ts-mobile-body" hidden={section !== item.id}>
                 {item.groups.map((g) => (
                   <div key={g.label} className="ts-mega-group">
                     {item.groups.length > 1 && <span className="ts-mega-h">{g.label}</span>}

@@ -13,7 +13,7 @@ describe("NavBar", () => {
     expect(trigger.className).toContain("is-here");
     fireEvent.click(trigger);
     expect(trigger.getAttribute("aria-expanded")).toBe("true");
-    const panel = document.getElementById("ts-mega-product")!;
+    const panel = document.getElementById(trigger.getAttribute("aria-controls")!)!;
     expect(within(panel).getByRole("link", { name: /Эх сурвалжтай хариулт/ }).getAttribute("aria-current")).toBe("page");
     fireEvent.keyDown(document, { key: "Escape" });
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
@@ -27,7 +27,7 @@ describe("NavBar", () => {
     expect(toggle.getAttribute("aria-label")).toBe("Цэс нээх");
     fireEvent.click(toggle);
     expect(toggle.getAttribute("aria-label")).toBe("Цэс хаах");
-    const mobile = document.getElementById("ts-nav-mobile")!;
+    const mobile = document.getElementById(toggle.getAttribute("aria-controls")!)!;
     expect(mobile.hidden).toBe(false);
     const col = [...mobile.querySelectorAll<HTMLButtonElement>(".ts-mobile-h")].find((b) => b.textContent?.includes("Шийдэл"))!;
     fireEvent.click(col);
