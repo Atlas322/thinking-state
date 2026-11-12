@@ -46,12 +46,12 @@ export const chatWidgetSchemas: WidgetSchema[] = [
     feeds: "Project Portfolio · Weekly GTD",
     role: "Report",
     props: {
-      project: { type: "{ name, icon?, status?: { label, tone? }, owner?, sharedWith?, updated?, summary? }", required: true, vault: "02-Projects/<name> frontmatter" },
+      project: { type: "{ name, icon?, status?: { label, tone? }, owner?, sharedWith?, updated?, summary? }", required: true, vault: "project note frontmatter" },
       me: { type: "string", note: "Enables All / Mine" },
       kpis: { type: "{ label, value: number, unit?, note?, tone? }[]", note: "Counts only; no prices" },
       progress: { type: "{ value: 0–100, label?, milestones?: { at, label }[] }", notion: "Progress (formula)" },
       phases: { type: "Phase[]", notion: "Sub-projects / Roadmap & Milestone" },
-      waiting: { type: "Waiting[]", vault: "01-GTD/Tasks with waiting_on: me" },
+      waiting: { type: "Waiting[]", vault: "GTD tasks with waiting_on: me" },
       view: { type: '"status" | "cards"' },
       labels: { type: "Partial<labels>", note: "Mongolian labels go here" },
     },
@@ -124,7 +124,7 @@ export const chatWidgetSchemas: WidgetSchema[] = [
     props: {
       title: { type: "string" },
       me: { type: "string", note: "Enables All / Mine" },
-      decisions: { type: "Decision[]", required: true, vault: "04-Resources/Atomic/decisions (open questions)" },
+      decisions: { type: "Decision[]", required: true, vault: "decision atoms (open questions)" },
       chosen: { type: "Record<id, optionId>" },
     },
     items: {

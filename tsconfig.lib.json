@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "lib/types",
+    "rootDir": "src",
+    "tsBuildInfoFile": "work/tsconfig.lib.tsbuildinfo"
+  },
+  "include": ["src/lib/index.ts", "src/lib/chat.ts", "src/vite-env.d.ts"]
+}
