@@ -567,7 +567,9 @@ export default function App() {
                 <div className="component-meta">
                   <span className={`origin ${entry.pro ? "recreated" : "mit"}`}>
                     <span className="origin-dot" />
-                    {"source" in entry
+                    {"origin" in entry
+                      ? entry.origin
+                      : "source" in entry
                       ? `Source · ${entry.source}`
                       : entry.pro
                       ? "Independent recreation"

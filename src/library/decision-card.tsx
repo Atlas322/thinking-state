@@ -31,6 +31,10 @@ export type DecisionCardLabels = {
   own: string;
   waiting: (n: number) => string;
   of: (i: number, n: number) => string;
+  close: string;
+  closeReason: string;
+  confirmClose: string;
+  cancel: string;
 };
 export type DecisionCardProps = {
   decisions?: Decision[];
@@ -40,6 +44,15 @@ export type DecisionCardProps = {
   reveal?: number;
   labels?: Partial<DecisionCardLabels>;
   className?: string;
+  /** Host mode: the card stays after an answer (the host removes it when its request succeeds) and the question is not clamped. */
+  host?: boolean;
+  /** Host mode: a request is in flight — answers are ignored. */
+  busy?: boolean;
+  error?: React.ReactNode;
+  /** Host content under the question (links, who asked). */
+  meta?: React.ReactNode;
+  /** Shows a close action; the field then takes an optional reason. */
+  onClose?: (id: string, reason: string) => void;
 };
 
 const baseLabels: DecisionCardLabels = {
@@ -52,6 +65,10 @@ const baseLabels: DecisionCardLabels = {
   own: "Something else…",
   waiting: (n) => `${n} decision${n === 1 ? "" : "s"} waiting`,
   of: (i, n) => `${i} of ${n}`,
+  close: "Close",
+  closeReason: "Why close it? (optional)",
+  confirmClose: "Close",
+  cancel: "Cancel",
 };
 
 const defaultDecisions: Decision[] = [
@@ -78,6 +95,11 @@ export function DecisionCard({
   reveal,
   labels: labelsProp,
   className = "",
+  host = false,
+  busy = false,
+  error,
+  meta,
+  onClose,
 }: DecisionCardProps) {
   const L = { ...baseLabels, ...labelsProp };
   const [answered, setAnswered] = React.useState<string[]>([]);
@@ -88,6 +110,7 @@ export function DecisionCard({
   const [text, setText] = React.useState("");
   const [said, setSaid] = React.useState("");
   const [pulse, setPulse] = React.useState(0);
+  const [closing, setClosing] = React.useState(false);
   const rowsRef = React.useRef<(HTMLElement | null)[]>([]);
   const fieldRef = React.useRef<HTMLInputElement>(null);
   const showRef = React.useRef<HTMLButtonElement>(null);
@@ -113,7 +136,12 @@ export function DecisionCard({
       : (d.options ?? []).map((o) => ({ key: o.id, title: o.title, summary: o.summary, recommended: o.recommended, answer: { option: o.id } }));
 
   const answer = (a: DecisionAnswer) => {
-    if (!d) return;
+    if (!d || busy) return;
+    if (host) {
+      setText("");
+      onDecide?.(d.id, a);
+      return;
+    }
     const left = open.length - 1;
     const what = a === "approve" ? L.approve : a === "decline" ? L.decline : "text" in a ? a.text : rows.find((r) => typeof r.answer === "object" && "option" in r.answer && r.answer.option === a.option)?.title;
     setAnswered((s) => [...s, d.id]);
@@ -211,9 +239,11 @@ export function DecisionCard({
               </button>
             </span>
           )}
-          <button type="button" className="dc-later" aria-keyshortcuts="Escape" onClick={later}>{L.later}</button>
+          {onClose && !closing && <button type="button" className="dc-later" disabled={busy} onClick={() => { setClosing(true); window.setTimeout(() => fieldRef.current?.focus(), 30); }}>{L.close}</button>}
+          <button type="button" className="dc-later" aria-keyshortcuts="Escape" disabled={busy} onClick={later}>{L.later}</button>
         </header>
-        <h3 id={qid} className="dc-q">{d.question}</h3>
+        <h3 id={qid} className="dc-q" data-full={host || undefined}>{d.question}</h3>
+        {meta && <div className="dc-meta">{meta}</div>}
         {d.facts && (
           <dl className="dc-facts">
             {d.facts.map((f) => (
@@ -235,6 +265,7 @@ export function DecisionCard({
                 aria-selected={focus === i}
                 aria-keyshortcuts={String(i + 1)}
                 tabIndex={focus === i ? 0 : -1}
+                aria-disabled={busy || undefined}
                 className={isPick ? "dc-tile" : "dc-row"}
                 onFocus={() => setFocus(i)}
                 onClick={() => answer(r.answer)}
@@ -259,22 +290,33 @@ export function DecisionCard({
             value={text}
             aria-label={L.own.replace("…", "")}
             aria-keyshortcuts={String(n + 1)}
-            placeholder={L.own}
+            placeholder={closing ? L.closeReason : L.own}
             onFocus={() => setFocus(n)}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && text.trim()) {
+              if (e.key !== "Enter") return;
+              if (closing) {
+                e.preventDefault();
+                if (!busy && d) onClose?.(d.id, text.trim());
+              } else if (text.trim()) {
                 e.preventDefault();
                 answer({ text: text.trim() });
               }
             }}
           />
-          {text.trim() && (
+          {!closing && text.trim() && (
             <button type="button" className="dc-send" aria-label="Send answer" onClick={() => answer({ text: text.trim() })}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3.5M4 7.5l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           )}
         </label>
+        {closing && (
+          <div className="dc-closebar">
+            <button type="button" className="dc-danger" disabled={busy} onClick={() => d && onClose?.(d.id, text.trim())}>{L.confirmClose}</button>
+            <button type="button" className="dc-later" onClick={() => setClosing(false)}>{L.cancel}</button>
+          </div>
+        )}
+        {error && <p className="dc-error" role="alert">{error}</p>}
       </section>
       <span role="status" aria-live="polite" className="dc-sr">{said}</span>
     </div>
@@ -319,8 +361,8 @@ export function DecisionCardDemo() {
 }
 
 const css = `
-.dc,.dc-demo{--dc-bg:#fff;--dc-fg:#18181b;--dc-muted:#71717a;--dc-faint:#a1a1aa;--dc-line:#ececef;--dc-soft:#f4f4f5;--dc-hl:#f6f6f7;--dc-accent:#4f7cf0;--dc-amber:#c2620a;--dc-amber-bg:#fdefdc;font:400 12.5px/1.45 Inter,system-ui,sans-serif;color:var(--dc-fg)}
-:where(.dark,[data-theme=dark]) :is(.dc,.dc-demo){--dc-bg:#1b1b1e;--dc-fg:#ececef;--dc-muted:#a1a1aa;--dc-faint:#71717a;--dc-line:#2c2c31;--dc-soft:#28282d;--dc-hl:#232327;--dc-accent:#7c9cff;--dc-amber:#eba659;--dc-amber-bg:#3a2a16;color-scheme:dark}
+.dc,.dc-demo{--dc-bg:#fff;--dc-fg:#18181b;--dc-muted:#71717a;--dc-faint:#a1a1aa;--dc-line:#ececef;--dc-soft:#f4f4f5;--dc-hl:#f6f6f7;--dc-accent:#4f7cf0;--dc-amber:#c2620a;--dc-amber-bg:#fdefdc;--dc-red:#dc2626;font:400 12.5px/1.45 Inter,system-ui,sans-serif;color:var(--dc-fg)}
+:where(.dark,[data-theme=dark]) :is(.dc,.dc-demo){--dc-bg:#1b1b1e;--dc-fg:#ececef;--dc-muted:#a1a1aa;--dc-faint:#71717a;--dc-line:#2c2c31;--dc-soft:#28282d;--dc-hl:#232327;--dc-accent:#7c9cff;--dc-amber:#eba659;--dc-amber-bg:#3a2a16;--dc-red:#f87171;color-scheme:dark}
 .dc{width:100%}.dc *,.dc-demo *{box-sizing:border-box}.dc button{font:inherit;color:inherit;cursor:pointer}
 .dc-card{background:var(--dc-bg);border:1px solid var(--dc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 4px 14px -6px #0000001a;padding:10px 12px 10px;animation:dc-in .25s both}
 .dc-card[data-pulse=true]{animation:dc-pulse .7s both}
@@ -332,6 +374,12 @@ const css = `
 .dc-pager{display:inline-flex;align-items:center;gap:2px;color:var(--dc-muted);font-size:12px}
 .dc-pager button{display:grid;place-items:center;width:22px;height:22px;border:0;border-radius:5px;background:none}.dc-pager button:hover:not(:disabled){background:var(--dc-hl)}.dc-pager button:disabled{opacity:.35;cursor:default}.dc-pager svg{width:13px;height:13px}
 .dc-q{margin:12px 0 8px;font-size:14px;font-weight:500;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dc-q[data-full=true]{display:block;-webkit-line-clamp:none;overflow:visible;white-space:pre-wrap}
+.dc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;margin:-2px 0 8px;color:var(--dc-muted);font-size:11.5px}.dc-meta a,.dc-meta button{color:var(--dc-accent);border:0;background:none;padding:0;text-decoration:none}.dc-meta a:hover,.dc-meta button:hover{text-decoration:underline}
+.dc-closebar{display:flex;align-items:center;gap:8px;margin-top:6px}
+.dc-danger{border:0;border-radius:6px;padding:3px 10px;background:var(--dc-red);color:#fff!important;font-size:12px;font-weight:500}
+.dc-error{margin:6px 0 0;color:var(--dc-red);font-size:12px}
+.dc [aria-disabled=true],.dc button:disabled{opacity:.5;cursor:default}
 .dc-facts{display:grid;grid-template-columns:auto 1fr;gap:3px 20px;margin:0 0 8px}
 .dc-facts dt{color:var(--dc-muted)}.dc-facts dd{margin:0;min-width:0;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .dc-rows{display:flex;flex-direction:column;margin:0 -6px}
