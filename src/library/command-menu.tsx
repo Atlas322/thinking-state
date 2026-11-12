@@ -142,7 +142,7 @@ export function CommandMenu({
   }, []);
 
   const run = (c: Command | null, q?: string) => {
-    const label = c ? c.label : `Ask “${q}”`;
+    const label = c ? c.label : `Асуух: “${q}”`;
     if (c) {
       setPressed(c.id);
       window.setTimeout(() => setPressed(null), 160);
@@ -223,7 +223,7 @@ export function CommandMenu({
               onClick={() => run(null, query.trim())}
             >
               <span className="cmdk-ico">{L.spark}</span>
-              <span className="cmdk-label">Ask assistant</span>
+              <span className="cmdk-label">Туслахаас асуух</span>
               <span className="cmdk-hint">“{query.trim()}”</span>
             </button>
           </div>
@@ -275,11 +275,11 @@ export function CommandMenu({
             {ran.label}
           </span>
         ) : (
-          <span><kbd>Tab</kbd> to jump between sections</span>
+          <span><kbd>⇥</kbd> хэсэг хооронд шилжих</span>
         )}
-        <span className="cmdk-open"><kbd>⌘</kbd><kbd>K</kbd> to open</span>
+        <span className="cmdk-open"><kbd>⌘</kbd><kbd>K</kbd> нээх</span>
       </div>
-      <span role="status" aria-live="polite" className="cmdk-sr">{ran ? `Ran ${ran.label}` : ""}</span>
+      <span role="status" aria-live="polite" className="cmdk-sr">{ran ? `Ажиллуулсан: ${ran.label}` : ""}</span>
     </div>
   );
 }

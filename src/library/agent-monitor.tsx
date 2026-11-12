@@ -94,21 +94,21 @@ const clock = (ms: number) => {
   const s = Math.max(0, Math.floor(ms / 1000));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 };
-const secs = (ms: number) => `${(ms / 1000).toFixed(1)}s`;
+const secs = (ms: number) => `${(ms / 1000).toFixed(1)} с`;
 
 const tags: Record<AgentRunState, string> = {
-  idle: "Idle",
-  running: "Running",
-  waiting: "Needs you",
-  paused: "Paused",
-  finished: "Finished",
-  failed: "Failed",
-  cancelled: "Cancelled",
+  idle: "Сул",
+  running: "Ажиллаж байна",
+  waiting: "Таны ээлж",
+  paused: "Түр зогссон",
+  finished: "Дууссан",
+  failed: "Алдаатай",
+  cancelled: "Цуцлагдсан",
 };
 
 export function AgentMonitor({
   state: stateProp,
-  agent = { name: "Хувилбарын агент", role: "Үйл ажиллагааны агент · web-app v3.2", mark: monitorIcons.claude },
+  agent = { name: "Хувилбарын агент", role: "Үйл ажиллагааны агент · вэб апп v3.2", mark: monitorIcons.claude },
   steps = defaultSteps,
   current,
   since,
@@ -197,7 +197,7 @@ export function AgentMonitor({
           {agent.role && <span>{agent.role}</span>}
         </div>
         {cost != null && (
-          <span className={`am-cost ${live ? "is-live" : ""}`} aria-label={`${cost.toFixed(1)}k tokens so far`}>
+          <span className={`am-cost ${live ? "is-live" : ""}`} aria-label={`Одоогоор ${cost.toFixed(1)}k токен`}>
             {cost.toFixed(1)}k
             <span className="am-cur"> токен</span>
           </span>
@@ -206,7 +206,7 @@ export function AgentMonitor({
           <i />
           {tags[state]}
         </span>
-        <button type="button" className="am-fold" aria-label="Fold away" onClick={() => setFolded(true)}>
+        <button type="button" className="am-fold" aria-label="Хураах" onClick={() => setFolded(true)}>
           <svg viewBox="0 0 16 16"><path d="m5 6 3-3 3 3M5 10l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
       </header>
@@ -224,12 +224,12 @@ export function AgentMonitor({
           <span className="am-well-i">{well?.icon ?? monitorIcons.terminal}</span>
           <span className={`am-well-l ${state === "running" ? "is-live" : ""}`}>
             {state === "finished"
-              ? `Finished in ${Math.round(elapsed / 1000)}s${outcome?.note ? ` · ${outcome.note}` : ""}`
+              ? `${Math.round(elapsed / 1000)} с-д дууссан${outcome?.note ? ` · ${outcome.note}` : ""}`
               : state === "failed"
-                ? error ?? "Failed"
+                ? error ?? "Алдаатай"
                 : state === "cancelled"
-                  ? "Cancelled"
-                  : well?.label ?? "Waiting to start"}
+                  ? "Цуцлагдсан"
+                  : well?.label ?? "Эхлэхийг хүлээж байна"}
           </span>
           <span className="am-well-c">{clock(elapsed)}</span>
         </div>
@@ -268,7 +268,7 @@ export function AgentMonitor({
               <div className="am-info" role="dialog" aria-label={s.label}>
                 <div className="am-info-h">
                   {s.tool && <strong>{s.tool}</strong>}
-                  <button type="button" aria-label="Close" onClick={() => setOpen(null)}>
+                  <button type="button" aria-label="Хаах" onClick={() => setOpen(null)}>
                     <svg viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
                   </button>
                 </div>
@@ -284,10 +284,10 @@ export function AgentMonitor({
         {state === "waiting" ? (
           <>
             <button type="button" className="am-btn" onClick={onDecline}>
-              Decline <kbd>Esc</kbd>
+              Татгалзах <kbd>Esc</kbd>
             </button>
             <button type="button" className="am-btn is-primary" onClick={onAllow}>
-              Allow <kbd>⏎</kbd>
+              Зөвшөөрөх <kbd>⏎</kbd>
             </button>
           </>
         ) : state === "running" || state === "paused" ? (
@@ -298,26 +298,26 @@ export function AgentMonitor({
               ) : (
                 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4v8M10 4v8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
               )}
-              {state === "paused" ? "Resume" : "Pause"}
+              {state === "paused" ? "Үргэлжлүүлэх" : "Түр зогсоох"}
             </button>
             <button type="button" className="am-btn" onClick={cancel}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m5 5 6 6m0-6-6 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
-              Cancel
+              Болих
             </button>
           </>
         ) : state === "failed" && onRetry ? (
           <button type="button" className="am-btn" onClick={onRetry}>
-            Try again
+            Дахин оролдох
           </button>
         ) : (stateProp == null && state === "cancelled") ? (
           <button type="button" className="am-btn" onClick={() => setInnerState("running")}>
-            Restart
+            Дахин эхлүүлэх
           </button>
         ) : null}
         <span className="am-count">{count}</span>
         {onOpenLog && (
           <button type="button" className="am-log" onClick={onOpenLog}>
-            Log
+            Бүртгэл
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 10.5 10.5 5.5M6.5 5.5h4v4" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
           </button>
         )}

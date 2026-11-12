@@ -27,15 +27,15 @@ describe("Agent Inbox documented integration", () => {
       task({ startedAt: Date.now() - 80_000, status: "running" }),
       task({ id: "done", title: "Published digest", status: "done", elapsed: 252_000, steps: [{ label: "Published" }] }),
     ]} />);
-    expect(toggle().textContent).toContain("1m 20s");
-    expect(screen.getByRole("button", { name: /Published digest/ }).textContent).toContain("4m 12s");
+    expect(toggle().textContent).toContain("1 мин 20 с");
+    expect(screen.getByRole("button", { name: /Published digest/ }).textContent).toContain("4 мин 12 с");
     fireEvent.click(toggle());
     expect(screen.getByText("Sonnet")).toBeTruthy();
     expect(container.querySelectorAll(".ai-inbox-count")).toHaveLength(0);
     expect(container.textContent).not.toMatch(/NaN|undefined/);
     act(() => vi.advanceTimersByTime(2_000));
-    expect(toggle().textContent).toContain("1m 22s");
-    expect(screen.getByRole("button", { name: /Published digest/ }).textContent).toContain("4m 12s");
+    expect(toggle().textContent).toContain("1 мин 22 с");
+    expect(screen.getByRole("button", { name: /Published digest/ }).textContent).toContain("4 мин 12 с");
     fireEvent.click(screen.getByRole("button", { name: /Published digest/ }));
     expect(screen.getByText("Published")).toBeTruthy();
     unmount();
@@ -48,13 +48,13 @@ describe("Agent Inbox documented integration", () => {
     const source = task({ startedAt: Date.now() - 80_000 });
     render(<AgentInbox tasks={[source]} />);
     fireEvent.click(toggle());
-    fireEvent.click(screen.getByRole("button", { name: "Reject" }));
-    expect(toggle().textContent).toContain("Failed");
+    fireEvent.click(screen.getByRole("button", { name: "Татгалзах" }));
+    expect(toggle().textContent).toContain("Алдаатай");
     fireEvent.click(toggle());
-    fireEvent.click(screen.getByRole("button", { name: /Retry/ }));
-    expect(within(screen.getByRole("region", { name: "Running" })).getByRole("button", { name: /Review changes/ }).textContent).toContain("0m 00s");
+    fireEvent.click(screen.getByRole("button", { name: /Дахин оролдох/ }));
+    expect(within(screen.getByRole("region", { name: "Ажиллаж байна" })).getByRole("button", { name: /Review changes/ }).textContent).toContain("0 мин 00 с");
     act(() => vi.advanceTimersByTime(1_000));
-    expect(toggle().textContent).toContain("0m 01s");
+    expect(toggle().textContent).toContain("0 мин 01 с");
     expect(source.status).toBe("waiting");
     expect(source.startedAt).toBe(920_000);
   });
@@ -64,22 +64,22 @@ describe("Agent Inbox documented integration", () => {
     const onApprove = vi.fn();
     const view = render(<AgentInbox tasks={[source]} onApprove={onApprove} />);
     fireEvent.click(toggle());
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
+    fireEvent.click(screen.getByRole("button", { name: "Батлах" }));
     expect(onApprove).toHaveBeenCalledExactlyOnceWith(source);
-    expect(screen.getByRole("region", { name: "Needs you" }).textContent).toContain(source.title);
+    expect(screen.getByRole("region", { name: "Таны ээлж" }).textContent).toContain(source.title);
     view.rerender(<AgentInbox tasks={[{ ...source, status: "running" }]} onApprove={onApprove} />);
-    expect(screen.getByRole("region", { name: "Running" }).textContent).toContain(source.title);
+    expect(screen.getByRole("region", { name: "Ажиллаж байна" }).textContent).toContain(source.title);
   });
 
   it("allows the owner to replace a task after a fallback approval", () => {
     const source = task();
     const view = render(<AgentInbox tasks={[source]} />);
     fireEvent.click(toggle());
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
-    expect(screen.getByRole("region", { name: "Running" }).textContent).toContain(source.title);
+    fireEvent.click(screen.getByRole("button", { name: "Батлах" }));
+    expect(screen.getByRole("region", { name: "Ажиллаж байна" }).textContent).toContain(source.title);
     view.rerender(<AgentInbox tasks={[{ ...source, status: "done", elapsed: 30_000 }]} />);
-    expect(screen.getByRole("region", { name: "Done" }).textContent).toContain(source.title);
-    expect(toggle().textContent).toContain("0m 30s");
+    expect(screen.getByRole("region", { name: "Дууссан" }).textContent).toContain(source.title);
+    expect(toggle().textContent).toContain("0 мин 30 с");
   });
 
   it("offers Open only when connected and passes the original task", () => {
@@ -87,9 +87,9 @@ describe("Agent Inbox documented integration", () => {
     const onOpen = vi.fn();
     const view = render(<AgentInbox tasks={[source]} />);
     fireEvent.click(toggle());
-    expect(screen.queryByRole("button", { name: "Open task" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Даалгаврыг нээх" })).toBeNull();
     view.rerender(<AgentInbox tasks={[source]} onOpen={onOpen} />);
-    fireEvent.click(screen.getByRole("button", { name: "Open task" }));
+    fireEvent.click(screen.getByRole("button", { name: "Даалгаврыг нээх" }));
     expect(onOpen).toHaveBeenCalledExactlyOnceWith(source);
   });
 
@@ -99,7 +99,7 @@ describe("Agent Inbox documented integration", () => {
     render(<form onSubmit={onSubmit}><AgentInbox tasks={[task()]} action={{ label: "New task", onClick }} /></form>);
     fireEvent.click(screen.getByRole("button", { name: "New task" }));
     fireEvent.click(toggle());
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
+    fireEvent.click(screen.getByRole("button", { name: "Батлах" }));
     expect(onClick).toHaveBeenCalledOnce();
     expect(onSubmit).not.toHaveBeenCalled();
   });
@@ -107,16 +107,16 @@ describe("Agent Inbox documented integration", () => {
   it("closes a card with Escape and restores its focus even when its id contains punctuation", () => {
     render(<AgentInbox tasks={[task({ id: 'task["quoted"]' })]} />);
     fireEvent.click(toggle());
-    const approve = screen.getByRole("button", { name: "Approve" });
+    const approve = screen.getByRole("button", { name: "Батлах" });
     approve.focus();
     fireEvent.keyDown(approve, { key: "Escape" });
     expect(toggle().getAttribute("aria-expanded")).toBe("false");
     expect(document.activeElement).toBe(toggle());
-    expect(screen.queryByRole("button", { name: "Approve" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Батлах" })).toBeNull();
   });
 
-  it.each(["Approve", "Reject", "Retry"])("keeps keyboard focus on the task after fallback %s", (label) => {
-    render(<AgentInbox tasks={[task({ status: label === "Retry" ? "failed" : "waiting" })]} />);
+  it.each(["Батлах", "Татгалзах", "Дахин оролдох"])("keeps keyboard focus on the task after fallback %s", (label) => {
+    render(<AgentInbox tasks={[task({ status: label === "Дахин оролдох" ? "failed" : "waiting" })]} />);
     fireEvent.click(toggle());
     const action = screen.getByRole("button", { name: new RegExp(label) });
     action.focus();
@@ -128,11 +128,11 @@ describe("Agent Inbox documented integration", () => {
   it("supports keyboard layout selection and waits for controlled view updates", () => {
     const onViewChange = vi.fn();
     const view = render(<AgentInbox tasks={[]} view="board" onViewChange={onViewChange} />);
-    fireEvent.keyDown(screen.getByRole("radio", { name: "Board" }), { key: "ArrowRight" });
+    fireEvent.keyDown(screen.getByRole("radio", { name: "Самбар" }), { key: "ArrowRight" });
     expect(onViewChange).toHaveBeenCalledExactlyOnceWith("list");
-    expect(screen.getByRole("radio", { name: "Board" }).getAttribute("aria-checked")).toBe("true");
+    expect(screen.getByRole("radio", { name: "Самбар" }).getAttribute("aria-checked")).toBe("true");
     view.rerender(<AgentInbox tasks={[]} view="list" onViewChange={onViewChange} />);
-    expect(screen.getByRole("radio", { name: "List" }).getAttribute("aria-checked")).toBe("true");
-    expect(screen.getByRole("radio", { name: "List" }).tabIndex).toBe(0);
+    expect(screen.getByRole("radio", { name: "Жагсаалт" }).getAttribute("aria-checked")).toBe("true");
+    expect(screen.getByRole("radio", { name: "Жагсаалт" }).tabIndex).toBe(0);
   });
 });

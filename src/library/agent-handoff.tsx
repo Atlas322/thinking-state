@@ -339,19 +339,19 @@ export function AgentHandoff({
     if (!task) return;
     pickupOrigin.current = cardRefs.current.get(handoff.id) ?? null;
     setPicked({ task, minimum: index + 1 });
-    setNotice(`Choose an agent after ${agents[index].name} for ${task.title}.`);
+    setNotice(`${task.title}: ${agents[index].name}-ийн дараах агентыг сонгоно уу.`);
     agentRefs.current.get(agents[index + 1]?.id)?.focus();
   };
   const cancelPickup = () => {
     setPicked(null);
-    setNotice("Task move cancelled.");
+    setNotice("Даалгавар шилжүүлэхийг цуцаллаа.");
     pickupOrigin.current?.focus();
     pickupOrigin.current = null;
   };
   const assign = (agent: HandoffAgent, index: number) => {
     if (!picked || index < picked.minimum) return;
     onAssign?.(picked.task, agent);
-    setNotice(`${picked.task.title} assigned to ${agent.name}`);
+    setNotice(`${picked.task.title}: ${agent.name}-д оноолоо`);
     setPicked(null);
   };
   const taskFor = (agent: HandoffAgent) =>
@@ -360,7 +360,7 @@ export function AgentHandoff({
     <section
       ref={root}
       className={`ho-root ${className}`}
-      aria-label="Agent handoff relay"
+      aria-label="Агентуудын дамжуулалт"
       style={
         { "--ho-count": Math.max(1, agents.length) } as React.CSSProperties
       }
@@ -429,7 +429,7 @@ export function AgentHandoff({
                   className={`ho-agent ${eligible ? "eligible" : ""} ${picked && !eligible ? "passed" : ""}`}
                   aria-label={
                     picked
-                      ? `Assign ${picked.task.title} to ${agent.name}`
+                      ? `${picked.task.title}: ${agent.name}-д оноох`
                       : agent.name
                   }
                   aria-disabled={picked && !eligible ? true : undefined}
@@ -461,12 +461,12 @@ export function AgentHandoff({
                     )}
                     <span className={`ho-agent-state ${task ? "working" : ""}`}>
                       {task && <HandoffSpinner />}
-                      {task ? "Working" : "Idle"}
+                      {task ? "Ажиллаж байна" : "Сул"}
                     </span>
                   </span>
                   <span className="ho-description">
                     {agent.description ??
-                      "Works on the next task in this relay."}
+                      "Энэ дамжуулалтын дараагийн даалгаврыг гүйцэтгэнэ."}
                   </span>
                   <span className="ho-current-task">
                     {task ? (
@@ -477,15 +477,15 @@ export function AgentHandoff({
                           </span>
                         )}</span>
                         <strong>{task.title}</strong>
-                        <span>{task.note ?? "Working…"}</span>
+                        <span>{task.note ?? "Ажиллаж байна…"}</span>
                       </>
                     ) : next ? (
                       <>
-                        <small>Up next</small>
+                        <small>Дараагийнх</small>
                         <strong>{next.title}</strong>
                       </>
                     ) : (
-                      <span>Ready for a task</span>
+                      <span>Даалгавар авахад бэлэн</span>
                     )}
                   </span>
                 </button>
@@ -495,7 +495,7 @@ export function AgentHandoff({
                     <p>
                       {task?.note ??
                         agent.description ??
-                        "Ready for the next handoff."}
+                        "Дараагийн дамжуулалтад бэлэн."}
                     </p>
                   </div>
                 )}
@@ -524,7 +524,7 @@ export function AgentHandoff({
               </header>
               <div
                 role="list"
-                aria-label={`${group.from.name} to ${group.to.name} handoffs`}
+                aria-label={`${group.from.name} → ${group.to.name} дамжуулалт`}
                 className="ho-cards"
               >
                 {group.items.map((handoff) => {
@@ -581,13 +581,13 @@ export function AgentHandoff({
                         >
                           <i />
                           {losses.length
-                            ? `${losses.length} ${losses.length === 1 ? "item" : "items"} left behind`
-                            : "Looks good"}
+                            ? `${losses.length} зүйл орхигдсон`
+                            : "Зүгээр"}
                         </span>
                       </button>
                       {open && (
                         <div className="ho-expanded">
-                          <ul aria-label={`Items for ${handoff.task}`}>
+                          <ul aria-label={`${handoff.task}: зүйлс`}>
                             {handoff.items.map((item) => (
                               <li
                                 key={item.id}
@@ -611,13 +611,13 @@ export function AgentHandoff({
                                       }
                                     >
                                       <HandoffIcon kind="lost" /><span>{item.label}</span>
-                                      <small>Left behind</small>
+                                      <small>Орхигдсон</small>
                                     </button>
                                     {lost === handoff.id + item.id && (
                                       <div className="ho-loss-detail">
                                         <p>
                                           {item.why ??
-                                            "This item was not included in the handoff."}
+                                            "Энэ зүйлийг дамжуулалтад оруулаагүй."}
                                         </p>
                                         {onRestore && (
                                           <button
@@ -626,7 +626,7 @@ export function AgentHandoff({
                                               onRestore(handoff, item)
                                             }
                                           >
-                                            Add back
+                                            Буцааж нэмэх
                                           </button>
                                         )}
                                       </div>
@@ -647,7 +647,7 @@ export function AgentHandoff({
                               className="ho-move"
                               onClick={() => pickup(handoff, group.index)}
                             >
-                              Move task to an agent →
+                              Даалгаврыг агентад шилжүүлэх →
                             </button>
                           )}
                         </div>
@@ -656,7 +656,7 @@ export function AgentHandoff({
                   );
                 })}
                 {!group.items.length && (
-                  <p className="ho-empty">Nothing handed over yet</p>
+                  <p className="ho-empty">Одоогоор юу ч дамжуулаагүй</p>
                 )}
               </div>
             </div>
@@ -668,8 +668,8 @@ export function AgentHandoff({
       </p>
       {picked && (
         <div className="ho-pick-notice">
-          Choose an agent to the right for “{picked.task.title}”
-          <button type="button" onClick={cancelPickup}>Cancel</button>
+          “{picked.task.title}” даалгаврыг баруун талын агентад өгнө үү
+          <button type="button" onClick={cancelPickup}>Болих</button>
         </div>
       )}
     </section>
@@ -696,7 +696,7 @@ export default function Demo() {
                   ...item,
                   agent: agent.id,
                   status: "working",
-                  note: "Working on this task",
+                  note: "Энэ даалгавар дээр ажиллаж байна",
                 }
               : item,
           ),

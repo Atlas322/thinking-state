@@ -146,7 +146,7 @@ function Glyph({ name, className = "" }: { name: string; className?: string }) {
 
 function elapsed(seconds: number) {
   seconds = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
-  return `${Math.floor(seconds / 60)}m ${String(seconds % 60).padStart(2, "0")}s`;
+  return `${Math.floor(seconds / 60)} мин ${String(seconds % 60).padStart(2, "0")} с`;
 }
 
 function durationMs(task: AgentTask, now: number, mountedAt: number) {
@@ -159,7 +159,7 @@ function durationMs(task: AgentTask, now: number, mountedAt: number) {
 
 export function AgentInbox({
   tasks,
-  title = "Agent inbox",
+  title = "Агентын ирсэн",
   action,
   view,
   defaultView = "board",
@@ -265,24 +265,24 @@ export function AgentInbox({
     setOverrides((old) => new Map(old).set(task.id, { source, task: next }));
     setExpanded(null);
     setNotice(
-      `${task.title}: ${action === "reject" ? "rejected" : action === "retry" ? "retrying" : "approved"}.`,
+      `${task.title}: ${action === "reject" ? "татгалзсан" : action === "retry" ? "дахин оролдож байна" : "батлагдсан"}.`,
     );
   };
   const groups = [
     {
-      name: "Needs you",
+      name: "Таны ээлж",
       key: "needs",
       tasks: rows.filter(
         (t) => t.status === "waiting" || t.status === "failed",
       ),
     },
     {
-      name: "Running",
+      name: "Ажиллаж байна",
       key: "running",
       tasks: rows.filter((t) => t.status === "running"),
     },
     {
-      name: "Done",
+      name: "Дууссан",
       key: "done",
       tasks: rows.filter((t) => t.status === "done"),
     },
@@ -319,17 +319,17 @@ export function AgentInbox({
                 <Glyph name={task.status === "running" ? "spinner" : "dot"} className={task.status === "running" ? "ai-inbox-spinner" : "ai-inbox-dot"} />
               )}
               {task.status === "waiting"
-                ? `Waiting for you · ${duration}`
+                ? `Таныг хүлээж байна · ${duration}`
                 : task.status === "failed"
-                  ? "Failed"
+                  ? "Алдаатай"
                   : duration}
             </span>
             <span className="ai-inbox-counters">
-            {task.sources != null && <span className="ai-inbox-count" title={`${task.sources} sources`}>
+            {task.sources != null && <span className="ai-inbox-count" title={`${task.sources} эх сурвалж`}>
               <Glyph name="search" />
               {task.sources}
             </span>}
-            {task.tools != null && <span className="ai-inbox-count" title={`${task.tools} tool calls`}>
+            {task.tools != null && <span className="ai-inbox-count" title={`${task.tools} дуудлага`}>
               <Glyph name="tool" />
               {task.tools}
             </span>}
@@ -358,9 +358,9 @@ export function AgentInbox({
                     onClick={() => act(task, "approve")}
                   >
                     <Glyph name="check" />
-                    Approve
+                    Батлах
                   </button>
-                  <button type="button" onClick={() => act(task, "reject")}>Reject</button>
+                  <button type="button" onClick={() => act(task, "reject")}>Татгалзах</button>
                 </>
               ) : task.status === "failed" ? (
                 <button
@@ -368,11 +368,11 @@ export function AgentInbox({
                   className="ai-inbox-primary"
                   onClick={() => act(task, "retry")}
                 >
-                  Retry
+                  Дахин оролдох
                 </button>
               ) : onOpen ? (
-                <button type="button" aria-label="Open task" onClick={() => act(task, "open")}>
-                  Open
+                <button type="button" aria-label="Даалгаврыг нээх" onClick={() => act(task, "open")}>
+                  Нээх
                 </button>
               ) : null}
             </div>
@@ -400,7 +400,7 @@ export function AgentInbox({
       <style>{css}</style>
       <header className="ai-inbox-header">
         <span>
-          <span>Agents</span>
+          <span>Агентууд</span>
           <b aria-hidden="true">/</b>
           <strong>{title}</strong>
         </span>
@@ -409,7 +409,7 @@ export function AgentInbox({
         <div
           className="ai-inbox-switch"
           role="radiogroup"
-          aria-label="Inbox view"
+          aria-label="Харагдац"
         >
           {(["board", "list"] as const).map((v) => (
             <button
@@ -428,7 +428,7 @@ export function AgentInbox({
               }}
             >
               <Glyph name={v} />
-              {v === "board" ? "Board" : "List"}
+              {v === "board" ? "Самбар" : "Жагсаалт"}
             </button>
           ))}
         </div>
@@ -449,7 +449,7 @@ export function AgentInbox({
             <div className="ai-inbox-cards">
               {group.tasks.map(card)}
               {!group.tasks.length && (
-                <p className="ai-inbox-empty">No tasks</p>
+                <p className="ai-inbox-empty">Даалгавар алга</p>
               )}
             </div>
           </section>
@@ -457,10 +457,10 @@ export function AgentInbox({
       </div>
       <footer className="ai-inbox-footer">
         <span aria-live="polite">
-          {groups[0].tasks.length} need you <b>·</b> {groups[1].tasks.length}{" "}
-          running
+          {groups[0].tasks.length} таны ээлж <b>·</b> {groups[1].tasks.length}{" "}
+          ажиллаж байна
         </span>
-        <span>{rows.length} tasks</span>
+        <span>{rows.length} даалгавар</span>
       </footer>
       <p className="ai-inbox-notice" role="status" aria-live="polite">
         {notice}

@@ -144,10 +144,10 @@ export function ToolCallCard({
 
   const announce =
     status === "running"
-      ? `${name} running`
+      ? `${name} ажиллаж байна`
       : status === "success"
-        ? `${name} finished`
-        : `${name} failed${error ? `: ${error}` : ""}`;
+        ? `${name} дууссан`
+        : `${name} алдаатай${error ? `: ${error}` : ""}`;
 
   return (
     <div
@@ -201,7 +201,7 @@ export function ToolCallCard({
           {status === "error" && <ErrorIcon />}
           <span className="ui-tclc__time">
             {status === "error"
-              ? "Failed"
+              ? "Алдаатай"
               : ms != null
                 ? formatMs(ms, status === "running")
                 : null}
@@ -217,7 +217,7 @@ export function ToolCallCard({
               <div className="ui-tclc__error">
                 <ErrorIcon />
                 <p className="ui-tclc__error-text" dir="auto">
-                  {error ?? "The tool call failed."}
+                  {error ?? "Хэрэгслийн дуудлага амжилтгүй боллоо."}
                 </p>
                 {onRetry && (
                   <button
@@ -229,28 +229,28 @@ export function ToolCallCard({
                       <path d="M2.75 8a5.25 5.25 0 1 0 1.6-3.77" />
                       <path d="M2.5 2.5v2.75h2.75" />
                     </svg>
-                    Retry
+                    Дахин оролдох
                   </button>
                 )}
               </div>
             )}
             {args !== undefined && (
-              <CodeSection label="Arguments" value={args} cap={maxCodeHeight} />
+              <CodeSection label="Аргумент" value={args} cap={maxCodeHeight} />
             )}
             {result !== undefined ? (
-              <CodeSection label="Result" value={result} cap={maxCodeHeight} />
+              <CodeSection label="Үр дүн" value={result} cap={maxCodeHeight} />
             ) : status === "running" ? (
               <div className="ui-tclc__section">
                 <div className="ui-tclc__section-head">
-                  <span className="ui-tclc__label">Result</span>
+                  <span className="ui-tclc__label">Үр дүн</span>
                 </div>
-                <p className="ui-tclc__pending">Waiting for result…</p>
+                <p className="ui-tclc__pending">Үр дүнг хүлээж байна…</p>
               </div>
             ) : null}
             {args === undefined &&
               result === undefined &&
               status === "success" && (
-                <p className="ui-tclc__pending">No arguments or result.</p>
+                <p className="ui-tclc__pending">Аргумент, үр дүн алга.</p>
               )}
           </div>
         </div>
@@ -264,7 +264,7 @@ export function ToolCallCard({
 export function ToolCallGroup({
   children,
   label,
-  runningLabel = "Using tools…",
+  runningLabel = "Хэрэгсэл ашиглаж байна…",
   duration,
   defaultOpen = false,
   open: openProp,
@@ -300,7 +300,7 @@ export function ToolCallGroup({
       : null;
   const ms = running ? measured : (duration ?? sum ?? measured);
 
-  const count = `Used ${calls.length.toLocaleString("en-US")} ${calls.length === 1 ? "tool" : "tools"}`;
+  const count = `${calls.length.toLocaleString("en-US")} хэрэгсэл ашигласан`;
   const title = running ? runningLabel : (label ?? count);
   const icons = calls.slice(-3);
 
@@ -316,7 +316,7 @@ export function ToolCallGroup({
       <span className="ui-tclc-sr" role="status" aria-live="polite">
         {running
           ? runningLabel
-          : `${count}${failed ? `, ${failed} failed` : ""}`}
+          : `${count}${failed ? `, ${failed} алдаатай` : ""}`}
       </span>
 
       <button
@@ -430,7 +430,7 @@ function CodeSection({
           aria-expanded={full}
           onClick={() => setFull(!full)}
         >
-          {full ? "Show less" : "Show all"}
+          {full ? "Хураах" : "Бүгдийг харах"}
         </button>
       )}
     </div>
@@ -450,8 +450,8 @@ function CopyButton({ text, label }: { text: string; label: string }) {
       type="button"
       className="ui-tclc__copy"
       data-copied={copied || undefined}
-      aria-label={copied ? "Copied" : `Copy ${label}`}
-      title={copied ? "Copied" : `Copy ${label}`}
+      aria-label={copied ? "Хуулсан" : `${label} хуулах`}
+      title={copied ? "Хуулсан" : `${label} хуулах`}
       onClick={() => copyText(text).then((ok) => ok && setCopied(true))}
     >
       <svg
@@ -538,17 +538,17 @@ function useStopwatch(
   return ms;
 }
 
-/** 0.4s, 12.3s, 2m 05s, 3h 12m, 2d 4h – the live timer always shows tenths below a minute */
+/** 0.4 с, 12.3 с, 2 мин 05 с, 3 цаг 12 мин, 2 өдөр 4 цаг – the live timer always shows tenths below a minute */
 function formatMs(ms: number, live: boolean) {
   if (!live && ms < 1000) return `${Math.max(1, Math.round(ms))}ms`;
-  if (ms < 60_000) return `${(Math.floor(ms / 100) / 10).toFixed(1)}s`;
+  if (ms < 60_000) return `${(Math.floor(ms / 100) / 10).toFixed(1)} с`;
   const s = Math.floor(ms / 1000);
   if (s < 3600)
-    return `${Math.floor(s / 60)}m ${String(s % 60).padStart(2, "0")}s`;
+    return `${Math.floor(s / 60)} мин ${String(s % 60).padStart(2, "0")} с`;
   const h = Math.floor(s / 3600);
   if (h < 24)
-    return `${h}h ${String(Math.floor(s / 60) % 60).padStart(2, "0")}m`;
-  return `${Math.floor(h / 24)}d ${h % 24}h`;
+    return `${h} цаг ${String(Math.floor(s / 60) % 60).padStart(2, "0")} мин`;
+  return `${Math.floor(h / 24)} өдөр ${h % 24} цаг`;
 }
 
 function toText(value: unknown): { text: string; json: boolean } {
@@ -1146,17 +1146,16 @@ export default function Demo() {
           summary="Вэбээс «харилцагчийн бүртгэл 2026» гэж хайлаа"
           status="success"
           duration={1500}
-          args={{ query: "харилцагчийн бүртгэл 2026 жижиг борлуулалтын баг", max_results: 5 }}
+          args={{ search_query: "харилцагчийн бүртгэл 2026 жижиг борлуулалтын баг", max_results: 5 }}
           result={{
-            results: [
-              { title: "Харилцагчийн бүртгэл А – багцууд", url: "https://example.com/crm-a/plans", max_seats: 25 },
-              { title: "Харилцагчийн бүртгэл Б – багцууд", url: "https://example.com/crm-b/plans", max_seats: 10 },
-              { title: "Харилцагчийн бүртгэл В – багцууд", url: "https://example.com/crm-c/plans", max_seats: 50 },
-              { title: "Борлуулалтын самбар Г", url: "https://example.com/crm-d/plans", max_seats: 5 },
-              { title: "Харилцагчийн бүртгэл Д – багцууд", url: "https://example.com/crm-e/plans", max_seats: 20 },
+            top_results: [
+              { page_title: "Харилцагчийн бүртгэл А – багцууд", page_url: "https://example.com/crm-a/plans", max_seats: 25 },
+              { page_title: "Харилцагчийн бүртгэл Б – багцууд", page_url: "https://example.com/crm-b/plans", max_seats: 10 },
+              { page_title: "Харилцагчийн бүртгэл В – багцууд", page_url: "https://example.com/crm-c/plans", max_seats: 50 },
+              { page_title: "Борлуулалтын самбар Г", page_url: "https://example.com/crm-d/plans", max_seats: 5 },
+              { page_title: "Харилцагчийн бүртгэл Д – багцууд", page_url: "https://example.com/crm-e/plans", max_seats: 20 },
             ],
-            total: 5,
-            cached: false,
+            total_count: 5,
           }}
         />
         <ToolCallCard
@@ -1165,8 +1164,8 @@ export default function Demo() {
           summary="example.com/crm-a/plans хуудсыг уншлаа"
           status="success"
           duration={1000}
-          args={{ url: "https://example.com/crm-a/plans", timeout_ms: 8000 }}
-          result={{ status: 200, title: "Харилцагчийн бүртгэл А – багцууд", words: 2140 }}
+          args={{ page_url: "https://example.com/crm-a/plans", timeout_ms: 8000 }}
+          result={{ http_status: 200, page_title: "Харилцагчийн бүртгэл А – багцууд", word_count: 2140 }}
         />
         <ToolCallCard
           name="crm.list_deals"
@@ -1174,12 +1173,12 @@ export default function Demo() {
           summary="Хэлэлцээрийн шатанд 4 нээлттэй хэлцэл олдлоо"
           status="success"
           duration={1200}
-          args={{ stage: "negotiation", owner: "me", limit: 10 }}
+          args={{ deal_stage: "хэлэлцээр", owner_id: "u_bat", max_items: 10 }}
           result={{
-            count: 4,
-            deals: [
-              { name: "Хойд салхи ХХК", days_open: 18 },
-              { name: "Говь трейд ХХК", days_open: 9 },
+            deal_count: 4,
+            open_deals: [
+              { deal_name: "Хойд салхи ХХК", days_open: 18 },
+              { deal_name: "Говь трейд ХХК", days_open: 9 },
             ],
           }}
         />

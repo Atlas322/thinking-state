@@ -20,15 +20,15 @@ export type WritingAssistantProps = {
 
 const sample = (m: string) => {
   const t = m.toLowerCase();
-  if (t.includes("shorter"))
-    return "Here's a tighter version: “Thanks for the update – I'll review the draft today and send notes by Friday.” Want it even shorter?";
-  if (t.includes("tone"))
-    return "I softened the opening and swapped “ASAP” for a clear date. It now reads warm but direct – shall I apply it to the rest?";
-  if (t.includes("reply"))
-    return "Hi Sam – thanks for sending this over. The plan looks good; I'd only move the review to Thursday so design can join. Talk soon!";
-  if (t.includes("email"))
-    return "I tidied the greeting, cut two filler sentences and ended with one clear ask. Paste the email and I'll polish the wording line by line.";
-  return "Happy to help. Paste your draft and tell me who it's for – I'll keep your voice and make it clearer.";
+  if (t.includes("богин"))
+    return "Илүү товч хувилбар: «Мэдээлсэнд баярлалаа – ноорогийг өнөөдөр уншаад, баасан гаригт санал илгээнэ.» Үүнээс ч богиносгох уу?";
+  if (t.includes("өнгө"))
+    return "Эхлэлийг зөөлрүүлж, «аль болох хурдан» гэснийг тодорхой огноогоор сольсон. Одоо дулаахан ч шулуун сонсогдож байна – үлдсэн хэсэгт нь ч ингэх үү?";
+  if (t.includes("хариу"))
+    return "Сайн байна уу, Бат аа – илгээсэнд баярлалаа. Төлөвлөгөө сайн байна; дизайны баг оролцож болохоор хяналтыг пүрэв гараг руу л шилжүүлье. Дараа ярья!";
+  if (t.includes("мэйл"))
+    return "Мэндчилгээг цэгцэлж, илүүц хоёр өгүүлбэрийг хасаад, нэг тодорхой хүсэлтээр төгсгөсөн. И-мэйлээ буулгавал мөр мөрөөр нь өнгөлье.";
+  return "Туслахад бэлэн. Ноорогоо буулгаад хэнд зориулсныг хэлээрэй – таны өнгө аясыг хадгалаад илүү ойлгомжтой болгоно.";
 };
 
 type SpeechRec = {
@@ -41,14 +41,14 @@ type SpeechRec = {
 };
 
 export function WritingAssistant({
-  name = "Quill",
-  tagline = "Your writing companion.",
-  greeting = "What should we write?",
-  suggestions = ["Polish my email", "Make it shorter", "Fix the tone", "Draft a reply"],
-  placeholder = "Ask anything…",
+  name = "Үзэг",
+  tagline = "Таны бичгийн туслах.",
+  greeting = "Юу бичих вэ?",
+  suggestions = ["И-мэйлээ сайжруулах", "Богиносгох", "Өнгө аясыг засах", "Хариу ноороглох"],
+  placeholder = "Юу ч асуугаарай…",
   respond,
   speech = "auto",
-  dictation = "Write a short thank-you note to the design team for shipping on time.",
+  dictation = "Дизайны багт ажлаа цагтаа хүлээлгэн өгсөнд нь талархсан богино захидал бич.",
   className = "",
 }: WritingAssistantProps) {
   const [messages, setMessages] = React.useState<WritingMessage[]>([]);
@@ -99,7 +99,7 @@ export function WritingAssistant({
             timers.current.push(window.setTimeout(() => res(sample(v)), 650));
           });
     } catch {
-      reply = "Something went wrong – try again.";
+      reply = "Алдаа гарлаа – дахин оролдоно уу.";
     }
     setThinking(false);
     setStreaming({ id: ++idRef.current, full: reply, shown: 0 });
@@ -117,7 +117,7 @@ export function WritingAssistant({
     const Ctor = W.SpeechRecognition ?? W.webkitSpeechRecognition;
     if (speech === "auto" && Ctor) {
       const r = new Ctor();
-      r.lang = "en-US";
+      r.lang = "mn-MN";
       r.interimResults = true;
       r.onresult = (e) => setInput(Array.from(e.results).map((x) => x[0].transcript).join(""));
       r.onend = () => setListening(false);
@@ -178,7 +178,7 @@ export function WritingAssistant({
                 </div>
               ))}
               {thinking && (
-                <div className="wra-msg is-assistant wra-dots" aria-label="Writing">
+                <div className="wra-msg is-assistant wra-dots" aria-label="Бичиж байна">
                   <i />
                   <i />
                   <i />
@@ -200,13 +200,14 @@ export function WritingAssistant({
             send(input);
           }}
         >
-          <input aria-label="Message" placeholder={listening ? "Listening…" : placeholder} value={input} onChange={(e) => setInput(e.target.value)} />
+          <input aria-label="Мессеж" placeholder={listening ? "Сонсож байна…" : placeholder} value={input} onChange={(e) => setInput(e.target.value)} />
           {input.trim() && !listening ? (
-            <button type="submit" className="wra-send" aria-label="Send">
+            <button type="submit" className="wra-send" aria-label="Илгээх">
               <svg viewBox="0 0 16 16"><path d="M8 12.5v-9M4.5 7 8 3.5 11.5 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           ) : (
-            <button type="button" className={`wra-mic${listening ? " is-on" : ""}`} aria-label={listening ? "Stop dictation" : "Dictate"} aria-pressed={listening} onClick={dictate}>
+            <button type="button" className={`wra-mic${listening ? " is-on" : ""}`} aria-label={listening ? "Дуут бичлэгийг зогсоох" : "Дуугаар бичих"}
+ aria-pressed={listening} onClick={dictate}>
               {listening ? (
                 <span className="wra-bars" aria-hidden="true"><i /><i /><i /><i /></span>
               ) : (

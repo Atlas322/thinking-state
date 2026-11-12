@@ -68,19 +68,19 @@ export const autonomyIcons = {
 };
 
 const defaultActions: AgentAction[] = [
-  { id: "read", label: "Read files and docs", risk: "safe", icon: autonomyIcons.notion },
-  { id: "draft", label: "Draft emails", risk: "safe", icon: autonomyIcons.gmail },
-  { id: "crm", label: "Update CRM records", risk: "risky", icon: autonomyIcons.hubspot },
-  { id: "send", label: "Send emails", risk: "risky", icon: autonomyIcons.gmail },
-  { id: "delete", label: "Delete files", risk: "destructive", icon: autonomyIcons.drive },
-  { id: "spend", label: "Spend money", risk: "destructive", icon: autonomyIcons.stripe },
+  { id: "read", label: "Файл, баримт унших", risk: "safe", icon: autonomyIcons.notion },
+  { id: "draft", label: "Имэйлийн ноорог бичих", risk: "safe", icon: autonomyIcons.gmail },
+  { id: "crm", label: "CRM бичлэг шинэчлэх", risk: "risky", icon: autonomyIcons.hubspot },
+  { id: "send", label: "Имэйл илгээх", risk: "risky", icon: autonomyIcons.gmail },
+  { id: "delete", label: "Файл устгах", risk: "destructive", icon: autonomyIcons.drive },
+  { id: "spend", label: "Мөнгө зарцуулах", risk: "destructive", icon: autonomyIcons.stripe },
 ];
 
-const levels = ["Always ask", "If risky", "Full auto"] as const;
+const levels = ["Үргэлж асуух", "Эрсдэлтэй бол", "Бүрэн автомат"] as const;
 const meaning = [
-  "Every action waits for you",
-  "Safe actions run, risky ones wait for you",
-  "Everything runs except what you lock",
+  "Үйлдэл бүр таныг хүлээнэ",
+  "Аюулгүй үйлдэл ажиллана, эрсдэлтэй нь таныг хүлээнэ",
+  "Таны түгжсэнээс бусад нь бүгд ажиллана",
 ];
 
 const Lock = ({ open }: { open: boolean }) => (
@@ -99,8 +99,8 @@ export function AutonomyDial({
   pinned,
   defaultPinned = ["spend"],
   onPinnedChange,
-  title = "Sales agent",
-  subtitle = "What it may do without asking you",
+  title = "Борлуулалтын агент",
+  subtitle = "Танаас асуухгүйгээр юу хийж болох вэ",
   className = "",
 }: AutonomyDialProps) {
   const [innerLevel, setInnerLevel] = React.useState<AutonomyLevel>(defaultLevel);
@@ -135,15 +135,15 @@ export function AutonomyDial({
             ) : (
               <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M8 5v3.5M8 10.8v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
             )}
-            {a.risk === "risky" ? "Risky" : "Destructive"}
+            {a.risk === "risky" ? "Эрсдэлтэй" : "Устгах"}
           </span>
         )}
         <button
           type="button"
           className={`ad-lock ${locked ? "is-on" : ""}`}
           aria-pressed={locked}
-          aria-label={`${locked ? "Unlock" : "Lock"} ${a.label}`}
-          title={locked ? "Always asks – click to unlock" : "Always ask for this"}
+          aria-label={`${a.label}: ${locked ? "түгжээ тайлах" : "түгжих"}`}
+          title={locked ? "Үргэлж асууна – дарж түгжээг тайлна" : "Үүнийг үргэлж асуух"}
           onClick={() => togglePin(a.id)}
         >
           <Lock open={!locked} />
@@ -173,7 +173,7 @@ export function AutonomyDial({
       <div
         className="ad-levels"
         role="radiogroup"
-        aria-label="Autonomy level"
+        aria-label="Бие даалтын түвшин"
         aria-describedby={descId}
       >
         {levels.map((l, i) => (
@@ -201,21 +201,21 @@ export function AutonomyDial({
         {meaning[lv]}
       </p>
       <div className="ad-body">
-        <section aria-label="Runs on its own">
+        <section aria-label="Өөрөө ажиллана">
           <h4>
-            Runs on its own <span className="ad-count">{own.length}</span>
+            Өөрөө ажиллана <span className="ad-count">{own.length}</span>
           </h4>
           <ul>{own.map(row)}</ul>
         </section>
-        <section aria-label="Asks you first">
+        <section aria-label="Эхлээд танаас асууна">
           <h4>
-            Asks you first <span className="ad-count">{ask.length}</span>
+            Эхлээд танаас асууна <span className="ad-count">{ask.length}</span>
           </h4>
           <ul>{ask.map(row)}</ul>
         </section>
       </div>
       <p className="ad-sr" aria-live="polite">
-        {levels[lv]}: {own.length} on its own, {ask.length} ask first
+        {levels[lv]}: {own.length} өөрөө, {ask.length} эхлээд асууна
       </p>
     </section>
   );

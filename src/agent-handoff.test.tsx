@@ -22,7 +22,7 @@ it("places appended handoffs first without mutating the consumer array", () => {
   const entries = [...handoffs, { ...handoffs[0], id: "newest", task: "Pricing copy" }];
   const { rerender } = render(<AgentHandoff agents={agents} tasks={tasks} handoffs={handoffs} />);
   rerender(<AgentHandoff agents={agents} tasks={tasks} handoffs={entries} />);
-  const list = screen.getByRole("list", { name: "Researcher to Writer handoffs" });
+  const list = screen.getByRole("list", { name: "Researcher → Writer дамжуулалт" });
   expect(within(list).getAllByRole("listitem")[0].textContent).toContain("Pricing copy");
   expect(entries.map((entry) => entry.id)).toEqual(["older", "newest"]);
 });
@@ -30,15 +30,15 @@ it("places appended handoffs first without mutating the consumer array", () => {
 it("returns keyboard focus to the picked card after Escape or Cancel", () => {
   const onAssign = vi.fn();
   render(<AgentHandoff agents={agents} tasks={tasks} handoffs={handoffs} onAssign={onAssign} />);
-  const card = screen.getByRole("button", { name: /Launch post.*left behind/ });
+  const card = screen.getByRole("button", { name: /Launch post.*орхигдсон/ });
   fireEvent.click(card);
-  fireEvent.click(screen.getByRole("button", { name: "Move task to an agent →" }));
-  expect(document.activeElement).toBe(screen.getByRole("button", { name: "Assign Launch post to Writer" }));
+  fireEvent.click(screen.getByRole("button", { name: "Даалгаврыг агентад шилжүүлэх →" }));
+  expect(document.activeElement).toBe(screen.getByRole("button", { name: "Launch post: Writer-д оноох" }));
   fireEvent.keyDown(document.activeElement!, { key: "Escape" });
   expect(document.activeElement).toBe(card);
   expect(card.getAttribute("aria-expanded")).toBe("true");
-  fireEvent.click(screen.getByRole("button", { name: "Move task to an agent →" }));
-  fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+  fireEvent.click(screen.getByRole("button", { name: "Даалгаврыг агентад шилжүүлэх →" }));
+  fireEvent.click(screen.getByRole("button", { name: "Болих" }));
   expect(document.activeElement).toBe(card);
   expect(onAssign).not.toHaveBeenCalled();
 });
@@ -47,10 +47,10 @@ it("does not submit an enclosing form and keeps focus when a nested loss closes"
   const onSubmit = vi.fn((event: React.FormEvent) => event.preventDefault());
   const onRestore = vi.fn();
   render(<form onSubmit={onSubmit}><AgentHandoff agents={agents} tasks={tasks} handoffs={handoffs} onRestore={onRestore} /></form>);
-  const card = screen.getByRole("button", { name: /Launch post.*left behind/ });
+  const card = screen.getByRole("button", { name: /Launch post.*орхигдсон/ });
   fireEvent.click(card);
-  fireEvent.click(screen.getByRole("button", { name: "Quote Left behind" }));
-  const restore = screen.getByRole("button", { name: "Add back" });
+  fireEvent.click(screen.getByRole("button", { name: "Quote Орхигдсон" }));
+  const restore = screen.getByRole("button", { name: "Буцааж нэмэх" });
   fireEvent.click(restore);
   expect(onRestore).toHaveBeenCalledWith(handoffs[0], handoffs[0].items[0]);
   expect(onSubmit).not.toHaveBeenCalled();

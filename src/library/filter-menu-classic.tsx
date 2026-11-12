@@ -216,7 +216,7 @@ export function FilterMenu({
             disabled={chips.length === 0}
             onClick={() => commit({})}
           >
-            Clear all
+            Бүгдийг цэвэрлэх
           </button>
         </div>
 
@@ -230,7 +230,7 @@ export function FilterMenu({
                 </span>
                 <button
                   type="button"
-                  aria-label={`Remove ${c.label}`}
+                  aria-label={`${c.label} хасах`}
                   onClick={() => toggle(c.group.id, c.option.id)}
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -286,7 +286,7 @@ export function FilterMenu({
                   </span>
                   <span className="ui-fm__group-picked" aria-live="polite">
                     {count > 0
-                      ? `${count} filter${count === 1 ? "" : "s"}`
+                      ? `${count} шүүлтүүр`
                       : ""}
                   </span>
                 </button>
@@ -349,7 +349,7 @@ export function FilterMenu({
                 <path d="M12 19V5m0 0-5 5m5-5 5 5" />
               </svg>
             </kbd>
-            To navigate
+            Шилжих
           </span>
           <span className="ui-fm__hint">
             <kbd>
@@ -357,7 +357,7 @@ export function FilterMenu({
                 <path d="M18 6v6.5a2 2 0 0 1-2 2H7m0 0 3.5-3.5M7 14.5 10.5 18" />
               </svg>
             </kbd>
-            To select
+            Сонгох
           </span>
         </div>
       )}

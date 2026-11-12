@@ -56,31 +56,31 @@ export type DecisionCardProps = {
 };
 
 const baseLabels: DecisionCardLabels = {
-  needsYou: "Needs you",
-  later: "Later",
-  show: "Show",
-  recommended: "Recommended",
-  approve: "Approve",
-  decline: "Decline",
-  own: "Something else…",
-  waiting: (n) => `${n} decision${n === 1 ? "" : "s"} waiting`,
-  of: (i, n) => `${i} of ${n}`,
-  close: "Close",
-  closeReason: "Why close it? (optional)",
-  confirmClose: "Close",
-  cancel: "Cancel",
+  needsYou: "Таны ээлж",
+  later: "Дараа",
+  show: "Харах",
+  recommended: "Санал болгосон",
+  approve: "Батлах",
+  decline: "Татгалзах",
+  own: "Өөр хариулт…",
+  waiting: (n) => `${n} шийдвэр хүлээж байна`,
+  of: (i, n) => `${i}/${n}`,
+  close: "Хаах",
+  closeReason: "Яагаад хаах вэ? (заавал биш)",
+  confirmClose: "Хаах",
+  cancel: "Болих",
 };
 
 const defaultDecisions: Decision[] = [
   {
     id: "weekly",
     kind: "approval",
-    task: "Weekly update",
-    question: "Send the weekly update to Northwind?",
+    task: "Долоо хоногийн тайлан",
+    question: "Долоо хоногийн тайланг Хойд салхи ХХК руу илгээх үү?",
     facts: [
-      { label: "To", value: "Dana Reyes, Northwind" },
-      { label: "Subject", value: "Week 45: ingest is live, dashboard in review" },
-      { label: "Body", value: "Ingest runs on staging and took Tuesday's spike without losing an event, and the dashboard is in review with Dana's team." },
+      { label: "Хэнд", value: "Дулмаа Рэнцэн, Хойд салхи ХХК" },
+      { label: "Гарчиг", value: "45-р долоо хоног: өгөгдөл татах ажил эхэлсэн, самбар хянагдаж байна" },
+      { label: "Агуулга", value: "Өгөгдөл татах үйлчилгээ туршилтын орчинд ажиллаж, мягмар гарагийн оргил ачааллыг нэг ч үйл явдал алдалгүй даалаа. Самбарыг Дулмаагийн баг хянаж байна." },
     ],
   },
 ];
@@ -147,7 +147,7 @@ export function DecisionCard({
     setAnswered((s) => [...s, d.id]);
     setText("");
     setFocus(0);
-    setSaid(left ? `Answer recorded: ${what}. ${L.waiting(left)}.` : "Answer recorded");
+    setSaid(left ? `Хариулт бүртгэгдлээ: ${what}. ${L.waiting(left)}.` : "Хариулт бүртгэгдлээ");
     onDecide?.(d.id, a);
     window.setTimeout(() => (left ? rowsRef.current[0]?.focus() : undefined), 30);
   };
@@ -230,11 +230,11 @@ export function DecisionCard({
           <span className="dc-spacer" />
           {open.length > 1 && (
             <span className="dc-pager">
-              <button type="button" aria-label="Previous decision" disabled={idx === 0} onClick={() => setPage(idx - 1)}>
+              <button type="button" aria-label="Өмнөх шийдвэр" disabled={idx === 0} onClick={() => setPage(idx - 1)}>
                 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
               </button>
               {L.of(idx + 1, open.length)}
-              <button type="button" aria-label="Next decision" disabled={idx === open.length - 1} onClick={() => setPage(idx + 1)}>
+              <button type="button" aria-label="Дараах шийдвэр" disabled={idx === open.length - 1} onClick={() => setPage(idx + 1)}>
                 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
               </button>
             </span>
@@ -305,7 +305,7 @@ export function DecisionCard({
             }}
           />
           {!closing && text.trim() && (
-            <button type="button" className="dc-send" aria-label="Send answer" onClick={() => answer({ text: text.trim() })}>
+            <button type="button" className="dc-send" aria-label="Хариулт илгээх" onClick={() => answer({ text: text.trim() })}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3.5M4 7.5l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           )}
@@ -333,21 +333,21 @@ export function DecisionCardDemo() {
             <rect key={`${i}${j}`} x={x} y={y} width="3" height="3" rx=".6" fill={(i + j) % 2 ? "#c084fc" : "#8b5cf6"} opacity={(i + j) % 3 === 1 ? 0.45 : 1} />
           )))}
         </svg>
-        Setup checklist – on it.
+        Тохиргооны жагсаалт – ажиллаж байна.
       </p>
       <DecisionCard />
       <div className="dc-composer">
-        <div className="dc-ph">Ask for anything…</div>
+        <div className="dc-ph">Юу ч хамаагүй асуу…</div>
         <div className="dc-tools">
           <span>
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
           </span>
           <span className="dc-req">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 8V3.8a1 1 0 0 1 2 0V7.5m0-.5V2.8a1 1 0 0 1 2 0V7.5m0-.3V3.8a1 1 0 0 1 2 0V9c0 3-1.6 4.5-4 4.5-2 0-3-1-4.2-3L2.6 8.6a1 1 0 0 1 1.6-1.1L5.5 9" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round" /></svg>
-            Request approval
+            Зөвшөөрөл хүсэх
           </span>
           <span className="dc-spacer" />
-          <span className="dc-auto">Auto <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg></span>
+          <span className="dc-auto">Автомат <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg></span>
           <span>
             <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="6" y="2" width="4" height="7.5" rx="2" fill="none" stroke="currentColor" strokeWidth="1.2" /><path d="M4 8a4 4 0 0 0 8 0M8 12v2" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
           </span>

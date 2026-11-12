@@ -48,7 +48,8 @@ export type TextAreaProps = Omit<ComponentPropsWithRef<"textarea">, "rows"> & {
   hint?: ReactNode;
   /** Marks the field invalid and shows this under it, in place of the hint */
   error?: ReactNode;
-  /** "Optional" next to the label */
+  /** "Заавал биш" next to the label */
+
   optional?: boolean;
   /** Shows "120/2000" under the field; needs maxLength */
   counter?: boolean;
@@ -211,7 +212,7 @@ export function TextArea({
           <label className="ui-tac__label" htmlFor={inputId}>
             {label}
           </label>
-          {optional && <span className="ui-tac__optional">Optional</span>}
+          {optional && <span className="ui-tac__optional">Заавал биш</span>}
         </div>
       )}
       <div className="ui-tac__box">
@@ -271,7 +272,7 @@ export function TextArea({
           <button
             type="button"
             className="ui-tac__expand"
-            aria-label={expanded ? "Less room" : "More room"}
+            aria-label={expanded ? "Багасгах" : "Томруулах"}
             aria-pressed={expanded}
             aria-controls={inputId}
             onClick={toggle}
@@ -528,15 +529,15 @@ const css = /* css */ `
 /** Working example; use the named TextArea export in your application. */
 export default function Demo() {
   const [text, setText] = useState(
-    "We're Acme, a 40-person B2B company selling scheduling software to clinics in Germany and Austria.\nCommon terms: MRR, churn, onboarding call, practice (= customer).\nAnswer in English unless someone writes in German.",
+    "Бид эмнэлгүүдэд цаг захиалгын програм зардаг 40 хүнтэй B2B компани. Улаанбаатар болон Дархан хотод үйлчилдэг.\nТогтмол нэр томьёо: MRR, хэрэглэгч алдагдал, танилцуулах уулзалт, эмнэлэг (= харилцагч).\nХэн нэгэн англиар бичээгүй л бол монголоор хариулна.",
   );
   const [note, setNote] = useState("");
   return (
     <div className="text-area-example">
       <style>{`.text-area-example{width:400px;max-width:100%;box-sizing:border-box;padding:20px;display:grid;gap:20px;border:1px solid #e9e9e9;background:white;border-radius:12px}:where(.dark,[data-theme=dark]) .text-area-example{background:#131315;border-color:#29292b}`}</style>
       <TextArea
-        label="Company context"
-        hint="Added to every chat in this workspace."
+        label="Компанийн мэдээлэл"
+        hint="Энэ ажлын орчны бүх ярианд нэмэгдэнэ."
         value={text}
         onChange={(e) => setText(e.target.value)}
         maxLength={2000}
@@ -546,10 +547,10 @@ export default function Demo() {
         expandable
       />
       <TextArea
-        label="Note for the reviewer"
+        label="Хянагчид үлдээх тэмдэглэл"
         optional
-        placeholder="What should they look at first?"
-        hint="⌘ Enter to send"
+        placeholder="Юуг түрүүлж харах вэ?"
+        hint="⌘ ↵ дарж илгээнэ"
         value={note}
         onChange={(e) => setNote(e.target.value)}
         minRows={2}

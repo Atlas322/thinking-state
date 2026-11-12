@@ -99,7 +99,7 @@ export function Dropzone({
     commit(itemsRef.current.map((item) => (item.id === itemId ? { ...item, ...changes } : item)));
   };
   const validate = (file: File, size = file.size) => {
-    if (size > Math.max(0, maxSize)) return "Too large";
+    if (size > Math.max(0, maxSize)) return "Хэт том";
     if (
       accept?.length &&
       !accept.some((rule) => {
@@ -111,7 +111,7 @@ export function Dropzone({
             : file.type.toLowerCase() === value;
       })
     )
-      return "File type not accepted";
+      return "Файлын төрөл зөвшөөрөгдөхгүй";
     return undefined;
   };
   const fail = (item: UploadItem, error: string) => {
@@ -134,14 +134,14 @@ export function Dropzone({
       if (!valid()) return;
       attempts.current.delete(item.id);
       patch(item.id, { status: "done", progress: 1 });
-      setAnnouncement(`${item.name} uploaded`);
+      setAnnouncement(`${item.name} байршуулсан`);
     };
     if (onUpload && !simulate) {
       Promise.resolve()
         .then(() => onUpload(item.file!, progress))
         .then(done, (failure) => {
           if (!valid()) return;
-          fail(item, failure instanceof Error ? failure.message : "Upload failed");
+          fail(item, failure instanceof Error ? failure.message : "Байршуулж чадсангүй");
         });
     } else {
       let value = 0;
@@ -178,7 +178,7 @@ export function Dropzone({
       const error = validate(d.file, d.size);
       const itemId = `${id}-${++sequence.current}`;
       if (!(entry instanceof File) && entry.failAt !== undefined)
-        demoFail.current.set(itemId, { at: entry.failAt, msg: entry.failWith ?? "Upload failed" });
+        demoFail.current.set(itemId, { at: entry.failAt, msg: entry.failWith ?? "Байршуулж чадсангүй" });
       return {
         id: itemId,
         name: d.file.name,
@@ -202,17 +202,17 @@ export function Dropzone({
       () =>
         addRef.current(
           [
-            { file: new File(["Demo document"], "Q3-Board-Report.pdf", { type: "application/pdf" }), size: 4.2 * MB },
-            { file: new File(["Demo image"], "Hero-Shot.png", { type: "image/png" }), size: 2.6 * MB },
+            { file: new File(["Demo document"], "3-р-улирлын-тайлан.pdf", { type: "application/pdf" }), size: 4.2 * MB },
+            { file: new File(["Demo image"], "Нүүр-зураг.png", { type: "image/png" }), size: 2.6 * MB },
             {
-              file: new File(["Demo sheet"], "Budget-2027.xlsx", {
+              file: new File(["Demo sheet"], "Төсөв-2027.xlsx", {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               }),
               size: 1.8 * MB,
               failAt: 0.62,
-              failWith: "Connection lost",
+              failWith: "Холболт тасарсан",
             },
-            { file: new File(["Demo video"], "Product-Demo.mp4", { type: "video/mp4" }), size: 48 * MB },
+            { file: new File(["Demo video"], "Бүтээгдэхүүний-танилцуулга.mp4", { type: "video/mp4" }), size: 48 * MB },
           ],
           true,
         ),
@@ -226,7 +226,7 @@ export function Dropzone({
     if (timer !== undefined) window.clearInterval(timer);
     simulations.current.delete(item.id);
     commit(itemsRef.current.filter((value) => value.id !== item.id));
-    setAnnouncement(`${item.name} removed from the list.`);
+    setAnnouncement(`${item.name} жагсаалтаас хасагдлаа.`);
   };
   const clear = () => {
     itemsRef.current.forEach((item) => {
@@ -236,18 +236,18 @@ export function Dropzone({
     });
     simulations.current.clear();
     commit([]);
-    setAnnouncement("List cleared.");
+    setAnnouncement("Жагсаалтыг цэвэрлэлээ.");
   };
 
   const limit = `${(maxSize / MB).toLocaleString(undefined, { maximumFractionDigits: 1 })} MB`;
   const types = accept?.length
     ? accept.map((a) => a.replace(/^\./, "").toUpperCase()).join(", ")
-    : "PDF, PNG, JPG and more";
-  const help = hint ?? `${types} · up to ${limit} each`;
+    : "PDF, PNG, JPG болон бусад";
+  const help = hint ?? `${types} · тус бүр ${limit} хүртэл`;
   const done = items.filter((i) => i.status === "done").length;
   const busy = items.some((i) => i.status === "uploading");
   const failed = items.some((i) => i.status === "error");
-  const errorText = (item: UploadItem) => (item.error === "Too large" ? `Too large – max ${limit}` : item.error);
+  const errorText = (item: UploadItem) => (item.error === "Хэт том" ? `Хэт том – дээд тал нь ${limit}` : item.error);
 
   return (
     <div className={`dz ${className}`}>
@@ -257,7 +257,7 @@ export function Dropzone({
         type="file"
         multiple
         accept={accept?.join(",")}
-        aria-label="Choose files"
+        aria-label="Файл сонгох"
         style={{ display: "none" }}
         onChange={(event) => {
           if (event.target.files) add(Array.from(event.target.files));
@@ -306,10 +306,10 @@ export function Dropzone({
         </span>
         <span className="dz-title">
           {drag > 0 ? (
-            `Drop ${drag} ${drag === 1 ? "file" : "files"} to upload`
+            `Байршуулах ${drag} файлаа энд тавина уу`
           ) : (
             <>
-              Drop files here or <span className="dz-link">browse</span>
+              Файлаа энд чирж оруулах эсвэл <span className="dz-link">сонгох</span>
             </>
           )}
         </span>
@@ -320,7 +320,7 @@ export function Dropzone({
 
       {items.length > 0 && (
         <>
-          <ul className="dz-list" aria-label="Files">
+          <ul className="dz-list" aria-label="Файлууд">
             {items.map((item, i) => {
               const rejected = item.status === "error" && !!item.file && !!validate(item.file, item.size);
               const showBar = !rejected && item.status !== "done";
@@ -335,7 +335,7 @@ export function Dropzone({
                     <div className="dz-name">
                       <span title={item.name}>{item.name}</span>
                       {item.status === "done" && (
-                        <svg className="dz-ok" viewBox="0 0 16 16" aria-label="Uploaded">
+                        <svg className="dz-ok" viewBox="0 0 16 16" aria-label="Байршуулсан">
                           <circle cx="8" cy="8" r="7" fill="currentColor" />
                           <path d="m5 8.2 2 2 4-4.4" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
@@ -345,14 +345,14 @@ export function Dropzone({
                       {item.status === "error"
                         ? errorText(item)
                         : item.status === "uploading"
-                          ? `${fmtSize(item.size * item.progress)} of ${fmtSize(item.size)} · ${Math.max(1, Math.round((1 - item.progress) * 6))}s left`
+                          ? `${fmtSize(item.size * item.progress)}/${fmtSize(item.size)} · ${Math.max(1, Math.round((1 - item.progress) * 6))} с үлдсэн`
                           : fmtSize(item.size)}
                     </div>
                     {!rejected && (
                       <div
                         className={`dz-bar ${showBar ? "" : "is-hidden"}`}
                         role="progressbar"
-                        aria-label={`Upload ${item.name}`}
+                        aria-label={`Байршуулалт: ${item.name}`}
                         aria-valuemin={0}
                         aria-valuemax={100}
                         aria-valuenow={Math.round(item.progress * 100)}
@@ -363,13 +363,13 @@ export function Dropzone({
                   </div>
                   <div className="dz-acts">
                     {item.status === "error" && item.file && !rejected && (
-                      <button type="button" aria-label={`Retry ${item.name}`} onClick={() => upload(item, !onUpload)}>
+                      <button type="button" aria-label={`Дахин оролдох: ${item.name}`} onClick={() => upload(item, !onUpload)}>
                         <svg viewBox="0 0 16 16">
                           <path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v2.5h-2.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </button>
                     )}
-                    <button type="button" aria-label={`Remove ${item.name}`} onClick={() => remove(item)}>
+                    <button type="button" aria-label={`Хасах: ${item.name}`} onClick={() => remove(item)}>
                       <svg viewBox="0 0 16 16">
                         <path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
                       </svg>
@@ -395,10 +395,10 @@ export function Dropzone({
                   <path d="m5 8.2 2 2 4-4.4" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
                 </svg>
               )}
-              {busy ? `Uploading ${done} of ${items.length}` : `${done} of ${items.length} uploaded`}
+              {busy ? `Байршуулж байна: ${done}/${items.length}` : `${done}/${items.length} байршуулсан`}
             </span>
             <button type="button" className="dz-clear" onClick={clear}>
-              Clear
+              Цэвэрлэх
             </button>
           </div>
         </>

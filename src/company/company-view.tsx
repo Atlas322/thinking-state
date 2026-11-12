@@ -84,7 +84,7 @@ export const companyLabelsMn: CompanyViewLabels = {
   raci: "RACI",
   structure: "Процесс",
   agents: "Хүн ба агент",
-  workflows: "Workflow",
+  workflows: "Ажлын урсгал",
   decisions: "Шийдвэр",
   institution: "Институц",
   company: "Компани",
@@ -92,7 +92,7 @@ export const companyLabelsMn: CompanyViewLabels = {
   department: "Хэлтэс",
   stream: "Чиглэл",
   exportedAt: "Шинэчлэгдсэн",
-  area: "Area",
+  area: "Чиглэл",
   types: "Төрлүүд",
   customers: "Үйлчлүүлэгч",
   value: "Үнэ цэнэ",
@@ -101,7 +101,7 @@ export const companyLabelsMn: CompanyViewLabels = {
   units: "Нэгж",
   people: "Хүн",
   agents_n: "Агент",
-  workflows_n: "Workflow",
+  workflows_n: "Ажлын урсгал",
   projects_n: "Төсөл",
   level: "Түвшин",
   views: "Харагдац",
@@ -250,7 +250,7 @@ function StructureView({ scoped, L, onPick, onPerson, current }: { scoped: Compa
             )}
             {flows > 0 && (
               <span className="cv-pill">
-                ↻ {flows} {L.workflows_n}
+                ↻ {flows} {L.workflows_n.toLowerCase()}
               </span>
             )}
           </span>

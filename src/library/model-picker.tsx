@@ -48,6 +48,7 @@ const defaultModels: PickerModel[] = [
 ];
 
 const efforts: Effort[] = ["low", "medium", "high"];
+const effortLabel: Record<Effort, string> = { low: "Бага", medium: "Дунд", high: "Өндөр" };
 const effortMul: Record<Effort, number> = { low: 1.6, medium: 2.6, high: 4.2 };
 
 function useRoll(target: number, ms = 300) {
@@ -173,7 +174,7 @@ export function ModelPicker({
   return (
     <div className={`mp ${className}`} ref={rootRef} onKeyDown={(e) => { if (e.key === "Escape" && isOpen) { setOpen(false); trigRef.current?.focus(); } }}>
       <style>{css}</style>
-      <textarea className="mp-input" rows={1} placeholder={placeholder} value={text} onChange={(e) => setText(e.target.value)} aria-label="Message" />
+      <textarea className="mp-input" rows={1} placeholder={placeholder} value={text} onChange={(e) => setText(e.target.value)} aria-label="Мессеж" />
       <div className="mp-bar">
         <div className="mp-anchor">
           <button
@@ -183,7 +184,7 @@ export function ModelPicker({
             aria-haspopup="listbox"
             aria-expanded={isOpen}
             aria-controls={listId}
-            aria-label={`Model: ${model.name}${think ? ", extended thinking on" : ""}`}
+            aria-label={`Загвар: ${model.name}${think ? ", гүн бодолт асаалттай" : ""}`}
             onClick={() => { setOpen(!isOpen); if (!isOpen) requestAnimationFrame(() => listRef.current?.focus()); }}
             onKeyDown={(e) => { if (e.key === "ArrowDown") { e.preventDefault(); setOpen(true); requestAnimationFrame(() => listRef.current?.focus()); } }}
           >
@@ -193,13 +194,13 @@ export function ModelPicker({
             <svg className="mp-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
           </button>
           <div className={`mp-menu mp-${side} mp-${align}${isOpen ? " is-open" : ""}`} inert={!isOpen ? true : undefined}>
-            <div className="mp-head" aria-hidden="true"><span>Model</span><span>Speed</span><span>Quality</span><span>Cost</span></div>
+            <div className="mp-head" aria-hidden="true"><span>Загвар</span><span>Хурд</span><span>Чанар</span><span>Зардал</span></div>
             <div
               ref={listRef}
               id={listId}
               role="listbox"
               tabIndex={0}
-              aria-label="Models"
+              aria-label="Загварууд"
               aria-activedescendant={`${listId}-${active ?? id}`}
               className={`mp-list${active ? " has-active" : ""}`}
               onKeyDown={onListKey}
@@ -225,7 +226,7 @@ export function ModelPicker({
                       </span>
                     </span>
                     {r ? (
-                      <span className="mp-varies">Varies</span>
+                      <span className="mp-varies">Өөр өөр</span>
                     ) : (
                       <>
                         <Bars n={m.speed} lit={m.id === (active ?? id)} />
@@ -239,15 +240,15 @@ export function ModelPicker({
             </div>
             <div className="mp-sep" />
             <div className="mp-set">
-              <span className="mp-set-l"><Bulb /><span>Extended thinking<small>Thinks before it answers</small></span></span>
-              <Switch on={think} label="Extended thinking" onChange={(v) => { if (thinking === undefined) setInThink(v); onThinkingChange?.(v); }} />
+              <span className="mp-set-l"><Bulb /><span>Гүн бодолт<small>Хариулахаасаа өмнө бодно</small></span></span>
+              <Switch on={think} label="Гүн бодолт" onChange={(v) => { if (thinking === undefined) setInThink(v); onThinkingChange?.(v); }} />
             </div>
             <div className={`mp-effort-wrap${think ? " is-open" : ""}`}>
               <div className="mp-effort-in">
                 <div
                   className="mp-effort"
                   role="radiogroup"
-                  aria-label="Effort"
+                  aria-label="Хүчин чармайлт"
                   onKeyDown={(e) => {
                     const i = efforts.indexOf(eff);
                     const n = e.key === "ArrowRight" ? Math.min(2, i + 1) : e.key === "ArrowLeft" ? Math.max(0, i - 1) : i;
@@ -257,7 +258,7 @@ export function ModelPicker({
                   <span className="mp-eff-thumb" style={{ transform: `translateX(${efforts.indexOf(eff) * 100}%)` }} />
                   {efforts.map((x) => (
                     <button key={x} type="button" role="radio" aria-checked={x === eff} tabIndex={x === eff ? 0 : -1} onClick={() => { if (effort === undefined) setInEffort(x); onEffortChange?.(x); }}>
-                      {x[0].toUpperCase() + x.slice(1)}
+                      {effortLabel[x]}
                     </button>
                   ))}
                 </div>
@@ -266,17 +267,17 @@ export function ModelPicker({
             <div className="mp-set">
               <span className="mp-set-l">
                 <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M2 8h12M8 2c-2.2 2.4-2.2 9.6 0 12M8 2c2.2 2.4 2.2 9.6 0 12" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
-                <span>Web search<small>Looks things up when needed</small></span>
+                <span>Вэб хайлт<small>Шаардлагатай үед хайж олно</small></span>
               </span>
-              <Switch on={web} label="Web search" onChange={(v) => { if (webSearch === undefined) setInWeb(v); onWebSearchChange?.(v); }} />
+              <Switch on={web} label="Вэб хайлт" onChange={(v) => { if (webSearch === undefined) setInWeb(v); onWebSearchChange?.(v); }} />
             </div>
             <div className="mp-tray">
-              <span>First token <b>{routed ? "varies" : `~${rLat.toFixed(1)}s`}</b></span>
-              <span>Cost <b>{routed || shown.cost == null ? "varies" : `${shown.cost}/5`}</b></span>
+              <span>Эхний хариу <b>{routed ? "өөр өөр" : `~${rLat.toFixed(1)} с`}</b></span>
+              <span>Зардал <b>{routed || shown.cost == null ? "өөр өөр" : `${shown.cost}/5`}</b></span>
             </div>
           </div>
         </div>
-        <button type="button" className="mp-send" aria-label="Send" disabled={!text.trim()}>
+        <button type="button" className="mp-send" aria-label="Илгээх" disabled={!text.trim()}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
       </div>

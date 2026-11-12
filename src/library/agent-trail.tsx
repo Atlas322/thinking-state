@@ -45,44 +45,44 @@ export type AgentTrailProps = {
 };
 
 const defaultLabels: AgentTrailLabels = {
-  title: "Agent steps",
-  running: "Running",
-  approval: "Approval",
-  waiting: "Needs you",
-  failed: "Failed",
-  empty: "No steps yet",
-  untitled: "Untitled step",
+  title: "Агентын алхмууд",
+  running: "Ажиллаж байна",
+  approval: "Батлалт",
+  waiting: "Таны ээлж",
+  failed: "Алдаатай",
+  empty: "Алхам алга",
+  untitled: "Нэргүй алхам",
 };
 
 const defaultSteps: TrailStep[] = [
-  { id: "read", title: "Read the bug report", state: "done", duration: 8000 },
-  { id: "repro", title: "Reproduce the crash", state: "done", duration: 34000 },
+  { id: "read", title: "Алдааны мэдээг уншсан", state: "done", duration: 8000 },
+  { id: "repro", title: "Гацалтыг давтан үүсгэсэн", state: "done", duration: 34000 },
   {
     id: "patch",
-    title: "Patch the checkout form",
+    title: "Төлбөрийн маягтыг засах",
     state: "running",
-    status: "Testing",
+    status: "Тестлэж байна",
     startedAt: -31000,
     substeps: [
-      { title: "Found the empty-cart case", detail: "cart.ts:142" },
-      { title: "Added a guard and 2 tests", detail: "+18 −3" },
-      { title: "Running the test suite", state: "running", detail: "182/214" },
+      { title: "Хоосон сагсны тохиолдлыг олсон", detail: "cart.ts:142" },
+      { title: "Хамгаалалт ба 2 тест нэмсэн", detail: "+18 −3" },
+      { title: "Тестүүдийг ажиллуулж байна", state: "running", detail: "182/214" },
     ],
   },
-  { id: "note", title: "Write the release note", state: "pending" },
-  { id: "pr", title: "Open a pull request", state: "pending", gate: true },
+  { id: "note", title: "Хувилбарын тэмдэглэл бичих", state: "pending" },
+  { id: "pr", title: "PR нээх", state: "pending", gate: true },
 ];
 
 export function formatDuration(v: number | string | undefined): string {
   if (v == null) return "";
   if (typeof v === "string") return v;
   const s = Math.max(0, Math.round(v / 1000));
-  if (s < 60) return `${s}s`;
+  if (s < 60) return `${s} с`;
   const m = Math.floor(s / 60);
-  if (m < 60) return `${m}m ${s % 60}s`;
+  if (m < 60) return `${m} мин ${s % 60} с`;
   const h = Math.floor(m / 60);
-  if (h < 24) return `${h}h ${m % 60}m`;
-  return `${Math.floor(h / 24)}d ${h % 24}h`;
+  if (h < 24) return `${h} цаг ${m % 60} мин`;
+  return `${Math.floor(h / 24)} өдөр ${h % 24} цаг`;
 }
 
 function Marker({ step }: { step: TrailStep }) {
@@ -108,7 +108,7 @@ function Marker({ step }: { step: TrailStep }) {
 }
 
 export function AgentTrail({
-  title = "Fix the checkout crash",
+  title = "Төлбөрийн гацалтыг засах",
   steps = defaultSteps,
   expanded,
   onExpandedChange,

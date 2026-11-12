@@ -72,10 +72,10 @@ describe("Agent Tree reference contracts", () => {
     );
     expect(screen.getAllByText("$0.60").length).toBeGreaterThan(0);
     fireEvent.click(
-      screen.getByRole("button", { name: "Hide 1 sub-agents of Builder" }),
+      screen.getByRole("button", { name: "Builder: 1 дэд агентыг нуух" }),
     );
     expect(onCollapsedChange).toHaveBeenCalledWith(["build"]);
-    expect(screen.getByRole("treeitem", { name: "Tester, Done" })).toBeTruthy();
+    expect(screen.getByRole("treeitem", { name: "Tester, Дууссан" })).toBeTruthy();
     rerender(
       <AgentTree
         root={root}
@@ -84,27 +84,27 @@ describe("Agent Tree reference contracts", () => {
         onCollapsedChange={onCollapsedChange}
       />,
     );
-    expect(screen.queryByRole("treeitem", { name: "Tester, Done" })).toBeNull();
+    expect(screen.queryByRole("treeitem", { name: "Tester, Дууссан" })).toBeNull();
     expect(
-      screen.getByRole("button", { name: "Show 1 sub-agents of Builder" }),
+      screen.getByRole("button", { name: "Builder: 1 дэд агентыг харуулах" }),
     ).toBeTruthy();
     expect(screen.getAllByText("$0.60").length).toBeGreaterThan(0);
   });
   it("focuses the first answer and reports the specific approval action", () => {
     const onResolve = vi.fn();
     render(<AgentTree root={root} now={10000} onResolve={onResolve} />);
-    fireEvent.click(screen.getByRole("button", { name: "Needs you" }));
+    fireEvent.click(screen.getByRole("button", { name: "Таны ээлж" }));
     expect(
-      screen.getByRole("dialog", { name: "Builder: Needs you" }),
+      screen.getByRole("dialog", { name: "Builder: Таны ээлж" }),
     ).toBeTruthy();
     expect(document.activeElement).toBe(
-      screen.getByRole("button", { name: "Approve" }),
+      screen.getByRole("button", { name: "Батлах" }),
     );
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
+    fireEvent.click(screen.getByRole("button", { name: "Батлах" }));
     expect(onResolve).toHaveBeenCalledWith(root.children![0], "approve");
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(document.activeElement).toBe(
-      screen.getByRole("button", { name: "Needs you" }),
+      screen.getByRole("button", { name: "Таны ээлж" }),
     );
   });
   it("selects the actual agent for the consumer", () => {
@@ -139,15 +139,15 @@ describe("Context Map reference contracts", () => {
       />,
     );
     expect(
-      screen.getByRole("button", { name: "Free space, available, 70 tokens" }),
+      screen.getByRole("button", { name: "Сул зай, чөлөөтэй, 70 токен" }),
     ).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Before" }));
+    fireEvent.click(screen.getByRole("button", { name: "Өмнө" }));
     expect(onViewChange).toHaveBeenCalledWith("before");
     expect(
-      screen.getByRole("button", { name: "Earlier chat, Chat, 80 tokens" }),
+      screen.getByRole("button", { name: "Earlier chat, Яриа, 80 токен" }),
     ).toBeTruthy();
     expect(
-      screen.getByRole("button", { name: "Free space, available, 10 tokens" }),
+      screen.getByRole("button", { name: "Сул зай, чөлөөтэй, 10 токен" }),
     ).toBeTruthy();
   });
   it("pins details, releases removed blocks, and reports free-space selection", () => {
@@ -156,17 +156,17 @@ describe("Context Map reference contracts", () => {
       <ContextMap blocks={before} limit={100} onSelect={onSelect} />,
     );
     fireEvent.click(
-      screen.getByRole("button", { name: "Earlier chat, Chat, 80 tokens" }),
+      screen.getByRole("button", { name: "Earlier chat, Яриа, 80 токен" }),
     );
     expect(onSelect).toHaveBeenCalledWith(before[0]);
     expect(screen.getByRole("dialog")).toBeTruthy();
     rerender(<ContextMap blocks={after} limit={100} onSelect={onSelect} />);
     expect(screen.queryByRole("dialog")).toBeNull();
     fireEvent.click(
-      screen.getByRole("button", { name: "Free space, available, 70 tokens" }),
+      screen.getByRole("button", { name: "Сул зай, чөлөөтэй, 70 токен" }),
     );
     expect(onSelect).toHaveBeenLastCalledWith(null);
-    fireEvent.keyDown(screen.getByRole("region", { name: "Context" }), {
+    fireEvent.keyDown(screen.getByRole("region", { name: "Контекст" }), {
       key: "Escape",
     });
     expect(screen.queryByRole("dialog")).toBeNull();
@@ -184,10 +184,10 @@ describe("Context Map reference contracts", () => {
         onAgentChange={onAgentChange}
       />,
     );
-    expect(screen.queryByRole("button", { name: /Free space/ })).toBeNull();
+    expect(screen.queryByRole("button", { name: /Сул зай/ })).toBeNull();
     expect(screen.getByText("180%")).toBeTruthy();
     fireEvent.change(
-      screen.getByRole("combobox", { name: "Select context agent" }),
+      screen.getByRole("combobox", { name: "Контекстийн агент сонгох" }),
       { target: { value: "large" } },
     );
     expect(onAgentChange).toHaveBeenCalledWith("large");
@@ -243,7 +243,7 @@ describe("Trace Waterfall reference contracts", () => {
     expect(screen.getAllByText("$0.06").length).toBeGreaterThan(0);
     expect(
       screen
-        .getByText("Slowest")
+        .getByText("Хамгийн удаан")
         .closest("[role=treeitem]")
         ?.getAttribute("aria-label"),
     ).toContain("Search");
@@ -296,7 +296,7 @@ describe("Trace Waterfall reference contracts", () => {
     );
     expect(
       screen.getByRole("treeitem", {
-        name: "Live run, agent, running, 5s, $0.000",
+        name: "Live run, агент, ажиллаж байна, 5 с, $0.000",
       }),
     ).toBeTruthy();
   });
@@ -335,14 +335,14 @@ describe("Agent Handoff reference contracts", () => {
     );
     fireEvent.click(
       screen.getByRole("button", {
-        name: /Launch post Brief 1 item left behind/,
+        name: /Launch post Brief 1 зүйл орхигдсон/,
       }),
     );
     fireEvent.click(
-      screen.getByRole("button", { name: /User quote Left behind/ }),
+      screen.getByRole("button", { name: /User quote Орхигдсон/ }),
     );
     expect(screen.getByText("Context limit")).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Add back" }));
+    fireEvent.click(screen.getByRole("button", { name: "Буцааж нэмэх" }));
     expect(onRestore).toHaveBeenCalledWith(handoffs[0], handoffs[0].items[1]);
   });
   it("assigns forward without dragging and prevents backward assignment", () => {
@@ -357,18 +357,18 @@ describe("Agent Handoff reference contracts", () => {
     );
     fireEvent.click(
       screen.getByRole("button", {
-        name: /Launch post Brief 1 item left behind/,
+        name: /Launch post Brief 1 зүйл орхигдсон/,
       }),
     );
     fireEvent.click(
-      screen.getByRole("button", { name: "Move task to an agent →" }),
+      screen.getByRole("button", { name: "Даалгаврыг агентад шилжүүлэх →" }),
     );
     fireEvent.click(
-      screen.getByRole("button", { name: "Assign Launch post to Researcher" }),
+      screen.getByRole("button", { name: "Launch post: Researcher-д оноох" }),
     );
     expect(onAssign).not.toHaveBeenCalled();
     fireEvent.click(
-      screen.getByRole("button", { name: "Assign Launch post to Reviewer" }),
+      screen.getByRole("button", { name: "Launch post: Reviewer-д оноох" }),
     );
     expect(onAssign).toHaveBeenCalledWith(tasks[0], agents[2]);
   });

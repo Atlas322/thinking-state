@@ -23,20 +23,25 @@ export type StepperFormProps = {
 };
 
 const STEPS = [
-  { id: "workspace", title: "Workspace", heading: "Name your workspace", description: "This is where your team's projects live." },
-  { id: "team", title: "Team", heading: "Invite your team", description: "They get an email with a link to join. You can skip this." },
-  { id: "plan", title: "Plan", heading: "Pick a plan", description: "You can change it any time from settings." },
-  { id: "review", title: "Review", heading: "Check and create", description: "Everything look right?" },
+  { id: "workspace", title: "Орон зай", heading: "Орон зайгаа нэрлэнэ үү", description: "Танай багийн төслүүд энд байрлана." },
+  { id: "team", title: "Баг", heading: "Багаа урих", description: "Тэд нэгдэх холбоостой имэйл авна. Энэ алхмыг алгасаж болно." },
+  { id: "plan", title: "Багц", heading: "Багц сонгох", description: "Тохиргооноос хүссэн үедээ сольж болно." },
+  { id: "review", title: "Шалгах", heading: "Шалгаад үүсгэх", description: "Бүгд зөв үү?" },
 ];
 
 const PLANS = [
-  { value: "Free", title: "Free", aside: "$0", description: "Up to 3 members and 2 projects." },
-  { value: "Pro", title: "Pro", aside: "$12 / seat", description: "Unlimited projects, guests and history.", badge: "Popular" },
-  { value: "Business", title: "Business", aside: "$24 / seat", description: "SSO, audit log and priority support." },
+  { value: "Free", title: "Үнэгүй", aside: "3 гишүүн", description: "3 хүртэл гишүүн, 2 төсөл." },
+  { value: "Pro", title: "Про", aside: "Суудлаар", description: "Хязгааргүй төсөл, зочин, түүх.", badge: "Түгээмэл" },
+  { value: "Business", title: "Бизнес", aside: "Суудлаар", description: "SSO, аудитын бүртгэл, тэргүүлэх дэмжлэг." },
 ];
 
+/** Mongolian Cyrillic to Latin, so a Mongolian name still gives a URL */
+const LATIN: Record<string, string> = {
+  а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "yo", ж: "j", з: "z", и: "i", й: "i", к: "k", л: "l", м: "m", н: "n", о: "o", ө: "o",
+  п: "p", р: "r", с: "s", т: "t", у: "u", ү: "u", ф: "f", х: "kh", ц: "ts", ч: "ch", ш: "sh", щ: "sh", ъ: "", ы: "y", ь: "i", э: "e", ю: "yu", я: "ya",
+};
 const slug = (s: string) =>
-  s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  [...s.toLowerCase().trim()].map((c) => LATIN[c] ?? c).join("").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 const emailOk = (e: string) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
 
 export function StepperForm({
@@ -44,13 +49,13 @@ export function StepperForm({
   initialStep = 0,
   step: stepIn,
   onStepChange,
-  submitLabel = "Create workspace",
-  submittingLabel = "Creating…",
+  submitLabel = "Орон зай үүсгэх",
+  submittingLabel = "Үүсгэж байна…",
   onComplete,
   className = "",
 }: StepperFormProps) {
   const [values, setValues] = React.useState<StepperValues>(() => {
-    const name = initialValues?.name ?? "Northwind Studio";
+    const name = initialValues?.name ?? "Студи 24";
     return { name, url: initialValues?.url ?? slug(name), invites: initialValues?.invites ?? [], plan: initialValues?.plan ?? "Pro" };
   });
   const [urlTouched, setUrlTouched] = React.useState(!!initialValues?.url);
@@ -73,11 +78,11 @@ export function StepperForm({
   const validate = (): Record<string, string> => {
     const e: Record<string, string> = {};
     if (step === 0) {
-      if (!values.name.trim()) e.name = "Give your workspace a name.";
-      if (!values.url) e.url = "Pick a URL for your workspace.";
-      else if (!/^[a-z0-9-]+$/.test(values.url)) e.url = "Use lowercase letters, numbers and dashes.";
+      if (!values.name.trim()) e.name = "Орон зайдаа нэр өгнө үү.";
+      if (!values.url) e.url = "Орон зайн URL сонгоно уу.";
+      else if (!/^[a-z0-9-]+$/.test(values.url)) e.url = "Жижиг латин үсэг, тоо, зураас ашиглана уу.";
     }
-    if (step === 1 && draft.trim() && !emailOk(draft.trim())) e.invites = "That doesn't look like an email address.";
+    if (step === 1 && draft.trim() && !emailOk(draft.trim())) e.invites = "Имэйл хаяг биш бололтой.";
     return e;
   };
 
@@ -87,7 +92,7 @@ export function StepperForm({
     const bad = parts.filter((p) => !emailOk(p));
     if (good.length) setValues((v) => ({ ...v, invites: [...v.invites, ...good] }));
     setDraft(bad.join(", "));
-    setErrors(bad.length ? { invites: "That doesn't look like an email address." } : {});
+    setErrors(bad.length ? { invites: "Имэйл хаяг биш бололтой." } : {});
   };
 
   const next = async () => {
@@ -133,20 +138,20 @@ export function StepperForm({
   );
 
   return (
-    <section className={`sf ${className}`} aria-label="Create a workspace">
+    <section className={`sf ${className}`} aria-label="Орон зай үүсгэх">
       <style>{css}</style>
       {done ? (
         <div className="sf-success">
           <span className="sf-check">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </span>
-          <h3>{values.name} is ready</h3>
+          <h3>{values.name} бэлэн боллоо</h3>
           <p>
             affect.app/{values.url}
-            {values.invites.length ? ` · ${values.invites.length} invite${values.invites.length > 1 ? "s" : ""} sent` : ""}
+            {values.invites.length ? ` · ${values.invites.length} урилга илгээсэн` : ""}
           </p>
           <button type="button" className="sf-btn sf-ghost" onClick={reset}>
-            Start over
+            Дахин эхлэх
           </button>
         </div>
       ) : (
@@ -174,7 +179,7 @@ export function StepperForm({
               <>
                 {field(
                   "name",
-                  "Workspace name",
+                  "Орон зайн нэр",
                   <input
                     id="sf-name"
                     className="sf-input"
@@ -189,7 +194,7 @@ export function StepperForm({
                 )}
                 {field(
                   "url",
-                  "Workspace URL",
+                  "Орон зайн URL",
                   <div className="sf-input sf-prefixed">
                     <span>affect.app/</span>
                     <input
@@ -203,21 +208,21 @@ export function StepperForm({
                       onKeyDown={(e) => e.key === "Enter" && next()}
                     />
                   </div>,
-                  "Lowercase letters, numbers and dashes",
+                  "Жижиг латин үсэг, тоо, зураас",
                 )}
               </>
             )}
             {step === 1 &&
               field(
                 "invites",
-                "Email addresses",
+                "Имэйл хаягууд",
                 <div className="sf-input sf-tags">
                   {values.invites.map((em) => (
                     <span key={em} className="sf-tag">
                       {em}
                       <button
                         type="button"
-                        aria-label={`Remove ${em}`}
+                        aria-label={`${em} хасах`}
                         onClick={() => setValues((v) => ({ ...v, invites: v.invites.filter((x) => x !== em) }))}
                       >
                         ×
@@ -227,7 +232,7 @@ export function StepperForm({
                   <input
                     id="sf-invites"
                     value={draft}
-                    placeholder={values.invites.length ? "" : "name@company.com"}
+                    placeholder={values.invites.length ? "" : "name@example.mn"}
                     onChange={(e) => {
                       const v = e.target.value;
                       if (/[,\s]$/.test(v)) addInvites(v);
@@ -248,10 +253,10 @@ export function StepperForm({
                     }}
                   />
                 </div>,
-                "Press Enter or comma to add. Paste a list to add several.",
+                "Нэмэхдээ ↵ эсвэл таслал дарна уу. Жагсаалт буулгаж олноор нэмж болно.",
               )}
             {step === 2 && (
-              <div className="sf-choices" role="radiogroup" aria-label="Plan">
+              <div className="sf-choices" role="radiogroup" aria-label="Багц">
                 {PLANS.map((p) => (
                   <button
                     key={p.value}
@@ -277,16 +282,16 @@ export function StepperForm({
             {step === 3 && (
               <dl className="sf-review">
                 {[
-                  ["Workspace", values.name, 0],
+                  ["Орон зай", values.name, 0],
                   ["URL", `affect.app/${values.url}`, 0],
-                  ["Team", values.invites.length ? values.invites.join(", ") : "Just you for now", 1],
-                  ["Plan", values.plan, 2],
+                  ["Баг", values.invites.length ? values.invites.join(", ") : "Одоохондоо зөвхөн та", 1],
+                  ["Багц", PLANS.find((p) => p.value === values.plan)?.title ?? values.plan, 2],
                 ].map(([k, v, st]) => (
                   <div key={k as string}>
                     <dt>{k}</dt>
                     <dd>{v}</dd>
-                    <button type="button" className="sf-edit" aria-label={`Edit ${k}`} onClick={() => goTo(st as number)}>
-                      Edit
+                    <button type="button" className="sf-edit" aria-label={`${k} засах`} onClick={() => goTo(st as number)}>
+                      Засах
                     </button>
                   </div>
                 ))}
@@ -296,11 +301,11 @@ export function StepperForm({
           <footer className="sf-foot">
             {step > 0 && (
               <button type="button" className="sf-btn sf-ghost" onClick={() => goTo(step - 1)}>
-                Back
+                Буцах
               </button>
             )}
             <button type="button" className="sf-btn sf-primary" disabled={busy} onClick={next}>
-              {step === STEPS.length - 1 ? (busy ? submittingLabel : submitLabel) : step === 1 && !values.invites.length && !draft ? "Skip" : "Continue"}
+              {step === STEPS.length - 1 ? (busy ? submittingLabel : submitLabel) : step === 1 && !values.invites.length && !draft ? "Алгасах" : "Үргэлжлүүлэх"}
             </button>
           </footer>
         </>

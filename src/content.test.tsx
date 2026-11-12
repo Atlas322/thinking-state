@@ -5,7 +5,7 @@ import { cleanup, render } from "@testing-library/react";
 import type { ComponentType } from "react";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { catalog, hasClassic } from "./registry";
-import { contentHits, readableText } from "./content-rules";
+import { contentHits, englishWords, readableText } from "./content-rules";
 
 const modules = import.meta.glob<{ default: ComponentType }>("./library/*.tsx");
 
@@ -36,5 +36,17 @@ describe("catalog content: no vendor or model names, no prices", () => {
         const { container } = render(<Preview />);
         const hits = readableText(container).flatMap(contentHits);
         expect(hits.map((h) => `${h.rule}: «${h.match}» in “${h.text.trim()}”`)).toEqual([]);
+      });
+});
+
+describe("catalog content: UI labels are Mongolian", () => {
+  for (const entry of catalog)
+    for (const style of hasClassic(entry) ? ["clean", "classic"] : ["clean"])
+      it(`${entry.slug} (${style})`, async () => {
+        vi.useFakeTimers();
+        const { default: Preview } = await modules[`./library/${entry.slug}${style === "classic" ? "-classic" : ""}.tsx`]();
+        const { container } = render(<Preview />);
+        const english = readableText(container).filter((t) => englishWords(t).length).map((t) => `«${englishWords(t).join(" ")}» in “${t.trim().slice(0, 60)}”`);
+        expect(english).toEqual([]);
       });
 });

@@ -28,29 +28,32 @@ const strip = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
 const same = (a?: Date | null, b?: Date | null) => !!a && !!b && a.getTime() === b.getTime();
 const diffDays = (a: Date, b: Date) => Math.round((strip(b).getTime() - strip(a).getTime()) / DAY);
-const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const short = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+const MONTHS = ["1-р сар", "2-р сар", "3-р сар", "4-р сар", "5-р сар", "6-р сар", "7-р сар", "8-р сар", "9-р сар", "10-р сар", "11-р сар", "12-р сар"];
+const WEEKDAYS_LONG = ["ням", "даваа", "мягмар", "лхагва", "пүрэв", "баасан", "бямба"];
+const pad = (n: number) => String(n).padStart(2, "0");
+const dayLabel = (d: Date) => `${d.getFullYear()} оны ${d.getMonth() + 1}-р сарын ${d.getDate()}, ${WEEKDAYS_LONG[d.getDay()]} гараг`;
+const short = (d: Date) => `${pad(d.getMonth() + 1)}.${pad(d.getDate())}`;
 const fmtRange = (r: DateRange) =>
   r.start.getFullYear() === r.end.getFullYear()
     ? same(r.start, r.end)
-      ? `${short(r.start)}, ${r.start.getFullYear()}`
-      : `${short(r.start)} – ${short(r.end)}, ${r.end.getFullYear()}`
-    : `${short(r.start)}, ${r.start.getFullYear()} – ${short(r.end)}, ${r.end.getFullYear()}`;
+      ? `${r.start.getFullYear()}.${short(r.start)}`
+      : `${r.start.getFullYear()}.${short(r.start)} – ${short(r.end)}`
+    : `${r.start.getFullYear()}.${short(r.start)} – ${r.end.getFullYear()}.${short(r.end)}`;
 
 export const defaultPresets: DateRangePreset[] = [
-  { id: "today", label: "Today", range: (t) => ({ start: t, end: t }) },
-  { id: "yesterday", label: "Yesterday", range: (t) => ({ start: addDays(t, -1), end: addDays(t, -1) }) },
-  { id: "7d", label: "Last 7 days", range: (t) => ({ start: addDays(t, -6), end: t }) },
-  { id: "30d", label: "Last 30 days", range: (t) => ({ start: addDays(t, -29), end: t }) },
-  { id: "90d", label: "Last 90 days", range: (t) => ({ start: addDays(t, -89), end: t }) },
-  { id: "month", label: "This month", range: (t) => ({ start: new Date(t.getFullYear(), t.getMonth(), 1), end: t }) },
+  { id: "today", label: "Өнөөдөр", range: (t) => ({ start: t, end: t }) },
+  { id: "yesterday", label: "Өчигдөр", range: (t) => ({ start: addDays(t, -1), end: addDays(t, -1) }) },
+  { id: "7d", label: "Сүүлийн 7 хоног", range: (t) => ({ start: addDays(t, -6), end: t }) },
+  { id: "30d", label: "Сүүлийн 30 хоног", range: (t) => ({ start: addDays(t, -29), end: t }) },
+  { id: "90d", label: "Сүүлийн 90 хоног", range: (t) => ({ start: addDays(t, -89), end: t }) },
+  { id: "month", label: "Энэ сар", range: (t) => ({ start: new Date(t.getFullYear(), t.getMonth(), 1), end: t }) },
   {
     id: "lastmonth",
-    label: "Last month",
+    label: "Өнгөрсөн сар",
     range: (t) => ({ start: new Date(t.getFullYear(), t.getMonth() - 1, 1), end: new Date(t.getFullYear(), t.getMonth(), 0) }),
   },
-  { id: "quarter", label: "This quarter", range: (t) => ({ start: new Date(t.getFullYear(), Math.floor(t.getMonth() / 3) * 3, 1), end: t }) },
-  { id: "ytd", label: "Year to date", range: (t) => ({ start: new Date(t.getFullYear(), 0, 1), end: t }) },
+  { id: "quarter", label: "Энэ улирал", range: (t) => ({ start: new Date(t.getFullYear(), Math.floor(t.getMonth() / 3) * 3, 1), end: t }) },
+  { id: "ytd", label: "Оны эхнээс", range: (t) => ({ start: new Date(t.getFullYear(), 0, 1), end: t }) },
 ];
 
 const compareRange = (r: DateRange, mode: CompareMode): DateRange | null => {
@@ -182,7 +185,7 @@ export function DateRangePicker({
   };
 
   const weekdays = Array.from({ length: 7 }, (_, i) =>
-    ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][(i + weekStartsOn) % 7],
+    ["Ня", "Да", "Мя", "Лх", "Пү", "Ба", "Бя"][(i + weekStartsOn) % 7],
   );
 
   const inR = (d: Date, r: DateRange | null) => !!r && d >= r.start && d <= r.end;
@@ -199,17 +202,17 @@ export function DateRangePicker({
       <div className="drp-month" key={`${m.getFullYear()}-${m.getMonth()}`} style={{ ["--drp-dir" as string]: dir }}>
         <div className="drp-mhead">
           {side === "left" ? (
-            <button type="button" className="drp-nav" aria-label="Previous month" onClick={() => moveView(-1)}>
+            <button type="button" className="drp-nav" aria-label="Өмнөх сар" onClick={() => moveView(-1)}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
             </button>
           ) : (
             <span className="drp-nav-sp" />
           )}
           <span id={labelId} aria-live="polite">
-            {MONTHS[m.getMonth()]} {m.getFullYear()}
+            {m.getFullYear()} оны {MONTHS[m.getMonth()]}
           </span>
           {side === "right" ? (
-            <button type="button" className="drp-nav" aria-label="Next month" onClick={() => moveView(1)}>
+            <button type="button" className="drp-nav" aria-label="Дараах сар" onClick={() => moveView(1)}>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" /></svg>
             </button>
           ) : (
@@ -261,7 +264,7 @@ export function DateRangePicker({
                         data-day={d.getTime()}
                         tabIndex={focus ? 0 : -1}
                         className={`drp-day ${isStart || isEnd ? "end" : ""} ${off ? "off" : ""}`}
-                        aria-label={d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
+                        aria-label={dayLabel(d)}
                         aria-selected={inBand}
                         aria-disabled={off || undefined}
                         aria-current={same(d, today) ? "date" : undefined}
@@ -310,7 +313,7 @@ export function DateRangePicker({
           ref={panelRef}
           className="drp-panel"
           role="dialog"
-          aria-label="Choose a date range"
+          aria-label="Огнооны хүрээ сонгох"
           onKeyDown={(e) => {
             if (e.key === "Escape") {
               e.preventDefault();
@@ -319,7 +322,7 @@ export function DateRangePicker({
           }}
         >
           <div className="drp-main">
-            <div className="drp-presets" role="tablist" aria-label="Presets">
+            <div className="drp-presets" role="tablist" aria-label="Бэлэн хүрээ">
               {presets.map((p) => (
                 <button
                   key={p.id}
@@ -338,7 +341,7 @@ export function DateRangePicker({
                   {p.label}
                 </button>
               ))}
-              <span className={`drp-custom ${draft.end && !activePreset ? "on" : ""}`}>Custom</span>
+              <span className={`drp-custom ${draft.end && !activePreset ? "on" : ""}`}>Өөрөө сонгох</span>
             </div>
             <div className="drp-months" onMouseLeave={() => setHover(null)}>
               {renderMonth(view, "left")}
@@ -349,16 +352,16 @@ export function DateRangePicker({
             <div className="drp-sum">
               <div className="drp-range">
                 <strong>{fmtRange(shown)}</strong>
-                <span>{days} {days === 1 ? "day" : "days"}</span>
+                <span>{days} хоног</span>
               </div>
               {compare && (
-                <div className="drp-compare" role="radiogroup" aria-label="Compare">
-                  <span className="drp-clabel">Compare</span>
+                <div className="drp-compare" role="radiogroup" aria-label="Харьцуулах">
+                  <span className="drp-clabel">Харьцуулах</span>
                   {(
                     [
-                      ["off", "Off"],
-                      ["previous", "Previous period"],
-                      ["year", "Previous year"],
+                      ["off", "Үгүй"],
+                      ["previous", "Өмнөх үе"],
+                      ["year", "Өмнөх жил"],
                     ] as [CompareMode, string][]
                   ).map(([m, l]) => (
                     <button key={m} type="button" role="radio" aria-checked={mode === m} className={mode === m ? "on" : ""} onClick={() => setMode(m)}>
@@ -369,7 +372,7 @@ export function DateRangePicker({
               )}
             </div>
             <div className="drp-actions">
-              <button type="button" className="drp-btn" onClick={() => close()}>Cancel</button>
+              <button type="button" className="drp-btn" onClick={() => close()}>Болих</button>
               <button
                 type="button"
                 className="drp-btn primary"
@@ -382,7 +385,7 @@ export function DateRangePicker({
                   close();
                 }}
               >
-                Apply
+                Хэрэглэх
               </button>
             </div>
           </div>

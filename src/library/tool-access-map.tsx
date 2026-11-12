@@ -141,7 +141,7 @@ const defaultAgents: MapAgent[] = [
       { id: "vcs", calls: [c("g1", 12000, 5200, { action: "create_branch", name: "pricing-page" }, { ok: true }), c("g2", 31000, 4800, { action: "commit", files: 4 }, { sha: "8f2c1a" }), c("g3", 52000, 5200, { action: "open_pr", title: "Тарифын хуудас" }, { pr: 482 })] },
       { id: "terminal", calls: [c("t1", 20000, 9000, { cmd: "pnpm test" }, { passed: 128 }), c("t2", 45000, 10000, { cmd: "pnpm build" }, { ok: true })] },
       { id: "payments", calls: [c("s1", 38000, 730, { action: "create_plan", seats: 5 }, { id: "plan_1Q" })] },
-      { id: "design", calls: [c("f1", 8000, 1200, { file: "Тариф v3", frame: "Desktop" }, { nodes: 42 })] },
+      { id: "design", calls: [c("f1", 8000, 1200, { file: "Тариф v3", frame: "Компьютер" }, { nodes: 42 })] },
       { id: "database", calls: [c("d1", 41000, 280, { sql: "select * from plans" }, { rows: 3 })] },
       { id: "web" },
     ],
@@ -162,8 +162,9 @@ const defaultAgents: MapAgent[] = [
   },
 ];
 
-const fmtDur = (ms?: number) => (ms == null ? "" : ms < 1000 ? `${ms}ms` : `${+(ms / 1000).toFixed(1)}s`);
+const fmtDur = (ms?: number) => (ms == null ? "" : ms < 1000 ? `${ms}ms` : `${+(ms / 1000).toFixed(1)} с`);
 const defaultFormatTime = (ms: number) => `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, "0")}`;
+const STATUS_LABEL: Record<string, string> = { queued: "Дараалалд", running: "Ажиллаж байна", waiting: "Таны ээлж", done: "Дууссан", failed: "Алдаатай" };
 const pretty = (v: unknown) => (typeof v === "string" ? v : JSON.stringify(v, null, 2));
 
 // geometry
@@ -274,7 +275,7 @@ export function ToolAccessMap({
     const last = a?.calls?.[n - 1];
     const isRunning = last?.status === "running";
     const failed = last?.status === "failed";
-    const state = !a ? "No access" : !n ? "Not used yet" : isRunning ? "Running" : failed ? "Failed" : `Last call ${fmtDur(last?.duration)}`;
+    const state = !a ? "Эрхгүй" : !n ? "Хараахан ашиглаагүй" : isRunning ? "Ажиллаж байна" : failed ? "Алдаатай" : `Сүүлд ${fmtDur(last?.duration)}`;
     return (
       <button
         key={t.id}
@@ -285,7 +286,7 @@ export function ToolAccessMap({
         className={`tam-tool ${!a ? "off" : ""} ${isRunning ? "run" : ""} ${failed ? "fail" : ""}`}
         style={{ left: x, top: y }}
         aria-disabled={!a || !n || undefined}
-        aria-label={`${t.name}: ${state}${n ? `, ${n} ${n === 1 ? "call" : "calls"}` : ""}`}
+        aria-label={`${t.name}: ${state}${n ? `, ${n} дуудлага` : ""}`}
         onClick={() => {
           if (!a || !n) return;
           setCallIdx(n - 1);
@@ -314,16 +315,16 @@ export function ToolAccessMap({
         </svg>
         <strong>{title}</strong>
         <span className="tam-stats" aria-live="polite">
-          {running > 0 && <span className="tam-runtag">{running} running</span>}
-          <span>{used}/{tools.length} tools</span>
-          <span>· {callsTotal} calls</span>
+          {running > 0 && <span className="tam-runtag">{running} ажиллаж байна</span>}
+          <span>{used}/{tools.length} хэрэгсэл</span>
+          <span>· {callsTotal} дуудлага</span>
         </span>
       </header>
 
       <div
         className="tam-tabs"
         role="tablist"
-        aria-label="Agents"
+        aria-label="Агентууд"
         ref={tabsRef}
         onKeyDown={(e) => {
           if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
@@ -395,7 +396,7 @@ export function ToolAccessMap({
                 </span>
                 <span className={`tam-badge ${agent.status}`}>
                   {agent.status === "running" && <i className="tam-spin" aria-hidden="true" />}
-                  {agent.status === "waiting" ? "Needs you" : agent.status[0].toUpperCase() + agent.status.slice(1)}
+                  {STATUS_LABEL[agent.status] ?? agent.status}
                 </span>
               </div>
               {agent.task && <p className="tam-task">{agent.task}</p>}
@@ -406,7 +407,7 @@ export function ToolAccessMap({
             <div
               className="tam-calls"
               role="dialog"
-              aria-label={`${tool.name} calls`}
+              aria-label={`${tool.name}: дуудлагууд`}
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
                   e.preventDefault();
@@ -415,12 +416,12 @@ export function ToolAccessMap({
               }}
             >
               <div className="tam-calls-head">
-                <button type="button" className="tam-back" aria-label="Back to the map" onClick={closeCalls}>
+                <button type="button" className="tam-back" aria-label="Зураглал руу буцах" onClick={closeCalls}>
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
                 </button>
                 <span className="tam-ico">{("icon" in tool ? (tool as { icon?: React.ReactNode }).icon : undefined) ?? toolIcons[tool.id]}</span>
                 <strong>{tool.name}</strong>
-                <span className="tam-muted">{calls.length} {calls.length === 1 ? "call" : "calls"} by {agent.name}</span>
+                <span className="tam-muted">{agent.name}: {calls.length} дуудлага</span>
               </div>
               <div className="tam-calls-body">
                 <ul
@@ -428,7 +429,7 @@ export function ToolAccessMap({
                   className="tam-list"
                   role="listbox"
                   tabIndex={0}
-                  aria-label="Calls"
+                  aria-label="Дуудлагууд"
                   aria-activedescendant={`${id}-call-${callIdx}`}
                   onKeyDown={(e) => {
                     if (e.key === "ArrowDown") {
@@ -451,14 +452,14 @@ export function ToolAccessMap({
                       onClick={() => setCallIdx(i)}
                     >
                       <i className={`tam-dot ${x.status}`} />
-                      <span>#{i + 1}{x.replay ? " · replay" : ""}</span>
+                      <span>#{i + 1}{x.replay ? " · дахин" : ""}</span>
                       <span className="tam-muted">{x.at != null ? formatTime(x.at) : ""}</span>
                       <span className="tam-muted tam-dur">{fmtDur(x.duration)}</span>
                     </li>
                   ))}
                 </ul>
                 <div className="tam-call">
-                  <label className="tam-lbl" htmlFor={`${id}-input`}>Input</label>
+                  <label className="tam-lbl" htmlFor={`${id}-input`}>Оролт</label>
                   <textarea
                     id={`${id}-input`}
                     value={draft}
@@ -471,11 +472,11 @@ export function ToolAccessMap({
                       }
                     }}
                   />
-                  <div className="tam-lbl">{call.error ? "Error" : "Output"}</div>
+                  <div className="tam-lbl">{call.error ? "Алдаа" : "Гаралт"}</div>
                   <pre className={call.error ? "err" : ""}>{call.error ?? (call.output !== undefined ? pretty(call.output) : "…")}</pre>
                   <div className="tam-call-foot">
                     <button type="button" className="tam-replay" onClick={replay}>
-                      Replay
+                      Дахин тоглуулах
                       <kbd>⌘↵</kbd>
                     </button>
                   </div>

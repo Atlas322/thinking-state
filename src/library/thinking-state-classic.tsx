@@ -168,7 +168,7 @@ function Sources({ step }: { step: ThinkingStep }) {
             }
             onClick={() => setExpanded((value) => !value)}
           >
-            {expanded ? "Show less" : `+${extra.length} more`}
+            {expanded ? "Хураах" : `+${extra.length} бусад`}
           </button>
         </>
       )}
@@ -179,7 +179,7 @@ function Sources({ step }: { step: ThinkingStep }) {
 /** A timed, presentational thinking timeline. Remount with a new key to replay. */
 export function ThinkingState({
   steps,
-  doneLabel = "Finished thinking",
+  doneLabel = "Бодож дууссан",
   stepMs = 1300,
   loop = false,
   collapseOnDone = false,
@@ -279,11 +279,11 @@ export function ThinkingState({
         </span>
         <span className="thinking-heading">
           {progress.done ? (
-            `Worked for ${progress.seconds}s`
+            `${progress.seconds} с ажилласан`
           ) : (
             <>
-              <span className="thinking-shimmer">Thinking</span>{" "}
-              <span className="thinking-time">{progress.seconds}s</span>
+              <span className="thinking-shimmer">Бодож байна</span>{" "}
+              <span className="thinking-time">{progress.seconds} с</span>
             </>
           )}
         </span>
@@ -309,8 +309,8 @@ export function ThinkingState({
               const active = !progress.done && i === progress.visible - 1;
               const label = !active
                 ? (step.completedLabel ??
-                  (step.kind === "search" && step.label === "Searching"
-                    ? "Searched"
+                  (step.kind === "search" && (step.label === "Searching" || step.label === "Хайж байна")
+                    ? "Хайсан"
                     : step.label))
                 : step.label;
               return (

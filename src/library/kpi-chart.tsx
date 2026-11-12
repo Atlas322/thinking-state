@@ -108,7 +108,7 @@ export function KPIChart({
               viewBox={`0 0 ${W} ${H}`}
               preserveAspectRatio="none"
               role="img"
-              aria-label={`${title} by ${series.map((s) => s.label).join(", ")}`}
+              aria-label={`${title}, сувгаар: ${series.map((s) => s.label).join(", ")}`}
               tabIndex={0}
               onMouseMove={(e) => pick(e.clientX)}
               onMouseLeave={() => setHover(null)}

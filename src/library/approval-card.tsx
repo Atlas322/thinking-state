@@ -44,9 +44,11 @@ export type ApprovalCardProps = {
   className?: string;
 };
 
+const riskLabel = { low: "Бага", medium: "Дунд", high: "Өндөр" } as const;
+
 export function ApprovalCard({
-  title = "Send campaign email",
-  description = "October product update · Newsletter",
+  title = "Кампанит имэйл илгээх",
+  description = "10-р сарын бүтээгдэхүүний шинэчлэл · Мэдээллийн товхимол",
   risk,
   icon = shieldIcon,
   details,
@@ -60,10 +62,10 @@ export function ApprovalCard({
   expiresIn,
   onExpire,
   allowAlways = true,
-  alwaysLabel = "Always allow this action",
-  approveLabel = "Approve",
-  denyLabel = "Deny",
-  editLabel = "Edit",
+  alwaysLabel = "Энэ үйлдлийг үргэлж зөвшөөрөх",
+  approveLabel = "Батлах",
+  denyLabel = "Татгалзах",
+  editLabel = "Засах",
   shortcuts = true,
   label,
   actions = "card",
@@ -133,7 +135,7 @@ export function ApprovalCard({
       setError(
         failure instanceof Error
           ? failure.message
-          : "Could not deny this request. Try again.",
+          : "Хүсэлтээс татгалзаж чадсангүй. Дахин оролдоно уу.",
       );
     }
   };
@@ -158,7 +160,7 @@ export function ApprovalCard({
         setError(
           failure instanceof Error
             ? failure.message
-            : "Approval failed. Try again.",
+            : "Баталж чадсангүй. Дахин оролдоно уу.",
         );
     } finally {
       locked.current = false;
@@ -190,7 +192,7 @@ export function ApprovalCard({
         {denyLabel}
         {shortcuts && (
           <kbd className="apv-kbd" aria-hidden="true">
-            Esc
+            ESC
           </kbd>
         )}
       </button>
@@ -201,7 +203,7 @@ export function ApprovalCard({
         aria-keyshortcuts="Meta+Enter Control+Enter"
         onClick={() => void approve()}
       >
-        {busy ? "Approving…" : approveLabel}
+        {busy ? "Баталж байна…" : approveLabel}
         {busy ? (
           <span className="apv-spin" aria-hidden="true" />
         ) : (
@@ -218,10 +220,10 @@ export function ApprovalCard({
     remaining != null ? (
       <>
         <span id={`${id}-expiry`} className="apv-hidden">
-          Expires in {remaining} seconds unless approved. Paused while hovered or focused.
+          Батлахгүй бол {remaining} секундийн дараа хугацаа дуусна. Заагч дээр нь байх эсвэл фокустай үед түр зогсоно.
         </span>
         <span className={`apv-expiry ${remaining <= 10 ? "warn" : ""}`} aria-hidden="true">
-          Expires in {Math.floor(remaining / 60)}:{String(remaining % 60).padStart(2, "0")}
+          {Math.floor(remaining / 60)}:{String(remaining % 60).padStart(2, "0")} үлдсэн
         </span>
       </>
     ) : null;
@@ -267,8 +269,8 @@ export function ApprovalCard({
               </div>
               {risk && (
                 <span className={`apv-risk ${risk}`}>
-                  {risk[0].toUpperCase() + risk.slice(1)}
-                  <span className="apv-risk-word"> risk</span>
+                  {riskLabel[risk]}
+                  <span className="apv-risk-word"> эрсдэл</span>
                 </span>
               )}
             </div>
@@ -297,6 +299,7 @@ export function ApprovalCard({
                 <label className="apv-check">
                   <input
                     type="checkbox"
+                    value="1"
                     checked={always}
                     aria-disabled={busy}
                     onChange={(event) => {
@@ -329,12 +332,12 @@ export function ApprovalCard({
           </span>
           <strong id={`${id}-title`}>{title}</strong>
           <span id={`${id}-description`} className="apv-state">
-            {state === "approved" ? "Approved" : "Denied"}
+            {state === "approved" ? "Батлагдсан" : "Татгалзсан"}
           </span>
         </div>
       )}
       <span className="apv-hidden" role="status">
-        {state !== "pending" ? `${state === "approved" ? "Approved" : "Denied"}: ${title}` : ""}
+        {state !== "pending" ? `${state === "approved" ? "Батлагдсан" : "Татгалзсан"}: ${title}` : ""}
       </span>
     </div>
   );
@@ -400,10 +403,10 @@ const css = `
 `;
 
 const people = [
-  { n: "M", c: "#e9e3fb" },
-  { n: "J", c: "#dfeafc" },
-  { n: "S", c: "#fbe6dc" },
-  { n: "A", c: "#ddf3e6" },
+  { n: "М", c: "#e9e3fb" },
+  { n: "Ж", c: "#dfeafc" },
+  { n: "С", c: "#fbe6dc" },
+  { n: "А", c: "#ddf3e6" },
 ];
 
 export function Demo() {
@@ -415,7 +418,7 @@ export function Demo() {
         <i aria-hidden="true">
           <svg viewBox="0 0 16 16" width="12" height="12"><path d="M8 2c.4 3.2 2.8 5.6 6 6-3.2.4-5.6 2.8-6 6-.4-3.2-2.8-5.6-6-6 3.2-.4 5.6-2.8 6-6Z" fill="currentColor" /></svg>
         </i>
-        <p>I drafted the October newsletter. Ready to send?</p>
+        <p>10-р сарын мэдээллийн товхимлыг бэлдлээ. Илгээх үү?</p>
       </div>
       <ApprovalCard
         key={key}
@@ -428,13 +431,13 @@ export function Demo() {
                 <span key={p.n} style={{ background: p.c }}>{p.n}</span>
               ))}
             </span>
-            <span>Mia, Jonas, Sara, Alex</span>
-            <em>+38 more</em>
+            <span>Мөнх, Жаргал, Сараа, Ану</span>
+            <em>+38 бусад</em>
           </div>
         }
         details={[
-          { label: "Subject", value: "What's new in October" },
-          { label: "Send", value: "Today, 9:00 AM" },
+          { label: "Гарчиг", value: "10-р сард юу шинэ вэ" },
+          { label: "Илгээх", value: "Өнөөдөр, 9:00" },
         ]}
         onApprove={() => new Promise((resolve) => window.setTimeout(resolve, 900))}
         onDeny={() => window.setTimeout(() => setKey((value) => value + 1), 1800)}

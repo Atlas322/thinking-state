@@ -28,38 +28,40 @@ export type PromptLibraryProps = {
 const promptExamples: PromptTemplate[] = [
   {
     id: "meeting",
-    title: "Summarize a meeting",
-    category: "Notes",
+    title: "Уулзалтыг хураангуйлах",
+    category: "Тэмдэглэл",
     tone: "blue",
-    body: "Summarize the meeting below for {audience} in under {length}. List decisions first, then open questions with an owner.",
-    variables: { length: { default: "150 words" } },
+    body: "Доорх уулзалтыг хураангуйл. Уншигч: {audience}. Хэмжээ: {length} хүртэл. Эхлээд шийдвэрүүд, дараа нь хариуцагчтай нээлттэй асуултууд.",
+    variables: { audience: { description: "уншигч" }, length: { description: "хэмжээ", default: "150 үг" } },
   },
   {
     id: "release",
-    title: "Write release notes",
-    category: "Product",
+    title: "Шинэчлэлтийн тэмдэглэл бичих",
+    category: "Бүтээгдэхүүн",
     tone: "violet",
-    body: "Write release notes for {product} {version} for {audience}. Keep the tone {tone} and group the changes into New, Improved and Fixed.",
+    body: "{product} {version} хувилбарын шинэчлэлтийн тэмдэглэл бич. Уншигч: {audience}. Өнгө аяс: {tone}. Өөрчлөлтүүдийг Шинэ, Сайжруулсан, Зассан гэж бүлэглэ.",
     variables: {
-      product: { description: "Product name", default: "Relay" },
-      version: { description: "Version", default: "2.4" },
-      audience: { description: "Who reads it", default: "existing customers" },
-      tone: { description: "Tone of voice", default: "friendly" },
+      product: { description: "бүтээгдэхүүн", default: "Дохио" },
+      version: { description: "хувилбар", default: "2.4" },
+      audience: { description: "уншигч", default: "одоогийн харилцагчид" },
+      tone: { description: "өнгө аяс", default: "найрсаг" },
     },
   },
   {
     id: "error",
-    title: "Explain an error",
-    category: "Debug",
+    title: "Алдааг тайлбарлах",
+    category: "Алдаа засах",
     tone: "amber",
-    body: "Explain this {language} error in plain words and suggest the smallest fix: {error}",
+    body: "Энэ {language} алдааг энгийн үгээр тайлбарлаад хамгийн жижиг засварыг санал болго: {error}",
+    variables: { language: { description: "хэл" }, error: { description: "алдааны мессеж" } },
   },
   {
     id: "cold",
-    title: "Draft a cold email",
-    category: "Sales",
+    title: "Анхны и-мэйл ноороглох",
+    category: "Борлуулалт",
     tone: "green",
-    body: "Draft a short cold email to {name} at {company} about {offer}. Under 120 words, one clear ask.",
+    body: "Анхны богино и-мэйл ноорогло. Хүлээн авагч: {name}, {company}. Сэдэв: {offer}. 120 үгээс бага, нэг тодорхой хүсэлттэй.",
+    variables: { name: { description: "нэр" }, company: { description: "компани" }, offer: { description: "санал" } },
   },
 ];
 
@@ -74,8 +76,8 @@ export function PromptLibrary({
   onSelect,
   onUse,
   onCopy,
-  title = "Prompts",
-  useLabel = "Use prompt",
+  title = "Промптууд",
+  useLabel = "Промпт ашиглах",
   className = "",
 }: PromptLibraryProps) {
   const [internal, setInternal] = React.useState(
@@ -121,7 +123,7 @@ export function PromptLibrary({
     const nowReady = names.every((k) => (k === n ? v : values[k]).trim());
     if (nowReady && !wasReady) {
       setPulse((p) => p + 1);
-      setSaid("All variables filled");
+      setSaid("Бүх хувьсагч бөглөгдлөө");
     }
   };
 
@@ -132,7 +134,7 @@ export function PromptLibrary({
       return;
     }
     onUse?.(prompt, t, values);
-    setSaid("Prompt used");
+    setSaid("Промпт ашигласан");
   };
 
   const copy = async () => {
@@ -141,11 +143,11 @@ export function PromptLibrary({
       if (!navigator.clipboard) throw new Error("no clipboard");
       await navigator.clipboard.writeText(prompt);
       setCopied(true);
-      setSaid("Prompt copied");
+      setSaid("Промпт хуулсан");
       onCopy?.(prompt);
       window.setTimeout(() => setCopied(false), 1400);
     } catch {
-      setError("Couldn't reach the clipboard. Select and copy the preview instead.");
+      setError("Санах ой руу хандаж чадсангүй. Урьдчилан харах хэсгийг сонгоод хуулна уу.");
     }
   };
 
@@ -177,8 +179,8 @@ export function PromptLibrary({
           <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="m10.5 10.5 3 3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
           <input
             value={query}
-            placeholder="Search templates"
-            aria-label="Search templates"
+            placeholder="Промпт хайх"
+            aria-label="Промпт хайх"
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Escape") setQuery("");
@@ -207,7 +209,7 @@ export function PromptLibrary({
               {x.category && <span className={`pl-badge pl-${x.tone ?? "gray"}`}>{x.category}</span>}
             </div>
           ))}
-          {!visible.length && <p className="pl-none">No templates match</p>}
+          {!visible.length && <p className="pl-none">Тохирох промпт алга</p>}
         </div>
       </aside>
 
@@ -221,7 +223,7 @@ export function PromptLibrary({
                 <span className="pl-dots" aria-hidden="true">
                   {names.map((n) => <i key={n} data-on={!!values[n].trim()} />)}
                 </span>
-                {filled} of {names.length} filled
+                {filled}/{names.length} бөглөсөн
               </span>
             )}
           </header>
@@ -230,9 +232,10 @@ export function PromptLibrary({
               const m = p.match(/^\{(\w+)\}$/);
               if (!m) return <React.Fragment key={i}>{p}</React.Fragment>;
               const n = m[1];
-              if (seen.has(n)) return <span key={i} className="pl-echo">{values[n] || n}</span>;
-              seen.add(n);
               const desc = t.variables?.[n]?.description;
+              const label = desc ?? n;
+              if (seen.has(n)) return <span key={i} className="pl-echo">{values[n] || label}</span>;
+              seen.add(n);
               return (
                 <input
                   key={i}
@@ -240,12 +243,11 @@ export function PromptLibrary({
                   className="pl-var"
                   data-lit={lit === n}
                   data-empty={!values[n]}
-                  aria-label={n}
-                  aria-description={desc}
+                  aria-label={label}
                   title={desc}
-                  placeholder={n}
+                  placeholder={label}
                   value={values[n]}
-                  style={{ width: `calc(${Math.max(2, (values[n] || n).length) * 0.56}em + 12px)` }}
+                  style={{ width: `calc(${Math.max(2, (values[n] || label).length) * 0.56}em + 12px)` }}
                   onChange={(e) => setVal(n, e.target.value)}
                   onBlur={() => setLit(null)}
                   onKeyDown={(e) => {
@@ -259,29 +261,30 @@ export function PromptLibrary({
               );
             })}
           </div>
-          <div className="pl-label">Preview</div>
+          <div className="pl-label">Урьдчилан харах</div>
           <p className="pl-preview">
             {parts.map((p, i) => {
               const m = p.match(/^\{(\w+)\}$/);
               if (!m) return <React.Fragment key={i}>{p}</React.Fragment>;
               const v = values[m[1]]?.trim();
-              return v ? <b key={i} data-lit={lit === m[1]}>{v}</b> : <span key={i} className="pl-missing">{p}</span>;
+              return v ? <b key={i} data-lit={lit === m[1]}>{v}</b> : <span key={i} className="pl-missing">{`{${t.variables?.[m[1]]?.description ?? m[1]}}`}</span>;
             })}
           </p>
         </div>
       )}
 
       <footer className="pl-foot">
-        <span className="pl-tokens" key={tokens}>~{tokens} tokens</span>
-        {!ready && <span className="pl-missing-n">{names.length - filled} to fill</span>}
+        <span className="pl-tokens" key={tokens}>~{tokens} токен</span>
+        {!ready && <span className="pl-missing-n">{names.length - filled} бөглөх үлдсэн</span>}
         <span className="pl-spacer" />
-        <button type="button" className="pl-btn" aria-label="Copy prompt" onClick={copy}>
+        <button type="button" className="pl-btn" aria-label="Промпт хуулах" onClick={copy}>
           {copied ? (
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
           ) : (
             <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M3 10.5V3.5a1 1 0 0 1 1-1h6.5" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
           )}
-          <span className="pl-copy-l">{copied ? "Copied" : "Copy"}</span>
+          <span className="pl-copy-l">{copied ? "Хуулсан" : "Хуулах"}</span>
+
         </button>
         <button key={pulse} type="button" className="pl-btn pl-primary" data-pulse={pulse > 0} aria-disabled={!ready} onClick={use}>
           {useLabel}

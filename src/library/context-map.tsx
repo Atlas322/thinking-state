@@ -94,13 +94,13 @@ const compactNumber = (value: number) =>
       ? `${(value / 1000).toFixed(value % 1000 ? 1 : 0)}k`
       : String(Math.round(value));
 const kinds = {
-  system: "System prompt",
-  tools: "Tools",
-  memory: "Memory",
-  file: "File",
-  chat: "Chat",
-  result: "Tool results",
-  summary: "Summary",
+  system: "Системийн заавар",
+  tools: "Хэрэгсэл",
+  memory: "Санах ой",
+  file: "Файл",
+  chat: "Яриа",
+  result: "Хэрэгслийн үр дүн",
+  summary: "Хураангуй",
 };
 type Tile = {
   id: string;
@@ -175,7 +175,7 @@ export function ContextMap({
   onViewChange,
   status,
   onSelect,
-  title = "Context",
+  title = "Контекст",
   className = "",
 }: ContextMapProps) {
   const [localView, setLocalView] = React.useState<"before" | "after">("after");
@@ -263,7 +263,7 @@ export function ContextMap({
           )}
           {agents.length ? (
             <select
-              aria-label="Select context agent"
+              aria-label="Контекстийн агент сонгох"
               value={selectedAgent?.id ?? ""}
               onChange={(event) => {
                 setLocalAgent(event.target.value);
@@ -292,14 +292,14 @@ export function ContextMap({
         </span>
         {status && <span className="cmp-status">{status}</span>}
         {compaction && (
-          <span className="cmp-view" role="group" aria-label="Compaction view">
+          <span className="cmp-view" role="group" aria-label="Шахалтын харагдац">
             {(["before", "after"] as const).map((mode) => (
               <button
                 key={mode}
                 aria-pressed={mode === currentView}
                 onClick={() => changeView(mode)}
               >
-                {mode === "before" ? "Before" : "After"}
+                {mode === "before" ? "Өмнө" : "Дараа"}
               </button>
             ))}
           </span>
@@ -309,7 +309,7 @@ export function ContextMap({
         ref={map}
         className="cmp-map"
         role="list"
-        aria-label={`${title} blocks`}
+        aria-label={`${title}: блокууд`}
         onPointerLeave={() => setHovered(null)}
       >
         {tiles.map((tile) => (
@@ -325,7 +325,7 @@ export function ContextMap({
             }}
           >
             <button
-              aria-label={`${tile.block?.label ?? "Free space"}, ${tile.block ? kinds[tile.block.kind] : "available"}, ${tile.tokens.toLocaleString()} tokens`}
+              aria-label={`${tile.block?.label ?? "Сул зай"}, ${tile.block ? kinds[tile.block.kind] : "чөлөөтэй"}, ${tile.tokens.toLocaleString()} токен`}
               aria-pressed={pinned === tile.id}
               onPointerEnter={() => setHovered(tile.id)}
               onFocus={() => setHovered(tile.id)}
@@ -337,7 +337,7 @@ export function ContextMap({
             >
               <span className="cmp-tile-label">
                 {tile.block?.icon}
-                {tile.block?.label ?? "Free"}
+                {tile.block?.label ?? "Сул"}
               </span>
               <small>
                 {compactNumber(tile.tokens)}
@@ -363,17 +363,17 @@ export function ContextMap({
                     ),
                 ),
               )}{" "}
-              tokens freed
+              токен чөлөөлсөн
             </span>
             <span>
-              {compaction.summarized?.length ?? 0} summarized <b>·</b>{" "}
-              {compaction.dropped?.length ?? 0} dropped
+              {compaction.summarized?.length ?? 0} хураангуйлсан <b>·</b>{" "}
+              {compaction.dropped?.length ?? 0} хассан
               {compaction.summary ? ` · ${compaction.summary}` : ""}
             </span>
           </>
         ) : (
           <span>
-            Not compacted yet – once it is, compare before and after here.
+            Одоохондоо шахаагүй. Шахсаны дараа өмнөх, дараах байдлыг энд харьцуулна.
           </span>
         )}
       </footer>
@@ -381,14 +381,14 @@ export function ContextMap({
         <aside
           className="cmp-detail"
           role={pinned ? "dialog" : "tooltip"}
-          aria-label={`${selected.block?.label ?? "Free space"} details`}
+          aria-label={`${selected.block?.label ?? "Сул зай"}: дэлгэрэнгүй`}
         >
           <header>
             <span>{selected.block?.icon}</span>
-            <strong>{selected.block?.label ?? "Free space"}</strong>
+            <strong>{selected.block?.label ?? "Сул зай"}</strong>
             {pinned && (
               <button
-                aria-label="Unpin details"
+                aria-label="Дэлгэрэнгүйг хаах"
                 onClick={() => {
                   setPinned(null);
                   setHovered(null);
@@ -399,9 +399,9 @@ export function ContextMap({
             )}
           </header>
           <p>
-            {selected.tokens.toLocaleString()} tokens{" "}
+            {selected.tokens.toLocaleString()} токен{" "}
             <span>
-              · {((selected.tokens / capacity) * 100).toFixed(1)}% of the window
+              · цонхны {((selected.tokens / capacity) * 100).toFixed(1)}%
             </span>
           </p>
           {selected.block?.detail && <p>{selected.block.detail}</p>}

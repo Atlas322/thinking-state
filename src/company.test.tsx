@@ -56,10 +56,10 @@ describe("Company contract helpers", () => {
 describe("CompanyView", () => {
   it("opens at the highest level and zooms to a company", () => {
     render(<CompanyView company={acmeGroup} />);
-    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("ac.me Group");
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("ac.me групп");
     expect(screen.getByRole("radio", { name: "Институц" }).getAttribute("aria-checked")).toBe("true");
     fireEvent.click(screen.getByRole("radio", { name: "Компани" }));
-    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("ac.me Retail");
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("ac.me ритейл");
     // stats follow the scope: 4 units under Retail
     const units = screen.getByText("Нэгж").closest(".cv-stat")!;
     expect(units.textContent).toContain("4");
@@ -78,15 +78,15 @@ describe("CompanyView", () => {
     const panel = screen.getByRole("tabpanel");
     const lead = within(panel).getByRole("region", { name: "Удирдлага" });
     expect(lead.textContent).toContain("Saraa.D");
-    expect(lead.textContent).toContain("Project");
+    expect(lead.textContent).toContain("Төсөл");
     const knowledge = within(panel).getByRole("region", { name: "Мэдлэг" });
     expect(knowledge.textContent).toContain("Нэгжийн агент");
-    expect(knowledge.textContent).toContain("Context Engineer");
+    expect(knowledge.textContent).toContain("Контекст инженер");
   });
 
   it("shows workflow steps with person and agent actors", () => {
     render(<CompanyView company={inai} defaultView="workflows" />);
-    const flow = screen.getByRole("article", { name: "Чатын widget → компонент" });
+    const flow = screen.getByRole("article", { name: "Чатын виджет → компонент" });
     const steps = flow.querySelectorAll(".cv-step");
     expect(steps).toHaveLength(4);
     expect(steps[0].className).toContain("is-agent");
@@ -119,7 +119,7 @@ describe("CompanyView", () => {
     expect(onTemplateChange).toHaveBeenCalledWith("brief");
     expect(container.querySelector('[data-template="brief"]')).toBeTruthy();
     expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(
-      expect.arrayContaining([expect.stringContaining("OKR"), expect.stringContaining("Workflow"), expect.stringContaining("RACI")]),
+      expect.arrayContaining([expect.stringContaining("OKR"), expect.stringContaining("Ажлын урсгал"), expect.stringContaining("RACI")]),
     );
   });
 
@@ -144,7 +144,7 @@ describe("review fixes", () => {
     fireEvent.click(screen.getByRole("radio", { name: "Баг" }));
     expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("Тээврийн төлөвлөлт");
     fireEvent.click(screen.getByRole("radio", { name: "Компани" }));
-    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("ac.me Logistics");
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("ac.me логистик");
   });
 
   it("module sources import only their folder and the library", async () => {
@@ -177,7 +177,7 @@ describe("dashboard, RACI, profiles", () => {
     const [, owner, due] = within(panel).getAllByRole("combobox");
     fireEvent.change(due, { target: { value: "overdue" } });
     expect(panel.textContent).toContain("Хувилбарын хяналтын төлбөр засах");
-    expect(panel.textContent).not.toContain("Hero «тархи ↔ апп» зураглал");
+    expect(panel.textContent).not.toContain("Нүүр хэсгийн «тархи ↔ апп» зураглал");
     fireEvent.change(due, { target: { value: "all" } });
     fireEvent.change(owner, { target: { value: "bilguun" } });
     expect(panel.textContent).toContain("Хөтөлбөрийн бүтэц");
@@ -195,8 +195,8 @@ describe("dashboard, RACI, profiles", () => {
     const dialog = screen.getByRole("dialog", { name: "Saraa.D" });
     expect(dialog.textContent).toContain("Нар агентлаг");
     expect(dialog.textContent).toContain("Нийтийн холбоос алга.");
-    expect(dialog.textContent).toContain("Inai Website");
-    expect(dialog.textContent).toContain("Project");
+    expect(dialog.textContent).toContain("Inai вэбсайт");
+    expect(dialog.textContent).toContain("Төсөл");
     fireEvent.keyDown(window, { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
   });
@@ -227,7 +227,7 @@ describe("methodology templates", () => {
   it("switches template to Lean Canvas with empty blocks marked", () => {
     const onMethodologyChange = vi.fn();
     render(<CompanyView company={inai} onMethodologyChange={onMethodologyChange} />);
-    fireEvent.click(screen.getByRole("radio", { name: "Lean" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Лийн" }));
     expect(onMethodologyChange).toHaveBeenCalledWith("lean-canvas");
     const problem = within(screen.getByRole("tabpanel")).getByRole("region", { name: "Асуудал" });
     expect(problem.textContent).toContain("Бөглөөгүй");
@@ -239,11 +239,11 @@ describe("methodology templates", () => {
     const matrix = within(panel).getByRole("region", { name: "PMBOK матриц" });
     expect(matrix.querySelectorAll("thead th")).toHaveLength(6);
     expect(matrix.querySelectorAll("tbody tr")).toHaveLength(10);
-    const cell = within(matrix).getByRole("button", { name: /Procurement · Planning/ });
+    const cell = within(matrix).getByRole("button", { name: /Худалдан авалт · Төлөвлөх/ });
     fireEvent.click(cell);
     expect(panel.textContent).toContain("Худалдан авалтын төлөвлөгөө");
-    const facts = within(panel).getByRole("region", { name: "Facts hub" });
-    expect(facts.textContent).toContain("Planning");
+    const facts = within(panel).getByRole("region", { name: "Баримтын төв" });
+    expect(facts.textContent).toContain("Төлөвлөх");
     expect(facts.textContent).toContain("2026-09-01 → 2027-03-31");
     expect(panel.querySelectorAll(".cv-gantt-bar")).toHaveLength(14);
     expect(panel.querySelector(".cv-gantt-today")).toBeTruthy();
@@ -309,8 +309,8 @@ describe("collections (vault types)", () => {
     fireEvent.click(screen.getByRole("button", { name: /7 хоногийн хуанли/ }));
     const grid = screen.getByRole("grid");
     expect(grid.querySelectorAll("[role=gridcell]")).toHaveLength(7);
-    expect(grid.textContent).toContain("Компанийн renderer");
-    fireEvent.click(screen.getByRole("radio", { name: /Timeline/ }));
+    expect(grid.textContent).toContain("Компанийн дүрслэгч");
+    fireEvent.click(screen.getByRole("radio", { name: /Цагийн хэлхээс/ }));
     expect(document.querySelectorAll(".cl-tl-bar").length).toBeGreaterThan(3);
   });
 
@@ -319,11 +319,11 @@ describe("collections (vault types)", () => {
     render(<CollectionPanel collection={tasks()} today={today} defaultView="list" />);
     const [field] = screen.getAllByRole("combobox");
     fireEvent.change(field, { target: { value: "owner" } });
-    fireEvent.change(screen.getAllByRole("combobox")[1], { target: { value: "Architect" } });
+    fireEvent.change(screen.getAllByRole("combobox")[1], { target: { value: "Архитектор" } });
     expect(document.querySelectorAll(".cl-row")).toHaveLength(3);
     const group = screen.getAllByRole("combobox")[2];
     fireEvent.change(group, { target: { value: "project" } });
-    expect(screen.getAllByRole("button", { name: /Inai Website|Thinking State/ }).some((b) => b.classList.contains("cl-group-h"))).toBe(true);
+    expect(screen.getAllByRole("button", { name: /Inai вэбсайт|Thinking State/ }).some((b) => b.classList.contains("cl-group-h"))).toBe(true);
   });
 
   it("shows an empty state", async () => {
@@ -408,7 +408,7 @@ describe("collection polish (notion-teardown v2)", () => {
     const { CollectionPanel } = await import("./company/company-view");
     render(<CollectionPanel collection={col("task")} today={today} />);
     fireEvent.click(screen.getByRole("button", { name: /Энэ сар/ }));
-    fireEvent.click(within(screen.getByRole("tablist")).getByRole("tab", { name: /Inbox/ }));
+    fireEvent.click(within(screen.getByRole("tablist")).getByRole("tab", { name: /Ирсэн/ }));
     if (!screen.queryByText("Энэ харагдацад мөр алга.")) return;
     fireEvent.click(screen.getByRole("button", { name: /Шүүлт цэвэрлэх/ }));
     expect(document.querySelectorAll(".cl-row").length).toBe(col("task").items.length);
@@ -418,11 +418,11 @@ describe("collection polish (notion-teardown v2)", () => {
     render(<CompanyView company={inai} today={today} />);
     const types = screen.getByRole("navigation", { name: "Төрлүүд" });
     fireEvent.click(within(types).getByRole("button", { name: /Төсөл/ }));
-    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
-    const peek = screen.getByRole("dialog", { name: /Inai Website/ });
-    expect(peek.textContent).toContain("Priority");
+    fireEvent.click(screen.getByRole("button", { name: "Inai вэбсайт" }));
+    const peek = screen.getByRole("dialog", { name: /Inai вэбсайт/ });
+    expect(peek.textContent).toContain("Ач холбогдол");
     const tabs = within(peek).getByRole("tablist");
-    expect(within(tabs).getByRole("tab", { name: /Task/ }).textContent).toContain("5");
+    expect(within(tabs).getByRole("tab", { name: /Даалгавар/ }).textContent).toContain("5");
     expect(within(tabs).getByRole("tab", { name: /Шийдвэр/ }).textContent).toContain("2");
     expect(peek.textContent).toContain("Хувилбарын хяналтын төлбөр засах");
     fireEvent.keyDown(window, { key: "Escape" });
@@ -434,8 +434,8 @@ describe("teardown final: linked views and type badges", () => {
   it("the peek's related items are a linked view without a nested peek", () => {
     render(<CompanyView company={inai} today={new Date("2026-11-12T09:00:00")} />);
     fireEvent.click(within(screen.getByRole("navigation", { name: "Төрлүүд" })).getByRole("button", { name: /Төсөл/ }));
-    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
-    const peek = screen.getByRole("dialog", { name: /Inai Website/ });
+    fireEvent.click(screen.getByRole("button", { name: "Inai вэбсайт" }));
+    const peek = screen.getByRole("dialog", { name: /Inai вэбсайт/ });
     // the linked view has its own view switch and the task presets
     expect(within(peek).getByRole("radiogroup", { name: "Харагдац" })).toBeTruthy();
     expect(within(peek).getByRole("button", { name: /7 хоногийн хуанли/ })).toBeTruthy();
@@ -472,11 +472,11 @@ describe("owner values resolve to agents, people or text", () => {
 
   it("links agent short names to the agent card and leaves strangers as text", () => {
     render(<CompanyView company={company} />);
-    fireEvent.click(within(screen.getByRole("navigation", { name: "Төрлүүд" })).getByRole("button", { name: /Task/ }));
+    fireEvent.click(within(screen.getByRole("navigation", { name: "Төрлүүд" })).getByRole("button", { name: /Даалгавар/ }));
     const chips = Array.from(document.querySelectorAll(".cl-rel")).map((c) => c.textContent);
-    expect(chips).toEqual(expect.arrayContaining(["GTD", "Wiki", "Saraa.D"]));
+    expect(chips).toEqual(expect.arrayContaining(["GTD", "Вики", "Saraa.D"]));
     expect(screen.getByText("someone-else").className).toBe("cl-text");
-    fireEvent.click(screen.getAllByRole("button", { name: "Wiki" }).find((b) => b.classList.contains("cl-rel"))!);
+    fireEvent.click(screen.getAllByRole("button", { name: "Вики" }).find((b) => b.classList.contains("cl-rel"))!);
     expect(screen.getByRole("tab", { name: /Хүн ба агент/ }).getAttribute("aria-selected")).toBe("true");
     expect(document.querySelector('[data-agent="wiki"]')!.className).toContain("is-focus");
     expect(screen.getByRole("heading", { level: 2 }).textContent).toBe("Мэдлэг");
@@ -484,7 +484,7 @@ describe("owner values resolve to agents, people or text", () => {
 
   it("links people to their profile", () => {
     render(<CompanyView company={company} />);
-    fireEvent.click(within(screen.getByRole("navigation", { name: "Төрлүүд" })).getByRole("button", { name: /Task/ }));
+    fireEvent.click(within(screen.getByRole("navigation", { name: "Төрлүүд" })).getByRole("button", { name: /Даалгавар/ }));
     fireEvent.click(screen.getAllByRole("button", { name: "Saraa.D" }).find((b) => b.classList.contains("cl-rel"))!);
     expect(screen.getByRole("dialog", { name: "Saraa.D" })).toBeTruthy();
   });
@@ -501,9 +501,9 @@ describe("task dependencies and task RACI (company-schema 7b41c41)", () => {
     const hero = site.tasks.find((t) => t.id === "t3")!;
     const figma = ts.tasks.find((t) => t.id === "t3")!;
     expect(dependenciesOf(inai, site, deploy, index).waitsOn.map((w) => w.task.title)).toEqual(["Хувилбарын хяналтын төлбөр засах"]);
-    expect(dependenciesOf(inai, site, billing, index).blocks.map((w) => w.task.title)).toEqual(["Засвар эрх ба deploy"]);
+    expect(dependenciesOf(inai, site, billing, index).blocks.map((w) => w.task.title)).toEqual(["Засах эрх ба байршуулалт"]);
     expect(dependenciesOf(inai, ts, figma, index).waitsOn[0].task).toBe(hero);
-    expect(dependenciesOf(inai, site, hero, index).blocks.map((b) => b.task.title)).toEqual(["Дизайны instance"]);
+    expect(dependenciesOf(inai, site, hero, index).blocks.map((b) => b.task.title)).toEqual(["Дизайны хувилбар"]);
     // a bare id in another project does not count as pointing here
     expect(dependenciesOf(inai, ts, ts.tasks.find((t) => t.id === "t2")!, index).blocks).toHaveLength(0);
   });
@@ -512,11 +512,11 @@ describe("task dependencies and task RACI (company-schema 7b41c41)", () => {
     render(<CompanyView company={inai} defaultView="dashboard" today={new Date("2026-11-12T09:00:00")} />);
     const panel = screen.getByRole("tabpanel");
     expect(panel.textContent).toContain("⛓ хүлээж буй: Хувилбарын хяналтын төлбөр засах");
-    expect(panel.textContent).toContain("→ 1 task хүлээж байна");
-    expect(panel.textContent).toContain("⛓ хүлээж буй: Inai Website › Hero «тархи ↔ апп» зураглал");
-    fireEvent.click(within(panel).getByRole("button", { name: /^Inai Website/ }));
+    expect(panel.textContent).toContain("→ 1 даалгавар хүлээж байна");
+    expect(panel.textContent).toContain("⛓ хүлээж буй: Inai вэбсайт › Нүүр хэсгийн «тархи ↔ апп» зураглал");
+    fireEvent.click(within(panel).getByRole("button", { name: /^Inai вэбсайт/ }));
     const wait = within(panel).getByRole("region", { name: /Хүлээгдэж буй/ });
-    expect(wait.textContent).toContain("Засвар эрх ба deploy");
+    expect(wait.textContent).toContain("Засах эрх ба байршуулалт");
   });
 
   it("adds task roles to the RACI matrix and the profile", () => {
@@ -525,8 +525,8 @@ describe("task dependencies and task RACI (company-schema 7b41c41)", () => {
     expect(row.querySelector(".cv-raci-l.is-task")).toBeTruthy();
     fireEvent.click(within(screen.getByRole("table")).getByRole("button", { name: /Ganaa\.B/ }));
     const dialog = screen.getByRole("dialog", { name: "Ganaa.B" });
-    expect(dialog.textContent).toContain("Хариуцсан task");
-    expect(dialog.textContent).toContain("Засвар эрх ба deploy");
+    expect(dialog.textContent).toContain("Хариуцсан даалгавар");
+    expect(dialog.textContent).toContain("Засах эрх ба байршуулалт");
   });
 });
 
@@ -561,7 +561,7 @@ describe("app-shell embedding (inai-sh PR #31)", () => {
   it("lets the host drive the vault type", () => {
     const onCollectionChange = vi.fn();
     const { rerender } = render(<CompanyView company={inai} showTree={false} collection="task" onCollectionChange={onCollectionChange} />);
-    expect(screen.getByRole("heading", { level: 2 }).textContent).toContain("Task");
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toContain("Даалгавар");
     fireEvent.click(screen.getByRole("tab", { name: /Самбар/ }));
     expect(onCollectionChange).toHaveBeenCalledWith(null);
     rerender(<CompanyView company={inai} showTree={false} collection={null} onCollectionChange={onCollectionChange} />);
@@ -587,15 +587,15 @@ describe("TENET 3 alignment (moodboard)", () => {
     const onOpenInVault = vi.fn();
     const onAskAgent = vi.fn();
     const { unmount } = render(<CompanyView company={inai} collection="project" showTree={false} />);
-    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
-    expect(screen.queryByRole("button", { name: /Vault-д нээх/ })).toBeNull();
-    expect(screen.getByLabelText("Frontmatter").textContent).toContain("title: Inai Website");
+    fireEvent.click(screen.getByRole("button", { name: "Inai вэбсайт" }));
+    expect(screen.queryByRole("button", { name: /Тэмдэглэлийн санд нээх/ })).toBeNull();
+    expect(screen.getByLabelText("Мета өгөгдөл").textContent).toContain("title: Inai вэбсайт");
     unmount();
     render(<CompanyView company={inai} collection="project" showTree={false} onOpenInVault={onOpenInVault} onAskAgent={onAskAgent} />);
-    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
+    fireEvent.click(screen.getByRole("button", { name: "Inai вэбсайт" }));
     fireEvent.click(screen.getByRole("button", { name: /Агентаас асуух/ }));
-    expect(onAskAgent).toHaveBeenCalledWith(expect.objectContaining({ title: "Inai Website" }), expect.objectContaining({ type: "project" }));
-    fireEvent.click(screen.getByRole("button", { name: /Vault-д нээх/ }));
+    expect(onAskAgent).toHaveBeenCalledWith(expect.objectContaining({ title: "Inai вэбсайт" }), expect.objectContaining({ type: "project" }));
+    fireEvent.click(screen.getByRole("button", { name: /Тэмдэглэлийн санд нээх/ }));
     expect(onOpenInVault).toHaveBeenCalled();
   });
 
@@ -620,7 +620,7 @@ describe("area ids show unit names (inai-sh #28 export)", () => {
     const panel = screen.getByRole("tabpanel");
     expect(panel.textContent).not.toContain("area-fac9e1b8f9");
     expect(within(panel).getAllByRole("region", { name: "Бүтээгдэхүүн хөгжүүлэлт" }).length).toBeGreaterThan(0);
-    fireEvent.click(within(panel).getByRole("button", { name: /^Inai Website/ }));
+    fireEvent.click(within(panel).getByRole("button", { name: /^Inai вэбсайт/ }));
     expect(panel.textContent).toContain("Бүтээгдэхүүн хөгжүүлэлт › Сайт");
   });
 });

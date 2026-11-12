@@ -94,8 +94,8 @@ const defaultGates: ApprovalGate[] = [
   },
 ];
 
-const inputLabel = { tool: "Arguments", file: "Changes", agent: "Prompt", message: "Message" } as const;
-const statusLabel = { approved: "Approved", edited: "Approved with changes", rejected: "Stopped the run" } as const;
+const inputLabel = { tool: "Аргумент", file: "Өөрчлөлт", agent: "Заавар", message: "Мессеж" } as const;
+const statusLabel = { approved: "Батлагдсан", edited: "Засвартай батлагдсан", rejected: "Ажлыг зогсоосон" } as const;
 
 const Chevron = () => (
   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -115,7 +115,7 @@ function GateBody({ gate }: { gate: ApprovalGate }) {
             {d.lines.map((l, i) => (
               <div key={i} className={`gate-dl gate-${l.type}`}>
                 <span aria-hidden="true">{l.type === "add" ? "+" : l.type === "remove" ? "−" : " "}</span>
-                {l.type !== "same" && <span className="gate-sr">{l.type === "add" ? "Added:" : "Removed:"}</span>}
+                {l.type !== "same" && <span className="gate-sr">{l.type === "add" ? "Нэмсэн:" : "Хассан:"}</span>}
                 <code>{l.text}</code>
               </div>
             ))}
@@ -137,7 +137,7 @@ export function ApprovalGates({
   task = gatesProp === defaultGates ? "Шинэ үнийн хуудсыг нээх" : undefined,
   live = false,
   onDecide,
-  title = "Approvals",
+  title = "Батлах хүсэлт",
   className = "",
 }: ApprovalGatesProps) {
   const [local, setLocal] = React.useState<Record<string, { status: GateDecision; note?: string; order: number }>>({});
@@ -170,7 +170,7 @@ export function ApprovalGates({
       setEditing(false);
       setCtxOpen(false);
       const left = open.length - 1;
-      setSaid(`${statusLabel[decision]}: ${g.action}. ${left} request${left === 1 ? "" : "s"} left.`);
+      setSaid(`${statusLabel[decision]}: ${g.action}. ${left} хүсэлт үлдлээ.`);
       onDecide?.(g.id, decision, value);
       window.setTimeout(() => approveRef.current?.focus(), 30);
     }, reduce ? 0 : decision === "rejected" ? 520 : 320);
@@ -179,10 +179,10 @@ export function ApprovalGates({
   const holds = gate?.holds ?? [];
   const decidedCount = gates.length - open.length;
   const runText = open.length
-    ? `Paused – ${open.reduce((n, g) => n + (g.holds?.length ?? 0), 0) || 1} step waits on ${open.length} gate${open.length === 1 ? "" : "s"}`
+    ? `Түр зогссон – ${open.reduce((n, g) => n + (g.holds?.length ?? 0), 0) || 1} алхам ${open.length} хүсэлтийг хүлээж байна`
     : live
-      ? "Running"
-      : "Done";
+      ? "Ажиллаж байна"
+      : "Дууссан";
 
   return (
     <section className={`gate ${className}`}>
@@ -197,13 +197,13 @@ export function ApprovalGates({
           {task && <span className="gate-task">{task}</span>}
           <span className={`gate-pill ${open.length ? "gate-wait" : "gate-ok"}`}>
             <i />
-            {open.length ? "Waiting on you" : live ? "Running" : "All decided"}
+            {open.length ? "Таныг хүлээж байна" : live ? "Ажиллаж байна" : "Бүгд шийдэгдсэн"}
           </span>
         </header>
         <dl className="gate-stats">
-          <div><dt>Waiting on you</dt><dd>{open.length}</dd></div>
-          <div><dt>Decided</dt><dd>{decidedCount}/{gates.length}</dd></div>
-          <div><dt>Run</dt><dd>{runText}</dd></div>
+          <div><dt>Таныг хүлээж байна</dt><dd>{open.length}</dd></div>
+          <div><dt>Шийдсэн</dt><dd>{decidedCount}/{gates.length}</dd></div>
+          <div><dt>Ажил</dt><dd>{runText}</dd></div>
         </dl>
       </div>
 
@@ -211,7 +211,7 @@ export function ApprovalGates({
         <div
           className="gate-stack"
           role="group"
-          aria-label={`${open.length} request${open.length === 1 ? "" : "s"} waiting, on top: ${gate.action}`}
+          aria-label={`${open.length} хүсэлт хүлээж байна, эхнийх: ${gate.action}`}
           data-depth={Math.min(open.length, 3)}
           onKeyDown={(e) => {
             if (editing || (e.target as HTMLElement).tagName === "TEXTAREA") return;
@@ -235,7 +235,7 @@ export function ApprovalGates({
                 {gate.at && ` · ${gate.at}`}
               </span>
               {(gate.blocking ?? !!gate.holds?.length) && (
-                <span className="gate-pill gate-wait gate-block-pill"><Lock />Blocking</span>
+                <span className="gate-pill gate-wait gate-block-pill"><Lock />Түгжиж байна</span>
               )}
             </div>
             <h3 className="gate-action">{gate.action}</h3>
@@ -247,7 +247,7 @@ export function ApprovalGates({
                   className="gate-edit"
                   autoFocus
                   value={draft}
-                  aria-label={`Edit ${inputLabel[gate.kind].toLowerCase()}`}
+                  aria-label={`${inputLabel[gate.kind]} засах`}
                   onChange={(e) => setDraft(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
@@ -267,11 +267,11 @@ export function ApprovalGates({
             {gate.context && gate.context.length > 0 && (
               <div className="gate-ctx">
                 <button type="button" aria-expanded={ctxOpen} onClick={() => setCtxOpen((v) => !v)}>
-                  Full context <Chevron />
+                  Бүтэн агуулга <Chevron />
                 </button>
                 {ctxOpen && (
                   <div className="gate-ctx-body">
-                    <div className="gate-label">Before this</div>
+                    <div className="gate-label">Үүнээс өмнө</div>
                     <ul>{gate.context.map((c) => <li key={c}>{c}</li>)}</ul>
                   </div>
                 )}
@@ -279,7 +279,7 @@ export function ApprovalGates({
             )}
             <footer className="gate-foot">
               {editing ? (
-                <button type="button" className="gate-ghost" onClick={() => setEditing(false)}>Cancel</button>
+                <button type="button" className="gate-ghost" onClick={() => setEditing(false)}>Болих</button>
               ) : (
                 <button
                   ref={editRef}
@@ -291,19 +291,19 @@ export function ApprovalGates({
                   }}
                 >
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5 13.5 5.5 6 13H3v-3Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /></svg>
-                  Edit
+                  Засах
                 </button>
               )}
-              {open.length > 1 && <span className="gate-pos">{idx + 1} of {open.length}</span>}
+              {open.length > 1 && <span className="gate-pos">{idx + 1}/{open.length}</span>}
               <span className="gate-spacer" />
-              <button type="button" className="gate-btn" onClick={() => decide("rejected")}>Reject</button>
+              <button type="button" className="gate-btn" onClick={() => decide("rejected")}>Татгалзах</button>
               <button
                 ref={approveRef}
                 type="button"
                 className="gate-btn gate-primary"
                 onClick={() => (editing ? decide("edited", draft) : decide("approved"))}
               >
-                {editing ? "Approve with changes" : "Approve"}
+                {editing ? "Засвартай батлах" : "Батлах"}
               </button>
             </footer>
           </article>
@@ -313,13 +313,13 @@ export function ApprovalGates({
       {holds.length > 0 && (
         <p className="gate-holds">
           <Lock />
-          <b>Holds {holds.length} step{holds.length === 1 ? "" : "s"}:</b> {holds.join(", ")}
+          <b>{holds.length} алхмыг түгжиж байна:</b> {holds.join(", ")}
         </p>
       )}
 
       {decided.length > 0 && (
         <div className="gate-decided">
-          <div className="gate-label">Decided</div>
+          <div className="gate-label">Шийдсэн</div>
           {decided.map((g) => {
             const isOpen = expanded === g.id;
             return (
@@ -341,7 +341,7 @@ export function ApprovalGates({
                 {isOpen && (
                   <div className="gate-row-body">
                     <p className="gate-reason">{g.reason}</p>
-                    {g.note && <p className="gate-note">Changed to: {g.note}</p>}
+                    {g.note && <p className="gate-note">Өөрчилсөн нь: {g.note}</p>}
                     <GateBody gate={g} />
                   </div>
                 )}

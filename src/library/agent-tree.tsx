@@ -69,12 +69,12 @@ export type AgentTreeProps = {
   className?: string;
 };
 const labels = {
-  queued: "Queued",
-  running: "Running",
-  waiting: "Needs you",
-  done: "Done",
-  failed: "Failed",
-  stopped: "Stopped",
+  queued: "Дараалалд",
+  running: "Ажиллаж байна",
+  waiting: "Таны ээлж",
+  done: "Дууссан",
+  failed: "Алдаатай",
+  stopped: "Зогсоосон",
 };
 const sumCost = (node: TreeAgent): number =>
   Math.max(0, node.cost ?? 0) +
@@ -207,7 +207,7 @@ export function AgentTree({
   onSelect,
   now,
   formatCost = dollars,
-  title = "Agents",
+  title = "Агентууд",
   className = "",
 }: AgentTreeProps) {
   const [demo] = React.useState(sampleTree);
@@ -361,8 +361,8 @@ export function AgentTree({
       seconds === undefined
         ? ""
         : seconds >= 60
-          ? `${Math.floor(seconds / 60)}m ${String(seconds % 60).padStart(2, "0")}s`
-          : `${seconds}s`;
+          ? `${Math.floor(seconds / 60)} мин ${String(seconds % 60).padStart(2, "0")} с`
+          : `${seconds} с`;
     return (
       <div
         className={`agt-branch agt-depth-${depth === 0 ? "root" : depth === 1 ? "first" : "deep"}`}
@@ -439,12 +439,12 @@ export function AgentTree({
             {children.length > 0 && (
               <button
                 type="button"
-                aria-label={`${isFolded ? "Show" : "Hide"} ${children.length} sub-agents of ${agent.name}`}
+                aria-label={`${agent.name}: ${children.length} дэд агентыг ${isFolded ? "харуулах" : "нуух"}`}
                 aria-expanded={!isFolded}
                 onClick={() => toggle(agent.id)}
               >
                 {isFolded
-                  ? `${flatten(agent).length - 1} hidden`
+                  ? `${flatten(agent).length - 1} нуусан`
                   : children.length}
                 <svg
                   viewBox="0 0 24 24"
@@ -476,19 +476,19 @@ export function AgentTree({
           {title}
         </span>
         <div aria-live="polite">
-          <span>{all.length} agents</span>
+          <span>{all.length} агент</span>
           {running > 0 && (
-            <span className="agt-running-text">{running} running</span>
+            <span className="agt-running-text">{running} ажиллаж байна</span>
           )}
           {all.some((agent) => agent.status === "waiting") && (
             <span className="agt-waiting-text">
-              {all.filter((agent) => agent.status === "waiting").length} need
-              you
+              {all.filter((agent) => agent.status === "waiting").length} таны
+              ээлж
             </span>
           )}
           {all.some((agent) => agent.status === "failed") && (
             <span className="agt-failed-text">
-              {all.filter((agent) => agent.status === "failed").length} failed
+              {all.filter((agent) => agent.status === "failed").length} алдаатай
             </span>
           )}
           <strong className={running > 0 ? "agt-live-cost" : undefined}>
@@ -560,7 +560,7 @@ export function AgentTree({
               <button
                 type="button"
                 className="agt-dialog-close"
-                aria-label="Close details"
+                aria-label="Дэлгэрэнгүйг хаах"
                 onClick={close}
               >
                 ×
@@ -569,8 +569,8 @@ export function AgentTree({
             <p>
               {dialog.status === "waiting"
                 ? (dialog.ask ??
-                  "This agent needs your input before continuing.")
-                : (dialog.error ?? "The agent could not complete this step.")}
+                  "Үргэлжлүүлэхийн өмнө энэ агентад таны хариу хэрэгтэй.")
+                : (dialog.error ?? "Агент энэ алхмыг гүйцээж чадсангүй.")}
             </p>
             <footer>
               {dialog.status === "waiting" ? (
@@ -580,9 +580,9 @@ export function AgentTree({
                     className="agt-primary"
                     onClick={() => resolve("approve")}
                   >
-                    Approve
+                    Батлах
                   </button>
-                  <button type="button" onClick={() => resolve("reject")}>Reject</button>
+                  <button type="button" onClick={() => resolve("reject")}>Татгалзах</button>
                 </>
               ) : (
                 <>
@@ -591,9 +591,9 @@ export function AgentTree({
                     className="agt-primary"
                     onClick={() => resolve("retry")}
                   >
-                    Retry
+                    Дахин оролдох
                   </button>
-                  <button type="button" onClick={() => resolve("dismiss")}>Dismiss</button>
+                  <button type="button" onClick={() => resolve("dismiss")}>Хаах</button>
                 </>
               )}
             </footer>

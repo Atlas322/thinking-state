@@ -123,7 +123,7 @@ export function TsPrimitives({
         </Stack>
 
         <Stack gap="control">
-          <Text variant="label">[03] Tab ба сегмент</Text>
+          <Text variant="label">[03] Таб ба сегмент</Text>
           <Tabs
             label="Арга зүй"
             value={live?.tab ?? tab}
@@ -135,7 +135,7 @@ export function TsPrimitives({
             ]}
           />
           <Text variant="body" tone="muted">
-            Табын доор хамгийн багадаа 16px (--ts-gap-control) — эцгийн Stack өгнө.
+            Табын доор хамгийн багадаа 16px (var(--ts-gap-control)), зайг эцэг {"<Stack>"} өгнө.
           </Text>
           <Tabs
             variant="segmented"
@@ -151,9 +151,9 @@ export function TsPrimitives({
         </Stack>
 
         <Stack gap="stack-sm">
-          <Text variant="label">[04] Chip ба badge</Text>
+          <Text variant="label">[04] Чип ба тэмдэг</Text>
           <Stack direction="row" gap="stack-sm" wrap>
-            {["Төсөл", "Task", "Шийдвэр", "Атом"].map((c, i) => (
+            {["Төсөл", "Даалгавар", "Шийдвэр", "Атом"].map((c, i) => (
               <Pill key={c} icon={CHIP_ICON[c]} selected={chips.includes(c)} count={[4, 11, 3, 5][i]} onClick={() => toggle(c)}>
                 {c}
               </Pill>
@@ -176,13 +176,13 @@ export function TsPrimitives({
             <Card>
               <Stack gap="stack-sm">
                 <Text variant="h3">Энгийн карт</Text>
-                <Text variant="small" tone="muted">surface · 1px line · 12px булан</Text>
+                <Text variant="small" tone="muted">гадаргуу · 1px зураас · 12px булан</Text>
               </Stack>
             </Card>
             <Card interactive tabIndex={0}>
               <Stack gap="stack-sm">
                 <Text variant="h3">Дарагддаг</Text>
-                <Text variant="small" tone="muted">hover дээр 1px өргөгдөнө</Text>
+                <Text variant="small" tone="muted">хулганаар заахад 1px өргөгдөнө</Text>
               </Stack>
             </Card>
             <Card selected>
@@ -194,7 +194,7 @@ export function TsPrimitives({
             <Card block>
               <Stack gap="stack-sm">
                 <Text variant="h3">Блок</Text>
-                <Text variant="small" tone="muted">булангүй (block layout)</Text>
+                <Text variant="small" tone="muted">булангүй (блок байрлал)</Text>
               </Stack>
             </Card>
           </div>
@@ -205,21 +205,21 @@ export function TsPrimitives({
 }
 
 /** Vault types → the system icon map (src/company/icons TYPE_ICON). */
-const CHIP_ICON: Record<string, IconName> = { Төсөл: "folder", Task: "circle-check", Шийдвэр: "git-branch", Атом: "atom" };
+const CHIP_ICON: Record<string, IconName> = { Төсөл: "folder", Даалгавар: "circle-check", Шийдвэр: "git-branch", Атом: "atom" };
 
 const NEUTRALS: [string, string][] = [
-  ["--ts-side", "side"],
-  ["--ts-page", "page"],
-  ["--ts-surface", "surface"],
-  ["--ts-raised", "raised"],
-  ["--ts-line", "line"],
-  ["--ts-faint", "faint"],
-  ["--ts-muted", "muted"],
-  ["--ts-fg", "text"],
-  ["--ts-accent-strong", "primary"],
-  ["--ts-electric", "electric"],
-  ["--ts-selected", "selected"],
-  ["--ts-folder", "folder"],
+  ["--ts-side", "Хажуу"],
+  ["--ts-page", "Хуудас"],
+  ["--ts-surface", "Гадаргуу"],
+  ["--ts-raised", "Өргөгдсөн"],
+  ["--ts-line", "Зураас"],
+  ["--ts-faint", "Цайвар"],
+  ["--ts-muted", "Бүдэг"],
+  ["--ts-fg", "Текст"],
+  ["--ts-accent-strong", "Үндсэн"],
+  ["--ts-electric", "Цахилгаан"],
+  ["--ts-selected", "Сонгосон"],
+  ["--ts-folder", "Хавтас"],
 ];
 const STATUS_MN: Record<(typeof STATUSES)[number], string> = {
   running: "Ажиллаж байна",

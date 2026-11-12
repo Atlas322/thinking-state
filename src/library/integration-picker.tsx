@@ -172,18 +172,18 @@ export function IntegrationPicker({
   );
 
   return (
-    <section className={`ip ${className}`} aria-label="Integrations">
+    <section className={`ip ${className}`} aria-label="Холболтууд">
       <style>{css}</style>
       <header className="ip-head">
         <button
           type="button"
           className="ip-back"
-          aria-label="Back"
+          aria-label="Буцах"
           onClick={() => onBack?.()}
         >
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
         </button>
-        <span className="ip-crumb">Integrations</span>
+        <span className="ip-crumb">Холболтууд</span>
         <input
           ref={inputRef}
           className="ip-search"
@@ -191,8 +191,8 @@ export function IntegrationPicker({
           aria-expanded="true"
           aria-controls={`${id}-list`}
           aria-activedescendant={current ? `${id}-${current.id}` : undefined}
-          aria-label="Search integrations"
-          placeholder="Search integrations"
+          aria-label="Холболт хайх"
+          placeholder="Холболт хайх"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -217,20 +217,20 @@ export function IntegrationPicker({
       </header>
 
       <div className="ip-body">
-        <div className="ip-list" id={`${id}-list`} role="listbox" aria-label="Integrations" ref={listRef}>
+        <div className="ip-list" id={`${id}-list`} role="listbox" aria-label="Холболтууд" ref={listRef}>
           {connected.length > 0 && (
-            <div role="group" aria-label="Connected">
-              <div className="ip-group">Connected</div>
+            <div role="group" aria-label="Холбогдсон">
+              <div className="ip-group">Холбогдсон</div>
               {connected.map(row)}
             </div>
           )}
           {available.length > 0 && (
-            <div role="group" aria-label="Available">
-              <div className="ip-group">Available</div>
+            <div role="group" aria-label="Боломжтой">
+              <div className="ip-group">Боломжтой</div>
               {available.map(row)}
             </div>
           )}
-          {!flat.length && <p className="ip-empty">No integrations match “{query}”</p>}
+          {!flat.length && <p className="ip-empty">“{query}”-д тохирох холболт алга</p>}
         </div>
 
         {current && (
@@ -254,7 +254,7 @@ export function IntegrationPicker({
                   type="button"
                   role="switch"
                   aria-checked={isOn}
-                  aria-label={`${isOn ? "Disconnect" : "Connect"} ${current.name}`}
+                  aria-label={`${current.name}: ${isOn ? "салгах" : "холбох"}`}
                   className="ip-switch"
                   onClick={() => toggle(current)}
                 >
@@ -263,7 +263,7 @@ export function IntegrationPicker({
               </div>
               <div className="ip-meta">
                 {current.domain}
-                {isOn && <span className="ip-badge">Connected</span>}
+                {isOn && <span className="ip-badge">Холбогдсон</span>}
               </div>
               <p className="ip-desc">{current.description}</p>
               <ul className="ip-feats">
@@ -275,7 +275,7 @@ export function IntegrationPicker({
                 ))}
               </ul>
               <button type="button" className="ip-explore" onClick={() => onExplore?.(current.id)}>
-                Explore integration
+                Дэлгэрэнгүй үзэх
                 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 4 4-4 4" /></svg>
               </button>
             </div>
@@ -286,11 +286,11 @@ export function IntegrationPicker({
       <footer className="ip-foot">
         <span className="ip-count">
           <i />
-          {count} of {integrations.length} connected
+          {count}/{integrations.length} холбогдсон
         </span>
         <span className="ip-keys">
           <kbd>↑</kbd>
-          <kbd>↓</kbd> to move <kbd>↵</kbd> to switch
+          <kbd>↓</kbd> шилжих <kbd>↵</kbd> сэлгэх
         </span>
       </footer>
     </section>

@@ -242,10 +242,10 @@ export function EmailDraft({
   const open = phase === "draft" || phase === "sending";
   const badge =
     phase === "sent"
-      ? { text: "Sent", tone: "ok" }
+      ? { text: "Илгээсэн", tone: "ok" }
       : phase === "discarded"
-        ? { text: "Discarded", tone: "muted" }
-        : { text: "Ready for review", tone: "ok" };
+        ? { text: "Хаясан", tone: "muted" }
+        : { text: "Хянахад бэлэн", tone: "ok" };
 
   return (
     <div
@@ -288,7 +288,7 @@ export function EmailDraft({
             >
               <div className="ui-edc__meta">
                 <div className="ui-edc__to" ref={menuRef}>
-                  <span className="ui-edc__label">To</span>
+                  <span className="ui-edc__label">Хэнд</span>
                   {to.email ? (
                     <button
                       type="button"
@@ -307,13 +307,13 @@ export function EmailDraft({
                       </svg>
                     </button>
                   ) : (
-                    <span className="ui-edc__email">No recipient</span>
+                    <span className="ui-edc__email">Хүлээн авагч алга</span>
                   )}
                   {menu && (
                     <ul
                       className="ui-edc__menu"
                       role="listbox"
-                      aria-label="Recipient"
+                      aria-label="Хүлээн авагч"
                     >
                       {contacts.map((c, i) => (
                         <li key={`${c.email}-${i}`}>
@@ -355,7 +355,7 @@ export function EmailDraft({
                     </span>
                     <button
                       type="button"
-                      aria-label={`Remove ${file}`}
+                      aria-label={`${file} хасах`}
                       onClick={() => setFile(null)}
                     >
                       <Icon>
@@ -374,7 +374,7 @@ export function EmailDraft({
                         <path d="M12 6v12M6 12h12" />
                       </Icon>
                       <span className="ui-edc__file-name" title={attachment}>
-                        Attach {attachment}
+                        {attachment} хавсаргах
                       </span>
                     </button>
                   )
@@ -397,7 +397,7 @@ export function EmailDraft({
                       if (e.key === "Escape") setEditing(false);
                     }}
                     onBlur={() => setEditing(false)}
-                    aria-label="Email text"
+                    aria-label="Имэйлийн текст"
                   />
                 ) : (
                   <p
@@ -405,7 +405,7 @@ export function EmailDraft({
                     className="ui-edc__text"
                     dir="auto"
                     onClick={startEditing}
-                    title="Click to edit"
+                    title="Засахын тулд дарна уу"
                   >
                     {body}{" "}
                     <a href={link.href} onClick={(e) => e.stopPropagation()}>
@@ -416,7 +416,7 @@ export function EmailDraft({
               </div>
 
               <div className="ui-edc__tune">
-                <div className="ui-edc__tones" role="group" aria-label="Tone">
+                <div className="ui-edc__tones" role="group" aria-label="Өнгө аяс">
                   {tones.map((t) => (
                     <button
                       key={t.id}
@@ -431,7 +431,7 @@ export function EmailDraft({
                     type="button"
                     className="ui-edc__edit-btn"
                     aria-pressed={editing}
-                    aria-label="Edit text"
+                    aria-label="Текст засах"
                     onClick={startEditing}
                   >
                     <Icon>
@@ -439,7 +439,7 @@ export function EmailDraft({
                     </Icon>
                   </button>
                 </div>
-                <span className="ui-edc__hint">⌘ Enter to send</span>
+                <span className="ui-edc__hint">⌘↵ илгээх</span>
               </div>
             </div>
           ) : (
@@ -460,15 +460,15 @@ export function EmailDraft({
               <span className="ui-edc__receipt-text">
                 {phase === "sent" ? (
                   <>
-                    Sent to <b dir="auto">{to.name}</b>
-                    {file ? ` with ${file}` : ""}
+                    Илгээсэн: <b dir="auto">{to.name}</b>
+                    {file ? `, хавсралт: ${file}` : ""}
                   </>
                 ) : (
-                  "Draft discarded"
+                  "Ноорог хаягдсан"
                 )}
               </span>
               <button type="button" className="ui-edc__undo" onClick={undo}>
-                Undo
+                Буцаах
               </button>
             </div>
           )}
@@ -491,7 +491,7 @@ export function EmailDraft({
               onClick={discard}
               disabled={phase === "sending"}
             >
-              Discard
+              Хаях
             </button>
             <button
               type="button"
@@ -502,10 +502,10 @@ export function EmailDraft({
               {phase === "sending" ? (
                 <>
                   <span className="ui-edc__spinner" aria-hidden="true" />
-                  Sending
+                  Илгээж байна
                 </>
               ) : (
-                "Send email"
+                "Имэйл илгээх"
               )}
             </button>
           </div>

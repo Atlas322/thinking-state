@@ -52,7 +52,7 @@ export type ChangeSummaryProps = {
 };
 
 export function ChangeSummary({
-  title = "What's changed",
+  title = "Юу өөрчлөгдсөн",
   period,
   icon,
   changes,
@@ -329,12 +329,12 @@ export default function Demo() {
   return (
     <div style={{ width: "100%", maxWidth: 480, margin: "0 auto" }}>
       <ChangeSummary
-        period="This week"
+        period="Энэ долоо хоног"
         changes={[
-          { label: "Active users", change: "Up 6.1% to 18.2K", tone: "good" },
-          { label: "Activation", change: "Climbed to 41%, up 3 pts", tone: "good" },
-          { label: "Churn", change: "Down to 2.1% from 2.6%", tone: "good", direction: "down" },
-          { label: "Support tickets", change: "Up 14% to 312", tone: "bad", direction: "up" },
+          { label: "Идэвхтэй хэрэглэгч", change: "6.1% өсөж 18.2K болсон", tone: "good" },
+          { label: "Идэвхжилт", change: "41% хүрч, 3 пунктээр өссөн", tone: "good" },
+          { label: "Цуцлалт", change: "2.6%-аас 2.1% хүртэл буурсан", tone: "good", direction: "down" },
+          { label: "Тусламжийн хүсэлт", change: "14% өсөж 312 болсон", tone: "bad", direction: "up" },
         ]}
       />
     </div>

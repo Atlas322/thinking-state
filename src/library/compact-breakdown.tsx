@@ -87,19 +87,19 @@ function useRolled(value: number) {
 }
 
 export function CompactBreakdown({
-  title = "Revenue by channel",
+  title = "Сувгаар орлого",
   items: itemsProp,
   periods = [
-    { id: "7d", label: "7d" },
-    { id: "30d", label: "30d" },
-    { id: "90d", label: "90d" },
+    { id: "7d", label: "7 хоног" },
+    { id: "30d", label: "30 хоног" },
+    { id: "90d", label: "90 хоног" },
   ],
   period: periodProp,
   defaultPeriod,
   onPeriodChange,
   delta: deltaProp,
   format = money,
-  totalLabel = "Total revenue",
+  totalLabel = "Нийт орлого",
   footer,
   className = "",
 }: CompactBreakdownProps) {
@@ -123,7 +123,7 @@ export function CompactBreakdown({
       <header className="cbd-head">
         <h3>{title}</h3>
         {periods.length > 0 && (
-          <div className="cbd-seg" role="radiogroup" aria-label="Period">
+          <div className="cbd-seg" role="radiogroup" aria-label="Хугацаа">
             {periods.map((p) => (
               <button
                 key={p.id}
@@ -155,7 +155,7 @@ export function CompactBreakdown({
       <div className="cbd-sub" aria-hidden="true">{hovered ? `${hovered.label} · ${pct(hovered.value)}%` : totalLabel}</div>
       <p className="cbd-sr">
         {totalLabel}: {format(total)}
-        {delta !== undefined && `, ${delta < 0 ? "down" : "up"} ${Math.abs(delta)}% against the previous period`}
+        {delta !== undefined && `, өмнөх үеэс ${Math.abs(delta)}% ${delta < 0 ? "буурсан" : "өссөн"}`}
       </p>
       <div className="cbd-bar" aria-hidden="true">
         {ranked.map((r) => (
@@ -190,7 +190,7 @@ export function CompactBreakdown({
         <footer className="cbd-foot">
           {footer ?? (
             <>
-              <span>Largest:</span> {ranked[0]?.label}
+              <span>Хамгийн их:</span> {ranked[0]?.label}
             </>
           )}
         </footer>

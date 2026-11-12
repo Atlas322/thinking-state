@@ -35,6 +35,9 @@ const DEMO_ICON: Record<LoopName, IconName> = {
   shake: "triangle-alert",
 };
 const ORIGIN: Partial<Record<LoopName, string>> = { swing: "20% 90%" };
+/** Mongolian display names; the keys stay the API names */
+const LOOP_MN: Record<LoopName, string> = { bob: "дүүлэх", swing: "савлах", breathe: "амьсгалах", float: "хөвөх", spin: "эргэх", pulse: "лугших", nudge: "түлхэх", pop: "товших", shake: "доргих" };
+const SPRING_MN: Record<SpringName, string> = { soft: "зөөлөн", settle: "тогтох", heavy: "хүнд" };
 
 function Curve({ name }: { name: SpringName }) {
   const e = spring(name);
@@ -52,7 +55,7 @@ function Curve({ name }: { name: SpringName }) {
         <polyline points={pts} fill="none" stroke="currentColor" strokeWidth="1.75" />
       </svg>
       <figcaption>
-        <b>{name}</b>
+        <b>{SPRING_MN[name]}</b>
         <span>
           ζ {dampingRatio(SPRINGS[name]).toFixed(2)} · {e.duration} ms · {e.overshoot ? `+${Math.round(e.overshoot * 100)}%` : "0%"}
         </span>
@@ -76,7 +79,7 @@ function LoopTile({ name, i = 0 }: { name: LoopName; i?: number }) {
           <Icon name={DEMO_ICON[name]} size={20} />
         </span>
       </span>
-      <span className="mf-name">{name}</span>
+      <span className="mf-name">{LOOP_MN[name]}</span>
     </div>
   );
 }
@@ -126,12 +129,12 @@ function PageControls({ stress, setStress }: { stress: boolean; setStress: (s: b
         {motion.paused ? "▶ Бүх хөдөлгөөнийг үргэлжлүүлэх" : "⏸ Бүх хөдөлгөөнийг зогсоох"}
       </button>
       <button type="button" className="mf-btn" aria-pressed={stress} onClick={() => setStress(!stress)}>
-        {stress ? "Стресс тест: 96 loop ✓" : "Стресс тест: 96 loop"}
+        {stress ? "Стресс тест: 96 давталт ✓" : "Стресс тест: 96 давталт"}
       </button>
-      {reduced && <span className="mf-note">prefers-reduced-motion асаалттай: эцсийн төлөв</span>}
+      {reduced && <span className="mf-note">Хөдөлгөөн багасгах тохиргоо асаалттай: эцсийн төлөв</span>}
       {stress && fps && (
         <output className="mf-fps" aria-live="off">
-          {fps.avg} fps · хамгийн урт кадр {fps.worst} ms · 25 ms-ээс урт {fps.janky}/{fps.frames}
+          {fps.avg} кадр/с · хамгийн урт кадр {fps.worst} ms · 25 ms-ээс урт {fps.janky}/{fps.frames}
         </output>
       )}
     </div>
@@ -147,7 +150,7 @@ export default function Preview() {
       <div className="mf">
         <PageControls stress={stress} setStress={setStress} />
         <section className="mf-section">
-          <h3>Spring</h3>
+          <h3>Пүрш</h3>
           <div className="mf-curves">
             {(Object.keys(SPRINGS) as SpringName[]).map((n) => (
               <Curve key={n} name={n} />
@@ -155,7 +158,7 @@ export default function Preview() {
           </div>
         </section>
         <LoopRegion as="section" className="mf-section" controls="always">
-          <h3>Loop</h3>
+          <h3>Давталт</h3>
           <div className="mf-grid">
             {LOOPS.map((n) => (
               <div key={n} className="mf-cell" title={LOOP_NOTES[n]}>
@@ -166,9 +169,9 @@ export default function Preview() {
           </div>
         </LoopRegion>
         <LoopRegion as="section" className="mf-section" controls="always">
-          <h3>Нэг удаа (enter) · ↺</h3>
+          <h3>Нэг удаа (орох) · ↺</h3>
           <div className="mf-enter">
-            {["Шийдвэр", "Төсөл", "Task", "Атом"].map((t, i) => (
+            {["Шийдвэр", "Төсөл", "Даалгавар", "Атом"].map((t, i) => (
               <div key={t} className="mf-card ts-enter" style={{ ["--ts-enter-delay" as string]: `${i * 70}ms` }}>
                 {t}
               </div>
@@ -177,7 +180,7 @@ export default function Preview() {
         </LoopRegion>
         {stress && (
           <LoopRegion as="section" className="mf-section" controls="always">
-            <h3>96 loop зэрэг</h3>
+            <h3>96 давталт зэрэг</h3>
             <div className="mf-stress">
               {Array.from({ length: 96 }, (_, i) => (
                 <LoopTile key={i} name={LOOPS[i % LOOPS.length]} i={i + LOOPS.length} />

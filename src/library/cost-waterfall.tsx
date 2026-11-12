@@ -80,7 +80,7 @@ const sum = (s: CostStep): Totals =>
 
 const fmtTok = (n: number) => (n >= 10000 ? `${(n / 1000).toFixed(1)}k` : n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`);
 const fmtTokShort = (n: number) => (n >= 100000 ? `${Math.round(n / 1000)}k` : fmtTok(n));
-const fmtTime = (ms?: number) => (ms == null ? "–" : ms < 1000 ? `${Math.round(ms)}ms` : `${(ms / 1000).toFixed(1)}s`);
+const fmtTime = (ms?: number) => (ms == null ? "–" : ms < 1000 ? `${Math.round(ms)}ms` : `${(ms / 1000).toFixed(1)} с`);
 /** Cost in usage credits (кр), not money. */
 const dollars = (n: number) => `${n.toFixed(2)} кр`;
 
@@ -194,34 +194,34 @@ export function CostWaterfall({
         </svg>
         <strong>{title}</strong>
         <span className="cw-task">{task}</span>
-        <div className="cw-seg" role="tablist" aria-label="Measure">
+        <div className="cw-seg" role="tablist" aria-label="Хэмжүүр">
           {(["cost", "tokens"] as const).map((m) => (
             <button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => setMode(m)}>
-              {m === "cost" ? "Cost" : "Tokens"}
+              {m === "cost" ? "Зардал" : "Токен"}
             </button>
           ))}
         </div>
         <span className={`cw-state ${running ? "live" : failedRun ? "fail" : "done"}`}>
           <i />
-          {running ? "Live" : failedRun ? "Failed" : "Done"}
+          {running ? "Шууд" : failedRun ? "Алдаатай" : "Дууссан"}
         </span>
       </header>
       <div className="cw-stats">
         <div>
-          <span className="cw-k">Total cost</span>
+          <span className="cw-k">Нийт зардал</span>
           <span className="cw-v">{formatCost(total.cost)}</span>
         </div>
         <div>
-          <span className="cw-k">Total tokens</span>
+          <span className="cw-k">Нийт токен</span>
           <span className="cw-v">
             {fmtTokShort(total.tin + total.tout)}
             <small>
-              {fmtTokShort(total.tin)} in · {fmtTok(total.tout)} out
+              {fmtTokShort(total.tin)} оролт · {fmtTok(total.tout)} гаралт
             </small>
           </span>
         </div>
         <div>
-          <span className="cw-k">Most expensive</span>
+          <span className="cw-k">Хамгийн их зардал</span>
           <span className="cw-v cw-v-name">
             {top?.name}
             <small>{top ? formatCost(sum(top).cost) : ""}</small>
@@ -230,7 +230,7 @@ export function CostWaterfall({
       </div>
       <div className="cw-table" style={maxHeight ? { maxHeight, overflowY: "auto" } : undefined}>
         <div className="cw-row cw-th">
-          <span className="cw-name">Step</span>
+          <span className="cw-name">Алхам</span>
           <span className="cw-chart">
             {ticks.map((t) => (
               <span key={t} className="cw-tick" style={{ left: pct(t) }}>
@@ -238,10 +238,10 @@ export function CostWaterfall({
               </span>
             ))}
           </span>
-          <span className="cw-num">In</span>
-          <span className="cw-num">Out</span>
-          <span className="cw-num">Cost</span>
-          <span className="cw-num">Time</span>
+          <span className="cw-num">Оролт</span>
+          <span className="cw-num">Гаралт</span>
+          <span className="cw-num">Зардал</span>
+          <span className="cw-num">Хугацаа</span>
         </div>
         {rows.map(({ s, depth, start, t }) => {
           const hasKids = !!s.children?.length;
@@ -258,7 +258,7 @@ export function CostWaterfall({
                       type="button"
                       className="cw-caret"
                       aria-expanded={!folded}
-                      aria-label={`${folded ? "Open" : "Fold"} ${s.name}`}
+                      aria-label={`${s.name}: ${folded ? "нээх" : "хураах"}`}
                       onClick={() => toggleCol(s.id)}
                     >
                       <svg viewBox="0 0 16 16" aria-hidden="true" style={{ transform: folded ? "none" : "rotate(90deg)" }}>
@@ -276,12 +276,12 @@ export function CostWaterfall({
                   {folded && <span className="cw-tag">+{s.children!.length}</span>}
                   {isTop && <span className="cw-tag cw-top">TOP</span>}
                   {s.status === "failed" && (
-                    <svg className="cw-warn" viewBox="0 0 16 16" aria-label="Failed">
+                    <svg className="cw-warn" viewBox="0 0 16 16" aria-label="Алдаатай">
                       <path d="M8 2.5 14 13H2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
                       <path d="M8 6.5v3M8 11.2v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
                     </svg>
                   )}
-                  {s.status === "running" && <span className="cw-spin" aria-label="Running" />}
+                  {s.status === "running" && <span className="cw-spin" aria-label="Ажиллаж байна" />}
                 </span>
                 <span className="cw-chart">
                   {ticks.map((tk) => (
@@ -302,15 +302,15 @@ export function CostWaterfall({
                   {s.error && <p className="cw-err">{s.error}</p>}
                   {s.input && (
                     <p>
-                      <b>Input</b> {s.input}
+                      <b>Оролт</b> {s.input}
                     </p>
                   )}
                   {s.output && (
                     <p>
-                      <b>Output</b> {s.output}
+                      <b>Гаралт</b> {s.output}
                     </p>
                   )}
-                  {!s.error && !s.input && !s.output && <p className="cw-faint">No details recorded.</p>}
+                  {!s.error && !s.input && !s.output && <p className="cw-faint">Дэлгэрэнгүй бичигдээгүй.</p>}
                 </div>
               )}
             </React.Fragment>

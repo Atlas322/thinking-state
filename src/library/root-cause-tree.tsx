@@ -74,7 +74,8 @@ const FileIco = () => (
   <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5h4l2 2v7H3Z" fill="currentColor" opacity=".55" /></svg>
 );
 
-const statusText: Record<CauseStatus, string> = { open: "Not checked", checking: "Checking", "ruled-out": "Ruled out", confirmed: "Root cause" };
+const statusText: Record<CauseStatus, string> = { open: "Шалгаагүй", checking: "Шалгаж байна", "ruled-out": "Үгүйсгэсэн", confirmed: "Үндсэн шалтгаан" };
+const gateText = { or: "эсвэл", and: "ба" } as const;
 
 function count(c: Cause): { all: number; out: number } {
   return (c.children ?? []).reduce(
@@ -86,7 +87,7 @@ function count(c: Cause): { all: number; out: number } {
   );
 }
 
-export function RootCauseTree({ title = "Root cause", failure = defaultFailure, onAction, formatTime = fmt, className = "" }: RootCauseTreeProps) {
+export function RootCauseTree({ title = "Үндсэн шалтгаан", failure = defaultFailure, onAction, formatTime = fmt, className = "" }: RootCauseTreeProps) {
   const findFirst = (c: Cause): Cause | undefined => {
     for (const k of c.children ?? []) {
       if (k.status === "checking" || k.status === "confirmed") return k;
@@ -127,9 +128,9 @@ export function RootCauseTree({ title = "Root cause", failure = defaultFailure, 
         {root ? (
           <span className="rct-status">
             <svg className="rct-warn" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2 14.5 13.5h-13Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /><path d="M8 6.5v3M8 11.5v.1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
-            <span className="rct-failed">Failed</span>
+            <span className="rct-failed">Алдаатай</span>
             {failure.detail && <span>{failure.detail}</span>}
-            <span className="rct-right">{confirmed ? "Found" : "Investigating"}</span>
+            <span className="rct-right">{confirmed ? "Олдсон" : "Судалж байна"}</span>
           </span>
         ) : (
           <span className="rct-status">
@@ -149,7 +150,7 @@ export function RootCauseTree({ title = "Root cause", failure = defaultFailure, 
         {card(c, root)}
         {kids.length > 0 && (
           <>
-            <span className="rct-gate">{(c.gate ?? "or").toUpperCase()}</span>
+            <span className="rct-gate">{gateText[c.gate ?? "or"].toUpperCase()}</span>
             <ul className={`rct-kids${kids.length === 1 ? " is-single" : ""}`}>{kids.map((k) => branch(k))}</ul>
           </>
         )}
@@ -165,10 +166,10 @@ export function RootCauseTree({ title = "Root cause", failure = defaultFailure, 
         <strong>{title}</strong>
         <span className={`rct-badge${confirmed ? " is-found" : ""}`}>
           {!confirmed && <span className="rct-spin" aria-hidden="true" />}
-          {confirmed ? "Found" : "Investigating"}
+          {confirmed ? "Олдсон" : "Судалж байна"}
         </span>
         <span className="rct-count">
-          {hyp} hypotheses · {out} ruled out
+          {hyp} таамаглал · {out} үгүйсгэсэн
         </span>
       </header>
       <div className="rct-scroll">
@@ -184,7 +185,7 @@ export function RootCauseTree({ title = "Root cause", failure = defaultFailure, 
             <span className="rct-ev-st">{statusText[sel.status ?? "open"]}</span>
           </div>
           <p className="rct-ev-text">
-            {sel.verdict ?? (sel.status === "checking" ? "Checking this now…" : sel.status === "open" ? "Not checked yet." : "")}
+            {sel.verdict ?? (sel.status === "checking" ? "Одоо шалгаж байна…" : sel.status === "open" ? "Хараахан шалгаагүй." : "")}
           </p>
           {sel.evidence && (
             <pre className="rct-ev-code">
@@ -201,8 +202,8 @@ export function RootCauseTree({ title = "Root cause", failure = defaultFailure, 
           )}
           {onAction && sel.status === "confirmed" && (
             <div className="rct-ev-act">
-              <button type="button" onClick={() => onAction(sel, "retry")}>Retry from here</button>
-              <button type="button" className="is-dark" onClick={() => onAction(sel, "fix")}>Fix it</button>
+              <button type="button" onClick={() => onAction(sel, "retry")}>Эндээс дахин оролдох</button>
+              <button type="button" className="is-dark" onClick={() => onAction(sel, "fix")}>Засах</button>
             </div>
           )}
         </div>

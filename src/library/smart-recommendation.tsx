@@ -59,7 +59,7 @@ export type SmartRecommendationProps = {
   className?: string;
 };
 
-const signalText = ["No signal", "Weak signal", "Good signal", "Strong signal"];
+const signalText = ["Дохиогүй", "Сул дохио", "Сайн дохио", "Хүчтэй дохио"];
 /** Any signal outside 0–3 (NaN, "3", 7, -1) is read as the nearest valid level, NaN as no signal */
 const level = (s: unknown): 0 | 1 | 2 | 3 => {
   const n = Math.round(Number(s));
@@ -71,7 +71,7 @@ const lowerFirst = (s: string) =>
   /^\p{Lu}\p{Ll}/u.test(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s;
 
 export function SmartRecommendation({
-  title = "Smart recommendation",
+  title = "Ухаалаг зөвлөмж",
   options,
   onAccept,
   onUndo,
@@ -126,7 +126,7 @@ export function SmartRecommendation({
   const isRecommended = at === 0;
   const done = accepted === at;
   const signal = level(current.signal);
-  const acceptText = `Accept ${lowerFirst(String(current.label))}`;
+  const acceptText = `Хүлээн авах: ${lowerFirst(String(current.label))}`;
 
   return (
     <>
@@ -148,7 +148,7 @@ export function SmartRecommendation({
           <span className="ui-src__title" dir="auto" title={title}>
             {title}
           </span>
-          {!isRecommended && <span className="ui-src__pill">Alternative</span>}
+          {!isRecommended && <span className="ui-src__pill">Өөр хувилбар</span>}
           <span className="ui-src__chevron">
             <Icon d="m4.5 6.25 3.5 3.5 3.5-3.5" />
           </span>
@@ -188,7 +188,7 @@ export function SmartRecommendation({
                   onClick={() => setMenu((m) => !m)}
                 >
                   <Icon d="M5 12.5v-9M2.75 5.75 5 3.5l2.25 2.25M11 3.5v9M8.75 10.25 11 12.5l2.25-2.25" />
-                  Alternatives
+                  Өөр хувилбарууд
                 </button>
                 {menu && (
                   <div
@@ -218,7 +218,7 @@ export function SmartRecommendation({
                             {o.label}
                           </span>
                           {i === 0 && (
-                            <span className="ui-src__tag">Recommended</span>
+                            <span className="ui-src__tag">Санал болгосон</span>
                           )}
                         </span>
                         <span
@@ -245,9 +245,9 @@ export function SmartRecommendation({
                   <Icon d="m3.5 8.5 3 3 6-7" />
                   <span
                     className="ui-src__done-text"
-                    title={`${current.label} accepted`}
+                    title={`${current.label} хүлээн авсан`}
                   >
-                    <bdi>{current.label}</bdi> accepted
+                    <bdi>{current.label}</bdi> хүлээн авсан
                   </span>
                 </span>
                 <button
@@ -259,7 +259,7 @@ export function SmartRecommendation({
                   }}
                 >
                   <Icon d="M3.5 6.5h6.25a2.75 2.75 0 0 1 0 5.5H8M5.75 4.25 3.5 6.5l2.25 2.25" />
-                  Undo
+                  Буцаах
                 </button>
               </>
             ) : (
@@ -636,17 +636,17 @@ export default function Demo() {
         options={[
           {
             id: "incremental",
-            label: "Incremental sync",
+            label: "Хэсэгчилсэн шинэчлэл",
             reason: (
               <>
-                Only 4% of rows changed since yesterday – switching to{" "}
-                <strong style={{ fontWeight: 500, color: "inherit" }}>Incremental sync</strong> saves about 40 minutes.
+                Өчигдрөөс хойш мөрийн ердөө 4% өөрчлөгдсөн тул{" "}
+                <strong style={{ fontWeight: 500, color: "inherit" }}>хэсэгчилсэн шинэчлэл</strong> рүү шилжвэл 40 орчим минут хэмнэнэ.
               </>
             ),
             signal: 3,
           },
-          { id: "full", label: "Full refresh", reason: "Rebuilds every table from the source – slow, but always exact.", signal: 1 },
-          { id: "scheduled", label: "Nightly sync", reason: "Runs once at 2:00 when nobody is working.", signal: 2 },
+          { id: "full", label: "Бүтэн шинэчлэл", reason: "Хүснэгт бүрийг эх сурвалжаас дахин бүтээнэ – удаан ч үргэлж яг таарна.", signal: 1 },
+          { id: "scheduled", label: "Шөнийн шинэчлэл", reason: "Хэн ч ажиллахгүй 2:00 цагт нэг удаа ажиллана.", signal: 2 },
         ]}
       />
     </div>
