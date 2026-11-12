@@ -12,6 +12,13 @@ export function dependencyText(c: Company, p: CompanyProject | undefined, t: Com
   if (blocks.length) parts.push(`→ ${blocks.length} task хүлээж байна`);
   return parts.join(" · ");
 }
+/** area / subArea may be a unit id («area-fac9e1b8f9», kind "area") or a plain name: show the name. */
+export const areaLabel = (c: Company, v?: string) => {
+  const t = v?.trim();
+  if (!t) return "";
+  return c.units.find((u) => u.id === t)?.name ?? t;
+};
+
 /** True when the task waits on something that is not done yet. */
 export function isHeld(c: Company, p: CompanyProject | undefined, t: CompanyTask, index = taskIndex(c)) {
   return dependenciesOf(c, p, t, index).waitsOn.some((w) => toPhaseState(w.task.status) !== "done");
@@ -96,7 +103,7 @@ export function ProjectReportFor({ c, p, decisionsLabel = "Шийдвэр" }: { 
         status: { label: phaseLabel[state], tone: phaseTone[state] },
         owner: accountable ?? unit?.name,
         updated: p.due,
-        summary: [p.area, p.subArea].filter(Boolean).join(" › ") || unit?.name,
+        summary: [areaLabel(c, p.area), areaLabel(c, p.subArea)].filter(Boolean).join(" › ") || unit?.name,
       }}
       kpis={[
         { label: "Task", value: p.tasks.length },
@@ -164,7 +171,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
 
   const areas = new Map<string, CompanyProject[]>();
   for (const p of scoped.projects) {
-    const key = p.area?.trim() || NO_AREA;
+    const key = areaLabel(c, p.area) || NO_AREA;
     areas.set(key, [...(areas.get(key) ?? []), p]);
   }
   const picked = scoped.projects.find((p) => p.id === pick) ?? null;
@@ -181,6 +188,20 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
           </div>
         ))}
       </dl>
+      {owners.some((o) => o.kind === "person") && (
+        <div className="cv-people" role="group" aria-label="Хүнээр шүүх">
+          {owners
+            .filter((o) => o.kind === "person")
+            .map((o) => (
+              <button key={o.id} type="button" aria-pressed={owner === o.id} onClick={() => setOwner(owner === o.id ? "all" : o.id)}>
+                <span className="cv-ava is-person" style={{ "--s": "20px" } as React.CSSProperties} aria-hidden="true">
+                  {initials(o.name)}
+                </span>
+                {o.name}
+              </button>
+            ))}
+        </div>
+      )}
       <div className="cv-filters" role="group" aria-label="Шүүлт">
         <label>
           <span>Төлөв</span>
@@ -235,7 +256,7 @@ export function Dashboard({ c, scoped, today = new Date(), empty }: { c: Company
             for (const p of projects) {
               const tasks = p.tasks.filter((t) => passes(p, t));
               if (filtering && !tasks.length) continue;
-              const sub = p.subArea?.trim() || "";
+              const sub = areaLabel(c, p.subArea);
               if (sub) subs.set(sub, sub);
               const done = p.tasks.filter((t) => isDone(t.status)).length;
               const acc = p.raci?.accountable ? actorOf(c, p.raci.accountable) : null;
@@ -310,6 +331,9 @@ export const dashboardCss = `
 .cv-dash{display:flex;flex-direction:column;gap:12px}
 .cv-dash-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
 .cv-stat.is-amber dd{color:color-mix(in srgb,var(--cv-amber) 85%,var(--cv-fg))}
+.cv-people{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:1px}
+.cv-people button{flex:none;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px 0 4px;border:1px solid var(--cv-line);border-radius:15px;background:var(--cv-bg);font-size:13px;white-space:nowrap}
+.cv-people button[aria-pressed=true]{border-color:var(--cv-accent);background:var(--cv-accent-soft);color:color-mix(in srgb,var(--cv-accent) 70%,var(--cv-fg));font-weight:500}
 .cv-filters{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px}
 .cv-filters label{display:flex;flex-direction:column;gap:3px;font-size:11.5px;font-weight:500;color:var(--cv-muted)}
 .cv-filters select{height:32px;min-width:140px;padding:0 28px 0 10px;border:1px solid var(--cv-line);border-radius:8px;background:var(--cv-bg);color:var(--cv-fg);font:inherit;font-size:13px}

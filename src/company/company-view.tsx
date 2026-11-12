@@ -12,6 +12,8 @@ import {
   modelLines,
   rootsOf,
   scopeCompany,
+  type Collection,
+  type CollectionItem,
   type Company,
   type CompanyLevel,
   METHODOLOGIES,
@@ -130,6 +132,14 @@ export type CompanyViewProps = {
   showMethodologySwitch?: boolean;
   /** "Today" for due-date filters and the Gantt marker. */
   today?: Date;
+  /** Workspace layout: hide the unit tree and «Төрлүүд» when the host app has its own menu (level switch and unit chips move into the header). */
+  showTree?: boolean;
+  /** Controlled vault type to show (a collection's `type`); null shows the tabs. */
+  collection?: string | null;
+  onCollectionChange?: (type: string | null) => void;
+  /** Side peek actions for vault items (shown only when given). */
+  onOpenInVault?: (item: CollectionItem, collection: Collection) => void;
+  onAskAgent?: (item: CollectionItem, collection: Collection) => void;
   defaultLevel?: CompanyLevel;
   /** Unit to open first; its kind decides the level. */
   defaultUnitId?: string;
@@ -429,6 +439,11 @@ export function CompanyView({
   onMethodologyChange,
   showMethodologySwitch = true,
   today,
+  showTree = true,
+  collection: collectionProp,
+  onCollectionChange,
+  onOpenInVault,
+  onAskAgent,
   defaultLevel,
   defaultUnitId,
   defaultView = "method",
@@ -453,7 +468,12 @@ export function CompanyView({
   const [methodOwn, setMethodOwn] = React.useState<Methodology>(company.methodology ?? "bmc");
   const methodology = methodologyProp ?? methodOwn;
   const [personId, setPersonId] = React.useState<string | null>(null);
-  const [collectionType, setCollectionType] = React.useState<string | null>(null);
+  const [collectionOwn, setCollectionOwn] = React.useState<string | null>(null);
+  const collectionType = collectionProp !== undefined ? collectionProp : collectionOwn;
+  const setCollectionType = (t: string | null) => {
+    setCollectionOwn(t);
+    if (t !== collectionType) onCollectionChange?.(t);
+  };
   const [focusAgent, setFocusAgent] = React.useState<string | null>(null);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const tabsRef = React.useRef<(HTMLButtonElement | null)[]>([]);
@@ -723,7 +743,7 @@ export function CompanyView({
                 </button>
               ))}
             </div>
-            <CollectionView key={(collection ?? collections[0]).type} collection={collection ?? collections[0]} today={today} resolve={resolve} siblings={collections} />
+            <CollectionView key={(collection ?? collections[0]).type} collection={collection ?? collections[0]} today={today} resolve={resolve} siblings={collections} onOpenInVault={onOpenInVault} onAskAgent={onAskAgent} />
           </section>
         )}
         </div>
@@ -767,7 +787,8 @@ export function CompanyView({
   return (
     <div ref={rootRef} className={`cv ${className}`} data-template="workspace" data-methodology={methodology}>
       <style>{css}</style>
-      <div className="cv-ws">
+      <div className={`cv-ws${showTree ? "" : " no-tree"}`}>
+      {showTree && (
       <aside className="cv-side" aria-label={company.name}>
         <div className="cv-brand">
           <span className="cv-brand-mark" aria-hidden="true">
@@ -810,6 +831,7 @@ export function CompanyView({
           </nav>
         )}
       </aside>
+      )}
       <main className="cv-main">
         <header className="cv-head">
           <div className="cv-head-top">
@@ -845,6 +867,12 @@ export function CompanyView({
             )}
           </h2>
           {!collection && tags}
+          {!showTree && (
+            <div className="cv-head-scope">
+              {levelSwitch}
+              {unitChips}
+            </div>
+          )}
           <div
             className="cv-tabs"
             role="tablist"
@@ -884,7 +912,7 @@ export function CompanyView({
         </header>
         {collection ? (
           <section className="cv-panel" aria-label={collection.label ?? typeLabel(collection.type)} key={`collection-${collection.type}`}>
-            <CollectionView collection={collection} today={today} resolve={resolve} siblings={collections} />
+            <CollectionView collection={collection} today={today} resolve={resolve} siblings={collections} onOpenInVault={onOpenInVault} onAskAgent={onAskAgent} />
           </section>
         ) : (
           <section id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${view}`} className="cv-panel" key={`${view}-${scope.unitId}`}>
@@ -940,7 +968,7 @@ const baseCss = `
 .cv-stat{display:flex;flex-direction:column-reverse;padding:10px 12px;border-radius:10px;background:var(--cv-bg);border:1px solid var(--cv-line);animation:cv-in .34s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 45ms)}
 .cv-stat dt{font-size:12px;color:var(--cv-muted)}
 .cv-stat dd{margin:0;font-size:22px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.cv-canvas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cv-canvas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
 .cv-cell{padding:14px;border-radius:12px;background:var(--cv-bg);border:1px solid var(--cv-line);animation:cv-in .36s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 60ms + 120ms)}
 .cv-cell h4{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--cv-muted)}
 .cv-cell-1{background:linear-gradient(160deg,var(--cv-accent-soft),var(--cv-bg) 70%)}
@@ -979,7 +1007,7 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 .cv-unit-block{padding:12px;border:1px solid var(--cv-line);border-radius:12px;background:var(--cv-bg);animation:cv-in .34s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 50ms)}
 .cv-unit-h{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:14px;font-weight:600}
 .cv-pairs{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
-.cv-pair{display:grid;grid-template-columns:minmax(150px,220px) 28px 1fr;align-items:start;gap:0}
+.cv-pair{display:grid;grid-template-columns:minmax(150px,220px) 28px minmax(0,1fr);align-items:start;gap:0}
 .cv-person{display:flex;align-items:center;gap:9px;min-width:0;padding:8px 10px;border-radius:10px;background:var(--cv-soft)}
 .cv-person>span:last-child{display:flex;flex-direction:column;min-width:0}
 .cv-person strong{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1063,6 +1091,9 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 .cv-type-chips{margin-bottom:10px}
 .cv-nav-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cv-side-chips{display:none}
+.cv-ws.no-tree{grid-template-columns:minmax(0,1fr)}
+.cv-head-scope{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;min-width:0}
+.cv-head-scope .cv-unit-chips{flex:1;min-width:0}
 .cv-main{min-width:0;display:flex;flex-direction:column}
 .cv-head{padding:16px 20px 0;background:var(--cv-bg);border-bottom:1px solid var(--cv-line)}
 .cv-head-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 10px;min-width:0}
@@ -1101,7 +1132,7 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 .cv-types .cv-nav-list{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .cv-types .cv-nav-item{width:auto;min-height:30px;padding:0 10px;border:1px solid var(--cv-line);border-radius:15px;white-space:nowrap}
 .cv-types .cv-nav-count{margin-left:2px}
-.cv-ws{grid-template-columns:1fr}
+.cv-ws{grid-template-columns:minmax(0,1fr)}
 .cv-side{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px;border-right:0;border-bottom:1px solid var(--cv-line)}
 .cv-nav{display:none}
 .cv-side-chips{display:block;width:100%;min-width:0}
@@ -1115,15 +1146,15 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 .cv-tpl button{padding:0 8px;font-size:12.5px}
 .cv-hero-bar .cv-unit-chips{flex-basis:100%}
 .cv-hero-top{align-items:flex-start}
-.cv-canvas{grid-template-columns:1fr}
+.cv-canvas{grid-template-columns:minmax(0,1fr)}
 .cv-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
 .cv-model .cv-stat:last-child{grid-column:1/-1}
-.cv-pair{grid-template-columns:1fr}
+.cv-pair{grid-template-columns:minmax(0,1fr)}
 .cv-link{height:18px;width:2px;margin-left:24px}
 .cv-link::before{left:0;right:auto;top:2px;bottom:4px;width:1.5px;height:auto}
 .cv-link::after{left:-3.25px;right:auto;top:auto;bottom:0;border:4px solid transparent;border-top:6px solid color-mix(in srgb,var(--cv-accent) 55%,var(--cv-line));border-bottom:0}
 .cv-link.is-none{display:none}
-.cv-steps{grid-template-columns:1fr;gap:18px;overflow:visible}
+.cv-steps{grid-template-columns:minmax(0,1fr);gap:18px;overflow:visible}
 .cv-step:not(:last-child)::after{right:auto;left:22px;top:auto;bottom:-17px;width:1.5px;height:15px}
 .cv-step:not(:last-child)::before{right:auto;left:18.5px;top:auto;bottom:-19px;border:4px solid transparent;border-top:6px solid var(--cv-faint);border-bottom:0}
 .cv-step.gate-next::before{border-top-color:var(--cv-amber);border-left-color:transparent}
