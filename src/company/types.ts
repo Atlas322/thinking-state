@@ -85,22 +85,24 @@ export type CompanyProject = Placement & {
 export type Methodology = "bmc" | "pmbok" | "okr" | "lean-canvas";
 export const METHODOLOGIES: Methodology[] = ["bmc", "pmbok", "okr", "lean-canvas"];
 
+/** A block set to null is not shown at all (the company chose not to publish it). */
+export type ModelBlock = ModelField | null;
 export type CompanyModel = {
-  customers: ModelField;
-  value: ModelField;
-  channels: ModelField;
-  revenue: ModelField;
+  customers: ModelBlock;
+  value: ModelBlock;
+  channels: ModelBlock;
+  revenue: ModelBlock;
   /** Business Model Canvas blocks beyond the core four. */
-  partners?: ModelField;
-  activities?: ModelField;
-  resources?: ModelField;
-  relationships?: ModelField;
-  costs?: ModelField;
+  partners?: ModelBlock;
+  activities?: ModelBlock;
+  resources?: ModelBlock;
+  relationships?: ModelBlock;
+  costs?: ModelBlock;
   /** Lean Canvas blocks. */
-  problem?: ModelField;
-  solution?: ModelField;
-  metrics?: ModelField;
-  advantage?: ModelField;
+  problem?: ModelBlock;
+  solution?: ModelBlock;
+  metrics?: ModelBlock;
+  advantage?: ModelBlock;
 };
 export type Okr = { id: string; title: string; ownerId?: string; keyResults: { id: string; title: string; progress: number }[] };
 export type CompanyNote = { id: string; title: string; projectId?: string; date?: string };
@@ -196,7 +198,7 @@ export function actorOf(c: Company, id: string | undefined): Actor {
 }
 
 /** Normalises any ModelField into display lines. */
-export function modelLines(f: ModelField | undefined): { text: string; share?: number }[] {
+export function modelLines(f: ModelField | null | undefined): { text: string; share?: number }[] {
   if (f == null) return [];
   if (typeof f === "string") return f.trim() ? [{ text: f }] : [];
   return (f as (string | { stream: string; share?: number })[]).map((x) =>
