@@ -189,13 +189,51 @@ export function Tabs<V extends string>({ items, value, onChange, variant = "tabs
 
 /* ───────── Badge ───────── */
 
-export type BadgeTone = "neutral" | "blue" | "green" | "amber" | "red" | "violet" | "cat-1" | "cat-2" | "cat-3" | "cat-4";
+export type StatusTone = "running" | "needs-you" | "error" | "done" | "idle";
+export type BadgeTone = "neutral" | "blue" | "green" | "amber" | "red" | "violet" | "cat-1" | "cat-2" | "cat-3" | "cat-4" | StatusTone;
 export function Badge({ children, tone = "neutral", icon, className }: { children: React.ReactNode; tone?: BadgeTone; icon?: IconName; className?: string }) {
   return (
     <span className={cx("ts-badge", `is-${tone}`, className)}>
       <PrimitiveStyles />
       {icon && <Icon name={icon} size={14} />}
       {children}
+    </span>
+  );
+}
+
+/* ───────── IconTile ───────── */
+
+export type IconTileTone = "neutral" | "accent" | "cat-1" | "cat-2" | "cat-3" | "cat-4" | "folder" | StatusTone;
+const TILE_ICON: Record<number, number> = { 16: 11, 20: 13, 24: 15, 32: 20 };
+/**
+ * Coloured rounded square with an icon — menus, cards, side peek, collections
+ * (owner 2026-11-12). Colour comes from the category / status tokens; one
+ * radius token (--ts-radius-tile). tone="folder" shows the solid yellow folder.
+ */
+export function IconTile({
+  icon,
+  tone = "neutral",
+  size = 24,
+  label,
+  className,
+}: {
+  icon: IconName;
+  tone?: IconTileTone;
+  size?: 16 | 20 | 24 | 32;
+  label?: string;
+  className?: string;
+}) {
+  const folder = tone === "folder";
+  return (
+    <span
+      className={cx("ts-tile", `is-${tone}`, className)}
+      style={{ ["--ts-tile-size" as string]: `${size}px` }}
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+    >
+      <PrimitiveStyles />
+      <Icon name={folder ? "folder" : icon} variant={folder ? "filled" : "line"} size={folder ? size : TILE_ICON[size]} />
     </span>
   );
 }
@@ -256,8 +294,8 @@ export function Text({
   );
 }
 
-import { PRIMITIVES_CSS } from "./primitives-css";
-export { PRIMITIVES_CSS };
+import { PRIMITIVES_CSS, STATUSES } from "./primitives-css";
+export { PRIMITIVES_CSS, STATUSES };
 
 let href: string | undefined;
 /** Injects PRIMITIVES_CSS once (React 19 hoists and dedupes by href). */

@@ -2,7 +2,7 @@
 // The tokens come from src/lib/tokens.css, inlined for the preview only.
 import * as React from "react";
 import tokensCss from "../lib/tokens.css?inline";
-import { Badge, Button, Card, Pill, SplitCTA, Tabs, Text } from "../ui/primitives";
+import { Badge, Button, Card, IconTile, Pill, SplitCTA, STATUSES, Tabs, Text } from "../ui/primitives";
 import { Stack } from "../layout/stack";
 
 /** The primitives on one surface — what a page assembles from. */
@@ -14,6 +14,43 @@ export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) 
   return (
     <div data-ts-theme={theme} data-theme={theme === "dark" ? "dark" : "light"} className="tsp-panel">
       <Stack gap="stack-lg">
+        <Stack gap="stack-sm">
+          <Text variant="label">[00] Палитр</Text>
+          <div className="tsp-swatches">
+            {NEUTRALS.map(([v, n]) => (
+              <div key={v} className="tsp-sw">
+                <span style={{ background: `var(${v})` }} />
+                <Text variant="caption">{n}</Text>
+              </div>
+            ))}
+          </div>
+          <Stack direction="row" gap="stack-sm" wrap>
+            {STATUSES.map((st) => (
+              <Badge key={st} tone={st}>
+                {STATUS_MN[st]}
+              </Badge>
+            ))}
+          </Stack>
+          <Stack direction="row" gap="stack-sm" wrap align="center">
+            <IconTile icon="layout-grid" tone="cat-1" label="Арга зүй" />
+            <IconTile icon="bot" tone="cat-2" label="Технологи" />
+            <IconTile icon="briefcase" tone="cat-3" label="Бизнес" />
+            <IconTile icon="box" tone="cat-4" label="Бүтээгдэхүүн" />
+            <IconTile icon="folder" tone="folder" label="Төсөл" />
+            <IconTile icon="arrow-up-right" tone="accent" />
+            <IconTile icon="play" tone="running" />
+            <IconTile icon="triangle-alert" tone="needs-you" />
+            <IconTile icon="x" tone="error" />
+            <IconTile icon="check" tone="done" />
+            {([16, 20, 24, 32] as const).map((z) => (
+              <IconTile key={z} icon="folder" tone="folder" size={z} />
+            ))}
+            {([16, 20, 24, 32] as const).map((z) => (
+              <IconTile key={`c${z}`} icon="bot" tone="cat-2" size={z} />
+            ))}
+          </Stack>
+        </Stack>
+
         <Stack gap="stack-sm">
           <Text variant="label">[01] Үсэг</Text>
           <Text variant="display">Цэгүүдийг холбо.</Text>
@@ -123,6 +160,28 @@ export function TsPrimitives({ theme = "cream" }: { theme?: "cream" | "dark" }) 
   );
 }
 
+const NEUTRALS: [string, string][] = [
+  ["--ts-side", "side"],
+  ["--ts-page", "page"],
+  ["--ts-surface", "surface"],
+  ["--ts-raised", "raised"],
+  ["--ts-line", "line"],
+  ["--ts-faint", "faint"],
+  ["--ts-muted", "muted"],
+  ["--ts-fg", "text"],
+  ["--ts-accent-strong", "primary"],
+  ["--ts-electric", "electric"],
+  ["--ts-selected", "selected"],
+  ["--ts-folder", "folder"],
+];
+const STATUS_MN: Record<(typeof STATUSES)[number], string> = {
+  running: "Ажиллаж байна",
+  "needs-you": "Таны ээлж",
+  error: "Алдаа",
+  done: "Дууссан",
+  idle: "Хүлээгдэж буй",
+};
+
 export default function Preview() {
   return (
     <div className="tsp">
@@ -136,5 +195,8 @@ export default function Preview() {
 const CSS = `
 .tsp{width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
 .tsp-panel{padding:24px;border-radius:14px;min-width:0}
+.tsp-swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.tsp-sw{display:flex;flex-direction:column;gap:4px}
+.tsp-sw > span:first-child{height:36px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--ts-line)}
 .tsp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:12px}
 `;
