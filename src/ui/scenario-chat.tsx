@@ -146,7 +146,11 @@ export function ScenarioChat({ scenarios, people = [], autoplay = true, loops = 
   // live step times: when each phase began, so the trail's running row counts up
   const phaseKey = `${cur?.id}:${phase.at}:${phase.n}`;
   const began = React.useRef<Record<string, number>>({});
-  if (!began.current[phaseKey]) began.current[phaseKey] = Date.now();
+  if (!began.current[phaseKey]) {
+    // keep only the current question's times
+    for (const k of Object.keys(began.current)) if (!k.startsWith(`${cur?.id}:`)) delete began.current[k];
+    began.current[phaseKey] = Date.now();
+  }
   // the answer, a word at a time
   const [wordsShown, setWordsShown] = React.useState(0);
   React.useEffect(() => {
@@ -206,10 +210,8 @@ export function ScenarioChat({ scenarios, people = [], autoplay = true, loops = 
   const answerText = phase.at === "answer" ? answerWords.slice(0, wordsShown).join("") : answerWords.join("");
 
   // the trail: understand → search (sources as tagged sub-rows) → each step → the human gate
-  const ago = (key: string) => Date.now() - (began.current[key] ?? Date.now());
   const runAt = (key: string) => began.current[`${cur.id}:${key}`];
   const srcN = cur.sources?.length ?? 0;
-  const stepN = cur.steps?.length ?? 0;
   const searching = phase.at === "source";
   const searchDone = past(phase, "source") || (srcN === 0 && past(phase, "question"));
   const trail: TrailStep[] = [
@@ -255,8 +257,6 @@ export function ScenarioChat({ scenarios, people = [], autoplay = true, loops = 
   // the running step opens by itself; once someone opens one, it is theirs
   const autoOpen = trail.filter((t) => t.state === "running" && t.substeps?.length).map((t) => t.id);
   const doneSearch: string[] = []; // the full answer: the chips carry the sources, the search step stays folded
-  void ago;
-  void stepN;
 
   return (
     <div ref={sc.ref} className={`ts-loop-region ts-sc ${className}`} {...sc.attrs} data-controls="hover" onKeyDown={touch}>
