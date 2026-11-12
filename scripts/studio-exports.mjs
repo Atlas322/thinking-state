@@ -17,9 +17,10 @@ export function studioEntries(cat, read) {
     if (e.module) continue;
     const src = read(`src/library/${e.slug}.tsx`);
     const re = new RegExp(String.raw`export\s+(?:function|const|class)\s+` + e.exportName + String.raw`\b`);
-    // the labels API rides along: `xLabelsMn` (Mongolian defaults) and its `XLabels` type
-    const labels = [...src.matchAll(/export\s+const\s+(\w+LabelsMn)\b/g)].map((m) => m[1]);
-    const types = [...src.matchAll(/export\s+type\s+(\w+Labels)\b/g)].map((m) => m[1]);
+    // Rides along: the labels defaults (`xLabelsMn`), icon maps (`xIcons`) and
+    // every exported data type, so hosts never re-derive types from props.
+    const labels = [...src.matchAll(/export\s+const\s+(\w+(?:LabelsMn|Icons))\b/g)].map((m) => m[1]);
+    const types = [...src.matchAll(/export\s+(?:type|interface)\s+(\w+)/g)].map((m) => m[1]);
     if (re.test(src)) out.push({ slug: e.slug, name: e.exportName, labels, types });
     else missing.push(`${e.slug}: ${e.exportName}`);
   }

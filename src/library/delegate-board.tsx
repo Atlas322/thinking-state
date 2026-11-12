@@ -8,6 +8,8 @@ export type DelegateAgent = {
   id: string;
   name: string;
   model?: string;
+  /** Optional role, shown as a small muted line under the name. */
+  role?: string;
   avatar?: React.ReactNode;
   /** Minutes left on the task it runs now. */
   current?: number;
@@ -18,8 +20,8 @@ export type DelegateAgent = {
 export type DelegateTask = {
   id: string;
   title: string;
-  /** Minutes. */
-  estimate: number;
+  /** Minutes. Optional: when absent nothing is shown and totals skip it. */
+  estimate?: number;
   tools?: React.ReactNode[];
   agentId?: string | null;
 };
@@ -103,7 +105,7 @@ export function DelegateBoard({
   const queue = (id: string | null) => tasks.filter((t) => (t.agentId ?? null) === id);
   const minutesFor = (a: DelegateAgent) => {
     const q = queue(a.id);
-    return q.reduce((n, t, i) => n + (i === 0 && a.current !== undefined ? a.current : t.estimate), 0);
+    return q.reduce((n, t, i) => n + (i === 0 && a.current !== undefined ? a.current : (t.estimate ?? 0)), 0);
   };
   const busyUntil = (a: DelegateAgent, extra = 0) => clock(now + (minutesFor(a) + extra) * 60000);
   const totalCost = agents.reduce((n, a) => n + minutesFor(a) * (a.rate ?? 0), 0);
@@ -193,7 +195,7 @@ export function DelegateBoard({
               className={`dlb-task${suggestion?.taskId === t.id ? " is-suggested" : ""}${picking?.task === t.id ? " is-picking" : ""}`}
               draggable
               tabIndex={0}
-              aria-label={`${t.title}, ойролцоогоор ${t.estimate} мин`}
+              aria-label={t.estimate !== undefined ? `${t.title}, ойролцоогоор ${t.estimate} мин` : t.title}
               onDragStart={() => setDragging(t.id)}
               onDragEnd={() => {
                 setDragging(null);
@@ -223,7 +225,8 @@ export function DelegateBoard({
               <div>
                 <div className="dlb-task-t">{t.title}</div>
                 <div className="dlb-task-m">
-                  {t.tools?.map((ic, i) => <span key={i} className="dlb-ico">{ic}</span>)}~{t.estimate} мин
+                  {t.tools?.map((ic, i) => <span key={i} className="dlb-ico">{ic}</span>)}
+                  {t.estimate !== undefined && `~${t.estimate} мин`}
                 </div>
               </div>
             </div>
@@ -257,14 +260,15 @@ export function DelegateBoard({
                   <div className="dlb-agent-top">
                     <div>
                       <div className="dlb-agent-n">{a.name}</div>
+                      {a.role && <div className="dlb-agent-r">{a.role}</div>}
                       <div className="dlb-agent-m">
                         {a.model}
                         {a.rate !== undefined && <span> {formatCost(a.rate)}/мин</span>}
                       </div>
                     </div>
                     <span className={`dlb-until${p ? " is-preview" : ""}`}>
-                      {p ? busyUntil(a, p.estimate) : busyUntil(a)} хүртэл завгүй
-                      {p && a.rate !== undefined && <em> +{formatCost(p.estimate * a.rate)}</em>}
+                      {p ? busyUntil(a, p.estimate ?? 0) : busyUntil(a)} хүртэл завгүй
+                      {p && p.estimate !== undefined && a.rate !== undefined && <em> +{formatCost(p.estimate * a.rate)}</em>}
                     </span>
                   </div>
                   <div className="dlb-queue">
@@ -327,6 +331,7 @@ const css = `
 .dlb-agent-main{flex:1;min-width:0}
 .dlb-agent-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .dlb-agent-n{font-size:14px;font-weight:500}
+.dlb-agent-r{font-size:12px;color:var(--dlb-muted)}
 .dlb-agent-m{font-size:13px;color:var(--dlb-muted)}.dlb-agent-m span{color:var(--dlb-faint);margin-left:4px}
 .dlb-until{flex:none;height:20px;padding:0 6px;border-radius:5px;background:var(--dlb-chip);font-size:12px;line-height:20px;color:var(--dlb-muted);font-variant-numeric:tabular-nums;transition:background .15s,color .15s}
 .dlb-until.is-preview{background:var(--dlb-blue-soft);color:var(--dlb-blue-fg)}.dlb-until em{font-style:normal}

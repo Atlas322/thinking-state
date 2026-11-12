@@ -16,6 +16,8 @@ export type WritingAssistantProps = {
   speech?: "auto" | "simulate";
   dictation?: string;
   className?: string;
+  /** A ready conversation to start from instead of the empty welcome state. */
+  initialMessages?: WritingMessage[];
 };
 
 const sample = (m: string) => {
@@ -50,8 +52,9 @@ export function WritingAssistant({
   speech = "auto",
   dictation = "Дизайны багт ажлаа цагтаа хүлээлгэн өгсөнд нь талархсан богино захидал бич.",
   className = "",
+  initialMessages,
 }: WritingAssistantProps) {
-  const [messages, setMessages] = React.useState<WritingMessage[]>([]);
+  const [messages, setMessages] = React.useState<WritingMessage[]>(() => initialMessages ?? []);
   const [input, setInput] = React.useState("");
   const [streaming, setStreaming] = React.useState<{ id: number; full: string; shown: number } | null>(null);
   const [thinking, setThinking] = React.useState(false);
@@ -59,7 +62,8 @@ export function WritingAssistant({
   const timers = React.useRef<number[]>([]);
   const rec = React.useRef<SpeechRec | null>(null);
   const listRef = React.useRef<HTMLDivElement>(null);
-  const idRef = React.useRef(0);
+  // New ids continue after the highest id in the starting conversation, so keys stay unique.
+  const idRef = React.useRef(initialMessages?.reduce((max, m) => Math.max(max, m.id), 0) ?? 0);
 
   React.useEffect(
     () => () => {
