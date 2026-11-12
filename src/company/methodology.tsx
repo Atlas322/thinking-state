@@ -16,7 +16,8 @@ import {
   type PmPhase,
 } from "./types";
 import { Avatar, Lines } from "./ui";
-import { Empty } from "./collection";
+import { Empty, PriorityBadge, ProgressNM, parseDay } from "./collection";
+import { Icon, type IconName } from "./icons";
 
 /**
  * Methodology templates — the same company core drawn the way the
@@ -82,7 +83,71 @@ function Canvas({ c, blocks, label, hideEmpty = false }: { c: Company; blocks: B
   );
 }
 
-function BmcView({ c, scoped, hideEmpty = false }: { c: Company; scoped: Company; hideEmpty?: boolean }) {
+/**
+ * GTD state of a task, in the Agent Lanes palette (--ts-status-*):
+ * in progress = running, waiting = needs you, completed = done, the rest idle.
+ */
+type GtdTone = "idle" | "running" | "needs-you" | "done";
+const GTD: Record<string, { label: string; icon: IconName; tone: GtdTone }> = {
+  inbox: { label: "Ирсэн", icon: "inbox", tone: "idle" },
+  next: { label: "Дараагийн алхам", icon: "arrow-right", tone: "idle" },
+  progress: { label: "Хийж байна", icon: "play", tone: "running" },
+  waiting: { label: "Хүлээж байна", icon: "hourglass", tone: "needs-you" },
+  completed: { label: "Дууссан", icon: "circle-check", tone: "done" },
+  cancelled: { label: "Цуцалсан", icon: "x", tone: "idle" },
+};
+export function gtdOf(status: string | undefined) {
+  const v = String(status ?? "").toLowerCase().replace(/[\s_]+/g, "-");
+  if (["completed", "complete", "done", "finished"].includes(v)) return GTD.completed;
+  if (["cancelled", "canceled", "dropped"].includes(v)) return GTD.cancelled;
+  if (["waiting", "waiting-on", "blocked", "on-hold"].includes(v)) return GTD.waiting;
+  if (["in-progress", "active", "doing", "running", "ongoing"].includes(v)) return GTD.progress;
+  if (["next-action", "next", "planning", "todo"].includes(v)) return GTD.next;
+  return GTD.inbox;
+}
+
+/** «3 хоногийн дараа», «2 хоног хэтэрсэн»; error tone when overdue, needs-you within 7 days. */
+function Due({ due, today }: { due?: string; today: Date }) {
+  const t = parseDay(due);
+  if (t == null) return null;
+  const days = Math.round((t - new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime()) / 86_400_000);
+  const text = days < 0 ? `${-days} хоног хэтэрсэн` : days === 0 ? "өнөөдөр" : days === 1 ? "маргааш" : `${days} хоногийн дараа`;
+  const tone = days < 0 ? " is-over" : days <= 7 ? " is-soon" : "";
+  return (
+    <time className={`cl-date cv-due${tone}`} dateTime={due!.slice(0, 10)} title={due!.slice(0, 10)}>
+      <Icon name={days < 0 ? "clock" : "calendar"} size={14} />
+      {text}
+    </time>
+  );
+}
+
+function TaskRow({ c, t, today }: { c: Company; t: CompanyTask; today: Date }) {
+  const g = gtdOf(t.status);
+  const closed = g === GTD.completed || g === GTD.cancelled;
+  const owner = t.ownerId ? actorOf(c, t.ownerId) : null;
+  return (
+    <li className={`cv-trow${closed ? " is-closed" : ""}`}>
+      {/* keyed by state: a change replays the pill's entrance */}
+      <span key={g.label} className={`cl-pill cv-gtd is-${g.tone}`} title={g.label}>
+        <Icon name={g.icon} size={14} />
+        <span className="cv-gtd-l">{g.label}</span>
+      </span>
+      <span className="cv-trow-t">{t.title}</span>
+      <span className="cv-trow-meta">
+        {!closed && <PriorityBadge value={t.priority} />}
+        {!closed && <Due due={t.due} today={today} />}
+        {owner && (
+          <span className="cl-rel cv-trow-owner" title={owner.name}>
+            <Avatar actor={owner} size={16} />
+            <span>{owner.name}</span>
+          </span>
+        )}
+      </span>
+    </li>
+  );
+}
+
+function BmcView({ c, scoped, hideEmpty = false, today = new Date() }: { c: Company; scoped: Company; hideEmpty?: boolean; today?: Date }) {
   const notes = scoped.notes ?? [];
   return (
     <div className="cv-method">
@@ -99,25 +164,25 @@ function BmcView({ c, scoped, hideEmpty = false }: { c: Company; scoped: Company
                     <span className="cv-plist-top">
                       <i className={`cv-dot is-${toPhaseState(p.status)}`} aria-hidden="true" />
                       <strong>{p.name}</strong>
-                      <span className="cv-plist-n">
-                        {done}/{p.tasks.length}
-                      </span>
+                      {p.tasks.length > 0 && <ProgressNM value={`${done}/${p.tasks.length}`} />}
                     </span>
-                    {p.tasks.length > 0 && (
+                    {p.tasks.length > 0 ? (
                       <ul className="cv-tlist">
                         {p.tasks.map((t) => (
-                          <li key={t.id} className={`is-${toPhaseState(t.status)}`}>
-                            {t.title}
-                          </li>
+                          <TaskRow key={t.id} c={c} t={t} today={today} />
                         ))}
                       </ul>
+                    ) : (
+                      <p className="cv-tnone">
+                        <Icon name="square-check" size={14} /> Даалгавар алга
+                      </p>
                     )}
                   </li>
                 );
               })}
             </ul>
           ) : (
-            <p className="cv-none">Төсөл алга.</p>
+            <Empty text="Төсөл алга." icon="folder" />
           )}
         </section>
         <section className="cv-below-col" aria-label="Нот">
@@ -134,7 +199,7 @@ function BmcView({ c, scoped, hideEmpty = false }: { c: Company; scoped: Company
               ))}
             </ul>
           ) : (
-            <p className="cv-none">Нот алга.</p>
+            <Empty text="Нот алга." icon="file-text" />
           )}
         </section>
       </div>
@@ -410,7 +475,7 @@ export function MethodologyView({
         <Canvas c={c} blocks={LEAN} label="Лийн канвас" hideEmpty={hideEmpty} />
       </div>
     );
-  return <BmcView c={c} scoped={scoped} hideEmpty={hideEmpty} />;
+  return <BmcView c={c} scoped={scoped} hideEmpty={hideEmpty} today={today} />;
 }
 
 export const methodologyCss = `
@@ -433,11 +498,33 @@ export const methodologyCss = `
 .cv-plist,.cv-notes{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
 .cv-plist-top{display:flex;align-items:center;gap:8px}
 .cv-plist-top strong{flex:1;min-width:0;font-weight:600}
-.cv-plist-n{font-size:12px;color:var(--cv-muted);font-variant-numeric:tabular-nums}
-.cv-tlist{margin:4px 0 0 15px;padding:0 0 0 12px;border-left:1.5px solid var(--cv-line);list-style:none;font-size:13px;color:var(--cv-muted)}
-.cv-tlist li{padding:2px 0}
-.cv-tlist li.is-done{text-decoration:line-through;text-decoration-color:var(--cv-faint)}
-.cv-tlist li.is-active{color:var(--cv-fg)}
+.cv-tlist{container-type:inline-size;display:flex;flex-direction:column;gap:2px;margin:6px 0 0 15px;padding:0 0 0 12px;border-left:1.5px solid var(--cv-line);list-style:none;font-size:13px}
+/* task row: GTD pill · title · priority, due, owner (the Collection row parts) */
+.cv-trow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:4px 8px;min-height:30px;padding:3px 0;color:var(--cv-fg)}
+.cv-trow-t{min-width:0}
+.cv-trow-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px}
+.cv-trow.is-closed .cv-trow-t{color:var(--cv-muted)}
+.cv-trow-owner{max-width:160px}.cv-trow-owner>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cv-gtd{flex:none;animation:cv-gtd-in var(--ts-motion-dur-base,.32s) var(--ts-motion-ease-spring,cubic-bezier(.34,1.56,.64,1)) both}
+.cv-gtd.is-idle{background:var(--ts-status-idle-bg,#f0eee8);color:var(--ts-status-idle-fg,#45433f)}
+.cv-gtd.is-running{background:var(--ts-status-running-bg,#e6f0fd);color:var(--ts-status-running-fg,#1d5fb8)}
+.cv-gtd.is-needs-you{background:var(--ts-status-needs-you-bg,#fdf0e1);color:var(--ts-status-needs-you-fg,#a33e0b)}
+.cv-gtd.is-done{background:var(--ts-status-done-bg,#e5f4ea);color:var(--ts-status-done-fg,#1d6b3a)}
+:where(.dark,[data-theme=dark]) .cv-gtd.is-idle{background:var(--ts-status-idle-bg,#34332f);color:var(--ts-status-idle-fg,#d3d0c8)}
+:where(.dark,[data-theme=dark]) .cv-gtd.is-running{background:var(--ts-status-running-bg,#1d2b40);color:var(--ts-status-running-fg,#93c5fd)}
+:where(.dark,[data-theme=dark]) .cv-gtd.is-needs-you{background:var(--ts-status-needs-you-bg,#3a2717);color:var(--ts-status-needs-you-fg,#f0a46a)}
+:where(.dark,[data-theme=dark]) .cv-gtd.is-done{background:var(--ts-status-done-bg,#173a25);color:var(--ts-status-done-fg,#86d6a0)}
+@keyframes cv-gtd-in{from{opacity:0;transform:scale(.88)}}
+.cv-due.is-soon{color:var(--ts-status-needs-you-fg,#a33e0b)}
+.cv-due.is-over{color:var(--ts-status-error-fg,#b42318)}
+:where(.dark,[data-theme=dark]) .cv-due.is-soon{color:var(--ts-status-needs-you-fg,#f0a46a)}
+:where(.dark,[data-theme=dark]) .cv-due.is-over{color:var(--ts-status-error-fg,#f47b7f)}
+.cv-tnone{display:flex;align-items:center;gap:6px;margin:6px 0 0 27px;color:var(--cv-muted);font-size:13px}
+/* narrow column or phone: meta goes under the title */
+@container (max-width:520px){.cv-trow{grid-template-columns:auto minmax(0,1fr)}.cv-trow-meta{grid-column:2;justify-content:flex-start}}
+/* phone: the pill keeps its icon and colour, its word stays for screen readers; meta takes the full width */
+@container (max-width:420px){.cv-gtd{padding-inline:5px}.cv-gtd-l{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.cv-trow-meta{grid-column:1/-1;padding-left:30px}}
+@media (prefers-reduced-motion:reduce){.cv-gtd{animation:none}}
 .cv-notes li{display:flex;flex-direction:column;padding:8px 10px;border-radius:8px;background:var(--cv-soft)}
 .cv-note-title{font-size:13.5px}
 .cv-note-meta{font-size:12px;color:var(--cv-muted)}
