@@ -29,6 +29,7 @@
   --ts-faint: #8f8a80;
   --ts-accent: #1b5cff;
   --ts-accent-soft: #e3e9fb;
+  --ts-accent-fg: #1b5cff;
   --ts-link: #1b5cff;
   --ts-seg-on: #f7f5ee;
   --ts-code: #ebe7dd;
@@ -85,6 +86,8 @@
   --ts-faint: #6e6a62;
   --ts-accent: #3a4e8c;
   --ts-accent-soft: #1b2133;
+  /* indigo is ~2.3:1 on the dark surface: text in the accent uses this lighter indigo (≥ 7:1) */
+  --ts-accent-fg: #aebbda;
   --ts-seg-on: #2c2c31;
   --ts-code: #0e0e10;
   --ts-green: #4ade80;
