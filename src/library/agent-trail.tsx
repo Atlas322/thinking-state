@@ -11,6 +11,10 @@ export type TrailSubstep = {
   title: string;
   state?: "done" | "running" | "pending";
   detail?: string;
+  /** A small coloured inline tag before the detail («Баримт», «Хувийн»). */
+  tag?: string;
+  /** Category colour of the tag (1–4, the --ts-cat palette). */
+  tagTone?: 1 | 2 | 3 | 4;
 };
 
 export type TrailStep = {
@@ -213,6 +217,7 @@ export function AgentTrail({
                       <li key={sub.id ?? j} className={`atr-sub atr-sub-${sub.state ?? "done"}`}>
                         <span className="atr-dot" />
                         <span className="atr-sub-t">{sub.title}</span>
+                        {sub.tag && <span className={`atr-tag is-c${sub.tagTone ?? 1}`}>{sub.tag}</span>}
                         {sub.detail && <span className="atr-sub-d">{sub.detail}</span>}
                       </li>
                     ))}
@@ -260,6 +265,17 @@ const css = `
 .atr-sub-pending .atr-dot{background:none;border:1px solid var(--atr-faint)}
 .atr-sub-t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .atr-sub-d{font-size:11.5px;color:var(--atr-faint);font-variant-numeric:tabular-nums;max-width:45%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.atr-tag{flex:none;padding:0 6px;border-radius:4px;font-size:11.5px;line-height:18px;font-weight:500}
+.atr-tag.is-c1{background:var(--ts-cat-1-bg,#fdf3c8);color:var(--ts-cat-1-fg,#7a5600)}
+.atr-tag.is-c2{background:var(--ts-cat-2-bg,#e3eefd);color:var(--ts-cat-2-fg,#1d5fb8)}
+.atr-tag.is-c3{background:var(--ts-cat-3-bg,#e1f3e6);color:var(--ts-cat-3-fg,#1d6b3a)}
+.atr-tag.is-c4{background:var(--ts-cat-4-bg,#efe7fd);color:var(--ts-cat-4-fg,#5b35b5)}
+:where(.dark,[data-theme=dark]) .atr-tag.is-c1{background:#3a2f0e;color:#f5c84b}
+:where(.dark,[data-theme=dark]) .atr-tag.is-c2{background:#1d2b40;color:#93c5fd}
+:where(.dark,[data-theme=dark]) .atr-tag.is-c3{background:#173a25;color:#86d6a0}
+:where(.dark,[data-theme=dark]) .atr-tag.is-c4{background:#2c2347;color:#c4b5fd}
+.atr-sub{animation:atr-sub-in var(--ts-motion-spring-settle-duration,.5s) var(--ts-motion-spring-settle,cubic-bezier(.34,1.56,.64,1)) both}
+@keyframes atr-sub-in{from{opacity:0;transform:translateY(4px)}}
 .atr-empty{margin:4px 0;color:var(--atr-muted);font-size:13px}
 .atr :focus-visible{outline:2px solid var(--atr-accent);outline-offset:2px;border-radius:4px}
 @keyframes atr-spin{to{transform:rotate(360deg)}}
