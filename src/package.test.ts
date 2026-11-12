@@ -58,8 +58,10 @@ describe("@inai/thinking-state package", () => {
       expect(css).toContain(need);
     for (const v of ["--ts-page: #0b0b0c;", "--ts-surface: #17171a;", "--ts-line: #26262a;", "--ts-electric: #4d7fff;", "--ts-electric-soft: #16224a;", "--ts-fg: #edebe6;"])
       expect(css).toContain(v);
-    expect(css).toContain('--ts-font-display: "Spectral"'); // cream headings
-    expect(css).toContain('--ts-font-display: "Inter"'); // dark headings
+    expect(css).not.toContain("Spectral"); // one heading font on both themes (owner 11-12)
+    expect(css).toContain('--ts-font-head: "Inter"');
+    expect(css.match(/--ts-font-display: var\(--ts-font-head\);/g)).toHaveLength(2);
+    for (const c of ["#f5a524", "#0c8ce9", "#22c55e", "#a855f7"]) expect(css.match(new RegExp(`--ts-cat-\\d: ${c};`, "g"))).toHaveLength(2); // vivid on both
     expect(css).not.toMatch(/Alegreya|Onest|#17130f/i); // Theme А withdrawn
   });
 });
