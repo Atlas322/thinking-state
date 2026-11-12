@@ -189,9 +189,10 @@ export function DelegateBoard({
           <div className="dlb-pool-h">
             Хуваарилаагүй <span className="dlb-n">{unassigned.length}</span>
           </div>
-          {unassigned.map((t) => (
+          {unassigned.map((t, i) => (
             <div
               key={t.id}
+              style={{ ["--dlb-i" as string]: i }}
               className={`dlb-task${suggestion?.taskId === t.id ? " is-suggested" : ""}${picking?.task === t.id ? " is-picking" : ""}`}
               draggable
               tabIndex={0}
@@ -317,7 +318,7 @@ const css = `
 .dlb-pool.is-over{box-shadow:inset 0 0 0 1.5px var(--dlb-blue)}
 .dlb-pool-h{display:flex;align-items:center;gap:6px;padding:0 6px 8px;font-size:13px;color:var(--dlb-muted)}
 .dlb-n{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border:1px solid var(--dlb-line);border-radius:5px;background:var(--dlb-bg);font-size:11px;color:var(--dlb-fg)}
-.dlb-task{display:flex;gap:8px;padding:9px 10px;margin-bottom:6px;border-radius:7px;background:var(--dlb-bg);box-shadow:0 1px 2px #0000000f,0 0 0 1px #0000000a;cursor:grab;animation:dlb-in .25s both;outline:none}
+.dlb-task{display:flex;gap:8px;padding:9px 10px;margin-bottom:6px;border-radius:7px;background:var(--dlb-bg);box-shadow:0 1px 2px #0000000f,0 0 0 1px #0000000a;cursor:grab;animation:dlb-in .5s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both;animation-delay:calc(var(--dlb-i,0)*130ms);outline:none}
 .dlb-task:focus-visible,.dlb-task.is-picking{box-shadow:0 0 0 2px var(--dlb-blue)}
 .dlb-task.is-suggested{box-shadow:0 0 0 1.5px var(--dlb-blue)}
 .dlb-grip{width:8px;padding-top:4px;color:var(--dlb-faint)}.dlb-grip svg{width:6px;height:10px}
@@ -342,7 +343,7 @@ const css = `
 .dlb-chip.is-more{color:var(--dlb-muted);cursor:default}
 .dlb-ring{width:10px;height:10px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--dlb-blue) 30%,transparent);border-top-color:var(--dlb-blue);animation:dlb-rot .9s linear infinite}
 .dlb-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-@keyframes dlb-in{from{opacity:0;transform:translateY(3px)}}
+@keyframes dlb-in{from{opacity:0;transform:translateY(10px) scale(.985)}}
 @keyframes dlb-rot{to{transform:rotate(360deg)}}
 @media(max-width:620px){.dlb-body{grid-template-columns:minmax(0,1fr)}.dlb-pool{min-height:0}.dlb-hint{display:none}}
 @media(prefers-reduced-motion:reduce){.dlb *{animation:none!important;transition:none!important}}

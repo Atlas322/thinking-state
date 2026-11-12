@@ -324,6 +324,7 @@ const css = `
 @keyframes ackc-shim{to{background-position:-200% 0}}
 @media(max-width:480px){.ackc-task,.ackc-files{display:none}}
 @media(prefers-reduced-motion:reduce){.ackc *{animation:none!important;transition:none!important}}
+.ackc-row{animation-duration:.5s;animation-timing-function:var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1))}.ackc-row:nth-child(1){animation-delay:0ms}.ackc-row:nth-child(2){animation-delay:110ms}.ackc-row:nth-child(3){animation-delay:220ms}.ackc-row:nth-child(4){animation-delay:330ms}.ackc-row:nth-child(5){animation-delay:440ms}.ackc-row:nth-child(6){animation-delay:550ms}.ackc-row:nth-child(7){animation-delay:660ms}.ackc-row:nth-child(8){animation-delay:770ms}.ackc-row:nth-child(9){animation-delay:880ms}.ackc-row:nth-child(10){animation-delay:990ms}.ackc-row:nth-child(11){animation-delay:1100ms}.ackc-row:nth-child(12){animation-delay:1210ms}
 `;
 
 export default AgentCheckpoints;

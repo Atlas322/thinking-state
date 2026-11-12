@@ -1111,4 +1111,5 @@ const css = `
 @keyframes xcSpin{to{transform:rotate(360deg)}}
 .xc-static .xc *,.xc-static .xc{animation:none!important}
 @media (prefers-reduced-motion:reduce){.xc *{animation:none!important}}
+.xc-points li:nth-child(1){animation-delay:200ms}.xc-points li:nth-child(2){animation-delay:360ms}.xc-points li:nth-child(3){animation-delay:520ms}.xc-points li:nth-child(4){animation-delay:680ms}.xc-points li:nth-child(5){animation-delay:840ms}.xc-points li:nth-child(6){animation-delay:1000ms}.xc-points li:nth-child(7){animation-delay:1160ms}.xc-points li:nth-child(8){animation-delay:1320ms}.xc-stack-row:nth-child(1){animation-delay:300ms}.xc-stack-row:nth-child(2){animation-delay:440ms}.xc-stack-row:nth-child(3){animation-delay:580ms}.xc-stack-row:nth-child(4){animation-delay:720ms}.xc-stack-row:nth-child(5){animation-delay:860ms}.xc-stack-row:nth-child(6){animation-delay:1000ms}.xc-stack-row:nth-child(7){animation-delay:1140ms}.xc-stack-row:nth-child(8){animation-delay:1280ms}
 `;

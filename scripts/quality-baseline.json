@@ -1,25 +1,5 @@
 {
-  "motion": [
-    "change-summary",
-    "kpi-chart",
-    "permission-request",
-    "project-card",
-    "review-center",
-    "root-cause-tree",
-    "running-now",
-    "scheduled-runs",
-    "motion-foundation",
-    "pr-deploy-status",
-    "decision-inbox-chat",
-    "tool-access-map",
-    "tool-call-card",
-    "usage-meter",
-    "writing-assistant",
-    "folder-float",
-    "swipe-row",
-    "explainer-carousel",
-    "company-mini"
-  ],
+  "motion": [],
   "icons": {
     "agent-checkpoints": 2,
     "agent-cursors": 2,

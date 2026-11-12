@@ -210,6 +210,7 @@ const css = `
 @keyframes kpc-in{from{opacity:0}}
 @media(max-width:360px){.kpc-body{padding:14px 12px 10px}.kpc-tip{min-width:130px}}
 @media(prefers-reduced-motion:reduce){.kpc *{animation:none!important;transition:none!important}}
+.kpc-line{animation:kpc-in .8s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.kpc-line:nth-of-type(2){animation-delay:.2s}.kpc-line:nth-of-type(3){animation-delay:.4s}@keyframes kpc-in{from{opacity:0;transform:translateY(6px)}}@media(prefers-reduced-motion:reduce){.kpc-line{animation:none}}
 `;
 
 export default KPIChart;
