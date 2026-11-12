@@ -7,6 +7,6 @@ export { LOOPS, LOOP_NOTES, motionCss } from "./loops";
 export type { LoopName } from "./loops";
 export { MotionContext, MotionProvider, useInViewLoop, useMotion, usePrefersReducedMotion } from "./use-in-view-loop";
 export type { InViewLoop, InViewLoopOptions, LoopState } from "./use-in-view-loop";
-export { LoopRegion, MotionStyles, Replay, replayLabelsMn } from "./replay";
-export type { LoopRegionProps, ReplayLabels, ReplayProps } from "./replay";
+export { LoopRegion, MotionControls, MotionStyles, motionControlLabelsMn } from "./controls";
+export type { LoopRegionProps, MotionControlLabels, MotionControlsProps } from "./controls";
 export { animateSpring, prefersReducedMotion } from "./animate";
