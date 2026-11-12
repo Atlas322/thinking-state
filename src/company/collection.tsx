@@ -1,6 +1,8 @@
 import * as React from "react";
+import { createPortal } from "react-dom";
 import type { Collection, CollectionItem, CollectionValue, FieldKind } from "./types";
 import {
+  FIELD_ICON,
   Icon,
   PRIORITY,
   STATUS,
@@ -20,7 +22,9 @@ import {
  * from values when only names are given). Views: table, board, calendar,
  * timeline, list. Status saved-view tabs (Inbox · Идэвхтэй · Хүлээгдэж буй ·
  * Дууссан · Архив) with icons and counts; tasks also get This month /
- * Recent / Weekly calendar presets.
+ * Recent / Weekly calendar presets. Any row opens a side peek: type icon,
+ * title, status, the main properties (empty ones hidden, «n more»), and the
+ * items of other collections that point at it.
  */
 
 export type ResolvedField = { name: string; kind: FieldKind; label: string };
@@ -127,6 +131,22 @@ const fmtDay = (t: number) => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 };
 
+const PERSON_NAMES = ["owner", "assignee", "person", "people", "manager", "author"];
+export const fieldIcon = (f: { name: string; kind: FieldKind }): IconName =>
+  f.kind === "relation" && PERSON_NAMES.includes(f.name.toLowerCase()) ? "user" : FIELD_ICON[f.kind] ?? "type";
+
+/** "2026-05-17" + "2026-06-10" → "5/17 → 6/10" (year shown when they differ from today's). */
+export function rangeText(a: CollectionValue | undefined, b: CollectionValue | undefined, today: Date) {
+  const s = parseDay(a);
+  const e = parseDay(b);
+  if (s == null || e == null || s === e) return null;
+  const f = (t: number) => {
+    const d = new Date(t);
+    return `${d.getFullYear() !== today.getFullYear() ? `${d.getFullYear()}.` : ""}${d.getMonth() + 1}/${d.getDate()}`;
+  };
+  return `${f(s)} → ${f(e)}`;
+}
+
 /* ───────── row parts ───────── */
 
 export function StatusPill({ value }: { value: CollectionValue | undefined }) {
@@ -173,11 +193,15 @@ export function ProgressNM({ value }: { value: CollectionValue | undefined }) {
   const m = typeof value === "string" ? value.match(/^(\d+)\s*\/\s*(\d+)$/) : null;
   if (!m) return null;
   const [done, total] = [Number(m[1]), Number(m[2])];
+  const pct = total ? Math.min(1, done / total) : 0;
+  const C = 2 * Math.PI * 5.5;
   return (
-    <span className="cl-nm" title={`${done}/${total} task дууссан`}>
-      <span className="cl-nm-bar" aria-hidden="true">
-        <span style={{ width: `${total ? (done / total) * 100 : 0}%` }} />
-      </span>
+    <span className={`cl-nm${pct >= 1 ? " is-full" : ""}`} title={`${done}/${total} task дууссан`}>
+      <svg className="cl-ring" viewBox="0 0 14 14" width="14" height="14" aria-hidden="true">
+        <circle cx="7" cy="7" r="5.5" className="cl-ring-bg" />
+        {pct > 0 && pct < 1 && <circle cx="7" cy="7" r="5.5" className="cl-ring-arc" strokeDasharray={`${pct * C} ${C}`} transform="rotate(-90 7 7)" />}
+        {pct >= 1 && <circle cx="7" cy="7" r="6" className="cl-ring-full" />}
+      </svg>
       {done}/{total}
     </span>
   );
@@ -211,11 +235,13 @@ export type CollectionViewProps = {
   /** Turns a relation value into a label, icon and optional scope change. */
   resolve?: (field: string, value: string) => Relation | null;
   defaultView?: CollectionViewKind;
+  /** Other collections of the same company; the side peek lists their items that point at a row. */
+  siblings?: Collection[];
 };
 
 type Preset = { id: string; label: string; icon: IconName; view: CollectionViewKind; range?: "month" | "recent"; calendar?: "week" | "month" };
 
-export function CollectionView({ collection, today = new Date(), resolve, defaultView }: CollectionViewProps) {
+export function CollectionView({ collection, today = new Date(), resolve, defaultView, siblings = [] }: CollectionViewProps) {
   const fields = React.useMemo(() => resolveFields(collection), [collection]);
   const status = fields.find((f) => f.kind === "status");
   const priority = fields.find((f) => f.kind === "priority");
@@ -225,7 +251,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
   const startField = dates.find((f) => f.name.toLowerCase() === "start");
   const endField = dates.find((f) => ["end", "due", "deadline"].includes(f.name.toLowerCase()));
   const relations = fields.filter((f) => f.kind === "relation");
-  const groupable = fields.filter((f) => ["status", "priority", "select", "relation", "checkbox", "multi"].includes(f.kind));
+  const groupable = fields.filter((f) => ["status", "priority", "select", "relation", "checkbox", "multi", "date"].includes(f.kind));
 
   const presets: Preset[] =
     collection.type === "task" && dateField
@@ -248,6 +274,9 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
   const [cursor, setCursor] = React.useState(() => dayStart(today));
   const [moreTabs, setMoreTabs] = React.useState(false);
   const [folded, setFolded] = React.useState<Record<string, boolean>>({});
+  const [scale, setScale] = React.useState<"month" | "year">("month");
+  const [peek, setPeek] = React.useState<string | null>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
 
   const isDone = (i: CollectionItem) => {
     const g = status ? statusGroup(i.props[status.name]) : null;
@@ -346,16 +375,35 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
   const title = (i: CollectionItem) => (
     <span className="cl-title">
       <Icon name={itemIcon(i)} size={16} className={collection.type === "task" && isDone(i) ? "is-done" : ""} />
-      <span className="cl-title-t" title={i.path}>
+      <button type="button" className="cl-title-t" title={i.path ?? i.title} onClick={() => setPeek(i.id)}>
         {i.title}
-      </span>
+      </button>
+      <button type="button" className="cl-open" onClick={() => setPeek(i.id)} aria-label={`${i.title} — нээх`} tabIndex={-1}>
+        <Icon name="panel-right" size={14} />
+        Нээх
+      </button>
     </span>
   );
+  const dateOf = (i: CollectionItem) => {
+    const range = startField && endField ? rangeText(i.props[startField.name], i.props[endField.name], today) : null;
+    if (range)
+      return (
+        <span className={`cl-date${overdueOf(i) ? " is-overdue" : ""}`}>
+          <Icon name="calendar" size={14} />
+          {range}
+        </span>
+      );
+    return dateField ? <RelDate value={i.props[(endField ?? dateField).name] ?? i.props[dateField.name]} today={today} overdue={overdueOf(i)} /> : null;
+  };
 
   // grouping (table, list) and board columns
   const groupKey = (i: CollectionItem, f: ResolvedField) => {
     if (f.kind === "status") return statusGroup(i.props[f.name]) ?? "";
     if (f.kind === "priority") return priorityOf(i.props[f.name]) ?? "";
+    if (f.kind === "date") {
+      const t = parseDay(i.props[f.name]);
+      return t == null ? "" : fmtDay(t).slice(0, 7);
+    }
     const list = asList(i.props[f.name]);
     return list[0] ?? "";
   };
@@ -364,6 +412,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
     if (f.kind === "status") return STATUS[key as StatusGroup]?.label ?? key;
     if (f.kind === "priority") return PRIORITY[key as keyof typeof PRIORITY]?.label ?? key;
     if (f.kind === "relation") return resolve?.(f.name, key)?.label ?? linkLabel(key);
+    if (f.kind === "date") return `${key.slice(0, 4)} оны ${Number(key.slice(5, 7))}-р сар`;
     return key;
   };
   const groupsOf = (f: ResolvedField, list: CollectionItem[]) => {
@@ -374,12 +423,22 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
     }
     if (f.kind === "status") keys.sort((a, b) => STATUS_ORDER.indexOf(a as StatusGroup) - STATUS_ORDER.indexOf(b as StatusGroup));
     if (f.kind === "priority") keys.sort((a, b) => ["high", "medium", "low", ""].indexOf(a) - ["high", "medium", "low", ""].indexOf(b));
+    if (f.kind === "date") keys.sort((a, b) => (!a ? 1 : !b ? -1 : a.localeCompare(b)));
     return keys.map((k) => ({ key: k, items: list.filter((i) => groupKey(i, f) === k) }));
   };
   const groupHead = (f: ResolvedField, key: string, n: number, id: string) => (
     <button type="button" className="cl-group-h" aria-expanded={!folded[id]} onClick={() => setFolded((s) => ({ ...s, [id]: !s[id] }))}>
       <Icon name="chevron-right" size={14} className="cl-chev" />
-      {f.kind === "status" && key ? <StatusPill value={key} /> : f.kind === "priority" && key ? <PriorityBadge value={key} /> : <span className="cl-group-t">{groupLabel(f, key)}</span>}
+      {f.kind === "status" && key ? (
+        <StatusPill value={key} />
+      ) : f.kind === "priority" && key ? (
+        <PriorityBadge value={key} />
+      ) : (
+        <span className="cl-group-t">
+          <Icon name={fieldIcon(f)} size={14} />
+          {groupLabel(f, key)}
+        </span>
+      )}
       <span className="cl-count">{n}</span>
     </button>
   );
@@ -390,10 +449,12 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
       <table className="cl-table">
         <thead>
           <tr>
-            <th scope="col">Нэр</th>
+            <th scope="col">
+              <Icon name="type" size={14} /> Нэр
+            </th>
             {shown.map((f) => (
               <th key={f.name} scope="col">
-                {f.label}
+                <Icon name={fieldIcon(f)} size={14} /> {f.label}
               </th>
             ))}
           </tr>
@@ -408,6 +469,13 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={shown.length + 1}>
+              <span className="cl-foot">Тоо</span> {list.length}
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );
@@ -421,7 +489,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
         ))}
         {priority && <PriorityBadge value={i.props[priority.name]} />}
         {progress && <ProgressNM value={i.props[progress.name]} />}
-        {dateField && <RelDate value={i.props[(endField ?? dateField).name] ?? i.props[dateField.name]} today={today} overdue={overdueOf(i)} />}
+        {dateOf(i)}
       </span>
     </li>
   );
@@ -451,7 +519,12 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
     return (
       <div className="cl-board" role="list">
         {groupsOf(f, items).map((g) => (
-          <section key={g.key} className="cl-col" role="listitem" aria-label={groupLabel(f, g.key)}>
+          <section
+            key={g.key}
+            className={`cl-col${f.kind === "status" && g.key ? ` is-${STATUS[g.key as StatusGroup]?.tone ?? "gray"}` : ""}`}
+            role="listitem"
+            aria-label={groupLabel(f, g.key)}
+          >
             <header className="cl-col-h">
               {f.kind === "status" && g.key ? <StatusPill value={g.key} /> : <span className="cl-group-t">{groupLabel(f, g.key)}</span>}
               <span className="cl-count">{g.items.length}</span>
@@ -468,7 +541,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
                   <span className="cl-row-meta">
                     {priority && <PriorityBadge value={i.props[priority.name]} />}
                     {progress && <ProgressNM value={i.props[progress.name]} />}
-                    {dateField && <RelDate value={i.props[(endField ?? dateField).name] ?? i.props[dateField.name]} today={today} overdue={overdueOf(i)} />}
+                    {dateOf(i)}
                   </span>
                 </li>
               ))}
@@ -479,6 +552,7 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
     );
   };
 
+  const undated = dateField ? items.filter((i) => parseDay(i.props[(startField ?? dateField).name]) == null && (!endField || parseDay(i.props[endField.name]) == null)).length : 0;
   const calendar = () => {
     if (!dateField) return <Empty text="Огнооны талбар алга." icon="calendar" />;
     const c = new Date(cursor);
@@ -515,6 +589,12 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           <button type="button" className="cl-today" onClick={() => setCursor(dayStart(today))}>
             Өнөөдөр
           </button>
+          {undated > 0 && (
+            <span className="cl-undated">
+              <Icon name="calendar-x" size={14} />
+              Огноогүй ({undated})
+            </span>
+          )}
           <span className="cl-seg" role="radiogroup" aria-label="Хуанлийн хүрээ">
             {(["month", "week"] as const).map((m) => (
               <button key={m} type="button" role="radio" aria-checked={calMode === m} data-active={calMode === m || undefined} onClick={() => setCalMode(m)}>
@@ -567,17 +647,42 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
     const span = Math.max(DAY, hi - lo);
     const pct = (t: number) => ((t - lo) / span) * 100;
     const months: { at: number; label: string }[] = [];
+    // Short spans get weekly ticks (Mondays, M/D); longer ones months or quarters.
+    if (scale === "month" && span < 62 * DAY) {
+      const w = new Date(lo);
+      w.setDate(w.getDate() + ((8 - w.getDay()) % 7 || 7));
+      for (let g = 0; w.getTime() < hi && g < 12; g++) {
+        months.push({ at: pct(dayStart(w)), label: `${w.getMonth() + 1}/${w.getDate()}` });
+        w.setDate(w.getDate() + 7);
+      }
+    }
     const d = new Date(lo);
     d.setDate(1);
-    d.setMonth(d.getMonth() + 1);
-    for (let g = 0; d.getTime() < hi && g < 36; g++) {
+    d.setMonth(d.getMonth() + (scale === "year" ? 3 - (d.getMonth() % 3) : 1));
+    for (let g = 0; !(scale === "month" && span < 62 * DAY) && d.getTime() < hi && g < 48; g++) {
       const m = String(d.getMonth() + 1).padStart(2, "0");
-      months.push({ at: pct(d.getTime()), label: d.getMonth() === 0 || !months.length ? `${d.getFullYear()}.${m}` : m });
-      d.setMonth(d.getMonth() + 1);
+      const label = scale === "year" ? (d.getMonth() === 0 ? String(d.getFullYear()) : `${d.getMonth() / 3 + 1}-р улирал`) : d.getMonth() === 0 || !months.length ? `${d.getFullYear()}.${m}` : m;
+      months.push({ at: pct(d.getTime()), label });
+      d.setMonth(d.getMonth() + (scale === "year" ? 3 : 1));
     }
     const now = dayStart(today);
     return (
       <div className="cl-tl">
+        <div className="cl-tl-bar-top">
+          {undated > 0 && (
+            <span className="cl-undated">
+              <Icon name="calendar-x" size={14} />
+              Огноогүй ({undated})
+            </span>
+          )}
+          <span className="cl-seg" role="radiogroup" aria-label="Масштаб">
+            {(["month", "year"] as const).map((m) => (
+              <button key={m} type="button" role="radio" aria-checked={scale === m} data-active={scale === m || undefined} onClick={() => setScale(m)}>
+                {m === "month" ? "Сар" : "Жил"}
+              </button>
+            ))}
+          </span>
+        </div>
         <div className="cl-tl-scale" aria-hidden="true">
           {months.map((m) => (
             <span key={m.label + m.at} style={{ left: `${m.at}%` }}>
@@ -590,7 +695,6 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
             const g = status ? statusGroup(i.props[status.name]) : null;
             return (
               <li key={i.id} style={{ "--i": k } as React.CSSProperties}>
-                <span className="cl-tl-label">{title(i)}</span>
                 <span className="cl-tl-track">
                   {months.map((m) => (
                     <i key={m.label + m.at} className="cl-tl-grid" style={{ left: `${m.at}%` }} />
@@ -600,6 +704,10 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
                     style={{ left: `${pct(s)}%`, width: `${Math.max(1.2, pct(e) - pct(s))}%` }}
                     title={`${fmtDay(s)} → ${fmtDay(e)}`}
                   />
+                  <span className={`cl-tl-label${pct(s) > 55 ? " is-end" : ""}`} style={pct(s) > 55 ? { right: `${Math.max(0, 100 - pct(e))}%` } : { left: `${pct(s)}%` }}>
+                    {title(i)}
+                    {status && <StatusPill value={i.props[status.name]} />}
+                  </span>
                   {now >= lo && now <= hi && <i className="cl-tl-today" style={{ left: `${pct(now)}%` }} />}
                 </span>
               </li>
@@ -610,11 +718,12 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
     );
   };
 
+  const peekItem = collection.items.find((i) => i.id === peek) ?? null;
   const filterValues = filterField ? Array.from(new Set(collection.items.flatMap((i) => asList(i.props[filterField])))).sort() : [];
   const label = collection.label ?? typeLabel(collection.type);
 
   return (
-    <div className="cl" data-type={collection.type}>
+    <div className="cl" data-type={collection.type} ref={rootRef}>
       {status && groupsPresent.length > 0 && (
         <div className="cl-tabs" role="tablist" aria-label={`${label} — төлөв`}>
           <button type="button" role="tab" aria-selected={tab === "all"} onClick={() => setTab("all")}>
@@ -717,7 +826,24 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
       </div>
       <div className="cl-body" key={`${view}-${tab}-${preset}`}>
         {items.length === 0 ? (
-          <Empty text="Энэ харагдацад мөр алга." />
+          <div className="cl-empty">
+            <Empty text="Энэ харагдацад мөр алга." />
+            {(tab !== "all" || filterValue || preset) && (
+              <button
+                type="button"
+                className="cl-clear"
+                onClick={() => {
+                  setTab("all");
+                  setFilterField("");
+                  setFilterValue("");
+                  setPreset(null);
+                }}
+              >
+                <Icon name="filter" size={14} />
+                Шүүлт цэвэрлэх
+              </button>
+            )}
+          </div>
         ) : view === "table" ? (
           grouped(table)
         ) : view === "list" ? (
@@ -730,8 +856,171 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
           timeline()
         )}
       </div>
+      {peekItem && (
+        <Peek
+          item={peekItem}
+          collection={collection}
+          fields={fields}
+          cell={cell}
+          icon={itemIcon(peekItem)}
+          status={status}
+          siblings={siblings}
+          today={today}
+          onClose={() => setPeek(null)}
+          dark={!!rootRef.current?.closest(".dark,[data-theme=dark]")}
+        />
+      )}
     </div>
   );
+}
+
+/* ───────── side peek (entity page) ───────── */
+
+/** Items of other collections whose props point at `item` (by id, title or [[link]]). */
+export function relatedTo(item: CollectionItem, self: Collection, siblings: Collection[]) {
+  const keys = new Set([item.id, item.title, item.title.toLowerCase()]);
+  const hits = (v: CollectionValue | undefined) =>
+    asList(v).some((x) => keys.has(x) || keys.has(linkLabel(x)) || keys.has(linkLabel(x).toLowerCase()));
+  return siblings
+    .filter((c) => c !== self && c.type !== self.type)
+    .map((c) => ({ collection: c, items: c.items.filter((i) => Object.values(i.props).some(hits)) }))
+    .filter((g) => g.items.length > 0);
+}
+
+function Peek({
+  item,
+  collection,
+  fields,
+  cell,
+  icon,
+  status,
+  siblings,
+  today,
+  onClose,
+  dark,
+}: {
+  item: CollectionItem;
+  collection: Collection;
+  fields: ResolvedField[];
+  cell: (i: CollectionItem, f: ResolvedField) => React.ReactNode;
+  icon: IconName;
+  status?: ResolvedField;
+  siblings: Collection[];
+  today: Date;
+  onClose: () => void;
+  dark: boolean;
+}) {
+  const [more, setMore] = React.useState(false);
+  const related = relatedTo(item, collection, siblings);
+  const [tab, setTab] = React.useState(0);
+  const closeRef = React.useRef<HTMLButtonElement>(null);
+  React.useEffect(() => {
+    const back = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    const key = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", key);
+    return () => {
+      window.removeEventListener("keydown", key);
+      back?.focus?.();
+    };
+  }, [onClose]);
+  const filled = fields.filter((f) => f !== status && f.kind !== "relation" && !(item.props[f.name] == null || item.props[f.name] === "" || (Array.isArray(item.props[f.name]) && !(item.props[f.name] as string[]).length)));
+  const shownProps = more ? filled : filled.slice(0, 8);
+  const rels = fields.filter((f) => f.kind === "relation" && asList(item.props[f.name]).length);
+  const group = related[Math.min(tab, related.length - 1)];
+  const sheet = (
+    <div className="cv-sheet-wrap" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <section className="cv-sheet cl-peek" role="dialog" aria-modal="true" aria-labelledby="cl-peek-title">
+        <header className="cl-peek-head">
+          <span className="cl-peek-type">
+            <Icon name={typeIcon(collection.type)} size={14} />
+            {collection.label ?? typeLabel(collection.type)}
+          </span>
+          <button ref={closeRef} type="button" className="cv-sheet-close" onClick={onClose} aria-label="Хаах">
+            ×
+          </button>
+        </header>
+        <div className="cv-sheet-body">
+          <h3 id="cl-peek-title" className="cl-peek-title">
+            <Icon name={icon} size={20} />
+            {item.title}
+          </h3>
+          {status && <StatusPill value={item.props[status.name]} />}
+          {item.path && <code className="cl-peek-path">{item.path}</code>}
+          {filled.length > 0 && (
+            <dl className="cl-props">
+              {shownProps.map((f) => (
+                <div key={f.name}>
+                  <dt>
+                    <Icon name={fieldIcon(f)} size={14} />
+                    {f.label}
+                  </dt>
+                  <dd>{cell(item, f)}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          {filled.length > 8 && (
+            <button type="button" className="cl-more-props" onClick={() => setMore((m) => !m)} aria-expanded={more}>
+              <Icon name="chevron-right" size={14} className="cl-chev" />
+              {more ? "Цөөн харуулах" : `${filled.length - 8} more`}
+            </button>
+          )}
+          {rels.length > 0 && (
+            <section>
+              <h4>Холбоос</h4>
+              <dl className="cl-props">
+                {rels.map((f) => (
+                  <div key={f.name}>
+                    <dt>
+                      <Icon name={fieldIcon(f)} size={14} />
+                      {f.label}
+                    </dt>
+                    <dd>{cell(item, f)}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
+          <section>
+            <h4>Холбоотой</h4>
+            {related.length === 0 ? (
+              <p className="cv-none">Холбоотой мөр алга.</p>
+            ) : (
+              <>
+                <div className="cl-tabs" role="tablist" aria-label="Холбоотой төрөл">
+                  {related.map((g, k) => (
+                    <button key={g.collection.type} type="button" role="tab" aria-selected={group === g} onClick={() => setTab(k)}>
+                      <Icon name={typeIcon(g.collection.type)} size={14} />
+                      {g.collection.label ?? typeLabel(g.collection.type)} <span className="cl-count">{g.items.length}</span>
+                    </button>
+                  ))}
+                </div>
+                <ul className="cl-peek-list">
+                  {group.items.map((i) => {
+                    const st = Object.entries(i.props).find(([k]) => k.toLowerCase() === "status")?.[1];
+                    const dt = ["due", "date", "start", "end"].map((k) => i.props[k]).find((v) => parseDay(v) != null);
+                    return (
+                      <li key={i.id}>
+                        {st != null && <StatusPill value={st} />}
+                        <span className="cl-title">
+                          <Icon name={typeIcon(group.collection.type)} size={16} />
+                          <span className="cl-title-t">{i.title}</span>
+                        </span>
+                        <RelDate value={dt} today={today} />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            )}
+          </section>
+        </div>
+      </section>
+    </div>
+  );
+  if (typeof document === "undefined") return sheet;
+  return createPortal(<div className={`cv cv-layer${dark ? " dark" : ""}`}>{sheet}</div>, document.body);
 }
 
 export const collectionCss = `
@@ -773,9 +1062,12 @@ export const collectionCss = `
 .cl-rel .cv-icon{color:var(--cv-muted)}
 button.cl-rel:hover{background:var(--cv-soft);text-decoration-color:var(--cv-faint)}
 .cl-tag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:5px;background:var(--cv-soft);font-size:12px;white-space:nowrap}
-.cl-nm{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--cv-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.cl-nm-bar{position:relative;width:44px;height:5px;border-radius:3px;background:var(--cv-soft);overflow:hidden}
-.cl-nm-bar span{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--cv-green)}
+.cl-nm{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--cv-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cl-ring{flex:none}
+.cl-ring-bg{fill:none;stroke:var(--cv-line);stroke-width:2}
+.cl-ring-arc{fill:none;stroke:var(--cv-green);stroke-width:2;stroke-linecap:round}
+.cl-ring-full{fill:var(--cv-green)}
+.cl-nm.is-full{color:color-mix(in srgb,var(--cv-green) 78%,var(--cv-fg))}
 .cl-date{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--cv-muted);white-space:nowrap}
 .cl-date.is-overdue{color:color-mix(in srgb,var(--cv-red) 85%,var(--cv-fg));font-weight:500}
 .cl-url{display:inline-flex;align-items:center;gap:4px;color:var(--cv-accent);font-size:12.5px;text-decoration:none}
@@ -783,7 +1075,42 @@ button.cl-rel:hover{background:var(--cv-soft);text-decoration-color:var(--cv-fai
 .cl-title{display:inline-flex;align-items:center;gap:8px;min-width:0}
 .cl-title .cv-icon{color:var(--cv-muted)}
 .cl-title .cv-icon.is-done{color:var(--cv-green)}
-.cl-title-t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.cl-title-t{min-width:0;padding:0;border:0;background:none;color:inherit;font:inherit;font-weight:500;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv-faint);text-underline-offset:3px}
+.cl-open{display:none;align-items:center;gap:3px;height:22px;padding:0 6px;border:1px solid var(--cv-line);border-radius:6px;background:var(--cv-bg);color:var(--cv-muted);font-size:11px;font-weight:600;letter-spacing:.03em}
+.cl-row:hover .cl-open,.cl-table tr:hover .cl-open,.cl-card:hover .cl-open{display:inline-flex}
+.cl-table thead th .cv-icon{color:var(--cv-faint)}
+.cl-table tfoot td{padding:8px 10px;font-size:12px;color:var(--cv-muted);border-top:1px solid var(--cv-line)}
+.cl-foot{margin-right:6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cv-faint)}
+.cl-group-t{display:inline-flex;align-items:center;gap:6px}
+.cl-group-t .cv-icon{color:var(--cv-faint)}
+.cl-col.is-yellow{background:color-mix(in srgb,var(--cv-yellow-soft) 70%,var(--cv-soft))}
+.cl-col.is-blue{background:color-mix(in srgb,var(--cv-accent-soft) 70%,var(--cv-soft))}
+.cl-col.is-green{background:color-mix(in srgb,var(--cv-green-soft) 70%,var(--cv-soft))}
+.cl-col.is-red{background:color-mix(in srgb,var(--cv-red-soft) 70%,var(--cv-soft))}
+.cl-undated{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:var(--cv-soft);color:var(--cv-muted);font-size:12px}
+.cl-tl-bar-top{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.cl-empty{display:flex;flex-direction:column;align-items:center;gap:8px}
+.cl-empty .cv-empty{width:100%}
+.cl-clear{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px;border:1px solid var(--cv-line);border-radius:8px;background:var(--cv-bg);font-size:13px}
+.cl-peek-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--cv-line)}
+.cl-peek-type{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--cv-muted)}
+.cl-peek .cv-sheet-body{gap:14px}
+.cl-peek-title{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.01em}
+.cl-peek-title .cv-icon{margin-top:3px;color:var(--cv-muted)}
+.cl-peek-path{align-self:flex-start;padding:2px 6px;border-radius:5px;background:var(--cv-soft);color:var(--cv-muted);font-size:11.5px;word-break:break-all}
+.cl-props{display:flex;flex-direction:column;gap:2px;margin:0}
+.cl-props>div{display:grid;grid-template-columns:140px 1fr;align-items:center;gap:8px;min-height:32px;padding:2px 4px;border-radius:6px}
+.cl-props>div:hover{background:var(--cv-soft)}
+.cl-props dt{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--cv-muted)}
+.cl-props dt .cv-icon{color:var(--cv-faint)}
+.cl-props dd{margin:0;min-width:0}
+.cl-more-props{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;height:28px;padding:0 8px;border:0;border-radius:6px;background:none;color:var(--cv-muted);font-size:13px}
+.cl-more-props[aria-expanded=true] .cl-chev{transform:rotate(90deg)}
+.cl-peek-list{display:flex;flex-direction:column;gap:2px;margin:8px 0 0;padding:0;list-style:none}
+.cl-peek-list li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:7px 8px;border-radius:8px}
+.cl-peek-list li:hover{background:var(--cv-soft)}
+.cl-peek-list .cl-title{flex:1 1 160px}
 .cl-table-wrap{overflow-x:auto;border:1px solid var(--cv-line);border-radius:12px;background:var(--cv-bg)}
 .cl-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 .cl-table th,.cl-table td{padding:8px 10px;border-bottom:1px solid var(--cv-line);text-align:left;vertical-align:middle;white-space:nowrap}
@@ -827,18 +1154,21 @@ button.cl-rel:hover{background:var(--cv-soft);text-decoration-color:var(--cv-fai
 .cl-cal-item.is-yellow{background:var(--cv-yellow-soft)}.cl-cal-item.is-blue{background:var(--cv-accent-soft)}.cl-cal-item.is-green{background:var(--cv-green-soft)}.cl-cal-item.is-red{background:var(--cv-red-soft)}
 .cl-cal-more{font-size:11.5px;color:var(--cv-muted)}
 .cl-tl{display:flex;flex-direction:column;gap:6px;padding:12px;border:1px solid var(--cv-line);border-radius:12px;background:var(--cv-bg)}
-.cl-tl-scale{position:relative;height:16px;margin-left:var(--tl,220px);font-size:11px;color:var(--cv-faint)}
+.cl-tl-scale{position:relative;height:16px;font-size:11px;color:var(--cv-faint)}
 .cl-tl-scale span{position:absolute;transform:translateX(-50%);white-space:nowrap}
 .cl-tl-rows{display:flex;flex-direction:column;gap:4px;margin:0;padding:0;list-style:none}
-.cl-tl-rows li{display:grid;grid-template-columns:var(--tl,220px) 1fr;align-items:center;min-height:28px;animation:cv-in .28s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 30ms)}
-.cl-tl-label{min-width:0;padding-right:10px;font-size:13px}
-.cl-tl-track{position:relative;height:20px}
+.cl-tl-rows li{display:block;min-height:34px;animation:cv-in .28s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 30ms)}
+.cl-tl-track{position:relative;display:block;height:34px}
+.cl-tl-label{position:absolute;top:5px;display:inline-flex;align-items:center;gap:6px;max-width:calc(100% - 4px);padding:0 6px 0 4px;font-size:12.5px;white-space:nowrap}
+.cl-tl-label .cl-title{min-width:0}
+.cl-tl-label.is-end{flex-direction:row-reverse}
+.cl-tl-label .cl-pill{height:20px;font-size:11.5px}
 .cl-tl-grid{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--cv-line)}
-.cl-tl-bar{position:absolute;top:4px;height:12px;border-radius:4px;transform-origin:left;animation:cv-grow .5s cubic-bezier(.2,.8,.3,1) .1s both}
+.cl-tl-bar{position:absolute;top:3px;height:28px;border-radius:7px;opacity:.28;transform-origin:left;animation:cv-grow .5s cubic-bezier(.2,.8,.3,1) .1s both}
 .cl-tl-bar.is-gray{background:color-mix(in srgb,var(--cv-faint) 60%,var(--cv-bg))}
 .cl-tl-bar.is-yellow{background:var(--cv-yellow)}.cl-tl-bar.is-blue{background:var(--cv-accent)}.cl-tl-bar.is-green{background:var(--cv-green)}.cl-tl-bar.is-red{background:var(--cv-red)}
-.cl-tl-bar.is-overdue{box-shadow:0 0 0 2px var(--cv-red-soft),inset 0 0 0 1.5px var(--cv-red)}
+.cl-tl-bar.is-overdue{opacity:.4;box-shadow:inset 0 0 0 1.5px var(--cv-red)}
 .cl-tl-today{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--cv-red);opacity:.75}
 @container cv (max-width:700px){.cl-vlabel{display:none}.cl-tools{margin-left:0}}
-@container cv (max-width:560px){.cl-cal-cell{min-height:64px;padding:4px}.cl-cal-item{font-size:0;padding:3px}.cl-cal-item .cv-icon{width:12px;height:12px}.cl-cal-grid.is-week .cl-cal-item{font-size:11px}.cl-tl{--tl:0px}.cl-tl-rows li{grid-template-columns:1fr}.cl-board{grid-auto-columns:minmax(220px,85%)}}
+@container cv (max-width:560px){.cl-cal-cell{min-height:64px;padding:4px}.cl-cal-item{font-size:0;padding:3px}.cl-cal-item .cv-icon{width:12px;height:12px}.cl-cal-grid.is-week .cl-cal-item{font-size:11px}.cl-props>div{grid-template-columns:110px 1fr}.cl-board{grid-auto-columns:minmax(220px,85%)}}
 `;

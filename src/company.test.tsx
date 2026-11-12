@@ -354,3 +354,78 @@ describe("collections (vault types)", () => {
     expect(tags.textContent?.match(/Институц/g)).toHaveLength(1);
   });
 });
+
+describe("collection polish (notion-teardown v2)", () => {
+  const today = new Date("2026-11-12T09:00:00");
+  const col = (t: string) => inai.collections!.find((c) => c.type === t)!;
+
+  it("shows kind icons in headers and a count footer", async () => {
+    const { CollectionPanel } = await import("./company/company-view");
+    render(<CollectionPanel collection={col("project")} today={today} />);
+    const table = screen.getByRole("table");
+    expect(table.querySelectorAll("thead th svg").length).toBe(table.querySelectorAll("thead th").length);
+    expect(table.querySelector("tfoot")!.textContent).toContain("4");
+  });
+
+  it("draws n/m as a ring, full when complete", async () => {
+    const { ProgressNM } = await import("./company/collection");
+    const { container, rerender } = render(<ProgressNM value="1/4" />);
+    expect(container.querySelector(".cl-ring-arc")).toBeTruthy();
+    rerender(<ProgressNM value="3/3" />);
+    expect(container.querySelector(".cl-ring-full")).toBeTruthy();
+    expect(container.querySelector(".cl-nm.is-full")).toBeTruthy();
+  });
+
+  it("formats date ranges", async () => {
+    const { rangeText } = await import("./company/collection");
+    expect(rangeText("2026-05-17", "2026-06-10", today)).toBe("5/17 → 6/10");
+    expect(rangeText("2027-01-02", "2027-01-05", today)).toBe("2027.1/2 → 2027.1/5");
+    expect(rangeText("2026-05-17", "2026-05-17", today)).toBeNull();
+  });
+
+  it("groups by month and tints board columns by status", async () => {
+    const { CollectionPanel } = await import("./company/company-view");
+    render(<CollectionPanel collection={col("task")} today={today} defaultView="list" />);
+    fireEvent.change(screen.getAllByRole("combobox").at(-1)!, { target: { value: "due" } });
+    expect(screen.getByRole("region", { name: "2026 оны 11-р сар" })).toBeTruthy();
+    expect(screen.getByRole("region", { name: "Хоосон" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("radio", { name: /Самбар/ }));
+    fireEvent.change(screen.getAllByRole("combobox").at(-1)!, { target: { value: "" } });
+    expect(document.querySelector(".cl-col.is-yellow")).toBeTruthy();
+    expect(document.querySelector(".cl-col.is-green")).toBeTruthy();
+  });
+
+  it("timeline labels bars and counts undated rows", async () => {
+    const { CollectionPanel } = await import("./company/company-view");
+    render(<CollectionPanel collection={col("task")} today={today} defaultView="timeline" />);
+    expect(screen.getByText(/Огноогүй \(\d+\)/)).toBeTruthy();
+    expect(document.querySelector(".cl-tl-label .cl-pill")).toBeTruthy();
+    fireEvent.click(screen.getByRole("radio", { name: "Жил" }));
+    expect(screen.getByRole("radio", { name: "Жил" }).getAttribute("aria-checked")).toBe("true");
+  });
+
+  it("offers to clear filters when a view is empty", async () => {
+    const { CollectionPanel } = await import("./company/company-view");
+    render(<CollectionPanel collection={col("task")} today={today} />);
+    fireEvent.click(screen.getByRole("button", { name: /Энэ сар/ }));
+    fireEvent.click(within(screen.getByRole("tablist")).getByRole("tab", { name: /Inbox/ }));
+    if (!screen.queryByText("Энэ харагдацад мөр алга.")) return;
+    fireEvent.click(screen.getByRole("button", { name: /Шүүлт цэвэрлэх/ }));
+    expect(document.querySelectorAll(".cl-row").length).toBe(col("task").items.length);
+  });
+
+  it("opens a side peek with properties and related items from other types", () => {
+    render(<CompanyView company={inai} today={today} />);
+    const types = screen.getByRole("navigation", { name: "Төрлүүд" });
+    fireEvent.click(within(types).getByRole("button", { name: /Төсөл/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Inai Website" }));
+    const peek = screen.getByRole("dialog", { name: /Inai Website/ });
+    expect(peek.textContent).toContain("Priority");
+    const tabs = within(peek).getByRole("tablist");
+    expect(within(tabs).getByRole("tab", { name: /Task/ }).textContent).toContain("4");
+    expect(within(tabs).getByRole("tab", { name: /Шийдвэр/ }).textContent).toContain("2");
+    expect(peek.textContent).toContain("GitHub төлбөр засах");
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
+});

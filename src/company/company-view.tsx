@@ -701,7 +701,7 @@ export function CompanyView({
                 </button>
               ))}
             </div>
-            <CollectionView key={(collection ?? collections[0]).type} collection={collection ?? collections[0]} today={today} resolve={resolve} />
+            <CollectionView key={(collection ?? collections[0]).type} collection={collection ?? collections[0]} today={today} resolve={resolve} siblings={collections} />
           </section>
         )}
         </div>
@@ -864,7 +864,7 @@ export function CompanyView({
         </header>
         {collection ? (
           <section className="cv-panel" aria-label={collection.label ?? typeLabel(collection.type)} key={`collection-${collection.type}`}>
-            <CollectionView collection={collection} today={today} resolve={resolve} />
+            <CollectionView collection={collection} today={today} resolve={resolve} siblings={collections} />
           </section>
         ) : (
           <section id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${view}`} className="cv-panel" key={`${view}-${scope.unitId}`}>
