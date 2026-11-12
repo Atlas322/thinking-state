@@ -1092,7 +1092,7 @@ export const collectionCss = `
 .cl-tabs::-webkit-scrollbar{display:none}
 .cl-tabs button{position:relative;flex:none;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 10px;border:0;background:none;color:var(--cv-muted);font-size:13px;font-weight:500;white-space:nowrap}
 .cl-tabs button:hover{color:var(--cv-fg)}
-.cl-tabs button[aria-selected=true]{background:var(--ts-selected,#0c8ce9);color:var(--ts-on-selected,#fff);border-radius:6px}
+.cl-tabs button[aria-selected=true]{background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff);border-radius:6px}
 .cl-tabs button[aria-selected=true] :is(span,.cv-icon){color:currentColor}
 .cl-tabs button[aria-selected=true]::after{content:none}
 .cl-count{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--cv-soft);color:var(--cv-muted);font-size:11.5px;line-height:18px;text-align:center;font-variant-numeric:tabular-nums}
@@ -1102,7 +1102,7 @@ export const collectionCss = `
 .cl-seg button[data-active]{background:var(--cv-seg-on);color:var(--cv-fg);box-shadow:0 0 0 .5px #0000000f,0 1px 2px #0000000d}
 .cl-presets{display:inline-flex;flex-wrap:wrap;gap:4px}
 .cl-presets button{display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 9px;border:1px solid var(--cv-line);border-radius:14px;background:var(--cv-bg);color:var(--cv-muted);font-size:12.5px}
-.cl-presets button[aria-pressed=true]{border-color:transparent;background:var(--ts-selected,#0c8ce9);color:var(--ts-on-selected,#fff)}
+.cl-presets button[aria-pressed=true]{border-color:transparent;background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff)}
 .cl-tools{display:inline-flex;flex-wrap:wrap;gap:6px;margin-left:auto}
 .cl-select{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 4px 0 8px;border:1px solid var(--cv-line);border-radius:8px;background:var(--cv-bg);color:var(--cv-muted)}
 .cl-select select{height:28px;max-width:150px;border:0;background:none;color:var(--cv-fg);font:inherit;font-size:12.5px}
@@ -1186,6 +1186,9 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-tbadge.is-blue{background:#3b82f6}.cl-tbadge.is-green{background:#22a35a}.cl-tbadge.is-red{background:#e5484d}
 .cl-tbadge.is-violet{background:#8b5cf6}.cl-tbadge.is-teal{background:#14a3a3}.cl-tbadge.is-amber{background:#e08a1e}
 .cl-tbadge.is-yellow{background:#d4a017}.cl-tbadge.is-gray{background:#71717a}
+/* glyph contrast (Figma check, 2026-11-12): light fills take the dark on-cat glyph */
+.cl-tbadge.is-amber,.cl-tbadge.is-yellow{color:var(--ts-on-cat-1,#14130f)}
+.cl-tbadge.is-green,.cl-tbadge.is-teal{color:var(--ts-on-cat-3,#0b2414)}
 .cl-table-wrap{overflow-x:auto;border:1px solid var(--cv-line);border-radius:12px;background:var(--cv-bg)}
 .cl-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 .cl-table th,.cl-table td{padding:8px 10px;border-bottom:1px solid var(--cv-line);text-align:left;vertical-align:middle;white-space:nowrap}
@@ -1223,7 +1226,7 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-cal-grid.is-week .cl-cal-cell{min-height:180px}
 .cl-cal-cell.is-out{background:var(--cv-page);color:var(--cv-faint)}
 .cl-cal-n{font-size:12px;font-weight:500;color:var(--cv-muted)}
-.cl-cal-cell.is-today .cl-cal-n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--cv-red);color:#fff}
+.cl-cal-cell.is-today .cl-cal-n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--cv-red);color:var(--ts-on-red,#fff)}
 .cl-cal-item{display:flex;align-items:center;gap:4px;min-width:0;padding:2px 5px;border-radius:5px;background:var(--cv-soft);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cl-cal-item .cv-icon{color:var(--cv-muted)}
 .cl-cal-item.is-yellow{background:var(--cv-yellow-soft)}.cl-cal-item.is-blue{background:var(--cv-accent-soft)}.cl-cal-item.is-green{background:var(--cv-green-soft)}.cl-cal-item.is-red{background:var(--cv-red-soft)}

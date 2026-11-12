@@ -56,7 +56,10 @@
     "tokens:site": "node scripts/site-css.mjs && node scripts/ts-css.mjs",
     "check:spacing": "node scripts/check-spacing.mjs",
     "studio:exports": "node scripts/studio-exports.mjs",
-    "tokens:figma": "node scripts/figma-variables.mjs"
+    "tokens:figma": "node scripts/figma-variables.mjs",
+    "check:motion": "node scripts/check-quality.mjs --motion",
+    "check:icons": "node scripts/check-quality.mjs --icons",
+    "check:quality": "node scripts/check-quality.mjs --motion --icons"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

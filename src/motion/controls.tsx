@@ -155,5 +155,10 @@ const REPLAY_CSS = `
 .ts-loop-region[data-controls="hover"] > .ts-motion-ctl { opacity: 0; }
 .ts-loop-region[data-controls="hover"]:is(:hover, :focus-within) > .ts-motion-ctl,
 .ts-loop-region[data-controls="hover"][data-ts-loop="paused"] > .ts-motion-ctl { opacity: 1; }
+/* Inside a <Replay> wrapper (catalog, inai.sh) its ↺ owns the corner: sit beside it. */
+.ts-replay-body .ts-loop-region > .ts-motion-ctl { right: 46px; }
+.ts-scenario-steps { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); display: inline-flex; gap: 4px; pointer-events: none; }
+.ts-scenario-steps i { width: 6px; height: 6px; border-radius: 3px; background: var(--ts-ctl-line); transition: width var(--ts-motion-dur-sm, 200ms) var(--ts-motion-ease-standard, ease), background var(--ts-motion-dur-sm, 200ms); }
+.ts-scenario-steps i[data-on] { width: 16px; background: var(--ts-selected, #0c8ce9); }
 @media (hover: none) { .ts-loop-region[data-controls="hover"] > .ts-motion-ctl { opacity: 1; } }
 `;
