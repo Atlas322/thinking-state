@@ -30,7 +30,7 @@ function reachable(entry: string, seen = new Set<string>()) {
 describe("@inai/thinking-state package", () => {
   it("is named and exported for git installs", () => {
     expect(pkg.name).toBe("@inai/thinking-state");
-    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./tokens.css", "./site.css", "./ts.css", "./package.json"]);
+    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./studio", "./tokens.css", "./site.css", "./ts.css", "./package.json"]);
     expect(pkg.files).toContain("lib");
     expect(pkg.peerDependencies.react).toMatch(/\^19/);
     expect((pkg.dependencies as Record<string, string>).react).toBeUndefined();
@@ -38,7 +38,7 @@ describe("@inai/thinking-state package", () => {
   });
 
   it("never reaches fixtures from a package entry", () => {
-    const files = [...reachable("./lib/index"), ...reachable("./lib/chat")];
+    const files = [...reachable("./lib/index"), ...reachable("./lib/chat"), ...reachable("./lib/studio")];
     expect(files.length).toBeGreaterThan(10);
     expect(files.filter((f) => /fixtures|company-preview|catalog|registry/.test(f))).toEqual([]);
   });
@@ -68,5 +68,13 @@ describe("@inai/thinking-state package", () => {
     expect(css.match(/--ts-font-display: var\(--ts-font-head\);/g)).toHaveLength(2);
     for (const c of ["#f5a524", "#0c8ce9", "#22c55e", "#a855f7"]) expect(css.match(new RegExp(`--ts-cat-\\d: ${c};`, "g"))).toHaveLength(2); // vivid on both
     expect(css).not.toMatch(/Alegreya|Onest|#17130f/i); // Theme А withdrawn
+  });
+});
+
+describe("@inai/thinking-state/studio", () => {
+  it("exports every single-file catalog component and is fresh (npm run studio:exports)", async () => {
+    const catalog = (await import("./catalog.json")).default as { slug: string; exportName: string; module?: string }[];
+    const studio = (await import("./lib/studio")) as Record<string, unknown>;
+    for (const e of catalog.filter((x) => !x.module)) expect(typeof studio[e.exportName], e.slug).toBe("function");
   });
 });
