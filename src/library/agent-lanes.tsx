@@ -315,6 +315,23 @@ export function AgentLanes({
           </div>
         </div>
       </div>
+      {/* phones: the timeline stays as the overview, this list carries the readable titles (same data, so hidden from assistive tech; the lane blocks have full labels) */}
+      <ul className="al-list" aria-hidden="true">
+        {agents.map((a) => {
+          const cur = tasks.filter((t) => t.agentId === a.id).sort((p, q) => q.start - p.start)[0];
+          if (!cur) return null;
+          return (
+            <li key={a.id} className="al-row">
+              <span className="al-avatar">{a.avatar ?? a.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}</span>
+              <span className="al-row-text">
+                <span className="al-row-who">{a.name}</span>
+                <span className="al-row-title">{cur.title}</span>
+              </span>
+              <span className={`al-row-state ${cur.status}`}>{cur.status === "waiting" ? "Needs you" : cur.status}</span>
+            </li>
+          );
+        })}
+      </ul>
       <p className="al-sr" aria-live="polite">{waiting} task{waiting === 1 ? "" : "s"} need you</p>
     </section>
   );
@@ -379,7 +396,9 @@ const css = `
 @keyframes al-shimmer{from{background-position:100% 0}to{background-position:-100% 0}}
 @keyframes al-flow{to{stroke-dashoffset:-6}}
 @keyframes al-in{from{opacity:0;transform:translateY(-3px)}}
-@container (max-width:520px){.al-grid{grid-template-columns:40px minmax(0,1fr);padding:8px 10px 10px}.al-who{display:none}.al-bar{flex-wrap:wrap}}
+.al-list{display:none}
+@container (max-width:520px){.al-grid{grid-template-columns:40px minmax(0,1fr);padding:8px 10px 10px}.al-who{display:none}.al-bar{flex-wrap:wrap}.al-lanes{-webkit-mask-image:linear-gradient(90deg,transparent,#000 10px);mask-image:linear-gradient(90deg,transparent,#000 10px)}.al-list{display:grid;gap:2px;margin:0;padding:4px 10px 12px;list-style:none;border-top:1px solid var(--al-line)}.al-row{display:flex;align-items:center;gap:10px;min-height:44px}.al-row-text{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.3}.al-row-who{font-size:12px;color:var(--al-muted)}.al-row-title{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.al-row-state{flex:none;padding:0 6px;border-radius:4px;font-size:11px;line-height:18px;background:var(--al-chip);color:var(--al-muted)}.al-row-state.running{background:var(--al-blue-bg);color:var(--ts-status-running-fg,#1d5fb8)}.al-row-state.waiting{background:var(--al-warn-bg);color:var(--al-warn)}.al-row-state.failed{background:var(--al-red-bg);color:var(--ts-status-error-fg,#c4262b)}}
+:where(.dark,[data-theme=dark]) .al-row-state.running{color:var(--ts-status-running-fg,#7fb0f5)}
 @media(prefers-reduced-motion:reduce){.al *{animation:none!important;transition:none!important}}
 `;
 
