@@ -56,14 +56,14 @@ describe("@inai/thinking-state package", () => {
     const css = fs.readFileSync("src/lib/tokens.css", "utf8");
     for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="dark"]', '[data-ts-theme="manage"]'])
       expect(css).toContain(need);
-    // warm grey dark (owner 11-12), one Electric accent, no indigo
+    // warm grey dark (11-12), one Electric accent, no indigo
     for (const v of ["--ts-page: #262624;", "--ts-side: #1f1e1d;", "--ts-surface: #30302e;", "--ts-fg: #ecebe7;", "--ts-electric: #4d7fff;", "--ts-accent-strong: #1b5cff;"])
       expect(css).toContain(v);
     expect(css).not.toMatch(/--ts-indigo|data-ts-mode="manage"\]/);
     // status triads on both themes
     for (const st of ["running", "needs-you", "error", "done", "idle"])
       for (const part of ["bg", "border", "fg"]) expect(css.match(new RegExp(`--ts-status-${st}-${part}: #`, "g")), `${st}-${part}`).toHaveLength(2);
-    expect(css).not.toContain("Spectral"); // one heading font on both themes (owner 11-12)
+    expect(css).not.toContain("Spectral"); // one heading font on both themes (11-12)
     expect(css).toContain('--ts-font-head: "Inter"');
     expect(css.match(/--ts-font-display: var\(--ts-font-head\);/g)).toHaveLength(2);
     for (const c of ["#f5a524", "#0c8ce9", "#22c55e", "#a855f7"]) expect(css.match(new RegExp(`--ts-cat-\\d: ${c};`, "g"))).toHaveLength(2); // vivid on both

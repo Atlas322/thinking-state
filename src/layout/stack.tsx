@@ -1,7 +1,7 @@
 /**
  * Stack — the one place vertical (or horizontal) rhythm comes from.
  *
- * Rule (owner 2026-11-12, after a segmented control sat 4 px above its
+ * Rule (2026-11-12, after a segmented control sat 4 px above its
  * caption): controls — segmented controls, tab rows, chip groups — carry no
  * outer margin. Space between blocks comes from the parent's `gap`, i.e. a
  * Stack, using the --ts-space-* / --ts-gap-* tokens (tokens.css):
