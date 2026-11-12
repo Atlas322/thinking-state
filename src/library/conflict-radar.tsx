@@ -259,8 +259,8 @@ export function ConflictRadar({
 }
 
 const css = `
-.cr{--cr-bg:#fff;--cr-fg:#18181b;--cr-muted:#71717a;--cr-faint:#a1a1aa;--cr-line:#ececef;--cr-soft:#f7f7f8;--cr-changed:#dbe8fb;--cr-changed-edge:#a9c6f2;--cr-conflict:#f8d3bd;--cr-conflict-edge:#eaa47c;--cr-hot:#fdf3ec;--cr-dot:#dc4a12;--cr-kept:#cdebd6;--cr-kept-edge:#86c99b;--cr-accent:#3b82f6;width:100%;max-width:560px;background:var(--cr-bg);color:var(--cr-fg);border:1px solid var(--cr-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .cr{--cr-bg:#1b1b1e;--cr-fg:#ececef;--cr-muted:#a1a1aa;--cr-faint:#5c5c64;--cr-line:#2c2c31;--cr-soft:#232328;--cr-changed:#22344f;--cr-changed-edge:#3d5d8c;--cr-conflict:#4a2c1c;--cr-conflict-edge:#a8603a;--cr-hot:#2a1f19;--cr-dot:#fb7a45;--cr-kept:#1d3a27;--cr-kept-edge:#3f8a57;--cr-accent:#7aa2ff;color-scheme:dark}
+.cr{--cr-bg:#fff;--cr-fg:#18181b;--cr-muted:#65656d;--cr-faint:#65656d;--cr-line:#ececef;--cr-soft:#f7f7f8;--cr-changed:#dbe8fb;--cr-changed-edge:#a9c6f2;--cr-conflict:#f8d3bd;--cr-conflict-edge:#eaa47c;--cr-hot:#fdf3ec;--cr-dot:#dc4a12;--cr-kept:#cdebd6;--cr-kept-edge:#86c99b;--cr-accent:#3b82f6;width:100%;max-width:560px;background:var(--cr-bg);color:var(--cr-fg);border:1px solid var(--cr-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cr{--cr-bg:#1b1b1e;--cr-fg:#ececef;--cr-muted:#a1a1aa;--cr-faint:#9a9aa2;--cr-line:#2c2c31;--cr-soft:#232328;--cr-changed:#22344f;--cr-changed-edge:#3d5d8c;--cr-conflict:#4a2c1c;--cr-conflict-edge:#a8603a;--cr-hot:#2a1f19;--cr-dot:#fb7a45;--cr-kept:#1d3a27;--cr-kept-edge:#3f8a57;--cr-accent:#7aa2ff;color-scheme:dark}
 .cr *{box-sizing:border-box}.cr button{font:inherit;color:inherit;cursor:pointer}
 .cr-bar{display:flex;align-items:center;gap:10px;height:52px;padding:0 10px 0 16px;border-bottom:1px solid var(--cr-line)}
 .cr-logo{width:15px;height:15px;color:var(--cr-accent)}.cr-bar strong{font-weight:500}

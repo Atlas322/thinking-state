@@ -431,8 +431,8 @@ export function ReviewCenter({
 }
 
 const css = `
-.rc{--rc-bg:#fff;--rc-fg:#18181b;--rc-muted:#71717a;--rc-faint:#a1a1aa;--rc-line:#ececef;--rc-chip:#f4f4f5;--rc-blue:#3b82f6;--rc-amber:#fde68a;width:100%;max-width:760px;display:flex;flex-direction:column;background:var(--rc-bg);color:var(--rc-fg);border:1px solid var(--rc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;outline:none;container-type:inline-size}
-:where(.dark,[data-theme=dark]) .rc{--rc-bg:#1b1b1e;--rc-fg:#ececef;--rc-muted:#a1a1aa;--rc-faint:#71717a;--rc-line:#2e2e33;--rc-chip:#26262a;--rc-amber:#6b5310;color-scheme:dark}
+.rc{--rc-bg:#fff;--rc-fg:#18181b;--rc-muted:#65656d;--rc-faint:#65656d;--rc-line:#ececef;--rc-chip:#f4f4f5;--rc-blue:#3b82f6;--rc-amber:#fde68a;width:100%;max-width:760px;display:flex;flex-direction:column;background:var(--rc-bg);color:var(--rc-fg);border:1px solid var(--rc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;outline:none;container-type:inline-size}
+:where(.dark,[data-theme=dark]) .rc{--rc-bg:#1b1b1e;--rc-fg:#ececef;--rc-muted:#a1a1aa;--rc-faint:#9a9aa2;--rc-line:#2e2e33;--rc-chip:#26262a;--rc-amber:#6b5310;color-scheme:dark}
 .rc *{box-sizing:border-box}.rc button,.rc textarea{font:inherit;color:inherit}.rc button{cursor:pointer}
 .rc-bar{display:flex;align-items:center;gap:10px;height:48px;padding:0 16px;border-bottom:1px solid var(--rc-line);font-size:13px;white-space:nowrap}
 .rc-logo{width:16px;height:16px;color:var(--rc-blue);flex:none}

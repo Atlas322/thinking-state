@@ -415,8 +415,8 @@ export function AgentCursors({
 }
 
 const css = `
-.acu{--acu-bg:#fff;--acu-fg:#18181b;--acu-muted:#71717a;--acu-faint:#a1a1aa;--acu-line:#ececef;--acu-soft:#f4f4f5;--acu-ink:#18181b;--acu-flag:#18181b;--acu-flag-fg:#fafafa;--acu-edge:linear-gradient(90deg,#f472b6,#60a5fa);--acu-sug:#18181b;width:100%;max-width:700px;color:var(--acu-fg);font:400 14px/1.6 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .acu{--acu-bg:#1b1b1e;--acu-fg:#ececef;--acu-muted:#a1a1aa;--acu-faint:#71717a;--acu-line:#2e2e33;--acu-soft:#26262b;--acu-ink:#ececef;--acu-flag:#f4f4f5;--acu-flag-fg:#18181b;--acu-sug:#ececef;color-scheme:dark}
+.acu{--acu-bg:#fff;--acu-fg:#18181b;--acu-muted:#65656d;--acu-faint:#65656d;--acu-line:#ececef;--acu-soft:#f4f4f5;--acu-ink:#18181b;--acu-flag:#18181b;--acu-flag-fg:#fafafa;--acu-edge:linear-gradient(90deg,#f472b6,#60a5fa);--acu-sug:#18181b;width:100%;max-width:700px;color:var(--acu-fg);font:400 14px/1.6 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .acu{--acu-bg:#1b1b1e;--acu-fg:#ececef;--acu-muted:#a1a1aa;--acu-faint:#9a9aa2;--acu-line:#2e2e33;--acu-soft:#26262b;--acu-ink:#ececef;--acu-flag:#f4f4f5;--acu-flag-fg:#18181b;--acu-sug:#ececef;color-scheme:dark}
 .acu *{box-sizing:border-box}.acu button{font:inherit;color:inherit;cursor:pointer}
 .acu-tabs{display:flex;gap:6px;margin-bottom:8px}
 .acu-tabs button{height:30px;padding:0 10px;border:1px solid transparent;border-radius:8px;background:var(--acu-soft);color:var(--acu-muted);font-size:14px}

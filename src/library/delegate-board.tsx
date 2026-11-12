@@ -296,8 +296,8 @@ export function DelegateBoard({
 }
 
 const css = `
-.dlb{--dlb-bg:#fff;--dlb-fg:#18181b;--dlb-muted:#71717a;--dlb-faint:#a1a1aa;--dlb-line:#ececef;--dlb-soft:#f4f4f5;--dlb-chip:#f1f1f3;--dlb-blue:#3b82f6;--dlb-blue-soft:#e8f1fe;--dlb-blue-fg:#1d6fe0;width:100%;max-width:760px;background:var(--dlb-bg);color:var(--dlb-fg);border:1px solid var(--dlb-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .dlb{--dlb-bg:#1b1b1e;--dlb-fg:#ececef;--dlb-muted:#a1a1aa;--dlb-faint:#71717a;--dlb-line:#2e2e33;--dlb-soft:#232327;--dlb-chip:#2a2a2f;--dlb-blue:#5b9cff;--dlb-blue-soft:#1b2a44;--dlb-blue-fg:#8ab8ff;color-scheme:dark}
+.dlb{--dlb-bg:#fff;--dlb-fg:#18181b;--dlb-muted:#65656d;--dlb-faint:#65656d;--dlb-line:#ececef;--dlb-soft:#f4f4f5;--dlb-chip:#f1f1f3;--dlb-blue:#3b82f6;--dlb-blue-soft:#e8f1fe;--dlb-blue-fg:#1d6fe0;width:100%;max-width:760px;background:var(--dlb-bg);color:var(--dlb-fg);border:1px solid var(--dlb-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .dlb{--dlb-bg:#1b1b1e;--dlb-fg:#ececef;--dlb-muted:#a1a1aa;--dlb-faint:#9a9aa2;--dlb-line:#2e2e33;--dlb-soft:#232327;--dlb-chip:#2a2a2f;--dlb-blue:#5b9cff;--dlb-blue-soft:#1b2a44;--dlb-blue-fg:#8ab8ff;color-scheme:dark}
 .dlb *{box-sizing:border-box}
 .dlb-bar{display:flex;align-items:center;gap:10px;height:56px;padding:0 16px 0 20px;border-bottom:1px solid var(--dlb-line)}
 .dlb-spark{width:14px;height:14px;color:var(--dlb-blue)}.dlb-bar strong{font-weight:500}

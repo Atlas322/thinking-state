@@ -200,8 +200,8 @@ export function FallbackChain({
 }
 
 const css = `
-.fc{--fc-bg:#fff;--fc-fg:#18181b;--fc-muted:#71717a;--fc-faint:#a1a1aa;--fc-line:#e7e7ea;--fc-canvas:#fafafa;--fc-dot:#e4e4e7;--fc-ok:#15803d;--fc-okbar:#86c79c;--fc-bad:#dc2626;--fc-badbar:#f19a9a;--fc-run:#3b82f6;width:100%;max-width:740px;color:var(--fc-fg);font:400 13px/1.35 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .fc{--fc-bg:#1b1b1e;--fc-fg:#ececef;--fc-muted:#a1a1aa;--fc-faint:#71717a;--fc-line:#2e2e33;--fc-canvas:#151517;--fc-dot:#2a2a2f;--fc-ok:#4ade80;--fc-okbar:#2f7a4a;--fc-bad:#f87171;--fc-badbar:#8a3434;--fc-run:#60a5fa;color-scheme:dark}
+.fc{--fc-bg:#fff;--fc-fg:#18181b;--fc-muted:#65656d;--fc-faint:#65656d;--fc-line:#e7e7ea;--fc-canvas:#fafafa;--fc-dot:#e4e4e7;--fc-ok:#15803d;--fc-okbar:#86c79c;--fc-bad:#dc2626;--fc-badbar:#f19a9a;--fc-run:#3b82f6;width:100%;max-width:740px;color:var(--fc-fg);font:400 13px/1.35 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .fc{--fc-bg:#1b1b1e;--fc-fg:#ececef;--fc-muted:#a1a1aa;--fc-faint:#9a9aa2;--fc-line:#2e2e33;--fc-canvas:#151517;--fc-dot:#2a2a2f;--fc-ok:#4ade80;--fc-okbar:#2f7a4a;--fc-bad:#f87171;--fc-badbar:#8a3434;--fc-run:#60a5fa;color-scheme:dark}
 .fc *{box-sizing:border-box}.fc button{font:inherit;cursor:pointer}
 .fc-head{display:flex;align-items:center;gap:12px;padding:0 2px 14px}
 .fc-head strong{font-weight:500;font-size:14px;flex:1;min-width:0}

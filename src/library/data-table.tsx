@@ -523,8 +523,8 @@ export function DataTable({
 }
 
 const css = `
-.dt-root{--dt-fg:#1f1f1f;--dt-muted:#8b8b8b;--dt-card:#fff;--dt-line:#ededed;--dt-soft:#f6f6f6;--dt-blue:#2f6fed;--dt-sel:#2f6fed14;width:100%;max-width:720px;margin:0 auto;background:var(--dt-card);border:1px solid var(--dt-line);border-radius:12px;color:var(--dt-fg);font:400 13px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;box-shadow:0 1px 2px #00000008;overflow:hidden}
-:where(.dark,[data-theme=dark]) .dt-root{--dt-fg:#ececec;--dt-muted:#8f8f94;--dt-card:#1b1b1e;--dt-line:#2b2b30;--dt-soft:#242428;--dt-blue:#5b8cff;--dt-sel:#5b8cff22;color-scheme:dark}
+.dt-root{--dt-fg:#1f1f1f;--dt-muted:#65656d;--dt-card:#fff;--dt-line:#ededed;--dt-soft:#f6f6f6;--dt-blue:#2f6fed;--dt-sel:#2f6fed14;width:100%;max-width:720px;margin:0 auto;background:var(--dt-card);border:1px solid var(--dt-line);border-radius:12px;color:var(--dt-fg);font:400 13px/1.4 Inter,ui-sans-serif,system-ui,sans-serif;text-align:left;box-shadow:0 1px 2px #00000008;overflow:hidden}
+:where(.dark,[data-theme=dark]) .dt-root{--dt-fg:#ececec;--dt-muted:#9a9aa2;--dt-card:#1b1b1e;--dt-line:#2b2b30;--dt-soft:#242428;--dt-blue:#5b8cff;--dt-sel:#5b8cff22;color-scheme:dark}
 .dt-root *{box-sizing:border-box}
 .dt-root :where(button){font:inherit;color:inherit;cursor:pointer}
 .dt-root button:focus-visible{outline:2px solid var(--dt-blue);outline-offset:1px;border-radius:4px}

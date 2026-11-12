@@ -322,8 +322,8 @@ export function ScheduledRuns({
 }
 
 const css = `
-.sr{--sr-bg:#fff;--sr-fg:#18181b;--sr-muted:#71717a;--sr-faint:#a1a1aa;--sr-line:#ececef;--sr-well:#f4f4f5;--sr-red:#e5484d;--sr-blue:#3b82f6;width:100%;max-width:820px;color:var(--sr-fg);font:400 12px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .sr{--sr-bg:#1f1f23;--sr-fg:#ececef;--sr-muted:#a1a1aa;--sr-faint:#71717a;--sr-line:#2e2e33;--sr-well:#18181b;color-scheme:dark}
+.sr{--sr-bg:#fff;--sr-fg:#18181b;--sr-muted:#65656d;--sr-faint:#65656d;--sr-line:#ececef;--sr-well:#f4f4f5;--sr-red:#e5484d;--sr-blue:#3b82f6;width:100%;max-width:820px;color:var(--sr-fg);font:400 12px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .sr{--sr-bg:#1f1f23;--sr-fg:#ececef;--sr-muted:#a1a1aa;--sr-faint:#9a9aa2;--sr-line:#2e2e33;--sr-well:#18181b;color-scheme:dark}
 .sr *{box-sizing:border-box}.sr button{font:inherit;color:inherit;cursor:pointer}
 .sr-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
 .sr h3{margin:0;font-size:15px;font-weight:500;display:flex;align-items:baseline;gap:8px}.sr h3 small{font-size:12.5px;font-weight:400;color:var(--sr-muted)}

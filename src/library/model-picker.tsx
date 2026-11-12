@@ -286,8 +286,8 @@ export function ModelPicker({
 }
 
 const css = `
-.mp{--mp-bg:#fff;--mp-fg:#18181b;--mp-muted:#71717a;--mp-faint:#a1a1aa;--mp-line:#ececef;--mp-soft:#f4f4f5;--mp-seg:#e4e4e7;--mp-blue:#3b82f6;position:relative;width:100%;max-width:360px;background:var(--mp-bg);color:var(--mp-fg);border:1px solid var(--mp-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .mp{--mp-bg:#1b1b1e;--mp-fg:#ececef;--mp-muted:#a1a1aa;--mp-faint:#71717a;--mp-line:#2e2e33;--mp-soft:#26262b;--mp-seg:#38383e;color-scheme:dark}
+.mp{--mp-bg:#fff;--mp-fg:#18181b;--mp-muted:#65656d;--mp-faint:#65656d;--mp-line:#ececef;--mp-soft:#f4f4f5;--mp-seg:#e4e4e7;--mp-blue:#3b82f6;position:relative;width:100%;max-width:360px;background:var(--mp-bg);color:var(--mp-fg);border:1px solid var(--mp-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .mp{--mp-bg:#1b1b1e;--mp-fg:#ececef;--mp-muted:#a1a1aa;--mp-faint:#9a9aa2;--mp-line:#2e2e33;--mp-soft:#26262b;--mp-seg:#38383e;color-scheme:dark}
 .mp *{box-sizing:border-box}.mp button{font:inherit;color:inherit;cursor:pointer}
 .mp-input{display:block;width:100%;resize:none;border:0;outline:0;background:none;color:var(--mp-fg);font:inherit;font-size:13.5px;padding:14px 14px 6px}
 .mp-input::placeholder{color:var(--mp-faint)}

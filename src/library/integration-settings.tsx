@@ -266,8 +266,8 @@ export function IntegrationSettings({
 }
 
 const css = `
-.ist{--ist-bg:#fff;--ist-fg:#18181b;--ist-muted:#71717a;--ist-faint:#a1a1aa;--ist-line:#ececef;--ist-soft:#f4f4f5;--ist-accent:#3b82f6;--ist-green:#2f9e6a;--ist-red:#d14343;width:100%;max-width:560px;background:var(--ist-bg);color:var(--ist-fg);border:1px solid var(--ist-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 4px 14px -8px #00000014;font:400 13px/1.45 Inter,system-ui,sans-serif;overflow:visible}
-:where(.dark,[data-theme=dark]) .ist{--ist-bg:#1b1b1e;--ist-fg:#ececef;--ist-muted:#a1a1aa;--ist-faint:#71717a;--ist-line:#2c2c31;--ist-soft:#26262b;--ist-accent:#5b9bff;--ist-green:#6cc596;--ist-red:#f08585;color-scheme:dark}
+.ist{--ist-bg:#fff;--ist-fg:#18181b;--ist-muted:#65656d;--ist-faint:#65656d;--ist-line:#ececef;--ist-soft:#f4f4f5;--ist-accent:#3b82f6;--ist-green:#2f9e6a;--ist-red:#d14343;width:100%;max-width:560px;background:var(--ist-bg);color:var(--ist-fg);border:1px solid var(--ist-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 4px 14px -8px #00000014;font:400 13px/1.45 Inter,system-ui,sans-serif;overflow:visible}
+:where(.dark,[data-theme=dark]) .ist{--ist-bg:#1b1b1e;--ist-fg:#ececef;--ist-muted:#a1a1aa;--ist-faint:#9a9aa2;--ist-line:#2c2c31;--ist-soft:#26262b;--ist-accent:#5b9bff;--ist-green:#6cc596;--ist-red:#f08585;color-scheme:dark}
 .ist *{box-sizing:border-box}.ist button{font:inherit;color:inherit;cursor:pointer}
 .ist-head{display:flex;align-items:center;gap:13px;padding:16px 18px;border-bottom:1px solid var(--ist-line)}
 .ist-logo{display:grid;place-items:center;flex:none;width:46px;height:46px;border:1px solid var(--ist-line);border-radius:10px;background:#fff;box-shadow:0 1px 2px #0000000a}.ist-logo svg{width:26px;height:26px}

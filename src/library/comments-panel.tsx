@@ -196,8 +196,8 @@ export function CommentsPanel({
 }
 
 const css = `
-.cp{--cp-bg:#fff;--cp-fg:#18181b;--cp-muted:#71717a;--cp-faint:#a1a1aa;--cp-line:#ececef;--cp-chip:#f1f1f3;--cp-accent:#3b82f6;width:100%;max-width:400px;display:flex;flex-direction:column;background:var(--cp-bg);color:var(--cp-fg);border:1px solid var(--cp-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .cp{--cp-bg:#1b1b1e;--cp-fg:#ececef;--cp-muted:#a1a1aa;--cp-faint:#71717a;--cp-line:#2e2e33;--cp-chip:#2a2a2f;color-scheme:dark}
+.cp{--cp-bg:#fff;--cp-fg:#18181b;--cp-muted:#65656d;--cp-faint:#65656d;--cp-line:#ececef;--cp-chip:#f1f1f3;--cp-accent:#3b82f6;width:100%;max-width:400px;display:flex;flex-direction:column;background:var(--cp-bg);color:var(--cp-fg);border:1px solid var(--cp-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cp{--cp-bg:#1b1b1e;--cp-fg:#ececef;--cp-muted:#a1a1aa;--cp-faint:#9a9aa2;--cp-line:#2e2e33;--cp-chip:#2a2a2f;color-scheme:dark}
 .cp *{box-sizing:border-box}.cp button,.cp input{font:inherit;color:inherit}.cp button{cursor:pointer}
 .cp-head{display:flex;align-items:center;justify-content:space-between;padding:14px 12px 0 16px}
 .cp-head h3{margin:0;font-size:15px;font-weight:500}

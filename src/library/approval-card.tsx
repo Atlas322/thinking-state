@@ -344,8 +344,8 @@ export function ApprovalCard({
 }
 
 const css = `
-.apv{--apv-bg:#fff;--apv-fg:#18181b;--apv-muted:#71717a;--apv-faint:#a1a1aa;--apv-line:#ececef;--apv-soft:#f4f4f5;--apv-amber:#a16207;--apv-amber-bg:#fdf3d7;--apv-red:#c2410c;--apv-red-bg:#fde8e3;--apv-green:#16a34a;--apv-accent:#4f7cf0;width:100%;max-width:420px;color:var(--apv-fg);font:400 14px/1.45 Inter,system-ui,sans-serif;container:apv/inline-size}
-:where(.dark,[data-theme=dark]) .apv{--apv-bg:#1b1b1e;--apv-fg:#ececef;--apv-muted:#a1a1aa;--apv-faint:#71717a;--apv-line:#2e2e33;--apv-soft:#242428;--apv-amber:#fbbf24;--apv-amber-bg:#3a2f12;--apv-red:#fb923c;--apv-red-bg:#3a1e18;color-scheme:dark}
+.apv{--apv-bg:#fff;--apv-fg:#18181b;--apv-muted:#65656d;--apv-faint:#65656d;--apv-line:#ececef;--apv-soft:#f4f4f5;--apv-amber:#a16207;--apv-amber-bg:#fdf3d7;--apv-red:#c2410c;--apv-red-bg:#fde8e3;--apv-green:#16a34a;--apv-accent:#4f7cf0;width:100%;max-width:420px;color:var(--apv-fg);font:400 14px/1.45 Inter,system-ui,sans-serif;container:apv/inline-size}
+:where(.dark,[data-theme=dark]) .apv{--apv-bg:#1b1b1e;--apv-fg:#ececef;--apv-muted:#a1a1aa;--apv-faint:#9a9aa2;--apv-line:#2e2e33;--apv-soft:#242428;--apv-amber:#fbbf24;--apv-amber-bg:#3a2f12;--apv-red:#fb923c;--apv-red-bg:#3a1e18;color-scheme:dark}
 .apv *{box-sizing:border-box}.apv button{font:inherit;cursor:pointer}
 .apv.apv-has-tray{background:var(--apv-soft);border-radius:16px;padding:4px}
 .apv-label{padding:6px 10px 8px;font-size:12px;color:var(--apv-muted)}

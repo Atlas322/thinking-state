@@ -544,7 +544,7 @@ const css = /* css */ `
   --ui-ed-line: #ececec;
   --ui-ed-ink: #171717;
   --ui-ed-text: #404040;
-  --ui-ed-muted: #8f8f8f;
+  --ui-ed-muted: #65656d;
   --ui-ed-chip: #f5f5f5;
   --ui-ed-chip-line: #ebebeb;
   --ui-ed-hover: #f5f5f5;
@@ -906,7 +906,7 @@ const css = /* css */ `
   --ui-ed-line: rgba(255, 255, 255, 0.07);
   --ui-ed-ink: #ededed;
   --ui-ed-text: #c4c4c4;
-  --ui-ed-muted: #8f8f8f;
+  --ui-ed-muted: #9a9aa2;
   --ui-ed-chip: #2a2a2d;
   --ui-ed-chip-line: rgba(255, 255, 255, 0.08);
   --ui-ed-hover: rgba(255, 255, 255, 0.05);

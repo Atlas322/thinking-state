@@ -181,7 +181,7 @@ const css = /* css */ `
   --ui-cs-card: #ffffff;
   --ui-cs-line: #f0f0f0;
   --ui-cs-ink: #171717;
-  --ui-cs-muted: #737373;
+  --ui-cs-muted: #65656d;
   --ui-cs-accent: #2f6bff;
   --ui-cs-ease: cubic-bezier(0.22, 1, 0.36, 1);
   box-sizing: border-box;
@@ -281,7 +281,7 @@ const css = /* css */ `
 }
 .ui-cs__trend[data-tone="good"] { background: #edfaf3; color: #1f8a4c; }
 .ui-cs__trend[data-tone="bad"] { background: #fff0f0; color: #e5484d; }
-.ui-cs__trend[data-tone="neutral"] { background: #f5f5f5; color: #8f8f8f; }
+.ui-cs__trend[data-tone="neutral"] { background: #f5f5f5; color: #65656d; }
 
 @keyframes ui-cs-in {
   from { opacity: 0; transform: translateY(4px); }
@@ -296,7 +296,7 @@ const css = /* css */ `
   --ui-cs-card: #232326;
   --ui-cs-line: rgba(255, 255, 255, 0.08);
   --ui-cs-ink: #ededed;
-  --ui-cs-muted: #8f8f8f;
+  --ui-cs-muted: #9a9aa2;
   --ui-cs-accent: #6b95ff;
 }
 :where(.dark, [data-theme="dark"]) .ui-cs__card {
@@ -306,7 +306,7 @@ const css = /* css */ `
 :where(.dark, [data-theme="dark"]) .ui-cs__row:hover { background: #2a2a2d; }
 :where(.dark, [data-theme="dark"]) .ui-cs__trend[data-tone="good"] { background: rgba(31, 138, 76, 0.18); color: #3fbf74; }
 :where(.dark, [data-theme="dark"]) .ui-cs__trend[data-tone="bad"] { background: rgba(229, 72, 77, 0.16); color: #f2777b; }
-:where(.dark, [data-theme="dark"]) .ui-cs__trend[data-tone="neutral"] { background: #2a2a2d; color: #8f8f8f; }
+:where(.dark, [data-theme="dark"]) .ui-cs__trend[data-tone="neutral"] { background: #2a2a2d; color: #9a9aa2; }
 `;
 
 /** Working example; use the named ChangeSummary export in your application. */

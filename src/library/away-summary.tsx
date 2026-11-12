@@ -259,8 +259,8 @@ export function AwaySummary({
 }
 
 const css = `
-.aws{--aws-bg:#fff;--aws-fg:#18181b;--aws-muted:#71717a;--aws-faint:#a1a1aa;--aws-line:#ececef;--aws-chip:#f1f1f3;--aws-blue:#3b82f6;--aws-red:#e5484d;--aws-amber:#f59e0b;display:flex;flex-direction:column;gap:14px;width:100%;max-width:600px;color:var(--aws-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .aws{--aws-bg:#1b1b1e;--aws-fg:#ececef;--aws-muted:#a1a1aa;--aws-faint:#71717a;--aws-line:#2e2e33;--aws-chip:#2a2a2f;--aws-blue:#5b9cff;--aws-red:#ff6b6f;color-scheme:dark}
+.aws{--aws-bg:#fff;--aws-fg:#18181b;--aws-muted:#65656d;--aws-faint:#65656d;--aws-line:#ececef;--aws-chip:#f1f1f3;--aws-blue:#3b82f6;--aws-red:#e5484d;--aws-amber:#f59e0b;display:flex;flex-direction:column;gap:14px;width:100%;max-width:600px;color:var(--aws-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .aws{--aws-bg:#1b1b1e;--aws-fg:#ececef;--aws-muted:#a1a1aa;--aws-faint:#9a9aa2;--aws-line:#2e2e33;--aws-chip:#2a2a2f;--aws-blue:#5b9cff;--aws-red:#ff6b6f;color-scheme:dark}
 .aws *{box-sizing:border-box}.aws button,.aws input{font:inherit;color:inherit}.aws button{cursor:pointer}
 .aws-user{align-self:flex-end;max-width:85%;padding:6px 12px;border-radius:12px;background:var(--aws-chip);font-size:14px}
 .aws-agent{display:flex;align-items:center;gap:10px;font-size:14px;margin-top:-4px}.aws-agent svg{width:18px;height:18px;flex:none}

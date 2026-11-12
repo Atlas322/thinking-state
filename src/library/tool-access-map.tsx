@@ -491,8 +491,8 @@ export function ToolAccessMap({
 }
 
 const css = `
-.tam{--tam-bg:#fff;--tam-fg:#18181b;--tam-muted:#71717a;--tam-faint:#a1a1aa;--tam-line:#ececef;--tam-chip:#ededef;--tam-blue:#3b82f6;--tam-blue-bg:#e3eefd;--ui-tamc-used:#4f86d6;--ui-tamc-off:#8a8a93;--ui-tamc-glint:#2563eb;--ui-tamc-dim:.5;--tam-red:#dc2626;--tam-amber:#b45309;--tam-amber-bg:#fdf3d7;width:100%;max-width:680px;container-type:inline-size;color:var(--tam-fg);font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
-:where(.dark,[data-theme=dark]) .tam{--tam-bg:#1f1f23;--tam-fg:#ececef;--tam-muted:#a1a1aa;--tam-faint:#71717a;--tam-line:#303036;--tam-chip:#2a2a2f;--tam-blue-bg:#1c2a40;--ui-tamc-used:#5b8fe0;--ui-tamc-off:#7a7a83;--ui-tamc-glint:#93c5fd;--tam-amber:#fbbf24;--tam-amber-bg:#3a2f12;color-scheme:dark}
+.tam{--tam-bg:#fff;--tam-fg:#18181b;--tam-muted:#65656d;--tam-faint:#65656d;--tam-line:#ececef;--tam-chip:#ededef;--tam-blue:#3b82f6;--tam-blue-fg:#1d5fb8;--tam-blue-bg:#e3eefd;--ui-tamc-used:#4f86d6;--ui-tamc-off:#8a8a93;--ui-tamc-glint:#2563eb;--ui-tamc-dim:1;--tam-red:#dc2626;--tam-amber:#b45309;--tam-amber-bg:#fdf3d7;width:100%;max-width:680px;container-type:inline-size;color:var(--tam-fg);font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
+:where(.dark,[data-theme=dark]) .tam{--tam-bg:#1f1f23;--tam-fg:#ececef;--tam-muted:#a1a1aa;--tam-faint:#9a9aa2;--tam-line:#303036;--tam-chip:#2a2a2f;--tam-blue-bg:#1c2a40;--tam-blue-fg:#93c5fd;--ui-tamc-used:#5b8fe0;--ui-tamc-off:#7a7a83;--ui-tamc-glint:#93c5fd;--tam-amber:#fbbf24;--tam-amber-bg:#3a2f12;color-scheme:dark}
 .tam *{box-sizing:border-box}.tam button{font:inherit;color:inherit;cursor:pointer}
 .tam-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .tam-logo{width:16px;height:16px;color:var(--tam-muted)}
@@ -520,7 +520,7 @@ const css = `
 .tam-tool{position:absolute;width:${CARD_W}px;height:${CARD_H}px;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:0 10px;border:1px solid var(--tam-line);border-radius:8px;background:var(--tam-bg);box-shadow:0 1px 2px #0000000a;text-align:left;transition:opacity .25s,border-color .15s,box-shadow .15s}
 .tam-tool:not(.off):not([aria-disabled]):hover{border-color:color-mix(in srgb,var(--tam-fg) 20%,var(--tam-line));box-shadow:0 2px 8px #0000000f}
 .tam-tool[aria-disabled]{cursor:default}
-.tam-tool.off{opacity:var(--ui-tamc-dim);box-shadow:none;background:transparent}
+.tam-tool.off{opacity:var(--ui-tamc-dim);box-shadow:none;background:transparent;border-style:dashed}.tam-tool.off .tam-name{color:var(--tam-muted)}
 .tam-tool.run{border-color:color-mix(in srgb,var(--tam-blue) 45%,var(--tam-line))}
 .tam-tool .tam-ico{width:16px;height:16px;border:0;background:none}
 .tam-tool .tam-ico svg{width:13px;height:13px}
@@ -530,11 +530,13 @@ const css = `
 .tam-t2{padding-left:22px;font-size:11.5px;color:var(--tam-muted);white-space:nowrap}
 .tam-t2.run{color:var(--tam-blue)}.tam-t2.fail{color:var(--tam-red)}
 .tam-agent{position:absolute;width:${AG_W}px;transform:translateY(-50%);padding:10px;border:1px solid var(--tam-line);border-radius:10px;background:var(--tam-bg);box-shadow:0 2px 10px #0000000d;animation:tam-up .3s ease-out}
-.tam-a1{display:flex;align-items:flex-start;gap:8px}
-.tam-who{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.25}
+.tam-a1{display:flex;flex-wrap:wrap;align-items:flex-start;gap:4px 8px}
+.tam-who{display:flex;flex-direction:column;min-width:0;flex:1 1 calc(100% - 40px);line-height:1.25}
 .tam-who strong{font-size:14px;font-weight:500}.tam-who span{font-size:11.5px;color:var(--tam-muted)}
+/* the state reads under the name, so longer Mongolian states never squeeze it */
+.tam-a1>.tam-badge{margin-left:32px}
 .tam-badge{display:inline-flex;align-items:center;gap:5px;padding:0 5px;border-radius:4px;font-size:11.5px;line-height:17px;background:var(--tam-chip);color:var(--tam-muted)}
-.tam-badge.running{background:var(--tam-blue-bg);color:var(--tam-blue)}
+.tam-badge.running{background:var(--tam-blue-bg);color:var(--tam-blue-fg)}
 .tam-badge.waiting{background:var(--tam-amber-bg);color:var(--tam-amber)}
 .tam-badge.failed{background:#fde8e8;color:var(--tam-red)}
 .tam-spin{width:8px;height:8px;border:1.3px solid currentColor;border-right-color:transparent;border-radius:50%;animation:tam-spin 1s linear infinite}

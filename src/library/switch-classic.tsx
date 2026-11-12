@@ -113,7 +113,7 @@ const css = /* css */ `
 /* Colors and motion as variables – override them on .ui-sw (see Theming in the docs) */
 .ui-sw {
   --ui-sw-ink: #171717;
-  --ui-sw-subtle: #8f8f8f;
+  --ui-sw-subtle: #65656d;
   --ui-sw-off: #e2e2e2;
   --ui-sw-off-hover: #d4d4d8;
   --ui-sw-on: #171717;
@@ -192,7 +192,7 @@ const css = /* css */ `
 /* Dark mode: follows a .dark class or data-theme="dark" on any ancestor, e.g. <html> */
 :where(.dark, [data-theme="dark"]) .ui-sw {
   --ui-sw-ink: #ededed;
-  --ui-sw-subtle: #8b8b92;
+  --ui-sw-subtle: #9a9aa2;
   --ui-sw-off: #3a3a3f;
   --ui-sw-off-hover: #46464c;
   --ui-sw-on: #ededed;

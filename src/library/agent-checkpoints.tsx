@@ -288,8 +288,8 @@ export function AgentCheckpoints({
 }
 
 const css = `
-.ackc{--ui-ackc-link:#82bcff;--ui-ackc-dim:.45;--ackc-bg:#fff;--ackc-fg:#18181b;--ackc-muted:#71717a;--ackc-faint:#a1a1aa;--ackc-line:#ececef;--ackc-chip:#f1f1f3;--ackc-head:#2563eb;width:100%;max-width:480px;background:var(--ackc-bg);color:var(--ackc-fg);border:1px solid var(--ackc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
-:where(.dark,[data-theme=dark]) .ackc{--ackc-bg:#1b1b1e;--ackc-fg:#ececef;--ackc-muted:#a1a1aa;--ackc-faint:#71717a;--ackc-line:#2e2e33;--ackc-chip:#2a2a2f;--ackc-head:#5b9bff;color-scheme:dark}
+.ackc{--ui-ackc-link:#82bcff;--ui-ackc-dim:.45;--ackc-bg:#fff;--ackc-fg:#18181b;--ackc-muted:#65656d;--ackc-faint:#65656d;--ackc-line:#ececef;--ackc-chip:#f1f1f3;--ackc-head:#2563eb;width:100%;max-width:480px;background:var(--ackc-bg);color:var(--ackc-fg);border:1px solid var(--ackc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+:where(.dark,[data-theme=dark]) .ackc{--ackc-bg:#1b1b1e;--ackc-fg:#ececef;--ackc-muted:#a1a1aa;--ackc-faint:#9a9aa2;--ackc-line:#2e2e33;--ackc-chip:#2a2a2f;--ackc-head:#5b9bff;color-scheme:dark}
 .ackc *{box-sizing:border-box}.ackc button{font:inherit;color:inherit;cursor:pointer}
 .ackc-bar{display:flex;align-items:center;gap:8px;padding:12px 16px 6px 16px;font-size:13px;white-space:nowrap}
 .ackc-mark{width:14px;height:14px;color:var(--ackc-muted);flex:none}

@@ -398,7 +398,7 @@ const css = /* css */ `
   --ui-fm-card-line: #e5e5e5;
   --ui-fm-ink: #171717;
   --ui-fm-text: #404040;
-  --ui-fm-muted: #8f8f8f;
+  --ui-fm-muted: #65656d;
   --ui-fm-chip: #f3f3f3;
   --ui-fm-chip-hover: #ebebeb;
   --ui-fm-box: #f0f0f0;
@@ -616,7 +616,7 @@ const css = /* css */ `
   --ui-fm-card-line: rgba(255, 255, 255, 0.08);
   --ui-fm-ink: #ededed;
   --ui-fm-text: #c4c4c4;
-  --ui-fm-muted: #8f8f8f;
+  --ui-fm-muted: #9a9aa2;
   --ui-fm-chip: #2a2a2d;
   --ui-fm-chip-hover: #313135;
   --ui-fm-box: #2a2a2d;

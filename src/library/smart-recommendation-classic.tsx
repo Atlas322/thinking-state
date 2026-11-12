@@ -323,7 +323,7 @@ const css = /* css */ `
   --ui-sr-card: #ffffff;
   --ui-sr-ink: #171717;
   --ui-sr-text: #404040;
-  --ui-sr-muted: #8f8f8f;
+  --ui-sr-muted: #65656d;
   --ui-sr-accent: #2f6bff;
   --ui-sr-ok: #1f8a4c;
   --ui-sr-focus: rgba(0, 96, 226, 0.7);
@@ -549,7 +549,7 @@ const css = /* css */ `
   --ui-sr-card: #232326;
   --ui-sr-ink: #ededed;
   --ui-sr-text: #c4c4c4;
-  --ui-sr-muted: #8f8f8f;
+  --ui-sr-muted: #9a9aa2;
   --ui-sr-ok: #3dbb6f;
   --ui-sr-focus: rgba(77, 141, 255, 0.8);
   --ui-sr-accent-text: #6b95ff;

@@ -222,8 +222,8 @@ export function AutonomyDial({
 }
 
 const css = `
-.ad{--ad-bg:#fff;--ad-fg:#18181b;--ad-muted:#71717a;--ad-faint:#a1a1aa;--ad-line:#ececef;--ad-chip:#efeff1;--ad-accent:#3b82f6;width:100%;max-width:432px;background:var(--ad-bg);color:var(--ad-fg);border:1px solid var(--ad-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .ad{--ad-bg:#1b1b1e;--ad-fg:#ececef;--ad-muted:#a1a1aa;--ad-faint:#71717a;--ad-line:#2e2e33;--ad-chip:#2a2a2f;color-scheme:dark}
+.ad{--ad-bg:#fff;--ad-fg:#18181b;--ad-muted:#65656d;--ad-faint:#65656d;--ad-line:#ececef;--ad-chip:#efeff1;--ad-accent:#3b82f6;width:100%;max-width:432px;background:var(--ad-bg);color:var(--ad-fg);border:1px solid var(--ad-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .ad{--ad-bg:#1b1b1e;--ad-fg:#ececef;--ad-muted:#a1a1aa;--ad-faint:#9a9aa2;--ad-line:#2e2e33;--ad-chip:#2a2a2f;color-scheme:dark}
 .ad *{box-sizing:border-box}.ad button{font:inherit;color:inherit;cursor:pointer}
 .ad-head{display:flex;align-items:flex-start;gap:12px;padding:18px 18px 0}
 .ad-spark{width:14px;height:14px;margin-top:12px;flex:none}

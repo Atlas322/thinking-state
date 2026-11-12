@@ -439,7 +439,7 @@ const css = /* css */ `
 /* Dark mode: follows a .dark class or data-theme="dark" on any ancestor, e.g. <html> */
 :where(.dark, [data-theme="dark"]) .ui-tl {
   --ui-tl-ink: #ededed;
-  --ui-tl-text: #8f8f8f;
+  --ui-tl-text: #9a9aa2;
   --ui-tl-ray: #ededed;
   --ui-tl-bg: #161618;
   --ui-tl-line: rgba(255, 255, 255, 0.1);

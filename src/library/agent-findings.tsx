@@ -250,8 +250,8 @@ export function AgentFindings({
 }
 
 const css = `
-.afc{--afc-bg:#fff;--afc-fg:#18181b;--afc-muted:#71717a;--afc-faint:#b4b4bb;--afc-line:#ececef;--afc-hover:#f6f6f7;--afc-track:#ececef;--afc-bar:#9fb8ea;--afc-crit:#dc2626;--afc-warn:#ea580c;--afc-note:#93b4ea;--afc-accent:#3b7cf6;width:100%;max-width:640px;background:var(--afc-bg);color:var(--afc-fg);border:1px solid var(--afc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .afc{--afc-bg:#1b1b1e;--afc-fg:#ececef;--afc-muted:#a1a1aa;--afc-faint:#5c5c64;--afc-line:#2c2c31;--afc-hover:#24242a;--afc-track:#2e2e34;--afc-bar:#5b7fc6;--afc-crit:#f87171;--afc-warn:#fb923c;--afc-note:#6b8fd0;color-scheme:dark}
+.afc{--afc-bg:#fff;--afc-fg:#18181b;--afc-muted:#65656d;--afc-faint:#65656d;--afc-line:#ececef;--afc-hover:#f6f6f7;--afc-track:#ececef;--afc-bar:#9fb8ea;--afc-crit:#dc2626;--afc-warn:#ea580c;--afc-note:#93b4ea;--afc-accent:#3b7cf6;width:100%;max-width:640px;background:var(--afc-bg);color:var(--afc-fg);border:1px solid var(--afc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .afc{--afc-bg:#1b1b1e;--afc-fg:#ececef;--afc-muted:#a1a1aa;--afc-faint:#9a9aa2;--afc-line:#2c2c31;--afc-hover:#24242a;--afc-track:#2e2e34;--afc-bar:#5b7fc6;--afc-crit:#f87171;--afc-warn:#fb923c;--afc-note:#6b8fd0;color-scheme:dark}
 .afc *{box-sizing:border-box}.afc button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;text-align:left}
 .afc-bar{display:flex;align-items:center;gap:8px;padding:14px 16px 13px 18px;border-bottom:1px solid var(--afc-line)}
 .afc-bar strong{font-weight:500}.afc-spark svg{width:12px;height:12px;display:block}

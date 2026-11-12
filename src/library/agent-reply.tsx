@@ -76,10 +76,10 @@ const defaultLabels = {
 };
 
 const css = `
-.ar{--ar-tx:#18181b;--ar-mu:#71717a;--ar-dim:#a1a1aa;--ar-bd:#e4e4e7;--ar-s1:#fafafa;--ar-s2:#f4f4f5;
+.ar{--ar-tx:#18181b;--ar-mu:#65656d;--ar-dim:#65656d;--ar-bd:#e4e4e7;--ar-s1:#fafafa;--ar-s2:#f4f4f5;
 --ar-blue:#2563eb;--ar-green:#16a34a;--ar-amber:#d97706;--ar-red:#dc2626;
 font:14px/1.6 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--ar-tx);display:flex;gap:12px;max-width:680px}
-:where(.dark,[data-theme=dark]) .ar{--ar-tx:#f4f4f5;--ar-mu:#a1a1aa;--ar-dim:#71717a;--ar-bd:#27272a;--ar-s1:#111113;--ar-s2:#18181b;
+:where(.dark,[data-theme=dark]) .ar{--ar-tx:#f4f4f5;--ar-mu:#a1a1aa;--ar-dim:#9a9aa2;--ar-bd:#27272a;--ar-s1:#111113;--ar-s2:#18181b;
 --ar-blue:#60a5fa;--ar-green:#4ade80;--ar-amber:#f59e0b;--ar-red:#f87171}
 .ar-av{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--ar-s2);border:1px solid var(--ar-bd);font-size:14px}
 .ar-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:10px}

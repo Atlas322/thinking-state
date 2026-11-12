@@ -178,8 +178,8 @@ export function ParallelAttempts({
 }
 
 const css = `
-.pa{--pa-bg:#fff;--pa-fg:#18181b;--pa-muted:#71717a;--pa-faint:#a1a1aa;--pa-line:#ececef;--pa-track:#f1f1f3;--pa-ok:#15803d;--pa-okbar:#7fc497;--pa-okwash:#f3fbf5;--pa-okline:#9fd3b0;--pa-bad:#ef4444;--pa-badbar:#f5c4c4;--pa-run:#3b82f6;container-type:inline-size;width:100%;max-width:720px;color:var(--pa-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .pa{--pa-bg:#1b1b1e;--pa-fg:#ececef;--pa-muted:#a1a1aa;--pa-faint:#71717a;--pa-line:#2e2e33;--pa-track:#2a2a2f;--pa-ok:#4ade80;--pa-okbar:#2f8a52;--pa-okwash:#16261c;--pa-okline:#24563a;--pa-bad:#f87171;--pa-badbar:#6b2c2c;--pa-run:#60a5fa;color-scheme:dark}
+.pa{--pa-bg:#fff;--pa-fg:#18181b;--pa-muted:#65656d;--pa-faint:#65656d;--pa-line:#ececef;--pa-track:#f1f1f3;--pa-ok:#15803d;--pa-okbar:#7fc497;--pa-okwash:#f3fbf5;--pa-okline:#9fd3b0;--pa-bad:#ef4444;--pa-badbar:#f5c4c4;--pa-run:#3b82f6;container-type:inline-size;width:100%;max-width:720px;color:var(--pa-fg);font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .pa{--pa-bg:#1b1b1e;--pa-fg:#ececef;--pa-muted:#a1a1aa;--pa-faint:#9a9aa2;--pa-line:#2e2e33;--pa-track:#2a2a2f;--pa-ok:#4ade80;--pa-okbar:#2f8a52;--pa-okwash:#16261c;--pa-okline:#24563a;--pa-bad:#f87171;--pa-badbar:#6b2c2c;--pa-run:#60a5fa;color-scheme:dark}
 .pa *{box-sizing:border-box}.pa button{font:inherit;cursor:pointer}
 .pa-head{display:flex;align-items:center;gap:8px;padding:0 2px 16px}
 .pa-head svg{width:14px;height:14px;color:var(--pa-run);flex:none}

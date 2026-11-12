@@ -352,10 +352,10 @@ const css = /* css */ `
 .ui-ta {
   --ui-ta-title: #171717;
   --ui-ta-ink: #171717;
-  --ui-ta-muted: #8f8f8f;
-  --ui-ta-subtle: #8f8f8f;
-  --ui-ta-faint: #b5b5b5;
-  --ui-ta-icon: #8f8f8f;
+  --ui-ta-muted: #65656d;
+  --ui-ta-subtle: #65656d;
+  --ui-ta-faint: #65656d;
+  --ui-ta-icon: #65656d;
   --ui-ta-text: #404040;
   --ui-ta-surface: #ffffff;
   --ui-ta-line: #e6e6e8;
@@ -507,10 +507,10 @@ const css = /* css */ `
   --ui-ta-title: #ededed;
   --ui-ta-ink: #ededed;
   --ui-ta-text: #c8c8cc;
-  --ui-ta-muted: #8b8b92;
-  --ui-ta-subtle: #8b8b92;
-  --ui-ta-faint: #5c5c63;
-  --ui-ta-icon: #8b8b92;
+  --ui-ta-muted: #9a9aa2;
+  --ui-ta-subtle: #9a9aa2;
+  --ui-ta-faint: #9a9aa2;
+  --ui-ta-icon: #9a9aa2;
   --ui-ta-surface: #19191b;
   --ui-ta-line: #2a2a2e;
   --ui-ta-edge: #3a3a40;

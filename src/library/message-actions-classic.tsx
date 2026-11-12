@@ -688,7 +688,7 @@ const css = /* css */ `
   --ui-ma-line: #ececec;
   --ui-ma-ink: #171717;
   --ui-ma-text: #404040;
-  --ui-ma-muted: #8f8f8f;
+  --ui-ma-muted: #65656d;
   --ui-ma-well: #f4f4f5;
   --ui-ma-hover: rgba(23, 23, 23, 0.06);
   --ui-ma-accent: #2f6bff;
@@ -854,7 +854,7 @@ const css = /* css */ `
   --ui-ma-line: #2a2a2e;
   --ui-ma-ink: #ededed;
   --ui-ma-text: #c8c8cc;
-  --ui-ma-muted: #8b8b92;
+  --ui-ma-muted: #9a9aa2;
   --ui-ma-well: #222225;
   --ui-ma-hover: rgba(255, 255, 255, 0.07);
   --ui-ma-accent: #8fb1ff;

@@ -441,7 +441,7 @@ const css = /* css */ `
   --ui-ct-card: #ffffff;
   --ui-ct-ink: #171717;
   --ui-ct-text: #404040;
-  --ui-ct-muted: #8f8f8f;
+  --ui-ct-muted: #65656d;
   --ui-ct-accent: #2f6bff;
   --ui-ct-focus: rgba(0, 96, 226, 0.7);
   --ui-ct-ok: #1f8a4c;
@@ -452,7 +452,7 @@ const css = /* css */ `
   --ui-ct-row-hover: #f5f5f5;
   --ui-ct-initials: #eef3ff;
   --ui-ct-dot: #d4d4d4;
-  --ui-ct-subtle: #a3a3a3;
+  --ui-ct-subtle: #65656d;
   --ui-ct-avatar-ring: rgba(0, 0, 0, 0.06);
   --ui-ct-ease: cubic-bezier(0.22, 1, 0.36, 1);
   box-sizing: border-box;
@@ -690,7 +690,7 @@ img.ui-ct__avatar { box-shadow: 0 0 0 1px var(--ui-ct-avatar-ring); }
   --ui-ct-card: #232326;
   --ui-ct-ink: #ededed;
   --ui-ct-text: #c4c4c4;
-  --ui-ct-muted: #8f8f8f;
+  --ui-ct-muted: #9a9aa2;
   --ui-ct-ok: #2a9d5c;
   --ui-ct-accent-text: #6b95ff;
   --ui-ct-border: rgba(255, 255, 255, 0.08);
@@ -699,7 +699,7 @@ img.ui-ct__avatar { box-shadow: 0 0 0 1px var(--ui-ct-avatar-ring); }
   --ui-ct-row-hover: rgba(255, 255, 255, 0.06);
   --ui-ct-initials: rgba(47, 107, 255, 0.16);
   --ui-ct-dot: rgba(255, 255, 255, 0.14);
-  --ui-ct-subtle: #6b6b70;
+  --ui-ct-subtle: #9a9aa2;
   --ui-ct-avatar-ring: rgba(255, 255, 255, 0.08);
 }
 :where(.dark, [data-theme="dark"]) .ui-ct__send {

@@ -252,9 +252,9 @@ export function ExperimentCard({
 }
 
 const css = `
-.ec{--ec-bg:#fff;--ec-fg:#18181b;--ec-muted:#71717a;--ec-faint:#a1a1aa;--ec-line:#ececef;--ec-soft:#f4f4f5;--ec-green:#16a34a;--ec-green-bg:#e8f7ee;--ec-red:#e5484d;--ec-red-bg:#fdecec;--ec-accent:#3b82f6;width:100%;max-width:340px;background:var(--ec-bg);color:var(--ec-fg);border:1px solid var(--ec-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif;transition:box-shadow .2s}
+.ec{--ec-bg:#fff;--ec-fg:#18181b;--ec-muted:#65656d;--ec-faint:#65656d;--ec-line:#ececef;--ec-soft:#f4f4f5;--ec-green:#16a34a;--ec-green-bg:#e8f7ee;--ec-red:#e5484d;--ec-red-bg:#fdecec;--ec-accent:#3b82f6;width:100%;max-width:340px;background:var(--ec-bg);color:var(--ec-fg);border:1px solid var(--ec-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif;transition:box-shadow .2s}
 .ec.is-open{box-shadow:0 8px 28px #00000014}
-:where(.dark,[data-theme=dark]) .ec{--ec-bg:#1b1b1e;--ec-fg:#ececef;--ec-muted:#a1a1aa;--ec-faint:#71717a;--ec-line:#2e2e33;--ec-soft:#26262b;--ec-green-bg:#16301f;--ec-red-bg:#3a1c1e;color-scheme:dark}
+:where(.dark,[data-theme=dark]) .ec{--ec-bg:#1b1b1e;--ec-fg:#ececef;--ec-muted:#a1a1aa;--ec-faint:#9a9aa2;--ec-line:#2e2e33;--ec-soft:#26262b;--ec-green-bg:#16301f;--ec-red-bg:#3a1c1e;color-scheme:dark}
 .ec *{box-sizing:border-box}.ec button{font:inherit;color:inherit;cursor:pointer}
 .ec-head{display:flex;align-items:center;gap:10px;width:100%;padding:12px 12px 12px 12px;border:0;background:none;text-align:left;border-radius:10px}
 .ec-chart{display:flex;align-items:flex-end;justify-content:center;gap:2px;width:36px;height:36px;padding:7px 6px;border:1px solid var(--ec-line);border-radius:7px;flex:none;background:var(--ec-bg)}
