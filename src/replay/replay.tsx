@@ -19,14 +19,20 @@ export type ReplayProps = {
   onReplay?: () => void;
   /** Hide the button without removing the wrapper. */
   showButton?: boolean;
+  /**
+   * "inside" (default): ↺ floats over the top-right corner.
+   * "outside": a 38 px strip is kept above the content for ↺, so it never
+   * covers the component's own top-right controls (e.g. CompanyView's methodology switch).
+   */
+  placement?: "inside" | "outside";
   className?: string;
   style?: React.CSSProperties;
 };
 
-export function Replay({ children, label = "Дахин тоглуулах", onReplay, showButton = true, className = "", style }: ReplayProps) {
+export function Replay({ children, label = "Дахин тоглуулах", onReplay, showButton = true, placement = "inside", className = "", style }: ReplayProps) {
   const [run, setRun] = React.useState(0);
   return (
-    <div className={`ts-replay ${className}`} style={style} data-run={run}>
+    <div className={`ts-replay ${className}`} style={style} data-run={run} data-placement={showButton ? placement : undefined}>
       <style>{css}</style>
       {showButton && (
         <button
@@ -63,6 +69,8 @@ export function withReplay<P extends object>(Component: React.ComponentType<P>, 
 const css = `
 .ts-replay{position:relative;width:100%;min-width:0}
 .ts-replay-body{min-width:0}
+.ts-replay[data-placement=outside]{padding-top:38px}
+.ts-replay[data-placement=outside]>.ts-replay-btn{top:0}
 .ts-replay-btn{position:absolute;top:8px;right:8px;z-index:3;display:grid;place-items:center;width:30px;height:30px;padding:0;border:1px solid var(--ts-line,#e4e4e7);border-radius:8px;background:var(--ts-surface,#fff);color:var(--ts-muted,#71717a);box-shadow:0 1px 2px #0000000f;cursor:pointer;opacity:.82;transition:opacity .15s,color .15s,background .15s,transform .2s}
 .ts-replay-btn:hover{opacity:1;color:var(--ts-fg,#18181b);background:var(--ts-soft,#f4f4f5)}
 .ts-replay-btn:active .cv-icon{transform:rotate(-120deg)}

@@ -4,6 +4,7 @@ import {
   PM_AREAS,
   PM_PHASES,
   actorOf,
+  modelLines,
   toPmArea,
   toPmPhase,
   type Company,
@@ -60,11 +61,16 @@ const LEAN: Block[] = [
   { key: "revenue", area: "rv", title: "Орлогын урсгал", hint: "Revenue Streams" },
 ];
 
-function Canvas({ c, blocks, label }: { c: Company; blocks: Block[]; label: string }) {
+function Canvas({ c, blocks, label, hideEmpty = false }: { c: Company; blocks: Block[]; label: string; hideEmpty?: boolean }) {
+  // null = not published: always hidden. Unfilled blocks only with hideEmpty.
+  const shown = blocks.filter((b) => c.model[b.key] !== null && (!hideEmpty || modelLines(c.model[b.key]).length > 0));
+  // Missing blocks break the 5-column canvas areas, so the rest flows instead.
+  const flow = shown.length < blocks.length;
+  if (!shown.length) return null;
   return (
-    <div className="cv-bmc" role="group" aria-label={label}>
-      {blocks.map((b, i) => (
-        <section key={b.key} className={`cv-bmc-cell is-${b.area}`} style={{ gridArea: b.area, "--i": i } as React.CSSProperties} aria-label={b.title}>
+    <div className={`cv-bmc${flow ? " is-flow" : ""}`} role="group" aria-label={label}>
+      {shown.map((b, i) => (
+        <section key={b.key} className={`cv-bmc-cell is-${b.area}`} style={{ gridArea: flow ? undefined : b.area, "--i": i } as React.CSSProperties} aria-label={b.title}>
           <h4>
             {b.title}
             <small>{b.hint}</small>
@@ -76,11 +82,11 @@ function Canvas({ c, blocks, label }: { c: Company; blocks: Block[]; label: stri
   );
 }
 
-function BmcView({ c, scoped }: { c: Company; scoped: Company }) {
+function BmcView({ c, scoped, hideEmpty = false }: { c: Company; scoped: Company; hideEmpty?: boolean }) {
   const notes = scoped.notes ?? [];
   return (
     <div className="cv-method">
-      <Canvas c={c} blocks={BMC} label="Business Model Canvas" />
+      <Canvas c={c} blocks={BMC} label="Business Model Canvas" hideEmpty={hideEmpty} />
       <div className="cv-below">
         <section className="cv-below-col" aria-label="Төсөл ба task">
           <h4 className="cv-below-h">Төсөл → task</h4>
@@ -382,21 +388,35 @@ function PmbokView({ c, scoped, today }: { c: Company; scoped: Company; today: D
   );
 }
 
-export function MethodologyView({ c, scoped, methodology, today = new Date() }: { c: Company; scoped: Company; methodology: Methodology; today?: Date }) {
+export function MethodologyView({
+  c,
+  scoped,
+  methodology,
+  today = new Date(),
+  hideEmpty = false,
+}: {
+  c: Company;
+  scoped: Company;
+  methodology: Methodology;
+  today?: Date;
+  /** Public pages: show only filled canvas blocks; the rest flows in an auto-fill grid. */
+  hideEmpty?: boolean;
+}) {
   if (methodology === "pmbok") return <PmbokView c={c} scoped={scoped} today={today} />;
   if (methodology === "okr") return <OkrView c={c} scoped={scoped} />;
   if (methodology === "lean-canvas")
     return (
       <div className="cv-method">
-        <Canvas c={c} blocks={LEAN} label="Lean Canvas" />
+        <Canvas c={c} blocks={LEAN} label="Lean Canvas" hideEmpty={hideEmpty} />
       </div>
     );
-  return <BmcView c={c} scoped={scoped} />;
+  return <BmcView c={c} scoped={scoped} hideEmpty={hideEmpty} />;
 }
 
 export const methodologyCss = `
 .cv-method{display:flex;flex-direction:column;gap:18px}
 .cv-bmc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-areas:"kp ka vp cr cs" "kp kr vp ch cs" "co co co rv rv";gap:6px}
+.cv-bmc.is-flow{grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));grid-template-areas:none}
 .cv-bmc-cell{min-width:0;padding:12px;border:1px solid var(--cv-line);border-radius:10px;background:var(--cv-bg);animation:cv-in .34s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 40ms)}
 .cv-bmc-cell h4{display:flex;flex-direction:column;gap:1px;margin:0 0 8px;font:600 11px/1.3 var(--ts-font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);letter-spacing:.05em;text-transform:uppercase;color:var(--cv-muted)}
 .cv-bmc-cell h4 small{font-size:10.5px;font-weight:400;letter-spacing:.03em;color:var(--cv-faint)}
