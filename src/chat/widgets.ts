@@ -12,6 +12,8 @@ export type ChatWidget = {
     Component: ComponentType<Record<string, unknown>>;
     demo: Record<string, unknown>;
   }>;
+  /** Extra CSS for static exports, e.g. to hide controls that need React. */
+  staticCss?: string;
   /** Props forced in static exports, where React state is not running. */
   staticProps?: (props: Record<string, unknown>) => Record<string, unknown>;
 };
@@ -51,6 +53,8 @@ export const chatWidgets: ChatWidget[] = [
         demo: m.sessionBoardDemo,
       })),
     // The static export shows one view; the view switch needs React.
+    // Row folding re-renders the list, so the static file hides those chevrons.
+    staticCss: ".sb-fold{visibility:hidden;pointer-events:none}.sb-card-kids .sb-kids-btn{pointer-events:none}.sb-card-kids .sb-chev{display:none}",
     staticProps: (p) => ({
       views: [(p.view as string) ?? (p.defaultView as string) ?? "groups"],
     }),

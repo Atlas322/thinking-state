@@ -38,7 +38,7 @@ export async function renderChatHtml(
   const theme = options.theme ?? "auto";
   const pinned = theme === "auto" ? "" : ` data-cw-theme="${theme}"`;
   const body =
-    `<style>${shell}</style>` +
+    `<style>${shell}${widget.staticCss ?? ""}</style>` +
     `<div class="cw-wrap">${markup.replace(/data-cw-root="([^"]+)"/, `data-cw-root="$1"${pinned}`)}</div>` +
     `<script type="application/json" data-cw-props="${slug}">${escapeJson(data)}</script>` +
     `<script>${chatRuntimeSource}</script>`;

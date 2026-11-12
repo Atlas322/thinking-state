@@ -249,7 +249,7 @@ export function PrDeployStatus({
                 </>
               );
               return (
-                <li key={p.number} className={`pd-pr is-${p.state}`} style={{ "--i": i } as React.CSSProperties}>
+                <li key={`${p.number}-${i}`} className={`pd-pr is-${p.state}`} style={{ "--i": i } as React.CSSProperties}>
                   {p.href ? (
                     <a className="pd-pr-btn" href={p.href} target="_blank" rel="noreferrer noopener" onClick={() => onPrClick?.(p)}>
                       {body}

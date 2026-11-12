@@ -51,7 +51,8 @@ export function useChatWidget(slug: string | undefined) {
     setBusy(true);
     try {
       const { renderChatHtml } = await import("./export");
-      const html = await renderChatHtml(slug, parsed.data ?? lastGood ?? undefined, {
+      if (parsed.error) throw new Error("fix the JSON in the Data tab first");
+      const html = await renderChatHtml(slug, parsed.data ?? undefined, {
         title: slug.replace(/-/g, " "),
       });
       const url = URL.createObjectURL(new Blob([html], { type: "text/html;charset=utf-8" }));
