@@ -34,6 +34,9 @@ export type ChatScenario = {
 
 export type ScenarioChatLabels = {
   list: string;
+  /** Narrow screens: the button that unfolds the other questions. */
+  more: (n: number) => string;
+  less: string;
   sources: string;
   steps: string;
   doubt: string;
@@ -42,6 +45,8 @@ export type ScenarioChatLabels = {
 };
 export const scenarioChatLabelsMn: ScenarioChatLabels = {
   list: "Асуултууд",
+  more: (n) => `Бусад асуулт (${n})`,
+  less: "Хураах",
   sources: "Санах ойгоос хайв",
   steps: "Алхам",
   doubt: "Эргэлзээ",
@@ -92,6 +97,9 @@ export function ScenarioChat({ scenarios, people = [], autoplay = true, loops = 
   const [pick, setPick] = React.useState(Math.min(defaultIndex, Math.max(0, scenarios.length - 1)));
   const [played, setPlayed] = React.useState(0);
   const [manual, setManual] = React.useState(!autoplay);
+  // narrow screens fold the list to the current question (accordion)
+  const [listOpen, setListOpen] = React.useState(false);
+  const listId = React.useId();
   const cur = scenarios[pick];
   const steps = React.useMemo(() => (cur ? phasesOf(cur) : [{ state: { at: "done", n: 0 } as Phase, hold: 1000 }]), [cur]);
   const sc = useScenario<Phase, HTMLDivElement>(steps, { loops: 1, rest: 2600 });
@@ -107,6 +115,7 @@ export function ScenarioChat({ scenarios, people = [], autoplay = true, loops = 
   const choose = (i: number) => {
     setManual(true);
     setPick(i);
+    setListOpen(false);
     onSelect?.(scenarios[i]);
   };
   const replay = () => {
@@ -130,7 +139,8 @@ export function ScenarioChat({ scenarios, people = [], autoplay = true, loops = 
       <style href="ts-scenario-chat" precedence="default">
         {CSS}
       </style>
-      <ol className="ts-sc-list" aria-label={L.list}>
+      <div className="ts-sc-side">
+      <ol className="ts-sc-list" id={listId} aria-label={L.list} data-open={listOpen || undefined}>
         {scenarios.map((s, i) => (
           <li key={s.id}>
             <button type="button" className="ts-sc-q" aria-pressed={i === pick} onClick={() => choose(i)}>
@@ -143,6 +153,13 @@ export function ScenarioChat({ scenarios, people = [], autoplay = true, loops = 
           </li>
         ))}
       </ol>
+      {scenarios.length > 1 && (
+        <button type="button" className="ts-sc-more" aria-expanded={listOpen} aria-controls={listId} onClick={() => setListOpen(!listOpen)}>
+          <Icon name="chevron-down" size={14} />
+          {listOpen ? L.less : L.more(scenarios.length - 1)}
+        </button>
+      )}
+      </div>
       <article className="ts-sc-answer" aria-live="polite" key={cur.id}>
         <p className="ts-sc-asker">
           <Icon name="user" size={14} />
@@ -213,7 +230,12 @@ export function ScenarioChat({ scenarios, people = [], autoplay = true, loops = 
 
 const CSS = `
 .ts-sc{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:var(--ts-space-5,24px);font-family:var(--ts-font,Inter,system-ui,sans-serif);color:var(--ts-fg,#080808)}
+.ts-sc-side{display:grid;gap:4px;align-content:start;min-width:0}
 .ts-sc-list{display:grid;gap:4px;align-content:start;margin:0;padding:0;list-style:none}
+.ts-sc-more{display:none;align-items:center;gap:6px;justify-self:start;height:32px;padding:0 10px;border:1px solid var(--ts-line,#d8d3c6);border-radius:var(--ts-radius-pill,999px);background:var(--ts-surface,#f7f5ee);color:var(--ts-fg,#080808);font:500 13px var(--ts-font,Inter,system-ui,sans-serif);cursor:pointer}
+.ts-sc-more .cv-icon{transition:transform var(--ts-motion-dur-sm,200ms)}
+.ts-sc-more[aria-expanded=true] .cv-icon{transform:rotate(180deg)}
+.ts-sc-more:focus-visible{outline:2px solid var(--ts-selected,#0c8ce9);outline-offset:2px}
 .ts-sc-q{display:flex;gap:10px;width:100%;padding:10px 12px;border:1px solid transparent;border-radius:var(--ts-radius-control,8px);background:none;color:var(--ts-muted,#5e5a52);font:500 14px/1.4 var(--ts-font,Inter,system-ui,sans-serif);text-align:left;cursor:pointer;transition:background var(--ts-motion-dur-xs,120ms),color var(--ts-motion-dur-xs,120ms)}
 .ts-sc-q .cv-icon{flex:none;margin-top:2px}
 .ts-sc-q small{display:block;margin-bottom:2px;font:500 11px var(--ts-font-mono,"IBM Plex Mono",monospace);letter-spacing:.04em;text-transform:uppercase;opacity:.8}
@@ -231,7 +253,7 @@ const CSS = `
 .ts-sc-sources{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
 .ts-sc-sources li{display:inline-flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;border:1px solid var(--ts-line,#d8d3c6);border-radius:var(--ts-radius-pill,999px);background:var(--ts-page,#f0ede4);font-size:13px;opacity:0;transform:translateY(6px) scale(.97);transition:opacity var(--ts-motion-dur-sm,200ms),transform var(--ts-motion-spring-settle-duration,790ms) var(--ts-motion-spring-settle,ease-out)}
 .ts-sc-sources li[data-on]{opacity:1;transform:none}
-.ts-sc-sources time{font:500 11px var(--ts-font-mono,"IBM Plex Mono",monospace);color:var(--ts-muted,#5e5a52)}
+.ts-sc-sources time{font:500 11px var(--ts-font-mono,"IBM Plex Mono",monospace);color:var(--ts-muted,#5e5a52);white-space:nowrap}
 .ts-sc-steps{display:grid;gap:6px;margin:0;padding:0;list-style:none}
 .ts-sc-steps li{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.45;color:var(--ts-muted,#5e5a52);transition:color var(--ts-motion-dur-sm,200ms)}
 .ts-sc-steps li .cv-icon{flex:none;margin-top:2px;transition:transform var(--ts-motion-spring-settle-duration,790ms) var(--ts-motion-spring-settle,ease-out)}
@@ -245,6 +267,6 @@ const CSS = `
 .ts-sc-guard.is-human:not([data-ok]){background:var(--ts-status-needs-you-bg,#fdebd6);color:var(--ts-status-needs-you-fg,#a33e0b);box-shadow:inset 0 0 0 1px var(--ts-status-needs-you-border,#f2c597)}
 .ts-sc-guard[data-ok]{background:var(--ts-status-done-bg,#e3eadf);color:var(--ts-status-done-fg,#3f5e41);box-shadow:inset 0 0 0 1px var(--ts-status-done-border,#bfd2bb)}
 .ts-sc-fiction{margin:0;font:500 11px var(--ts-font-mono,"IBM Plex Mono",monospace);color:var(--ts-faint,#8f8a80)}
-@media (max-width:720px){.ts-sc{grid-template-columns:minmax(0,1fr)}.ts-sc-list{grid-auto-flow:column;grid-auto-columns:minmax(220px,80%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}.ts-sc-list li{scroll-snap-align:start}.ts-sc-answer{padding:var(--ts-space-4,16px)}}
+@media (max-width:720px){.ts-sc{grid-template-columns:minmax(0,1fr);gap:var(--ts-space-4,16px)}.ts-sc-more{display:inline-flex}.ts-sc-list:not([data-open]) li:not(:has(.ts-sc-q[aria-pressed=true])){display:none}.ts-sc-answer{padding:var(--ts-space-4,16px)}}
 @media (prefers-reduced-motion:reduce){.ts-sc *{transition:none!important}}
 `;
