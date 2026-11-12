@@ -19,11 +19,12 @@ export const DURATIONS = {
 } as const;
 
 /**
- * Loop rhythm: 0.9–2.4 s of motion, then 3–6 s of rest; at most `count`
- * cycles, then the rest pose until hover or the region re-enters the viewport.
- * `stagger` between siblings, top layer first.
+ * Default loop rhythm: `move` ms of motion, then `rest` ms still (icons set
+ * their own, 0.9–3 s + 2–6 s); at most `count` cycles, then the rest pose
+ * until hover or the region re-enters the viewport. `stagger` between
+ * siblings, top layer first.
  */
-export const LOOP = { period: 5000, count: 3, stagger: 100 } as const;
+export const LOOP = { move: 1200, rest: 4000, count: 3, stagger: 100 } as const;
 
 /** Bezier easings. */
 export const EASINGS = {
@@ -59,7 +60,7 @@ export const motionVar = {
 export function motionTokensCss() {
   const lines: string[] = [];
   for (const [n, v] of Object.entries(DURATIONS)) lines.push(`  --ts-motion-dur-${n}: ${v}ms;`);
-  lines.push(`  --ts-motion-loop-period: ${LOOP.period}ms;`, `  --ts-motion-loop-count: ${LOOP.count};`, `  --ts-motion-stagger: ${LOOP.stagger}ms;`);
+  lines.push(`  --ts-motion-loop-move: ${LOOP.move}ms;`, `  --ts-motion-loop-rest: ${LOOP.rest}ms;`, `  --ts-motion-loop-period: ${LOOP.move + LOOP.rest}ms;`, `  --ts-motion-loop-count: ${LOOP.count};`, `  --ts-motion-stagger: ${LOOP.stagger}ms;`);
   for (const [n, v] of Object.entries(EASINGS)) lines.push(`  --ts-motion-ease-${n}: ${v};`);
   for (const n of Object.keys(SPRINGS) as SpringName[]) {
     const e = spring(n);
