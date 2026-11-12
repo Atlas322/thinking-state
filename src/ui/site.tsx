@@ -5,9 +5,12 @@
  * icons come from the --ts-* tokens and the system icon map.
  *
  * NavBar: links and mega menus (headed groups of icon rows + one featured
- * next step), an outbound «inside» link, an actions slot (theme toggle,
+ * card per menu), an outbound «inside» link, an actions slot (theme toggle,
  * CTA); on phones the same map folds into one-column-at-a-time accordions.
- * Escape closes. Footer: brand block, the map's columns, and a bottom line
+ * Mega menus (2026-11-13): the bar's full height belongs to the menu, so
+ * the pointer never crosses a gap; leaving waits 280 ms (hover intent); a
+ * click pins the menu open until another click, a click outside or Escape;
+ * touch and pen only open on tap. Footer: brand block, the map's columns, and a bottom line
  * with the source and date of the site's numbers.
  */
 import * as React from "react";
@@ -41,10 +44,20 @@ export function Wordmark({ href = "index.html", label = "INAI — Нүүр", siz
 
 export type NavLink = { label: string; href: string; icon: IconName; note?: string };
 export type NavGroup = { label: string; links: NavLink[] };
+/** The featured card on the right of a mega menu: icon tile → eyebrow → title → body → CTA at the bottom. */
+export type NavFeatured = { icon: IconName; eyebrow: string; title: string; body: string; cta: string; href: string };
+/** @deprecated use NavFeatured (`featured`); kept so older hosts keep working. */
 export type NavFeature = { kicker: string; title: string; text: string; cta: string; href: string; icon: IconName };
 export type NavItem =
   | { kind: "link"; label: string; href: string; icon?: IconName; match?: string[] }
-  | { kind: "menu"; id: string; label: string; groups: NavGroup[]; feature?: NavFeature };
+  | { kind: "menu"; id: string; label: string; groups: NavGroup[]; featured?: NavFeatured; /** @deprecated */ feature?: NavFeature };
+
+/** Leaving a menu with the pointer closes it after this long (hover intent). */
+export const MEGA_CLOSE_DELAY = 280;
+
+const featuredOf = (item: Extract<NavItem, { kind: "menu" }>): NavFeatured | null =>
+  item.featured ??
+  (item.feature ? { icon: item.feature.icon, eyebrow: item.feature.kicker, title: item.feature.title, body: item.feature.text, cta: item.feature.cta, href: item.feature.href } : null);
 
 export type NavBarLabels = { main: string; mobile: string; open: string; close: string };
 export const navBarLabelsMn: NavBarLabels = { main: "Үндсэн цэс", mobile: "Гар утасны цэс", open: "Цэс нээх", close: "Цэс хаах" };
@@ -85,6 +98,45 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
   const [own, setOwn] = React.useState<string | null>(null);
   const menu = openMenu !== undefined ? openMenu : own;
   const setMenu = (id: string | null) => (openMenu === undefined && setOwn(id), onOpenMenuChange?.(id));
+  // pinned: opened by a click (or keyboard), stays until closed on purpose
+  const [pinned, setPinned] = React.useState(false);
+  const closeTimer = React.useRef<number | undefined>(undefined);
+  const cancelClose = () => window.clearTimeout(closeTimer.current);
+  React.useEffect(() => () => window.clearTimeout(closeTimer.current), []);
+  const headerRef = React.useRef<HTMLElement>(null);
+  const triggers = React.useRef<Record<string, HTMLButtonElement | null>>({});
+  const close = (focusTrigger = false) => {
+    cancelClose();
+    const was = menu;
+    setPinned(false);
+    setMenu(null);
+    if (focusTrigger && was) triggers.current[was]?.focus();
+  };
+  const hoverOpen = (e: React.PointerEvent, id: string) => {
+    if (e.pointerType !== "mouse" || pinned) return; // touch / pen: tap only
+    cancelClose();
+    setMenu(id);
+  };
+  const hoverLeave = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse" || pinned || !menu) return;
+    cancelClose();
+    closeTimer.current = window.setTimeout(() => setMenu(null), MEGA_CLOSE_DELAY);
+  };
+  const clickTrigger = (id: string) => {
+    cancelClose();
+    if (menu === id && pinned) return close();
+    setPinned(true);
+    setMenu(id);
+  };
+  // a pinned menu closes on a click outside the bar
+  React.useEffect(() => {
+    if (!menu || !pinned) return;
+    const onDown = (e: PointerEvent) => {
+      if (!headerRef.current?.contains(e.target as Node)) close();
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  });
   const [phone, setPhone] = React.useState(false);
   const owner = items.find((i) => i.kind === "menu" && i.groups.some((g) => g.links.some((l) => l.href === current)));
   const [section, setSection] = React.useState<string | null>(owner && owner.kind === "menu" ? owner.id : null);
@@ -94,19 +146,19 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
     if (!phone && !menu) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
+      if (menu) return close(true);
       setPhone(false);
-      setMenu(null);
       toggle.current?.focus();
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   });
   return (
-    <header className={cx("ts-navbar", sticky && "is-sticky", className)}>
+    <header ref={headerRef} className={cx("ts-navbar", sticky && "is-sticky", className)}>
       <SiteStyles />
       <div className="ts-nav-inner">
         <span className="ts-nav-brand">{brand ?? <Wordmark />}</span>
-        <nav className="ts-nav-desktop" aria-label={L.main} onMouseLeave={() => setMenu(null)}>
+        <nav className="ts-nav-desktop" aria-label={L.main} onPointerLeave={hoverLeave} onPointerEnter={(e) => e.pointerType === "mouse" && menu && cancelClose()}>
           {items.map((item) =>
             item.kind === "link" ? (
               <a key={item.href} className="ts-nav-link" href={item.href} aria-current={item.href === current || item.match?.includes(current ?? "") ? "page" : undefined}>
@@ -114,13 +166,23 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
                 {item.label}
               </a>
             ) : (
-              <div key={item.id} className="ts-mega" onMouseEnter={() => setMenu(item.id)}>
+              <div key={item.id} className="ts-mega" onPointerEnter={(e) => hoverOpen(e, item.id)}>
                 <button
                   type="button"
-                  className={cx("ts-mega-trigger", owner === item && "is-here")}
+                  ref={(el) => {
+                    triggers.current[item.id] = el;
+                  }}
+                  className={cx("ts-mega-trigger", owner === item && "is-here", menu === item.id && pinned && "is-pinned")}
                   aria-expanded={menu === item.id}
                   aria-controls={`${uid}-mega-${item.id}`}
-                  onClick={() => setMenu(menu === item.id ? null : item.id)}
+                  onClick={() => clickTrigger(item.id)}
+                  onKeyDown={(e) => {
+                    if (e.key !== "ArrowDown") return;
+                    e.preventDefault();
+                    setPinned(true);
+                    setMenu(item.id);
+                    window.setTimeout(() => document.getElementById(`${uid}-mega-${item.id}`)?.querySelector<HTMLElement>("a")?.focus(), 0);
+                  }}
                 >
                   {item.label} <Icon name="chevron-down" size={14} />
                 </button>
@@ -130,24 +192,29 @@ export function NavBar({ items, current, brand, inside, actions, openMenu, onOpe
                       <div key={g.label} className="ts-mega-group">
                         <span className="ts-mega-h">{g.label}</span>
                         {g.links.map((l) => (
-                          <NavRow key={l.href} l={l} current={current} />
+                          <NavRow key={l.href} l={l} current={current} onClick={() => close()} />
                         ))}
                       </div>
                     ))}
                   </div>
-                  {item.feature && (
-                    <a className="ts-mega-feature" href={item.feature.href}>
-                      <span className="ts-nav-ico is-accent">
-                        <Icon name={item.feature.icon} size={18} />
-                      </span>
-                      <span className="ts-mega-k">{item.feature.kicker}</span>
-                      <b>{item.feature.title}</b>
-                      <small>{item.feature.text}</small>
-                      <span className="ts-mega-cta">
-                        {item.feature.cta} <Icon name="arrow-right" size={14} />
-                      </span>
-                    </a>
-                  )}
+                  {(() => {
+                    const f = featuredOf(item);
+                    return (
+                      f && (
+                        <a className="ts-mega-feature" href={f.href} onClick={() => close()}>
+                          <span className="ts-nav-ico is-accent">
+                            <Icon name={f.icon} size={18} />
+                          </span>
+                          <span className="ts-mega-k">{f.eyebrow}</span>
+                          <b>{f.title}</b>
+                          <small>{f.body}</small>
+                          <span className="ts-mega-cta">
+                            {f.cta} <Icon name="arrow-right" size={14} />
+                          </span>
+                        </a>
+                      )
+                    );
+                  })()}
                 </div>
               </div>
             ),
@@ -299,17 +366,18 @@ export const SITE_CSS = `
 .ts-navbar.is-sticky{position:sticky;top:0}
 .ts-nav-inner{position:relative;display:flex;align-items:center;gap:var(--ts-space-5,24px);min-height:60px;max-width:var(--ts-page-max,1200px);margin:0 auto;padding:0 var(--ts-space-5,24px)}
 .ts-nav-brand{flex:none}
-.ts-nav-desktop{display:flex;align-items:center;gap:2px;flex:1;min-width:0}
+.ts-nav-desktop{display:flex;align-items:center;align-self:stretch;gap:2px;flex:1;min-width:0}
 .ts-nav-link,.ts-mega-trigger{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:0;border-radius:var(--ts-radius-control,8px);background:none;color:var(--ts-muted,#5e5a52);font:500 14px var(--ts-font,Inter,system-ui,sans-serif);text-decoration:none;white-space:nowrap;cursor:pointer;transition:background var(--ts-motion-dur-xs,120ms),color var(--ts-motion-dur-xs,120ms)}
 .ts-nav-link:hover,.ts-mega-trigger:hover,.ts-mega-trigger[aria-expanded=true],.ts-mega-trigger.is-here{background:var(--ts-soft,#efebe1);color:var(--ts-fg,#080808)}
 .ts-nav-link[aria-current=page]{background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff)}
 .ts-nav-link.is-inside{margin-left:auto;color:color-mix(in srgb,var(--ts-accent-fg,#1b5cff) 88%,var(--ts-fg,#080808))}
 .ts-mega-trigger .cv-icon{transition:transform var(--ts-motion-dur-sm,200ms) var(--ts-motion-ease-standard,ease)}
 .ts-mega-trigger[aria-expanded=true] .cv-icon{transform:rotate(180deg)}
-.ts-mega{position:static}
+.ts-mega{position:static;display:flex;align-items:center;align-self:stretch}
 .ts-mega-panel{position:absolute;top:100%;left:0;right:0;z-index:50;display:flex;align-items:stretch;border:1px solid var(--ts-line,#d8d3c6);border-top:0;border-radius:0 0 var(--ts-radius-card,12px) var(--ts-radius-card,12px);background:var(--ts-surface,#f7f5ee);box-shadow:0 24px 48px -24px rgb(0 0 0 / .3);animation:ts-mega-in var(--ts-motion-spring-soft-duration,700ms) var(--ts-motion-spring-soft,ease-out) both}
 .ts-mega-panel[hidden]{display:none}
-.ts-mega-panel::before{content:"";position:absolute;left:0;right:0;top:-8px;height:8px}
+.ts-mega-panel::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+.ts-mega-trigger.is-pinned{box-shadow:inset 0 -2px 0 var(--ts-selected,#0c8ce9)}
 @keyframes ts-mega-in{from{opacity:0;transform:translateY(-6px)}}
 .ts-mega-groups{flex:1;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);padding:20px 8px 20px 16px;min-width:0}
 .ts-mega-group{display:grid;align-content:start;gap:2px;min-width:0;padding:0 16px}
@@ -325,7 +393,7 @@ export const SITE_CSS = `
 .ts-nav-row:hover .ts-nav-ico{transform:scale(1.06)}
 .ts-nav-row[aria-current=page] .ts-nav-ico{background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff)}
 .ts-mega-feature{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:300px;flex:none;padding:24px;border-left:1px solid var(--ts-line,#d8d3c6);background:var(--ts-page,#f0ede4);color:var(--ts-fg,#080808);text-decoration:none;border-radius:0 0 var(--ts-radius-card,12px) 0}
-.ts-mega-feature .ts-nav-ico{margin-bottom:8px}
+.ts-mega-feature .ts-nav-ico{width:40px;height:40px;margin-bottom:8px}
 .ts-mega-k{font-size:12px;font-weight:600;color:var(--ts-accent-fg,#1b5cff)}
 .ts-mega-feature b{font-size:16px;line-height:1.3}
 .ts-mega-feature small{font-size:13px;line-height:1.5;color:var(--ts-muted,#5e5a52)}

@@ -29,7 +29,7 @@ export const DEMO_NAV: NavItem[] = [
         ],
       },
     ],
-    feature: { kicker: "Шинэ", title: "Thinking State", text: "Компанийн тархийг апп болгон хар.", cta: "Үзэх", href: "#ts", icon: "layers" },
+    featured: { icon: "layers", eyebrow: "Шинэ", title: "Thinking State", body: "Компанийн тархийг апп болгон хар.", cta: "Үзэх", href: "#ts" },
   },
   {
     kind: "menu",
@@ -46,6 +46,7 @@ export const DEMO_NAV: NavItem[] = [
         ],
       },
     ],
+    featured: { icon: "users", eyebrow: "Жишээ", title: "Багийн тархи 30 хоногт", body: "5 хүнтэй баг нэг сан, нэг самбартай болсон түүх.", cta: "Кейс унших", href: "#case" },
   },
   { kind: "link", label: "Үнэ", href: "#pricing", icon: "tag" },
   { kind: "link", label: "Нөөц", href: "#resources", icon: "book-open" },

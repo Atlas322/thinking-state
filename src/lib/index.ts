@@ -62,8 +62,8 @@ export { Badge, Button, Card, IconTile, Pill, PrimitiveStyles, PRIMITIVES_CSS, S
 export type { BadgeTone, IconTileTone, StatusTone, ButtonProps, ButtonVariant, CardProps, PillProps, SplitCTAProps, TabItem, TabsProps, TextVariant } from "../ui/primitives";
 
 // Site chrome and story components (one design system for the app and the site)
-export { Footer, NavBar, Wordmark, navBarLabelsMn } from "../ui/site";
-export type { FooterColumn, FooterProps, NavBarLabels, NavBarProps, NavFeature, NavGroup, NavItem, NavLink } from "../ui/site";
+export { Footer, NavBar, Wordmark, navBarLabelsMn, MEGA_CLOSE_DELAY } from "../ui/site";
+export type { FooterColumn, FooterProps, NavBarLabels, NavBarProps, NavFeature, NavFeatured, NavGroup, NavItem, NavLink } from "../ui/site";
 export { ScenarioChat, scenarioChatLabelsMn } from "../ui/scenario-chat";
 export type { ChatScenario, ChatSourceType, ScenarioChatLabels, ScenarioChatProps } from "../ui/scenario-chat";
 export { AgentConsent, agentConsentLabelsMn } from "../ui/agent-consent";
