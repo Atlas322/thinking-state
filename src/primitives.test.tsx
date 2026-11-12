@@ -103,8 +103,8 @@ describe("Badge / Card / Text", () => {
 });
 
 describe("styles", () => {
-  it("selected state is #0C8CE9 with white text, controls have no outer margin", () => {
-    expect(PRIMITIVES_CSS).toContain(".ts-pill.is-selected,.ts-tab.is-selected{border-color:transparent;background:var(--ts-selected,#0c8ce9);color:var(--ts-on-selected,#fff)}");
+  it("selected fill is #0A7ACB (4.5:1 under white text), controls have no outer margin", () => {
+    expect(PRIMITIVES_CSS).toContain(".ts-pill.is-selected,.ts-tab.is-selected{border-color:transparent;background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff)}");
     for (const cls of [".ts-btn{", ".ts-pill{", ".ts-tabs{", ".ts-tab{", ".ts-cta{"]) {
       const rule = PRIMITIVES_CSS.slice(PRIMITIVES_CSS.indexOf(cls), PRIMITIVES_CSS.indexOf("}", PRIMITIVES_CSS.indexOf(cls)));
       expect(rule, cls).not.toMatch(/(^|[;{])margin/);
