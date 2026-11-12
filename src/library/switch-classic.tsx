@@ -113,7 +113,7 @@ const css = /* css */ `
 /* Colors and motion as variables – override them on .ui-sw (see Theming in the docs) */
 .ui-sw {
   --ui-sw-ink: #171717;
-  --ui-sw-subtle: #8f8f8f;
+  --ui-sw-subtle: #65656d;
   --ui-sw-off: #e2e2e2;
   --ui-sw-off-hover: #d4d4d8;
   --ui-sw-on: #171717;
@@ -192,7 +192,7 @@ const css = /* css */ `
 /* Dark mode: follows a .dark class or data-theme="dark" on any ancestor, e.g. <html> */
 :where(.dark, [data-theme="dark"]) .ui-sw {
   --ui-sw-ink: #ededed;
-  --ui-sw-subtle: #8b8b92;
+  --ui-sw-subtle: #9a9aa2;
   --ui-sw-off: #3a3a3f;
   --ui-sw-off-hover: #46464c;
   --ui-sw-on: #ededed;
@@ -206,22 +206,22 @@ const css = /* css */ `
 /** Working example; use the named Switch export in your application. */
 export default function Demo() {
   const rows = [
-    { label: "Daily digest", description: "Approvals waiting, runs that finished or failed", on: true },
-    { label: "Weekly usage report", description: "Credits spent and the busiest agents, every Monday", on: false },
-    { label: "Hold pushes at night", description: "Mobile pushes wait until morning", on: true },
-    { label: "Sound on new messages", description: "Needs the desktop app", on: false, disabled: true },
+    { label: "Өдрийн тойм", description: "Батлах хүсэлт, дууссан эсвэл алдаатай ажиллагаа", on: true },
+    { label: "Долоо хоногийн хэрэглээ", description: "Зарцуулсан кредит ба хамгийн ачаалалтай агентууд, даваа бүр", on: false },
+    { label: "Шөнө мэдэгдэл хойшлуулах", description: "Утасны мэдэгдэл өглөө хүртэл хүлээнэ", on: true },
+    { label: "Шинэ мессежийн дуу", description: "Компьютерийн аппликейшн шаардлагатай", on: false, disabled: true },
   ];
   return (
     <div style={{ width: "100%", maxWidth: 400, margin: "0 auto", display: "grid", gap: 16 }}>
       <div style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.06)", borderRadius: 12, boxShadow: "0 1px 2px rgba(0,0,0,0.04)", padding: "4px 16px" }}>
         {rows.map((r, i) => (
           <div key={r.label} style={{ padding: "12px 0", borderTop: i ? "1px solid rgba(0,0,0,0.06)" : undefined }}>
-            <Switch placement="end" label={r.label} description={r.description} defaultChecked={r.on} disabled={r.disabled} />
+            <Switch placement="end" value="1" label={r.label} description={r.description} defaultChecked={r.on} disabled={r.disabled} />
           </div>
         ))}
       </div>
       <div style={{ paddingLeft: 4 }}>
-        <Switch size="sm" label="Compact rows" />
+        <Switch size="sm" value="1" label="Нягт мөр" />
       </div>
     </div>
   );

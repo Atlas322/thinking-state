@@ -30,7 +30,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
  * One white chip with hairline shadows, a thin eight-ray spinner in the accent blue and a quiet gray
  * label with a darker band sweeping over it. The label walks through phases (Thinking → Searching
  * the web → …): the old one rolls up and blurs out, the new one rolls in, and the chip glides to its
- * new width. When done, the spinner turns into a check and the label settles on "Thought for 6s".
+ * new width. When done, the spinner turns into a check and the label settles on "6 с бодсон".
  * The styles are injected below, so no extra files are needed.
  */
 
@@ -54,21 +54,21 @@ export type ThinkingLoaderProps = {
 };
 
 const DEFAULT_PHASES = [
-  "Thinking",
-  "Searching the web",
-  "Reading sources",
-  "Writing response",
+  "Бодож байна",
+  "Вэбээс хайж байна",
+  "Эх сурвалж уншиж байна",
+  "Хариулт бичиж байна",
 ];
 const RAYS = Array.from({ length: 8 }, (_, i) => i);
-// 75s reads "1m 15s", a long run "2h 05m" or "3d 4h"
+// 75s reads "1 мин 15 с", a long run "2 цаг 05 мин" or "3 өдөр 4 цаг"
 const took = (s: number) => {
-  if (s < 60) return `${s}s`;
+  if (s < 60) return `${s} с`;
   const m = Math.floor(s / 60);
-  if (m < 60) return `${m}m ${s % 60}s`;
+  if (m < 60) return `${m} мин ${s % 60} с`;
   const h = Math.floor(m / 60);
   return h < 24
-    ? `${h}h ${String(m % 60).padStart(2, "0")}m`
-    : `${Math.floor(h / 24)}d ${h % 24}h`;
+    ? `${h} цаг ${String(m % 60).padStart(2, "0")} мин`
+    : `${Math.floor(h / 24)} өдөр ${h % 24} цаг`;
 };
 
 export function ThinkingLoader({
@@ -77,7 +77,7 @@ export function ThinkingLoader({
   phase,
   loop = false,
   done = false,
-  doneLabel = (s) => `Thought for ${took(s)}`,
+  doneLabel = (s) => `${took(s)} бодсон`,
   size = "md",
   variant = "pill",
   className,
@@ -471,7 +471,7 @@ export default function Demo() {
           lineHeight: 1.45,
         }}
       >
-        Which CRM fits a 10-person sales team best?
+        10 хүнтэй борлуулалтын багт аль CRM хамгийн тохирох вэ?
       </div>
       <div style={{ alignSelf: "flex-start" }}>
         <ThinkingLoader done={done} />

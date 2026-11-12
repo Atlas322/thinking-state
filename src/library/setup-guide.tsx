@@ -19,22 +19,22 @@ export type SetupGuideProps = {
 const defaultGroups: SetupGroup[] = [
   {
     id: "workspace",
-    title: "Set up your workspace",
+    title: "Ажлын орчноо тохируулах",
     tasks: [
-      { id: "name", label: "Choose a workspace name" },
-      { id: "invite", label: "Invite your teammates to collaborate" },
-      { id: "calendar", label: "Connect your calendar" },
+      { id: "name", label: "Ажлын орчны нэр сонгох" },
+      { id: "invite", label: "Багийн гишүүдээ хамтран ажиллахаар урих" },
+      { id: "calendar", label: "Хуанлиа холбох" },
     ],
   },
   {
     id: "billing",
-    title: "Set up billing",
+    title: "Төлбөрийн тохиргоо",
     tasks: [
-      { id: "payment", label: "Add a payment method" },
-      { id: "plan", label: "Choose a plan" },
+      { id: "payment", label: "Төлбөрийн хэрэгсэл нэмэх" },
+      { id: "plan", label: "Багц сонгох" },
     ],
   },
-  { id: "verify", title: "Verify your account", tasks: [{ id: "email", label: "Confirm your email address", done: true }] },
+  { id: "verify", title: "Бүртгэлээ баталгаажуулах", tasks: [{ id: "email", label: "Имэйл хаягаа баталгаажуулах", done: true }] },
 ];
 
 const Chevron = ({ up }: { up?: boolean }) => (
@@ -45,7 +45,7 @@ const Chevron = ({ up }: { up?: boolean }) => (
 
 export function SetupGuide({
   groups = defaultGroups,
-  title = "Setup guide",
+  title = "Тохиргооны заавар",
   onEdit = () => {},
   onClose = () => {},
   onChange,
@@ -83,20 +83,20 @@ export function SetupGuide({
           <strong>{title}</strong>
           {onEdit && (
             <button type="button" className="sg-edit" onClick={onEdit}>
-              Edit
+              Засах
             </button>
           )}
-          <button type="button" className="sg-ib" aria-label={mini ? "Expand" : "Minimize"} aria-expanded={!mini} onClick={() => setMini((m) => !m)}>
+          <button type="button" className="sg-ib" aria-label={mini ? "Дэлгэх" : "Хураах"} aria-expanded={!mini} onClick={() => setMini((m) => !m)}>
             <svg viewBox="0 0 16 16"><path d={mini ? "M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" : "M13 3 9.5 6.5M9.5 3v3.5H13M3 13l3.5-3.5M6.5 13V9.5H3"} fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
           {onClose && (
-            <button type="button" className="sg-ib" aria-label="Close" onClick={() => { setClosed(true); onClose(); }}>
+            <button type="button" className="sg-ib" aria-label="Хаах" onClick={() => { setClosed(true); onClose(); }}>
               <svg viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
             </button>
           )}
         </div>
         <div className="sg-prog">
-          <div className="sg-bar" role="progressbar" aria-label="Setup progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct * 100)}>
+          <div className="sg-bar" role="progressbar" aria-label="Тохиргооны явц" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(pct * 100)}>
             <span style={{ width: `${pct * 100}%` }} />
           </div>
           <span className="sg-count">
@@ -152,8 +152,8 @@ export function SetupGuide({
 }
 
 const css = `
-.sg{--sg-bg:#fff;--sg-fg:#18181b;--sg-muted:#71717a;--sg-faint:#a1a1aa;--sg-line:#ececef;--sg-soft:#f6f6f7;--sg-accent:#3b82f6;--sg-track:#e9e9ec;width:100%;max-width:320px;background:var(--sg-bg);color:var(--sg-fg);border:1px solid var(--sg-line);border-radius:10px;box-shadow:0 1px 3px #0000000d;font:400 13.5px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .sg{--sg-bg:#1b1b1e;--sg-fg:#ececef;--sg-muted:#a1a1aa;--sg-faint:#71717a;--sg-line:#2e2e33;--sg-soft:#242428;--sg-accent:#60a5fa;--sg-track:#2e2e33;color-scheme:dark}
+.sg{--sg-bg:#fff;--sg-fg:#18181b;--sg-muted:#65656d;--sg-faint:#65656d;--sg-line:#ececef;--sg-soft:#f6f6f7;--sg-accent:#3b82f6;--sg-track:#e9e9ec;width:100%;max-width:320px;background:var(--sg-bg);color:var(--sg-fg);border:1px solid var(--sg-line);border-radius:10px;box-shadow:0 1px 3px #0000000d;font:400 13.5px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .sg{--sg-bg:#1b1b1e;--sg-fg:#ececef;--sg-muted:#a1a1aa;--sg-faint:#9a9aa2;--sg-line:#2e2e33;--sg-soft:#242428;--sg-accent:#60a5fa;--sg-track:#2e2e33;color-scheme:dark}
 .sg *{box-sizing:border-box}.sg button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
 .sg-head{padding:14px 12px 12px 16px;border-bottom:1px solid var(--sg-line)}
 .sg-top{display:flex;align-items:center;gap:4px}

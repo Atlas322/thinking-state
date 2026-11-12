@@ -32,53 +32,53 @@ export type CitedAnswerProps = {
 const defaultSources: CitedSource[] = [
   {
     id: "tokenwise",
-    title: "Prompt caching, explained",
+    title: "Промпт кэшлэх нь юу вэ",
     site: "tokenwise.dev",
-    date: "Jul 18, 2026",
+    date: "2026-07-18",
     url: "https://example.com/tokenwise",
     quote:
-      "Providers reuse the processed prefix of a prompt. On prompts over 10K tokens that can cut time to first token by up to 80%.",
-    highlight: "cut time to first token by up to 80%",
+      "Үйлчилгээ үзүүлэгч промптын боловсруулсан эхлэлийг дахин ашигладаг. 10K-аас дээш токентой промпт дээр эхний токен хүртэлх хугацааг 80% хүртэл богиносгодог.",
+    highlight: "эхний токен хүртэлх хугацааг 80% хүртэл богиносгодог",
   },
   {
     id: "latency",
-    title: "Designing cache-friendly prompts",
+    title: "Кэшэд ээлтэй промпт зохиох",
     site: "latencynotes.io",
-    date: "Aug 2, 2026",
+    date: "2026-08-02",
     url: "https://example.com/latency",
     quote:
-      "Keep the stable part – system prompt, tool definitions, long documents – at the very start, and put anything that changes per request after it. A single changed character early on invalidates everything behind it.",
-    highlight: "at the very start",
+      "Тогтвортой хэсгийг – системийн промпт, хэрэгслийн тодорхойлолт, урт баримт бичгийг – хамгийн эхэнд байрлуулж, хүсэлт бүрт өөрчлөгддөг зүйлийг ард нь тавь. Эхэнд нэг тэмдэгт өөрчлөгдөхөд араас нь бүх зүйл хүчингүй болно.",
+    highlight: "хамгийн эхэнд",
   },
   {
     id: "weekly",
-    title: "Semantic caches in production",
+    title: "Үйлдвэрлэлийн орчин дахь утгын кэш",
     site: "inferenceweekly.com",
-    date: "Sep 9, 2026",
+    date: "2026-09-09",
     url: "https://example.com/weekly",
     quote:
-      "Close matches were answered from the cache in about 40 ms, covering nearly a third of FAQ-style traffic.",
-    highlight: "about 40 ms",
+      "Ойролцоо асуултад кэшээс 40 ms орчимд хариулж, түгээмэл асуултын урсгалын бараг гуравны нэгийг хамарсан.",
+    highlight: "40 ms орчимд",
   },
 ];
 
 const defaultSegments: CitedSegment[] = [
   {
-    text: "The biggest win is prompt caching: the provider reuses the processed start of your prompt, so a long system prompt isn't recomputed on every call.",
+    text: "Хамгийн том хожил бол промпт кэшлэх: үйлчилгээ үзүүлэгч промптын боловсруулсан эхлэлийг дахин ашигладаг тул урт системийн промптыг дуудлага бүрт дахин тооцоолохгүй.",
     cite: ["tokenwise"],
   },
-  { text: " On prompts over 10K tokens that can cut time to first token by up to 80%.", cite: ["tokenwise"] },
+  { text: " 10K-аас дээш токентой промпт дээр энэ нь эхний токен хүртэлх хугацааг 80% хүртэл богиносгодог.", cite: ["tokenwise"] },
   {
-    text: " It only works while that start stays identical, so put the system prompt, tools and long documents first and anything that changes per request last.",
+    text: " Энэ нь эхлэл нь ижил байх үед л ажилладаг тул системийн промпт, хэрэгсэл, урт баримт бичгийг эхэнд, хүсэлт бүрт өөрчлөгддөг зүйлийг төгсгөлд нь тавь.",
     cite: ["latency", "tokenwise"],
   },
   {
-    text: "For repeated questions, add a semantic cache in front of the model: close matches get a stored answer in about 40 ms,",
+    text: "Давтагддаг асуултад загварын өмнө утгын кэш нэм: ойролцоо асуултад хадгалсан хариултыг 40 ms орчимд өгнө,",
     cite: ["weekly"],
     paragraph: true,
   },
-  { text: " which covered nearly a third of FAQ-style traffic in one production setup.", cite: ["weekly"] },
-  { text: " Stream the rest, so people see the first words while the answer is still being written." },
+  { text: " энэ нь нэг үйлдвэрлэлийн орчинд түгээмэл асуултын урсгалын бараг гуравны нэгийг хамарсан.", cite: ["weekly"] },
+  { text: " Үлдсэнийг урсгалаар дамжуул, ингэснээр хариулт бичигдэж байх үед хүмүүс эхний үгсийг харна." },
 ];
 
 const tints = ["#eef0f3", "#e3f4e8", "#e6f1fb", "#fbefe3", "#f1e8fb"];
@@ -103,7 +103,7 @@ export function CitedAnswer({
   defaultOpen,
   onOpenSource,
   onPreviewChange,
-  action = { label: "Follow up", onClick: () => {} },
+  action = { label: "Үргэлжлүүлэн асуух", onClick: () => {} },
   className = "",
 }: CitedAnswerProps) {
   const [hover, setHover] = React.useState<string | null>(null);
@@ -136,7 +136,7 @@ export function CitedAnswer({
         style={{ background: tints[n % tints.length], color: inks[n % inks.length] }}
         aria-hidden="true"
       >
-        {src?.icon ?? src?.title.replace(/^.*?(\w).*$/, "$1") ?? "?"}
+        {src?.icon ?? (src ? initial(src) : "?")}
       </span>
     );
   };
@@ -155,7 +155,7 @@ export function CitedAnswer({
               </span>
             ))}
           </span>
-          {sources.length} sources{pagesRead ? ` · ${pagesRead} pages read` : ""}
+          {sources.length} эх сурвалж{pagesRead ? ` · ${pagesRead} хуудас уншсан` : ""}
         </div>
         <div className="ca-prose">
           {paragraphs.map((p, i) => (
@@ -173,7 +173,7 @@ export function CitedAnswer({
                         key={c}
                         type="button"
                         className={`ca-num ${active === c ? "on" : ""}`}
-                        aria-label={`Source ${idx(c) + 1}: ${sources[idx(c)]?.title ?? c}`}
+                        aria-label={`Эх сурвалж ${idx(c) + 1}: ${sources[idx(c)]?.title ?? c}`}
                         onMouseEnter={() => setHover(c)}
                         onMouseLeave={() => setHover(null)}
                         onFocus={() => setHover(c)}
@@ -205,7 +205,7 @@ export function CitedAnswer({
               <span className="ca-badge ca-badge-s" style={{ background: tints[n % tints.length], color: inks[n % inks.length] }}>
                 {s.icon ?? initial(s)}
               </span>
-              {s.site.replace(/\.(io|dev|com|org|net)$/, "").replace(/^(\w)/, (m) => m.toUpperCase()).replace("notes", " Notes").replace("weekly", " Weekly")}
+              {s.site}
               <span className="ca-chip-n">{n + 1}</span>
             </button>
           ))}
@@ -236,7 +236,7 @@ export function CitedAnswer({
                   }
                 }}
               >
-                Open source
+                Эх сурвалжийг нээх
                 <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5h6.5V10M12.5 3.5 4 12" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
               </a>
               <button
@@ -247,7 +247,7 @@ export function CitedAnswer({
                   window.setTimeout(() => setCopied(false), 1400);
                 }}
               >
-                {copied ? "Copied" : "Copy quote"}
+                {copied ? "Хуулсан" : "Ишлэл хуулах"}
               </button>
             </div>
           </div>
@@ -257,11 +257,11 @@ export function CitedAnswer({
         <span className="ca-foot-l">
           {activeSrc ? (
             <>
-              {activeSrc.site.replace(/\.(io|dev|com)$/, "").replace(/^(\w)/, (m) => m.toUpperCase()).replace("notes", " Notes").replace("weekly", " Weekly")}
-              <span className="ca-faint"> · cited in {citedIn(activeSrc.id)} sentence{citedIn(activeSrc.id) === 1 ? "" : "s"}</span>
+              {activeSrc.site}
+              <span className="ca-faint"> · {citedIn(activeSrc.id)} өгүүлбэрт иш татсан</span>
             </>
           ) : (
-            <span className="ca-faint">Hover a number to see its source</span>
+            <span className="ca-faint">Эх сурвалжийг харах бол дугаар дээр очно уу</span>
           )}
         </span>
         {action && (
@@ -276,8 +276,8 @@ export function CitedAnswer({
 }
 
 const css = `
-.ca{--ca-bg:#fff;--ca-fg:#18181b;--ca-muted:#71717a;--ca-faint:#a1a1aa;--ca-line:#ececef;--ca-chip:#f4f4f5;--ca-lit:#e8f1fd;--ca-accent:#3b82f6;--ca-mark:#fdf0b8;width:100%;max-width:442px;background:var(--ca-bg);color:var(--ca-fg);border:1px solid var(--ca-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.57 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .ca{--ca-bg:#1b1b1e;--ca-fg:#ececef;--ca-muted:#a1a1aa;--ca-faint:#71717a;--ca-line:#2e2e33;--ca-chip:#2a2a2f;--ca-lit:#1d3150;--ca-accent:#6aa3ff;--ca-mark:#5a4a12;color-scheme:dark}
+.ca{--ca-bg:#fff;--ca-fg:#18181b;--ca-muted:#65656d;--ca-faint:#65656d;--ca-line:#ececef;--ca-chip:#f4f4f5;--ca-lit:#e8f1fd;--ca-accent:#3b82f6;--ca-mark:#fdf0b8;width:100%;max-width:442px;background:var(--ca-bg);color:var(--ca-fg);border:1px solid var(--ca-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.57 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .ca{--ca-bg:#1b1b1e;--ca-fg:#ececef;--ca-muted:#a1a1aa;--ca-faint:#9a9aa2;--ca-line:#2e2e33;--ca-chip:#2a2a2f;--ca-lit:#1d3150;--ca-accent:#6aa3ff;--ca-mark:#5a4a12;color-scheme:dark}
 .ca *{box-sizing:border-box}.ca button{font:inherit;color:inherit;cursor:pointer}
 .ca-body{padding:14px 20px 16px}
 .ca-head{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ca-muted);margin-bottom:12px}

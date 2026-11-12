@@ -85,7 +85,7 @@ export function Select({
   value: valueProp,
   defaultValue = null,
   onChange,
-  placeholder = "Choose…",
+  placeholder = "Сонгох…",
   label,
   hint,
   error,
@@ -499,9 +499,9 @@ const css = /* css */ `
 .ui-sel {
   --ui-sel-title: #171717;
   --ui-sel-ink: #171717;
-  --ui-sel-subtle: #8f8f8f;
-  --ui-sel-faint: #b5b5b5;
-  --ui-sel-icon: #8f8f8f;
+  --ui-sel-subtle: #65656d;
+  --ui-sel-faint: #65656d;
+  --ui-sel-icon: #65656d;
   --ui-sel-surface: #ffffff;
   --ui-sel-menu: #ffffff;
   --ui-sel-line: #e6e6e8;
@@ -670,9 +670,9 @@ const css = /* css */ `
 :where(.dark, [data-theme="dark"]) .ui-sel {
   --ui-sel-title: #ededed;
   --ui-sel-ink: #ededed;
-  --ui-sel-subtle: #8b8b92;
-  --ui-sel-faint: #5c5c63;
-  --ui-sel-icon: #8b8b92;
+  --ui-sel-subtle: #9a9aa2;
+  --ui-sel-faint: #9a9aa2;
+  --ui-sel-icon: #9a9aa2;
   --ui-sel-surface: #19191b;
   --ui-sel-menu: #19191b;
   --ui-sel-line: #2a2a2e;
@@ -698,23 +698,23 @@ function DemoIcon({ d }: { d: string }) {
 }
 
 const demoRoles: SelectOption[] = [
-  { value: "design", label: "Design", icon: <DemoIcon d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" /> },
-  { value: "engineering", label: "Engineering", icon: <DemoIcon d="m16 18 6-6-6-6M8 6l-6 6 6 6" /> },
-  { value: "product", label: "Product", icon: <DemoIcon d="M21 16V8l-9-5-9 5v8l9 5 9-5ZM3.3 7 12 12l8.7-5M12 22V12" /> },
-  { value: "marketing", label: "Marketing", icon: <DemoIcon d="m3 11 18-5v12L3 14v-3ZM11.6 16.8a3 3 0 1 1-5.8-1.6" /> },
+  { value: "design", label: "Дизайн", icon: <DemoIcon d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" /> },
+  { value: "engineering", label: "Хөгжүүлэлт", icon: <DemoIcon d="m16 18 6-6-6-6M8 6l-6 6 6 6" /> },
+  { value: "product", label: "Бүтээгдэхүүн", icon: <DemoIcon d="M21 16V8l-9-5-9 5v8l9 5 9-5ZM3.3 7 12 12l8.7-5M12 22V12" /> },
+  { value: "marketing", label: "Маркетинг", icon: <DemoIcon d="m3 11 18-5v12L3 14v-3ZM11.6 16.8a3 3 0 1 1-5.8-1.6" /> },
 ];
 
 const demoModels: SelectOption[] = [
-  { value: "auto", label: "Auto", description: "Picks the model for each message" },
-  { value: "opus", label: "Claude Opus 5.5", description: "Best for hard, long questions" },
-  { value: "custom", label: "Your own model", description: "Add an endpoint first", disabled: true },
+  { value: "auto", label: "Автомат", description: "Мессеж бүрт загвар сонгоно" },
+  { value: "opus", label: "Гүн загвар", description: "Хэцүү, урт асуултад хамгийн тохиромжтой" },
+  { value: "custom", label: "Өөрийн загвар", description: "Эхлээд холболтын хаяг нэмнэ үү", disabled: true },
 ];
 
 const demoZones: SelectOption[] = [
-  { value: "berlin", label: "Berlin", description: "UTC+1" },
-  { value: "london", label: "London", description: "UTC+0" },
-  { value: "new-york", label: "New York", description: "UTC−5" },
-  { value: "tokyo", label: "Tokyo", description: "UTC+9" },
+  { value: "berlin", label: "Берлин", description: "UTC+1" },
+  { value: "london", label: "Лондон", description: "UTC+0" },
+  { value: "new-york", label: "Нью-Йорк", description: "UTC−5" },
+  { value: "tokyo", label: "Токио", description: "UTC+9" },
 ];
 
 export default function Demo() {
@@ -734,15 +734,15 @@ export default function Demo() {
         gap: 20,
       }}
     >
-      <Select label="Role" options={demoRoles} defaultValue="design" hint="Helps tailor suggestions to your work." />
-      <Select label="Default model" options={demoModels} defaultValue="auto" name="model" />
+      <Select label="Үүрэг" options={demoRoles} defaultValue="design" hint="Санал зөвлөмжийг таны ажилд тохируулна." />
+      <Select label="Үндсэн загвар" options={demoModels} defaultValue="auto" />
       <Select
-        label="Time zone"
-        placeholder="Choose a time zone"
+        label="Цагийн бүс"
+        placeholder="Цагийн бүс сонгох"
         options={demoZones}
         value={zone}
         onChange={setZone}
-        error={zone ? undefined : "Pick one, so reminders arrive on time."}
+        error={zone ? undefined : "Сануулга цагтаа ирэхийн тулд нэгийг сонгоно уу."}
       />
     </div>
   );

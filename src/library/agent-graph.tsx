@@ -54,12 +54,14 @@ const money = (value: number) => `$${value.toFixed(2)}`;
 const pair = (a: string, b: string) => JSON.stringify([a, b].sort());
 const statusLabel = (status: GraphNode["status"]) =>
   ({
-    idle: "Idle",
-    working: "Working",
-    waiting: "Needs you",
-    error: "Failed",
-    done: "Done",
+    idle: "Сул",
+    working: "Ажиллаж байна",
+    waiting: "Таны ээлж",
+    error: "Алдаатай",
+    done: "Дууссан",
   })[status ?? "idle"];
+const kindLabel = (kind: GraphNode["kind"]) => ({ agent: "агент", tool: "хэрэгсэл", user: "хэрэглэгч" })[kind] ?? kind;
+const callStatusLabel = (status: GraphCall["status"]) => ({ pending: "хүлээж байна", ok: "амжилттай", error: "алдаа" })[status ?? "ok"];
 
 function layout(
   nodes: GraphNode[],
@@ -153,7 +155,7 @@ export function AgentGraph({
   onSelect,
   height,
   formatCost = money,
-  title = "Agent graph",
+  title = "Агентын сүлжээ",
   className = "",
 }: AgentGraphProps) {
   const root = React.useRef<HTMLElement>(null),
@@ -453,12 +455,12 @@ export function AgentGraph({
         </div>
         <div className="agg-stats">
           <span>
-            {unique.filter((node) => node.kind === "agent").length} agents
+            {unique.filter((node) => node.kind === "agent").length} агент
           </span>
           <span>
-            {unique.filter((node) => node.kind === "tool").length} tools
+            {unique.filter((node) => node.kind === "tool").length} хэрэгсэл
           </span>
-          <span>{recent.length} calls/min</span>
+          <span>{recent.length} дуудлага/мин</span>
           <strong>
             {formatCost(
               unique.reduce(
@@ -595,7 +597,7 @@ export function AgentGraph({
                 // Centered labels must also fit when a fixed node is near an edge.
                 "--agg-label-room": `${Math.max(0, Math.min(p.x, width - p.x) * 2 - 16)}px`,
               } as React.CSSProperties}
-              aria-label={`${node.name}, ${node.kind}, ${statusLabel(node.status)}${node.doing ? `, ${node.doing}` : ""}, ${recent.filter((call) => call.from === node.id || call.to === node.id).length} calls in the last minute`}
+              aria-label={`${node.name}, ${kindLabel(node.kind)}, ${statusLabel(node.status)}${node.doing ? `, ${node.doing}` : ""}, сүүлийн минутад ${recent.filter((call) => call.from === node.id || call.to === node.id).length} дуудлага`}
               aria-haspopup="dialog"
               aria-expanded={selected === node.id}
               aria-controls={selected === node.id ? `${id}-card` : undefined}
@@ -641,64 +643,64 @@ export function AgentGraph({
             </button>
           );
         })}
-        {!unique.length && <p className="agg-empty">No agents connected</p>}
+        {!unique.length && <p className="agg-empty">Холбогдсон агент алга</p>}
         {current && (
           <div
             id={`${id}-card`}
             className="agg-card"
             style={width >= 520 ? {left: position(current.id).x > width/2 ? Math.max(14,position(current.id).x-302) : Math.min(width-274,position(current.id).x+42), top:Math.max(14,Math.min(h-239,position(current.id).y-112.5)),right:'auto',bottom:'auto'} : undefined}
             role="dialog"
-            aria-label={`${current.name} details`}
+            aria-label={`${current.name}: дэлгэрэнгүй`}
           >
             <div className="agg-card-heading">
               <span className="agg-card-icon">{current.icon ?? current.name.slice(0,2)}</span>
-              <div className="agg-card-who"><strong>{current.name}</strong><small>{current.detail ?? current.kind}</small></div>
+              <div className="agg-card-who"><strong>{current.name}</strong><small>{current.detail ?? kindLabel(current.kind)}</small></div>
               <span className="agg-card-pill" data-status={current.status}>{statusLabel(current.status)}</span>
-              <button ref={closeButton} type="button" onClick={close} aria-label={`Close ${current.name} details`}>
+              <button ref={closeButton} type="button" onClick={close} aria-label={`${current.name}: дэлгэрэнгүйг хаах`}>
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="m6 6 12 12M18 6 6 18"/></svg>
               </button>
             </div>
             {current.doing && <p>{current.doing}</p>}
-            <ul aria-label="Latest calls">
+            <ul aria-label="Сүүлийн дуудлагууд">
               {[...validCalls].filter(call => call.from === current.id || call.to === current.id).sort((a,b)=>b.at-a.at).slice(0,4).map(call => {
                 const outgoing=call.from===current.id;
                 const other=unique.find(n=>n.id===(outgoing?call.to:call.from));
                 return <li key={call.id}>
-                  <span className="agg-call-direction" aria-label={outgoing?'To':'From'}>{outgoing?'↗':'↙'}</span>
+                  <span className="agg-call-direction" aria-label={outgoing?'Илгээсэн':'Ирсэн'}>{outgoing?'↗':'↙'}</span>
                   <span className="agg-call-icon">{other?.icon ?? other?.name.slice(0,2)}</span>
                   <span className="agg-call-text"><b>{other?.name}</b>{call.label && ` · ${call.label}`}</span>
-                  <small>{call.status==='pending' ? <span className="agg-call-spin" aria-label="Pending"/> : call.ms===undefined ? call.status : call.ms<1000 ? `${call.ms}ms` : `${(call.ms/1000).toFixed(1)}s`}</small>
+                  <small>{call.status==='pending' ? <span className="agg-call-spin" aria-label="Хүлээж байна"/> : call.ms===undefined ? callStatusLabel(call.status) : call.ms<1000 ? `${call.ms}ms` : `${(call.ms/1000).toFixed(1)}s`}</small>
                 </li>;
               })}
             </ul>
-            <div className="agg-card-meta"><strong>{formatCost(current.cost ?? 0)}</strong><span>{recent.filter(call => call.from === current.id || call.to === current.id).length} calls in the last minute</span></div>
+            <div className="agg-card-meta"><strong>{formatCost(current.cost ?? 0)}</strong><span>Сүүлийн минутад {recent.filter(call => call.from === current.id || call.to === current.id).length} дуудлага</span></div>
           </div>
         )}
-      <footer className="agg-footer" aria-label="Call legend">
+      <footer className="agg-footer" aria-label="Дуудлагын тайлбар">
         <span>
           <i style={{ "--color": "var(--agg-pulse)" } as React.CSSProperties} />
-          Call
+          Дуудлага
         </span>
         <span>
           <i
             style={{ "--color": "var(--agg-answer)" } as React.CSSProperties}
           />
-          Answer
+          Хариу
         </span>
         <span>
           <i style={{ "--color": "var(--agg-amber)" } as React.CSSProperties} />
-          Needs you
+          Таны ээлж
         </span>
         <span>
           <i style={{ "--color": "var(--agg-red)" } as React.CSSProperties} />
-          Failed
+          Алдаатай
         </span>
       </footer>
       </div>
-      <ul className="agg-sr" aria-label="Network description">
+      <ul className="agg-sr" aria-label="Сүлжээний тайлбар">
         {unique.map((node) => (
           <li key={node.id}>
-            {node.name}, {node.kind}, {statusLabel(node.status)},{" "}
+            {node.name}, {kindLabel(node.kind)}, {statusLabel(node.status)},{" "}
             {formatCost(node.cost ?? 0)}.{" "}
             {unique
               .filter((other) =>
@@ -708,7 +710,7 @@ export function AgentGraph({
               )
               .map(
                 (other) =>
-                  `Called ${other.name} ${recent.filter((call) => call.from === node.id && call.to === other.id).length} times in the last minute.`,
+                  `${other.name}: сүүлийн минутад ${recent.filter((call) => call.from === node.id && call.to === other.id).length} удаа дуудсан.`,
               )
               .join(" ")}
           </li>

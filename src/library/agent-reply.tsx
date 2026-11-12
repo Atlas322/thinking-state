@@ -64,22 +64,22 @@ const tones: Record<ReplyTone, string> = {
 };
 
 const defaultLabels = {
-  findings: "Findings",
-  proposal: "Proposal",
-  outputs: "Outputs",
-  choices: "Your choice",
-  sources: "Sources",
-  open: "Open",
-  own: "Or: your own answer, an edit…",
-  send: "Send",
-  answered: "Answered — the agent continues.",
+  findings: "Олдвор",
+  proposal: "Санал",
+  outputs: "Гаралт",
+  choices: "Таны сонголт",
+  sources: "Эх сурвалж",
+  open: "Нээх",
+  own: "Эсвэл: өөрийн хариулт, засвар…",
+  send: "Илгээх",
+  answered: "Хариулсан, агент үргэлжлүүлнэ.",
 };
 
 const css = `
-.ar{--ar-tx:#18181b;--ar-mu:#71717a;--ar-dim:#a1a1aa;--ar-bd:#e4e4e7;--ar-s1:#fafafa;--ar-s2:#f4f4f5;
+.ar{--ar-tx:#18181b;--ar-mu:#65656d;--ar-dim:#65656d;--ar-bd:#e4e4e7;--ar-s1:#fafafa;--ar-s2:#f4f4f5;
 --ar-blue:#2563eb;--ar-green:#16a34a;--ar-amber:#d97706;--ar-red:#dc2626;
 font:14px/1.6 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--ar-tx);display:flex;gap:12px;max-width:680px}
-:where(.dark,[data-theme=dark]) .ar{--ar-tx:#f4f4f5;--ar-mu:#a1a1aa;--ar-dim:#71717a;--ar-bd:#27272a;--ar-s1:#111113;--ar-s2:#18181b;
+:where(.dark,[data-theme=dark]) .ar{--ar-tx:#f4f4f5;--ar-mu:#a1a1aa;--ar-dim:#9a9aa2;--ar-bd:#27272a;--ar-s1:#111113;--ar-s2:#18181b;
 --ar-blue:#60a5fa;--ar-green:#4ade80;--ar-amber:#f59e0b;--ar-red:#f87171}
 .ar-av{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--ar-s2);border:1px solid var(--ar-bd);font-size:14px}
 .ar-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:10px}
@@ -144,7 +144,7 @@ function Section({ title, tone, count, folded, kind, children }: {
 }
 
 export function AgentReply({
-  bare, agent = "Agent", avatar = "◆", time, summary, findings = [], proposal, sections = [], outputs = [],
+  bare, agent = "Агент", avatar = "◆", time, summary, findings = [], proposal, sections = [], outputs = [],
   choices = [], sources = [], labels, onChoose, onOpenOutput, children, className,
 }: AgentReplyProps) {
   const L = { ...defaultLabels, ...labels };
@@ -222,22 +222,22 @@ export function AgentReply({
 export default function Demo() {
   return (
     <AgentReply
-      agent="Project agent"
+      agent="Төслийн агент"
       avatar="📁"
       time="03:07"
-      summary={<>Hero direction is written into the project note. You picked <b>v4a</b> earlier, but the <b>v4c</b> task is still open — which one is final?</>}
+      summary={<>Үндсэн зургийн чиглэлийг төслийн тэмдэглэлд бичлээ. Та өмнө нь <b>v4a</b>-г сонгосон ч <b>v4c</b> даалгавар нээлттэй хэвээр байна. Аль нь эцсийнх вэ?</>}
       findings={[
-        <>v4a keeps the hero on a dark field with a pale accent <code>#E4E9F5</code> on the headline.</>,
-        <>v4c (brand tokens, paper background) was logged as decided in <code>Inai Website.md</code>, and a worker still has it claimed.</>,
-        <>The sources <code>platform.html</code> and <code>site.css</code> are unchanged.</>,
+        <>v4a нь үндсэн хэсгийг бараан дэвсгэр дээр үлдээж, гарчигт цайвар <code>#E4E9F5</code> өнгө хэрэглэдэг.</>,
+        <>v4c (брэндийн токен, цаасан дэвсгэр)-г <code>Inai Website.md</code>-д шийдсэн гэж бүртгэсэн бөгөөд нэг гүйцэтгэгч үүнийг авсан хэвээр байна.</>,
+        <>Эх файл <code>platform.html</code>, <code>site.css</code> өөрчлөгдөөгүй.</>,
       ]}
-      proposal="Close the v4c task and ship v4a; keep v4c tokens as the light theme for later."
+      proposal="v4c даалгаврыг хааж, v4a-г гаргая; v4c-ийн токенуудыг дараа цайвар загварт ашиглахаар үлдээнэ."
       outputs={[
         { label: "platform-v4a.html", kind: "site" },
-        { label: "Hero direction.md", kind: "doc" },
+        { label: "Үндсэн-чиглэл.md", kind: "doc" },
         { label: "hero-v4a@2x.png", kind: "image" },
       ]}
-      choices={["Make v4a final", "Keep v4c"]}
+      choices={["v4a-г эцсийнх болгох", "v4c-г үлдээх"]}
       sources={[
         { label: "projects/website/brief.md" },
         { label: "projects/website/output/platform-v4a.html" },

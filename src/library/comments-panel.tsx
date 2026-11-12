@@ -8,7 +8,7 @@ export type CommentAuthor = { name: string; avatar?: string; color?: string };
 export type PanelComment = {
   id: string;
   author: CommentAuthor;
-  /** Date, epoch ms, or a ready label like "2min ago". */
+  /** Date, epoch ms, or a ready label like "2 мин өмнө". */
   createdAt: Date | number | string;
   text: string;
 };
@@ -27,11 +27,11 @@ type Filter = "all" | "questions" | "edits";
 
 const ago = (m: number) => Date.now() - m * 60000;
 const defaultComments: PanelComment[] = [
-  { id: "1", author: { name: "Mara Lindqvist", color: "#c08457" }, createdAt: ago(2), text: "/edit Rename every “customers” to “members” on the pricing page." },
-  { id: "2", author: { name: "Jonas Weber", color: "#5b6b7a" }, createdAt: ago(5), text: "Should we mention the launch discount in the hero too?" },
-  { id: "3", author: { name: "Lena Hart", color: "#b0877a" }, createdAt: ago(11), text: "The new illustrations look great on mobile." },
-  { id: "4", author: { name: "Theo Brandt", color: "#6d7f62" }, createdAt: ago(18), text: "/edit Shorten every FAQ answer to two sentences." },
-  { id: "5", author: { name: "Sofia Marin", color: "#9a6a8e" }, createdAt: ago(26), text: "Can we ship this before Friday?" },
+  { id: "1", author: { name: "Мөнхзул Бат", color: "#c08457" }, createdAt: ago(2), text: "/edit Үнийн хуудсан дээрх «харилцагч» гэдгийг бүгдийг нь «гишүүн» болгох." },
+  { id: "2", author: { name: "Тэмүүлэн Ган", color: "#5b6b7a" }, createdAt: ago(5), text: "Нээлтийн хөнгөлөлтийг нүүр хэсэгт ч бас дурдах уу?" },
+  { id: "3", author: { name: "Номин Дорж", color: "#b0877a" }, createdAt: ago(11), text: "Шинэ зургууд утсан дээр гоё харагдаж байна." },
+  { id: "4", author: { name: "Ганбат Төр", color: "#6d7f62" }, createdAt: ago(18), text: "/edit Түгээмэл асуултын хариулт бүрийг хоёр өгүүлбэр болгож богиносгох." },
+  { id: "5", author: { name: "Солонго Цэрэн", color: "#9a6a8e" }, createdAt: ago(26), text: "Үүнийг баасан гарагаас өмнө гаргаж чадах уу?" },
 ];
 
 const isEdit = (t: string) => /^\/edit\b/i.test(t.trim());
@@ -39,10 +39,10 @@ const isQuestion = (t: string) => !isEdit(t) && t.trim().endsWith("?");
 const when = (c: PanelComment["createdAt"]) => {
   if (typeof c === "string") return c;
   const m = Math.max(0, Math.round((Date.now() - new Date(c).getTime()) / 60000));
-  if (m < 1) return "now";
-  if (m < 60) return `${m}min ago`;
+  if (m < 1) return "одоо";
+  if (m < 60) return `${m} мин өмнө`;
   const h = Math.round(m / 60);
-  return h < 24 ? `${h}h ago` : `${Math.round(h / 24)}d ago`;
+  return h < 24 ? `${h} цаг өмнө` : `${Math.round(h / 24)} өдрийн өмнө`;
 };
 
 function Avatar({ a, size = 20 }: { a: CommentAuthor; size?: number }) {
@@ -57,11 +57,11 @@ function Avatar({ a, size = 20 }: { a: CommentAuthor; size?: number }) {
 
 export function CommentsPanel({
   comments = defaultComments,
-  currentUser = { name: "You", color: "#a07a5f" },
+  currentUser = { name: "Та", color: "#a07a5f" },
   onRunEdit,
   onAdd,
   onClose = () => {},
-  title = "Comments",
+  title = "Сэтгэгдэл",
   className = "",
 }: CommentsPanelProps) {
   const [list, setList] = React.useState(comments);
@@ -100,9 +100,9 @@ export function CommentsPanel({
   };
 
   const tabs: [Filter, string, number?][] = [
-    ["all", "All"],
-    ["questions", "Questions"],
-    ["edits", "Edits", edits],
+    ["all", "Бүгд"],
+    ["questions", "Асуулт"],
+    ["edits", "Засвар", edits],
   ];
 
   return (
@@ -111,13 +111,13 @@ export function CommentsPanel({
       <header className="cp-head">
         <h3>{title}</h3>
         {onClose && (
-          <button type="button" className="cp-icon" aria-label="Close comments" onClick={onClose}>
+          <button type="button" className="cp-icon" aria-label="Сэтгэгдлийг хаах" onClick={onClose}>
             <svg viewBox="0 0 16 16"><path d="m4.5 4.5 7 7m0-7-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
           </button>
         )}
       </header>
       <div className="cp-bar">
-        <div className="cp-tabs" role="tablist" aria-label="Filter comments">
+        <div className="cp-tabs" role="tablist" aria-label="Сэтгэгдэл шүүх">
           {tabs.map(([id, label, n]) => (
             <button key={id} type="button" role="tab" aria-selected={filter === id} onClick={() => setFilter(id)}>
               {label}
@@ -126,14 +126,14 @@ export function CommentsPanel({
           ))}
         </div>
         <div className="cp-sort">
-          <button type="button" className="cp-icon" aria-label="Sort" aria-expanded={menu} onClick={() => setMenu((m) => !m)}>
+          <button type="button" className="cp-icon" aria-label="Эрэмбэлэх" aria-expanded={menu} onClick={() => setMenu((m) => !m)}>
             <svg viewBox="0 0 16 16"><path d="M3 4.5h10M5 8h6M7 11.5h2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
           </button>
           {menu && (
             <div className="cp-menu" role="menu">
               {[true, false].map((v) => (
                 <button key={String(v)} type="button" role="menuitemradio" aria-checked={newest === v} onClick={() => { setNewest(v); setMenu(false); }}>
-                  {v ? "Newest first" : "Oldest first"}
+                  {v ? "Шинэ нь эхэнд" : "Хуучин нь эхэнд"}
                 </button>
               ))}
             </div>
@@ -170,13 +170,13 @@ export function CommentsPanel({
                   ) : (
                     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5Z" fill="currentColor" /></svg>
                   )}
-                  {st === "running" ? "Running…" : st === "done" ? "Applied" : "Run edit"}
+                  {st === "running" ? "Ажиллаж байна…" : st === "done" ? "Хэрэгжүүлсэн" : "Засвар ажиллуулах"}
                 </button>
               )}
             </li>
           );
         })}
-        {shown.length === 0 && <li className="cp-empty">Nothing here yet</li>}
+        {shown.length === 0 && <li className="cp-empty">Одоогоор хоосон</li>}
       </ol>
       <form
         className="cp-compose"
@@ -186,8 +186,8 @@ export function CommentsPanel({
         }}
       >
         <Avatar a={currentUser} />
-        <input value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Add a comment or /edit..." aria-label="Add a comment" />
-        <button type="submit" className="cp-send" aria-label="Send" disabled={!draft.trim()}>
+        <input value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Сэтгэгдэл эсвэл /edit бичих..." aria-label="Сэтгэгдэл нэмэх" />
+        <button type="submit" className="cp-send" aria-label="Илгээх" disabled={!draft.trim()}>
           <svg viewBox="0 0 16 16"><path d="M8 12.5v-9m-4 4 4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>
       </form>
@@ -196,8 +196,8 @@ export function CommentsPanel({
 }
 
 const css = `
-.cp{--cp-bg:#fff;--cp-fg:#18181b;--cp-muted:#71717a;--cp-faint:#a1a1aa;--cp-line:#ececef;--cp-chip:#f1f1f3;--cp-accent:#3b82f6;width:100%;max-width:400px;display:flex;flex-direction:column;background:var(--cp-bg);color:var(--cp-fg);border:1px solid var(--cp-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .cp{--cp-bg:#1b1b1e;--cp-fg:#ececef;--cp-muted:#a1a1aa;--cp-faint:#71717a;--cp-line:#2e2e33;--cp-chip:#2a2a2f;color-scheme:dark}
+.cp{--cp-bg:#fff;--cp-fg:#18181b;--cp-muted:#65656d;--cp-faint:#65656d;--cp-line:#ececef;--cp-chip:#f1f1f3;--cp-accent:#3b82f6;width:100%;max-width:400px;display:flex;flex-direction:column;background:var(--cp-bg);color:var(--cp-fg);border:1px solid var(--cp-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cp{--cp-bg:#1b1b1e;--cp-fg:#ececef;--cp-muted:#a1a1aa;--cp-faint:#9a9aa2;--cp-line:#2e2e33;--cp-chip:#2a2a2f;color-scheme:dark}
 .cp *{box-sizing:border-box}.cp button,.cp input{font:inherit;color:inherit}.cp button{cursor:pointer}
 .cp-head{display:flex;align-items:center;justify-content:space-between;padding:14px 12px 0 16px}
 .cp-head h3{margin:0;font-size:15px;font-weight:500}

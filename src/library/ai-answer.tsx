@@ -188,7 +188,7 @@ export function AIAnswer({
           {extra > 0 && (
             <button type="button" className="aa-src aa-more">
               <strong>+{extra}</strong>
-              <span>more</span>
+              <span>бусад</span>
             </button>
           )}
         </div>
@@ -196,7 +196,7 @@ export function AIAnswer({
           <svg viewBox="0 0 16 16" aria-hidden="true">
             <path d="M6 1.5 7.2 5 10.5 6 7.2 7 6 10.5 4.8 7 1.5 6 4.8 5ZM12 9l.7 1.8 1.8.7-1.8.7L12 14l-.7-1.8-1.8-.7 1.8-.7Z" fill="currentColor" />
           </svg>
-          Answer
+          Хариулт
         </div>
         <div className="aa-prose" aria-busy={!done}>
           {answer.map((b, i) =>
@@ -211,7 +211,7 @@ export function AIAnswer({
         </div>
         {done && related.length > 0 && (
           <div className="aa-related">
-            <div className="aa-related-h">Related</div>
+            <div className="aa-related-h">Холбоотой</div>
             {related.map((r) => (
               <button key={r} type="button" onClick={() => onAction?.("related", r)}>
                 {r}
@@ -226,7 +226,7 @@ export function AIAnswer({
       <footer className="aa-foot">
         <button
           type="button"
-          aria-label={copied ? "Copied" : "Copy"}
+          aria-label={copied ? "Хуулсан" : "Хуулах"}
           onClick={() => {
             navigator.clipboard?.writeText(plain).catch(() => {});
             setCopied(true);
@@ -240,24 +240,24 @@ export function AIAnswer({
             <svg viewBox="0 0 16 16"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" fill="currentColor" /><path d="M3 10.5V3.5A1 1 0 0 1 4 2.5h6.5" fill="none" stroke="currentColor" strokeWidth="1.4" /></svg>
           )}
         </button>
-        <button type="button" aria-label="Regenerate" onClick={() => { setShown(0); setFeedback(null); onAction?.("regenerate"); }}>
+        <button type="button" aria-label="Дахин үүсгэх" onClick={() => { setShown(0); setFeedback(null); onAction?.("regenerate"); }}>
           <svg viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.5v2.5h-2.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
         </button>
-        <button type="button" aria-label="Good answer" aria-pressed={feedback === "like"} onClick={() => { setFeedback("like"); onAction?.("like"); }}>
+        <button type="button" aria-label="Сайн хариулт" aria-pressed={feedback === "like"} onClick={() => { setFeedback("like"); onAction?.("like"); }}>
           <svg viewBox="0 0 16 16"><path d="M2 7h2.5v7H2zM6 14h5.5a1.5 1.5 0 0 0 1.5-1.2l.9-4.3A1.5 1.5 0 0 0 12.4 6.7H9.5l.5-2.6A1.4 1.4 0 0 0 7.4 3.2L6 6.5Z" fill="currentColor" /></svg>
         </button>
-        <button type="button" aria-label="Bad answer" aria-pressed={feedback === "dislike"} onClick={() => { setFeedback("dislike"); onAction?.("dislike"); }}>
+        <button type="button" aria-label="Муу хариулт" aria-pressed={feedback === "dislike"} onClick={() => { setFeedback("dislike"); onAction?.("dislike"); }}>
           <svg viewBox="0 0 16 16" style={{ transform: "rotate(180deg)" }}><path d="M2 7h2.5v7H2zM6 14h5.5a1.5 1.5 0 0 0 1.5-1.2l.9-4.3A1.5 1.5 0 0 0 12.4 6.7H9.5l.5-2.6A1.4 1.4 0 0 0 7.4 3.2L6 6.5Z" fill="currentColor" /></svg>
         </button>
-        <span className="aa-time">{done ? `Answered in ${answeredIn}s` : "Answering…"}</span>
+        <span className="aa-time">{done ? `${answeredIn} с-д хариулсан` : "Хариулж байна…"}</span>
       </footer>
     </section>
   );
 }
 
 const css = `
-.aa{--aa-bg:#fff;--aa-fg:#18181b;--aa-muted:#71717a;--aa-faint:#a1a1aa;--aa-line:#e9e9ec;--aa-chip:#f1f1f3;--aa-accent:#4f7cf0;width:100%;max-width:730px;background:var(--aa-bg);color:var(--aa-fg);border:1px solid var(--aa-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.6 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .aa{--aa-bg:#1b1b1e;--aa-fg:#ececef;--aa-muted:#a1a1aa;--aa-faint:#71717a;--aa-line:#2e2e33;--aa-chip:#2a2a2f;--aa-accent:#7c9cff;color-scheme:dark}
+.aa{--aa-bg:#fff;--aa-fg:#18181b;--aa-muted:#65656d;--aa-faint:#65656d;--aa-line:#e9e9ec;--aa-chip:#f1f1f3;--aa-accent:#4f7cf0;width:100%;max-width:730px;background:var(--aa-bg);color:var(--aa-fg);border:1px solid var(--aa-line);border-radius:14px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.6 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .aa{--aa-bg:#1b1b1e;--aa-fg:#ececef;--aa-muted:#a1a1aa;--aa-faint:#9a9aa2;--aa-line:#2e2e33;--aa-chip:#2a2a2f;--aa-accent:#7c9cff;color-scheme:dark}
 .aa *{box-sizing:border-box}.aa button{font:inherit;color:inherit;cursor:pointer}
 .aa-body{padding:22px 26px 6px}
 .aa-q{margin:0 0 14px;font-size:16px;font-weight:500;letter-spacing:-.01em}

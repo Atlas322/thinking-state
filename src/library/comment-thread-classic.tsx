@@ -75,16 +75,16 @@ export type CommentThreadProps = {
 
 function ago(time: number, now: number) {
   const s = Math.max(0, Math.round((now - time) / 1000));
-  if (s < 45) return "just now";
+  if (s < 45) return "саяхан";
   const m = Math.round(s / 60);
-  if (m < 60) return `${m}min ago`;
+  if (m < 60) return `${m} мин өмнө`;
   const h = Math.round(m / 60);
-  if (h < 24) return `${h}h ago`;
+  if (h < 24) return `${h} цаг өмнө`;
   const d = Math.round(h / 24);
-  if (d < 30) return `${d}d ago`;
+  if (d < 30) return `${d} өдрийн өмнө`;
   return d < 365
-    ? `${Math.round(d / 30)}mo ago`
-    : `${Math.round(d / 365)}y ago`;
+    ? `${Math.round(d / 30)} сарын өмнө`
+    : `${Math.round(d / 365)} жилийн өмнө`;
 }
 
 // 1284 → "1,284"
@@ -101,7 +101,7 @@ const initials = (name: string) =>
     .toUpperCase();
 
 export function CommentThread({
-  title = "Comment",
+  title = "Сэтгэгдэл",
   messages: initial,
   currentUser,
   assistant,
@@ -193,13 +193,13 @@ export function CommentThread({
           </h3>
           <span className="ui-ct__count">
             {count.format(messages.length)}{" "}
-            {messages.length === 1 ? "message" : "messages"}
+            мессеж
           </span>
           {onClose && (
             <button
               type="button"
               className="ui-ct__icon-btn"
-              aria-label="Close comment"
+              aria-label="Сэтгэгдлийг хаах"
               onClick={onClose}
             >
               <Icon d="m4 4 8 8M12 4l-8 8" />
@@ -298,7 +298,7 @@ export function CommentThread({
             {thinking && assistant && (
               <article
                 className="ui-ct__msg"
-                aria-label={`${assistant.name} is thinking`}
+                aria-label={`${assistant.name} бодож байна`}
               >
                 <div className="ui-ct__meta">
                   <Avatar author={assistant} />
@@ -322,14 +322,14 @@ export function CommentThread({
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             placeholder={
-              assistant ? `Reply, or ask @${assistant.name}…` : "Add comment…"
+              assistant ? `Хариулах, эсвэл @${assistant.name} гэж асуух…` : "Сэтгэгдэл нэмэх…"
             }
-            aria-label="Reply"
+            aria-label="Хариулт"
           />
           <button
             type="submit"
             className="ui-ct__send"
-            aria-label="Send reply"
+            aria-label="Хариулт илгээх"
             disabled={!draft.trim() || thinking}
           >
             <Icon d="M8 13V3M3.5 7.5 8 3l4.5 4.5" size={14} />
@@ -441,7 +441,7 @@ const css = /* css */ `
   --ui-ct-card: #ffffff;
   --ui-ct-ink: #171717;
   --ui-ct-text: #404040;
-  --ui-ct-muted: #8f8f8f;
+  --ui-ct-muted: #65656d;
   --ui-ct-accent: #2f6bff;
   --ui-ct-focus: rgba(0, 96, 226, 0.7);
   --ui-ct-ok: #1f8a4c;
@@ -452,7 +452,7 @@ const css = /* css */ `
   --ui-ct-row-hover: #f5f5f5;
   --ui-ct-initials: #eef3ff;
   --ui-ct-dot: #d4d4d4;
-  --ui-ct-subtle: #a3a3a3;
+  --ui-ct-subtle: #65656d;
   --ui-ct-avatar-ring: rgba(0, 0, 0, 0.06);
   --ui-ct-ease: cubic-bezier(0.22, 1, 0.36, 1);
   box-sizing: border-box;
@@ -690,7 +690,7 @@ img.ui-ct__avatar { box-shadow: 0 0 0 1px var(--ui-ct-avatar-ring); }
   --ui-ct-card: #232326;
   --ui-ct-ink: #ededed;
   --ui-ct-text: #c4c4c4;
-  --ui-ct-muted: #8f8f8f;
+  --ui-ct-muted: #9a9aa2;
   --ui-ct-ok: #2a9d5c;
   --ui-ct-accent-text: #6b95ff;
   --ui-ct-border: rgba(255, 255, 255, 0.08);
@@ -699,7 +699,7 @@ img.ui-ct__avatar { box-shadow: 0 0 0 1px var(--ui-ct-avatar-ring); }
   --ui-ct-row-hover: rgba(255, 255, 255, 0.06);
   --ui-ct-initials: rgba(47, 107, 255, 0.16);
   --ui-ct-dot: rgba(255, 255, 255, 0.14);
-  --ui-ct-subtle: #6b6b70;
+  --ui-ct-subtle: #9a9aa2;
   --ui-ct-avatar-ring: rgba(255, 255, 255, 0.08);
 }
 :where(.dark, [data-theme="dark"]) .ui-ct__send {

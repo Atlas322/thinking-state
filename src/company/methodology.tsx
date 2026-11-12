@@ -29,36 +29,36 @@ import { Empty } from "./collection";
  */
 
 export const methodologyName: Record<Methodology, string> = {
-  bmc: "Business Model Canvas",
-  "lean-canvas": "Lean Canvas",
+  bmc: "Бизнес загварын канвас",
+  "lean-canvas": "Лийн канвас",
   okr: "OKR",
   pmbok: "PMBOK",
 };
-export const methodologyShort: Record<Methodology, string> = { bmc: "BMC", "lean-canvas": "Lean", okr: "OKR", pmbok: "PMBOK" };
+export const methodologyShort: Record<Methodology, string> = { bmc: "BMC", "lean-canvas": "Лийн", okr: "OKR", pmbok: "PMBOK" };
 
 type Block = { key: keyof CompanyModel; area: string; title: string; hint: string };
 
 const BMC: Block[] = [
-  { key: "partners", area: "kp", title: "Гол түнш", hint: "Key Partners" },
-  { key: "activities", area: "ka", title: "Гол үйл ажиллагаа", hint: "Key Activities" },
-  { key: "resources", area: "kr", title: "Гол нөөц", hint: "Key Resources" },
-  { key: "value", area: "vp", title: "Үнэ цэнийн санал", hint: "Value Propositions" },
-  { key: "relationships", area: "cr", title: "Харилцагчтай харилцаа", hint: "Customer Relationships" },
-  { key: "channels", area: "ch", title: "Суваг", hint: "Channels" },
-  { key: "customers", area: "cs", title: "Үйлчлүүлэгчийн сегмент", hint: "Customer Segments" },
-  { key: "costs", area: "co", title: "Зардлын бүтэц", hint: "Cost Structure" },
-  { key: "revenue", area: "rv", title: "Орлогын урсгал", hint: "Revenue Streams" },
+  { key: "partners", area: "kp", title: "Гол түнш", hint: "Хэнтэй хамтрах вэ" },
+  { key: "activities", area: "ka", title: "Гол үйл ажиллагаа", hint: "Юу хийх вэ" },
+  { key: "resources", area: "kr", title: "Гол нөөц", hint: "Юу хэрэгтэй вэ" },
+  { key: "value", area: "vp", title: "Үнэ цэнийн санал", hint: "Ямар үнэ цэнэ өгөх вэ" },
+  { key: "relationships", area: "cr", title: "Харилцагчтай харилцаа", hint: "Хэрхэн харилцах вэ" },
+  { key: "channels", area: "ch", title: "Суваг", hint: "Хэрхэн хүрэх вэ" },
+  { key: "customers", area: "cs", title: "Үйлчлүүлэгчийн сегмент", hint: "Хэнд зориулах вэ" },
+  { key: "costs", area: "co", title: "Зардлын бүтэц", hint: "Юунд зарцуулах вэ" },
+  { key: "revenue", area: "rv", title: "Орлогын урсгал", hint: "Юугаар орлого олох вэ" },
 ];
 const LEAN: Block[] = [
-  { key: "problem", area: "kp", title: "Асуудал", hint: "Problem" },
-  { key: "solution", area: "ka", title: "Шийдэл", hint: "Solution" },
-  { key: "metrics", area: "kr", title: "Гол хэмжүүр", hint: "Key Metrics" },
-  { key: "value", area: "vp", title: "Өвөрмөц санал", hint: "Unique Value Proposition" },
-  { key: "advantage", area: "cr", title: "Өрсөлдөхүйц давуу тал", hint: "Unfair Advantage" },
-  { key: "channels", area: "ch", title: "Суваг", hint: "Channels" },
-  { key: "customers", area: "cs", title: "Үйлчлүүлэгчийн сегмент", hint: "Customer Segments" },
-  { key: "costs", area: "co", title: "Зардлын бүтэц", hint: "Cost Structure" },
-  { key: "revenue", area: "rv", title: "Орлогын урсгал", hint: "Revenue Streams" },
+  { key: "problem", area: "kp", title: "Асуудал", hint: "Ямар асуудал вэ" },
+  { key: "solution", area: "ka", title: "Шийдэл", hint: "Хэрхэн шийдэх вэ" },
+  { key: "metrics", area: "kr", title: "Гол хэмжүүр", hint: "Юугаар хэмжих вэ" },
+  { key: "value", area: "vp", title: "Өвөрмөц санал", hint: "Яагаад биднийг сонгох вэ" },
+  { key: "advantage", area: "cr", title: "Өрсөлдөхүйц давуу тал", hint: "Юугаар давуу вэ" },
+  { key: "channels", area: "ch", title: "Суваг", hint: "Хэрхэн хүрэх вэ" },
+  { key: "customers", area: "cs", title: "Үйлчлүүлэгчийн сегмент", hint: "Хэнд зориулах вэ" },
+  { key: "costs", area: "co", title: "Зардлын бүтэц", hint: "Юунд зарцуулах вэ" },
+  { key: "revenue", area: "rv", title: "Орлогын урсгал", hint: "Юугаар орлого олох вэ" },
 ];
 
 function Canvas({ c, blocks, label, hideEmpty = false }: { c: Company; blocks: Block[]; label: string; hideEmpty?: boolean }) {
@@ -86,10 +86,10 @@ function BmcView({ c, scoped, hideEmpty = false }: { c: Company; scoped: Company
   const notes = scoped.notes ?? [];
   return (
     <div className="cv-method">
-      <Canvas c={c} blocks={BMC} label="Business Model Canvas" hideEmpty={hideEmpty} />
+      <Canvas c={c} blocks={BMC} label="Бизнес загварын канвас" hideEmpty={hideEmpty} />
       <div className="cv-below">
-        <section className="cv-below-col" aria-label="Төсөл ба task">
-          <h4 className="cv-below-h">Төсөл → task</h4>
+        <section className="cv-below-col" aria-label="Төсөл ба даалгавар">
+          <h4 className="cv-below-h">Төсөл → даалгавар</h4>
           {scoped.projects.length ? (
             <ul className="cv-plist">
               {scoped.projects.map((p) => {
@@ -184,23 +184,23 @@ function OkrView({ c, scoped }: { c: Company; scoped: Company }) {
 }
 
 const PHASE_NAME: Record<PmPhase, string> = {
-  initiating: "Initiating",
-  planning: "Planning",
-  executing: "Executing",
-  monitoring: "Monitoring & Controlling",
-  closing: "Closing",
+  initiating: "Эхлүүлэх",
+  planning: "Төлөвлөх",
+  executing: "Гүйцэтгэх",
+  monitoring: "Хянах",
+  closing: "Хаах",
 };
 const AREA_NAME: Record<PmKnowledgeArea, string> = {
-  integration: "Integration",
-  scope: "Scope",
-  schedule: "Schedule",
-  cost: "Cost",
-  quality: "Quality",
-  resource: "Resource",
-  communications: "Communications",
-  risk: "Risk",
-  procurement: "Procurement",
-  stakeholder: "Stakeholder",
+  integration: "Нэгтгэл",
+  scope: "Хамрах хүрээ",
+  schedule: "Хуваарь",
+  cost: "Зардал",
+  quality: "Чанар",
+  resource: "Нөөц",
+  communications: "Харилцаа",
+  risk: "Эрсдэл",
+  procurement: "Худалдан авалт",
+  stakeholder: "Оролцогч",
 };
 
 type PmItem = { p: CompanyProject; t: CompanyTask; phase: PmPhase | null; area: PmKnowledgeArea | null; start: number | null; end: number | null };
@@ -237,10 +237,10 @@ function PmbokView({ c, scoped, today }: { c: Company; scoped: Company; today: D
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   };
   const facts = [
-    { label: "Task", value: String(items.length) },
-    { label: "Гүйцэтгэл", value: items.length ? `${Math.round((done / items.length) * 100)}%` : "—" },
-    { label: "Идэвхтэй бүлэг", value: live && live.n ? PHASE_NAME[live.ph] : "—" },
-    { label: "Хугацаа", value: starts.length && ends.length ? `${fmt(Math.min(...starts))} → ${fmt(Math.max(...ends))}` : "—" },
+    { label: "Даалгавар", value: String(items.length) },
+    { label: "Гүйцэтгэл", value: items.length ? `${Math.round((done / items.length) * 100)}%` : "0%" },
+    { label: "Идэвхтэй бүлэг", value: live && live.n ? PHASE_NAME[live.ph] : "Алга" },
+    { label: "Хугацаа", value: starts.length && ends.length ? `${fmt(Math.min(...starts))} → ${fmt(Math.max(...ends))}` : "Тодорхойгүй" },
     { label: "Шийдвэр", value: String(scoped.projects.reduce((n, p) => n + p.decisions.length, 0)) },
     ...(c.facts ?? []),
   ];
@@ -267,8 +267,8 @@ function PmbokView({ c, scoped, today }: { c: Company; scoped: Company; today: D
 
   return (
     <div className="cv-method">
-      <section className="cv-facts" aria-label="Facts hub">
-        <h4 className="cv-below-h">Facts hub</h4>
+      <section className="cv-facts" aria-label="Баримтын төв">
+        <h4 className="cv-below-h">Баримтын төв</h4>
         <dl>
           {facts.map((f, i) => (
             <div key={f.label + i} style={{ "--i": i } as React.CSSProperties}>
@@ -315,7 +315,7 @@ function PmbokView({ c, scoped, today }: { c: Company; scoped: Company; today: D
                             {list.length}
                             <span className="cv-sr">
                               {" "}
-                              task, {AREA_NAME[ar]} · {PHASE_NAME[ph]}
+                              даалгавар, {AREA_NAME[ar]} · {PHASE_NAME[ph]}
                             </span>
                           </button>
                         ) : (
@@ -340,11 +340,11 @@ function PmbokView({ c, scoped, today }: { c: Company; scoped: Company; today: D
             ))}
           </ul>
         )}
-        {items.length > 0 && items.every((x) => !x.phase || !x.area) && <p className="cv-none">Task-уудад phase, knowledgeArea бүртгэгдээгүй.</p>}
+        {items.length > 0 && items.every((x) => !x.phase || !x.area) && <p className="cv-none">Даалгавруудад үе шат, мэдлэгийн чиглэл бүртгэгдээгүй.</p>}
       </section>
 
-      <section aria-label="Gantt">
-        <h4 className="cv-below-h">Gantt</h4>
+      <section aria-label="Гант график">
+        <h4 className="cv-below-h">Гант график</h4>
         {dated.length ? (
           <div className="cv-gantt">
             <div className="cv-gantt-scale" aria-hidden="true">
@@ -381,7 +381,7 @@ function PmbokView({ c, scoped, today }: { c: Company; scoped: Company; today: D
             </p>
           </div>
         ) : (
-          <p className="cv-none">Эхлэх, дуусах огноотой task алга.</p>
+          <p className="cv-none">Эхлэх, дуусах огноотой даалгавар алга.</p>
         )}
       </section>
     </div>
@@ -407,7 +407,7 @@ export function MethodologyView({
   if (methodology === "lean-canvas")
     return (
       <div className="cv-method">
-        <Canvas c={c} blocks={LEAN} label="Lean Canvas" hideEmpty={hideEmpty} />
+        <Canvas c={c} blocks={LEAN} label="Лийн канвас" hideEmpty={hideEmpty} />
       </div>
     );
   return <BmcView c={c} scoped={scoped} hideEmpty={hideEmpty} />;

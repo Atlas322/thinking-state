@@ -27,15 +27,15 @@ export type BillingScheduleProps = {
 };
 
 const durations: { label: string; months: number }[] = [
-  { label: "Milestone", months: 0 },
-  { label: "1 month", months: 1 },
-  { label: "3 months", months: 3 },
-  { label: "6 months", months: 6 },
-  { label: "12 months", months: 12 },
+  { label: "Нэг удаагийн", months: 0 },
+  { label: "1 сар", months: 1 },
+  { label: "3 сар", months: 3 },
+  { label: "6 сар", months: 6 },
+  { label: "12 сар", months: 12 },
 ];
 const repeatMonths: Record<Repeat, number> = { once: 0, monthly: 1, quarterly: 3, yearly: 12 };
-const repeatLabel: Record<Repeat, string> = { once: "Once", monthly: "Monthly", quarterly: "Quarterly", yearly: "Yearly" };
-const per: Record<Repeat, string> = { once: "once", monthly: "month", quarterly: "quarter", yearly: "year" };
+const repeatLabel: Record<Repeat, string> = { once: "Нэг удаа", monthly: "Сар бүр", quarterly: "Улирал бүр", yearly: "Жил бүр" };
+const per: Record<Repeat, string> = { once: "нэг удаа", monthly: "сар", quarterly: "улирал", yearly: "жил" };
 
 const defaultCatalog: CatalogItem[] = [
   { name: "Платформын лиценз", repeat: "monthly", price: 1200 },
@@ -49,7 +49,7 @@ const nid = () => `l${++uid}`;
 
 const fmtDate = (iso: string) => {
   const d = new Date(`${iso}T00:00:00`);
-  return Number.isNaN(d.getTime()) ? iso : d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  return Number.isNaN(d.getTime()) ? iso : `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
 };
 const addMonths = (iso: string, m: number) => {
   const d = new Date(`${iso}T00:00:00`);
@@ -81,7 +81,7 @@ export function BillingSchedule({
 }: BillingScheduleProps) {
   const [phase, setPhase] = React.useState(phaseProp);
   const [start, setStart] = React.useState(defaultStart);
-  const [duration, setDuration] = React.useState("Milestone");
+  const [duration, setDuration] = React.useState("Нэг удаагийн");
   const [lines, setLines] = React.useState<ScheduleLine[]>(
     () => defaultLines ?? [{ id: nid(), kind: "product", name: "Суурилуулалт", repeat: "once", price: 4999, timing: "advance" }],
   );
@@ -134,27 +134,27 @@ export function BillingSchedule({
       <header className="bs-head">
         <h3>{title}</h3>
         <p className="bs-sum">
-          <input className="bs-phase" aria-label="Phase name" value={phase} size={Math.max(1, phase.length - 1)} onChange={(e) => setPhase(e.target.value)} />
+          <input className="bs-phase" aria-label="Үе шатын нэр" value={phase} size={Math.max(1, phase.length - 1)} onChange={(e) => setPhase(e.target.value)} />
           <span className="bs-dot">·</span>
           <span>{fmtDate(start)}</span>
           {Ico.arrow}
           <span key={duration + start} className="bs-end">
-            {months ? fmtDate(addMonths(start, months)) : "Milestone"}
+            {months ? fmtDate(addMonths(start, months)) : "Нэг удаагийн"}
           </span>
         </p>
       </header>
 
       <div className="bs-fields">
         <label className="bs-field">
-          <span>Start date</span>
+          <span>Эхлэх огноо</span>
           <span className="bs-input">
-            <input type="date" value={start} onChange={(e) => e.target.value && setStart(e.target.value)} aria-label="Start date" />
+            <input type="date" value={start} onChange={(e) => e.target.value && setStart(e.target.value)} aria-label="Эхлэх огноо" />
             <span className="bs-show">{start.replace(/-/g, ".")}</span>
             {Ico.cal}
           </span>
         </label>
         <div className="bs-field bs-menu-wrap">
-          <span id="bs-dur">Duration</span>
+          <span id="bs-dur">Хугацаа</span>
           <button
             type="button"
             className="bs-input bs-select"
@@ -167,7 +167,7 @@ export function BillingSchedule({
             {Ico.chev}
           </button>
           {menu === "duration" && (
-            <ul className="bs-menu" role="listbox" aria-label="Duration">
+            <ul className="bs-menu" role="listbox" aria-label="Хугацаа">
               {durations.map((d) => (
                 <li
                   key={d.label}
@@ -197,10 +197,10 @@ export function BillingSchedule({
       <table className="bs-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Repeats</th>
-            <th className="bs-r">Price</th>
-            <th aria-label="Remove" />
+            <th>Нэр</th>
+            <th>Давтамж</th>
+            <th className="bs-r">Үнэ</th>
+            <th aria-label="Хасах" />
           </tr>
         </thead>
         <tbody>
@@ -211,7 +211,7 @@ export function BillingSchedule({
                 <td>
                   <span className="bs-rep">
                     {Ico.repeat}
-                    <select aria-label={`${l.name} repeats`} value={l.repeat} onChange={(e) => update(l.id, { repeat: e.target.value as Repeat })}>
+                    <select aria-label={`${l.name}: давтамж`} value={l.repeat} onChange={(e) => update(l.id, { repeat: e.target.value as Repeat })}>
                       {(Object.keys(repeatLabel) as Repeat[]).map((r) => (
                         <option key={r} value={r}>
                           {repeatLabel[r]}
@@ -224,7 +224,7 @@ export function BillingSchedule({
                   <span className="bs-price">
                     <span className="bs-cur">{currency}</span>
                     <input
-                      aria-label={`${l.name} price`}
+                      aria-label={`${l.name}: үнэ`}
                       inputMode="decimal"
                       value={l.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
                       size={Math.max(1, l.price.toLocaleString("en-US", { minimumFractionDigits: 2 }).length - 1)}
@@ -237,46 +237,46 @@ export function BillingSchedule({
                   </span>
                   <select
                     className="bs-timing"
-                    aria-label={`${l.name} billing timing`}
+                    aria-label={`${l.name}: нэхэмжлэх хугацаа`}
                     value={l.timing ?? "advance"}
                     onChange={(e) => update(l.id, { timing: e.target.value as "advance" | "arrears" })}
                   >
-                    <option value="advance">Billed in advance</option>
-                    <option value="arrears">Billed in arrears</option>
+                    <option value="advance">Урьдчилж нэхэмжилнэ</option>
+                    <option value="arrears">Дараа нь нэхэмжилнэ</option>
                   </select>
                 </td>
                 <td className="bs-x">
-                  <button type="button" aria-label={`Remove ${l.name}`} onClick={() => remove(l.id)}>
+                  <button type="button" aria-label={`Хасах: ${l.name}`} onClick={() => remove(l.id)}>
                     {Ico.x}
                   </button>
                 </td>
               </tr>
             ) : l.kind === "discount" ? (
               <tr key={l.id}>
-                <td className="bs-name">Discount</td>
-                <td className="bs-muted">All products</td>
+                <td className="bs-name">Хөнгөлөлт</td>
+                <td className="bs-muted">Бүх бүтээгдэхүүн</td>
                 <td className="bs-r">
                   <span className="bs-price">
-                    <input aria-label="Discount percent" inputMode="decimal" value={l.percent} size={3} onChange={(e) => update(l.id, { percent: Math.min(100, Number(e.target.value.replace(/\D/g, "")) || 0) })} />
-                    <span className="bs-per">% off</span>
+                    <input aria-label="Хөнгөлөлтийн хувь" inputMode="decimal" value={l.percent} size={3} onChange={(e) => update(l.id, { percent: Math.min(100, Number(e.target.value.replace(/\D/g, "")) || 0) })} />
+                    <span className="bs-per">% хөнгөлөлт</span>
                   </span>
                 </td>
                 <td className="bs-x">
-                  <button type="button" aria-label="Remove discount" onClick={() => remove(l.id)}>{Ico.x}</button>
+                  <button type="button" aria-label="Хөнгөлөлт хасах" onClick={() => remove(l.id)}>{Ico.x}</button>
                 </td>
               </tr>
             ) : (
               <tr key={l.id}>
-                <td className="bs-name">Minimum commitment</td>
-                <td className="bs-muted">Whole phase</td>
+                <td className="bs-name">Доод хэмжээ</td>
+                <td className="bs-muted">Бүх үе шат</td>
                 <td className="bs-r">
                   <span className="bs-price">
                     <span className="bs-cur">{currency}</span>
-                    <input aria-label="Minimum amount" inputMode="decimal" value={l.amount} size={7} onChange={(e) => update(l.id, { amount: Number(e.target.value.replace(/[^0-9.]/g, "")) || 0 })} />
+                    <input aria-label="Доод дүн" inputMode="decimal" value={l.amount} size={7} onChange={(e) => update(l.id, { amount: Number(e.target.value.replace(/[^0-9.]/g, "")) || 0 })} />
                   </span>
                 </td>
                 <td className="bs-x">
-                  <button type="button" aria-label="Remove minimum" onClick={() => remove(l.id)}>{Ico.x}</button>
+                  <button type="button" aria-label="Доод хэмжээ хасах" onClick={() => remove(l.id)}>{Ico.x}</button>
                 </td>
               </tr>
             ),
@@ -288,10 +288,10 @@ export function BillingSchedule({
         <div className="bs-menu-wrap">
           <button type="button" className="bs-btn" aria-haspopup="listbox" aria-expanded={menu === "catalog"} onClick={() => setMenu(menu === "catalog" ? null : "catalog")}>
             {Ico.plus}
-            Add product
+            Бүтээгдэхүүн нэмэх
           </button>
           {menu === "catalog" && (
-            <ul className="bs-menu bs-up" role="listbox" aria-label="Products">
+            <ul className="bs-menu bs-up" role="listbox" aria-label="Бүтээгдэхүүн">
               {catalog.map((c) => (
                 <li
                   key={c.name}
@@ -316,20 +316,20 @@ export function BillingSchedule({
         <span className="bs-grow" />
         <button type="button" className="bs-btn" disabled={!!discount} onClick={() => setLines((ls) => [...ls, { id: nid(), kind: "discount", percent: 10 }])}>
           {Ico.pct}
-          Add discount
+          Хөнгөлөлт нэмэх
         </button>
         <button type="button" className="bs-btn" disabled={!!minimum} onClick={() => setLines((ls) => [...ls, { id: nid(), kind: "minimum", amount: 10000 }])}>
           {Ico.min}
-          Add minimum
+          Доод хэмжээ нэмэх
         </button>
       </div>
 
       <footer className="bs-foot" aria-live="polite">
         <span>
-          First invoice <b>{money(firstInvoice)}</b>
+          Эхний нэхэмжлэх <b>{money(firstInvoice)}</b>
         </span>
         <span>
-          Phase total <b>{money(total)}</b>
+          Үе шатын нийт <b>{money(total)}</b>
         </span>
       </footer>
     </section>
@@ -337,8 +337,8 @@ export function BillingSchedule({
 }
 
 const css = `
-.bs{--bs-bg:#fff;--bs-fg:#18181b;--bs-muted:#71717a;--bs-faint:#a1a1aa;--bs-line:#ececef;--bs-soft:#f7f7f8;--bs-accent:#3b82f6;width:100%;max-width:604px;background:var(--bs-bg);color:var(--bs-fg);border:1px solid var(--bs-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .bs{--bs-bg:#1b1b1e;--bs-fg:#ececef;--bs-muted:#a1a1aa;--bs-faint:#6b6b73;--bs-line:#2c2c31;--bs-soft:#232328;--bs-accent:#7aa2ff;color-scheme:dark}
+.bs{--bs-bg:#fff;--bs-fg:#18181b;--bs-muted:#65656d;--bs-faint:#65656d;--bs-line:#ececef;--bs-soft:#f7f7f8;--bs-accent:#3b82f6;width:100%;max-width:604px;background:var(--bs-bg);color:var(--bs-fg);border:1px solid var(--bs-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .bs{--bs-bg:#1b1b1e;--bs-fg:#ececef;--bs-muted:#a1a1aa;--bs-faint:#9a9aa2;--bs-line:#2c2c31;--bs-soft:#232328;--bs-accent:#7aa2ff;color-scheme:dark}
 .bs *{box-sizing:border-box}.bs button,.bs input,.bs select{font:inherit;color:inherit}
 .bs-head{padding:17px 15px 0}
 .bs-head h3{margin:0;font-size:16px;font-weight:500;letter-spacing:-.01em}

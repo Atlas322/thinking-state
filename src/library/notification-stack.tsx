@@ -121,7 +121,7 @@ export function NotificationStack({
       </style>
       <section
         className={["ui-nsc", className].filter(Boolean).join(" ")}
-        aria-label="Notifications"
+        aria-label="Мэдэгдлүүд"
         style={{ height: visible.length ? front + behind * PEEK : 0 }}
       >
         {items.map((notice) => {
@@ -179,7 +179,7 @@ export function NotificationStack({
                   <button
                     type="button"
                     className="ui-nsc__close"
-                    aria-label={`Dismiss ${notice.title}`}
+                    aria-label={`Хаах: ${notice.title}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       dismiss(notice);

@@ -118,7 +118,7 @@ const layout = (list, spread, lift, tilt, sizes) => {
 
 export function FolderFloat({
   items = DEFAULT_ITEMS,
-  label = "Design feedback",
+  label = "Дизайны санал",
   sublabel = "",
   trigger = "hover",
   defaultOpen = false,
@@ -159,7 +159,7 @@ export function FolderFloat({
   const liveTimer = useRef(undefined);
   const list = items.map((item) => (typeof item === "string" ? { label: item, value: item } : item));
   const n = list.length;
-  const sub = sublabel || `${n} ${n === 1 ? "note" : "notes"}`;
+  const sub = sublabel || `${n} тэмдэглэл`;
   const pos = layout(list, spread, lift, tilt, sizes);
 
   const labelsKey = list.map((item) => item.label).join("|");
@@ -444,13 +444,13 @@ export default function Demo() {
   return (
     <div style={{ display: "grid", justifyItems: "center", gap: 16, paddingTop: 170 }}>
       <FolderFloat
-        items={["Try a warmer palette", "Tighten the spacing", "Logo feels small", "Love the new hero", "Ship v4a"]}
-        label="Design feedback"
+        items={["Илүү дулаан өнгө туршъя", "Зайг нягтруулах", "Лого жижиг санагдаж байна", "Шинэ нүүр хэсэг гоё болжээ", "4А хувилбарыг гаргая"]}
+        label="Дизайны санал"
         trigger="click"
         onSelect={(value) => setPicked(value)}
       />
       <small style={{ color: "#71717a", font: "12px Inter, system-ui, sans-serif" }}>
-        {picked ? `Picked: ${picked}` : "Click the folder, then drag or pick a note"}
+        {picked ? `Сонгосон: ${picked}` : "Хавтсан дээр дараад тэмдэглэлээ чирэх эсвэл сонгоно уу"}
       </small>
     </div>
   );

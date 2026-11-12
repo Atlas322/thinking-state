@@ -104,7 +104,7 @@ const defaultBlocks: DocBlock[] = [
   {
     id: "code",
     kind: "code",
-    text: "const rollout = {\n  waitlist: \"11/3\",\n  everyone: \"11-р сарын хоёр дахь долоо хоног\",\n};",
+    text: "rollout.waitlist = \"11/3\";\nrollout.everyone = \"11-р сарын хоёр дахь долоо хоног\";",
   },
   { id: "launch", kind: "paragraph", text: "Нээлтийн долоо хоног: нэг богино пост, демо бичлэг, хүлээлгийн жагсаалт руу имэйл." },
   { id: "ships", kind: "heading", text: "Юу гарах вэ" },
@@ -114,7 +114,7 @@ const defaultBlocks: DocBlock[] = [
 
 const defaultSuggestions: DocSuggestion[] = [
   { id: "s1", agent: "writer", block: "title", at: 21, remove: "товчоо", insert: "төлөвлөгөө", note: "Нэвтрүүлэлтийн хэсэгт төлөвлөгөө гэдэг нь тохирно" },
-  { id: "s2", agent: "coder", block: "code", at: 51, remove: "11-р сарын хоёр дахь долоо хоног", insert: "11/10", note: "Хүлээлгийн жагсаалтын огноотой ижил формат" },
+  { id: "s2", agent: "coder", block: "code", at: 47, remove: "11-р сарын хоёр дахь долоо хоног", insert: "11/10", note: "Хүлээлгийн жагсаалтын огноотой ижил формат" },
 ];
 
 const defaultComments: DocComment[] = [
@@ -125,7 +125,7 @@ const defaultComments: DocComment[] = [
 const defaultCursors: Record<string, AgentCursor> = {
   researcher: { block: "lede", at: 25, doing: "тоо шалгаж байна" },
   designer: { block: "img", doing: "хэмжээ өөрчилж байна" },
-  coder: { block: "code", at: 86 },
+  coder: { block: "code", at: 81 },
   writer: { block: "title", at: 27, typing: true },
 };
 
@@ -230,7 +230,7 @@ export function AgentCursors({
               role="button"
               tabIndex={0}
               className="acu-sug"
-              aria-label={`${a?.name ?? sug.agent} suggests ${sug.remove ? `replacing ${sug.remove} with` : "adding:"} ${sug.insert ?? ""}`}
+              aria-label={`${a?.name ?? sug.agent} санал болгож байна: ${sug.remove ? `${sug.remove} → ${sug.insert ?? ""}` : `нэмэх ${sug.insert ?? ""}`}`}
               onClick={() => setOpen(open === sug.id ? null : sug.id)}
               onFocus={() => setOpen(sug.id)}
               onKeyDown={(e) => e.key === "Escape" && setOpen(null)}
@@ -239,15 +239,15 @@ export function AgentCursors({
               {ins && <ins>{ins}</ins>}
             </span>
             {open === sug.id && (
-              <span role="dialog" aria-label={`Suggestion from ${a?.name}`} className="acu-pop">
+              <span role="dialog" aria-label={`${a?.name}: санал`} className="acu-pop">
                 <span className="acu-pop-who">
                   <span className="acu-face sm">{marks[sug.agent]}</span>
                   {a?.name}
                 </span>
                 {sug.note && <span className="acu-pop-note">{sug.note}</span>}
                 <span className="acu-pop-act">
-                  <button type="button" onClick={() => decide(sug, false)}>Reject</button>
-                  <button type="button" className="is-dark" onClick={() => decide(sug, true)}>Accept</button>
+                  <button type="button" onClick={() => decide(sug, false)}>Татгалзах</button>
+                  <button type="button" className="is-dark" onClick={() => decide(sug, true)}>Хүлээн авах</button>
                 </span>
               </span>
             )}
@@ -269,15 +269,15 @@ export function AgentCursors({
       .map((c) => {
         const a = byId(c.agent);
         return (
-          <span key={c.id} className="acu-pin" tabIndex={0} aria-label={`Comment from ${a?.name}: ${c.text}`}>
+          <span key={c.id} className="acu-pin" tabIndex={0} aria-label={`${a?.name}, сэтгэгдэл: ${c.text}`}>
             <span className="acu-pin-mark">{marks[c.agent]}</span>
             <span className="acu-pin-card">
               <span className="acu-pin-head">
                 <b>{a?.name}</b>
-                <span>now</span>
+                <span>одоо</span>
                 <button
                   type="button"
-                  aria-label="Resolve"
+                  aria-label="Шийдэх"
                   onClick={() => {
                     setComments((l) => l.filter((x) => x.id !== c.id));
                     onResolveComment?.(c);
@@ -314,7 +314,7 @@ export function AgentCursors({
         break;
       case "image":
         doc.push(
-          <div key={b.id} className={`acu-img is-${b.float ?? "left"}`} role="img" aria-label="Image placeholder">
+          <div key={b.id} className={`acu-img is-${b.float ?? "left"}`} role="img" aria-label="Зургийн орон зай">
             {pointersFor(b.id)}
           </div>,
         );
@@ -372,7 +372,7 @@ export function AgentCursors({
           </span>
           {suggestions.length > 0 && (
             <span className="acu-count">
-              {suggestions.length} suggestion{suggestions.length === 1 ? "" : "s"}
+              {suggestions.length} санал
             </span>
           )}
           <b className="acu-total">{formatCost(total)}</b>
@@ -385,7 +385,7 @@ export function AgentCursors({
                 onAcceptAll?.();
               }}
             >
-              Accept all
+              Бүгдийг хүлээн авах
             </button>
           )}
         </header>
@@ -395,13 +395,13 @@ export function AgentCursors({
           ) : (
             <table className="acu-table">
               <thead>
-                <tr><th>Agent</th><th>Doing</th><th>Cost</th></tr>
+                <tr><th>Агент</th><th>Хийж буй</th><th>Зардал</th></tr>
               </thead>
               <tbody>
                 {agents.map((a) => (
                   <tr key={a.id}>
                     <td><span className="acu-face sm">{marks[a.id]}</span>{a.name}</td>
-                    <td>{cursors[a.id]?.doing ?? (cursors[a.id] ? "Editing" : "Away")}</td>
+                    <td>{cursors[a.id]?.doing ?? (cursors[a.id] ? "Засаж байна" : "Холдсон")}</td>
                     <td>{formatCost(a.cost ?? 0)}</td>
                   </tr>
                 ))}
@@ -415,8 +415,8 @@ export function AgentCursors({
 }
 
 const css = `
-.acu{--acu-bg:#fff;--acu-fg:#18181b;--acu-muted:#71717a;--acu-faint:#a1a1aa;--acu-line:#ececef;--acu-soft:#f4f4f5;--acu-ink:#18181b;--acu-flag:#18181b;--acu-flag-fg:#fafafa;--acu-edge:linear-gradient(90deg,#f472b6,#60a5fa);--acu-sug:#18181b;width:100%;max-width:700px;color:var(--acu-fg);font:400 14px/1.6 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .acu{--acu-bg:#1b1b1e;--acu-fg:#ececef;--acu-muted:#a1a1aa;--acu-faint:#71717a;--acu-line:#2e2e33;--acu-soft:#26262b;--acu-ink:#ececef;--acu-flag:#f4f4f5;--acu-flag-fg:#18181b;--acu-sug:#ececef;color-scheme:dark}
+.acu{--acu-bg:#fff;--acu-fg:#18181b;--acu-muted:#65656d;--acu-faint:#65656d;--acu-line:#ececef;--acu-soft:#f4f4f5;--acu-ink:#18181b;--acu-flag:#18181b;--acu-flag-fg:#fafafa;--acu-edge:linear-gradient(90deg,#f472b6,#60a5fa);--acu-sug:#18181b;width:100%;max-width:700px;color:var(--acu-fg);font:400 14px/1.6 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .acu{--acu-bg:#1b1b1e;--acu-fg:#ececef;--acu-muted:#a1a1aa;--acu-faint:#9a9aa2;--acu-line:#2e2e33;--acu-soft:#26262b;--acu-ink:#ececef;--acu-flag:#f4f4f5;--acu-flag-fg:#18181b;--acu-sug:#ececef;color-scheme:dark}
 .acu *{box-sizing:border-box}.acu button{font:inherit;color:inherit;cursor:pointer}
 .acu-tabs{display:flex;gap:6px;margin-bottom:8px}
 .acu-tabs button{height:30px;padding:0 10px;border:1px solid transparent;border-radius:8px;background:var(--acu-soft);color:var(--acu-muted);font-size:14px}

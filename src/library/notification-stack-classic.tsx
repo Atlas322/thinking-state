@@ -120,7 +120,7 @@ export function NotificationStack({
       </style>
       <section
         className={["ui-ns", className].filter(Boolean).join(" ")}
-        aria-label="Notifications"
+        aria-label="Мэдэгдлүүд"
         style={{ height: visible.length ? front + behind * PEEK : 0 }}
       >
         {items.map((notice) => {
@@ -178,7 +178,7 @@ export function NotificationStack({
                   <button
                     type="button"
                     className="ui-ns__close"
-                    aria-label={`Dismiss ${notice.title}`}
+                    aria-label={`Хаах: ${notice.title}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       dismiss(notice);
@@ -314,7 +314,7 @@ const css = /* css */ `
   --ui-ns-card: #ffffff;
   --ui-ns-line: #e5e5e5;
   --ui-ns-ink: #171717;
-  --ui-ns-muted: #737373;
+  --ui-ns-muted: #65656d;
   --ui-ns-art: #e3e3e3;
   --ui-ns-accent: #2f6bff;
   --ui-ns-focus: rgba(0, 96, 226, 0.7);
@@ -474,7 +474,7 @@ const css = /* css */ `
   --ui-ns-card: #232326;
   --ui-ns-line: rgba(255, 255, 255, 0.1);
   --ui-ns-ink: #ededed;
-  --ui-ns-muted: #8f8f8f;
+  --ui-ns-muted: #9a9aa2;
   --ui-ns-art: rgba(255, 255, 255, 0.08);
   --ui-ns-focus: rgba(77, 141, 255, 0.8);
 }

@@ -90,7 +90,7 @@ const DECEL = 0.998;
 const VMAX = 1500;
 const EASE_OUT = [0.23, 1, 0.32, 1];
 const SPRING_UI = { type: "spring", duration: 0.3, bounce: 0 };
-const DEFAULT_ACTIONS = [{ id: "delete", label: "Delete" }];
+const DEFAULT_ACTIONS = [{ id: "delete", label: "Устгах" }];
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 const rubber = (o, dim, c) => (o * dim * c) / (dim + c * Math.abs(o));
@@ -151,7 +151,7 @@ export function SwipeRow({
   onCommit,
   closeOnAction = true,
   haptic = true,
-  label = "List item",
+  label = "Жагсаалтын мөр",
   className = "",
   style,
 }: SwipeRowProps) {
@@ -253,7 +253,7 @@ export function SwipeRow({
     if (reduce) spread.set(on ? 1 : 0);
     else animate(spread, on ? 1 : 0, SPRING_UI);
     if (on && primary) {
-      setSay(`Release to ${primary.label}`);
+      setSay(`Тавьвал: ${primary.label}`);
       if (haptic && grip.current?.touch) navigator.vibrate?.(8);
     }
   };
@@ -370,7 +370,7 @@ export function SwipeRow({
     heading.current = D;
     x.set(s * D);
     setOpen(true);
-    setSay(`${n} actions revealed`);
+    setSay(`${n} үйлдэл нээгдлээ`);
   };
   const closeNow = () => {
     heading.current = 0;
@@ -468,7 +468,7 @@ export function SwipeRow({
             onKeyDown={onToggleKey}
             onClick={onToggleClick}
           >
-            {n} {n === 1 ? "action" : "actions"}
+            {n} үйлдэл
           </button>
         </motion.div>
       </div>
@@ -486,9 +486,9 @@ const ArchiveIcon = () => (
 );
 
 const SEED = [
-  { id: "1", title: "Research agent", note: "Brief ready · 12 sources" },
-  { id: "2", title: "Design review notes", note: "3 comments on hero v4a" },
-  { id: "3", title: "Deploy to staging", note: "Waiting for approval" },
+  { id: "1", title: "Судлаач агент", note: "Товчоо бэлэн · 12 эх сурвалж" },
+  { id: "2", title: "Дизайны хяналтын тэмдэглэл", note: "Нүүр хэсгийн v4a дээр 3 сэтгэгдэл" },
+  { id: "3", title: "Туршилтын орчинд байршуулах", note: "Зөвшөөрөл хүлээж байна" },
 ];
 
 export default function Demo() {
@@ -500,8 +500,8 @@ export default function Demo() {
           key={row.id}
           label={row.title}
           actions={[
-            { id: "delete", label: "Delete" },
-            { id: "archive", label: "Archive", icon: <ArchiveIcon />, dismiss: true },
+            { id: "delete", label: "Устгах" },
+            { id: "archive", label: "Архивлах", icon: <ArchiveIcon />, dismiss: true },
           ]}
           onCommit={() => setRows((r) => r.filter((x) => x.id !== row.id))}
           style={{ marginBottom: 8 }}
@@ -514,7 +514,8 @@ export default function Demo() {
       ))}
       {rows.length === 0 && (
         <button type="button" onClick={() => setRows(SEED)} style={{ padding: "8px 14px", borderRadius: 999, border: "1px solid #d4d4d8", background: "transparent", cursor: "pointer" }}>
-          Reset rows
+          Мөрүүдийг сэргээх
+
         </button>
       )}
     </div>

@@ -161,7 +161,7 @@ export function ProfileMenu({
             ref={listRef}
             className="ui-pmc__items"
             role="menu"
-            aria-label="Account"
+            aria-label="Бүртгэл"
             onKeyDown={onKey}
           >
             {list.map((item, i) => (
@@ -207,7 +207,7 @@ function SetupProgress({
   return (
     <div className="ui-pmc__setup">
       <div className="ui-pmc__setup-head">
-        <span className="ui-pmc__setup-title">Profile setup</span>
+        <span className="ui-pmc__setup-title">Профайл тохируулах</span>
         <span className="ui-pmc__setup-count">
           {count.format(done)}/{count.format(total)}
         </span>
@@ -215,7 +215,7 @@ function SetupProgress({
       <span
         className="ui-pmc__track"
         role="progressbar"
-        aria-label="Profile setup"
+        aria-label="Профайл тохируулах"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={percent}
@@ -228,7 +228,7 @@ function SetupProgress({
       {open && (
         <button type="button" className="ui-pmc__next" onClick={onContinue}>
           <span className="ui-pmc__next-label" dir="auto" title={next}>
-            <span className="ui-pmc__next-hint">Next:</span> {next}
+            <span className="ui-pmc__next-hint">Дараах:</span> {next}
           </span>
           <ArrowIcon />
         </button>
@@ -315,10 +315,10 @@ const ArrowIcon = () => (
 );
 
 const defaultItems: ProfileMenuItem[] = [
-  { id: "settings", label: "Settings", icon: <SettingsIcon /> },
-  { id: "docs", label: "Docs", icon: <DocsIcon /> },
-  { id: "apps", label: "Apps", icon: <AppsIcon />, badge: "New" },
-  { id: "logout", label: "Logout", icon: <LogoutIcon /> },
+  { id: "settings", label: "Тохиргоо", icon: <SettingsIcon /> },
+  { id: "docs", label: "Баримт бичиг", icon: <DocsIcon /> },
+  { id: "apps", label: "Аппууд", icon: <AppsIcon />, badge: "Шинэ" },
+  { id: "logout", label: "Гарах", icon: <LogoutIcon /> },
 ];
 
 /* ---------- Styles ---------- */

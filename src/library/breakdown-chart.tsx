@@ -27,16 +27,16 @@ export type BreakdownChartProps = {
 
 const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 1.3, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
 const statusIcons: Record<string, React.ReactNode> = {
-  Backlog: <svg viewBox="0 0 16 16" {...stroke}><path d="M2.5 9.5 4 4h8l1.5 5.5V12a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1Z M2.5 9.5h3.2l.8 1.2h3l.8-1.2h3.2" /></svg>,
-  Todo: <svg viewBox="0 0 16 16" {...stroke}><rect x="2.8" y="2.8" width="10.4" height="10.4" rx="2" /></svg>,
-  "In progress": <svg viewBox="0 0 16 16" {...stroke} style={{ color: "#4f8ef7" }}><circle cx="8" cy="8" r="5.5" /><path d="M8 5v3l2 1.3" /></svg>,
-  "In review": <svg viewBox="0 0 16 16" {...stroke} style={{ color: "#5b5bd6" }}><path d="M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8Z" /><circle cx="8" cy="8" r="1.8" /></svg>,
-  Done: <svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2" fill="#2f7cf6" /><path d="m5.3 8.2 1.8 1.8 3.6-3.8" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" /></svg>,
-  Canceled: <svg viewBox="0 0 16 16" {...stroke}><circle cx="8" cy="8" r="5.5" /><path d="m4.2 11.8 7.6-7.6" /></svg>,
+  "Нөөцөд": <svg viewBox="0 0 16 16" {...stroke}><path d="M2.5 9.5 4 4h8l1.5 5.5V12a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1Z M2.5 9.5h3.2l.8 1.2h3l.8-1.2h3.2" /></svg>,
+  "Хийх": <svg viewBox="0 0 16 16" {...stroke}><rect x="2.8" y="2.8" width="10.4" height="10.4" rx="2" /></svg>,
+  "Хийгдэж байна": <svg viewBox="0 0 16 16" {...stroke} style={{ color: "#4f8ef7" }}><circle cx="8" cy="8" r="5.5" /><path d="M8 5v3l2 1.3" /></svg>,
+  "Хянагдаж байна": <svg viewBox="0 0 16 16" {...stroke} style={{ color: "#5b5bd6" }}><path d="M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8Z" /><circle cx="8" cy="8" r="1.8" /></svg>,
+  "Дууссан": <svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="2.2" fill="#2f7cf6" /><path d="m5.3 8.2 1.8 1.8 3.6-3.8" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" /></svg>,
+  "Цуцалсан": <svg viewBox="0 0 16 16" {...stroke}><circle cx="8" cy="8" r="5.5" /><path d="m4.2 11.8 7.6-7.6" /></svg>,
 };
 
-const statuses = ["Backlog", "Todo", "In progress", "In review", "Done", "Canceled"];
-const priorities = ["Urgent", "High", "Medium", "Low", "None"];
+const statuses = ["Нөөцөд", "Хийх", "Хийгдэж байна", "Хянагдаж байна", "Дууссан", "Цуцалсан"];
+const priorities = ["Яаралтай", "Өндөр", "Дунд", "Бага", "Тодорхойгүй"];
 const matrix = [
   [3, 6, 6, 8, 3],
   [1, 7, 12, 11, 5],
@@ -45,8 +45,8 @@ const matrix = [
   [7, 14, 23, 25, 27],
   [0, 1, 3, 1, 2],
 ];
-const people = ["Ana", "Ben", "Chen", "Dara"];
-const types = ["Feature", "Bug", "Chore"];
+const people = ["Анар", "Бат", "Чимэг", "Дулам"];
+const types = ["Шинэ боломж", "Алдаа", "Ажил"];
 
 const defaultRecords: BreakdownRecord[] = (() => {
   const out: BreakdownRecord[] = [];
@@ -61,15 +61,15 @@ const defaultRecords: BreakdownRecord[] = (() => {
 })();
 
 const defaultDimensions: Dimension[] = [
-  { key: "status", label: "Status", values: statuses, icons: statusIcons },
-  { key: "priority", label: "Priority", values: priorities, colors: { Urgent: "#e5484d", High: "#e8a20c", Medium: "#3b82f6", Low: "#a9c8f5", None: "#d9d9de" } },
-  { key: "assignee", label: "Assignee", values: people },
-  { key: "type", label: "Type", values: types },
+  { key: "status", label: "Төлөв", values: statuses, icons: statusIcons },
+  { key: "priority", label: "Ач холбогдол", values: priorities, colors: { "Яаралтай": "#e5484d", "Өндөр": "#e8a20c", "Дунд": "#3b82f6", "Бага": "#a9c8f5", "Тодорхойгүй": "#d9d9de" } },
+  { key: "assignee", label: "Хариуцагч", values: people },
+  { key: "type", label: "Төрөл", values: types },
 ];
 
 const defaultMeasures: Measure[] = [
-  { key: "count", label: "Task count", unit: "tasks" },
-  { key: "points", label: "Story points", unit: "points", field: "points" },
+  { key: "count", label: "Даалгаврын тоо", unit: "даалгавар" },
+  { key: "points", label: "Оноо", unit: "оноо", field: "points" },
 ];
 
 const palette = ["#3b82f6", "#e8a20c", "#16a34a", "#a855f7", "#e5484d", "#14b8a6"];
@@ -93,7 +93,7 @@ export function BreakdownChart({
   records = defaultRecords,
   dimensions = defaultDimensions,
   measures = defaultMeasures,
-  title = "Sprint 24",
+  title = "Спринт 24",
   defaultMeasure,
   defaultSlice,
   defaultSegment,
@@ -108,7 +108,7 @@ export function BreakdownChart({
   const measure = measures.find((m) => m.key === mKey) ?? measures[0];
   const slice = dimensions.find((d) => d.key === sKey) ?? dimensions[0];
   const seg = dimensions.find((d) => d.key === gKey && d.key !== slice.key);
-  const segValues = seg ? seg.values : ["All"];
+  const segValues = seg ? seg.values : ["Бүгд"];
   const colorOf = (v: string, i: number) => seg?.colors?.[v] ?? (seg ? palette[i % palette.length] : "#3b82f6");
   const val = (r: BreakdownRecord) => (measure.field ? Number(r[measure.field]) || 0 : 1);
 
@@ -132,7 +132,7 @@ export function BreakdownChart({
       return n;
     });
 
-  const segOpts = [{ value: "none", label: "None" }, ...dimensions.filter((d) => d.key !== slice.key).map((d) => ({ value: d.key, label: d.label }))];
+  const segOpts = [{ value: "none", label: "Үгүй" }, ...dimensions.filter((d) => d.key !== slice.key).map((d) => ({ value: d.key, label: d.label }))];
 
   return (
     <section className={`bc ${className}`} aria-label={title}>
@@ -142,9 +142,9 @@ export function BreakdownChart({
         <span className="bc-total"><b>{grand}</b> {measure.unit ?? ""}</span>
       </header>
       <div className="bc-picks">
-        <Picker label="Measure" value={measure.key} options={measures.map((m) => ({ value: m.key, label: m.label }))} onChange={setM} />
-        <Picker label="Slice" value={slice.key} options={dimensions.map((d) => ({ value: d.key, label: d.label }))} onChange={(v) => { setS(v); if (v === gKey) setG("none"); }} />
-        <Picker label="Segment" value={seg ? seg.key : "none"} options={segOpts} onChange={setG} />
+        <Picker label="Хэмжүүр" value={measure.key} options={measures.map((m) => ({ value: m.key, label: m.label }))} onChange={setM} />
+        <Picker label="Ангилал" value={slice.key} options={dimensions.map((d) => ({ value: d.key, label: d.label }))} onChange={(v) => { setS(v); if (v === gKey) setG("none"); }} />
+        <Picker label="Хэсэглэх" value={seg ? seg.key : "none"} options={segOpts} onChange={setG} />
       </div>
       <div className="bc-plot">
         <div className="bc-area">
@@ -226,8 +226,8 @@ export function BreakdownChart({
 }
 
 const css = `
-.bc{--bc-bg:#fff;--bc-fg:#18181b;--bc-muted:#71717a;--bc-faint:#a1a1aa;--bc-line:#ececef;--bc-soft:#f4f4f5;--bc-accent:#3b82f6;width:100%;max-width:560px;background:var(--bc-bg);color:var(--bc-fg);border:1px solid var(--bc-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .bc{--bc-bg:#1b1b1e;--bc-fg:#ececef;--bc-muted:#a1a1aa;--bc-faint:#71717a;--bc-line:#2e2e33;--bc-soft:#26262b;color-scheme:dark}
+.bc{--bc-bg:#fff;--bc-fg:#18181b;--bc-muted:#65656d;--bc-faint:#65656d;--bc-line:#ececef;--bc-soft:#f4f4f5;--bc-accent:#3b82f6;width:100%;max-width:560px;background:var(--bc-bg);color:var(--bc-fg);border:1px solid var(--bc-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 13px/1.4 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .bc{--bc-bg:#1b1b1e;--bc-fg:#ececef;--bc-muted:#a1a1aa;--bc-faint:#9a9aa2;--bc-line:#2e2e33;--bc-soft:#26262b;color-scheme:dark}
 .bc *{box-sizing:border-box}.bc button{font:inherit;color:inherit;cursor:pointer}
 .bc-head{display:flex;justify-content:space-between;align-items:baseline;padding:16px 16px 10px}
 .bc h3{margin:0;font-size:15px;font-weight:500}

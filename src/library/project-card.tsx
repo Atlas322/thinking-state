@@ -28,21 +28,21 @@ export type ProjectCardProps = {
 };
 
 const defaultStatuses: ProjectOption[] = [
-  { id: "todo", label: "To do", tone: "gray" },
-  { id: "progress", label: "In progress", tone: "amber" },
-  { id: "review", label: "In review", tone: "violet" },
-  { id: "done", label: "Done", tone: "green" },
+  { id: "todo", label: "Хийх", tone: "gray" },
+  { id: "progress", label: "Хийгдэж байна", tone: "amber" },
+  { id: "review", label: "Хяналтад", tone: "violet" },
+  { id: "done", label: "Дууссан", tone: "green" },
 ];
 
 const defaultTasks: ProjectTask[] = [
-  { id: "1", label: "Welcome screen", done: true, assignee: "Mia" },
-  { id: "2", label: "Workspace setup", done: true, assignee: "Jonas" },
-  { id: "3", label: "Invite teammates", done: true, assignee: "Mia" },
-  { id: "4", label: "First-run checklist", assignee: "Priya" },
-  { id: "5", label: "Lifecycle emails", assignee: "Jonas" },
+  { id: "1", label: "Угтах дэлгэц", done: true, assignee: "Мөнхзул" },
+  { id: "2", label: "Ажлын орчин тохируулах", done: true, assignee: "Жаргал" },
+  { id: "3", label: "Багийнхныг урих", done: true, assignee: "Мөнхзул" },
+  { id: "4", label: "Эхний ажиллуулалтын жагсаалт", assignee: "Пүрэвсүрэн" },
+  { id: "5", label: "Харилцагчийн имэйлүүд", assignee: "Жаргал" },
 ];
 
-const defaultMembers: ProjectMember[] = [{ name: "Mia" }, { name: "Jonas" }, { name: "Priya" }];
+const defaultMembers: ProjectMember[] = [{ name: "Мөнхзул" }, { name: "Жаргал" }, { name: "Пүрэвсүрэн" }];
 
 const softColors = ["#dcf3e3", "#e7e3fb", "#dfe7fb", "#fbe6dc", "#fdf0c8", "#fde2ea"];
 const inkColors = ["#2f7d4a", "#6b4fc8", "#3d63c9", "#b8572e", "#9a7208", "#b23a62"];
@@ -100,7 +100,7 @@ function Ring({ tasks, hot, dim }: { tasks: ProjectTask[]; hot: string | null; d
 }
 
 export function ProjectCard({
-  title = "Onboarding flow",
+  title = "Танилцуулах урсгал",
   tasks: tasksProp,
   onTasksChange,
   status: statusProp,
@@ -156,13 +156,13 @@ export function ProjectCard({
   const hotT = tasks.find((t) => t.id === hotTask);
   const line: React.ReactNode = hotT
     ? hotT.assignee
-      ? `${hotT.assignee} · ${hotT.done ? "done" : "open"}`
+      ? `${hotT.assignee} · ${hotT.done ? "дууссан" : "нээлттэй"}`
       : hotT.done
-        ? "Done"
-        : "Open"
+        ? "Дууссан"
+        : "Нээлттэй"
     : person
-      ? `${person} · ${tasks.filter((t) => t.assignee === person && !t.done).length} left`
-      : hint ?? (left ? `${left} left` : "All done");
+      ? `${person} · ${tasks.filter((t) => t.assignee === person && !t.done).length} үлдсэн`
+      : hint ?? (left ? `${left} үлдсэн` : "Бүгд дууссан");
 
   const toneOf = (o?: ProjectOption) => o?.tone ?? "gray";
 
@@ -206,7 +206,7 @@ export function ProjectCard({
           className="pc-headbtn"
           aria-expanded={open}
           aria-controls={bodyId}
-          aria-label={`${title}, ${done} of ${tasks.length} done, ${current?.label ?? ""}${due ? `, due ${due}` : ""}`}
+          aria-label={`${title}, ${done}/${tasks.length} дууссан, ${current?.label ?? ""}${due ? `, хугацаа ${due}` : ""}`}
           onClick={() => setOpen(!open)}
         />
         <Ring tasks={tasks} hot={hotTask} dim={dim} />
@@ -230,7 +230,7 @@ export function ProjectCard({
             </span>
             {due && (
               <span className="pc-due">
-                <span className="pc-due-w">Due </span>
+                <span className="pc-due-w">Хугацаа </span>
                 {due}
               </span>
             )}
@@ -243,7 +243,7 @@ export function ProjectCard({
               type="button"
               className={`pc-person ${person === m.name ? "on" : ""} ${person && person !== m.name ? "dim" : ""}`}
               aria-pressed={pinPerson === m.name}
-              aria-label={`Only ${m.name}'s subtasks`}
+              aria-label={`Зөвхөн ${m.name}: дэд даалгаврууд`}
               tabIndex={open ? 0 : -1}
               onMouseEnter={() => setHoverPerson(m.name)}
               onMouseLeave={() => setHoverPerson(null)}
@@ -260,7 +260,7 @@ export function ProjectCard({
       <div className="pc-fold" id={bodyId} inert={!open || undefined} aria-hidden={!open}>
         <div className="pc-fold-in">
           {statusOpen ? (
-            <div className="pc-options" role="radiogroup" aria-label="Status">
+            <div className="pc-options" role="radiogroup" aria-label="Төлөв">
               {statuses.map((s) => (
                 <button
                   key={s.id}
@@ -294,6 +294,7 @@ export function ProjectCard({
                     >
                       <input
                         type="checkbox"
+                        value={t.id}
                         checked={!!t.done}
                         onChange={() => toggleTask(t.id)}
                         onFocus={() => setHotTask(t.id)}
@@ -326,9 +327,9 @@ export function ProjectCard({
 }
 
 const css = `
-.pc{--pc-bg:#fff;--pc-fg:#18181b;--pc-muted:#71717a;--pc-faint:#a1a1aa;--pc-line:#ececef;--pc-soft:#f4f4f5;--pc-blue:#3b82f6;--pc-seg:#e4e4e7;--pc-amber:#b45309;--pc-amber-bg:#fdf3d7;--pc-green:#15803d;--pc-green-bg:#e3f6e8;--pc-red:#dc2626;--pc-red-bg:#fde8e8;--pc-violet:#7c3aed;--pc-violet-bg:#efe9fd;--pc-blue-bg:#e3edfd;--pc-gray-bg:#f1f1f3;position:relative;width:100%;max-width:320px;background:var(--pc-bg);color:var(--pc-fg);border:1px solid var(--pc-line);border-radius:12px;box-shadow:0 1px 3px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;container:pc/inline-size;transition:box-shadow .2s}
+.pc{--pc-bg:#fff;--pc-fg:#18181b;--pc-muted:#65656d;--pc-faint:#65656d;--pc-line:#ececef;--pc-soft:#f4f4f5;--pc-blue:#3b82f6;--pc-seg:#e4e4e7;--pc-amber:#b45309;--pc-amber-bg:#fdf3d7;--pc-green:#15803d;--pc-green-bg:#e3f6e8;--pc-red:#dc2626;--pc-red-bg:#fde8e8;--pc-violet:#7c3aed;--pc-violet-bg:#efe9fd;--pc-blue-bg:#e3edfd;--pc-gray-bg:#f1f1f3;position:relative;width:100%;max-width:320px;background:var(--pc-bg);color:var(--pc-fg);border:1px solid var(--pc-line);border-radius:12px;box-shadow:0 1px 3px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;container:pc/inline-size;transition:box-shadow .2s}
 .pc.open{box-shadow:0 6px 22px #0000000f,0 1px 3px #0000000a}
-:where(.dark,[data-theme=dark]) .pc{--pc-bg:#1b1b1e;--pc-fg:#ececef;--pc-muted:#a1a1aa;--pc-faint:#71717a;--pc-line:#2e2e33;--pc-soft:#26262a;--pc-seg:#3a3a40;--pc-amber:#fbbf24;--pc-amber-bg:#3a2f12;--pc-green:#4ade80;--pc-green-bg:#173323;--pc-red:#f87171;--pc-red-bg:#3a1c1c;--pc-violet:#a78bfa;--pc-violet-bg:#2a2140;--pc-blue-bg:#1c2a40;--pc-gray-bg:#2a2a2f;color-scheme:dark}
+:where(.dark,[data-theme=dark]) .pc{--pc-bg:#1b1b1e;--pc-fg:#ececef;--pc-muted:#a1a1aa;--pc-faint:#9a9aa2;--pc-line:#2e2e33;--pc-soft:#26262a;--pc-seg:#3a3a40;--pc-amber:#fbbf24;--pc-amber-bg:#3a2f12;--pc-green:#4ade80;--pc-green-bg:#173323;--pc-red:#f87171;--pc-red-bg:#3a1c1c;--pc-violet:#a78bfa;--pc-violet-bg:#2a2140;--pc-blue-bg:#1c2a40;--pc-gray-bg:#2a2a2f;color-scheme:dark}
 .pc *{box-sizing:border-box}.pc button{font:inherit;color:inherit;cursor:pointer}
 .pc-head{position:relative;display:flex;align-items:center;gap:10px;padding:12px 12px 12px 12px}
 .pc-headbtn{position:absolute;inset:0;width:100%;border:0;background:none;border-radius:12px;padding:0}
@@ -400,11 +401,11 @@ export function Demo() {
   return (
     <div style={{ width: "100%", maxWidth: 320, minHeight: 290 }}>
       <ProjectCard
-        due="Oct 24"
+        due="10-р сарын 24"
         status={status}
         onStatusChange={setStatus}
         defaultOpen
-        action={{ label: "Open", onClick: () => {} }}
+        action={{ label: "Нээх", onClick: () => {} }}
       />
     </div>
   );

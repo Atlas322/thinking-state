@@ -27,13 +27,66 @@ export type LaneTask = {
   tools?: LaneTool[];
 };
 
+/** Every visible or spoken string. Defaults: `agentLanesLabelsMn`. */
+export type AgentLanesLabels = {
+  title: string;
+  /** Header counter, e.g. «3 ажиллаж байна». */
+  running: (n: number) => string;
+  /** Header counter for tasks waiting on the user. */
+  needsYou: (n: number) => string;
+  /** Window chip built from `span`, e.g. «Сүүлийн 30 мин». */
+  lastSpan: (minutes: number) => string;
+  now: string;
+  /** Tick label, e.g. «−25 мин». */
+  tick: (minutes: number) => string;
+  /** Agent tag when nothing runs. */
+  idle: string;
+  /** Status words; `waiting` is the «Таны ээлж» flag, tag and pill. */
+  status: Record<LaneTask["status"], string>;
+  approve: string;
+  reject: string;
+  open: string;
+  /** Popover question when a waiting task has no `ask`. */
+  defaultAsk: string;
+  /** Popover text when a task has no `summary` (gets the status word). */
+  popoverFallback: (status: string) => string;
+  /** Screen-reader live line. */
+  srWaiting: (n: number) => string;
+  /** Relative start time. */
+  ago: (minutes: number) => string;
+  /** Lane block aria-label. */
+  blockLabel: (agent: string, title: string, status: string, ago: string) => string;
+};
+
+export const agentLanesLabelsMn: AgentLanesLabels = {
+  title: "Агентууд",
+  running: (n) => `${n} ажиллаж байна`,
+  needsYou: (n) => `Таны ээлж: ${n}`,
+  lastSpan: (m) => `Сүүлийн ${m} мин`,
+  now: "одоо",
+  tick: (m) => `−${m} мин`,
+  idle: "Сул",
+  status: { done: "Дууссан", running: "Ажиллаж байна", waiting: "Таны ээлж", failed: "Алдаатай" },
+  approve: "Батлах",
+  reject: "Татгалзах",
+  open: "Нээх",
+  defaultAsk: "Энэ алхмыг батлах уу?",
+  popoverFallback: (status) => status,
+  srWaiting: (n) => `Таны ээлжийг хүлээж буй даалгавар: ${n}`,
+  ago: (m) => (m <= 0 ? "саяхан" : `${m} мин өмнө`),
+  blockLabel: (agent, title, status, ago) => `${agent}: ${title}, ${status}, эхэлсэн: ${ago}`,
+};
+
 export type AgentLanesProps = {
   agents?: LaneAgent[];
   tasks?: LaneTask[];
   /** Visible window in ms. */
   span?: number;
   now?: number;
+  /** Defaults to `labels.title`. */
   title?: string;
+  /** Overrides for any label; the rest fall back to `agentLanesLabelsMn`. */
+  labels?: Partial<AgentLanesLabels>;
   className?: string;
   onApprove?: (task: LaneTask) => void;
   onReject?: (task: LaneTask) => void;
@@ -122,22 +175,22 @@ const demoTasks = (t: number): LaneTask[] => [
   { id: "t7", agentId: "ops", title: "API түлхүүр солих", status: "waiting", start: t - 17 * MIN, tools: ["payments", "code"], ask: "Төлбөрийн системийн идэвхтэй түлхүүрийг сольж, хувилбарын хяналтын нууц утгыг шинэчлэх үү?" },
 ];
 
-const ago = (ms: number) => {
-  const m = Math.round(ms / MIN);
-  return m <= 0 ? "just now" : `${m} min ago`;
-};
 
 export function AgentLanes({
   agents = defaultAgents,
   tasks: tasksProp,
   span = 30 * MIN,
   now: nowProp,
-  title = "Agents",
+  title: titleProp,
+  labels,
   className = "",
   onApprove,
   onReject,
   onOpen,
 }: AgentLanesProps) {
+  const L = { ...agentLanesLabelsMn, ...labels };
+  const title = titleProp ?? L.title;
+  const ago = (ms: number) => L.ago(Math.round(ms / MIN));
   const [mountedAt] = React.useState(() => Date.now());
   const [clock, setClock] = React.useState(mountedAt);
   React.useEffect(() => {
@@ -204,11 +257,11 @@ export function AgentLanes({
           <circle cx="12.5" cy="12.5" r="1.2" fill="currentColor" opacity=".6" />
         </svg>
         <strong>{title}</strong>
-        <span className="al-stat"><i className="al-dot run" />{running} running</span>
+        <span className="al-stat"><i className="al-dot run" />{L.running(running)}</span>
         {waiting > 0 && (
-          <span className="al-stat warn"><i className="al-dot warn" />{waiting} needs you</span>
+          <span className="al-stat warn"><i className="al-dot warn" />{L.needsYou(waiting)}</span>
         )}
-        <span className="al-span">Last {Math.round(span / MIN)}m</span>
+        <span className="al-span">{L.lastSpan(Math.round(span / MIN))}</span>
       </header>
 
       <div className="al-grid">
@@ -225,7 +278,7 @@ export function AgentLanes({
                 <span className="al-who">
                   <span className="al-name">
                     {a.name}
-                    {needs ? <span className="al-tag warn">Needs you</span> : !busy ? <span className="al-tag">Idle</span> : null}
+                    {needs ? <span className="al-tag warn">{L.status.waiting}</span> : !busy ? <span className="al-tag">{L.idle}</span> : null}
                   </span>
                   {a.model && <span className="al-model">{a.model}</span>}
                 </span>
@@ -237,9 +290,9 @@ export function AgentLanes({
         <div className="al-track">
           <div className="al-ticks" aria-hidden="true">
             {ticks.map((m) => (
-              <span key={m} style={{ left: `${100 - (m / span) * 100}%` }}>−{Math.round(m / MIN)}m</span>
+              <span key={m} style={{ left: `${100 - (m / span) * 100}%` }}>{L.tick(Math.round(m / MIN))}</span>
             ))}
-            <span className="al-now">now</span>
+            <span className="al-now">{L.now}</span>
           </div>
           <div className="al-lanes" style={{ height: agents.length * ROW }}>
             {ticks.map((m) => (
@@ -266,7 +319,7 @@ export function AgentLanes({
                             blockRefs.current[t.id] = el;
                           }}
                           className={`al-block ${t.status} ${left < 0 ? "clip" : ""}`}
-                          aria-label={`${a.name}: ${t.title}, ${t.status === "waiting" ? "needs you" : t.status}, started ${ago(now - t.start)}`}
+                          aria-label={L.blockLabel(a.name, t.title, L.status[t.status], ago(now - t.start))}
                           aria-expanded={t.status === "waiting" ? open : undefined}
                           onClick={() => setOpenId(open ? null : t.id)}
                         >
@@ -277,7 +330,7 @@ export function AgentLanes({
                           {t.status === "waiting" && (
                             <span className="al-flag">
                               <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5 11 10.5H1Z" fill="currentColor" /></svg>
-                              Needs you
+                              {L.status.waiting}
                             </span>
                           )}
                         </button>
@@ -294,15 +347,15 @@ export function AgentLanes({
                             }}
                           >
                             <strong>{t.title}</strong>
-                            <p>{t.status === "waiting" ? t.ask ?? "Approve this step?" : t.summary ?? t.status}</p>
+                            <p>{t.status === "waiting" ? t.ask ?? L.defaultAsk : t.summary ?? L.popoverFallback(L.status[t.status])}</p>
                             {t.status === "waiting" ? (
                               <div className="al-pop-actions">
-                                <button type="button" className="al-btn" onClick={() => decide(t, false)}>Reject</button>
-                                <button type="button" className="al-btn primary" autoFocus onClick={() => decide(t, true)}>Approve</button>
+                                <button type="button" className="al-btn" onClick={() => decide(t, false)}>{L.reject}</button>
+                                <button type="button" className="al-btn primary" autoFocus onClick={() => decide(t, true)}>{L.approve}</button>
                               </div>
                             ) : (
                               onOpen && (
-                                <button type="button" className="al-link" onClick={() => onOpen(t)}>Open</button>
+                                <button type="button" className="al-link" onClick={() => onOpen(t)}>{L.open}</button>
                               )
                             )}
                           </div>
@@ -327,19 +380,19 @@ export function AgentLanes({
                 <span className="al-row-who">{a.name}</span>
                 <span className="al-row-title">{cur.title}</span>
               </span>
-              <span className={`al-row-state ${cur.status}`}>{cur.status === "waiting" ? "Needs you" : cur.status}</span>
+              <span className={`al-row-state ${cur.status}`}>{L.status[cur.status]}</span>
             </li>
           );
         })}
       </ul>
-      <p className="al-sr" aria-live="polite">{waiting} task{waiting === 1 ? "" : "s"} need you</p>
+      <p className="al-sr" aria-live="polite">{L.srWaiting(waiting)}</p>
     </section>
   );
 }
 
 const css = `
-.al{--al-bg:#fff;--al-fg:#18181b;--al-muted:#71717a;--al-faint:#a1a1aa;--al-line:#ececef;--al-chip:#f0f0f2;--al-done:#efefef;--al-blue:#3b82f6;--al-blue-bg:#e3effd;--al-blue-fg:#4a8fe0;--al-warn:#d9480f;--al-warn-bg:#fdebd6;--al-red-bg:#fde4e4;--al-red:#e5484d;width:100%;max-width:760px;container-type:inline-size;background:var(--al-bg);color:var(--al-fg);border:1px solid var(--al-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
-:where(.dark,[data-theme=dark]) .al{--al-bg:#1b1b1e;--al-fg:#ececef;--al-muted:#a1a1aa;--al-faint:#71717a;--al-line:#2e2e33;--al-chip:#2a2a2f;--al-done:#2a2a2e;--al-blue-bg:#1d2b40;--al-blue-fg:#7fb0f5;--al-warn:#f0883e;--al-warn-bg:#3a2717;--al-red-bg:#3a1e20;color-scheme:dark}
+.al{--al-bg:#fff;--al-fg:#18181b;--al-muted:#65656d;--al-faint:#65656d;--al-line:#ececef;--al-chip:#f0f0f2;--al-done:#efefef;--al-blue:#3b82f6;--al-blue-bg:#e3effd;--al-blue-fg:#4a8fe0;--al-warn:#b93c0b;--al-warn-bg:#fdebd6;--al-red-bg:#fde4e4;--al-red:#c0262b;width:100%;max-width:760px;container-type:inline-size;background:var(--al-bg);color:var(--al-fg);border:1px solid var(--al-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
+:where(.dark,[data-theme=dark]) .al{--al-bg:#1b1b1e;--al-fg:#ececef;--al-muted:#a1a1aa;--al-faint:#9a9aa2;--al-line:#2e2e33;--al-chip:#2a2a2f;--al-done:#2a2a2e;--al-blue-bg:#1d2b40;--al-blue-fg:#7fb0f5;--al-warn:#f0883e;--al-warn-bg:#3a2717;--al-red-bg:#3a1e20;--al-red:#f47b7f;color-scheme:dark}
 .al *{box-sizing:border-box}.al button{font:inherit;color:inherit;cursor:pointer}
 .al-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--al-line)}
 .al-spark{width:16px;height:16px;color:var(--al-blue);margin-right:2px}
@@ -397,7 +450,7 @@ const css = `
 @keyframes al-flow{to{stroke-dashoffset:-6}}
 @keyframes al-in{from{opacity:0;transform:translateY(-3px)}}
 .al-list{display:none}
-@container (max-width:520px){.al-grid{grid-template-columns:40px minmax(0,1fr);padding:8px 10px 10px}.al-who{display:none}.al-bar{flex-wrap:wrap}.al-lanes{-webkit-mask-image:linear-gradient(90deg,transparent,#000 10px);mask-image:linear-gradient(90deg,transparent,#000 10px)}.al-list{display:grid;gap:2px;margin:0;padding:4px 10px 12px;list-style:none;border-top:1px solid var(--al-line)}.al-row{display:flex;align-items:center;gap:10px;min-height:44px}.al-row-text{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.3}.al-row-who{font-size:12px;color:var(--al-muted)}.al-row-title{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.al-row-state{flex:none;padding:0 6px;border-radius:4px;font-size:11px;line-height:18px;background:var(--al-chip);color:var(--al-muted)}.al-row-state.running{background:var(--al-blue-bg);color:var(--ts-status-running-fg,#1d5fb8)}.al-row-state.waiting{background:var(--al-warn-bg);color:var(--al-warn)}.al-row-state.failed{background:var(--al-red-bg);color:var(--ts-status-error-fg,#c4262b)}}
+@container (max-width:520px){.al-block .al-flag{display:none}.al-grid{grid-template-columns:40px minmax(0,1fr);padding:8px 10px 10px}.al-who{display:none}.al-bar{flex-wrap:wrap}.al-lanes{-webkit-mask-image:linear-gradient(90deg,transparent,#000 10px);mask-image:linear-gradient(90deg,transparent,#000 10px)}.al-list{display:grid;gap:2px;margin:0;padding:4px 10px 12px;list-style:none;border-top:1px solid var(--al-line)}.al-row{display:flex;align-items:center;gap:10px;min-height:44px}.al-row-text{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.3}.al-row-who{font-size:12px;color:var(--al-muted)}.al-row-title{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.al-row-state{flex:none;padding:0 6px;border-radius:4px;font-size:11px;line-height:18px;background:var(--al-chip);color:var(--al-muted)}.al-row-state.running{background:var(--al-blue-bg);color:var(--ts-status-running-fg,#1d5fb8)}.al-row-state.waiting{background:var(--al-warn-bg);color:var(--al-warn)}.al-row-state.failed{background:var(--al-red-bg);color:var(--ts-status-error-fg,#c4262b)}}
 :where(.dark,[data-theme=dark]) .al-row-state.running{color:var(--ts-status-running-fg,#7fb0f5)}
 @media(prefers-reduced-motion:reduce){.al *{animation:none!important;transition:none!important}}
 `;

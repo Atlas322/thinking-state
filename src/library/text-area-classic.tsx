@@ -211,7 +211,7 @@ export function TextArea({
           <label className="ui-ta__label" htmlFor={inputId}>
             {label}
           </label>
-          {optional && <span className="ui-ta__optional">Optional</span>}
+          {optional && <span className="ui-ta__optional">Заавал биш</span>}
         </div>
       )}
       <div className="ui-ta__box">
@@ -269,7 +269,7 @@ export function TextArea({
           <button
             type="button"
             className="ui-ta__expand"
-            aria-label={expanded ? "Less room" : "More room"}
+            aria-label={expanded ? "Багасгах" : "Томсгох"}
             aria-pressed={expanded}
             aria-controls={inputId}
             onClick={toggle}
@@ -352,10 +352,10 @@ const css = /* css */ `
 .ui-ta {
   --ui-ta-title: #171717;
   --ui-ta-ink: #171717;
-  --ui-ta-muted: #8f8f8f;
-  --ui-ta-subtle: #8f8f8f;
-  --ui-ta-faint: #b5b5b5;
-  --ui-ta-icon: #8f8f8f;
+  --ui-ta-muted: #65656d;
+  --ui-ta-subtle: #65656d;
+  --ui-ta-faint: #65656d;
+  --ui-ta-icon: #65656d;
   --ui-ta-text: #404040;
   --ui-ta-surface: #ffffff;
   --ui-ta-line: #e6e6e8;
@@ -507,10 +507,10 @@ const css = /* css */ `
   --ui-ta-title: #ededed;
   --ui-ta-ink: #ededed;
   --ui-ta-text: #c8c8cc;
-  --ui-ta-muted: #8b8b92;
-  --ui-ta-subtle: #8b8b92;
-  --ui-ta-faint: #5c5c63;
-  --ui-ta-icon: #8b8b92;
+  --ui-ta-muted: #9a9aa2;
+  --ui-ta-subtle: #9a9aa2;
+  --ui-ta-faint: #9a9aa2;
+  --ui-ta-icon: #9a9aa2;
   --ui-ta-surface: #19191b;
   --ui-ta-line: #2a2a2e;
   --ui-ta-edge: #3a3a40;
@@ -528,15 +528,15 @@ const css = /* css */ `
 /** Working example; use the named TextArea export in your application. */
 export default function Demo() {
   const [text, setText] = useState(
-    "We're Acme, a 40-person B2B company selling scheduling software to clinics in Germany and Austria.\nCommon terms: MRR, churn, onboarding call, practice (= customer).\nAnswer in English unless someone writes in German.",
+    "Бид эмнэлгүүдэд цаг захиалгын систем борлуулдаг 40 хүнтэй B2B компани.\nТогтмол нэр томьёо: MRR, гарсан харилцагч, танилцуулах дуудлага, эмнэлэг (= харилцагч).\nХэн нэгэн өөр хэлээр бичихээс бусад үед монголоор хариул.",
   );
   const [note, setNote] = useState("");
   return (
     <div className="text-area-example">
       <style>{`.text-area-example{width:400px;max-width:100%;box-sizing:border-box;padding:20px;display:grid;gap:20px;border:1px solid #e9e9e9;background:white;border-radius:12px}:where(.dark,[data-theme=dark]) .text-area-example{background:#131315;border-color:#29292b}`}</style>
       <TextArea
-        label="Company context"
-        hint="Added to every chat in this workspace."
+        label="Компанийн мэдээлэл"
+        hint="Энэ ажлын орчны бүх чатад нэмэгдэнэ."
         value={text}
         onChange={(e) => setText(e.target.value)}
         maxLength={2000}
@@ -546,10 +546,10 @@ export default function Demo() {
         expandable
       />
       <TextArea
-        label="Note for the reviewer"
+        label="Хянагчид өгөх тэмдэглэл"
         optional
-        placeholder="What should they look at first?"
-        hint="⌘ Enter to send"
+        placeholder="Юуг нь түрүүлж харах вэ?"
+        hint="⌘ ↵ дарж илгээнэ"
         value={note}
         onChange={(e) => setNote(e.target.value)}
         minRows={2}

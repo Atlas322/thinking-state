@@ -146,7 +146,7 @@ function Glyph({ name, className = "" }: { name: string; className?: string }) {
 
 function elapsed(seconds: number) {
   seconds = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
-  return `${Math.floor(seconds / 60)}m ${String(seconds % 60).padStart(2, "0")}s`;
+  return `${Math.floor(seconds / 60)} мин ${String(seconds % 60).padStart(2, "0")} с`;
 }
 
 function durationMs(task: AgentTask, now: number, mountedAt: number) {
@@ -159,7 +159,7 @@ function durationMs(task: AgentTask, now: number, mountedAt: number) {
 
 export function AgentInbox({
   tasks,
-  title = "Agent inbox",
+  title = "Агентын ирсэн",
   action,
   view,
   defaultView = "board",
@@ -265,24 +265,24 @@ export function AgentInbox({
     setOverrides((old) => new Map(old).set(task.id, { source, task: next }));
     setExpanded(null);
     setNotice(
-      `${task.title}: ${action === "reject" ? "rejected" : action === "retry" ? "retrying" : "approved"}.`,
+      `${task.title}: ${action === "reject" ? "татгалзсан" : action === "retry" ? "дахин оролдож байна" : "батлагдсан"}.`,
     );
   };
   const groups = [
     {
-      name: "Needs you",
+      name: "Таны ээлж",
       key: "needs",
       tasks: rows.filter(
         (t) => t.status === "waiting" || t.status === "failed",
       ),
     },
     {
-      name: "Running",
+      name: "Ажиллаж байна",
       key: "running",
       tasks: rows.filter((t) => t.status === "running"),
     },
     {
-      name: "Done",
+      name: "Дууссан",
       key: "done",
       tasks: rows.filter((t) => t.status === "done"),
     },
@@ -319,17 +319,17 @@ export function AgentInbox({
                 <Glyph name={task.status === "running" ? "spinner" : "dot"} className={task.status === "running" ? "ai-inbox-spinner" : "ai-inbox-dot"} />
               )}
               {task.status === "waiting"
-                ? `Waiting for you · ${duration}`
+                ? `Таныг хүлээж байна · ${duration}`
                 : task.status === "failed"
-                  ? "Failed"
+                  ? "Алдаатай"
                   : duration}
             </span>
             <span className="ai-inbox-counters">
-            {task.sources != null && <span className="ai-inbox-count" title={`${task.sources} sources`}>
+            {task.sources != null && <span className="ai-inbox-count" title={`${task.sources} эх сурвалж`}>
               <Glyph name="search" />
               {task.sources}
             </span>}
-            {task.tools != null && <span className="ai-inbox-count" title={`${task.tools} tool calls`}>
+            {task.tools != null && <span className="ai-inbox-count" title={`${task.tools} дуудлага`}>
               <Glyph name="tool" />
               {task.tools}
             </span>}
@@ -358,9 +358,9 @@ export function AgentInbox({
                     onClick={() => act(task, "approve")}
                   >
                     <Glyph name="check" />
-                    Approve
+                    Батлах
                   </button>
-                  <button type="button" onClick={() => act(task, "reject")}>Reject</button>
+                  <button type="button" onClick={() => act(task, "reject")}>Татгалзах</button>
                 </>
               ) : task.status === "failed" ? (
                 <button
@@ -368,11 +368,11 @@ export function AgentInbox({
                   className="ai-inbox-primary"
                   onClick={() => act(task, "retry")}
                 >
-                  Retry
+                  Дахин оролдох
                 </button>
               ) : onOpen ? (
-                <button type="button" aria-label="Open task" onClick={() => act(task, "open")}>
-                  Open
+                <button type="button" aria-label="Даалгаврыг нээх" onClick={() => act(task, "open")}>
+                  Нээх
                 </button>
               ) : null}
             </div>
@@ -400,7 +400,7 @@ export function AgentInbox({
       <style>{css}</style>
       <header className="ai-inbox-header">
         <span>
-          <span>Agents</span>
+          <span>Агентууд</span>
           <b aria-hidden="true">/</b>
           <strong>{title}</strong>
         </span>
@@ -409,7 +409,7 @@ export function AgentInbox({
         <div
           className="ai-inbox-switch"
           role="radiogroup"
-          aria-label="Inbox view"
+          aria-label="Харагдац"
         >
           {(["board", "list"] as const).map((v) => (
             <button
@@ -428,7 +428,7 @@ export function AgentInbox({
               }}
             >
               <Glyph name={v} />
-              {v === "board" ? "Board" : "List"}
+              {v === "board" ? "Самбар" : "Жагсаалт"}
             </button>
           ))}
         </div>
@@ -449,7 +449,7 @@ export function AgentInbox({
             <div className="ai-inbox-cards">
               {group.tasks.map(card)}
               {!group.tasks.length && (
-                <p className="ai-inbox-empty">No tasks</p>
+                <p className="ai-inbox-empty">Даалгавар алга</p>
               )}
             </div>
           </section>
@@ -457,10 +457,10 @@ export function AgentInbox({
       </div>
       <footer className="ai-inbox-footer">
         <span aria-live="polite">
-          {groups[0].tasks.length} need you <b>·</b> {groups[1].tasks.length}{" "}
-          running
+          {groups[0].tasks.length} таны ээлж <b>·</b> {groups[1].tasks.length}{" "}
+          ажиллаж байна
         </span>
-        <span>{rows.length} tasks</span>
+        <span>{rows.length} даалгавар</span>
       </footer>
       <p className="ai-inbox-notice" role="status" aria-live="polite">
         {notice}
@@ -471,8 +471,8 @@ export function AgentInbox({
 
 // Values measured from the public Clean preview; independently authored styles.
 const css = `
-.ai-inbox{--in-fg:#1c1c1f;--in-text:#55555c;--in-muted:#8e8e96;--in-slash:#b4b4bb;--in-card:#fff;--in-group:#f4f4f5;--in-line:#e9e9ec;--in-count:#1010180f;--in-blue:#2f6bff;--in-green:#22a05a;--in-amber:#e7ab50;--in-red:#e5484d;color:var(--in-text);font:400 13px/20px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;width:100%;max-width:720px;container-type:inline-size;isolation:isolate;text-align:left}
-:where(.dark,[data-theme=dark]) .ai-inbox{--in-fg:#ededed;--in-text:#b6b6bd;--in-muted:#85858d;--in-card:#1e1e21;--in-group:#161618;--in-line:#2c2c31;--in-count:#ffffff12;--in-slash:#5c5c63;--in-blue:#5b8cff;--in-green:#3ecf8e;--in-red:#ff6b66;color-scheme:dark}
+.ai-inbox{--in-fg:#1c1c1f;--in-text:#55555c;--in-muted:#65656d;--in-slash:#65656d;--in-card:#fff;--in-group:#f4f4f5;--in-line:#e9e9ec;--in-count:#1010180f;--in-blue:#2f6bff;--in-green:#22a05a;--in-amber:#e7ab50;--in-red:#e5484d;color:var(--in-text);font:400 13px/20px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;width:100%;max-width:720px;container-type:inline-size;isolation:isolate;text-align:left}
+:where(.dark,[data-theme=dark]) .ai-inbox{--in-fg:#ededed;--in-text:#b6b6bd;--in-muted:#9a9aa2;--in-card:#1e1e21;--in-group:#161618;--in-line:#2c2c31;--in-count:#ffffff12;--in-slash:#9a9aa2;--in-blue:#5b8cff;--in-green:#3ecf8e;--in-red:#ff6b66;color-scheme:dark}
 .ai-inbox *{box-sizing:border-box}.ai-inbox button{font:inherit;color:inherit;cursor:pointer}.ai-inbox button:focus-visible{outline:2px solid var(--in-blue);outline-offset:3px}.ai-inbox svg{width:14px;height:14px;flex:none}
 .ai-inbox-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:0 2px;min-height:32px}.ai-inbox-header>span{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--in-fg);min-width:0}.ai-inbox-header>span>span{color:var(--in-muted);font-weight:400}.ai-inbox-header b{font-weight:500;color:var(--in-slash)}.ai-inbox-header strong{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ai-inbox-header-actions{display:flex;align-items:center;gap:8px}.ai-inbox-header-action{border:0;background:var(--in-card);box-shadow:inset 0 0 0 1px var(--in-line);border-radius:8px;padding:0 12px;height:28px;white-space:nowrap}
 .ai-inbox-switch{display:flex;gap:2px;background:var(--in-group);padding:3px;border-radius:10px}.ai-inbox-switch button{border:0;border-radius:7px;background:none;color:var(--in-muted);padding:0 10px;height:26px;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500}.ai-inbox-switch svg{width:13px;height:13px}.ai-inbox-switch [aria-checked=true]{background:var(--in-card);color:var(--in-fg);box-shadow:0 1px 2px #10101814,0 0 0 1px #1010180a}

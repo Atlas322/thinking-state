@@ -76,38 +76,38 @@ function SevGlyph({ severity, muted }: { severity: FindingSeverity; muted?: bool
   );
 }
 
-const sevLabel: Record<FindingSeverity, string> = { critical: "Critical", warning: "Warning", note: "Note" };
+const sevLabel: Record<FindingSeverity, string> = { critical: "Ноцтой", warning: "Анхааруулга", note: "Тэмдэглэл" };
 
 const T0 = Date.now();
 const defaultAgents: FindingAgent[] = [
-  { id: "auditor", name: "Auditor", step: "Checking access control on mint", done: 10, total: 24, icon: "claude" },
-  { id: "fuzzer", name: "Fuzzer", step: "Replaying failed sequences", done: 7, total: 18, icon: "openai" },
-  { id: "prover", name: "Prover", step: "Checking balance conservation", done: 4, total: 12, icon: "gemini" },
-  { id: "gas", name: "Gas review", step: "Packing struct slots", done: 6, total: 10, icon: "claude" },
+  { id: "auditor", name: "Шалгагч", step: "Гаргалтын эрхийн хяналтыг шалгаж байна", done: 10, total: 24, icon: "claude" },
+  { id: "fuzzer", name: "Санамсаргүй тест", step: "Унасан дарааллыг дахин тоглуулж байна", done: 7, total: 18, icon: "openai" },
+  { id: "prover", name: "Нотлогч", step: "Үлдэгдлийн тэнцвэрийг шалгаж байна", done: 4, total: 12, icon: "gemini" },
+  { id: "gas", name: "Зардлын хяналт", step: "Бүтцийн талбаруудыг нягтруулж байна", done: 6, total: 10, icon: "claude" },
 ];
 const defaultFindings: Finding[] = [
-  { id: "f1", title: "Owner can mint without a cap", severity: "warning", agent: "auditor", location: "Token.sol:31", at: T0 - 1000 },
-  { id: "f2", title: "Loop reads storage on every pass", severity: "note", agent: "gas", location: "Pool.sol:61", at: T0 - 2000 },
-  { id: "f3", title: "Return value of transfer not checked", severity: "warning", agent: "fuzzer", location: "Token.sol:88", at: T0 - 6000 },
-  { id: "f4", title: "Reentrancy in withdraw()", severity: "critical", agent: "auditor", location: "Vault.sol:142", at: T0 - 9000 },
+  { id: "f1", title: "Эзэмшигч хязгааргүй гаргаж чадна", severity: "warning", agent: "auditor", location: "Token.sol:31", at: T0 - 1000 },
+  { id: "f2", title: "Давталт алхам бүрт санах ой уншина", severity: "note", agent: "gas", location: "Pool.sol:61", at: T0 - 2000 },
+  { id: "f3", title: "Шилжүүлгийн буцах утгыг шалгаагүй", severity: "warning", agent: "fuzzer", location: "Token.sol:88", at: T0 - 6000 },
+  { id: "f4", title: "withdraw() дахин нэвтрэлтэд өртөмтгий", severity: "critical", agent: "auditor", location: "Vault.sol:142", at: T0 - 9000 },
 ];
 const queued: Omit<Finding, "at">[] = [
-  { id: "q1", title: "Constant could be immutable", severity: "note", agent: "gas", location: "Pool.sol:12" },
-  { id: "q2", title: "Unchecked cast in reward math", severity: "warning", agent: "prover", location: "Rewards.sol:57" },
+  { id: "q1", title: "Тогтмолыг өөрчлөгдөхгүй болгож болно", severity: "note", agent: "gas", location: "Pool.sol:12" },
+  { id: "q2", title: "Шагналын тооцоонд шалгаагүй хөрвүүлэлт", severity: "warning", agent: "prover", location: "Rewards.sol:57" },
 ];
 
 const ago = (ms: number) => {
   const s = Math.max(0, Math.round(ms / 1000));
-  if (s < 3) return "now";
-  if (s < 60) return `${s}s`;
+  if (s < 3) return "одоо";
+  if (s < 60) return `${s} с`;
   const m = Math.floor(s / 60);
-  return m < 60 ? `${m}m` : `${Math.floor(m / 60)}h`;
+  return m < 60 ? `${m} мин` : `${Math.floor(m / 60)} цаг`;
 };
 
 export function AgentFindings({
   agents: agentsProp,
   findings: findingsProp,
-  title = "Verification",
+  title = "Баталгаажуулалт",
   rows = 4,
   now,
   onOpen,
@@ -163,19 +163,19 @@ export function AgentFindings({
         <span className="afc-spark">{GeminiIcon}</span>
         <strong>{title}</strong>
         <span className="afc-muted">
-          {checked} of {total} checks
+          {checked}/{total} шалгалт
         </span>
         <span className="afc-tally">
           {crit > 0 && (
             <span className="afc-critical">
               <i />
-              {crit} critical
+              {crit} ноцтой
             </span>
           )}
           {warn > 0 && (
             <span className="afc-warning">
               <i />
-              {warn} {warn === 1 ? "warning" : "warnings"}
+              {warn} анхааруулга
             </span>
           )}
         </span>
@@ -197,7 +197,7 @@ export function AgentFindings({
               <span className="afc-ico">{iconFor(a.icon)}</span>
               <span className="afc-who">
                 <span className="afc-name">{a.name}</span>
-                <span className="afc-step">{done ? "Done" : a.step}</span>
+                <span className="afc-step">{done ? "Дууссан" : a.step}</span>
               </span>
               <span className="afc-track" aria-hidden="true">
                 <span style={{ width: `${(a.done / a.total) * 100}%` }} className={done ? "is-done" : ""} />
@@ -208,12 +208,12 @@ export function AgentFindings({
               <span className={`afc-cnt ${c ? "afc-critical" : ""}`}>
                 <SevGlyph severity="critical" muted={!c} />
                 {c}
-                <span className="afc-sr"> critical</span>
+                <span className="afc-sr"> ноцтой</span>
               </span>
               <span className={`afc-cnt ${w ? "afc-warning" : ""}`}>
                 <SevGlyph severity="warning" muted={!w} />
                 {w}
-                <span className="afc-sr"> warnings</span>
+                <span className="afc-sr"> анхааруулга</span>
               </span>
             </button>
           );
@@ -221,7 +221,7 @@ export function AgentFindings({
       </div>
 
       <div className="afc-feed">
-        <div className="afc-h">Latest findings{filter && <> · {nameOf(filter)}</>}</div>
+        <div className="afc-h">Сүүлийн илрүүлэлт{filter && <> · {nameOf(filter)}</>}</div>
         <ul aria-live="polite">
           {feed.map((f) => (
             <li key={f.id}>
@@ -242,7 +242,7 @@ export function AgentFindings({
               </button>
             </li>
           ))}
-          {feed.length === 0 && <li className="afc-empty">No findings yet</li>}
+          {feed.length === 0 && <li className="afc-empty">Илрүүлэлт алга</li>}
         </ul>
       </div>
     </section>
@@ -250,8 +250,8 @@ export function AgentFindings({
 }
 
 const css = `
-.afc{--afc-bg:#fff;--afc-fg:#18181b;--afc-muted:#71717a;--afc-faint:#b4b4bb;--afc-line:#ececef;--afc-hover:#f6f6f7;--afc-track:#ececef;--afc-bar:#9fb8ea;--afc-crit:#dc2626;--afc-warn:#ea580c;--afc-note:#93b4ea;--afc-accent:#3b7cf6;width:100%;max-width:640px;background:var(--afc-bg);color:var(--afc-fg);border:1px solid var(--afc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .afc{--afc-bg:#1b1b1e;--afc-fg:#ececef;--afc-muted:#a1a1aa;--afc-faint:#5c5c64;--afc-line:#2c2c31;--afc-hover:#24242a;--afc-track:#2e2e34;--afc-bar:#5b7fc6;--afc-crit:#f87171;--afc-warn:#fb923c;--afc-note:#6b8fd0;color-scheme:dark}
+.afc{--afc-bg:#fff;--afc-fg:#18181b;--afc-muted:#65656d;--afc-faint:#65656d;--afc-line:#ececef;--afc-hover:#f6f6f7;--afc-track:#ececef;--afc-bar:#9fb8ea;--afc-crit:#dc2626;--afc-warn:#ea580c;--afc-note:#93b4ea;--afc-accent:#3b7cf6;width:100%;max-width:640px;background:var(--afc-bg);color:var(--afc-fg);border:1px solid var(--afc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .afc{--afc-bg:#1b1b1e;--afc-fg:#ececef;--afc-muted:#a1a1aa;--afc-faint:#9a9aa2;--afc-line:#2c2c31;--afc-hover:#24242a;--afc-track:#2e2e34;--afc-bar:#5b7fc6;--afc-crit:#f87171;--afc-warn:#fb923c;--afc-note:#6b8fd0;color-scheme:dark}
 .afc *{box-sizing:border-box}.afc button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;text-align:left}
 .afc-bar{display:flex;align-items:center;gap:8px;padding:14px 16px 13px 18px;border-bottom:1px solid var(--afc-line)}
 .afc-bar strong{font-weight:500}.afc-spark svg{width:12px;height:12px;display:block}

@@ -31,7 +31,7 @@ describe("ThinkingState live mode", () => {
       container.querySelectorAll(".thinking-item")[1].getAttribute("data-active"),
     ).toBe("true");
     expect(screen.getByText("Ажиллаж байна")).toBeTruthy();
-    expect(screen.getByText("42s")).toBeTruthy();
+    expect(screen.getByText("42 с")).toBeTruthy();
   });
 
   it("never finishes on its own timer", () => {

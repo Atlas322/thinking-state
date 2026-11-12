@@ -141,7 +141,7 @@ const defaultAgents: MapAgent[] = [
       { id: "vcs", calls: [c("g1", 12000, 5200, { action: "create_branch", name: "pricing-page" }, { ok: true }), c("g2", 31000, 4800, { action: "commit", files: 4 }, { sha: "8f2c1a" }), c("g3", 52000, 5200, { action: "open_pr", title: "Тарифын хуудас" }, { pr: 482 })] },
       { id: "terminal", calls: [c("t1", 20000, 9000, { cmd: "pnpm test" }, { passed: 128 }), c("t2", 45000, 10000, { cmd: "pnpm build" }, { ok: true })] },
       { id: "payments", calls: [c("s1", 38000, 730, { action: "create_plan", seats: 5 }, { id: "plan_1Q" })] },
-      { id: "design", calls: [c("f1", 8000, 1200, { file: "Тариф v3", frame: "Desktop" }, { nodes: 42 })] },
+      { id: "design", calls: [c("f1", 8000, 1200, { file: "Тариф v3", frame: "Компьютер" }, { nodes: 42 })] },
       { id: "database", calls: [c("d1", 41000, 280, { sql: "select * from plans" }, { rows: 3 })] },
       { id: "web" },
     ],
@@ -162,8 +162,9 @@ const defaultAgents: MapAgent[] = [
   },
 ];
 
-const fmtDur = (ms?: number) => (ms == null ? "" : ms < 1000 ? `${ms}ms` : `${+(ms / 1000).toFixed(1)}s`);
+const fmtDur = (ms?: number) => (ms == null ? "" : ms < 1000 ? `${ms}ms` : `${+(ms / 1000).toFixed(1)} с`);
 const defaultFormatTime = (ms: number) => `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, "0")}`;
+const STATUS_LABEL: Record<string, string> = { queued: "Дараалалд", running: "Ажиллаж байна", waiting: "Таны ээлж", done: "Дууссан", failed: "Алдаатай" };
 const pretty = (v: unknown) => (typeof v === "string" ? v : JSON.stringify(v, null, 2));
 
 // geometry
@@ -274,7 +275,7 @@ export function ToolAccessMap({
     const last = a?.calls?.[n - 1];
     const isRunning = last?.status === "running";
     const failed = last?.status === "failed";
-    const state = !a ? "No access" : !n ? "Not used yet" : isRunning ? "Running" : failed ? "Failed" : `Last call ${fmtDur(last?.duration)}`;
+    const state = !a ? "Эрхгүй" : !n ? "Хараахан ашиглаагүй" : isRunning ? "Ажиллаж байна" : failed ? "Алдаатай" : `Сүүлд ${fmtDur(last?.duration)}`;
     return (
       <button
         key={t.id}
@@ -285,7 +286,7 @@ export function ToolAccessMap({
         className={`tam-tool ${!a ? "off" : ""} ${isRunning ? "run" : ""} ${failed ? "fail" : ""}`}
         style={{ left: x, top: y }}
         aria-disabled={!a || !n || undefined}
-        aria-label={`${t.name}: ${state}${n ? `, ${n} ${n === 1 ? "call" : "calls"}` : ""}`}
+        aria-label={`${t.name}: ${state}${n ? `, ${n} дуудлага` : ""}`}
         onClick={() => {
           if (!a || !n) return;
           setCallIdx(n - 1);
@@ -314,16 +315,16 @@ export function ToolAccessMap({
         </svg>
         <strong>{title}</strong>
         <span className="tam-stats" aria-live="polite">
-          {running > 0 && <span className="tam-runtag">{running} running</span>}
-          <span>{used}/{tools.length} tools</span>
-          <span>· {callsTotal} calls</span>
+          {running > 0 && <span className="tam-runtag">{running} ажиллаж байна</span>}
+          <span>{used}/{tools.length} хэрэгсэл</span>
+          <span>· {callsTotal} дуудлага</span>
         </span>
       </header>
 
       <div
         className="tam-tabs"
         role="tablist"
-        aria-label="Agents"
+        aria-label="Агентууд"
         ref={tabsRef}
         onKeyDown={(e) => {
           if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
@@ -395,7 +396,7 @@ export function ToolAccessMap({
                 </span>
                 <span className={`tam-badge ${agent.status}`}>
                   {agent.status === "running" && <i className="tam-spin" aria-hidden="true" />}
-                  {agent.status === "waiting" ? "Needs you" : agent.status[0].toUpperCase() + agent.status.slice(1)}
+                  {STATUS_LABEL[agent.status] ?? agent.status}
                 </span>
               </div>
               {agent.task && <p className="tam-task">{agent.task}</p>}
@@ -406,7 +407,7 @@ export function ToolAccessMap({
             <div
               className="tam-calls"
               role="dialog"
-              aria-label={`${tool.name} calls`}
+              aria-label={`${tool.name}: дуудлагууд`}
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
                   e.preventDefault();
@@ -415,12 +416,12 @@ export function ToolAccessMap({
               }}
             >
               <div className="tam-calls-head">
-                <button type="button" className="tam-back" aria-label="Back to the map" onClick={closeCalls}>
+                <button type="button" className="tam-back" aria-label="Зураглал руу буцах" onClick={closeCalls}>
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4" /></svg>
                 </button>
                 <span className="tam-ico">{("icon" in tool ? (tool as { icon?: React.ReactNode }).icon : undefined) ?? toolIcons[tool.id]}</span>
                 <strong>{tool.name}</strong>
-                <span className="tam-muted">{calls.length} {calls.length === 1 ? "call" : "calls"} by {agent.name}</span>
+                <span className="tam-muted">{agent.name}: {calls.length} дуудлага</span>
               </div>
               <div className="tam-calls-body">
                 <ul
@@ -428,7 +429,7 @@ export function ToolAccessMap({
                   className="tam-list"
                   role="listbox"
                   tabIndex={0}
-                  aria-label="Calls"
+                  aria-label="Дуудлагууд"
                   aria-activedescendant={`${id}-call-${callIdx}`}
                   onKeyDown={(e) => {
                     if (e.key === "ArrowDown") {
@@ -451,14 +452,14 @@ export function ToolAccessMap({
                       onClick={() => setCallIdx(i)}
                     >
                       <i className={`tam-dot ${x.status}`} />
-                      <span>#{i + 1}{x.replay ? " · replay" : ""}</span>
+                      <span>#{i + 1}{x.replay ? " · дахин" : ""}</span>
                       <span className="tam-muted">{x.at != null ? formatTime(x.at) : ""}</span>
                       <span className="tam-muted tam-dur">{fmtDur(x.duration)}</span>
                     </li>
                   ))}
                 </ul>
                 <div className="tam-call">
-                  <label className="tam-lbl" htmlFor={`${id}-input`}>Input</label>
+                  <label className="tam-lbl" htmlFor={`${id}-input`}>Оролт</label>
                   <textarea
                     id={`${id}-input`}
                     value={draft}
@@ -471,11 +472,11 @@ export function ToolAccessMap({
                       }
                     }}
                   />
-                  <div className="tam-lbl">{call.error ? "Error" : "Output"}</div>
+                  <div className="tam-lbl">{call.error ? "Алдаа" : "Гаралт"}</div>
                   <pre className={call.error ? "err" : ""}>{call.error ?? (call.output !== undefined ? pretty(call.output) : "…")}</pre>
                   <div className="tam-call-foot">
                     <button type="button" className="tam-replay" onClick={replay}>
-                      Replay
+                      Дахин тоглуулах
                       <kbd>⌘↵</kbd>
                     </button>
                   </div>
@@ -490,8 +491,8 @@ export function ToolAccessMap({
 }
 
 const css = `
-.tam{--tam-bg:#fff;--tam-fg:#18181b;--tam-muted:#71717a;--tam-faint:#a1a1aa;--tam-line:#ececef;--tam-chip:#ededef;--tam-blue:#3b82f6;--tam-blue-bg:#e3eefd;--ui-tamc-used:#4f86d6;--ui-tamc-off:#8a8a93;--ui-tamc-glint:#2563eb;--ui-tamc-dim:.5;--tam-red:#dc2626;--tam-amber:#b45309;--tam-amber-bg:#fdf3d7;width:100%;max-width:680px;container-type:inline-size;color:var(--tam-fg);font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
-:where(.dark,[data-theme=dark]) .tam{--tam-bg:#1f1f23;--tam-fg:#ececef;--tam-muted:#a1a1aa;--tam-faint:#71717a;--tam-line:#303036;--tam-chip:#2a2a2f;--tam-blue-bg:#1c2a40;--ui-tamc-used:#5b8fe0;--ui-tamc-off:#7a7a83;--ui-tamc-glint:#93c5fd;--tam-amber:#fbbf24;--tam-amber-bg:#3a2f12;color-scheme:dark}
+.tam{--tam-bg:#fff;--tam-fg:#18181b;--tam-muted:#65656d;--tam-faint:#65656d;--tam-line:#ececef;--tam-chip:#ededef;--tam-blue:#3b82f6;--tam-blue-fg:#1d5fb8;--tam-blue-bg:#e3eefd;--ui-tamc-used:#4f86d6;--ui-tamc-off:#8a8a93;--ui-tamc-glint:#2563eb;--ui-tamc-dim:1;--tam-red:#dc2626;--tam-amber:#b45309;--tam-amber-bg:#fdf3d7;width:100%;max-width:680px;container-type:inline-size;color:var(--tam-fg);font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
+:where(.dark,[data-theme=dark]) .tam{--tam-bg:#1f1f23;--tam-fg:#ececef;--tam-muted:#a1a1aa;--tam-faint:#9a9aa2;--tam-line:#303036;--tam-chip:#2a2a2f;--tam-blue-bg:#1c2a40;--tam-blue-fg:#93c5fd;--ui-tamc-used:#5b8fe0;--ui-tamc-off:#7a7a83;--ui-tamc-glint:#93c5fd;--tam-amber:#fbbf24;--tam-amber-bg:#3a2f12;color-scheme:dark}
 .tam *{box-sizing:border-box}.tam button{font:inherit;color:inherit;cursor:pointer}
 .tam-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .tam-logo{width:16px;height:16px;color:var(--tam-muted)}
@@ -519,7 +520,7 @@ const css = `
 .tam-tool{position:absolute;width:${CARD_W}px;height:${CARD_H}px;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:0 10px;border:1px solid var(--tam-line);border-radius:8px;background:var(--tam-bg);box-shadow:0 1px 2px #0000000a;text-align:left;transition:opacity .25s,border-color .15s,box-shadow .15s}
 .tam-tool:not(.off):not([aria-disabled]):hover{border-color:color-mix(in srgb,var(--tam-fg) 20%,var(--tam-line));box-shadow:0 2px 8px #0000000f}
 .tam-tool[aria-disabled]{cursor:default}
-.tam-tool.off{opacity:var(--ui-tamc-dim);box-shadow:none;background:transparent}
+.tam-tool.off{opacity:var(--ui-tamc-dim);box-shadow:none;background:transparent;border-style:dashed}.tam-tool.off .tam-name{color:var(--tam-muted)}
 .tam-tool.run{border-color:color-mix(in srgb,var(--tam-blue) 45%,var(--tam-line))}
 .tam-tool .tam-ico{width:16px;height:16px;border:0;background:none}
 .tam-tool .tam-ico svg{width:13px;height:13px}
@@ -529,11 +530,13 @@ const css = `
 .tam-t2{padding-left:22px;font-size:11.5px;color:var(--tam-muted);white-space:nowrap}
 .tam-t2.run{color:var(--tam-blue)}.tam-t2.fail{color:var(--tam-red)}
 .tam-agent{position:absolute;width:${AG_W}px;transform:translateY(-50%);padding:10px;border:1px solid var(--tam-line);border-radius:10px;background:var(--tam-bg);box-shadow:0 2px 10px #0000000d;animation:tam-up .3s ease-out}
-.tam-a1{display:flex;align-items:flex-start;gap:8px}
-.tam-who{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.25}
+.tam-a1{display:flex;flex-wrap:wrap;align-items:flex-start;gap:4px 8px}
+.tam-who{display:flex;flex-direction:column;min-width:0;flex:1 1 calc(100% - 40px);line-height:1.25}
 .tam-who strong{font-size:14px;font-weight:500}.tam-who span{font-size:11.5px;color:var(--tam-muted)}
+/* the state reads under the name, so longer Mongolian states never squeeze it */
+.tam-a1>.tam-badge{margin-left:32px}
 .tam-badge{display:inline-flex;align-items:center;gap:5px;padding:0 5px;border-radius:4px;font-size:11.5px;line-height:17px;background:var(--tam-chip);color:var(--tam-muted)}
-.tam-badge.running{background:var(--tam-blue-bg);color:var(--tam-blue)}
+.tam-badge.running{background:var(--tam-blue-bg);color:var(--tam-blue-fg)}
 .tam-badge.waiting{background:var(--tam-amber-bg);color:var(--tam-amber)}
 .tam-badge.failed{background:#fde8e8;color:var(--tam-red)}
 .tam-spin{width:8px;height:8px;border:1.3px solid currentColor;border-right-color:transparent;border-radius:50%;animation:tam-spin 1s linear infinite}

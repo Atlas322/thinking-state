@@ -258,7 +258,7 @@ function ToastItem({
         )}
       </div>
       {closeButton && (
-        <button type="button" className="tst-close" aria-label="Close notification" onClick={close}>
+        <button type="button" className="tst-close" aria-label="Мэдэгдлийг хаах" onClick={close}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 4.5 7 7m0-7-7 7" /></svg>
         </button>
       )}
@@ -286,7 +286,7 @@ export function Toaster({
   hotkey = "F8",
   hairline = true,
   closeButton = true,
-  label = "Notifications",
+  label = "Мэдэгдэл",
   className = "",
 }: ToasterProps) {
   const [all, setAll] = React.useState(store);
@@ -502,8 +502,8 @@ export default function ToasterDemo() {
 }
 
 const css = `
-.tst-region,.tst-demo{--tst-fg:#1f1f1f;--tst-muted:#7d7d7d;--tst-card:#fff;--tst-line:#ececec;--tst-soft:#f4f4f4;--tst-green:#2f9e66;--tst-red:#e5484d;--tst-blue:#3d7be8;font:400 13px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--tst-fg)}
-:where(.dark,[data-theme=dark]) :is(.tst-region,.tst-demo){--tst-fg:#ececec;--tst-muted:#8f8f94;--tst-card:#1d1d20;--tst-line:#2d2d32;--tst-soft:#27272b;--tst-green:#4cc38a;--tst-red:#ff6b70;color-scheme:dark}
+.tst-region,.tst-demo{--tst-fg:#1f1f1f;--tst-muted:#65656d;--tst-card:#fff;--tst-line:#ececec;--tst-soft:#f4f4f4;--tst-green:#2f9e66;--tst-red:#e5484d;--tst-blue:#3d7be8;font:400 13px/1.45 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--tst-fg)}
+:where(.dark,[data-theme=dark]) :is(.tst-region,.tst-demo){--tst-fg:#ececec;--tst-muted:#9a9aa2;--tst-card:#1d1d20;--tst-line:#2d2d32;--tst-soft:#27272b;--tst-green:#4cc38a;--tst-red:#ff6b70;color-scheme:dark}
 .tst-region *,.tst-demo *{box-sizing:border-box}
 .tst-region :where(button),.tst-demo :where(button){font:inherit;color:inherit;cursor:pointer}
 .tst-region{position:fixed;z-index:9999;width:356px;max-width:calc(100vw - 24px);pointer-events:none}

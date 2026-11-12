@@ -142,7 +142,7 @@ export function CommandMenu({
   }, []);
 
   const run = (c: Command | null, q?: string) => {
-    const label = c ? c.label : `Ask “${q}”`;
+    const label = c ? c.label : `Асуух: “${q}”`;
     if (c) {
       setPressed(c.id);
       window.setTimeout(() => setPressed(null), 160);
@@ -223,7 +223,7 @@ export function CommandMenu({
               onClick={() => run(null, query.trim())}
             >
               <span className="cmdk-ico">{L.spark}</span>
-              <span className="cmdk-label">Ask assistant</span>
+              <span className="cmdk-label">Туслахаас асуух</span>
               <span className="cmdk-hint">“{query.trim()}”</span>
             </button>
           </div>
@@ -275,18 +275,18 @@ export function CommandMenu({
             {ran.label}
           </span>
         ) : (
-          <span><kbd>Tab</kbd> to jump between sections</span>
+          <span><kbd>⇥</kbd> хэсэг хооронд шилжих</span>
         )}
-        <span className="cmdk-open"><kbd>⌘</kbd><kbd>K</kbd> to open</span>
+        <span className="cmdk-open"><kbd>⌘</kbd><kbd>K</kbd> нээх</span>
       </div>
-      <span role="status" aria-live="polite" className="cmdk-sr">{ran ? `Ran ${ran.label}` : ""}</span>
+      <span role="status" aria-live="polite" className="cmdk-sr">{ran ? `Ажиллуулсан: ${ran.label}` : ""}</span>
     </div>
   );
 }
 
 const css = `
-.cmdk{--cmdk-bg:#fff;--cmdk-fg:#18181b;--cmdk-muted:#71717a;--cmdk-faint:#a1a1aa;--cmdk-line:#ececef;--cmdk-hl:#f1f1f3;--cmdk-accent:#4f7cf0;--cmdk-green:#2f8a5b;width:100%;max-width:600px;display:flex;flex-direction:column;background:var(--cmdk-bg);color:var(--cmdk-fg);border:1px solid var(--cmdk-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 12px 32px -12px #00000024;font:400 12.5px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .cmdk{--cmdk-bg:#1b1b1e;--cmdk-fg:#ececef;--cmdk-muted:#a1a1aa;--cmdk-faint:#71717a;--cmdk-line:#2c2c31;--cmdk-hl:#2a2a2f;--cmdk-accent:#7c9cff;--cmdk-green:#6cc596;color-scheme:dark}
+.cmdk{--cmdk-bg:#fff;--cmdk-fg:#18181b;--cmdk-muted:#65656d;--cmdk-faint:#65656d;--cmdk-line:#ececef;--cmdk-hl:#f1f1f3;--cmdk-accent:#4f7cf0;--cmdk-green:#2f8a5b;width:100%;max-width:600px;display:flex;flex-direction:column;background:var(--cmdk-bg);color:var(--cmdk-fg);border:1px solid var(--cmdk-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 12px 32px -12px #00000024;font:400 12.5px/1.4 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cmdk{--cmdk-bg:#1b1b1e;--cmdk-fg:#ececef;--cmdk-muted:#a1a1aa;--cmdk-faint:#9a9aa2;--cmdk-line:#2c2c31;--cmdk-hl:#2a2a2f;--cmdk-accent:#7c9cff;--cmdk-green:#6cc596;color-scheme:dark}
 .cmdk *{box-sizing:border-box}
 .cmdk-field{display:flex;align-items:center;gap:10px;height:48px;padding:0 12px 0 16px;border-bottom:1px solid var(--cmdk-line)}
 .cmdk-search{display:grid;color:var(--cmdk-muted)}.cmdk-search svg{width:15px;height:15px}

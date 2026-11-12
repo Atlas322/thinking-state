@@ -48,28 +48,28 @@ export type AwaySummaryProps = {
 };
 
 const defaultLabels: AwaySummaryLabels = {
-  title: "While you were away",
-  needsYou: "need you",
-  failed: "failed",
-  done: "done",
-  decide: "Decide",
-  retry: "Retry",
-  open: "Open",
-  showMore: (n) => `Show ${n} more`,
-  showLess: "Show less",
-  gotIt: "Got it",
+  title: "Таныг байхгүй үед",
+  needsYou: "таны ээлж",
+  failed: "алдаатай",
+  done: "дууссан",
+  decide: "Шийдэх",
+  retry: "Дахин оролдох",
+  open: "Нээх",
+  showMore: (n) => `Дахиад ${n}-г харах`,
+  showLess: "Хураах",
+  gotIt: "Ойлголоо",
   divider: (s) => s,
 };
 
 const defaultItems: AwayItem[] = [
-  { id: "ingest", title: "Ingest pipeline", kind: "done", detail: "Answered: Kafka · deploying to staging" },
-  { id: "report", title: "Weekly report", kind: "done", detail: "Answered: the whole team · sent" },
-  { id: "billing", title: "Billing sync", kind: "done", detail: "Retried · synced all 3,900 invoices" },
-  { id: "auth", title: "Auth refactor", kind: "done", detail: "Opened PR #482 · on staging" },
-  { id: "usage", title: "Usage page", kind: "done", detail: "Shipped to Northwind" },
-  { id: "docs", title: "Evalkit docs", kind: "done", detail: "Published 14 pages" },
-  { id: "load", title: "Load test", kind: "done", detail: "Passed at 20k events a minute" },
-  { id: "flaky", title: "Flaky tests", kind: "done", detail: "Quarantined 3 tests in checkout" },
+  { id: "ingest", title: "Өгөгдөл татах шугам", kind: "done", detail: "Хариулт: мэдээллийн дараалал · туршилтын орчинд байршуулж байна" },
+  { id: "report", title: "Долоо хоногийн тайлан", kind: "done", detail: "Хариулт: бүх баг · илгээсэн" },
+  { id: "billing", title: "Төлбөрийн синк", kind: "done", detail: "Дахин оролдсон · 3,900 нэхэмжлэх бүгдийг синк хийсэн" },
+  { id: "auth", title: "Нэвтрэлтийн бүтцийн засвар", kind: "done", detail: "#482 хүсэлт нээсэн · туршилтын орчинд" },
+  { id: "usage", title: "Хэрэглээний хуудас", kind: "done", detail: "Харилцагчид хүргэсэн" },
+  { id: "docs", title: "Үнэлгээний баримт бичиг", kind: "done", detail: "14 хуудас нийтэлсэн" },
+  { id: "load", title: "Ачааллын тест", kind: "done", detail: "Минутад 20 мянган үйлдэлд тэсвэрлэсэн" },
+  { id: "flaky", title: "Тогтворгүй тестүүд", kind: "done", detail: "Төлбөрийн хэсгийн 3 тестийг тусгаарласан" },
 ];
 
 const order: Record<AwayItemKind, number> = { "needs-you": 0, failed: 1, done: 2 };
@@ -77,7 +77,7 @@ const order: Record<AwayItemKind, number> = { "needs-you": 0, failed: 1, done: 2
 const fmtDuration = (ms: number) => {
   const m = Math.max(0, Math.round(ms / 60000));
   const h = Math.floor(m / 60);
-  return h ? `${h}h ${m % 60}m` : `${m}m`;
+  return h ? `${h} цаг ${m % 60} мин` : `${m} мин`;
 };
 
 const Mark = ({ kind }: { kind: AwayItemKind }) => (
@@ -122,7 +122,7 @@ export function AwaySummary({
   const sinceMs = since === undefined ? nowMs - 134 * 60000 : typeof since === "number" && since < 1e7 ? nowMs - since * 60000 : +new Date(since);
   const away =
     timeStyle === "clock"
-      ? `since ${new Date(sinceMs).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`
+      ? `${new Date(sinceMs).toLocaleTimeString("mn-MN", { hour: "numeric", minute: "2-digit" })}-аас хойш`
       : fmtDuration(nowMs - sinceMs);
 
   const sorted = [...items].sort((a, b) => order[a.kind] - order[b.kind]);
@@ -174,7 +174,7 @@ export function AwaySummary({
           return (
             <li key={item.id} className={`aws-row is-${item.kind}`}>
               <Mark kind={item.kind} />
-              <span className="aws-sr">{item.kind}: </span>
+              <span className="aws-sr">{item.kind === "needs-you" ? L.needsYou : item.kind === "failed" ? L.failed : L.done}: </span>
               <div className="aws-text">
                 <div className="aws-name">{item.title}</div>
                 {item.detail && <div className="aws-detail">{item.detail}</div>}
@@ -226,7 +226,7 @@ export function AwaySummary({
       <style>{css}</style>
       {thread && (
         <>
-          <div className="aws-user">Get ingest onto staging today – ping me if you need anything.</div>
+          <div className="aws-user">Өгөгдөл татах шугамыг өнөөдөр туршилтын орчинд гаргаарай – хэрэгтэй бол надад хэлээрэй.</div>
           <div className="aws-agent">
             <svg viewBox="0 0 16 16" aria-hidden="true">
               {[0, 1, 2].flatMap((r) =>
@@ -235,7 +235,7 @@ export function AwaySummary({
                 )),
               )}
             </svg>
-            On it. I’ll split it into tasks and keep going while you’re out.
+            Ойлголоо. Даалгавруудад хувааж, таныг байхгүй үед үргэлжлүүлнэ.
           </div>
         </>
       )}
@@ -248,8 +248,8 @@ export function AwaySummary({
             setReply("");
           }}
         >
-          <input aria-label="Reply to the agent" placeholder="Reply to the agent…" value={reply} onChange={(e) => setReply(e.target.value)} />
-          <button type="submit" aria-label="Send" disabled={!reply.trim()}>
+          <input aria-label="Агентад хариулах" placeholder="Агентад хариулах…" value={reply} onChange={(e) => setReply(e.target.value)} />
+          <button type="submit" aria-label="Илгээх" disabled={!reply.trim()}>
             <svg viewBox="0 0 16 16"><path d="M8 12.5v-9M4.5 7 8 3.5 11.5 7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
         </form>
@@ -259,8 +259,8 @@ export function AwaySummary({
 }
 
 const css = `
-.aws{--aws-bg:#fff;--aws-fg:#18181b;--aws-muted:#71717a;--aws-faint:#a1a1aa;--aws-line:#ececef;--aws-chip:#f1f1f3;--aws-blue:#3b82f6;--aws-red:#e5484d;--aws-amber:#f59e0b;display:flex;flex-direction:column;gap:14px;width:100%;max-width:600px;color:var(--aws-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
-:where(.dark,[data-theme=dark]) .aws{--aws-bg:#1b1b1e;--aws-fg:#ececef;--aws-muted:#a1a1aa;--aws-faint:#71717a;--aws-line:#2e2e33;--aws-chip:#2a2a2f;--aws-blue:#5b9cff;--aws-red:#ff6b6f;color-scheme:dark}
+.aws{--aws-bg:#fff;--aws-fg:#18181b;--aws-muted:#65656d;--aws-faint:#65656d;--aws-line:#ececef;--aws-chip:#f1f1f3;--aws-blue:#3b82f6;--aws-red:#e5484d;--aws-amber:#f59e0b;display:flex;flex-direction:column;gap:14px;width:100%;max-width:600px;color:var(--aws-fg);font:400 14px/1.45 Inter,system-ui,sans-serif}
+:where(.dark,[data-theme=dark]) .aws{--aws-bg:#1b1b1e;--aws-fg:#ececef;--aws-muted:#a1a1aa;--aws-faint:#9a9aa2;--aws-line:#2e2e33;--aws-chip:#2a2a2f;--aws-blue:#5b9cff;--aws-red:#ff6b6f;color-scheme:dark}
 .aws *{box-sizing:border-box}.aws button,.aws input{font:inherit;color:inherit}.aws button{cursor:pointer}
 .aws-user{align-self:flex-end;max-width:85%;padding:6px 12px;border-radius:12px;background:var(--aws-chip);font-size:14px}
 .aws-agent{display:flex;align-items:center;gap:10px;font-size:14px;margin-top:-4px}.aws-agent svg{width:18px;height:18px;flex:none}

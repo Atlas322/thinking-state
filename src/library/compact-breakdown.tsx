@@ -87,19 +87,19 @@ function useRolled(value: number) {
 }
 
 export function CompactBreakdown({
-  title = "Revenue by channel",
+  title = "Сувгаар орлого",
   items: itemsProp,
   periods = [
-    { id: "7d", label: "7d" },
-    { id: "30d", label: "30d" },
-    { id: "90d", label: "90d" },
+    { id: "7d", label: "7 хоног" },
+    { id: "30d", label: "30 хоног" },
+    { id: "90d", label: "90 хоног" },
   ],
   period: periodProp,
   defaultPeriod,
   onPeriodChange,
   delta: deltaProp,
   format = money,
-  totalLabel = "Total revenue",
+  totalLabel = "Нийт орлого",
   footer,
   className = "",
 }: CompactBreakdownProps) {
@@ -123,7 +123,7 @@ export function CompactBreakdown({
       <header className="cbd-head">
         <h3>{title}</h3>
         {periods.length > 0 && (
-          <div className="cbd-seg" role="radiogroup" aria-label="Period">
+          <div className="cbd-seg" role="radiogroup" aria-label="Хугацаа">
             {periods.map((p) => (
               <button
                 key={p.id}
@@ -155,7 +155,7 @@ export function CompactBreakdown({
       <div className="cbd-sub" aria-hidden="true">{hovered ? `${hovered.label} · ${pct(hovered.value)}%` : totalLabel}</div>
       <p className="cbd-sr">
         {totalLabel}: {format(total)}
-        {delta !== undefined && `, ${delta < 0 ? "down" : "up"} ${Math.abs(delta)}% against the previous period`}
+        {delta !== undefined && `, өмнөх үеэс ${Math.abs(delta)}% ${delta < 0 ? "буурсан" : "өссөн"}`}
       </p>
       <div className="cbd-bar" aria-hidden="true">
         {ranked.map((r) => (
@@ -190,7 +190,7 @@ export function CompactBreakdown({
         <footer className="cbd-foot">
           {footer ?? (
             <>
-              <span>Largest:</span> {ranked[0]?.label}
+              <span>Хамгийн их:</span> {ranked[0]?.label}
             </>
           )}
         </footer>
@@ -200,8 +200,8 @@ export function CompactBreakdown({
 }
 
 const css = `
-.cbd{--cbd-bg:#fff;--cbd-fg:#18181b;--cbd-muted:#71717a;--cbd-faint:#a1a1aa;--cbd-line:#ececef;--cbd-chip:#f1f1f3;--cbd-up:#16a34a;--cbd-up-bg:#e9f8ee;--cbd-down:#dc2626;--cbd-down-bg:#fdecec;width:100%;max-width:360px;background:var(--cbd-bg);color:var(--cbd-fg);border:1px solid var(--cbd-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .cbd{--cbd-bg:#1b1b1e;--cbd-fg:#ececef;--cbd-muted:#a1a1aa;--cbd-faint:#71717a;--cbd-line:#2e2e33;--cbd-chip:#2a2a2f;--cbd-up:#4ade80;--cbd-up-bg:#16301f;--cbd-down:#f87171;--cbd-down-bg:#3a1d1f;color-scheme:dark}
+.cbd{--cbd-bg:#fff;--cbd-fg:#18181b;--cbd-muted:#65656d;--cbd-faint:#65656d;--cbd-line:#ececef;--cbd-chip:#f1f1f3;--cbd-up:#16a34a;--cbd-up-bg:#e9f8ee;--cbd-down:#dc2626;--cbd-down-bg:#fdecec;width:100%;max-width:360px;background:var(--cbd-bg);color:var(--cbd-fg);border:1px solid var(--cbd-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .cbd{--cbd-bg:#1b1b1e;--cbd-fg:#ececef;--cbd-muted:#a1a1aa;--cbd-faint:#9a9aa2;--cbd-line:#2e2e33;--cbd-chip:#2a2a2f;--cbd-up:#4ade80;--cbd-up-bg:#16301f;--cbd-down:#f87171;--cbd-down-bg:#3a1d1f;color-scheme:dark}
 .cbd *{box-sizing:border-box}.cbd button{font:inherit;color:inherit;cursor:pointer}
 .cbd-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px 0}
 .cbd-head h3{margin:0;font-size:15px;font-weight:500}

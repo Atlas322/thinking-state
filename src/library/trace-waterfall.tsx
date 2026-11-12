@@ -107,10 +107,13 @@ const money = (value: number) =>
   `$${value < 0.01 ? value.toFixed(3) : value.toFixed(2)}`;
 const duration = (value: number) =>
   value >= 60000
-    ? `${Math.floor(value / 60000)}m ${Math.floor((value % 60000) / 1000)}s`
+    ? `${Math.floor(value / 60000)} мин ${Math.floor((value % 60000) / 1000)} с`
     : value >= 1000
-      ? `${Number((value / 1000).toFixed(1))}s`
-      : `${Math.round(value)}ms`;
+      ? `${Number((value / 1000).toFixed(1))} с`
+      : `${Math.round(value)} ms`;
+const KIND_LABEL: Record<TraceSpan["kind"], string> = { agent: "агент", subagent: "дэд агент", llm: "LLM", tool: "хэрэгсэл" };
+const STATUS_LABEL: Record<TraceSpan["status"], string> = { running: "ажиллаж байна", done: "дууссан", failed: "алдаатай" };
+const FIELD_LABEL = { input: "Оролт", output: "Гаралт", error: "Алдаа" } as const;
 const short = (value: number) =>
   value >= 1000 ? `${Number((value / 1000).toFixed(1))}k` : String(value);
 function example(): TraceSpan {
@@ -305,7 +308,7 @@ function example(): TraceSpan {
             status: "failed",
             start: 42800,
             end: 51200,
-            input: "pnpm test checkout",
+            input: "src/checkout/ хавтасны тестүүдийг ажиллуулах",
             error: "14 тестээс 2 нь унав – купон багцын үнэд тооцогдохгүй байна",
           },
           {
@@ -338,7 +341,7 @@ export function TraceWaterfall({
   markSlowest = true,
   minRange = 10000,
   formatCost = money,
-  title = "Trace",
+  title = "Мөрдөлт",
   className = "",
 }: TraceWaterfallProps) {
   const [demo] = React.useState(example),
@@ -490,30 +493,30 @@ export function TraceWaterfall({
         <span className="trw-description">{data.input ?? data.name}</span>
         <span className={`trw-state ${data.status}`} role="status">
           {data.status === "running"
-            ? "• Live"
+            ? "• Шууд"
             : data.status === "failed"
-              ? "Failed"
-              : "✓ Done"}
+              ? "Алдаатай"
+              : "✓ Дууссан"}
         </span>
       </header>
       <dl className="trw-totals">
         {[
-          ["Duration", duration(totalDuration)],
-          ["Cost", formatCost(aggregate(data, "cost"))],
+          ["Хугацаа", duration(totalDuration)],
+          ["Зардал", formatCost(aggregate(data, "cost"))],
           [
-            "Tokens",
+            "Токен",
             short(aggregate(data, "tokensIn") + aggregate(data, "tokensOut")),
           ],
           [
-            "LLM calls",
+            "LLM дуудлага",
             String(all.filter((span) => span.kind === "llm").length),
           ],
           [
-            "Tool calls",
+            "Хэрэгслийн дуудлага",
             String(all.filter((span) => span.kind === "tool").length),
           ],
           [
-            "Errors",
+            "Алдаа",
             String(all.filter((span) => span.status === "failed").length),
           ],
         ].map(([label, value]) => (
@@ -521,9 +524,9 @@ export function TraceWaterfall({
             <dt>{label}</dt>
             <dd
               className={
-                live && ["Duration", "Cost", "Tokens"].includes(label)
+                live && ["Хугацаа", "Зардал", "Токен"].includes(label)
                   ? "trw-shimmer"
-                  : label === "Errors" && value !== "0"
+                  : label === "Алдаа" && value !== "0"
                     ? "trw-err"
                     : ""
               }
@@ -534,7 +537,7 @@ export function TraceWaterfall({
         ))}
       </dl>
       <div className="trw-axis" aria-hidden="true">
-        <span>Span</span>
+        <span>Алхам</span>
         <div>
           {ticks.map((tick) => (
             <span key={tick} style={{ left: `${(tick / range) * 100}%` }}>
@@ -543,7 +546,7 @@ export function TraceWaterfall({
           ))}
         </div>
       </div>
-      <div className="trw-rows" role="tree" aria-label="Trace spans">
+      <div className="trw-rows" role="tree" aria-label="Мөрдөлтийн алхмууд">
         {rows.map((row, index) => {
           const span = row.span;
           const end = span.end ?? time;
@@ -566,7 +569,7 @@ export function TraceWaterfall({
               aria-expanded={
                 span.children?.length ? !hidden.includes(span.id) : undefined
               }
-              aria-label={`${span.name}, ${span.kind}, ${span.status}, ${duration(spanDuration)}, ${formatCost(cost)}`}
+              aria-label={`${span.name}, ${KIND_LABEL[span.kind] ?? span.kind}, ${STATUS_LABEL[span.status] ?? span.status}, ${duration(spanDuration)}, ${formatCost(cost)}`}
               tabIndex={focus === span.id ? 0 : -1}
               className={`trw-row ${activeId === span.id ? "selected" : ""}`}
               onFocus={() => setFocus(span.id)}
@@ -588,7 +591,7 @@ export function TraceWaterfall({
                   <button
                     type="button"
                     tabIndex={-1}
-                    aria-label={`${hidden.includes(span.id) ? "Expand" : "Collapse"} ${span.name}`}
+                    aria-label={`${span.name}: ${hidden.includes(span.id) ? "дэлгэх" : "хураах"}`}
                     onClick={(event) => {
                       event.stopPropagation();
                       fold(span);
@@ -663,7 +666,7 @@ export function TraceWaterfall({
                 >
                   {duration(spanDuration)}
                   {cost > 0 ? ` · ${formatCost(cost)}` : ""}
-                  {markSlowest && slowest?.id === span.id && <b>Slowest</b>}
+                  {markSlowest && slowest?.id === span.id && <b>Хамгийн удаан</b>}
                 </span>
               </div>
             </div>
@@ -688,27 +691,27 @@ export function TraceWaterfall({
             <span className={`trw-kind-dot ${selected.kind}`} />
             <strong>{selected.name}</strong>
             <button
-              aria-label="Close span details"
+              aria-label="Алхмын дэлгэрэнгүйг хаах"
               onClick={() => openSpan(null)}
             >
               ×
             </button>
           </header>
           <p>
-            {selected.kind} <span>·</span> {selected.status} <span>·</span>{" "}
+            {KIND_LABEL[selected.kind] ?? selected.kind} <span>·</span> {STATUS_LABEL[selected.status] ?? selected.status} <span>·</span>{" "}
             {duration(Math.max(0, (selected.end ?? time) - selected.start))}
           </p>
           <dl>
             <div>
-              <dt>Cost</dt>
+              <dt>Зардал</dt>
               <dd>{formatCost(aggregate(selected, "cost"))}</dd>
             </div>
             <div>
-              <dt>Input tokens</dt>
+              <dt>Оролтын токен</dt>
               <dd>{aggregate(selected, "tokensIn").toLocaleString()}</dd>
             </div>
             <div>
-              <dt>Output tokens</dt>
+              <dt>Гаралтын токен</dt>
               <dd>{aggregate(selected, "tokensOut").toLocaleString()}</dd>
             </div>
           </dl>
@@ -716,7 +719,7 @@ export function TraceWaterfall({
           {(["input", "output", "error"] as const).map((field) =>
             selected[field] ? (
               <div className={`trw-preview ${field}`} key={field}>
-                <h4>{field}</h4>
+                <h4>{FIELD_LABEL[field]}</h4>
                 <pre>{selected[field]}</pre>
               </div>
             ) : null,
@@ -727,7 +730,7 @@ export function TraceWaterfall({
   );
 }
 const css = `
-.trw-root{--trw-bg:#fff;--trw-ink:#29292c;--trw-muted:#88888e;--trw-line:#e9e9eb;--trw-hover:#f7f7f8;--trw-agent:#88889820;--trw-agent-edge:#88889840;--trw-llm:#8e7be62b;--trw-llm-edge:#8e7be655;--trw-tool:#39a4b123;--trw-tool-edge:#39a4b14f;width:100%;max-width:950px;border:1px solid var(--trw-line);border-radius:12px;background:var(--trw-bg);color:var(--trw-ink);font:400 12.5px/18px Inter,system-ui,sans-serif;position:relative;container:trw / inline-size;text-align:left;isolation:isolate}:where(.dark,[data-theme=dark]) .trw-root{--trw-bg:#202022;--trw-ink:#e4e4e7;--trw-muted:#85858b;--trw-line:#2b2b2f;--trw-hover:#242427;color-scheme:dark}.trw-root *{box-sizing:border-box}.trw-root button{font:inherit;color:inherit;cursor:pointer}.trw-root :focus-visible{outline:2px solid #82bcff;outline-offset:-2px}.trw-root svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.trw-header{display:flex;align-items:center;gap:9px;padding:13px 17px;border-bottom:1px solid var(--trw-line);min-width:0}.trw-title{display:flex;gap:10px;align-items:center;font-size:13px;font-weight:500;white-space:nowrap}.trw-title i{font-size:14px;font-style:normal;color:#80b4ee}.trw-description{color:var(--trw-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}.trw-state{font-size:11.5px;line-height:18px;white-space:nowrap;padding:0 6px;border-radius:4px;color:#6896c5;background:#5e9cdb18;margin-left:auto}.trw-state.done{color:#62aa87;background:#62aa8718}.trw-state.failed{color:#d07882;background:#d0788218}.trw-totals{display:grid;grid-template-columns:repeat(6,1fr);padding:13px 8px;margin:0;border-bottom:1px solid var(--trw-line)}.trw-totals>div{padding:0 13px;border-left:1px solid var(--trw-line)}.trw-totals>div:first-child{border-left:0}.trw-totals dt{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--trw-muted);white-space:nowrap}.trw-totals dd{font-size:15px;line-height:21px;margin:4px 0 0;font-variant-numeric:tabular-nums}.trw-axis{display:grid;grid-template-columns:34% 1fr;height:30px;border-bottom:1px solid var(--trw-line);font-size:12px;color:var(--trw-muted)}.trw-axis>span{padding:6px 15px;text-transform:uppercase;font-size:10px;letter-spacing:.7px}.trw-axis>div{position:relative;margin-right:40px;border-left:1px solid var(--trw-line)}.trw-axis>div>span{position:absolute;top:6px;transform:translateX(4px);white-space:nowrap}.trw-axis>div>span:last-child{transform:translateX(-100%)}.trw-rows{padding:3px 0 12px;overflow:hidden;border-radius:0 0 12px 12px}.trw-row{display:grid;grid-template-columns:34% 1fr;min-height:30px;cursor:pointer;outline:none;animation:trw-row-in .2s both}.trw-row:hover,.trw-row.selected{background:var(--trw-hover)}.trw-name{display:flex;align-items:center;gap:7px;min-width:0;padding:6px 10px 6px 12px;position:relative}.trw-name strong{font-size:13px;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0;max-width:75%}.trw-name small{font-size:12px;color:var(--trw-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.trw-name>button{border:0;background:none;padding:0;width:10px;height:16px;flex:none;color:var(--trw-muted)}.trw-name>button svg{transition:transform .2s;width:10px}.trw-spacer{width:10px;flex:none}.trw-indent{position:absolute;top:0;bottom:0;width:1px;background:var(--trw-line)}.trw-icon{width:14px;height:14px;display:grid;place-items:center;flex:none;color:#d59373}.trw-icon svg,.trw-icon img{width:13px!important;height:13px!important;max-width:13px;max-height:13px}.trw-err{color:#d65c5c}.trw-count{flex:none;margin-left:auto;font-style:normal;font-size:11px;line-height:16px;padding:0 5px;border-radius:4px;background:var(--trw-hover);border:1px solid var(--trw-line);color:var(--trw-muted)}.trw-icon.tool{color:#72a8b3}.trw-spinner{margin-left:auto;flex:none;width:8px;height:8px;border:1px solid #81afdf44;border-top-color:#81afdf;border-radius:50%;animation:trw-spin 1s linear infinite}.trw-timeline{position:relative;min-width:0;border-left:1px solid var(--trw-line);margin-right:40px}.trw-grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--trw-line);pointer-events:none}.trw-now{position:absolute;top:-2px;bottom:-2px;width:1px;background:#679ddd88;pointer-events:none;z-index:2;transition:left .2s linear}.trw-row:first-child .trw-now:before{content:'';position:absolute;top:-6px;left:-2px;width:5px;height:5px;border-radius:50%;background:#8ab8f2}.trw-bar{position:absolute;top:9px;height:12px;border-radius:3px;background:var(--trw-agent);border:1px solid var(--trw-agent-edge);transition:left .4s,width .4s;min-width:2px;overflow:hidden}.trw-bar.llm{background:var(--trw-llm);border-color:var(--trw-llm-edge)}.trw-bar.tool{background:var(--trw-tool);border-color:var(--trw-tool-edge)}.trw-bar.failed{background:#c45c6d24;border-color:#c45c6d55}.trw-bar.running:after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 20%,#ffffff0b 50%,transparent 80%);background-size:220% 100%;animation:trw-shine 2.5s linear infinite}.trw-bar>i{position:absolute;top:1px;bottom:1px;width:2px;background:var(--trw-muted);opacity:.45}.trw-value{position:absolute;top:5px;padding-left:6px;white-space:nowrap;font-size:12px;color:var(--trw-muted);font-variant-numeric:tabular-nums;line-height:20px;transition:left .4s;pointer-events:none}.trw-value b{font-size:9.5px;text-transform:uppercase;letter-spacing:.3px;color:#c9945d;background:#a56b2918;padding:1px 4px;border-radius:2px;margin-left:7px;font-weight:500}.trw-shimmer{background:linear-gradient(100deg,var(--trw-muted),var(--trw-ink),var(--trw-muted));background-size:220% 100%;background-clip:text;color:transparent;animation:trw-shine 3s linear infinite}.trw-detail{position:absolute;right:16px;width:310px;max-width:calc(100% - 32px);max-height:390px;overflow:auto;padding:15px;background:var(--trw-bg);border:1px solid var(--trw-line);border-radius:10px;box-shadow:0 10px 35px #0003;z-index:20;animation:trw-pop .18s both}.trw-detail header{display:flex;gap:7px;align-items:center}.trw-detail header strong{font-weight:500;font-size:13px}.trw-detail header button{margin-left:auto;font-size:20px;line-height:20px;padding:0 3px;border:0;background:none;color:var(--trw-muted)}.trw-detail>p{font-size:12px;color:var(--trw-muted);margin:8px 0}.trw-detail>p span{padding:0 4px}.trw-detail dl{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--trw-line);padding:10px 0;margin:12px 0}.trw-detail dt{font-size:10px;color:var(--trw-muted)}.trw-detail dd{margin:3px 0 0;font-size:13px}.trw-preview h4{margin:10px 0 5px;text-transform:uppercase;letter-spacing:.06em;font-size:10px;font-weight:500}.trw-preview pre{background:var(--trw-hover);padding:9px;border-radius:6px;font:11.5px/1.6 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--trw-muted);margin:0}.trw-preview.error pre{color:#d07882}.trw-kind-dot{width:7px;height:7px;border-radius:2px;background:#9797a7}.trw-kind-dot.llm{background:#a292df}.trw-kind-dot.tool{background:#6cabb3}
+.trw-root{--trw-bg:#fff;--trw-ink:#29292c;--trw-muted:#65656d;--trw-line:#e9e9eb;--trw-hover:#f7f7f8;--trw-agent:#88889820;--trw-agent-edge:#88889840;--trw-llm:#8e7be62b;--trw-llm-edge:#8e7be655;--trw-tool:#39a4b123;--trw-tool-edge:#39a4b14f;width:100%;max-width:950px;border:1px solid var(--trw-line);border-radius:12px;background:var(--trw-bg);color:var(--trw-ink);font:400 12.5px/18px Inter,system-ui,sans-serif;position:relative;container:trw / inline-size;text-align:left;isolation:isolate}:where(.dark,[data-theme=dark]) .trw-root{--trw-bg:#202022;--trw-ink:#e4e4e7;--trw-muted:#9a9aa2;--trw-line:#2b2b2f;--trw-hover:#242427;color-scheme:dark}.trw-root *{box-sizing:border-box}.trw-root button{font:inherit;color:inherit;cursor:pointer}.trw-root :focus-visible{outline:2px solid #82bcff;outline-offset:-2px}.trw-root svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.trw-header{display:flex;align-items:center;gap:9px;padding:13px 17px;border-bottom:1px solid var(--trw-line);min-width:0}.trw-title{display:flex;gap:10px;align-items:center;font-size:13px;font-weight:500;white-space:nowrap}.trw-title i{font-size:14px;font-style:normal;color:#80b4ee}.trw-description{color:var(--trw-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}.trw-state{font-size:11.5px;line-height:18px;white-space:nowrap;padding:0 6px;border-radius:4px;color:#6896c5;background:#5e9cdb18;margin-left:auto}.trw-state.done{color:#62aa87;background:#62aa8718}.trw-state.failed{color:#d07882;background:#d0788218}.trw-totals{display:grid;grid-template-columns:repeat(6,1fr);padding:13px 8px;margin:0;border-bottom:1px solid var(--trw-line)}.trw-totals>div{padding:0 13px;border-left:1px solid var(--trw-line)}.trw-totals>div:first-child{border-left:0}.trw-totals dt{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--trw-muted);white-space:nowrap}.trw-totals dd{font-size:15px;line-height:21px;margin:4px 0 0;font-variant-numeric:tabular-nums}.trw-axis{display:grid;grid-template-columns:34% 1fr;height:30px;border-bottom:1px solid var(--trw-line);font-size:12px;color:var(--trw-muted)}.trw-axis>span{padding:6px 15px;text-transform:uppercase;font-size:10px;letter-spacing:.7px}.trw-axis>div{position:relative;margin-right:40px;border-left:1px solid var(--trw-line)}.trw-axis>div>span{position:absolute;top:6px;transform:translateX(4px);white-space:nowrap}.trw-axis>div>span:last-child{transform:translateX(-100%)}.trw-rows{padding:3px 0 12px;overflow:hidden;border-radius:0 0 12px 12px}.trw-row{display:grid;grid-template-columns:34% 1fr;min-height:30px;cursor:pointer;outline:none;animation:trw-row-in .2s both}.trw-row:hover,.trw-row.selected{background:var(--trw-hover)}.trw-name{display:flex;align-items:center;gap:7px;min-width:0;padding:6px 10px 6px 12px;position:relative}.trw-name strong{font-size:13px;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0;max-width:75%}.trw-name small{font-size:12px;color:var(--trw-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.trw-name>button{border:0;background:none;padding:0;width:10px;height:16px;flex:none;color:var(--trw-muted)}.trw-name>button svg{transition:transform .2s;width:10px}.trw-spacer{width:10px;flex:none}.trw-indent{position:absolute;top:0;bottom:0;width:1px;background:var(--trw-line)}.trw-icon{width:14px;height:14px;display:grid;place-items:center;flex:none;color:#d59373}.trw-icon svg,.trw-icon img{width:13px!important;height:13px!important;max-width:13px;max-height:13px}.trw-err{color:#d65c5c}.trw-count{flex:none;margin-left:auto;font-style:normal;font-size:11px;line-height:16px;padding:0 5px;border-radius:4px;background:var(--trw-hover);border:1px solid var(--trw-line);color:var(--trw-muted)}.trw-icon.tool{color:#72a8b3}.trw-spinner{margin-left:auto;flex:none;width:8px;height:8px;border:1px solid #81afdf44;border-top-color:#81afdf;border-radius:50%;animation:trw-spin 1s linear infinite}.trw-timeline{position:relative;min-width:0;border-left:1px solid var(--trw-line);margin-right:40px}.trw-grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--trw-line);pointer-events:none}.trw-now{position:absolute;top:-2px;bottom:-2px;width:1px;background:#679ddd88;pointer-events:none;z-index:2;transition:left .2s linear}.trw-row:first-child .trw-now:before{content:'';position:absolute;top:-6px;left:-2px;width:5px;height:5px;border-radius:50%;background:#8ab8f2}.trw-bar{position:absolute;top:9px;height:12px;border-radius:3px;background:var(--trw-agent);border:1px solid var(--trw-agent-edge);transition:left .4s,width .4s;min-width:2px;overflow:hidden}.trw-bar.llm{background:var(--trw-llm);border-color:var(--trw-llm-edge)}.trw-bar.tool{background:var(--trw-tool);border-color:var(--trw-tool-edge)}.trw-bar.failed{background:#c45c6d24;border-color:#c45c6d55}.trw-bar.running:after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 20%,#ffffff0b 50%,transparent 80%);background-size:220% 100%;animation:trw-shine 2.5s linear infinite}.trw-bar>i{position:absolute;top:1px;bottom:1px;width:2px;background:var(--trw-muted);opacity:.45}.trw-value{position:absolute;top:5px;padding-left:6px;white-space:nowrap;font-size:12px;color:var(--trw-muted);font-variant-numeric:tabular-nums;line-height:20px;transition:left .4s;pointer-events:none}.trw-value b{font-size:9.5px;text-transform:uppercase;letter-spacing:.3px;color:#c9945d;background:#a56b2918;padding:1px 4px;border-radius:2px;margin-left:7px;font-weight:500}.trw-shimmer{background:linear-gradient(100deg,var(--trw-muted),var(--trw-ink),var(--trw-muted));background-size:220% 100%;background-clip:text;color:transparent;animation:trw-shine 3s linear infinite}.trw-detail{position:absolute;right:16px;width:310px;max-width:calc(100% - 32px);max-height:390px;overflow:auto;padding:15px;background:var(--trw-bg);border:1px solid var(--trw-line);border-radius:10px;box-shadow:0 10px 35px #0003;z-index:20;animation:trw-pop .18s both}.trw-detail header{display:flex;gap:7px;align-items:center}.trw-detail header strong{font-weight:500;font-size:13px}.trw-detail header button{margin-left:auto;font-size:20px;line-height:20px;padding:0 3px;border:0;background:none;color:var(--trw-muted)}.trw-detail>p{font-size:12px;color:var(--trw-muted);margin:8px 0}.trw-detail>p span{padding:0 4px}.trw-detail dl{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--trw-line);padding:10px 0;margin:12px 0}.trw-detail dt{font-size:10px;color:var(--trw-muted)}.trw-detail dd{margin:3px 0 0;font-size:13px}.trw-preview h4{margin:10px 0 5px;text-transform:uppercase;letter-spacing:.06em;font-size:10px;font-weight:500}.trw-preview pre{background:var(--trw-hover);padding:9px;border-radius:6px;font:11.5px/1.6 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--trw-muted);margin:0}.trw-preview.error pre{color:#d07882}.trw-kind-dot{width:7px;height:7px;border-radius:2px;background:#9797a7}.trw-kind-dot.llm{background:#a292df}.trw-kind-dot.tool{background:#6cabb3}
 @container trw (max-width:559px){.trw-totals{grid-template-columns:repeat(3,1fr);gap:12px 0}.trw-totals>div:nth-child(4){border-left:0}.trw-header{padding:12px}.trw-description{font-size:10px}.trw-axis{grid-template-columns:1fr;height:25px}.trw-axis>span{display:none}.trw-axis>div{margin:0 90px 0 15px;border:0}.trw-row{grid-template-columns:1fr;min-height:55px}.trw-name{padding-top:5px;padding-bottom:2px}.trw-name strong{max-width:68%}.trw-timeline{margin:0 90px 0 15px;min-height:25px;border-left:0}.trw-bar{top:4px;height:12px}.trw-value{top:0;font-size:9px}.trw-now,.trw-grid-line{top:-20px}.trw-row:first-child .trw-now:before{display:none}.trw-value b{display:none}.trw-detail{top:110px!important;right:12px;max-width:calc(100% - 24px)}}@container trw (max-width:359px){.trw-name small{display:none}.trw-description{display:none}.trw-totals>div{padding:0 9px}.trw-totals dt{font-size:8px}}
 @keyframes trw-shine{to{background-position:-220% 0}}@keyframes trw-spin{to{transform:rotate(360deg)}}@keyframes trw-row-in{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}@keyframes trw-pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}@media(prefers-reduced-motion:reduce){.trw-root *{animation:none!important;transition:none!important}.trw-shimmer{background:none;color:var(--trw-ink)}}
 `;

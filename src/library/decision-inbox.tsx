@@ -99,13 +99,13 @@ export function DecisionInbox({
             <>
               <AlertIcon />
               <span>
-                {count} {open === 1 ? "needs" : "need"} your input
+                Таны шийдвэр хүлээж буй: {count}
               </span>
             </>
           ) : (
             <>
               <DoneIcon />
-              <span>All caught up</span>
+              <span>Бүгд шийдэгдсэн</span>
             </>
           )}
         </header>
@@ -186,7 +186,7 @@ export function DecisionInbox({
             );
           })}
           <p className="ui-dic__empty">
-            Nothing waiting on you – new decisions show up here.
+            Таныг хүлээж буй зүйл алга. Шинэ шийдвэр энд гарна.
           </p>
         </div>
       </section>

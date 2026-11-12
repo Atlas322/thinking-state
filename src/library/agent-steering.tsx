@@ -54,8 +54,8 @@ const defaultSteps: SteerStep[] = [
   { id: "s5", title: "Хянуулахаар өөрчлөлтийн хүсэлт нээх", status: "pending" },
 ];
 
-const fmtClock = (s: number) => `${Math.floor(s / 60)}m ${String(Math.floor(s % 60)).padStart(2, "0")}s`;
-const fmtDur = (d?: number | string) => (d == null ? "" : typeof d === "string" ? d : `${d.toFixed(1)}s`);
+const fmtClock = (s: number) => `${Math.floor(s / 60)} мин ${String(Math.floor(s % 60)).padStart(2, "0")} с`;
+const fmtDur = (d?: number | string) => (d == null ? "" : typeof d === "string" ? d : `${d.toFixed(1)} с`);
 
 const Check = () => (
   <svg viewBox="0 0 16 16" aria-hidden="true">
@@ -99,7 +99,7 @@ export function AgentSteering({
   onResume,
   draft: draftProp,
   onDraftChange,
-  placeholder = "Steer the agent…",
+  placeholder = "Агентад заавар өгөх…",
   className = "",
 }: AgentSteeringProps) {
   const [ownSteps, setOwnSteps] = React.useState<SteerStep[]>(defaultSteps);
@@ -145,7 +145,7 @@ export function AgentSteering({
       ss.map((s) => (s.status === "active" ? { ...s, notes: [...(s.notes ?? []), { ...note, picked: how }] } : s)),
     );
     setFresh(note.id);
-    setAnnounce(`${agent} picked up: ${note.text}`);
+    setAnnounce(`${agent} хүлээн авлаа: ${note.text}`);
   }
 
   const submit = (interrupt: boolean) => {
@@ -158,7 +158,7 @@ export function AgentSteering({
     } else {
       onQueue?.(text);
       if (!queueProp) setOwnQueue((q) => [...q, note]);
-      setAnnounce(`Queued for the next step: ${text}`);
+      setAnnounce(`Дараагийн алхамд дараалуулсан: ${text}`);
     }
     setDraft("");
   };
@@ -177,18 +177,18 @@ export function AgentSteering({
           <strong>{title}</strong>
           <span>
             {agent}
-            <i>·</i>Step {stepNo} of {steps.length}
+            <i>·</i>Алхам {stepNo}/{steps.length}
           </span>
         </div>
         <span className={`as-state as-${status}`}>
           <b />
-          {done ? "Done" : paused ? "Paused" : "Running"} · {fmtClock(Math.max(0, (now - t0) / 1000))}
+          {done ? "Дууссан" : paused ? "Түр зогссон" : "Ажиллаж байна"} · {fmtClock(Math.max(0, (now - t0) / 1000))}
         </span>
         {!done && (
           <button
             type="button"
             className="as-pause"
-            aria-label={paused ? "Resume" : "Pause"}
+            aria-label={paused ? "Үргэлжлүүлэх" : "Түр зогсоох"}
             onClick={() => {
               if (paused) {
                 setOwnStatus("running");
@@ -208,7 +208,7 @@ export function AgentSteering({
         )}
       </header>
 
-      <ol className="as-plan" aria-label="Plan">
+      <ol className="as-plan" aria-label="Төлөвлөгөө">
         {steps.map((s, i) => {
           const st = s.status ?? "pending";
           return (
@@ -226,7 +226,7 @@ export function AgentSteering({
                     <span className="as-note-t">{n.text}</span>
                     <span className="as-picked">
                       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
-                      {n.picked === "now" ? "Interrupted" : "Picked up"}
+                      {n.picked === "now" ? "Тасалсан" : "Хүлээн авсан"}
                     </span>
                   </div>
                 ))}
@@ -239,7 +239,7 @@ export function AgentSteering({
       {!done && (
         <footer className="as-foot">
           {queue.length > 0 && (
-            <ul className="as-queue" aria-label="Queued notes">
+            <ul className="as-queue" aria-label="Дараалсан заавар">
               {queue.map((n) => (
                 <li key={n.id}>
                   <span className="as-qdot" />
@@ -252,12 +252,12 @@ export function AgentSteering({
                       if (!queueProp) pick(n, "now");
                     }}
                   >
-                    Now
+                    Одоо
                   </button>
                   <button
                     type="button"
                     className="as-x"
-                    aria-label={`Remove “${n.text}”`}
+                    aria-label={`Хасах: «${n.text}»`}
                     onClick={() => {
                       onRemove?.(n.id);
                       if (!queueProp) setOwnQueue((q) => q.filter((x) => x.id !== n.id));
@@ -274,7 +274,7 @@ export function AgentSteering({
               rows={1}
               value={draft}
               placeholder={placeholder}
-              aria-label="Steer the agent"
+              aria-label="Агентад заавар өгөх"
               aria-describedby="as-hint"
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
@@ -285,13 +285,13 @@ export function AgentSteering({
                 }
               }}
             />
-            <button type="button" className="as-send" aria-label="Queue for the next step" disabled={!draft.trim()} onClick={() => submit(false)}>
+            <button type="button" className="as-send" aria-label="Дараагийн алхамд дараалуулах" disabled={!draft.trim()} onClick={() => submit(false)}>
               <svg viewBox="0 0 16 16"><path d="M8 12.5v-9M4 7.5l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           </div>
           <div className="as-hint" id="as-hint">
-            <kbd><Enter /></kbd>next step
-            <kbd>⌘</kbd><kbd><Enter /></kbd>interrupt now
+            <kbd><Enter /></kbd>дараагийн алхамд
+            <kbd>⌘</kbd><kbd><Enter /></kbd>одоо тасална
           </div>
         </footer>
       )}
@@ -301,8 +301,8 @@ export function AgentSteering({
 }
 
 const css = `
-.as{--as-bg:#fff;--as-fg:#18181b;--as-muted:#71717a;--as-faint:#a1a1aa;--as-line:#ececef;--as-soft:#f6f6f7;--as-accent:#3b82f6;width:100%;max-width:460px;background:var(--as-bg);color:var(--as-fg);border:1px solid var(--as-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .as{--as-bg:#1b1b1e;--as-fg:#ececef;--as-muted:#a1a1aa;--as-faint:#71717a;--as-line:#2e2e33;--as-soft:#242428;--as-accent:#60a5fa;color-scheme:dark}
+.as{--as-bg:#fff;--as-fg:#18181b;--as-muted:#65656d;--as-faint:#65656d;--as-line:#ececef;--as-soft:#f6f6f7;--as-accent:#3b82f6;width:100%;max-width:460px;background:var(--as-bg);color:var(--as-fg);border:1px solid var(--as-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+:where(.dark,[data-theme=dark]) .as{--as-bg:#1b1b1e;--as-fg:#ececef;--as-muted:#a1a1aa;--as-faint:#9a9aa2;--as-line:#2e2e33;--as-soft:#242428;--as-accent:#60a5fa;color-scheme:dark}
 .as *{box-sizing:border-box}.as button{font:inherit;color:inherit;cursor:pointer}
 .as-head{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px;border-bottom:1px solid var(--as-line)}
 .as-spark{width:14px;height:14px;color:var(--as-accent);flex:none}

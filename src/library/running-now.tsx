@@ -49,27 +49,27 @@ export type RunningNowProps = {
 };
 
 const defaultLabels: RunningNowLabels = {
-  title: "Background tasks",
-  running: "running",
-  needsYou: "need you",
-  needsYouOne: "needs you",
-  needsYouBadge: "Needs you",
-  paused: "Paused",
-  pausedCount: "paused",
-  done: "Done",
-  pause: "Pause",
-  resume: "Resume",
-  open: "Open",
-  openAll: "Open Tasks",
-  empty: "Nothing running",
-  idle: "No tasks running",
+  title: "Арын даалгаврууд",
+  running: "ажиллаж байна",
+  needsYou: "таны ээлж",
+  needsYouOne: "таны ээлж",
+  needsYouBadge: "Таны ээлж",
+  paused: "Түр зогссон",
+  pausedCount: "түр зогссон",
+  done: "Дууссан",
+  pause: "Түр зогсоох",
+  resume: "Үргэлжлүүлэх",
+  open: "Нээх",
+  openAll: "Бүх даалгаврыг нээх",
+  empty: "Ажиллаж буй зүйл алга",
+  idle: "Ажиллаж буй даалгавар алга",
 };
 
 const defaultTasks: RunningTask[] = [
-  { id: "ingest", title: "Ingest pipeline", step: "Embedding chunks", done: 2, total: 4, state: "running" },
-  { id: "refund", title: "Refund review", step: "Waiting for approval of $480", done: 3, total: 5, state: "needs-you" },
-  { id: "seo", title: "SEO audit", step: "Crawling 214 pages", done: 1, total: 6, state: "running" },
-  { id: "digest", title: "Weekly digest", step: "Drafting the summary", done: 2, total: 5, state: "running" },
+  { id: "ingest", title: "Өгөгдөл оруулах урсгал", step: "Хэсгүүдийг вектор болгож байна", done: 2, total: 4, state: "running" },
+  { id: "refund", title: "Буцаалтын хяналт", step: "Буцаалт батлахыг хүлээж байна", done: 3, total: 5, state: "needs-you" },
+  { id: "seo", title: "SEO шалгалт", step: "214 хуудас уншиж байна", done: 1, total: 6, state: "running" },
+  { id: "digest", title: "Долоо хоногийн тойм", step: "Хураангуйн ноорог бичиж байна", done: 2, total: 5, state: "running" },
 ];
 
 const ringColor = (t: RunningTask) => {
@@ -139,8 +139,8 @@ export function RunningNow({
           if (t.state !== "running") return t;
           const done = t.done + 1;
           if (done >= t.total) {
-            setAnnounce(`${t.title} finished`);
-            return { ...t, done: t.total, state: "done", step: "Finished" };
+            setAnnounce(`${t.title} дууслаа`);
+            return { ...t, done: t.total, state: "done", step: "Дууссан" };
           }
           return { ...t, done };
         }),
@@ -184,9 +184,9 @@ export function RunningNow({
               <span className="rn-logo" aria-hidden="true">
                 <svg viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="3" fill="currentColor" /><path d="M5 5h4v2H7v4H5Z" fill="var(--rn-bg)" /><rect x="8" y="8" width="3" height="3" fill="var(--rn-bg)" /></svg>
               </span>
-              <span className="rn-crumb">Acme</span>
+              <span className="rn-crumb">Thinking State</span>
               <span className="rn-sep">/</span>
-              <span>Agents</span>
+              <span>Агентууд</span>
             </>
           )}
         </div>
@@ -268,7 +268,7 @@ export function RunningNow({
                       }}
                       type="button"
                       className="rn-main"
-                      aria-label={`${t.title} – ${t.state === "needs-you" ? L.needsYouBadge.toLowerCase() : t.state}. ${t.step}. ${t.done} of ${t.total} steps`}
+                      aria-label={`${t.title} – ${t.state === "needs-you" ? L.needsYouBadge.toLowerCase() : t.state === "running" ? L.running : t.state === "paused" ? L.pausedCount : L.done.toLowerCase()}. ${t.step}. ${t.done}/${t.total} алхам`}
                       onClick={() => onOpen?.(t.id)}
                       onKeyDown={(e) => {
                         if (e.key === "ArrowDown") { e.preventDefault(); focusRow(i + 1); }
@@ -293,17 +293,17 @@ export function RunningNow({
                       </span>
                     </button>
                     {t.state === "running" && (
-                      <button type="button" className="rn-act" aria-label={`${L.pause} ${t.title}`} onClick={() => { setState(t.id, "paused"); onPause?.(t.id); }}>
+                      <button type="button" className="rn-act" aria-label={`${t.title}: ${L.pause.toLowerCase()}`} onClick={() => { setState(t.id, "paused"); onPause?.(t.id); }}>
                         <svg viewBox="0 0 16 16"><path d="M6 4v8M10 4v8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
                       </button>
                     )}
                     {t.state === "paused" && (
-                      <button type="button" className="rn-act" aria-label={`${L.resume} ${t.title}`} onClick={() => { setState(t.id, "running"); onResume?.(t.id); }}>
+                      <button type="button" className="rn-act" aria-label={`${t.title}: ${L.resume.toLowerCase()}`} onClick={() => { setState(t.id, "running"); onResume?.(t.id); }}>
                         <svg viewBox="0 0 16 16"><path d="M5.5 4v8l6.5-4Z" fill="currentColor" /></svg>
                       </button>
                     )}
                     {t.state === "needs-you" && (
-                      <button type="button" className="rn-open" aria-label={`${L.open} ${t.title} – ${L.needsYouBadge.toLowerCase()}`} onClick={() => onOpen?.(t.id)}>
+                      <button type="button" className="rn-open" aria-label={`${t.title}: ${L.open.toLowerCase()} – ${L.needsYouBadge.toLowerCase()}`} onClick={() => onOpen?.(t.id)}>
                         {L.open}
                       </button>
                     )}
@@ -326,8 +326,8 @@ export function RunningNow({
 }
 
 const css = `
-.rn{--rn-bg:#fff;--rn-fg:#18181b;--rn-muted:#71717a;--rn-faint:#a1a1aa;--rn-line:#ececef;--rn-soft:#f6f6f7;--rn-teal:#14b8a6;--rn-amber:#eab308;--rn-orange:#f97316;--rn-blue:#3b82f6;--rn-wait:#e5a000;position:relative;display:flex;align-items:center;gap:12px;width:100%;max-width:722px;height:50px;padding:0 9px 0 14px;background:var(--rn-bg);color:var(--rn-fg);border:1px solid var(--rn-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;box-sizing:border-box}
-:where(.dark,[data-theme=dark]) .rn{--rn-bg:#1b1b1e;--rn-fg:#ececef;--rn-muted:#a1a1aa;--rn-faint:#5c5c64;--rn-line:#2c2c31;--rn-soft:#24242a;--rn-wait:#facc15;color-scheme:dark}
+.rn{--rn-bg:#fff;--rn-fg:#18181b;--rn-muted:#65656d;--rn-faint:#65656d;--rn-line:#ececef;--rn-soft:#f6f6f7;--rn-teal:#14b8a6;--rn-amber:#eab308;--rn-orange:#f97316;--rn-blue:#3b82f6;--rn-wait:#e5a000;position:relative;display:flex;align-items:center;gap:12px;width:100%;max-width:722px;height:50px;padding:0 9px 0 14px;background:var(--rn-bg);color:var(--rn-fg);border:1px solid var(--rn-line);border-radius:10px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;box-sizing:border-box}
+:where(.dark,[data-theme=dark]) .rn{--rn-bg:#1b1b1e;--rn-fg:#ececef;--rn-muted:#a1a1aa;--rn-faint:#9a9aa2;--rn-line:#2c2c31;--rn-soft:#24242a;--rn-wait:#facc15;color-scheme:dark}
 .rn.rn-bare{display:inline-flex;width:auto;height:auto;padding:0;border:0;box-shadow:none;background:none}
 .rn *{box-sizing:border-box}.rn button{font:inherit;color:inherit;cursor:pointer}
 .rn-brand{display:flex;align-items:center;gap:6px;min-width:0}

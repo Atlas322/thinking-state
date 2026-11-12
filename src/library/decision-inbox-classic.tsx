@@ -98,13 +98,13 @@ export function DecisionInbox({
             <>
               <AlertIcon />
               <span>
-                {count} {open === 1 ? "needs" : "need"} your input
+                {count} шийдвэр таныг хүлээж байна
               </span>
             </>
           ) : (
             <>
               <DoneIcon />
-              <span>All caught up</span>
+              <span>Бүгд шийдэгдсэн</span>
             </>
           )}
         </header>
@@ -185,7 +185,7 @@ export function DecisionInbox({
             );
           })}
           <p className="ui-di__empty">
-            Nothing waiting on you – new decisions show up here.
+            Таныг хүлээж буй зүйл алга. Шинэ шийдвэр энд гарна.
           </p>
         </div>
       </section>
@@ -234,8 +234,8 @@ const css = /* css */ `
   --ui-di-line: #f0f0f0;
   --ui-di-ink: #171717;
   --ui-di-text: #404040;
-  --ui-di-muted: #8f8f8f;
-  --ui-di-faint: #b5b5b5;
+  --ui-di-muted: #65656d;
+  --ui-di-faint: #65656d;
   --ui-di-alert: #e8590c;
   --ui-di-ok: #1f8a4c;
   --ui-di-focus: rgba(0, 96, 226, 0.7);
@@ -410,8 +410,8 @@ const css = /* css */ `
   --ui-di-line: rgba(255, 255, 255, 0.08);
   --ui-di-ink: #ededed;
   --ui-di-text: #c4c4c4;
-  --ui-di-muted: #8f8f8f;
-  --ui-di-faint: #6b6b70;
+  --ui-di-muted: #9a9aa2;
+  --ui-di-faint: #9a9aa2;
   --ui-di-alert: #fb8a3c;
   --ui-di-ok: #3fbf74;
 }
