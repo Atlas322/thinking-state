@@ -523,6 +523,7 @@ a.pd-pr-btn:hover{background:var(--pd-soft)}
 @container pd (max-width:520px){.pd-review{display:none}.pd-pr-btn{align-items:flex-start}.pd-pr-side{flex-direction:column;align-items:flex-end;gap:4px}}
 @container pd (max-width:400px){.pd-pr-line code{display:none}.pd-block-bar{padding-left:0}.pd-updated{width:100%;margin-left:16px}.pd-slabel{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.pd *,.pd{animation:none!important;transition:none!important}}
+.pd-pr{animation:pdprrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.pd-pr:nth-child(1){animation-delay:0ms}.pd-pr:nth-child(2){animation-delay:110ms}.pd-pr:nth-child(3){animation-delay:220ms}.pd-pr:nth-child(4){animation-delay:330ms}.pd-pr:nth-child(5){animation-delay:440ms}.pd-pr:nth-child(6){animation-delay:550ms}.pd-pr:nth-child(7){animation-delay:660ms}.pd-pr:nth-child(8){animation-delay:770ms}.pd-pr:nth-child(9){animation-delay:880ms}.pd-pr:nth-child(10){animation-delay:990ms}.pd-pr:nth-child(11){animation-delay:1100ms}.pd-pr:nth-child(12){animation-delay:1210ms}@keyframes pdprrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.pd-pr{animation:none}}
 `;
 
 export default PrDeployStatus;

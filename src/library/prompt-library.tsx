@@ -351,6 +351,7 @@ const css = `
 @container pl (max-width:360px){.pl-copy-l{display:none}}
 @media(hover:none){.pl-item{height:40px}.pl-btn{height:34px}}
 @media(prefers-reduced-motion:reduce){.pl *{animation:none!important;transition:none!important}}
+.pl-item{animation:plitemrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.pl-item:nth-child(1){animation-delay:0ms}.pl-item:nth-child(2){animation-delay:90ms}.pl-item:nth-child(3){animation-delay:180ms}.pl-item:nth-child(4){animation-delay:270ms}.pl-item:nth-child(5){animation-delay:360ms}.pl-item:nth-child(6){animation-delay:450ms}.pl-item:nth-child(7){animation-delay:540ms}.pl-item:nth-child(8){animation-delay:630ms}.pl-item:nth-child(9){animation-delay:720ms}.pl-item:nth-child(10){animation-delay:810ms}.pl-item:nth-child(11){animation-delay:900ms}.pl-item:nth-child(12){animation-delay:990ms}@keyframes plitemrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.pl-item{animation:none}}
 `;
 
 export default PromptLibrary;

@@ -582,6 +582,7 @@ const css = `
 @media (prefers-reduced-motion:reduce){.dt-root *{animation:none!important;transition:none!important}}
 @media (pointer:coarse){.dt-check input{width:18px;height:18px}.dt-check{min-width:36px;min-height:36px}}
 @media (max-width:560px){.dt-head{padding:12px 14px}.dt-foot span{display:none}}
+.dt-row{animation:dtrowrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.dt-row:nth-child(1){animation-delay:0ms}.dt-row:nth-child(2){animation-delay:70ms}.dt-row:nth-child(3){animation-delay:140ms}.dt-row:nth-child(4){animation-delay:210ms}.dt-row:nth-child(5){animation-delay:280ms}.dt-row:nth-child(6){animation-delay:350ms}.dt-row:nth-child(7){animation-delay:420ms}.dt-row:nth-child(8){animation-delay:490ms}.dt-row:nth-child(9){animation-delay:560ms}.dt-row:nth-child(10){animation-delay:630ms}.dt-row:nth-child(11){animation-delay:700ms}.dt-row:nth-child(12){animation-delay:770ms}@keyframes dtrowrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.dt-row{animation:none}}
 `;
 
 export default DataTable;

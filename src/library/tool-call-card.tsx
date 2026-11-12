@@ -1093,6 +1093,7 @@ const css = /* css */ `
   --ui-tclc-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --ui-tclc-focus: rgba(77, 141, 255, 0.8);
 }
+.ui-tclc{animation:uitclcrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ui-tclc:nth-child(1){animation-delay:0ms}.ui-tclc:nth-child(2){animation-delay:140ms}.ui-tclc:nth-child(3){animation-delay:280ms}.ui-tclc:nth-child(4){animation-delay:420ms}.ui-tclc:nth-child(5){animation-delay:560ms}.ui-tclc:nth-child(6){animation-delay:700ms}.ui-tclc:nth-child(7){animation-delay:840ms}.ui-tclc:nth-child(8){animation-delay:980ms}.ui-tclc:nth-child(9){animation-delay:1120ms}.ui-tclc:nth-child(10){animation-delay:1260ms}.ui-tclc:nth-child(11){animation-delay:1400ms}.ui-tclc:nth-child(12){animation-delay:1540ms}@keyframes uitclcrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ui-tclc{animation:none}}
 `;
 
 /** Working example; use the named ToolCallCard export in your application. */

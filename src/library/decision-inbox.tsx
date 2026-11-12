@@ -476,6 +476,7 @@ const css = /* css */ `
   --ui-dic-shadow-hover: 0 0 0 0.5px rgba(255, 255, 255, 0.16), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --ui-dic-focus: rgba(77, 141, 255, 0.8);
 }
+.ui-dic__row{animation:uidicrowrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ui-dic__row:nth-child(1){animation-delay:0ms}.ui-dic__row:nth-child(2){animation-delay:130ms}.ui-dic__row:nth-child(3){animation-delay:260ms}.ui-dic__row:nth-child(4){animation-delay:390ms}.ui-dic__row:nth-child(5){animation-delay:520ms}.ui-dic__row:nth-child(6){animation-delay:650ms}.ui-dic__row:nth-child(7){animation-delay:780ms}.ui-dic__row:nth-child(8){animation-delay:910ms}.ui-dic__row:nth-child(9){animation-delay:1040ms}.ui-dic__row:nth-child(10){animation-delay:1170ms}.ui-dic__row:nth-child(11){animation-delay:1300ms}.ui-dic__row:nth-child(12){animation-delay:1430ms}@keyframes uidicrowrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ui-dic__row{animation:none}}
 `;
 
 /** Working example; use the named DecisionInbox export in your application. */

@@ -313,6 +313,7 @@ const css = `
 @keyframes ist-in{from{opacity:0;transform:translateY(-3px)}}
 @media(max-width:480px){.ist-head{padding:14px}.ist-sec{padding:14px}.ist-logo{width:40px;height:40px}.ist-meta{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.ist *{animation:none!important;transition:none!important}}
+.ist-sec{animation:istsecrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ist-sec:nth-child(1){animation-delay:0ms}.ist-sec:nth-child(2){animation-delay:130ms}.ist-sec:nth-child(3){animation-delay:260ms}.ist-sec:nth-child(4){animation-delay:390ms}.ist-sec:nth-child(5){animation-delay:520ms}.ist-sec:nth-child(6){animation-delay:650ms}.ist-sec:nth-child(7){animation-delay:780ms}.ist-sec:nth-child(8){animation-delay:910ms}.ist-sec:nth-child(9){animation-delay:1040ms}.ist-sec:nth-child(10){animation-delay:1170ms}.ist-sec:nth-child(11){animation-delay:1300ms}.ist-sec:nth-child(12){animation-delay:1430ms}@keyframes istsecrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ist-sec{animation:none}}
 `;
 
 export default IntegrationSettings;
