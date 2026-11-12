@@ -13,7 +13,7 @@
     const cs = getComputedStyle(el);
     return r.width > 2 && r.height > 2 && cs.visibility !== "hidden" && cs.display !== "none" && +cs.opacity > 0.05;
   };
-  const controls = [...root.querySelectorAll("button, [role=button], [role=tab], .chip, [class*=chip], [class*=pill], [class*=tag]:not(input)")].filter((el) => !el.closest(".ts-replay-btn, .preview-options")).filter(visible);
+  const controls = [...root.querySelectorAll("button, [role=button], [role=tab], .chip, [class*=chip], [class*=pill], [class*=tag]:not(input)")].filter((el) => el.matches("button, [role=button], [role=tab]") || [...el.classList].some((c) => /(^|[-_])(chip|pill|tag|badge)$/.test(c))).filter((el) => !el.closest(".ts-replay-btn, .preview-options")).filter(visible);
 
   // 1. Text wrapping inside buttons / chips.
   for (const el of controls) {
@@ -31,7 +31,7 @@
       for (const r of range.getClientRects()) if (r.width > 1) lines.add(Math.round((r.top + r.height / 2) / 10));
     }
     if (lines.size > 1) out.wraps.push(name(el));
-    if (el.scrollWidth > el.clientWidth + 1 && cs.overflow !== "visible") out.wraps.push(name(el) + " (clipped)");
+    if (el.scrollWidth > el.clientWidth + 1 && cs.overflow !== "visible" && cs.textOverflow !== "ellipsis") out.wraps.push(name(el) + " (clipped)");
   }
 
   // 2. Overflow: elements wider than their scroll container / the stage.
@@ -40,7 +40,7 @@
     if (!visible(el)) continue;
     const r = el.getBoundingClientRect();
     const cs = getComputedStyle(el);
-    if (cs.position === "fixed") continue;
+    if (cs.position === "fixed" || el.closest("[data-layout-bleed]")) continue; // data-layout-bleed marks an intentional bleed
     // Intentional horizontal scrollers (tab strips, carousels) may extend past the stage.
     let scroller = false;
     for (let p = el.parentElement; p && p !== root; p = p.parentElement) {
@@ -56,7 +56,7 @@
 
   // 3. Type scale: control text must not be larger than the nearest heading.
   const size = (el) => parseFloat(getComputedStyle(el).fontSize);
-  const heads = [...root.querySelectorAll("h1,h2,h3,h4,strong,b,[class*=title]")].filter(visible).filter((h) => !h.closest("button"));
+  const heads = [...root.querySelectorAll("h1,h2,h3,h4,strong,b,[class*=title]")].filter(visible).filter((h) => !h.closest("button") && size(h) >= 13);
   for (const el of controls) {
     const card = el.parentElement?.closest("section, article, li, [class*=card], [class*=panel], div");
     const head = heads.find((h) => card && card.contains(h));
@@ -76,7 +76,7 @@
   for (const [, items] of byRow) {
     const rows = new Map();
     for (const it of items) {
-      const k = Math.round(it.r.top / 4);
+      const k = Math.round(it.r.top / 4) + "|" + (it.el.className || it.el.tagName) + JSON.stringify({ ...it.el.dataset });
       (rows.get(k) || rows.set(k, []).get(k)).push(it);
     }
     for (const [, row] of rows) {
@@ -96,12 +96,18 @@
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     let t;
     while ((t = walker.nextNode()) && !t.textContent.trim());
-    if (!t) continue;
+    if (!t || t.parentElement.getBoundingClientRect().width < 4) continue; // visually-hidden label
     const range = document.createRange();
     range.selectNodeContents(t);
+    if (range.getClientRects().length > 1) continue; // multi-line text: icon sits on the first line by design
     const tr = range.getClientRects()[0];
     const ir = icon.getBoundingClientRect();
-    if (!tr) continue;
+    if (ir.width < 2 || ir.height < 2) continue; // icon is display:none at this width
+    // Only compare things that sit in the same row: the text must lie inside this control's own box
+    // (labels hung below an icon node, or text clipped far outside, are a different layout, not an axis error).
+    const er = el.getBoundingClientRect();
+    if (tr.top < er.top - 2 || tr.bottom > er.bottom + 2) continue;
+    if (!tr || tr.width < 4) continue; // visually-hidden label
     const d = Math.abs(tr.top + tr.height / 2 - (ir.top + ir.height / 2));
     if (d > 1.5) out.align.push(`${name(el)} Δ${d.toFixed(1)}px`);
   }

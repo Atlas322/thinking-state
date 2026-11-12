@@ -423,7 +423,7 @@ const css = `
 .al-lane{position:absolute;left:0;right:0;margin:0;padding:0;list-style:none;border-bottom:1px solid var(--al-line)}
 .al-lane:first-of-type{border-bottom-color:transparent}
 .al-li{position:absolute;top:10px;height:30px;transition:left 1s linear,width 1s linear}
-.al-block{display:flex;align-items:center;gap:6px;width:100%;height:100%;padding:0 8px;border:0;border-radius:6px;background:var(--al-done);color:var(--al-muted);font-size:13px;text-align:left;overflow:hidden;white-space:nowrap;transition:filter .15s}
+.al-block{display:flex;align-items:center;gap:6px;width:100%;height:100%;padding:0 8px;border:0;border-radius:6px;background:var(--al-done);color:var(--al-muted);font-size:13px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:filter .15s}
 .al-block:hover{filter:brightness(.97)}
 .al-block.running{background:linear-gradient(90deg,color-mix(in srgb,var(--al-blue-bg) 60%,var(--al-bg)),var(--al-blue-bg));color:var(--al-blue-fg);box-shadow:inset -2px 0 0 var(--al-blue);background-size:200% 100%;animation:al-shimmer 2.4s linear infinite}
 .al-block.waiting{background:var(--al-warn-bg);color:var(--al-warn)}

@@ -87,8 +87,8 @@ const evaluate = async (expression) => {
 
 const AUDIT = fs.readFileSync(new URL("./audit-layout.js", import.meta.url), "utf8");
 const catalog = JSON.parse(fs.readFileSync(new URL("../src/catalog.json", import.meta.url), "utf8"));
-// scenario-chat, agent-consent, company-* and site-* are reworked in the ts-v2 line; gate them once it lands.
-const skip = new Set(arg("skip", "scenario-chat,agent-consent").split(","));
+// Nothing is skipped by default any more (ts-v2 work landed); --skip a,b opts a slug out.
+const skip = new Set(arg("skip", "").split(","));
 const slugs = catalog.map((e) => e.slug).filter((s) => (!only || only.split(",").includes(s)) && !skip.has(s));
 const baselinePath = new URL("./layout-baseline.json", import.meta.url);
 const baseline = fs.existsSync(baselinePath) ? JSON.parse(fs.readFileSync(baselinePath, "utf8")) : {};

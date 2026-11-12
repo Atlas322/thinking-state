@@ -336,7 +336,7 @@ const css = `
 .mp-tray b{color:var(--mp-fg);font-weight:500}
 .mp :focus-visible{outline:2px solid var(--mp-blue);outline-offset:2px}
 @keyframes mp-fade{from{opacity:0}}
-@media(max-width:480px){.mp-menu{width:calc(100vw - 32px);max-width:380px}.mp-opt small{display:none}}
+@media(max-width:480px){.mp-menu{width:calc(100vw - 88px);max-width:380px}.mp-opt small{display:none}}
 @media(prefers-reduced-motion:reduce){.mp *{animation:none!important;transition:none!important}}
 `;
 

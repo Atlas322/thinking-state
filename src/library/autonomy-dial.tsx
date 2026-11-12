@@ -251,6 +251,7 @@ const css = `
 @keyframes ad-in{from{opacity:0;transform:translateY(4px)}}
 @media(max-width:400px){.ad-levels{gap:6px;padding:14px}.ad-levels button{font-size:12px}.ad-risk{display:none}}
 @media(prefers-reduced-motion:reduce){.ad *{animation:none!important;transition:none!important}}
+.ad-levels{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding-left:12px;padding-right:12px}.ad-levels button{min-width:0;padding:0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}.ad-levels button[aria-checked=true]{font-size:12.5px}
 `;
 
 export default AutonomyDial;

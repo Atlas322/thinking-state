@@ -347,6 +347,7 @@ const css = `
 @keyframes dlb-rot{to{transform:rotate(360deg)}}
 @media(max-width:620px){.dlb-body{grid-template-columns:minmax(0,1fr)}.dlb-pool{min-height:0}.dlb-hint{display:none}}
 @media(prefers-reduced-motion:reduce){.dlb *{animation:none!important;transition:none!important}}
+.dlb-chip{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 `;
 
 export default DelegateBoard;
