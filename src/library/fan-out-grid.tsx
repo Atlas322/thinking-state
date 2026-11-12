@@ -32,9 +32,10 @@ export type FanoutGridProps = {
   className?: string;
 };
 
-const dollars = (n: number) => `$${n.toFixed(2)}`;
+/** Usage credits (кр), not money. */
+const dollars = (n: number) => `${n.toFixed(2)} кр`;
 
-const companies = ["Acme", "Globex", "Initech", "Umbrella", "Hooli", "Vandelay", "Stark", "Wayne", "Wonka", "Soylent", "Cyberdyne", "Tyrell"];
+const companies = ["Алтай", "Хангай", "Говь", "Тэрэлж", "Хөвсгөл", "Орхон", "Сэлэнгэ", "Туул", "Хэрлэн", "Онон", "Завхан", "Буянт"];
 
 /** Demo job: 240 leads, 14 workers, each task ~1.6s. Deterministic. */
 function demoTasks(now: number): FanoutTask[] {
@@ -56,15 +57,15 @@ function demoTasks(now: number): FanoutTask[] {
     else if (now >= start) status = retry && now > start + dur ? "retrying" : "running";
     out.push({
       id: `lead-${i + 1}`,
-      label: `${companies[i % companies.length]} lead #${i + 1}`,
+      label: `${companies[i % companies.length]} · харилцагч #${i + 1}`,
       status,
       worker: `worker-${lane + 1}`,
       start,
       end: status === "done" || status === "failed" ? end : undefined,
       cost: status === "done" ? 0.012 + r * 0.004 : status === "failed" ? 0.004 : undefined,
       attempts: retry && now > start + dur ? 2 : 1,
-      result: status === "done" ? `${3 + Math.round(r * 5)} fields filled` : undefined,
-      error: status === "failed" ? "Domain not found" : undefined,
+      result: status === "done" ? `${3 + Math.round(r * 5)} талбар бөглөсөн` : undefined,
+      error: status === "failed" ? "Домэйн олдсонгүй" : undefined,
     });
   }
   return out;
@@ -77,13 +78,13 @@ const fmtLeft = (ms: number) => {
 
 export function FanoutGrid({
   tasks: tasksIn,
-  job = "Enrich 240 leads",
+  job = "240 харилцагчийн мэдээлэл баяжуулах",
   workers,
   now: nowIn,
   onRetry,
   onSelect,
   formatCost = dollars,
-  title = "Fan-out",
+  title = "Зэрэгцээ ажил",
   icon,
   className = "",
 }: FanoutGridProps) {

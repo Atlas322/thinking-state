@@ -486,17 +486,17 @@ export default function Demo() {
         decisions={[
           {
             id: "rollout",
-            title: "Roll out the new onboarding to everyone?",
-            detail: "Test won with +8% activation · 2 weeks of data",
-            primary: "Roll out",
-            secondary: "Keep testing",
+            title: "Шинэ танилцуулгыг бүх хэрэглэгчид нээх үү?",
+            detail: "Туршилт +8% идэвхжүүлэлттэй ялсан · 2 долоо хоногийн өгөгдөл",
+            primary: "Нээх",
+            secondary: "Туршилт үргэлжлүүлэх",
           },
           {
             id: "renewal",
-            title: "Renew Figma for the design team?",
-            detail: "12 seats · $1,800 per year · renews in 5 days",
-            primary: "Renew",
-            secondary: "Change seats",
+            title: "Дизайны багийн дизайны файлын эрхийг сунгах уу?",
+            detail: "12 суудал · 9 нь идэвхтэй · 5 хоногийн дараа сунгагдана",
+            primary: "Сунгах",
+            secondary: "Суудал өөрчлөх",
           },
         ]}
       />

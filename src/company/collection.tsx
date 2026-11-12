@@ -504,7 +504,9 @@ export function CollectionView({ collection, today = new Date(), resolve, defaul
             <tr key={i.id} style={{ "--i": k } as React.CSSProperties}>
               <th scope="row">{title(i)}</th>
               {shown.map((f) => (
-                <td key={f.name}>{cell(i, f)}</td>
+                <td key={f.name} data-label={f.label}>
+                  {cell(i, f)}
+                </td>
               ))}
             </tr>
           ))}
@@ -1094,6 +1096,7 @@ export const collectionCss = `
 .cl-tabs button:hover{color:var(--cv-fg)}
 .cl-tabs button[aria-selected=true]{background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff);border-radius:6px}
 .cl-tabs button[aria-selected=true] :is(span,.cv-icon){color:currentColor}
+.cl-tabs button[aria-selected=true] .cl-count{background:var(--ts-on-selected-soft,rgb(255 255 255 / .2));color:var(--ts-on-selected,#fff)}
 .cl-tabs button[aria-selected=true]::after{content:none}
 .cl-count{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--cv-soft);color:var(--cv-muted);font-size:11.5px;line-height:18px;text-align:center;font-variant-numeric:tabular-nums}
 .cl-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
@@ -1197,6 +1200,20 @@ button.cl-title-t:hover{text-decoration:underline;text-decoration-color:var(--cv
 .cl-table th[scope=row]{position:sticky;left:0;z-index:1;max-width:280px;background:var(--cv-bg);font-weight:400;border-right:1px solid var(--cv-line)}
 .cl-table tbody tr{animation:cv-in .28s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 25ms)}
 .cl-table tbody tr:hover>*{background:color-mix(in srgb,var(--cv-soft) 60%,var(--cv-bg))}
+/* phones: each row becomes a card — title on top, the fields as label · value lines; no sideways scroll */
+@media (max-width:600px){
+.cl-table-wrap{overflow:visible;border:0;background:none}
+.cl-table,.cl-table tbody,.cl-table tr,.cl-table th[scope=row],.cl-table td{display:block}
+.cl-table thead{display:none}
+.cl-table tbody{display:grid;gap:8px}
+.cl-table tbody tr{border:1px solid var(--cv-line);border-radius:12px;background:var(--cv-bg);overflow:hidden}
+.cl-table th[scope=row]{position:static;max-width:none;border-right:0;padding:10px 12px;font-weight:500;white-space:normal}
+.cl-table td{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 12px;white-space:normal;border-bottom:0;border-top:1px solid var(--cv-line)}
+.cl-table td::before{content:attr(data-label);flex:none;font-size:12px;color:var(--cv-muted)}
+.cl-table td:empty{display:none}
+.cl-table tfoot,.cl-table tfoot tr,.cl-table tfoot td{display:block}
+.cl-table tfoot td{border:0;padding:4px 2px}
+}
 .cl-list,.cl-cards{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
 .cl-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:8px 10px;border-radius:9px;animation:cv-in .28s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 25ms)}
 .cl-row:hover{background:var(--cv-soft)}

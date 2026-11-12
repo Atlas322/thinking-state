@@ -157,9 +157,9 @@ export const inai: Company = {
   source: "vault",
   methodology: "bmc",
   model: {
-    partners: ["Курсын түнш (сургалтын байгууллага)", "AI загварын нийлүүлэгч (6 agent-ийн тархи)", "Дизайн, монтажийн хэрэгслийн bridge", "Drive, Notion (sync, багийн толь)", "Клиент брэндүүд"],
+    partners: ["Курсын түнш (сургалтын байгууллага)", "AI загварын нийлүүлэгч (6 agent-ийн тархи)", "Дизайн, монтажийн хэрэгслийн bridge", "Баримтын сан (sync, багийн толь)", "Клиент брэндүүд"],
     activities: ["Судалгаа", "Брэндинг", "Агуулга", "Дизайн", "Хөгжүүлэлт", "Сургалт бэлтгэх, заах (санал)"],
-    resources: ["Vault (2 000+ файл, PARA)", "6 agent", "Figma · Framer bridge", "Бичлэгийн студи", "REDACTED repo"],
+    resources: ["Vault (2 000+ файл, PARA)", "6 agent", "Дизайны хэрэгслийн bridge", "Бичлэгийн студи", "REDACTED repo"],
     value: "«Бизнесээ системд шилжүүл.» Нэг ажил гурван газар ажиллана: клиентэд үр дүн, бидэнд чадамж, зах зээлд нотолгоо.",
     relationships: ["Cohort (Season 1 → 2)", "1:1 coaching", "Community (санал)", "Найз, танилын сүлжээ"],
     channels: ["Хувийн сүлжээ, санал", "Вэбсайтын төслүүд (15 кейс)", "Пост, reels", "Курс", "Бичлэг"],
@@ -186,7 +186,7 @@ export const inai: Company = {
         { period: "2019 – 2022", title: "Senior Project Manager", org: "Хөх тэнгэр трейд" },
         { period: "2016 – 2018", title: "Marketing Manager", org: "Мөнх групп" },
       ],
-      links: [{ label: "GitHub", url: "https://example.com/ganaa" }],
+      links: [{ label: "Код", url: "https://example.com/ganaa" }],
     },
     {
       id: "saraa", name: "Saraa.D", role: "Chief Product Officer", unitId: "lead",
@@ -211,27 +211,27 @@ export const inai: Company = {
         { period: "2022", title: "Эмзэг байдлын шинжээч", org: "Аюулгүй байдлын фирм" },
       ],
       links: [
-        { label: "GitHub", url: "https://example.com/nomin" },
+        { label: "Код", url: "https://example.com/nomin" },
         { label: "example.com", url: "https://example.com" },
       ],
     },
     {
       id: "bilguun", name: "Bilguun.Ts", role: "Chief Marketing Officer", unitId: "gtm",
-      about: "«Соёл». AI-First Marketing Strategist — маркетингийг системтэй болгоно; AI кодын туслах, Obsidian, Notion стекийг өөрөө ашигладаг.",
+      about: "«Соёл». AI-First Marketing Strategist — маркетингийг системтэй болгоно; AI кодын туслах, Obsidian, баримтын сан стекийг өөрөө ашигладаг.",
       cv: [
         { period: "2026 – одоо", title: "CMO", org: "INAI" },
         { period: "2025 – 2026", title: "Marketing Specialist", org: "Мөнх групп" },
         { period: "2023 – 2025", title: "CMO", org: "Мөнх групп" },
       ],
-      links: [{ label: "GitHub", url: "https://example.com/bilguun" }],
+      links: [{ label: "Код", url: "https://example.com/bilguun" }],
     },
   ],
   agents: [
     { id: "project", name: "Project", role: "Төслийн ганц цонх", unitId: "lead", ownerId: "saraa", skills: ["sync", "brief", "Session Board"], memory: ["TENET дахин төлөвлөлт", "Сешн удирдах дүрэм"] },
     { id: "gtd", name: "GTD", role: "Inbox, task, өдөр", unitId: "lead", ownerId: "saraa", skills: ["inbox", "task", "weekly review"], memory: ["Task hygiene дүрэм"] },
     { id: "architect", name: "Architect", role: "Код, skill, хэрэгсэл", unitId: "studio", ownerId: "temuulen", skills: ["skill бичих", "debug", "Thinking State"], memory: ["Chat widgets", "Company гэрээ"] },
-    { id: "creative", name: "Creative", role: "Брэнд, дизайн, пост", unitId: "studio", ownerId: "bilguun", skills: ["fm:post", "fm:figma", "moodboard"], memory: ["inai.sh v4 дизайн"] },
-    { id: "wiki", name: "Wiki", role: "Лавлагаа, атом", unitId: "knowledge", ownerId: "saraa", skills: ["fm:save", "fact-check", "глоссари"], memory: ["Just.Notion загвар", "Second Brain гурван түвшин"] },
+    { id: "creative", name: "Creative", role: "Брэнд, дизайн, пост", unitId: "studio", ownerId: "bilguun", skills: ["fm:post", "fm:design", "moodboard"], memory: ["inai.sh v4 дизайн"] },
+    { id: "wiki", name: "Wiki", role: "Лавлагаа, атом", unitId: "knowledge", ownerId: "saraa", skills: ["fm:save", "fact-check", "глоссари"], memory: ["баримтын сангийн загвар", "Second Brain гурван түвшин"] },
     { id: "context", name: "Context Engineer", role: "Eval, context аудит", unitId: "knowledge", skills: ["eval", "trace review"], memory: [] },
   ],
   workflows: [
@@ -248,7 +248,7 @@ export const inai: Company = {
       id: "w-post", name: "Пост бэлтгэх", unitId: "studio", trigger: "Brief ирэхэд",
       steps: [
         { id: "s1", label: "Дэгээ ба бүтэц", actorId: "creative", output: "10 слайдын бүтэц" },
-        { id: "s2", label: "Figma-д зурах", actorId: "creative", output: "Слайдын зураг" },
+        { id: "s2", label: "Дизайны файлд зурах", actorId: "creative", output: "Слайдын зураг" },
         { id: "s3", label: "Contrast шалгах", actorId: "creative", output: "Шалгалтын тайлан" },
         { id: "s4", label: "Нийтлэх", actorId: "bilguun", output: "Нийтэлсэн пост" },
       ],
@@ -270,7 +270,7 @@ export const inai: Company = {
         { id: "t1", title: "TENET дахин төлөвлөлт", status: "completed", ownerId: "project", due: "2026-11-12" },
         { id: "t2", title: "Нэг schema + INAI экспорт", status: "in-progress", ownerId: "architect", due: "2026-11-16", priority: "high" },
         { id: "t3", title: "Hero «тархи ↔ апп» зураглал", status: "planning", ownerId: "creative", due: "2026-11-24", priority: "medium" },
-        { id: "t4", title: "GitHub төлбөр засах", status: "waiting", ownerId: "saraa", due: "2026-11-11", priority: "high", raci: { responsible: ["ganaa"], accountable: "ganaa", consulted: ["temuulen"], informed: ["saraa"] } },
+        { id: "t4", title: "Хувилбарын хяналтын төлбөр засах", status: "waiting", ownerId: "saraa", due: "2026-11-11", priority: "high", raci: { responsible: ["ganaa"], accountable: "ganaa", consulted: ["temuulen"], informed: ["saraa"] } },
         { id: "t5", title: "Засвар эрх ба deploy", status: "waiting", ownerId: "temuulen", due: "2026-11-14", priority: "high", dependsOn: ["t4"], raci: { responsible: ["temuulen"], accountable: "ganaa", consulted: [], informed: ["saraa"] } },
       ],
       decisions: [
@@ -284,7 +284,7 @@ export const inai: Company = {
       tasks: [
         { id: "t1", title: "Chat widgets", status: "completed", ownerId: "architect" },
         { id: "t2", title: "Компанийн renderer", status: "in-progress", ownerId: "architect", due: "2026-11-14", priority: "high" },
-        { id: "t3", title: "Figma instance", status: "inbox", ownerId: "creative", dependsOn: ["inai-website-t3"] },
+        { id: "t3", title: "Дизайны instance", status: "inbox", ownerId: "creative", dependsOn: ["inai-website-t3"] },
       ],
       decisions: [{ id: "d1", title: "Thinking State бол бүтээгдэхүүн ба engine", date: "2026-11-12" }],
     },
@@ -440,7 +440,7 @@ function inaiCollections(c: Company): Collection[] {
     fields: ["date", "confidence", "tags", "up"],
     items: [
       { id: "a1", title: "Second Brain гурван түвшин — хувь, баг, компани", props: { date: "2026-11-12", confidence: "stated", tags: ["second-brain", "inai"], up: "[[02-Projects/Website/Inai Website]]" } },
-      { id: "a2", title: "Just.Notion Projects DB — PARA ба GTD төлөвтэй", props: { date: "2026-11-12", confidence: "observed", tags: ["notion"], up: "[[03-Areas/Products/Just.Notion]]" } },
+      { id: "a2", title: "Баримтын сангийн Projects DB — PARA ба GTD төлөвтэй", props: { date: "2026-11-12", confidence: "observed", tags: ["docs"], up: "[[03-Areas/Products/Docs]]" } },
       { id: "a3", title: "Төслийн шат = Key Activity гүүр", props: { date: "2026-10-07", confidence: "stated", tags: ["bmc"], up: "[[03-Areas/Business/INAI/Business Model Canvas]]" } },
       { id: "a4", title: "Task hygiene дүрэм", props: { date: "2026-10-26", confidence: "stated", tags: ["gtd"], up: "[[01-GTD/GTD]]" } },
       { id: "a5", title: "Founder Matrix Second Brain ганц repo", props: { date: "2026-10-05", confidence: "stated", tags: ["fm"], up: "[[03-Areas/AI Team/AI Team]]" } },
@@ -471,7 +471,7 @@ function inaiCollections(c: Company): Collection[] {
     fields: ["owner", "tags", "status"],
     items: [
       { id: "s1", title: "fm:post — пост, carousel", props: { owner: "Creative", tags: ["content"], status: "active" } },
-      { id: "s2", title: "fm:figma — Figma bridge", props: { owner: "Creative", tags: ["design"], status: "active" } },
+      { id: "s2", title: "fm:design — дизайны bridge", props: { owner: "Creative", tags: ["design"], status: "active" } },
       { id: "s3", title: "fm:save — линкийг атом болгох", props: { owner: "Wiki", tags: ["knowledge"], status: "active" } },
       { id: "s4", title: "fm:update — өдрийн дүгнэлт", props: { owner: "GTD", tags: ["gtd"], status: "active" } },
       { id: "s5", title: "chat:html — чатын widget", props: { owner: "Architect", tags: ["thinking-state"], status: "planning" } },

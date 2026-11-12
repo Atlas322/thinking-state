@@ -41,27 +41,28 @@ export type ToolAccessMapProps = {
 
 const ico = (children: React.ReactNode) => <svg viewBox="0 0 16 16" aria-hidden="true">{children}</svg>;
 
+// Neutral role marks for the demo agents (no vendor logos).
+const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 1.2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
 const logos = {
-  claude: ico(
-    <>
-      {[0, 30, 60, 90, 120, 150].map((r) => (
-        <rect key={r} x="7.35" y="2" width="1.3" height="12" rx=".65" fill="#d97757" transform={`rotate(${r} 8 8)`} />
-      ))}
-    </>,
+  research: ico(
+    <g {...stroke}>
+      <circle cx="7" cy="7" r="4" />
+      <path d="m10 10 3.5 3.5" />
+    </g>,
   ),
-  openai: ico(
-    <>
-      {[0, 60, 120, 180, 240, 300].map((r) => (
-        <path key={r} d="M8 2.6a2.4 2.4 0 0 1 2.4 2.4v3.1" fill="none" stroke="currentColor" strokeWidth="1.1" transform={`rotate(${r} 8 8)`} />
-      ))}
-    </>,
-  ),
-  gemini: ico(<path d="M8 1.5c.4 3.3 3.2 6.1 6.5 6.5-3.3.4-6.1 3.2-6.5 6.5-.4-3.3-3.2-6.1-6.5-6.5 3.3-.4 6.1-3.2 6.5-6.5Z" fill="#3b82f6" />),
+  code: ico(<path {...stroke} d="m5.5 4.5-3.5 3.5 3.5 3.5M10.5 4.5l3.5 3.5-3.5 3.5" />),
+  write: ico(<path {...stroke} d="M3 13h3l7-7-3-3-7 7Z" />),
+  analyze: ico(<path {...stroke} d="M2.5 13.5h11M4.5 11V8M8 11V4.5M11.5 11V6.5" />),
 };
 
 const toolIcons: Record<string, React.ReactNode> = {
-  github: ico(
-    <path fill="currentColor" d="M8 1a7 7 0 0 0-2.2 13.6c.35.07.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.81-.78-1.03-.78-1.03-.64-.43.05-.42.05-.42.7.05 1.07.72 1.07.72.62 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.55-.18-3.19-.78-3.19-3.47 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72a6.6 6.6 0 0 1 3.5 0c1.33-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.7-1.64 3.29-3.2 3.46.25.22.47.64.47 1.29v1.92c0 .19.13.41.48.34A7 7 0 0 0 8 1Z" />,
+  vcs: ico(
+    <g {...stroke}>
+      <circle cx="5" cy="3.5" r="1.6" />
+      <circle cx="5" cy="12.5" r="1.6" />
+      <circle cx="11" cy="6" r="1.6" />
+      <path d="M5 5.1v5.8M11 7.6c0 2-2 2.4-6 3.3" />
+    </g>,
   ),
   terminal: ico(
     <>
@@ -69,20 +70,17 @@ const toolIcons: Record<string, React.ReactNode> = {
       <path d="m5 6.5 1.8 1.5L5 9.5M8.5 10h2.5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </>,
   ),
-  stripe: ico(
-    <>
-      <rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="#635bff" />
-      <path d="M10 5.7c-.6-.3-1.2-.4-1.8-.4-.8 0-1.2.3-1.2.8 0 1.2 3.2.6 3.2 2.8 0 1.1-.9 1.7-2.2 1.7-.8 0-1.5-.2-2.1-.5" fill="none" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" />
-    </>,
+  payments: ico(
+    <g {...stroke}>
+      <rect x="1.5" y="3.5" width="13" height="9" rx="1.8" />
+      <path d="M1.5 6.5h13M4 10h3" />
+    </g>,
   ),
-  figma: ico(
-    <>
-      <rect x="5" y="1.5" width="3" height="4.3" rx="1.5" fill="#f24e1e" />
-      <rect x="8" y="1.5" width="3" height="4.3" rx="1.5" fill="#ff7262" />
-      <rect x="5" y="5.8" width="3" height="4.3" rx="1.5" fill="#a259ff" />
-      <circle cx="9.5" cy="8" r="1.6" fill="#1abcfe" />
-      <rect x="5" y="10.1" width="3" height="4.3" rx="1.5" fill="#0acf83" />
-    </>,
+  design: ico(
+    <g {...stroke}>
+      <rect x="2" y="2" width="12" height="12" rx="2" />
+      <path d="M2 6h12M6 6v8" />
+    </g>,
   ),
   database: ico(
     <g fill="none" stroke="#14b8a6" strokeWidth="1.2">
@@ -96,38 +94,26 @@ const toolIcons: Record<string, React.ReactNode> = {
       <path d="m10 10 3.5 3.5" stroke="#3b82f6" strokeWidth="1.3" strokeLinecap="round" />
     </>,
   ),
-  notion: ico(
-    <>
-      <rect x="2.5" y="2" width="11" height="12" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M5.5 11V5l5 6V5" fill="none" stroke="currentColor" strokeWidth="1.2" />
-    </>,
-  ),
-  slack: ico(
-    <>
-      <rect x="1.5" y="6.5" width="5.5" height="2.2" rx="1.1" fill="#36c5f0" />
-      <rect x="6.5" y="1.5" width="2.2" height="5.5" rx="1.1" fill="#2eb67d" />
-      <rect x="9" y="7.3" width="5.5" height="2.2" rx="1.1" fill="#ecb22e" />
-      <rect x="7.3" y="9" width="2.2" height="5.5" rx="1.1" fill="#e01e5a" />
-    </>,
-  ),
-  hubspot: ico(
-    <>
-      <circle cx="9.5" cy="9.5" r="2.4" fill="none" stroke="#ff7a59" strokeWidth="1.4" />
-      <path d="M9.5 7V4M4 4.5l3.7 3.4M7.7 11.2 5 13.5" stroke="#ff7a59" strokeWidth="1.4" strokeLinecap="round" />
-    </>,
+  docs: ico(<path {...stroke} d="M4 1.8h5.5L12.5 5v9.2H4ZM6 8h4.5M6 10.5h4.5" />),
+  chat: ico(<path {...stroke} d="M2.5 3h11v8H6.5L3 13.5V11h-.5Z" />),
+  crm: ico(
+    <g {...stroke}>
+      <circle cx="6" cy="5.5" r="2.3" />
+      <path d="M2 13c.4-2.4 2-3.6 4-3.6s3.6 1.2 4 3.6M10.5 3.6a2.2 2.2 0 0 1 0 4M12 9.6c1.2.5 1.9 1.6 2.1 3.4" />
+    </g>,
   ),
 };
 
 const defaultTools: AccessTool[] = [
-  { id: "github", name: "GitHub" },
-  { id: "terminal", name: "Terminal" },
-  { id: "stripe", name: "Stripe" },
-  { id: "figma", name: "Figma" },
-  { id: "database", name: "Database" },
-  { id: "web", name: "Web search" },
-  { id: "notion", name: "Notion" },
-  { id: "slack", name: "Slack" },
-  { id: "hubspot", name: "HubSpot" },
+  { id: "vcs", name: "Хувилбарын хяналт" },
+  { id: "terminal", name: "Терминал" },
+  { id: "payments", name: "Төлбөрийн систем" },
+  { id: "design", name: "Дизайны файл" },
+  { id: "database", name: "Өгөгдлийн сан" },
+  { id: "web", name: "Вэб хайлт" },
+  { id: "docs", name: "Баримтын сан" },
+  { id: "chat", name: "Багийн чат" },
+  { id: "crm", name: "Харилцагчийн бүртгэл" },
 ];
 
 const c = (id: string, at: number, duration: number, input: unknown, output: unknown, status: ToolCall["status"] = "done"): ToolCall => ({
@@ -141,38 +127,38 @@ const c = (id: string, at: number, duration: number, input: unknown, output: unk
 
 const defaultAgents: MapAgent[] = [
   {
-    id: "researcher", name: "Researcher", model: "Opus 5.5", avatar: logos.claude, status: "done",
-    task: "Compare competitor pricing pages",
+    id: "researcher", name: "Судлаач агент", model: "Том загвар", avatar: logos.research, status: "done",
+    task: "Өрсөлдөгчдийн тарифын хуудсыг харьцуулах",
     tools: [
-      { id: "web", calls: [c("r1", 4000, 2100, { q: "saas pricing pages 2026" }, { results: 10 }), c("r2", 9000, 1800, { q: "per-seat vs usage pricing" }, { results: 8 })] },
-      { id: "notion", calls: [c("r3", 15000, 900, { page: "Pricing research" }, { saved: true })] },
+      { id: "web", calls: [c("r1", 4000, 2100, { q: "тарифын хуудас 2026" }, { results: 10 }), c("r2", 9000, 1800, { q: "хэрэглэгчээр ба хэрэглээгээр тооцох" }, { results: 8 })] },
+      { id: "docs", calls: [c("r3", 15000, 900, { page: "Тарифын судалгаа" }, { saved: true })] },
     ],
   },
   {
-    id: "coder", name: "Coder", model: "GPT-6 Sol", avatar: logos.openai, status: "running",
-    task: "Build the pricing page and wire up checkout",
+    id: "coder", name: "Кодын агент", model: "Дунд загвар", avatar: logos.code, status: "running",
+    task: "Тарифын хуудсыг бүтээж, төлбөрийн урсгалыг холбох",
     tools: [
-      { id: "github", calls: [c("g1", 12000, 5200, { action: "create_branch", name: "pricing-page" }, { ok: true }), c("g2", 31000, 4800, { action: "commit", files: 4 }, { sha: "8f2c1a" }), c("g3", 52000, 5200, { action: "open_pr", title: "Pricing page" }, { pr: 482 })] },
+      { id: "vcs", calls: [c("g1", 12000, 5200, { action: "create_branch", name: "pricing-page" }, { ok: true }), c("g2", 31000, 4800, { action: "commit", files: 4 }, { sha: "8f2c1a" }), c("g3", 52000, 5200, { action: "open_pr", title: "Тарифын хуудас" }, { pr: 482 })] },
       { id: "terminal", calls: [c("t1", 20000, 9000, { cmd: "pnpm test" }, { passed: 128 }), c("t2", 45000, 10000, { cmd: "pnpm build" }, { ok: true })] },
-      { id: "stripe", calls: [c("s1", 38000, 730, { action: "create_price", amount: 2900 }, { id: "price_1Q" })] },
-      { id: "figma", calls: [c("f1", 8000, 1200, { file: "Pricing v3", frame: "Desktop" }, { nodes: 42 })] },
+      { id: "payments", calls: [c("s1", 38000, 730, { action: "create_plan", seats: 5 }, { id: "plan_1Q" })] },
+      { id: "design", calls: [c("f1", 8000, 1200, { file: "Тариф v3", frame: "Desktop" }, { nodes: 42 })] },
       { id: "database", calls: [c("d1", 41000, 280, { sql: "select * from plans" }, { rows: 3 })] },
       { id: "web" },
     ],
   },
   {
-    id: "writer", name: "Writer", model: "Sonnet 5.5", avatar: logos.claude, status: "waiting",
-    task: "Write the pricing page copy",
+    id: "writer", name: "Бичигч агент", model: "Дунд загвар", avatar: logos.write, status: "waiting",
+    task: "Тарифын хуудасны текст бичих",
     tools: [
-      { id: "notion", calls: [c("w1", 22000, 1100, { page: "Pricing copy" }, { words: 640 })] },
-      { id: "figma", calls: [c("w2", 30000, 1500, { file: "Pricing v3" }, { nodes: 42 })] },
-      { id: "slack" },
+      { id: "docs", calls: [c("w1", 22000, 1100, { page: "Тарифын текст" }, { words: 640 })] },
+      { id: "design", calls: [c("w2", 30000, 1500, { file: "Тариф v3" }, { nodes: 42 })] },
+      { id: "chat" },
     ],
   },
   {
-    id: "analyst", name: "Analyst", model: "Gemini 3.8 Flash", avatar: logos.gemini, status: "queued",
-    task: "Forecast revenue for the new tiers",
-    tools: [{ id: "database" }, { id: "stripe" }, { id: "hubspot" }],
+    id: "analyst", name: "Шинжээч агент", model: "Хурдан загвар", avatar: logos.analyze, status: "queued",
+    task: "Шинэ багцуудын хэрэглэгчийн өсөлтийг таамаглах",
+    tools: [{ id: "database" }, { id: "payments" }, { id: "crm" }],
   },
 ];
 
@@ -199,7 +185,7 @@ export function ToolAccessMap({
   onAgentChange,
   onReplay,
   formatTime = defaultFormatTime,
-  title = "Tool access",
+  title = "Хэрэгслийн эрх",
   className = "",
 }: ToolAccessMapProps) {
   const tools = React.useMemo(() => {
@@ -504,8 +490,8 @@ export function ToolAccessMap({
 }
 
 const css = `
-.tam{--tam-bg:#fff;--tam-fg:#18181b;--tam-muted:#71717a;--tam-faint:#a1a1aa;--tam-line:#ececef;--tam-chip:#ededef;--tam-blue:#3b82f6;--tam-blue-bg:#e3eefd;--ui-tamc-used:#9cc3f5;--ui-tamc-off:#d4d4d8;--ui-tamc-glint:#2563eb;--ui-tamc-dim:.5;--tam-red:#dc2626;--tam-amber:#b45309;--tam-amber-bg:#fdf3d7;width:100%;max-width:680px;color:var(--tam-fg);font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
-:where(.dark,[data-theme=dark]) .tam{--tam-bg:#1f1f23;--tam-fg:#ececef;--tam-muted:#a1a1aa;--tam-faint:#71717a;--tam-line:#303036;--tam-chip:#2a2a2f;--tam-blue-bg:#1c2a40;--ui-tamc-used:#3d6fb8;--ui-tamc-off:#45454c;--ui-tamc-glint:#93c5fd;--tam-amber:#fbbf24;--tam-amber-bg:#3a2f12;color-scheme:dark}
+.tam{--tam-bg:#fff;--tam-fg:#18181b;--tam-muted:#71717a;--tam-faint:#a1a1aa;--tam-line:#ececef;--tam-chip:#ededef;--tam-blue:#3b82f6;--tam-blue-bg:#e3eefd;--ui-tamc-used:#4f86d6;--ui-tamc-off:#8a8a93;--ui-tamc-glint:#2563eb;--ui-tamc-dim:.5;--tam-red:#dc2626;--tam-amber:#b45309;--tam-amber-bg:#fdf3d7;width:100%;max-width:680px;container-type:inline-size;color:var(--tam-fg);font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
+:where(.dark,[data-theme=dark]) .tam{--tam-bg:#1f1f23;--tam-fg:#ececef;--tam-muted:#a1a1aa;--tam-faint:#71717a;--tam-line:#303036;--tam-chip:#2a2a2f;--tam-blue-bg:#1c2a40;--ui-tamc-used:#5b8fe0;--ui-tamc-off:#7a7a83;--ui-tamc-glint:#93c5fd;--tam-amber:#fbbf24;--tam-amber-bg:#3a2f12;color-scheme:dark}
 .tam *{box-sizing:border-box}.tam button{font:inherit;color:inherit;cursor:pointer}
 .tam-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .tam-logo{width:16px;height:16px;color:var(--tam-muted)}
@@ -527,7 +513,7 @@ const css = `
 .tam-wires path{fill:none;stroke-width:1.5}
 .tam-wires path.on{stroke:var(--ui-tamc-used)}
 .tam-wires path.off{stroke:var(--ui-tamc-off);stroke-width:1.2;stroke-dasharray:2 3}
-.tam-wires path.draw{stroke:var(--ui-tamc-used);stroke-dasharray:1;stroke-dashoffset:1;animation:tam-draw .5s ease-out forwards;opacity:.9}
+.tam-wires path.draw{stroke:var(--ui-tamc-used);stroke-dasharray:1;stroke-dashoffset:1;animation:tam-draw .5s ease-out forwards}
 .tam-wires path.glint{stroke:var(--ui-tamc-glint);stroke-width:2;stroke-dasharray:.12 .88;animation:tam-glint 1.2s linear infinite}
 .tam-port{fill:var(--tam-bg);stroke:var(--ui-tamc-used);stroke-width:1.2}
 .tam-tool{position:absolute;width:${CARD_W}px;height:${CARD_H}px;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:0 10px;border:1px solid var(--tam-line);border-radius:8px;background:var(--tam-bg);box-shadow:0 1px 2px #0000000a;text-align:left;transition:opacity .25s,border-color .15s,box-shadow .15s}
@@ -579,7 +565,7 @@ const css = `
 @keyframes tam-spin{to{transform:rotate(360deg)}}
 @keyframes tam-up{from{opacity:0;transform:translateY(calc(-50% + 6px))}}
 @keyframes tam-in{from{opacity:0;transform:translateY(6px)}}
-@media(max-width:700px){.tam-map{height:auto!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tam-wires{display:none}.tam-tool,.tam-agent{position:relative;left:auto!important;top:auto!important;width:auto;transform:none}.tam-agent{grid-column:1/-1;order:-1;animation:none}.tam-calls-body{grid-template-columns:1fr}.tam-list{border-right:0;border-bottom:1px solid var(--tam-line)}}
+@container (max-width:600px){.tam-map{height:auto!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tam-wires{display:none}.tam-tool,.tam-agent{position:relative;left:auto!important;top:auto!important;width:auto;transform:none}.tam-agent{grid-column:1/-1;order:-1;animation:none}.tam-calls-body{grid-template-columns:1fr}.tam-list{border-right:0;border-bottom:1px solid var(--tam-line)}.tam-tool .tam-t2{white-space:normal}.tam-stats>span:not(.tam-runtag){min-width:0}.tam-bar{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.tam *{animation:none!important;transition:none!important}.tam-wires path.glint{display:none}}
 `;
 

@@ -102,15 +102,15 @@ describe("Library behavior", () => {
   it("moves an approved inbox task into Running and switches layouts", () => {
     render(<AgentInbox />);
     fireEvent.click(
-      screen.getByRole("button", { name: /Clean up CRM contacts/ }),
+      screen.getByRole("button", { name: /Харилцагчийн бүртгэлийг цэгцлэх/ }),
     );
     fireEvent.click(screen.getByRole("button", { name: /Retry/ }));
     expect(
       screen.getByRole("region", { name: "Running" }).textContent,
-    ).toContain("Clean up CRM contacts");
+    ).toContain("Харилцагчийн бүртгэлийг цэгцлэх");
     expect(
       screen.getByRole("region", { name: "Needs you" }).textContent,
-    ).not.toContain("Clean up CRM contacts");
+    ).not.toContain("Харилцагчийн бүртгэлийг цэгцлэх");
     fireEvent.click(screen.getByRole("radio", { name: "List" }));
     expect(
       screen.getByRole("radio", { name: "List" }).getAttribute("aria-checked"),
@@ -120,7 +120,7 @@ describe("Library behavior", () => {
     const onApprove = vi.fn();
     render(<AgentInbox onRetry={onApprove} />);
     fireEvent.click(
-      screen.getByRole("button", { name: /Clean up CRM contacts/ }),
+      screen.getByRole("button", { name: /Харилцагчийн бүртгэлийг цэгцлэх/ }),
     );
     fireEvent.click(screen.getByRole("button", { name: /Retry/ }));
     expect(onApprove).toHaveBeenCalledWith(
@@ -128,7 +128,7 @@ describe("Library behavior", () => {
     );
     expect(
       screen.getByRole("region", { name: "Needs you" }).textContent,
-    ).toContain("Clean up CRM contacts");
+    ).toContain("Харилцагчийн бүртгэлийг цэгцлэх");
   });
   it("runs an editable plan in order and cleans up timers", () => {
     vi.useFakeTimers();
@@ -152,14 +152,14 @@ describe("Library behavior", () => {
   it("edits a table cell, calls its consumer, and supports undo", () => {
     const onChange = vi.fn();
     render(<DataTable onRowsChange={onChange} />);
-    fireEvent.doubleClick(screen.getByText("Figma"));
-    fireEvent.change(screen.getByLabelText("Figma Tool"), {
-      target: { value: "Figma Updated" },
+    fireEvent.doubleClick(screen.getByText("Дизайны файл"));
+    fireEvent.change(screen.getByLabelText("Дизайны файл Хэрэгсэл"), {
+      target: { value: "Дизайны файл 2" },
     });
-    fireEvent.keyDown(screen.getByLabelText("Figma Tool"), { key: "Enter" });
-    expect(onChange.mock.calls.at(-1)?.[0][0].tool).toBe("Figma Updated");
+    fireEvent.keyDown(screen.getByLabelText("Дизайны файл Хэрэгсэл"), { key: "Enter" });
+    expect(onChange.mock.calls.at(-1)?.[0][0].tool).toBe("Дизайны файл 2");
     fireEvent.click(screen.getByRole("button", { name: /Undo/ }));
-    expect(screen.getByText("Figma")).toBeTruthy();
+    expect(screen.getByText("Дизайны файл")).toBeTruthy();
   });
   it("returns a custom decision to its consumer", () => {
     const onDecide = vi.fn();

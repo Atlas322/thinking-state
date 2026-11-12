@@ -31,13 +31,13 @@ export type PlanVsActualProps = {
 
 const S = 1000;
 const demoSteps: PlanStep[] = [
-  { id: "brief", title: "Read the brief", plan: 20 * S, start: 0, end: 16 * S },
-  { id: "copy", title: "Draft the copy", plan: 40 * S, deps: ["brief"], start: 16 * S, end: 68 * S },
-  { id: "layout", title: "Build the layout", plan: 60 * S, deps: ["brief"], start: 16 * S, end: 101 * S },
-  { id: "tests", title: "Write the tests", plan: 30 * S, deps: ["copy"], start: 69 * S, end: 97 * S },
-  { id: "stripe", title: "Wire up Stripe", plan: 45 * S, deps: ["layout"], start: 101 * S },
-  { id: "fix", title: "Run tests and fix", plan: 35 * S, deps: ["tests", "stripe"] },
-  { id: "pr", title: "Open the pull request", plan: 15 * S, deps: ["fix"] },
+  { id: "brief", title: "Даалгавар унших", plan: 20 * S, start: 0, end: 16 * S },
+  { id: "copy", title: "Бичвэрийн ноорог", plan: 40 * S, deps: ["brief"], start: 16 * S, end: 68 * S },
+  { id: "layout", title: "Хуудасны бүтэц", plan: 60 * S, deps: ["brief"], start: 16 * S, end: 101 * S },
+  { id: "tests", title: "Тест бичих", plan: 30 * S, deps: ["copy"], start: 69 * S, end: 97 * S },
+  { id: "payments", title: "Төлбөрийн систем холбох", plan: 45 * S, deps: ["layout"], start: 101 * S },
+  { id: "fix", title: "Тест ажиллуулж засах", plan: 35 * S, deps: ["tests", "payments"] },
+  { id: "pr", title: "Өөрчлөлтийг хянуулахаар илгээх", plan: 15 * S, deps: ["fix"] },
 ];
 
 const clock = (ms: number) => {
@@ -110,8 +110,8 @@ function StatusIcon({ state }: { state: Layout["state"] }) {
 export function PlanVsActual({
   steps = demoSteps,
   now: nowProp,
-  task = "Ship the pricing page",
-  title = "Plan vs actual",
+  task = "Багцуудын хуудсыг гаргах",
+  title = "Төлөвлөгөө ба бодит",
   cost,
   formatTime = clock,
   className = "",

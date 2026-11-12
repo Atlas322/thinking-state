@@ -718,8 +718,8 @@ export default function Demo() {
     <style>{`.demo-ct{flex:1;min-height:0;display:flex;flex-direction:column}.demo-ct [class*="__morph"]{flex:1}`}</style>
     <CommentThread
       className="demo-ct"
-      title="Comment"
-      currentUser={{ name: "You" }}
+      title="Сэтгэгдэл"
+      currentUser={{ name: "Та" }}
       assistant={atlas}
       onClose={() => {}}
       onReply={(text) =>
@@ -731,7 +731,7 @@ export default function Demo() {
                     id: String(Date.now()),
                     author: atlas,
                     createdAt: Date.now(),
-                    text: "Done – the pricing page now says “members” everywhere.",
+                    text: "Болсон – үнийн хуудсанд одоо хаа сайгүй «гишүүд» гэж бичигдсэн.",
                   }),
                 1600,
               ),
@@ -741,20 +741,20 @@ export default function Demo() {
       messages={[
         {
           id: "1",
-          author: { name: "Lena Lindqvist" },
+          author: { name: "Сарнай Батболд" },
           createdAt: Date.now() - 3 * 60000,
-          text: "/edit Rename every “customers” to “members” on the pricing page.",
+          text: "/edit Үнийн хуудсан дээрх бүх «харилцагч»-ийг «гишүүд» болгож соль.",
         },
         {
           id: "2",
           author: atlas,
           createdAt: Date.now() - 60000,
           text: "",
-          status: "Edit completed",
+          status: "Засвар дууслаа",
           details: [
-            "Renamed 12 mentions in 3 sections",
-            "Kept “customer support” as it is",
-            "Left the legal pages untouched",
+            "3 хэсгийн 12 газрыг сольсон",
+            "«Харилцагчийн тусламж»-ийг хэвээр үлдээсэн",
+            "Хуулийн хуудсуудад хүрээгүй",
           ],
         },
       ]}

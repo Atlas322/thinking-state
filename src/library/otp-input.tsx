@@ -335,7 +335,7 @@ export function OtpInput({
   // Phones turning, containers resizing: ring and pill follow
   useEffect(() => {
     const s = slots.current;
-    if (!s) return;
+    if (!s || typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(() => {
       const r = ring.current;
       const box = boxes.current[active];
@@ -923,9 +923,9 @@ export default function Demo() {
             <path d="M2.5 4.5 8 8.5l5.5-4" />
           </svg>
         </span>
-        <h3 className="otp-demo-title">Check your email</h3>
+        <h3 className="otp-demo-title">Имэйлээ шалгана уу</h3>
         <p className="otp-demo-sub">
-          We sent a code to <b>maya@acme.com</b>
+          Бид <b>saraa@example.mn</b> хаяг руу код илгээлээ
         </p>
         <OtpInput
           value={code}
@@ -935,7 +935,7 @@ export default function Demo() {
           }}
           onComplete={verify}
           status={status}
-          errorMessage={`That code didn't work. ${triesLeft} tries left.`}
+          errorMessage={`Код буруу байна. ${triesLeft} оролдлого үлдлээ.`}
           separator
           align="center"
           onResend={() => setTriesLeft(3)}
@@ -943,7 +943,7 @@ export default function Demo() {
         />
       </div>
       <div className="otp-demo-foot">
-        Demo code: <b>482 913</b>
+        Туршилтын код: <b>482 913</b>
       </div>
     </div>
   );

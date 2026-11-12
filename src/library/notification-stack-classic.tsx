@@ -91,6 +91,7 @@ export function NotificationStack({
       setHeights(next);
     };
     measure();
+    if (typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(measure);
     refs.current.forEach((el) => ro.observe(el));
     return () => ro.disconnect();
@@ -501,27 +502,27 @@ export default function Demo() {
       notices={[
         {
           id: "dark-mode",
-          badge: "New",
-          title: "Dark mode is here",
-          text: "Every screen now follows your system theme – or pick one yourself in settings.",
+          badge: "Шинэ",
+          title: "Харанхуй горим нэмэгдлээ",
+          text: "Бүх дэлгэц системийн загварыг дагана – эсвэл тохиргооноос өөрөө сонгоорой.",
           pattern: "orbit",
-          action: { label: "Try it", onClick: () => {} },
+          action: { label: "Туршиж үзэх", onClick: () => {} },
         },
         {
           id: "maintenance",
-          badge: "Notice",
-          title: "Scheduled maintenance",
-          text: "We'll be offline on Sunday from 02:00 to 03:00 UTC. Your data stays safe.",
+          badge: "Мэдэгдэл",
+          title: "Төлөвлөсөн засвар",
+          text: "Ням гарагт 02:00-03:00 цагт систем ажиллахгүй. Таны өгөгдөл хадгалагдана.",
           pattern: "grid",
-          action: { label: "View status", href: "#status", external: true },
+          action: { label: "Төлөв харах", href: "#status", external: true },
         },
         {
           id: "invite",
-          badge: "Invite",
-          title: "Mara invited you to Design Ops",
-          text: "Join the workspace to see shared projects, files and comments.",
+          badge: "Урилга",
+          title: "Сараа таныг «Дизайны баг»-т урьлаа",
+          text: "Хамтын төсөл, файл, сэтгэгдлийг харахын тулд ажлын орчинд нэгдээрэй.",
           pattern: "rays",
-          action: { label: "Accept invite", onClick: () => {} },
+          action: { label: "Урилга хүлээн авах", onClick: () => {} },
         },
       ]}
     />

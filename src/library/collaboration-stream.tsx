@@ -56,11 +56,11 @@ export type CollaborationStreamProps = {
 };
 
 const defaultAgents: StreamAgent[] = [
-  { id: "you", name: "You", color: "#1f1f1f", mark: [1, 1, 1, 1, 1, 1, 1, 1, 1] },
-  { id: "researcher", name: "Researcher", color: "#8a63f3", mark: [1, 0, 1, 0, 1, 0, 1, 0, 1] },
-  { id: "writer", name: "Writer", color: "#2b9fd8", mark: [1, 1, 1, 0, 0, 0, 1, 1, 1] },
-  { id: "orchestrator", name: "Orchestrator", color: "#3d6ff0", mark: [0, 0, 0, 1, 1, 1, 1, 1, 1] },
-  { id: "coder", name: "Coder", color: "#e2892f", mark: [1, 0, 1, 0, 1, 0, 1, 0, 1] },
+  { id: "you", name: "Та", color: "#1f1f1f", mark: [1, 1, 1, 1, 1, 1, 1, 1, 1] },
+  { id: "researcher", name: "Судлаач агент", color: "#8a63f3", mark: [1, 0, 1, 0, 1, 0, 1, 0, 1] },
+  { id: "writer", name: "Бичигч агент", color: "#2b9fd8", mark: [1, 1, 1, 0, 0, 0, 1, 1, 1] },
+  { id: "orchestrator", name: "Зохицуулагч агент", color: "#3d6ff0", mark: [0, 0, 0, 1, 1, 1, 1, 1, 1] },
+  { id: "coder", name: "Кодын агент", color: "#e2892f", mark: [1, 0, 1, 0, 1, 0, 1, 0, 1] },
 ];
 
 const defaultMessages: StreamMessage[] = [
@@ -69,7 +69,7 @@ const defaultMessages: StreamMessage[] = [
     from: "you",
     to: "orchestrator",
     time: "14:02",
-    text: "Launch the new pricing page by Friday – per-seat plans, keep a free tier.",
+    text: "Баасан гариг гэхэд шинэ багцын хуудсыг нээ – суудлаар тооцох багц, үнэгүй түвшинг үлдээ.",
   },
   { id: "e1", from: "orchestrator", to: "researcher", kind: "event" },
   { id: "e2", from: "orchestrator", to: "writer", kind: "event" },
@@ -78,17 +78,17 @@ const defaultMessages: StreamMessage[] = [
     from: "researcher",
     to: "orchestrator",
     time: "14:04",
-    quote: "Find out what Linear, Notion and Figma charge per seat, and what their free tiers allow.",
-    text: [{ bold: "Linear $10" }, ", ", { brand: "notion", text: "Notion $12" }, ", ", { brand: "figma", text: "Figma $15" }, " per seat. All three keep a free tier."],
+    quote: "Гурван өрсөлдөгч суудлаар хэрхэн тооцдог, үнэгүй түвшин нь юуг зөвшөөрдгийг олж мэд.",
+    text: [{ bold: "Гурвуулаа суудлаар тооцдог" }, ", ", { brand: "notion", text: "баримтын сан" }, " болон ", { brand: "figma", text: "дизайны файл" }, "-д зочин хязгаартай. Үнэгүй түвшин гурвуулаа бий."],
     tools: ["web_search ×6"],
-    files: [{ name: "pricing-table.csv" }],
+    files: [{ name: "plans-table.csv" }],
     details: {
-      meta: [["Model", "Gemini 3.8 Flash"], ["Tokens", "41.2k"], ["Cost", "$0.02"], ["Took", "1m 48s"]],
+      meta: [["Загвар", "Хурдан загвар"], ["Токен", "41.2k"], ["Алхам", "6"], ["Хугацаа", "1m 48s"]],
       items: [
-        { title: "web_search", detail: "6 searches – per-seat pricing 2026", kind: "tool" },
-        { title: "notion.com/pricing", detail: "Plus $12 · Business $18 per seat", kind: "link" },
-        { title: "figma.com/pricing", detail: "Professional $15 per editor", kind: "link" },
-        { title: "linear.app/pricing", detail: "Basic $10 per user", kind: "link" },
+        { title: "web_search", detail: "6 хайлт – суудлаар тооцох багцууд", kind: "tool" },
+        { title: "Өрсөлдөгч А", detail: "Үнэгүй түвшин · 10 зочин", kind: "link" },
+        { title: "Өрсөлдөгч Б", detail: "Үнэгүй түвшин · 3 төсөл", kind: "link" },
+        { title: "Өрсөлдөгч В", detail: "Үнэгүй түвшин · 250 даалгавар", kind: "link" },
       ],
     },
   },
@@ -98,23 +98,23 @@ const defaultMessages: StreamMessage[] = [
     to: "orchestrator",
     time: "14:04",
     kind: "question",
-    quote: "Draft the copy for Free, Pro and Team – short, one line per plan.",
-    text: "Do any of them cap seats on the free tier? I'd like to say ours doesn't.",
+    quote: "Үнэгүй, Про, Баг гэсэн гурван багцын тайлбарыг бич – багц бүрт нэг мөр.",
+    text: "Аль нэг нь үнэгүй түвшиндээ суудал хязгаарладаг уу? Манайх хязгааргүй гэж бичмээр байна.",
   },
   {
     id: "m4",
     from: "researcher",
     to: "writer",
     time: "14:05",
-    text: ["None cap seats – ", { brand: "notion", text: "Notion" }, " limits guests to 10, Linear caps issues at 250."],
+    text: ["Аль нь ч суудал хязгаарладаггүй – ", { brand: "notion", text: "Өрсөлдөгч А" }, " зочныг 10 хүртэл, Өрсөлдөгч В даалгаврыг 250 хүртэл хязгаарладаг."],
   },
   {
     id: "m5",
     from: "writer",
     to: "orchestrator",
     time: "14:06",
-    quote: "Draft the copy for Free, Pro and Team – short, one line per plan.",
-    text: ["Copy for the three plans is ready in ", { brand: "notion", text: "Notion" }, " – Free says “no seat limit”."],
+    quote: "Үнэгүй, Про, Баг гэсэн гурван багцын тайлбарыг бич – багц бүрт нэг мөр.",
+    text: ["Гурван багцын тайлбар ", { brand: "notion", text: "баримтын санд" }, " бэлэн – Үнэгүй багц «суудлын хязгааргүй» гэж бичсэн."],
     files: [{ name: "plans-copy.md" }],
   },
   { id: "e3", from: "orchestrator", to: "coder", kind: "event" },
@@ -124,19 +124,19 @@ const defaultMessages: StreamMessage[] = [
     to: "coder",
     time: "14:06",
     kind: "handoff",
-    text: ["Here's everything you need – copy, prices and the ", { brand: "figma", text: "Figma" }, " frames."],
+    text: ["Хэрэгтэй бүхэн энд байна – тайлбар, багцын хүснэгт, ", { brand: "figma", text: "дизайны файлын" }, " фреймүүд."],
     files: [
-      { name: "src/billing/", kind: "folder" },
+      { name: "src/plans/", kind: "folder" },
       { name: "plans-copy.md" },
-      { name: "pricing-table.csv" },
-      { name: "Pricing / Desktop", kind: "link" },
+      { name: "plans-table.csv" },
+      { name: "Багц / Компьютер", kind: "link" },
     ],
     details: {
-      meta: [["From", "Orchestrator"], ["To", "Coder"], ["Context", "18.4k tokens"]],
+      meta: [["Хэнээс", "Зохицуулагч агент"], ["Хэнд", "Кодын агент"], ["Контекст", "18.4k токен"]],
       items: [
-        { title: "Pricing / Desktop", detail: "Figma – 3 frames", kind: "figma" },
-        { title: "plans-copy.md", detail: "Notion – Launch / Pricing copy", kind: "file" },
-        { title: "feat/pricing-page", detail: "GitHub – branch to build on", kind: "folder" },
+        { title: "Багц / Компьютер", detail: "Дизайны файл – 3 фрейм", kind: "figma" },
+        { title: "plans-copy.md", detail: "Баримтын сан – Нээлт / Багцын тайлбар", kind: "file" },
+        { title: "feat/plans-page", detail: "Хувилбарын хяналт – ажиллах салбар", kind: "folder" },
       ],
     },
   },
@@ -145,26 +145,26 @@ const defaultMessages: StreamMessage[] = [
     from: "coder",
     to: "writer",
     time: "14:09",
-    text: "The Team line is two lines too long for its card – can you cut it?",
+    text: "Баг багцын мөр картандаа хоёр мөрөөр урт байна – богиносгож чадах уу?",
   },
   {
     id: "m8",
     from: "writer",
     to: "coder",
     time: "14:09",
-    text: "“Everything, together – for teams of 3 and more.”",
+    text: "«Бүгд хамтдаа – 3 ба түүнээс дээш хүнтэй багт.»",
   },
   {
     id: "m9",
     from: "coder",
     to: "you",
     kind: "writing",
-    quote: "Launch the new pricing page by Friday – per-seat plans, keep a free tier.",
+    quote: "Баасан гариг гэхэд шинэ багцын хуудсыг нээ – суудлаар тооцох багц, үнэгүй түвшинг үлдээ.",
     details: {
-      meta: [["Model", "Opus 5.5"], ["Waiting", "2m"], ["Holds", "Deploy"]],
+      meta: [["Загвар", "Кодын загвар"], ["Хүлээж буй", "2m"], ["Барьж буй", "Нийтлэл"]],
       items: [
-        { title: "price_team_12", detail: "Stripe – $12 per seat, test mode", kind: "file" },
-        { title: "price_team_15", detail: "Stripe – $15 per seat, test mode", kind: "file" },
+        { title: "plan_team_3", detail: "Төлбөрийн систем – 3 суудал, туршилтын горим", kind: "file" },
+        { title: "plan_team_10", detail: "Төлбөрийн систем – 10 суудал, туршилтын горим", kind: "file" },
       ],
     },
   },
@@ -190,26 +190,25 @@ function Mark({ agent, size = 12 }: { agent?: StreamAgent; size?: number }) {
   );
 }
 
+// Neutral glyphs for generic systems (design file, document store, payments) – no vendor marks.
 const brandIcon = {
   figma: (
     <svg viewBox="0 0 16 16" aria-hidden="true" className="cs-brand">
-      <circle cx="10" cy="8" r="2.5" fill="#1abcfe" />
-      <path d="M3.5 13A2.5 2.5 0 0 1 6 10.5h2.5V13a2.5 2.5 0 1 1-5 0Z" fill="#0acf83" />
-      <path d="M3.5 8A2.5 2.5 0 0 1 6 5.5h2.5v5H6A2.5 2.5 0 0 1 3.5 8Z" fill="#a259ff" />
-      <path d="M3.5 3A2.5 2.5 0 0 1 6 .5h2.5v5H6A2.5 2.5 0 0 1 3.5 3Z" fill="#f24e1e" />
-      <path d="M8.5.5H11a2.5 2.5 0 0 1 0 5H8.5Z" fill="#ff7262" />
+      <rect x="2" y="2" width="12" height="12" rx="2" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="10.5" cy="10.5" r="2" fill="currentColor" />
+      <path d="M4.5 4.5h4v4h-4z" fill="currentColor" />
     </svg>
   ),
   notion: (
     <svg viewBox="0 0 16 16" aria-hidden="true" className="cs-brand">
-      <rect x="1.5" y="1.5" width="13" height="13" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" />
-      <path d="M5 11.5v-7h1.2l3.6 7H11v-7" fill="none" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M4 1.5h5.5l3 3v10h-8.5z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+      <path d="M6 8h4.5M6 10.5h4.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
   ),
   stripe: (
     <svg viewBox="0 0 16 16" aria-hidden="true" className="cs-brand">
-      <rect x="1" y="1" width="14" height="14" rx="3" fill="#635bff" />
-      <path d="M9.9 6.1c-.5-.3-1.1-.5-1.7-.5-.5 0-.8.2-.8.5 0 .9 3 .5 3 2.7 0 1.2-1 1.9-2.4 1.9-.7 0-1.4-.2-2-.5V8.9c.6.3 1.3.6 2 .6.5 0 .8-.2.8-.5 0-1-3-.6-3-2.7 0-1.1.9-1.9 2.3-1.9.6 0 1.2.1 1.8.4Z" fill="#fff" />
+      <rect x="1.5" y="3.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M1.5 6.5h13" stroke="currentColor" strokeWidth="1.3" />
     </svg>
   ),
 };
@@ -258,7 +257,7 @@ export function CollaborationStream({
   onFilterChange,
   onSend,
   onOpenFile,
-  placeholder = "Message the agents – @ to name one",
+  placeholder = "Агентуудад бичих – @ гэж нэрлэнэ",
   className = "",
 }: CollaborationStreamProps) {
   const [localFilter, setLocalFilter] = React.useState(defaultFilter);

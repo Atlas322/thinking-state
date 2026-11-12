@@ -38,10 +38,10 @@ const repeatLabel: Record<Repeat, string> = { once: "Once", monthly: "Monthly", 
 const per: Record<Repeat, string> = { once: "once", monthly: "month", quarterly: "quarter", yearly: "year" };
 
 const defaultCatalog: CatalogItem[] = [
-  { name: "Platform licence", repeat: "monthly", price: 1200 },
-  { name: "Premium support", repeat: "monthly", price: 450 },
-  { name: "Onboarding workshop", repeat: "once", price: 2500 },
-  { name: "Data residency add-on", repeat: "yearly", price: 6000 },
+  { name: "Платформын лиценз", repeat: "monthly", price: 1200 },
+  { name: "Нэмэлт дэмжлэг", repeat: "monthly", price: 450 },
+  { name: "Танилцуулах сургалт", repeat: "once", price: 2500 },
+  { name: "Өгөгдлийг дотоодод хадгалах нэмэлт", repeat: "yearly", price: 6000 },
 ];
 
 let uid = 0;
@@ -70,8 +70,8 @@ const Ico = {
 };
 
 export function BillingSchedule({
-  title = "Create a billing schedule",
-  phase: phaseProp = "Build-out phase",
+  title = "Төлбөрийн хуваарь үүсгэх",
+  phase: phaseProp = "Нэвтрүүлэх үе шат",
   currency = "$",
   catalog = defaultCatalog,
   defaultLines,
@@ -83,7 +83,7 @@ export function BillingSchedule({
   const [start, setStart] = React.useState(defaultStart);
   const [duration, setDuration] = React.useState("Milestone");
   const [lines, setLines] = React.useState<ScheduleLine[]>(
-    () => defaultLines ?? [{ id: nid(), kind: "product", name: "Set-up fee", repeat: "once", price: 4999, timing: "advance" }],
+    () => defaultLines ?? [{ id: nid(), kind: "product", name: "Суурилуулалт", repeat: "once", price: 4999, timing: "advance" }],
   );
   const [menu, setMenu] = React.useState<null | "duration" | "catalog">(null);
   const rootRef = React.useRef<HTMLElement>(null);
@@ -387,4 +387,7 @@ const css = `
 @media(prefers-reduced-motion:reduce){.bs *{animation:none!important;transition:none!important}}
 `;
 
-export default BillingSchedule;
+/** Catalog preview: amounts are plain units with no currency sign. */
+export default function BillingSchedulePreview() {
+  return <BillingSchedule currency="" />;
+}

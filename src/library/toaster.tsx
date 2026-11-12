@@ -412,9 +412,9 @@ const fileIcon = (d: string) => (
 /** Demo: a file card whose actions send toasts into an inline stack. */
 export default function ToasterDemo() {
   React.useEffect(() => {
-    const id = toast.success("Report uploaded", {
+    const id = toast.success("Тайлан байршлаа", {
       id: "demo-upload",
-      description: "Shared with 4 people in Finance",
+      description: "Санхүүгийн 4 хүнтэй хуваалцлаа",
       toaster: "demo",
       duration: 12000,
     });
@@ -428,30 +428,30 @@ export default function ToasterDemo() {
         <div className="tst-file">
           <span className="tst-doc">{fileIcon("M4.5 2h4.8L12 4.7v8.8c0 .3-.2.5-.5.5h-7a.5.5 0 0 1-.5-.5V2.5c0-.3.2-.5.5-.5ZM6 8h4M6 10.5h4")}</span>
           <div>
-            <strong>Q3 Board Report</strong>
-            <span>Finance · edited 2 min ago</span>
+            <strong>3-р улирлын ТУЗ-ийн тайлан</strong>
+            <span>Санхүү · 2 минутын өмнө засварласан</span>
           </div>
         </div>
         <div className="tst-actions">
           <button
             type="button"
-            onClick={send(() => toast.success("Draft saved", { description: "Q3 Board Report", toaster: "demo" }))}
+            onClick={send(() => toast.success("Ноорог хадгалагдлаа", { description: "3-р улирлын ТУЗ-ийн тайлан", toaster: "demo" }))}
           >
             {fileIcon("M3 3.5c0-.3.2-.5.5-.5h7.3L13 5.2v7.3c0 .3-.2.5-.5.5h-9a.5.5 0 0 1-.5-.5ZM5.5 3v3h4V3M5 13V9.5h6V13")}
-            Save draft
+            Ноорог хадгалах
           </button>
           <button
             type="button"
             onClick={send(() =>
-              toast("File moved to trash", {
-                description: "Q3 Board Report",
+              toast("Файл хогийн сав руу шилжлээ", {
+                description: "3-р улирлын ТУЗ-ийн тайлан",
                 toaster: "demo",
-                action: { label: "Undo", onClick: () => toast.success("File restored", { toaster: "demo" }) },
+                action: { label: "Буцаах", onClick: () => toast.success("Файл сэргээгдлээ", { toaster: "demo" }) },
               }),
             )}
           >
             {fileIcon("M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5")}
-            Delete file
+            Файл устгах
           </button>
           <button
             type="button"
@@ -459,16 +459,16 @@ export default function ToasterDemo() {
               void toast.promise(
                 new Promise((r) => setTimeout(r, 1800)),
                 {
-                  loading: { title: "Uploading report…", description: "Q3 Board Report.pdf" },
-                  success: { title: "Report uploaded", description: "Shared with 4 people in Finance" },
-                  error: "Upload failed",
+                  loading: { title: "Тайлан байршуулж байна…", description: "3-р улирлын ТУЗ-ийн тайлан.pdf" },
+                  success: { title: "Тайлан байршлаа", description: "Санхүүгийн 4 хүнтэй хуваалцлаа" },
+                  error: "Байршуулж чадсангүй",
                 },
                 { toaster: "demo" },
               ),
             )}
           >
             {fileIcon("M8 10.5V3M5 5.8 8 3l3 2.8M3 10.5V13h10v-2.5")}
-            Upload report
+            Тайлан байршуулах
           </button>
           <button
             type="button"
@@ -477,9 +477,9 @@ export default function ToasterDemo() {
                 .promise(
                   new Promise((_, reject) => setTimeout(() => reject(new Error("offline")), 1800)),
                   {
-                    loading: "Syncing with Drive…",
-                    success: "Synced",
-                    error: { title: "Sync failed", description: "Drive didn't answer – try again in a minute" },
+                    loading: "Үүлэн санг тулгаж байна…",
+                    success: "Тулгалаа",
+                    error: { title: "Тулгаж чадсангүй", description: "Үүлэн сан хариу өгсөнгүй – нэг минутын дараа дахин оролдоно уу" },
                   },
                   { toaster: "demo" },
                 )
@@ -487,12 +487,12 @@ export default function ToasterDemo() {
             )}
           >
             {fileIcon("M12.5 6.5A4.6 4.6 0 0 0 4 5.2M3.5 9.5a4.6 4.6 0 0 0 8.5 1.3M4 2.8v2.6h2.6M12 13.2v-2.6H9.4")}
-            Sync
+            Тулгах
           </button>
         </div>
       </div>
       <p className="tst-hint">
-        Press <kbd>F8</kbd> to jump to notifications
+        <kbd>F8</kbd> дарж мэдэгдэл рүү шилжинэ
       </p>
       <div className="tst-stage">
         <Toaster inline id="demo" position="top-center" offset={0} />

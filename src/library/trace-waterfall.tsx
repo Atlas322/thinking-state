@@ -1,44 +1,36 @@
 "use client";
 import * as React from "react";
 
-// Simple Icons brand paths (CC0): v16.37.0, OpenAI v14.0.0.
-const providerPaths = {
-  claude:
-    "m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z",
-  openai:
-    "M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z",
-  googlegemini:
-    "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81",
-};
+// Neutral marks: tools by kind of system, model calls by one generic glyph.
 const toolMarks: Record<string, React.ReactNode> = {
-  GitHub: (
-    <svg viewBox="0 0 16 16" style={{ fill: "var(--trw-ink)", stroke: "none" }}>
-      <path d="M8 1a7 7 0 0 0-2.2 13.6c.35.07.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.81-.78-1.03-.78-1.03-.64-.43.05-.42.05-.42.7.05 1.07.72 1.07.72.63 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.55-.18-3.19-.78-3.19-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72a6.6 6.6 0 0 1 3.5 0c1.34-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.3v1.93c0 .19.13.41.48.34A7 7 0 0 0 8 1Z" />
-    </svg>
-  ),
-  Stripe: (
-    <svg viewBox="0 0 16 16" style={{ stroke: "none" }}>
-      <rect x="1" y="1" width="14" height="14" rx="3" fill="#635bff" />
-      <path d="M10.3 6c-.5-.4-1.2-.6-1.9-.6-1 0-1.6.5-1.6 1.1 0 1.6 3.6.9 3.6 3 0 .9-.8 1.6-2.1 1.6-.8 0-1.6-.3-2.1-.7" fill="none" stroke="#fff" strokeWidth="1.4" />
-    </svg>
-  ),
-  Notion: (
+  "хувилбарын хяналт": (
     <svg viewBox="0 0 16 16">
-      <rect x="2" y="2" width="12" height="12" rx="2" style={{ fill: "#fff" }} />
-      <path d="M5.5 11.5v-7h1l3.5 7h1v-7" />
+      <circle cx="5" cy="3.5" r="1.6" />
+      <circle cx="5" cy="12.5" r="1.6" />
+      <circle cx="11" cy="6" r="1.6" />
+      <path d="M5 5.1v5.8M11 7.6c0 2-2 2.4-6 3.3" />
     </svg>
   ),
-  Figma: (
-    <svg viewBox="0 0 16 16" style={{ stroke: "none" }}>
-      <path d="M6 1h2v4.5H6a2.25 2.25 0 0 1 0-4.5Z" fill="#f24e1e" />
-      <path d="M8 1h2a2.25 2.25 0 0 1 0 4.5H8Z" fill="#ff7262" />
-      <path d="M6 5.5h2V10H6a2.25 2.25 0 0 1 0-4.5Z" fill="#a259ff" />
-      <circle cx="10" cy="7.75" r="2.25" fill="#1abcfe" />
-      <path d="M6 10h2v2.25A2.25 2.25 0 1 1 6 10Z" fill="#0acf83" />
+  "төлбөрийн систем": (
+    <svg viewBox="0 0 16 16">
+      <rect x="1.5" y="3.5" width="13" height="9" rx="1.8" />
+      <path d="M1.5 6.5h13M4 10h3" />
     </svg>
   ),
-  Postgres: (
-    <svg viewBox="0 0 16 16" style={{ stroke: "#336791" }}>
+  "баримтын сан": (
+    <svg viewBox="0 0 16 16">
+      <path d="M4 1.8h5.5L12.5 5v9.2H4Z" />
+      <path d="M6 7.5h4.5M6 10h4.5" />
+    </svg>
+  ),
+  "дизайны файл": (
+    <svg viewBox="0 0 16 16">
+      <rect x="2" y="2" width="12" height="12" rx="2" />
+      <path d="M2 6h12M6 6v8" />
+    </svg>
+  ),
+  "өгөгдлийн сан": (
+    <svg viewBox="0 0 16 16">
       <ellipse cx="8" cy="4" rx="5" ry="2" />
       <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2" />
     </svg>
@@ -54,37 +46,14 @@ function toolMark(detail = "") {
     )
   );
 }
-function ProviderMark({ model = "" }: { model?: string }) {
-  const brand = /GPT|OpenAI/i.test(model)
-    ? "openai"
-    : /Gemini/i.test(model)
-      ? "googlegemini"
-      : "claude";
+function ProviderMark() {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 16 16"
       aria-hidden="true"
-      fill={
-        brand === "claude"
-          ? "#d97757"
-          : brand === "googlegemini"
-            ? "#4f65ff"
-            : "currentColor"
-      }
-      style={{
-        width: "1em",
-        height: "1em",
-        display: "block",
-        stroke: "none",
-        fill:
-          brand === "claude"
-            ? "#d97757"
-            : brand === "googlegemini"
-              ? "#4f65ff"
-              : "var(--trw-ink)",
-      }}
+      style={{ width: "1em", height: "1em", display: "block", stroke: "none", fill: "currentColor" }}
     >
-      <path d={providerPaths[brand]} />
+      <path d="M8 1.5c.4 3.3 3.2 6.1 6.5 6.5-3.3.4-6.1 3.2-6.5 6.5-.4-3.3-3.2-6.1-6.5-6.5 3.3-.4 6.1-3.2 6.5-6.5Z" />
     </svg>
   );
 }
@@ -147,67 +116,64 @@ const short = (value: number) =>
 function example(): TraceSpan {
   return {
     id: "run",
-    name: "Orchestrator",
-    detail: "Opus 5.5",
+    name: "Удирдагч агент",
+    detail: "3 туслах",
     kind: "agent",
     status: "running",
     start: 0,
-    input: "Launch the new pricing page by Friday",
+    input: "Шинэ тарифын хуудсыг баасан гараг гэхэд гаргах",
     children: [
       {
         id: "plan",
-        name: "Plan the launch",
-        detail: "Opus 5.5",
-        model: "Opus 5.5",
+        name: "Ажлыг төлөвлөх",
+        detail: "Удирдагч агент",
+        model: "Удирдагч агент",
         kind: "llm",
         status: "done",
         start: 900,
         end: 7800,
         tokensIn: 3240,
         tokensOut: 880,
-        cost: 0.115,
-        input: "Plan the launch of the new pricing page",
+        input: "Шинэ тарифын хуудсыг гаргах ажлыг төлөвлө",
         output:
-          "Research competitors, write the three plans, build and test checkout.",
+          "Өрсөлдөгчдийг судлах, гурван багцын текст бичих, хуудсыг хийж төлбөрийн урсгалыг шалгах.",
       },
       {
         id: "research",
-        name: "Researcher",
-        detail: "Sonnet 5.5",
+        name: "Судлаач агент",
+        detail: "5 алхам",
         kind: "subagent",
         status: "done",
         start: 8100,
         end: 38100,
         children: [
           {
-            id: "linear",
+            id: "rivals-a",
             name: "web_search",
-            detail: "Linear pricing",
+            detail: "Өрсөлдөгч А-гийн багцууд",
             kind: "tool",
             status: "done",
             start: 9000,
             end: 14400,
-            cost: 0.005,
             tokensIn: 1800,
             tokensOut: 2800,
-            output: "Retrieved the pricing plans and feature comparison.",
+            output: "Багцууд болон боломжуудын харьцуулалтыг татлаа.",
           },
           {
-            id: "notion",
+            id: "rivals-b",
             name: "web_search",
-            detail: "Notion pricing",
+            detail: "Өрсөлдөгч Б-гийн багцууд",
             kind: "tool",
             status: "done",
             start: 9300,
             end: 16500,
-            cost: 0.005,
             tokensIn: 2100,
             tokensOut: 3200,
           },
           {
             id: "query",
-            name: "Query plan usage",
-            detail: "Postgres",
+            name: "Багцын хэрэглээг татах",
+            detail: "өгөгдлийн сан",
             kind: "tool",
             status: "done",
             start: 9700,
@@ -217,34 +183,32 @@ function example(): TraceSpan {
           },
           {
             id: "reviews",
-            name: "Read G2 reviews",
-            detail: "120 pages",
+            name: "Хэрэглэгчийн сэтгэгдэл унших",
+            detail: "120 хуудас",
             kind: "tool",
             status: "done",
             start: 14800,
             end: 27800,
-            cost: 0.02,
           },
           {
             id: "summary",
-            name: "Summarize findings",
-            detail: "Gemini 3.8 Flash",
-            model: "Gemini 3.8 Flash",
+            name: "Дүгнэлт гаргах",
+            detail: "Судлаач агент",
+            model: "Судлаач агент",
             kind: "llm",
             status: "done",
             start: 28000,
             end: 37300,
-            cost: 0.02,
             tokensIn: 9800,
             tokensOut: 1400,
-            output: "Linear and Notion gate seats; Figma prices by editor.",
+            output: "Хоёр өрсөлдөгч хэрэглэгчийн тоогоор, гурав дахь нь засварлагчийн тоогоор багцалдаг.",
           },
         ],
       },
       {
         id: "writer",
-        name: "Writer",
-        detail: "Sonnet 5.5",
+        name: "Бичигч агент",
+        detail: "4 алхам",
         kind: "subagent",
         status: "done",
         start: 11100,
@@ -252,8 +216,8 @@ function example(): TraceSpan {
         children: [
           {
             id: "voice",
-            name: "Read brand voice",
-            detail: "Notion",
+            name: "Брэндийн өнгө аяс унших",
+            detail: "баримтын сан",
             kind: "tool",
             status: "done",
             start: 11700,
@@ -262,9 +226,9 @@ function example(): TraceSpan {
             tokensOut: 4200,
           },
           {
-            id: "figma",
-            name: "Read pricing frames",
-            detail: "Figma",
+            id: "frames",
+            name: "Хуудасны загвар унших",
+            detail: "дизайны файл",
             kind: "tool",
             status: "done",
             start: 12000,
@@ -274,20 +238,19 @@ function example(): TraceSpan {
           },
           {
             id: "copy",
-            name: "Draft plan copy",
-            detail: "Sonnet 5.5",
+            name: "Багцын текст бичих",
+            detail: "Бичигч агент",
             kind: "llm",
             status: "done",
             start: 17800,
             end: 40800,
-            cost: 0.09,
             tokensIn: 1800,
             tokensOut: 900,
           },
           {
             id: "save",
-            name: "Save draft",
-            detail: "Notion",
+            name: "Ноорог хадгалах",
+            detail: "баримтын сан",
             kind: "tool",
             status: "done",
             start: 41000,
@@ -297,16 +260,16 @@ function example(): TraceSpan {
       },
       {
         id: "coder",
-        name: "Coder",
-        detail: "GPT-6 Sol",
+        name: "Кодын агент",
+        detail: "5 алхам",
         kind: "subagent",
         status: "running",
         start: 15400,
         children: [
           {
             id: "branch",
-            name: "Create branch",
-            detail: "GitHub",
+            name: "Салбар үүсгэх",
+            detail: "хувилбарын хяналт",
             kind: "tool",
             status: "done",
             start: 16000,
@@ -316,20 +279,19 @@ function example(): TraceSpan {
           },
           {
             id: "build",
-            name: "Write pricing page",
-            detail: "GPT-6 Sol",
+            name: "Тарифын хуудас бичих",
+            detail: "Кодын агент",
             kind: "llm",
             status: "done",
             start: 18400,
             end: 38400,
-            cost: 0.16,
             tokensIn: 800,
             tokensOut: 900,
           },
           {
             id: "prices",
-            name: "Create prices",
-            detail: "Stripe",
+            name: "Багцуудыг үүсгэх",
+            detail: "төлбөрийн систем",
             kind: "tool",
             status: "done",
             start: 38600,
@@ -337,24 +299,23 @@ function example(): TraceSpan {
           },
           {
             id: "tests",
-            name: "Run checkout tests",
-            detail: "GitHub",
+            name: "Төлбөрийн тест ажиллуулах",
+            detail: "хувилбарын хяналт",
             kind: "tool",
             status: "failed",
             start: 42800,
             end: 51200,
             input: "pnpm test checkout",
-            error: "2 of 14 checkout tests fail – coupon codes aren't applied to seat prices",
+            error: "14 тестээс 2 нь унав – купон багцын үнэд тооцогдохгүй байна",
           },
           {
             id: "fix",
-            name: "Fix coupon handling",
-            detail: "GPT-6 Sol",
-            model: "GPT-6 Sol",
+            name: "Купоны алдааг засах",
+            detail: "Кодын агент",
+            model: "Кодын агент",
             kind: "llm",
             status: "running",
             start: 51400,
-            cost: 0.05,
             tokensIn: 2100,
             tokensOut: 600,
           },
@@ -654,7 +615,7 @@ export function TraceWaterfall({
                     (span.kind === "tool" ? (
                       toolMark(span.detail)
                     ) : (
-                      <ProviderMark model={span.model ?? span.detail} />
+                      <ProviderMark />
                     ))}
                 </span>
                 <strong>{span.name}</strong>
@@ -770,4 +731,7 @@ const css = `
 @container trw (max-width:559px){.trw-totals{grid-template-columns:repeat(3,1fr);gap:12px 0}.trw-totals>div:nth-child(4){border-left:0}.trw-header{padding:12px}.trw-description{font-size:10px}.trw-axis{grid-template-columns:1fr;height:25px}.trw-axis>span{display:none}.trw-axis>div{margin:0 90px 0 15px;border:0}.trw-row{grid-template-columns:1fr;min-height:55px}.trw-name{padding-top:5px;padding-bottom:2px}.trw-name strong{max-width:68%}.trw-timeline{margin:0 90px 0 15px;min-height:25px;border-left:0}.trw-bar{top:4px;height:12px}.trw-value{top:0;font-size:9px}.trw-now,.trw-grid-line{top:-20px}.trw-row:first-child .trw-now:before{display:none}.trw-value b{display:none}.trw-detail{top:110px!important;right:12px;max-width:calc(100% - 24px)}}@container trw (max-width:359px){.trw-name small{display:none}.trw-description{display:none}.trw-totals>div{padding:0 9px}.trw-totals dt{font-size:8px}}
 @keyframes trw-shine{to{background-position:-220% 0}}@keyframes trw-spin{to{transform:rotate(360deg)}}@keyframes trw-row-in{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}@keyframes trw-pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}@media(prefers-reduced-motion:reduce){.trw-root *{animation:none!important;transition:none!important}.trw-shimmer{background:none;color:var(--trw-ink)}}
 `;
-export default TraceWaterfall;
+/** Catalog example: the demo trace carries no money, so the cost column shows a dash. */
+export default function TraceWaterfallDemo() {
+  return <TraceWaterfall formatCost={(v) => `${v.toFixed(2)} кр`} />;
+}

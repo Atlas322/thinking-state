@@ -43,97 +43,91 @@ const ico = (c: React.ReactNode) => (
   </svg>
 );
 export const decisionIcons = {
-  openai: ico(
-    <g fill="none" stroke="currentColor" strokeWidth="1.1">
-      <path d="M8 2.2a2.8 2.8 0 0 1 4.6 2.6 2.8 2.8 0 0 1 .4 5A2.8 2.8 0 0 1 8.5 13a2.8 2.8 0 0 1-4.7-2.4 2.8 2.8 0 0 1-.6-5A2.8 2.8 0 0 1 8 2.2Z" />
-      <path d="M6 4.4v5l2 1.2 2-1.2V5.3M4 8.2l4-2.3 4 2.3" />
+  agent: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2">
+      <circle cx="8" cy="8" r="5.6" />
+      <circle cx="8" cy="8" r="1.8" fill="currentColor" stroke="none" />
     </g>,
   ),
-  salesforce: ico(<path d="M4.5 12a2.5 2.5 0 0 1-.6-4.9A3 3 0 0 1 9 4.8a2.4 2.4 0 0 1 3.3 1A2.6 2.6 0 0 1 12 12Z" fill="#00a1e0" />),
-  stripe: ico(
-    <>
-      <rect x="2" y="2" width="12" height="12" rx="3" fill="#635bff" />
-      <path d="M10 5.8c-.5-.3-1.1-.5-1.7-.5-.9 0-1.5.4-1.5 1 0 1.5 3.1 1 3.1 2.9 0 .8-.8 1.4-1.8 1.4-.7 0-1.4-.2-1.9-.6" fill="none" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" />
-    </>,
-  ),
-  slack: ico(
-    <>
-      <rect x="2" y="6.5" width="5" height="2" rx="1" fill="#36c5f0" />
-      <rect x="7.5" y="2" width="2" height="5" rx="1" fill="#2eb67d" />
-      <rect x="9" y="7.5" width="5" height="2" rx="1" fill="#ecb22e" />
-      <rect x="6.5" y="9" width="2" height="5" rx="1" fill="#e01e5a" />
-    </>,
-  ),
-  claude: ico(
-    <g stroke="#d97757" strokeWidth="1.4" strokeLinecap="round">
-      <path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4" />
+  crm: ico(
+    <g fill="none" stroke="#0ea5e9" strokeWidth="1.2">
+      <rect x="2" y="3" width="12" height="10" rx="2" />
+      <circle cx="6" cy="7" r="1.4" />
+      <path d="M3.8 11c.4-1.2 1.2-1.8 2.2-1.8s1.8.6 2.2 1.8M9.5 6.5h3M9.5 9h2" strokeLinecap="round" />
     </g>,
   ),
-  statuspage: ico(<><circle cx="8" cy="8" r="6" fill="#3fb950" /><path d="M5 8.5 7 10.5l4-4.5" fill="none" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" /></>),
+  payments: ico(
+    <g fill="none" stroke="#6366f1" strokeWidth="1.2">
+      <rect x="1.8" y="3.5" width="12.4" height="9" rx="2" />
+      <path d="M1.8 6.5h12.4M4.5 10h2.5" strokeLinecap="round" />
+    </g>,
+  ),
+  chat: ico(<path d="M3 3.5h10a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H7l-3 2.5v-2.5H3a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1Z" fill="none" stroke="#a855f7" strokeWidth="1.2" strokeLinejoin="round" />),
+  status: ico(<><circle cx="8" cy="8" r="6" fill="#3fb950" /><path d="M5 8.5 7 10.5l4-4.5" fill="none" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" /></>),
 };
 
 const I = decisionIcons;
 const defaultDecisions: Decision[] = [
   {
     id: "acme",
-    agent: "Sales agent",
-    model: "GPT-6 Sol",
-    icon: I.openai,
+    agent: "Борлуулалтын агент",
+    model: "Судлаач агент",
+    icon: I.agent,
     risk: "medium",
-    question: "Acme wants 25% off their $84k renewal or they'll switch – how should I respond?",
-    context: "Renewal in 9 days · 212 seats · they asked twice on yesterday's call.",
+    question: "Түнш компани 212 суудлын гэрээгээ 25% хөнгөлөлттэй сунгуулахыг хүсч байна, үгүй бол шилжинэ – яаж хариулах вэ?",
+    context: "Сунгалт 9 хоногийн дараа · 212 суудал · өчигдрийн уулзалтаар хоёр удаа асуусан.",
     options: [
       {
-        label: "Offer 15% instead",
-        icon: I.salesforce,
+        label: "Оронд нь 15% санал болгох",
+        icon: I.crm,
         pick: true,
         next: {
-          question: "Tie it to a longer contract?",
+          question: "Урт хугацааны гэрээтэй холбох уу?",
           options: [
-            { label: "Only with 2 years", pick: true, effects: ["$71.4k a year until 2028"], apps: [I.salesforce, I.stripe] },
-            { label: "For one year", effects: ["$71.4k · renews at full price"], apps: [I.salesforce] },
+            { label: "Зөвхөн 2 жилээр", pick: true, effects: ["2028 он хүртэл 15% хөнгөлөлт"], apps: [I.crm, I.payments] },
+            { label: "Нэг жилээр", effects: ["Дараа жил хөнгөлөлтгүй сунгагдана"], apps: [I.crm] },
           ],
         },
       },
       {
-        label: "Ask the VP",
-        icon: I.slack,
+        label: "Захиралаас асуух",
+        icon: I.chat,
         next: {
-          question: "What should I send along?",
+          question: "Юу хавсаргах вэ?",
           options: [
-            { label: "The call notes", effects: ["Summary of yesterday's call"], apps: [I.slack, I.salesforce] },
-            { label: "Usage and margin", effects: ["Margin drops to 41%"], apps: [I.slack, I.stripe] },
+            { label: "Уулзалтын тэмдэглэл", effects: ["Өчигдрийн уулзалтын хураангуй"], apps: [I.chat, I.crm] },
+            { label: "Ашиглалт ба ашгийн хувь", effects: ["Ашгийн хувь 41% болж буурна"], apps: [I.chat, I.payments] },
           ],
         },
       },
       {
-        label: "Accept 25%",
-        icon: I.stripe,
+        label: "25%-ийг зөвшөөрөх",
+        icon: I.payments,
         effects: [
           [
             {
-              text: "$63k a year · needs sign-off",
-              note: "Anything above 20% off needs the CRO's approval before the quote goes out.",
-              source: "Salesforce · approval rules",
+              text: "Жилийн орлого 25%-иар буурна · батламж хэрэгтэй",
+              note: "20%-иас дээш хөнгөлөлтийг үнийн санал илгээхээс өмнө борлуулалтын захирал батлах ёстой.",
+              source: "Харилцагчийн бүртгэл · батлах дүрэм",
             },
           ],
         ],
-        apps: [I.salesforce, I.stripe],
+        apps: [I.crm, I.payments],
       },
     ],
   },
   {
     id: "incident",
-    agent: "Incident agent",
-    model: "Claude Opus 5.5",
-    icon: I.claude,
+    agent: "Ослын агент",
+    model: "Үйл ажиллагааны агент",
+    icon: I.agent,
     risk: "high",
-    question: "Checkout errors are at 4% for 12 minutes – do we tell customers yet?",
-    context: "Started after the 14:02 deploy · rollback is running.",
+    question: "Төлбөрийн алдаа 12 минутын турш 4% байна – харилцагчдад одоо мэдэгдэх үү?",
+    context: "14:02-ын байршуулалтын дараа эхэлсэн · буцаалт явагдаж байна.",
     options: [
-      { label: "Post on the status page", icon: I.statuspage, pick: true, effects: ["Customers see “Investigating” within a minute"], apps: [I.statuspage] },
-      { label: "Wait for the rollback", icon: I.claude, effects: ["About 6 more minutes of silence"] },
-      { label: "Tell the team only", icon: I.slack, effects: ["#incidents gets the update"], apps: [I.slack] },
+      { label: "Төлөвийн хуудсанд нийтлэх", icon: I.status, pick: true, effects: ["Харилцагчид нэг минутын дотор «Шалгаж байна» гэж харна"], apps: [I.status] },
+      { label: "Буцаалтыг хүлээх", icon: I.agent, effects: ["Ойролцоогоор 6 минут чимээгүй"] },
+      { label: "Зөвхөн багт мэдэгдэх", icon: I.chat, effects: ["#осол суваг мэдээлэл авна"], apps: [I.chat] },
     ],
   },
 ];
@@ -142,7 +136,7 @@ export function DecisionTree({
   decisions = defaultDecisions,
   onChoose,
   allowOther = true,
-  title = "Decisions",
+  title = "Шийдвэрүүд",
   className = "",
 }: DecisionTreeProps) {
   const [doneIds, setDoneIds] = React.useState<string[]>([]);

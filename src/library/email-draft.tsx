@@ -76,9 +76,9 @@ export type EmailDraftProps = {
 };
 
 const defaultContacts: DraftContact[] = [
-  { name: "Jonas Weber", email: "jonas@northwind.io" },
-  { name: "Lena Hart", email: "lena@northwind.io" },
-  { name: "Finance team", email: "billing@northwind.io" },
+  { name: "Болд Ганбаатар", email: "bold@example.mn" },
+  { name: "Сарнай Төмөр", email: "sarnai@example.mn" },
+  { name: "Санхүүгийн баг", email: "finance@example.mn" },
 ];
 
 const first = (c: DraftContact) => c.name.trim().split(/\s+/)[0] ?? "";
@@ -98,21 +98,21 @@ const NO_ONE: DraftContact = { name: "", email: "" };
 const defaultTones: DraftTone[] = [
   {
     id: "friendly",
-    label: "Friendly",
+    label: "Найрсаг",
     body: (c) =>
-      `Hi ${first(c)}, a heads-up that your Growth plan renews on October 9 for $8,900 a year. If you'd like to add seats or switch to monthly billing, you can review the quote here:`,
+      `Сайн байна уу, ${first(c)}. Таны «Өсөлт» багц 10-р сарын 9-нд 12 суудлаар сунгагдана. Суудал нэмэх эсвэл сар бүрийн төлбөрт шилжих бол саналаа эндээс харна уу:`,
   },
   {
     id: "short",
-    label: "Short",
+    label: "Товч",
     body: (c) =>
-      `Hi ${first(c)}, your Growth plan renews on October 9 ($8,900/year). Quote for changes:`,
+      `${first(c)}, «Өсөлт» багц 10-р сарын 9-нд сунгагдана (12 суудал). Өөрчлөлтийн санал:`,
   },
   {
     id: "formal",
-    label: "Formal",
+    label: "Албан",
     body: (c) =>
-      `Dear ${c.name}, this is a reminder that your Growth subscription is scheduled to renew on October 9 at $8,900 per year. Should you wish to adjust seats or billing, please review the attached quote:`,
+      `Эрхэм ${c.name}, таны «Өсөлт» захиалга 10-р сарын 9-нд 12 суудлаар сунгагдахыг сануулж байна. Суудал эсвэл төлбөрийн нөхцөлөө өөрчлөх бол хавсаргасан саналтай танилцана уу:`,
   },
 ];
 
@@ -120,14 +120,14 @@ type Phase = "draft" | "sending" | "sent" | "discarded";
 
 export function EmailDraft({
   reference = "SUB-1182",
-  account = "Northwind Logistics",
-  amount = "$8,900",
-  status = "Renews in 5 days",
-  agent = "Renewal agent",
+  account = "Талын Тээвэр ХХК",
+  amount = "12 суудал",
+  status = "5 хоногийн дараа сунгагдана",
+  agent = "Сунгалтын агент",
   contacts = defaultContacts,
-  attachment = "Renewal-quote.pdf",
+  attachment = "Сунгалтын-санал.pdf",
   tones = defaultTones,
-  link = { label: "Review quote", href: "#" },
+  link = { label: "Санал харах", href: "#" },
   onSend,
   onDiscard,
   className,
