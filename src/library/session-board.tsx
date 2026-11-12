@@ -10,7 +10,7 @@ import * as React from "react";
  * line, PR and state tags, and a running line under live sessions; child
  * sessions sit indented under their parent and fold away with it.
  * Three views of the same data: by group, by state (tabs) and as cards.
- * Original Component Studio component. Colours follow tokens/tokens.json
+ * Original Thinking State component. Colours follow tokens/tokens.json
  * (bg, surface/2, border/default, text/*, accent/*, status/*).
  * Motion: rows arrive one after another, groups fold smoothly, counters count
  * up; all of it is off under prefers-reduced-motion.
