@@ -1,6 +1,6 @@
 /**
  * ScenarioChat — a role's own questions answered from the company's data,
- * with sources (owner 2026-11-12: «гол нь бүтэцлэгдсэн байдал ба эх
+ * with sources (2026-11-12: «гол нь бүтэцлэгдсэн байдал ба эх
  * сурвалж»). Data is the Company contract's `scenarios` (inai-sh #48):
  * question, sources (type · title · date), steps, answer, guard — passed
  * as props; the ac.me scenario text stays in inai-sh.

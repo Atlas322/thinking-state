@@ -23,6 +23,7 @@ const BASE = opt("base", "http://127.0.0.1:5182");
 const only = opt("only", "");
 
 const req = createRequire(import.meta.url);
+// playwright-core: PLAYWRIGHT_CORE (a path to it) or an installed `playwright-core` package
 const pwPath = process.env.PLAYWRIGHT_CORE || "playwright-core";
 const { chromium } = req(pwPath);
 const E = process.env;

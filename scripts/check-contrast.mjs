@@ -1,4 +1,4 @@
-// Contrast for every catalog preview, both themes (owner 2026-11-12):
+// Contrast for every catalog preview, both themes (2026-11-12):
 // text 4.5:1 (large text 3:1), icon glyphs 3:1, against the composited
 // background under them. Gradients and images are skipped (not measurable).
 //

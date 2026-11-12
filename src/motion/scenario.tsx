@@ -1,6 +1,6 @@
 /**
  * useScenario / <ScenarioRegion> — the Thinking State standard for a living
- * component (owner 2026-11-12): every component plays its own meaningful
+ * component (2026-11-12): every component plays its own meaningful
  * story — 3–5 states (e.g. request → waiting → approved → result), spring
  * transitions between them, a rest, then the loop again.
  *
