@@ -1,0 +1,276 @@
+/*
+ * @inai/thinking-state/site.css — GENERATED from tokens.css (npm run tokens:site).
+ * Theme А for a whole page: cream on :root, warm night on
+ * :root[data-theme="dark"]; Удирдах accent with data-ts-mode="manage".
+ * Use the --ts-color-* / --ts-font-* names below: they are the stable contract.
+ */
+
+:where(:root, .ts-theme-cream, [data-ts-theme="cream"]) {
+  --ts-page: #f0ede4;
+  --ts-side: #e8e4da;
+  --ts-surface: #f7f5ee;
+  --ts-soft: #efebe1;
+  --ts-soft-2: #e8e3d6;
+  --ts-raised: #efebe1;
+  --ts-line: #d8d3c6;
+  --ts-fg: #080808;
+  --ts-muted: #5c5a55;
+  --ts-faint: #8a877f;
+  /* accent by mode (see [data-ts-mode] below) */
+  --ts-electric: #1b5cff;
+  --ts-electric-fg: #1b5cff;
+  --ts-electric-soft: #dce5ff;
+  --ts-indigo: #3a4e8c;
+  --ts-indigo-fg: #3a4e8c;
+  --ts-indigo-soft: #e4e6ee;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-link: #1b5cff;
+  --ts-seg-on: #f7f5ee;
+  --ts-code: #ebe7dd;
+  --ts-green: #5e7a5f;
+  --ts-green-soft: #e3eadf;
+  --ts-amber: #a86a1e;
+  --ts-amber-soft: #f3e6cc;
+  --ts-red: #a8483a;
+  --ts-red-soft: #f1e2dc;
+  --ts-yellow: #9a7400;
+  --ts-yellow-soft: #f1e7c4;
+  --ts-violet: #6b47c9;
+  --ts-violet-soft: #e5ddf3;
+  --ts-teal: #0f7a70;
+  --ts-teal-soft: #d6e9e4;
+  --ts-glow: none;
+  --ts-glow-amber: none;
+  --ts-elevation: 0 1px 2px rgb(8 8 8 / 0.06), 0 6px 18px rgb(8 8 8 / 0.05);
+  /* priority */
+  --ts-prio-high: #a8483a;
+  --ts-prio-high-bg: #f1e2dc;
+  --ts-prio-medium: #86672a;
+  --ts-prio-medium-bg: #efe7d4;
+  --ts-prio-low: #5c5a55;
+  --ts-prio-low-bg: #ece8dd;
+  --ts-cat-1: #3a4e8c;
+  --ts-cat-1-bg: #e4e6ee;
+  --ts-cat-2: #5e7a5f;
+  --ts-cat-2-bg: #e3eadf;
+  --ts-cat-3: #86672a;
+  --ts-cat-3-bg: #efe7d4;
+  --ts-cat-4: #7a4e6a;
+  --ts-cat-4-bg: #eee2e8;
+  /* tiles and warm dark (Next Action, frontmatter, «Таны ээлж») */
+  --ts-tile-ochre: #e8e2d2;
+  --ts-tile-slate: #e4e6e9;
+  --ts-ink: #262522;
+  --ts-ink-card: #33312d;
+  --ts-ink-muted: #a3a099;
+  --ts-ink-label: #aebbda;
+  --ts-font: var(--ts-font-body);
+  --ts-font-display: var(--ts-font-head);
+  --ts-font-mono: var(--ts-font-code);
+  background: var(--ts-page);
+  color: var(--ts-fg);
+}
+
+:where(:root[data-theme="dark"], :root.dark, .ts-theme-night, [data-ts-theme="night"], [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
+  /* «бүлээн шөнө» — warm night */
+  --ts-page: #17130f;
+  --ts-side: #1d1813;
+  --ts-surface: #231d17;
+  --ts-soft: #2d261e;
+  --ts-soft-2: #3a3127;
+  --ts-raised: #3a3127;
+  --ts-line: #3d342a;
+  --ts-fg: #f3ece0;
+  --ts-muted: #b9ad9a;
+  --ts-faint: #8a7f6e;
+  --ts-electric: #4f7bff;
+  --ts-electric-fg: #a9beff;
+  --ts-electric-soft: #1e2a4d;
+  --ts-electric-gradient: linear-gradient(135deg, #4f7bff, #1b5cff);
+  --ts-indigo: #6e80d0;
+  --ts-indigo-deep: #3a4e8c;
+  /* #6E80D0 is ~4.3:1 on surface-1, so accent text uses a lighter indigo */
+  --ts-indigo-fg: #a7b3e6;
+  --ts-indigo-soft: #262b45;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-link: #a9beff;
+  --ts-seg-on: #3a3127;
+  --ts-code: #1d1813;
+  --ts-green: #9cc49a;
+  --ts-green-soft: #22301f;
+  --ts-amber: #e3a857;
+  --ts-amber-soft: #3a2e1c;
+  --ts-red: #e58b78;
+  --ts-red-soft: #3a231e;
+  --ts-yellow: #e3c25a;
+  --ts-yellow-soft: color-mix(in srgb, #e3c25a 14%, #231d17);
+  --ts-violet: #b8a2f0;
+  --ts-violet-soft: color-mix(in srgb, #b8a2f0 16%, #231d17);
+  --ts-teal: #8fcfc4;
+  --ts-teal-soft: color-mix(in srgb, #8fcfc4 14%, #231d17);
+  --ts-glow: 0 0 28px rgb(79 123 255 / 0.45);
+  --ts-glow-amber: 0 0 40px rgb(181 121 58 / 0.25);
+  --ts-elevation: 0 0 0 1px var(--ts-line);
+  --ts-prio-high: #e7907f;
+  --ts-prio-high-bg: #3a2420;
+  --ts-prio-medium: #d9b56a;
+  --ts-prio-medium-bg: #332a17;
+  --ts-prio-low: #b0ada5;
+  --ts-prio-low-bg: #26252a;
+  --ts-cat-1: #9fb0e6;
+  --ts-cat-1-bg: #1e2438;
+  --ts-cat-2: #a6c4a7;
+  --ts-cat-2-bg: #1d2a1f;
+  --ts-cat-3: #d9b56a;
+  --ts-cat-3-bg: #332a17;
+  --ts-cat-4: #d4a6c4;
+  --ts-cat-4-bg: #33222d;
+  --ts-tile-ochre: #2d261e;
+  --ts-tile-slate: #262620;
+  --ts-ink: #1d1813;
+  --ts-ink-card: #2d261e;
+  --ts-ink-muted: #b9ad9a;
+  --ts-ink-label: #a7b3e6;
+  --ts-font: var(--ts-font-body);
+  --ts-font-display: var(--ts-font-head);
+  --ts-font-mono: var(--ts-font-code);
+  color-scheme: dark;
+  background: var(--ts-page);
+  color: var(--ts-fg);
+}
+
+/* Mode: Удирдах = indigo accent on either surface; Үзэх = Electric. Only the accent changes.
+   The mode may sit on the themed element, inside it, or on an ancestor of it
+   (theme blocks reset the accent, so the ancestor case is listed explicitly). */
+:where(.ts-theme-manage, [data-ts-theme="manage"], [data-ts-mode="manage"], [data-ts-mode="manage"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-night)) {
+  --ts-accent: var(--ts-indigo);
+  --ts-accent-fg: var(--ts-indigo-fg);
+  --ts-accent-soft: var(--ts-indigo-soft);
+}
+:where([data-ts-mode="view"], [data-ts-mode="view"] :is([data-ts-theme], .ts-theme-cream, .ts-theme-night, .ts-theme-manage)) {
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+}
+
+/*
+ * Fonts by role. Heading (editorial, choice pending: Alegreya now; Literata,
+ * Source Serif 4, EB Garamond proposed — Figma 39:198066) and body (Onest;
+ * Inter also discussed) are one line each. Set them on :root to override.
+ * Load with Google Fonts css2 and no &text= so the cyrillic-ext subset (ү, ө)
+ * is served.
+ */
+:where(:root) {
+  --ts-font-head: "Alegreya", Georgia, "Times New Roman", serif;
+  --ts-font-body: "Onest", system-ui, sans-serif;
+  --ts-font-code: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Type scale (px / line-height), theme-independent. Phones: display 40, h1 30, h2 24. */
+:where(:root, [data-ts-theme]) {
+  --ts-fs-display: 64px;
+  --ts-lh-display: 1.05;
+  --ts-fs-h1: 44px;
+  --ts-lh-h1: 1.1;
+  --ts-fs-h2: 32px;
+  --ts-lh-h2: 1.15;
+  --ts-fs-h3: 24px;
+  --ts-lh-h3: 1.2;
+  --ts-fs-quote: 20px;
+  --ts-lh-quote: 1.4;
+  --ts-fs-body-lg: 18px;
+  --ts-lh-body-lg: 1.55;
+  --ts-fs-body: 15px;
+  --ts-lh-body: 1.55;
+  --ts-fs-ui: 14px;
+  --ts-lh-ui: 1.4;
+  --ts-fs-small: 13px;
+  --ts-lh-small: 1.45;
+  --ts-fs-label: 12px;
+  --ts-ls-label: 0.05em;
+  --ts-fs-caption: 11px;
+  --ts-fw-display: 500;
+  --ts-fw-ui: 500;
+}
+@media (max-width: 600px) {
+  :where(:root, [data-ts-theme]) {
+    --ts-fs-display: 40px;
+    --ts-fs-h1: 30px;
+    --ts-fs-h2: 24px;
+  }
+}
+
+/*
+ * Motion (--ts-motion-*): durations, easings and springs, theme-independent.
+ * Springs are physical (src/motion/spring.ts) rendered as CSS linear() curves;
+ * pair --ts-motion-spring-NAME with --ts-motion-spring-NAME-duration.
+ * Browsers without linear() get a cubic-bezier of the same character.
+ * Generated by motionTokensCss() — package.test.ts keeps them in sync.
+ */
+:where(:root, [data-ts-theme]) {
+  --ts-motion-dur-xs: 120ms;
+  --ts-motion-dur-sm: 200ms;
+  --ts-motion-dur-md: 320ms;
+  --ts-motion-dur-lg: 560ms;
+  --ts-motion-dur-xl: 900ms;
+  --ts-motion-loop-move: 1200ms;
+  --ts-motion-loop-rest: 4000ms;
+  --ts-motion-loop-period: 5200ms;
+  --ts-motion-loop-count: 3;
+  --ts-motion-stagger: 100ms;
+  --ts-motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ts-motion-ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ts-motion-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --ts-motion-ease-loop: cubic-bezier(0.45, 0, 0.55, 1);
+  --ts-motion-spring-soft-duration: 702ms;
+  --ts-motion-spring-settle-duration: 789ms;
+  --ts-motion-spring-heavy-duration: 1160ms;
+  --ts-motion-spring-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ts-motion-spring-settle: cubic-bezier(0.25, 1.2, 0.5, 1);
+  --ts-motion-spring-heavy: cubic-bezier(0.25, 1.2, 0.5, 1);
+}
+@supports (animation-timing-function: linear(0, 1)) {
+  :where(:root, [data-ts-theme]) {
+    --ts-motion-spring-soft: linear(0, 0.004 1%, 0.023 2.5%, 0.078 5%, 0.151 7.5%, 0.462 17%, 0.56 20.5%, 0.634 23.5%, 0.698 26.5%, 0.761 30%, 0.812 33.5%, 0.858 37.5%, 0.898 42%, 0.929 47%, 0.953 52.5%, 0.971 58.5%, 0.991 73.5%, 1);
+    --ts-motion-spring-settle: linear(0, 0.008 1.5%, 0.029 3%, 0.061 4.5%, 0.101 6%, 0.197 9%, 0.529 18.5%, 0.621 21.5%, 0.701 24.5%, 0.77 27.5%, 0.836 31%, 0.881 34%, 0.922 37.5%, 0.957 41.5%, 0.98 45.5%, 0.996 50%, 1.006 55%, 1.011 65.5%, 1);
+    --ts-motion-spring-heavy: linear(0, 0.004 1%, 0.021 2.5%, 0.05 4%, 0.102 6%, 0.198 9%, 0.513 18%, 0.62 21.5%, 0.699 24.5%, 0.768 27.5%, 0.833 31%, 0.878 34%, 0.918 37.5%, 0.953 41.5%, 0.976 45.5%, 0.993 50%, 1.004 55.5%, 1.009 66.5%, 1);
+  }
+}
+
+/* Stable aliases (declared wherever a theme or mode is, so they follow it). */
+:where(:root, [data-theme="dark"], [data-ts-theme], [data-ts-mode]) {
+  --ts-color-bg: var(--ts-page);
+  --ts-color-side: var(--ts-side);
+  --ts-color-surface: var(--ts-surface);
+  --ts-color-raised: var(--ts-raised);
+  --ts-color-tile: var(--ts-tile-ochre);
+  --ts-color-line: var(--ts-line);
+  --ts-color-text: var(--ts-fg);
+  --ts-color-text-muted: var(--ts-muted);
+  --ts-color-text-faint: var(--ts-faint);
+  --ts-color-accent: var(--ts-accent);
+  --ts-color-accent-text: var(--ts-accent-fg);
+  --ts-color-accent-soft: var(--ts-accent-soft);
+  --ts-color-electric: var(--ts-electric);
+  --ts-color-indigo: var(--ts-indigo);
+  --ts-color-link: var(--ts-link);
+  --ts-color-amber: var(--ts-amber);
+  --ts-color-amber-soft: var(--ts-amber-soft);
+  --ts-color-green: var(--ts-green);
+  --ts-color-red: var(--ts-red);
+  --ts-shadow: var(--ts-elevation);
+  --ts-shadow-glow: var(--ts-glow);
+  --ts-shadow-glow-amber: var(--ts-glow-amber);
+}
+
+:where(body) {
+  background: var(--ts-page);
+  color: var(--ts-fg);
+  font-family: var(--ts-font-body);
+  font-size: var(--ts-fs-body);
+  line-height: var(--ts-lh-body);
+}

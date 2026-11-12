@@ -1,7 +1,7 @@
 // Builds the @inai/thinking-state package into lib/:
 //   1. vite library build (ESM, React external) → lib/index.js, lib/chat.js
 //   2. TypeScript declarations → lib/types
-//   3. tokens.css → lib/tokens.css
+//   3. tokens.css, site.css → lib/ (site.css is generated: npm run tokens:site)
 //   4. guard: no fixtures or vault data may end up in the package
 import { execSync } from "node:child_process";
 import fs from "node:fs";
@@ -14,6 +14,7 @@ const run = (cmd) => execSync(cmd, { cwd: root, stdio: "inherit" });
 run("npx vite build -c vite.lib.config.ts --logLevel warn");
 run("npx tsc -p tsconfig.lib.json");
 fs.copyFileSync(path.join(root, "src/lib/tokens.css"), path.join(root, "lib/tokens.css"));
+fs.copyFileSync(path.join(root, "src/lib/site.css"), path.join(root, "lib/site.css"));
 const tokens = fs.readFileSync(path.join(root, "lib/tokens.css"), "utf8");
 for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="night"]', '[data-ts-theme="manage"]', '[data-ts-mode="manage"]', "--ts-surface", '"Alegreya"', '"Onest"'])
   if (!tokens.includes(need)) {

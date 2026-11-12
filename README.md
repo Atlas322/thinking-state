@@ -103,8 +103,19 @@ its own defaults. `tokens.css` нь Theme А (Figma `39:195990`). Хоёр тэ�
 `--ts-glow-amber`, `--ts-elevation` (night дээр 1px шугам), бичгийн шатлал
 `--ts-fs-*` / `--ts-lh-*` (утсанд display 40, h1 30, h2 24) нэмэгдсэн. Хув шарыг
 зөвхөн 4 газарт хэрэглэнэ: хүний батлах дохио, Medium priority, нэг онцлох тоо,
-доод туяа. Фонт багцад орохгүй: Alegreya (500, quote 400), Onest (400/500/600),
-JetBrains Mono (400/500)-г апп дотроо ачаал.
+доод туяа. Фонт нь үүргээрээ хувьсагчтай: `--ts-font-head` (Alegreya, editorial
+сонголт хүлээгдэж байна), `--ts-font-body` (Onest), `--ts-font-code` (JetBrains
+Mono). Солих бол `:root` дээр нэг мөрөөр сольж болно. Фонт багцад орохгүй. Google
+Fonts css2-оор `&text=`-гүй ачаал, тэгвэл ү, ө үсэгтэй cyrillic-ext subset ирнэ.
+
+**Сайт (`@inai/thinking-state/site.css`).** Маркетингийн сайтад зориулсан, ижил
+token-оос үүсгэсэн файл. Wrapper шаардахгүй: `:root` нь cream,
+`:root[data-theme="dark"]` нь бүлээн шөнө, `data-ts-mode="manage"` нь индиго accent.
+Тогтвортой alias-ууд: `--ts-color-bg/side/surface/raised/tile/line/text/text-muted/
+text-faint/accent/accent-text/accent-soft/electric/indigo/link/amber/amber-soft/
+green/red`, `--ts-shadow`, `--ts-shadow-glow`, `--ts-shadow-glow-amber`,
+`--ts-font-head/body/code`, `--ts-fs-*`. tokens.css-ийг өөрчилсний дараа
+`npm run tokens:site` ажиллуул (тест зөрөхийг барина).
 
 **Exports**
 

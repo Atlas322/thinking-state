@@ -17,6 +17,7 @@
       "import": "./lib/chat.js"
     },
     "./tokens.css": "./lib/tokens.css",
+    "./site.css": "./lib/site.css",
     "./package.json": "./package.json"
   },
   "files": [
@@ -46,7 +47,8 @@
     "chat:html": "node scripts/chat-html.mjs",
     "start": "node server.mjs",
     "build:lib": "node scripts/build-lib.mjs",
-    "release:lib": "node scripts/release-lib.mjs"
+    "release:lib": "node scripts/release-lib.mjs",
+    "tokens:site": "node scripts/site-css.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",
