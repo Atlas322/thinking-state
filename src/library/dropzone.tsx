@@ -411,8 +411,8 @@ export function Dropzone({
 }
 
 const css = `
-.dz{--dz-bg:#fff;--dz-fg:#18181b;--dz-muted:#65656d;--dz-faint:#65656d;--dz-line:#ececef;--dz-dash:#d4d4d8;--dz-soft:#f7f7f8;--dz-blue:#3b82f6;--dz-blue-wash:#eff6ff;--dz-red:#e5484d;--dz-green:#30a46c;--dz-amber:#e5a000;width:100%;max-width:522px;padding:8px;background:var(--dz-bg);color:var(--dz-fg);border:1px solid var(--dz-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;box-sizing:border-box}
-:where(.dark,[data-theme=dark]) .dz{--dz-bg:#1b1b1e;--dz-fg:#ececef;--dz-muted:#a1a1aa;--dz-faint:#9a9aa2;--dz-line:#2c2c31;--dz-dash:#3f3f46;--dz-soft:#232328;--dz-blue:#7aa2ff;--dz-blue-wash:#1b2540;color-scheme:dark}
+.dz{--dz-bg:#fff;--dz-fg:#18181b;--dz-muted:#65656d;--dz-faint:#65656d;--dz-line:#ececef;--dz-dash:#d4d4d8;--dz-soft:#f7f7f8;--dz-blue:#2563eb;--dz-blue-wash:#eff6ff;--dz-red:#c62828;--dz-green:#30a46c;--dz-amber:#b45309;width:100%;max-width:522px;padding:8px;background:var(--dz-bg);color:var(--dz-fg);border:1px solid var(--dz-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;box-sizing:border-box}
+:where(.dark,[data-theme=dark]) .dz{--dz-bg:#1b1b1e;--dz-fg:#ececef;--dz-muted:#a1a1aa;--dz-faint:#9a9aa2;--dz-line:#2c2c31;--dz-dash:#3f3f46;--dz-soft:#232328;--dz-blue:#7aa2ff;--dz-blue-wash:#1b2540;--dz-red:#f87171;--dz-amber:#e5a000;color-scheme:dark}
 .dz *{box-sizing:border-box}.dz button{font:inherit;color:inherit;cursor:pointer}
 .dz-drop{display:flex;flex-direction:column;align-items:center;width:100%;padding:28px 16px 21px;border:1px dashed var(--dz-dash);border-radius:8px;background:none;transition:background .2s,border-color .2s}
 .dz-drop:hover{background:var(--dz-soft)}

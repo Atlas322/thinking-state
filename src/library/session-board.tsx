@@ -768,7 +768,7 @@ const css = `
 .sb-owner{margin:1px 0 0;font-size:12.5px;color:var(--sb-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-status{flex:none;display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:6px;font-size:12px;font-weight:500}
 .sb-status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.sb-tone-green{background:var(--sb-green-soft);color:color-mix(in srgb,var(--sb-green) 78%,var(--sb-fg))}
+.sb-tone-green{background:var(--sb-green-soft);color:color-mix(in srgb,var(--sb-green) 70%,var(--sb-fg))}
 .sb-tone-amber{background:var(--sb-amber-soft);color:color-mix(in srgb,var(--sb-amber) 82%,var(--sb-fg))}
 .sb-tone-blue{background:var(--sb-accent-soft);color:color-mix(in srgb,var(--sb-accent) 72%,var(--sb-fg))}
 .sb-tone-red{background:var(--sb-red-soft);color:color-mix(in srgb,var(--sb-red) 82%,var(--sb-fg))}

@@ -378,8 +378,8 @@ const css = /* css */ `
 .ui-tagc {
   --ui-tagc-title: rgba(0, 0, 0, 0.88);
   --ui-tagc-ink: rgba(0, 0, 0, 0.88);
-  --ui-tagc-muted: rgba(0, 0, 0, 0.61);
-  --ui-tagc-subtle: rgba(0, 0, 0, 0.45);
+  --ui-tagc-muted: rgba(0, 0, 0, 0.7);
+  --ui-tagc-subtle: rgba(0, 0, 0, 0.6);
   --ui-tagc-faint: rgba(0, 0, 0, 0.3);
   --ui-tagc-surface: #ffffff;
   --ui-tagc-chip: rgba(0, 0, 0, 0.045);
@@ -390,7 +390,7 @@ const css = /* css */ `
   --ui-tagc-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 1px -1px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --ui-tagc-shadow-hover: 0 0 0 0.5px rgba(0, 0, 0, 0.13), 0 1px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --ui-tagc-shadow-focus: 0 0 0 1px rgba(0, 0, 0, 0.28), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --ui-tagc-danger: #d93d42;
+  --ui-tagc-danger: #c62828;
   --ui-tagc-danger-edge: rgba(229, 72, 77, 0.55);
   --ui-tagc-focus: rgba(0, 96, 226, 0.7);
   --ui-tagc-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -504,7 +504,7 @@ const css = /* css */ `
 .ui-tagc__foot { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
 .ui-tagc__message { flex: 1; min-width: 0; margin: 0; font-size: 12px; line-height: 16px; color: var(--ui-tagc-subtle); overflow-wrap: anywhere; animation: ui-tagc-message 260ms var(--ui-tagc-ease); }
 .ui-tagc[data-invalid] .ui-tagc__message { color: var(--ui-tagc-danger); }
-.ui-tagc__count { flex: none; margin-left: auto; font-size: 12px; line-height: 16px; font-variant-numeric: tabular-nums; color: var(--ui-tagc-faint); }
+.ui-tagc__count { flex: none; margin-left: auto; font-size: 12px; line-height: 16px; font-variant-numeric: tabular-nums; color: var(--ui-tagc-subtle); }
 .ui-tagc__count[data-full] { color: var(--ui-tagc-muted); }
 .ui-tagc__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 

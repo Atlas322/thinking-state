@@ -292,7 +292,7 @@ const css = `
 :where(.dark,[data-theme=dark]) .di-scope button[data-active]{background:#3a3a40}
 .di-title{flex:1;min-width:0;margin:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .di-left{flex:none;height:22px;padding:0 8px;border-radius:11px;background:var(--di-amber-soft);color:color-mix(in srgb,var(--di-amber) 82%,var(--di-fg));font-size:12px;font-weight:500;line-height:22px;font-variant-numeric:tabular-nums;transition:background .2s,color .2s}
-.di-left.is-zero{background:var(--di-green-soft);color:color-mix(in srgb,var(--di-green) 78%,var(--di-fg))}
+.di-left.is-zero{background:var(--di-green-soft);color:color-mix(in srgb,var(--di-green) 70%,var(--di-fg))}
 .di-done{display:flex;align-items:center;gap:8px;margin:0;padding:10px 12px;border-bottom:1px solid var(--di-line);background:var(--di-green-soft);color:color-mix(in srgb,var(--di-green) 70%,var(--di-fg));font-size:13px;font-weight:500;animation:di-fade .25s ease both}
 .di-done-mark,.di-check{display:grid;place-items:center;flex:none;width:18px;height:18px;border-radius:50%;background:var(--di-green);color:#fff}
 :where(.dark,[data-theme=dark]) .di-done-mark,:where(.dark,[data-theme=dark]) .di-check{color:#111}

@@ -179,7 +179,7 @@ export function KPIChart({
 }
 
 const css = `
-.kpc{--kpc-bg:#fff;--kpc-fg:#18181b;--kpc-muted:#65656d;--kpc-faint:#65656d;--kpc-line:#ececef;--kpc-grid:#f0f0f2;--kpc-up:#16a34a;--kpc-up-bg:#e9f8ee;--kpc-down:#dc2626;--kpc-down-bg:#fdecec;width:100%;max-width:440px;background:var(--kpc-bg);color:var(--kpc-fg);border:1px solid var(--kpc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:visible}
+.kpc{--kpc-bg:#fff;--kpc-fg:#18181b;--kpc-muted:#65656d;--kpc-faint:#65656d;--kpc-line:#ececef;--kpc-grid:#f0f0f2;--kpc-up:#15803d;--kpc-up-bg:#e9f8ee;--kpc-down:#c62828;--kpc-down-bg:#fdecec;width:100%;max-width:440px;background:var(--kpc-bg);color:var(--kpc-fg);border:1px solid var(--kpc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:visible}
 :where(.dark,[data-theme=dark]) .kpc{--kpc-bg:#1b1b1e;--kpc-fg:#ececef;--kpc-muted:#a1a1aa;--kpc-faint:#9a9aa2;--kpc-line:#2e2e33;--kpc-grid:#26262b;--kpc-up:#4ade80;--kpc-up-bg:#16301f;--kpc-down:#f87171;--kpc-down-bg:#3a1d1f;color-scheme:dark}
 .kpc *{box-sizing:border-box}
 .kpc-body{padding:16px 16px 12px}

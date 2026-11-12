@@ -306,7 +306,7 @@ button.cv-raci-who:hover{background:var(--cv-soft)}
 .cv-raci-l.is-A{background:var(--cv-fg);color:var(--cv-bg)}
 .cv-raci-l.is-C{background:var(--cv-teal-soft);color:color-mix(in srgb,var(--cv-teal) 75%,var(--cv-fg))}
 .cv-raci-l.is-I{background:var(--cv-soft);color:var(--cv-muted)}
-.cv-raci-l.is-task{opacity:.55;box-shadow:inset 0 0 0 1px currentColor;background:none}
+.cv-raci-l.is-task{outline:1px dashed currentColor;outline-offset:-1px;background:none}.cv-raci-l.is-A.is-task{color:var(--cv-fg)}
 .cv-resp-sub{display:block;font-size:11.5px;color:var(--cv-muted)}
 .cv-raci-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--cv-line)}
 .cv-raci-note{color:var(--cv-faint)}

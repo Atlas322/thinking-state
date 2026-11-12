@@ -499,8 +499,8 @@ const css = /* css */ `
 .ui-selc {
   --ui-selc-title: rgba(0, 0, 0, 0.88);
   --ui-selc-ink: rgba(0, 0, 0, 0.88);
-  --ui-selc-subtle: rgba(0, 0, 0, 0.45);
-  --ui-selc-faint: rgba(0, 0, 0, 0.3);
+  --ui-selc-subtle: rgba(0, 0, 0, 0.65);
+  --ui-selc-faint: rgba(0, 0, 0, 0.6);
   --ui-selc-icon: rgba(0, 0, 0, 0.447);
   --ui-selc-surface: #ffffff;
   --ui-selc-menu: #ffffff;
@@ -510,7 +510,7 @@ const css = /* css */ `
   --ui-selc-shadow-hover: 0 0 0 0.5px rgba(0, 0, 0, 0.13), 0 1px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --ui-selc-shadow-open: 0 0 0 1px rgba(0, 0, 0, 0.28), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --ui-selc-shadow-menu: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 8px 24px -6px rgba(0, 0, 0, 0.14), 0 2px 6px -2px rgba(0, 0, 0, 0.06);
-  --ui-selc-danger: #d93d42;
+  --ui-selc-danger: #c62828;
   --ui-selc-danger-edge: rgba(229, 72, 77, 0.55);
   --ui-selc-focus: rgba(0, 96, 226, 0.7);
   --ui-selc-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -669,8 +669,8 @@ const css = /* css */ `
 :where(.dark, [data-theme="dark"]) .ui-selc {
   --ui-selc-title: rgba(255, 255, 255, 0.92);
   --ui-selc-ink: rgba(255, 255, 255, 0.9);
-  --ui-selc-subtle: rgba(255, 255, 255, 0.46);
-  --ui-selc-faint: rgba(255, 255, 255, 0.3);
+  --ui-selc-subtle: rgba(255, 255, 255, 0.64);
+  --ui-selc-faint: rgba(255, 255, 255, 0.58);
   --ui-selc-icon: rgba(255, 255, 255, 0.5);
   --ui-selc-surface: #1c1c1e;
   --ui-selc-menu: #1f1f22;
@@ -726,7 +726,7 @@ export default function Demo() {
         padding: 20,
         borderRadius: 12,
         border: "1px solid rgba(0,0,0,0.08)",
-        background: "var(--background, #fff)",
+        background: "var(--background, Canvas)",
         display: "flex",
         flexDirection: "column",
         gap: 20,

@@ -414,7 +414,7 @@ export function MethodologyView({
 }
 
 export const methodologyCss = `
-.cv-method{display:flex;flex-direction:column;gap:18px}
+.cv-method{display:flex;flex-direction:column;gap:18px;container:cv/inline-size}
 .cv-bmc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-areas:"kp ka vp cr cs" "kp kr vp ch cs" "co co co rv rv";gap:6px}
 .cv-bmc.is-flow{grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));grid-template-areas:none}
 .cv-bmc-cell{min-width:0;padding:12px;border:1px solid var(--cv-line);border-radius:10px;background:var(--cv-bg);animation:cv-in .34s cubic-bezier(.2,.8,.3,1) both;animation-delay:calc(var(--i,0) * 40ms)}

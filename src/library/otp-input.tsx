@@ -594,8 +594,8 @@ const css = /* css */ `
   --ui-otpc-card: #ffffff;
   --ui-otpc-ink: rgba(0, 0, 0, 0.88);
   --ui-otpc-strong: #000000;
-  --ui-otpc-text: rgba(0, 0, 0, 0.61);
-  --ui-otpc-muted: rgba(0, 0, 0, 0.45);
+  --ui-otpc-text: rgba(0, 0, 0, 0.7);
+  --ui-otpc-muted: rgba(0, 0, 0, 0.62);
   --ui-otpc-faint: rgba(0, 0, 0, 0.27);
   --ui-otpc-icon: rgba(0, 0, 0, 0.447);
   --ui-otpc-line: rgba(0, 0, 0, 0.06);
@@ -857,8 +857,8 @@ const css = /* css */ `
   --ui-otpc-card: #1c1c1e;
   --ui-otpc-ink: rgba(255, 255, 255, 0.9);
   --ui-otpc-strong: #ffffff;
-  --ui-otpc-text: rgba(255, 255, 255, 0.62);
-  --ui-otpc-muted: rgba(255, 255, 255, 0.46);
+  --ui-otpc-text: rgba(255, 255, 255, 0.7);
+  --ui-otpc-muted: rgba(255, 255, 255, 0.62);
   --ui-otpc-faint: rgba(255, 255, 255, 0.3);
   --ui-otpc-icon: rgba(255, 255, 255, 0.5);
   --ui-otpc-line: rgba(255, 255, 255, 0.1);
@@ -893,6 +893,7 @@ const demoCss = `
 :where(.dark, [data-theme="dark"]) .otp-demo-icon { color: #a3a3a3; box-shadow: 0 0 0 1px rgba(255,255,255,0.12); }
 :where(.dark, [data-theme="dark"]) .otp-demo-sub b, :where(.dark, [data-theme="dark"]) .otp-demo-foot b { color: #ededed; }
 :where(.dark, [data-theme="dark"]) .otp-demo-foot { border-top-color: rgba(255,255,255,0.08); }
+:where(.dark, [data-theme="dark"]) .otp-demo-sub, :where(.dark, [data-theme="dark"]) .otp-demo-foot { color: #9a9aa2; }
 `;
 
 /** Working example; use the named OtpInput export in your application. */

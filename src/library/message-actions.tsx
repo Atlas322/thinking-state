@@ -703,8 +703,8 @@ const css = /* css */ `
   --ui-mac-card: #ffffff;
   --ui-mac-strong: #000000;
   --ui-mac-ink: rgba(0, 0, 0, 0.88);
-  --ui-mac-text: rgba(0, 0, 0, 0.61);
-  --ui-mac-muted: rgba(0, 0, 0, 0.45);
+  --ui-mac-text: rgba(0, 0, 0, 0.7);
+  --ui-mac-muted: rgba(0, 0, 0, 0.62);
   --ui-mac-faint: rgba(0, 0, 0, 0.27);
   --ui-mac-icon: rgba(0, 0, 0, 0.447);
   --ui-mac-line: rgba(0, 0, 0, 0.06);
@@ -745,11 +745,11 @@ const css = /* css */ `
 /* ----- The bar: quiet until the message is hovered, something inside is focused or busy ----- */
 /* Wraps to a second row in a very narrow message instead of running out of it */
 .ui-mac__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; min-height: 28px; transition: opacity 240ms ease; }
-.ui-mac[data-quiet] .ui-mac__bar { opacity: 0.6; }
+.ui-mac[data-quiet] .ui-mac__bar { --ui-mac-ink: var(--ui-mac-muted); }
 .ui-mac[data-quiet]:hover .ui-mac__bar,
 .ui-mac[data-quiet]:focus-within .ui-mac__bar,
 .ui-mac[data-quiet][data-active] .ui-mac__bar,
-:where([data-ui-message]:hover, [data-ui-message]:focus-within) .ui-mac[data-quiet] .ui-mac__bar { opacity: 1; }
+:where([data-ui-message]:hover, [data-ui-message]:focus-within) .ui-mac[data-quiet] .ui-mac__bar { --ui-mac-ink: inherit; }
 
 /* Ghost icon buttons; pressed takes the selected-tab look */
 .ui-mac__item { position: relative; display: inline-flex; flex: none; }
@@ -805,7 +805,7 @@ const css = /* css */ `
 .ui-mac__step[data-dir="prev"] .ui-mac__glyph { transform: scaleX(-1); }
 .ui-mac__step:hover:not(:disabled) { background: var(--ui-mac-wash); color: var(--ui-mac-ink); }
 .ui-mac__step:disabled { cursor: default; opacity: 0.45; }
-.ui-mac__count { display: inline-flex; align-items: center; gap: 2px; padding: 0 2px; font-size: 12px; line-height: 16px; color: var(--ui-mac-faint); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ui-mac__count { display: inline-flex; align-items: center; gap: 2px; padding: 0 2px; font-size: 12px; line-height: 16px; color: var(--ui-mac-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .ui-mac__count-now { color: var(--ui-mac-ink); font-weight: 500; }
 .ui-mac__count > .ui-mac__swap:last-child { color: var(--ui-mac-muted); }
 
@@ -859,7 +859,7 @@ const css = /* css */ `
 }
 
 @media (pointer: coarse) {
-  .ui-mac[data-quiet] .ui-mac__bar { opacity: 1; }
+  .ui-mac[data-quiet] .ui-mac__bar { --ui-mac-ink: inherit; }
   .ui-mac__btn { width: 36px; height: 36px; }
   .ui-mac__step { width: 28px; height: 36px; }
   .ui-mac__chip, .ui-mac__send { height: 34px; padding-top: 7px; padding-bottom: 7px; }
@@ -878,8 +878,8 @@ const css = /* css */ `
   --ui-mac-card: #1c1c1e;
   --ui-mac-strong: #ffffff;
   --ui-mac-ink: rgba(255, 255, 255, 0.9);
-  --ui-mac-text: rgba(255, 255, 255, 0.62);
-  --ui-mac-muted: rgba(255, 255, 255, 0.46);
+  --ui-mac-text: rgba(255, 255, 255, 0.7);
+  --ui-mac-muted: rgba(255, 255, 255, 0.62);
   --ui-mac-faint: rgba(255, 255, 255, 0.3);
   --ui-mac-icon: rgba(255, 255, 255, 0.5);
   --ui-mac-line: rgba(255, 255, 255, 0.08);

@@ -288,14 +288,14 @@ export function AgentCheckpoints({
 }
 
 const css = `
-.ackc{--ui-ackc-link:#82bcff;--ui-ackc-dim:.45;--ackc-bg:#fff;--ackc-fg:#18181b;--ackc-muted:#65656d;--ackc-faint:#65656d;--ackc-line:#ececef;--ackc-chip:#f1f1f3;--ackc-head:#2563eb;width:100%;max-width:480px;background:var(--ackc-bg);color:var(--ackc-fg);border:1px solid var(--ackc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.ackc{--ui-ackc-link:#82bcff;--ackc-bg:#fff;--ackc-fg:#18181b;--ackc-muted:#65656d;--ackc-faint:#65656d;--ackc-line:#ececef;--ackc-chip:#f1f1f3;--ackc-head:#2563eb;width:100%;max-width:480px;background:var(--ackc-bg);color:var(--ackc-fg);border:1px solid var(--ackc-line);border-radius:12px;box-shadow:0 1px 2px #0000000a;font:400 14px/1.4 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
 :where(.dark,[data-theme=dark]) .ackc{--ackc-bg:#1b1b1e;--ackc-fg:#ececef;--ackc-muted:#a1a1aa;--ackc-faint:#9a9aa2;--ackc-line:#2e2e33;--ackc-chip:#2a2a2f;--ackc-head:#5b9bff;color-scheme:dark}
 .ackc *{box-sizing:border-box}.ackc button{font:inherit;color:inherit;cursor:pointer}
-.ackc-bar{display:flex;align-items:center;gap:8px;padding:12px 16px 6px 16px;font-size:13px;white-space:nowrap}
+.ackc-bar{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;padding:12px 16px 6px 16px;font-size:13px;white-space:nowrap}
 .ackc-mark{width:14px;height:14px;color:var(--ackc-muted);flex:none}
 .ackc-bar strong{font-weight:500;font-size:14px}
 .ackc-task{color:var(--ackc-muted);overflow:hidden;text-overflow:ellipsis;min-width:0}
-.ackc-sum{margin-left:auto;padding-left:12px;font-size:12px;color:var(--ackc-muted)}
+.ackc-sum{margin-left:auto;padding-left:12px;white-space:normal;font-size:12px;color:var(--ackc-muted)}
 .ackc-body{display:flex;gap:10px;padding:0 14px 10px 16px;max-height:${14 * ROW + 10}px;overflow:auto}
 .ackc-rail{flex:none;overflow:visible}
 .ackc-rail path{fill:none;stroke-width:1.5}
@@ -305,12 +305,12 @@ const css = `
 .ackc-list{list-style:none;margin:0;padding:0;flex:1;min-width:0}
 .ackc-row{position:relative;display:flex;align-items:center;gap:8px;height:${ROW}px;padding:0 2px;border-radius:6px;outline:none;animation:ackc-in .3s both}
 .ackc-row:focus-visible{box-shadow:0 0 0 2px var(--ui-ackc-link)}
-.ackc-row.is-left>:not(.ackc-rewind){opacity:var(--ui-ackc-dim)}
+.ackc-row.is-left{--ackc-fg:var(--ackc-muted);color:var(--ackc-muted)}
 .ackc-ico{display:grid;place-items:center;width:16px;height:16px;flex:none}.ackc-ico svg{width:14px;height:14px}
 .ackc-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .is-running .ackc-title{background:linear-gradient(90deg,var(--ackc-fg) 30%,var(--ackc-faint) 50%,var(--ackc-fg) 70%) 0/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:ackc-shim 1.4s linear infinite}
 .ackc-tag{flex:none;padding:1px 6px;border-radius:4px;background:var(--ackc-chip);font-size:12px;color:var(--ackc-muted)}
-.ackc-tag.is-fail{background:#fdecec;color:#e35d5d}
+.ackc-tag.is-fail{background:#fdecec;color:#c62828}
 :where(.dark,[data-theme=dark]) .ackc-tag.is-fail{background:#3a1717;color:#fca5a5}
 .ackc-meta{display:flex;align-items:center;gap:20px;margin-left:auto;padding-left:8px;flex:none;font-size:12px}
 .ackc-files{display:inline-flex;align-items:center;gap:5px;color:var(--ackc-faint)}.ackc-files svg{width:11px;height:11px}

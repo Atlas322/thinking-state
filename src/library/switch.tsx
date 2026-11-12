@@ -113,7 +113,7 @@ const css = /* css */ `
 /* Colors and motion as variables – override them on .ui-swc (see Theming in the docs) */
 .ui-swc {
   --ui-swc-ink: rgba(0, 0, 0, 0.88);
-  --ui-swc-subtle: rgba(0, 0, 0, 0.45);
+  --ui-swc-subtle: rgba(0, 0, 0, 0.6);
   --ui-swc-off: rgba(0, 0, 0, 0.12);
   --ui-swc-off-hover: rgba(0, 0, 0, 0.18);
   --ui-swc-on: rgba(0, 0, 0, 0.88);

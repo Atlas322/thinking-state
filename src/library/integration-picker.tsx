@@ -298,7 +298,7 @@ export function IntegrationPicker({
 }
 
 const css = `
-.ip{--ip-bg:#fff;--ip-fg:#18181b;--ip-muted:#65656d;--ip-faint:#65656d;--ip-line:#ececef;--ip-soft:#f4f4f5;--ip-hover:#efeff1;--ip-stage:#f7f7f8;--ip-blue:#3b82f6;--ip-green:#15803d;--ip-green-bg:#e3f6e8;width:100%;max-width:660px;background:var(--ip-bg);color:var(--ip-fg);border:1px solid var(--ip-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden;container:ip/inline-size}
+.ip{--ip-bg:#fff;--ip-fg:#18181b;--ip-muted:#65656d;--ip-faint:#65656d;--ip-line:#ececef;--ip-soft:#f4f4f5;--ip-hover:#efeff1;--ip-stage:#f7f7f8;--ip-blue:#3b82f6;--ip-green:#166534;--ip-green-bg:#e3f6e8;width:100%;max-width:660px;background:var(--ip-bg);color:var(--ip-fg);border:1px solid var(--ip-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden;container:ip/inline-size}
 :where(.dark,[data-theme=dark]) .ip{--ip-bg:#1b1b1e;--ip-fg:#ececef;--ip-muted:#a1a1aa;--ip-faint:#9a9aa2;--ip-line:#2e2e33;--ip-soft:#26262a;--ip-hover:#2a2a2f;--ip-stage:#222226;--ip-green:#4ade80;--ip-green-bg:#173323;color-scheme:dark}
 .ip *{box-sizing:border-box}.ip button{font:inherit;color:inherit;cursor:pointer}
 .ip-head{display:flex;align-items:center;gap:8px;height:46px;padding:0 12px 0 10px;border-bottom:1px solid var(--ip-line)}

@@ -247,7 +247,7 @@ export function PromptLibrary({
                   title={desc}
                   placeholder={label}
                   value={values[n]}
-                  style={{ width: `calc(${Math.max(2, (values[n] || label).length) * 0.56}em + 12px)` }}
+                  style={{ width: `calc(${Math.max(2, (values[n] || label).length) * 0.64}em + 12px)` }}
                   onChange={(e) => setVal(n, e.target.value)}
                   onBlur={() => setLit(null)}
                   onKeyDown={(e) => {
@@ -298,10 +298,10 @@ export function PromptLibrary({
 }
 
 const css = `
-.pl{--pl-bg:#fff;--pl-fg:#18181b;--pl-muted:#65656d;--pl-faint:#65656d;--pl-line:#ececef;--pl-soft:#f4f4f5;--pl-hl:#f1f1f3;--pl-accent:#3b6be0;--pl-red:#d14343;container:pl/inline-size;display:grid;grid-template-columns:220px minmax(0,1fr);width:100%;max-width:640px;background:var(--pl-bg);color:var(--pl-fg);border:1px solid var(--pl-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 4px 14px -8px #00000014;font:400 12.5px/1.5 Inter,system-ui,sans-serif;overflow:hidden}
+.pl{--pl-bg:#fff;--pl-fg:#18181b;--pl-muted:#65656d;--pl-faint:#65656d;--pl-line:#ececef;--pl-soft:#f4f4f5;--pl-hl:#f1f1f3;--pl-accent:#3b6be0;--pl-red:#d14343;container:pl/inline-size;display:flex;flex-wrap:wrap;width:100%;max-width:640px;background:var(--pl-bg);color:var(--pl-fg);border:1px solid var(--pl-line);border-radius:12px;box-shadow:0 1px 2px #0000000a,0 4px 14px -8px #00000014;font:400 12.5px/1.5 Inter,system-ui,sans-serif;overflow:hidden}
 :where(.dark,[data-theme=dark]) .pl{--pl-bg:#1b1b1e;--pl-fg:#ececef;--pl-muted:#a1a1aa;--pl-faint:#9a9aa2;--pl-line:#2c2c31;--pl-soft:#26262b;--pl-hl:#2a2a2f;--pl-accent:#7c9cff;--pl-red:#f08585;color-scheme:dark}
 .pl *{box-sizing:border-box}.pl button{font:inherit;color:inherit;cursor:pointer}
-.pl-side{padding:12px 8px 12px;border-right:1px solid var(--pl-line);min-width:0}
+.pl-side{flex:1 1 220px;padding:12px 8px 12px;border-right:1px solid var(--pl-line);min-width:0}
 .pl-side-head{display:flex;align-items:center;gap:7px;padding:0 8px 10px;font-weight:500}.pl-n{color:var(--pl-faint);font-weight:400;font-size:12px}
 .pl-search{display:flex;align-items:center;gap:7px;height:28px;margin:0 0 10px;padding:0 8px;border:1px solid var(--pl-line);border-radius:7px}
 .pl-search svg{width:13px;height:13px;color:var(--pl-faint);flex:none}
@@ -314,10 +314,10 @@ const css = `
 .pl-item:focus-visible{box-shadow:inset 0 0 0 1.5px var(--pl-accent)}
 .pl-item-t{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pl-badge{flex:none;height:18px;padding:0 6px;border-radius:5px;font-size:11px;line-height:18px;font-weight:500}
-.pl-blue{color:#2f6bd8;background:#e9f1ff}.pl-violet{color:#6d4fd6;background:#efebff}.pl-amber{color:#b0640c;background:#fdf1df}.pl-green{color:#2a7d52;background:#e5f6ec}.pl-gray{color:var(--pl-muted);background:var(--pl-soft)}
+.pl-blue{color:#2459c4;background:#e9f1ff}.pl-violet{color:#6d4fd6;background:#efebff}.pl-amber{color:#9a520a;background:#fdf1df}.pl-green{color:#2a7d52;background:#e5f6ec}.pl-gray{color:var(--pl-muted);background:var(--pl-soft)}
 :where(.dark,[data-theme=dark]) .pl .pl-blue{color:#8fb3ff;background:#1d2a44}:where(.dark,[data-theme=dark]) .pl .pl-violet{color:#b4a3ff;background:#2a2346}:where(.dark,[data-theme=dark]) .pl .pl-amber{color:#eba659;background:#3a2a16}:where(.dark,[data-theme=dark]) .pl .pl-green{color:#6cc596;background:#183024}
 .pl-none{margin:8px;color:var(--pl-muted);font-size:12px}
-.pl-main{padding:12px 16px 16px;min-width:0;animation:pl-fade .22s both}
+.pl-main{flex:999 1 320px;padding:12px 16px 16px;min-width:0;animation:pl-fade .22s both}
 .pl-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}.pl-head strong{font-weight:500;margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pl-progress{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--pl-faint);white-space:nowrap}
 .pl-dots{display:inline-flex;gap:2px}.pl-dots i{width:6px;height:6px;border-radius:1.5px;background:var(--pl-line);transition:background .2s}.pl-dots i[data-on=true]{background:var(--pl-accent)}
@@ -347,7 +347,7 @@ const css = `
 @keyframes pl-fade{from{opacity:0}}
 @keyframes pl-roll{from{opacity:0;transform:translateY(3px)}}
 @keyframes pl-pulse{40%{transform:scale(1.05)}}
-@container pl (max-width:540px){.pl{grid-template-columns:1fr}.pl-side{border-right:0;border-bottom:1px solid var(--pl-line)}}
+/* a container cannot query itself: the row wraps at 220 + 320 = 540px, where this query swaps the divider */@container pl (max-width:540px){.pl-side{border-right:0;border-bottom:1px solid var(--pl-line)}}
 @container pl (max-width:360px){.pl-copy-l{display:none}}
 @media(hover:none){.pl-item{height:40px}.pl-btn{height:34px}}
 @media(prefers-reduced-motion:reduce){.pl *{animation:none!important;transition:none!important}}

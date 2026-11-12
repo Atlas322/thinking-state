@@ -424,8 +424,8 @@ const css = /* css */ `
 .ui-tfc {
   --ui-tfc-title: rgba(0, 0, 0, 0.88);
   --ui-tfc-ink: rgba(0, 0, 0, 0.88);
-  --ui-tfc-muted: rgba(0, 0, 0, 0.61);
-  --ui-tfc-subtle: rgba(0, 0, 0, 0.45);
+  --ui-tfc-muted: rgba(0, 0, 0, 0.7);
+  --ui-tfc-subtle: rgba(0, 0, 0, 0.6);
   --ui-tfc-faint: rgba(0, 0, 0, 0.3);
   --ui-tfc-icon: rgba(0, 0, 0, 0.447);
   --ui-tfc-surface: #ffffff;
@@ -434,7 +434,7 @@ const css = /* css */ `
   --ui-tfc-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 1px -1px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --ui-tfc-shadow-hover: 0 0 0 0.5px rgba(0, 0, 0, 0.13), 0 1px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --ui-tfc-shadow-focus: 0 0 0 1px rgba(0, 0, 0, 0.28), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --ui-tfc-danger: #d93d42;
+  --ui-tfc-danger: #c62828;
   --ui-tfc-danger-edge: rgba(229, 72, 77, 0.55);
   --ui-tfc-danger-edge-focus: rgba(229, 72, 77, 0.8);
   --ui-tfc-success: #2f9e5c;
@@ -597,7 +597,7 @@ const css = /* css */ `
   animation: ui-tfc-message 260ms var(--ui-tfc-ease);
 }
 .ui-tfc[data-invalid] .ui-tfc__message { color: var(--ui-tfc-danger); }
-.ui-tfc__count { flex: none; margin-left: auto; font-size: 12px; line-height: 16px; font-variant-numeric: tabular-nums; color: var(--ui-tfc-faint); transition: color 140ms ease; }
+.ui-tfc__count { flex: none; margin-left: auto; font-size: 12px; line-height: 16px; font-variant-numeric: tabular-nums; color: var(--ui-tfc-subtle); transition: color 140ms ease; }
 .ui-tfc__count[data-over] { color: var(--ui-tfc-danger); }
 .ui-tfc__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .ui-tfc__count[data-full] { color: var(--ui-tfc-muted); }
@@ -650,6 +650,8 @@ const css = /* css */ `
 }
 :where(.dark, [data-theme="dark"]) .ui-tfc[data-readonly] .ui-tfc__box,
 :where(.dark, [data-theme="dark"]) .ui-tfc[data-disabled] .ui-tfc__box { box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.12); }
+.ui-tfc-demo { background: var(--demo-card, #fff); box-shadow: 0 0 0 1px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04); }
+:where(.dark, [data-theme="dark"]) .ui-tfc-demo { background: var(--demo-card, #1c1c1e); box-shadow: 0 0 0 1px rgba(255,255,255,.1); }
 `;
 
 /** Working example; use the named TextField export in your application. */
@@ -658,6 +660,7 @@ export default function Demo() {
   const valid = /^[a-z0-9-]*$/.test(slug);
   return (
     <div
+      className="ui-tfc-demo"
       style={{
         display: "grid",
         gap: 16,
@@ -665,8 +668,6 @@ export default function Demo() {
         maxWidth: 360,
         padding: 20,
         borderRadius: 12,
-        background: "var(--demo-card, #fff)",
-        boxShadow: "0 0 0 1px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04)",
       }}
     >
       <TextField label="Ажлын орчны нэр" defaultValue="Маяа лаб" maxLength={32} counter clearable required />

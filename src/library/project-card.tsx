@@ -45,7 +45,7 @@ const defaultTasks: ProjectTask[] = [
 const defaultMembers: ProjectMember[] = [{ name: "Мөнхзул" }, { name: "Жаргал" }, { name: "Пүрэвсүрэн" }];
 
 const softColors = ["#dcf3e3", "#e7e3fb", "#dfe7fb", "#fbe6dc", "#fdf0c8", "#fde2ea"];
-const inkColors = ["#2f7d4a", "#6b4fc8", "#3d63c9", "#b8572e", "#9a7208", "#b23a62"];
+const inkColors = ["#276b3e", "#6b4fc8", "#3557b8", "#a14b22", "#856206", "#b23a62"];
 
 function StatusIcon({ tone = "gray" }: { tone?: ProjectTone }) {
   if (tone === "green")

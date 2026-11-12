@@ -273,7 +273,7 @@ const css = `
 .cr-legend span:not(.cr-sr){display:inline-flex;align-items:center;gap:5px;margin-right:12px}
 .cr-legend i{width:12px;height:5px;border-radius:3px;border:1px solid}
 .cr-k-changed{background:var(--cr-changed);border-color:var(--cr-changed-edge)!important}.cr-k-conflict{background:var(--cr-conflict);border-color:var(--cr-conflict-edge)!important}.cr-k-kept{background:var(--cr-kept);border-color:var(--cr-kept-edge)!important}
-.cr-agent{border-left:1px solid var(--cr-line);white-space:nowrap}
+.cr-agent{border-left:1px solid var(--cr-line);padding:4px 6px;line-height:1.25;overflow-wrap:normal}
 .cr-aico{display:inline-grid;place-items:center;width:14px;height:14px;margin-right:7px;vertical-align:-2px}.cr-aico svg{width:12px;height:12px}
 .cr-working{display:inline-block;width:5px;height:5px;margin-left:5px;border-radius:50%;background:var(--cr-accent);vertical-align:2px;animation:cr-pulse 1.4s infinite}
 .cr-grid tbody tr{height:36px;border-bottom:1px solid var(--cr-line);transition:background .2s}

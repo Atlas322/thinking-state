@@ -329,8 +329,8 @@ const css = /* css */ `
   --ui-pmc-card: #ffffff;
   --ui-pmc-strong: #000000;
   --ui-pmc-ink: rgba(0, 0, 0, 0.88);
-  --ui-pmc-text: rgba(0, 0, 0, 0.61);
-  --ui-pmc-muted: rgba(0, 0, 0, 0.45);
+  --ui-pmc-text: rgba(0, 0, 0, 0.7);
+  --ui-pmc-muted: rgba(0, 0, 0, 0.62);
   --ui-pmc-faint: rgba(0, 0, 0, 0.27);
   --ui-pmc-icon: rgba(0, 0, 0, 0.447);
   --ui-pmc-line: rgba(0, 0, 0, 0.06);
@@ -339,7 +339,7 @@ const css = /* css */ `
   --ui-pmc-track: rgba(0, 0, 0, 0.06);
   --ui-pmc-accent: rgba(0, 96, 226, 0.765);
   --ui-pmc-focus: rgba(0, 96, 226, 0.7);
-  --ui-pmc-badge: #e11d48;
+  --ui-pmc-badge: #be123c;
   --ui-pmc-badge-wash: rgba(225, 29, 72, 0.08);
   /* Strokes are shadows: a 0.5px hairline plus a soft lift, like a popover */
   --ui-pmc-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 12px 28px -10px rgba(0, 0, 0, 0.16), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -536,8 +536,8 @@ const css = /* css */ `
   --ui-pmc-card: #1c1c1e;
   --ui-pmc-strong: #ffffff;
   --ui-pmc-ink: rgba(255, 255, 255, 0.9);
-  --ui-pmc-text: rgba(255, 255, 255, 0.62);
-  --ui-pmc-muted: rgba(255, 255, 255, 0.46);
+  --ui-pmc-text: rgba(255, 255, 255, 0.7);
+  --ui-pmc-muted: rgba(255, 255, 255, 0.62);
   --ui-pmc-faint: rgba(255, 255, 255, 0.3);
   --ui-pmc-icon: rgba(255, 255, 255, 0.46);
   --ui-pmc-line: rgba(255, 255, 255, 0.08);

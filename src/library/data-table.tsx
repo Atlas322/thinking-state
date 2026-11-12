@@ -564,8 +564,9 @@ const css = `
 .dt-logo{display:grid;place-items:center;width:16px;height:16px;flex:none}
 .dt-logo svg{width:15px;height:15px}
 .dt-tag{display:inline-block;font-size:12px;line-height:19px;padding:0 6px;border-radius:4px;white-space:nowrap}
-.dt-tag.blue{background:#2f6fed14;color:#2563d8}.dt-tag.violet{background:#8b5cf618;color:#7c3aed}.dt-tag.pink{background:#ec489914;color:#db2777}.dt-tag.green{background:#16a34a14;color:#15803d}.dt-tag.amber{background:#f59e0b18;color:#b45309}.dt-tag.gray{background:#0000000d;color:#555}
+.dt-tag.blue{background:#2f6fed14;color:#2563d8}.dt-tag.violet{background:#8b5cf618;color:#7c3aed}.dt-tag.pink{background:#ec489914;color:#be185d}.dt-tag.green{background:#16a34a14;color:#15803d}.dt-tag.amber{background:#f59e0b18;color:#b45309}.dt-tag.gray{background:#0000000d;color:#555}
 :where(.dark,[data-theme=dark]) .dt-tag.gray{background:#ffffff12;color:#bbb}
+:where(.dark,[data-theme=dark]) .dt-tag.blue{color:#7cb4ff}:where(.dark,[data-theme=dark]) .dt-tag.violet{color:#b9a2ff}:where(.dark,[data-theme=dark]) .dt-tag.pink{color:#f472b6}:where(.dark,[data-theme=dark]) .dt-tag.green{color:#4ade80}:where(.dark,[data-theme=dark]) .dt-tag.amber{color:#fbbf24}
 .dt-link{color:color-mix(in srgb,var(--dt-fg) 82%,transparent);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--dt-fg) 30%,transparent);text-underline-offset:3px}
 .dt-link:hover{color:var(--dt-blue)}
 .dt-num{margin-left:auto;font-variant-numeric:tabular-nums}

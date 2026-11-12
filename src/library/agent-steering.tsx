@@ -301,12 +301,12 @@ export function AgentSteering({
 }
 
 const css = `
-.as{--as-bg:#fff;--as-fg:#18181b;--as-muted:#65656d;--as-faint:#65656d;--as-line:#ececef;--as-soft:#f6f6f7;--as-accent:#3b82f6;width:100%;max-width:460px;background:var(--as-bg);color:var(--as-fg);border:1px solid var(--as-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
+.as{--as-bg:#fff;--as-fg:#18181b;--as-muted:#65656d;--as-faint:#65656d;--as-line:#ececef;--as-soft:#f6f6f7;--as-accent:#2563eb;width:100%;max-width:460px;background:var(--as-bg);color:var(--as-fg);border:1px solid var(--as-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 14px/1.45 Inter,system-ui,sans-serif;overflow:hidden}
 :where(.dark,[data-theme=dark]) .as{--as-bg:#1b1b1e;--as-fg:#ececef;--as-muted:#a1a1aa;--as-faint:#9a9aa2;--as-line:#2e2e33;--as-soft:#242428;--as-accent:#60a5fa;color-scheme:dark}
 .as *{box-sizing:border-box}.as button{font:inherit;color:inherit;cursor:pointer}
-.as-head{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 16px;border-bottom:1px solid var(--as-line)}
+.as-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 14px 14px 16px;border-bottom:1px solid var(--as-line)}
 .as-spark{width:14px;height:14px;color:var(--as-accent);flex:none}
-.as-ttl{display:flex;flex-direction:column;min-width:0;flex:1}.as-ttl strong{font-weight:500}
+.as-ttl{display:flex;flex-direction:column;min-width:0;flex:1 1 180px}.as-ttl strong{font-weight:500}
 .as-ttl span{font-size:13px;color:var(--as-muted)}.as-ttl i{font-style:normal;margin:0 6px;color:var(--as-faint)}
 .as-state{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--as-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .as-state b{width:12px;height:12px;border-radius:50%;background:color-mix(in srgb,var(--as-accent) 20%,transparent);display:grid;place-items:center}
