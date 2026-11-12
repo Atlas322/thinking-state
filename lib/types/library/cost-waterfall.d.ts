@@ -1,0 +1,40 @@
+import * as React from "react";
+/** Independent implementation. No affectUI Pro source is included. */
+export type CostStep = {
+    id: string;
+    name: string;
+    kind: "llm" | "tool" | "agent";
+    status: "running" | "done" | "failed";
+    model?: string;
+    detail?: string;
+    icon?: React.ReactNode;
+    tokensIn?: number;
+    tokensOut?: number;
+    cost?: number;
+    duration?: number;
+    input?: string;
+    output?: string;
+    error?: string;
+    children?: CostStep[];
+};
+export type CostMode = "cost" | "tokens";
+export type CostWaterfallProps = {
+    steps?: CostStep[];
+    task?: string;
+    title?: string;
+    status?: "running" | "done" | "failed";
+    mode?: CostMode;
+    defaultMode?: CostMode;
+    onModeChange?: (mode: CostMode) => void;
+    collapsed?: string[];
+    defaultCollapsed?: string[];
+    onCollapsedChange?: (collapsed: string[]) => void;
+    openId?: string | null;
+    defaultOpenId?: string | null;
+    onOpenChange?: (id: string | null, step?: CostStep) => void;
+    maxHeight?: number;
+    formatCost?: (amount: number) => string;
+    className?: string;
+};
+export declare function CostWaterfall({ steps, task, title, status, mode: modeIn, defaultMode, onModeChange, collapsed: collapsedIn, defaultCollapsed, onCollapsedChange, openId: openIn, defaultOpenId, onOpenChange, maxHeight, formatCost, className, }: CostWaterfallProps): React.JSX.Element;
+export default CostWaterfall;
