@@ -48,7 +48,8 @@
     "start": "node server.mjs",
     "build:lib": "node scripts/build-lib.mjs",
     "release:lib": "node scripts/release-lib.mjs",
-    "tokens:site": "node scripts/site-css.mjs"
+    "tokens:site": "node scripts/site-css.mjs",
+    "check:spacing": "node scripts/check-spacing.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

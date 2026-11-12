@@ -52,3 +52,7 @@ export type { SessionBoardInput, SessionBoardProps, SessionBoardSession, Session
 
 // Motion foundation (v2): spring tokens, loop primitives, in-view playback, ↺ / ⏸
 export * from "../motion";
+
+// Layout: spacing tokens + Stack (controls carry no outer margin; the parent's gap spaces them)
+export { GAPS, SPACE, Stack, gapVar } from "../layout/stack";
+export type { GapName, SpaceStep, StackProps } from "../layout/stack";
