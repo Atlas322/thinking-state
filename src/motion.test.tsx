@@ -30,8 +30,8 @@ describe("spring physics", () => {
   it("overshoots only when underdamped", () => {
     expect(springEasing({ stiffness: 100, damping: 20 }).overshoot).toBe(0); // ζ = 1
     expect(springEasing({ stiffness: 100, damping: 40 }).overshoot).toBe(0); // ζ = 2
-    expect(springEasing(SPRINGS.bouncy).overshoot).toBeGreaterThan(0.1);
-    expect(dampingRatio(SPRINGS.wobble)).toBeLessThan(0.4);
+    expect(springEasing(SPRINGS.settle).overshoot).toBeGreaterThan(0);
+    for (const s of Object.values(SPRINGS)) expect(dampingRatio(s)).toBeGreaterThanOrEqual(0.7); // 🎨 motion language: calm, never bouncy
   });
 
   it("honours initial velocity", () => {
@@ -40,14 +40,14 @@ describe("spring physics", () => {
   });
 
   it("renders a compact CSS linear() easing", () => {
-    const e = springEasing(SPRINGS.bouncy);
+    const e = springEasing(SPRINGS.heavy);
     expect(e.easing).toMatch(/^linear\(0, .*, 1\)$/);
     expect(e.easing.length).toBeLessThan(600);
     expect(e.fallback).toMatch(/^cubic-bezier/);
   });
 
   it("samples keyframes for motion that crosses rest", () => {
-    const k = springKeyframes(SPRINGS.wobble, 16, 0, 20);
+    const k = springKeyframes(SPRINGS.settle, 16, 0, 20);
     expect(k[0]).toEqual({ offset: 0, value: 16 });
     expect(k.at(-1)).toEqual({ offset: 1, value: 0 });
     expect(k.some((f) => f.value < 0)).toBe(true);

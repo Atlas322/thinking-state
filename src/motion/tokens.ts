@@ -5,22 +5,35 @@
  */
 import { SPRINGS, springEasing, type SpringName } from "./spring";
 
-/** Durations in ms. `loop` is one cycle of an ambient loop (motion + rest). */
+/**
+ * Durations in ms (🎨 motion language §1): xs hover, chip, focus · sm toggle,
+ * pill, tab · md card enter, sheet, tooltip · lg page, section change · xl hero,
+ * diagram links.
+ */
 export const DURATIONS = {
-  instant: 90,
-  fast: 160,
-  base: 240,
-  slow: 420,
-  loop: 3200,
+  xs: 120,
+  sm: 200,
+  md: 320,
+  lg: 560,
+  xl: 900,
 } as const;
 
-/** Bezier easings for non-physical changes (colour, opacity, fades). */
+/**
+ * Loop rhythm: 0.9–2.4 s of motion, then 3–6 s of rest; at most `count`
+ * cycles, then the rest pose until hover or the region re-enters the viewport.
+ * `stagger` between siblings, top layer first.
+ */
+export const LOOP = { period: 5000, count: 3, stagger: 100 } as const;
+
+/** Bezier easings. */
 export const EASINGS = {
   standard: "cubic-bezier(0.2, 0, 0, 1)",
+  /** Enter: decelerates to rest. */
   enter: "cubic-bezier(0.05, 0.7, 0.1, 1)",
+  /** Exit: accelerates away. */
   exit: "cubic-bezier(0.3, 0, 0.8, 0.15)",
-  /** Harmonic (sine) in-out — breathing, floating, anything with no impact. */
-  sine: "cubic-bezier(0.37, 0, 0.63, 1)",
+  /** Icon loops — an even breath. */
+  loop: "cubic-bezier(0.45, 0, 0.55, 1)",
 } as const;
 
 export type DurationName = keyof typeof DURATIONS;
@@ -36,7 +49,7 @@ export function spring(name: SpringName) {
 
 /** `var(--ts-motion-…, fallback)` helpers for inline styles. */
 export const motionVar = {
-  duration: (n: DurationName) => `var(--ts-motion-${n}, ${DURATIONS[n]}ms)`,
+  duration: (n: DurationName) => `var(--ts-motion-dur-${n}, ${DURATIONS[n]}ms)`,
   easing: (n: EasingName) => `var(--ts-motion-ease-${n}, ${EASINGS[n]})`,
   spring: (n: SpringName) => `var(--ts-motion-spring-${n}, ${spring(n).fallback})`,
   springDuration: (n: SpringName) => `var(--ts-motion-spring-${n}-duration, ${spring(n).duration}ms)`,
@@ -45,7 +58,8 @@ export const motionVar = {
 /** The tokens.css block, generated — package.test checks tokens.css matches it. */
 export function motionTokensCss() {
   const lines: string[] = [];
-  for (const [n, v] of Object.entries(DURATIONS)) lines.push(`  --ts-motion-${n}: ${v}ms;`);
+  for (const [n, v] of Object.entries(DURATIONS)) lines.push(`  --ts-motion-dur-${n}: ${v}ms;`);
+  lines.push(`  --ts-motion-loop-period: ${LOOP.period}ms;`, `  --ts-motion-loop-count: ${LOOP.count};`, `  --ts-motion-stagger: ${LOOP.stagger}ms;`);
   for (const [n, v] of Object.entries(EASINGS)) lines.push(`  --ts-motion-ease-${n}: ${v};`);
   for (const n of Object.keys(SPRINGS) as SpringName[]) {
     const e = spring(n);

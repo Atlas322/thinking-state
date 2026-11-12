@@ -140,6 +140,8 @@ export type InViewLoop<T extends Element> = {
   togglePaused: () => void;
   /** ↺ — restart every animation in the region from its first frame. */
   replay: () => void;
+  /** Restart loops that rested after their cycles (hover, re-entering view). */
+  wake: () => void;
   /** Bumps on replay when the browser cannot restart animations itself; use as a React key. */
   epoch: number;
   /** Spread on the root: `data-ts-loop`. */
@@ -209,6 +211,20 @@ export function useInViewLoop<T extends Element = HTMLDivElement>(options: InVie
     for (const a of node.getAnimations({ subtree: true })) if (isScripted(a)) syncAnimation(a, state);
   }, [el, state]);
 
+  // Loops stop after --ts-motion-loop-count cycles. Coming back into view
+  // (or `wake()` on hover) starts the rested ones again.
+  const wake = React.useCallback(() => {
+    const node = el as AnimatableEl | null;
+    if (!node?.getAnimations) return;
+    for (const a of node.getAnimations({ subtree: true }))
+      if (typeof CSSAnimation !== "undefined" && a instanceof CSSAnimation && a.playState === "finished") a.currentTime = 0;
+  }, [el]);
+  const prev = React.useRef(state);
+  React.useEffect(() => {
+    if (state === "running" && (prev.current === "offscreen" || prev.current === "hidden")) wake();
+    prev.current = state;
+  }, [state, wake]);
+
   const replay = React.useCallback(() => {
     // Paused regions have no animations; playing again re-applies them from frame 0.
     // Only this region resumes — the page-wide pause stays for everything else.
@@ -238,6 +254,7 @@ export function useInViewLoop<T extends Element = HTMLDivElement>(options: InVie
     setPaused: (p) => setOwn(p),
     togglePaused: () => setOwn(!paused),
     replay,
+    wake,
     epoch,
     attrs: { "data-ts-loop": state },
   };

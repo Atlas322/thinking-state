@@ -17,7 +17,7 @@ export function prefersReducedMotion() {
 export function animateSpring(
   el: Element,
   keyframes: Keyframe[],
-  name: SpringName = "gentle",
+  name: SpringName = "soft",
   options: { delay?: number; fill?: FillMode } = {},
 ): Animation | null {
   const last = keyframes[keyframes.length - 1] ?? {};
