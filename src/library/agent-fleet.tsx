@@ -38,70 +38,73 @@ export type AgentFleetProps = {
 
 const steps3: FleetStep[] = [{ title: "a" }, { title: "b" }, { title: "c" }];
 
+/** `cost` is spend in thousands of tokens. `model` holds a generic agent role. */
 const defaultAgents: FleetAgent[] = [
   {
-    id: "launch", name: "Launch lead", model: "Opus 5.5", avatar: "anthropic", tools: ["slack", "notion", "github"],
-    status: "running", task: "Launch the new pricing page by Friday", took: 850,
+    id: "launch", name: "Нээлтийн ахлагч", model: "Төлөвлөгч агент", avatar: "anthropic", tools: ["slack", "notion", "github"],
+    status: "running", task: "Шинэ тарифын хуудсыг баасан гараг гэхэд нээх", took: 850,
     children: [
-      { id: "l1", name: "Copy", model: "Sonnet 5.5", avatar: "anthropic", tools: ["notion"], status: "running", task: "Write the pricing page copy", cost: 0.42, took: 380, steps: steps3 },
-      { id: "l2", name: "Design", model: "Opus 5.5", avatar: "anthropic", tools: ["figma"], status: "waiting", task: "Pick the hero layout", cost: 0.88, took: 420, ask: "Which hero layout?" },
-      { id: "l3", name: "Build", model: "Sonnet 5.5", avatar: "anthropic", tools: ["github"], status: "running", task: "Ship the page behind a flag", cost: 0.75, took: 600 },
+      { id: "l1", name: "Бичвэр", model: "Бичигч агент", avatar: "anthropic", tools: ["notion"], status: "running", task: "Тарифын хуудасны бичвэрийг бичих", cost: 42, took: 380, steps: steps3 },
+      { id: "l2", name: "Дизайн", model: "Дизайны агент", avatar: "anthropic", tools: ["figma"], status: "waiting", task: "Нүүр хэсгийн загварыг сонгох", cost: 88, took: 420, ask: "Аль загварыг сонгох вэ?" },
+      { id: "l3", name: "Хөгжүүлэлт", model: "Кодын агент", avatar: "anthropic", tools: ["github"], status: "running", task: "Хуудсыг тугийн ард гаргах", cost: 75, took: 600 },
     ],
   },
   {
-    id: "support", name: "Support lead", model: "Sonnet 5.5", avatar: "anthropic", tools: ["zendesk", "slack"],
-    status: "running", task: "Answer the 48 open tickets in the queue", took: 1570,
+    id: "support", name: "Тусламжийн ахлагч", model: "Тусламжийн агент", avatar: "anthropic", tools: ["zendesk", "slack"],
+    status: "running", task: "Дараалалд буй 48 хүсэлтэд хариулах", took: 1570,
     children: [
-      { id: "s1", name: "Billing", model: "Sonnet 5.5", avatar: "anthropic", status: "running", task: "Billing tickets", cost: 0.3, took: 600 },
-      { id: "s2", name: "Bugs", model: "Sonnet 5.5", avatar: "anthropic", status: "running", task: "Bug reports", cost: 0.33, took: 700 },
-      { id: "s3", name: "Access", model: "Sonnet 5.5", avatar: "anthropic", status: "done", task: "Access requests", cost: 0.2, took: 300 },
-      { id: "s4", name: "Refunds", model: "Sonnet 5.5", avatar: "anthropic", status: "done", task: "Refunds", cost: 0.3, took: 400 },
+      { id: "s1", name: "Төлбөр", model: "Тусламжийн агент", avatar: "anthropic", status: "running", task: "Төлбөрийн хүсэлтүүд", cost: 30, took: 600 },
+      { id: "s2", name: "Алдаа", model: "Тусламжийн агент", avatar: "anthropic", status: "running", task: "Алдааны мэдэгдлүүд", cost: 33, took: 700 },
+      { id: "s3", name: "Эрх", model: "Тусламжийн агент", avatar: "anthropic", status: "done", task: "Эрхийн хүсэлтүүд", cost: 20, took: 300 },
+      { id: "s4", name: "Буцаалт", model: "Тусламжийн агент", avatar: "anthropic", status: "done", task: "Буцаалтууд", cost: 30, took: 400 },
     ],
   },
   {
-    id: "release", name: "Release manager", model: "GPT-6 Sol", avatar: "openai", tools: ["github", "slack"],
-    status: "running", task: "Ship version 2.4 to the App Store", cost: 0.33, took: 2290,
+    id: "release", name: "Хувилбарын менежер", model: "Үйл ажиллагааны агент", avatar: "openai", tools: ["github", "slack"],
+    status: "running", task: "2.4 хувилбарыг апп дэлгүүрт гаргах", cost: 33, took: 2290,
     children: [
-      { id: "r1", name: "Changelog", model: "Sonnet 5.5", avatar: "anthropic", tools: ["github", "notion"], status: "done", task: "Write the release notes from 42 commits", cost: 0.09, took: 240, steps: steps3 },
-      { id: "r2", name: "iOS build", model: "GPT-6 Mini", avatar: "openai", tools: ["github"], status: "failed", task: "Sign and upload the iOS build", cost: 0.06, took: 180, error: "Signing certificate expired" },
-      { id: "r3", name: "Screenshots", model: "Gemini 3.8 Flash", avatar: "gemini", tools: ["figma"], status: "done", task: "Render the store screenshots in 8 languages", cost: 0.15, took: 480, steps: steps3 },
+      { id: "r1", name: "Өөрчлөлтийн жагсаалт", model: "Бичигч агент", avatar: "anthropic", tools: ["github", "notion"], status: "done", task: "42 коммитоос хувилбарын тэмдэглэл бичих", cost: 9, took: 240, steps: steps3 },
+      { id: "r2", name: "Утасны хувилбар", model: "Кодын агент", avatar: "openai", tools: ["github"], status: "failed", task: "Утасны хувилбарыг гарын үсэг зурж байршуулах", cost: 6, took: 180, error: "Гарын үсгийн гэрчилгээ хугацаа дууссан" },
+      { id: "r3", name: "Дэлгэцийн зураг", model: "Дизайны агент", avatar: "gemini", tools: ["figma"], status: "done", task: "Дэлгүүрийн дэлгэцийн зургийг 8 хэлээр гаргах", cost: 15, took: 480, steps: steps3 },
     ],
   },
   {
-    id: "market", name: "Market analyst", model: "Gemini 3.8 Pro", avatar: "gemini", tools: ["notion", "slack"],
-    status: "done", task: "Write the weekly competitor report", took: 2520,
+    id: "market", name: "Зах зээлийн шинжээч", model: "Судлаач агент", avatar: "gemini", tools: ["notion", "slack"],
+    status: "done", task: "Өрсөлдөгчийн долоо хоногийн тайлан бичих", took: 2520,
     children: [
-      { id: "m1", name: "Collect", status: "done", task: "Collect", cost: 0.3, avatar: "gemini" },
-      { id: "m2", name: "Compare", status: "done", task: "Compare", cost: 0.3, avatar: "gemini" },
-      { id: "m3", name: "Write", status: "done", task: "Write", cost: 0.22, avatar: "gemini" },
-      { id: "m4", name: "Chart", status: "done", task: "Chart", cost: 0, avatar: "gemini" },
+      { id: "m1", name: "Цуглуулах", status: "done", task: "Цуглуулах", cost: 30, avatar: "gemini" },
+      { id: "m2", name: "Харьцуулах", status: "done", task: "Харьцуулах", cost: 30, avatar: "gemini" },
+      { id: "m3", name: "Бичих", status: "done", task: "Бичих", cost: 22, avatar: "gemini" },
+      { id: "m4", name: "График", status: "done", task: "График", cost: 0, avatar: "gemini" },
     ],
   },
 ];
 
+/** Neutral shapes, no vendor marks. Keys kept for API compatibility. */
 const avatars: Record<string, React.ReactNode> = {
   anthropic: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2M4.6 2.2l6.8 11.6M11.4 2.2 4.6 13.8M2.2 4.6l11.6 6.8M13.8 4.6 2.2 11.4" stroke="#d97757" strokeWidth="1.1" strokeLinecap="round" /></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="none" stroke="#d97757" strokeWidth="1.6" /></svg>
   ),
   openai: (
-    <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="5.6" /><path d="M8 2.4v4.2l3.6 2.1M13.6 8l-3.6 2.1-3.6-2.1M8 13.6V9.4L4.4 7.3M2.4 8l3.6-2.1L9.6 8" /></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.8" y="2.8" width="10.4" height="10.4" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>
   ),
   gemini: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1c.6 3.6 3.4 6.4 7 7-3.6.6-6.4 3.4-7 7-.6-3.6-3.4-6.4-7-7 3.6-.6 6.4-3.4 7-7Z" fill="#3b7bf6" /></svg>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.2 13.8 13H2.2Z" fill="none" stroke="#3b7bf6" strokeWidth="1.5" strokeLinejoin="round" /></svg>
   ),
 };
 
+/** Neutral system glyphs, no brand marks. Keys kept for API compatibility. */
 const toolMarks: Record<FleetTool, React.ReactNode> = {
-  github: <svg viewBox="0 0 16 16"><path d="M8 1.3a6.7 6.7 0 0 0-2.1 13c.3 0 .5-.2.5-.4v-1.3c-1.9.4-2.3-.8-2.3-.8-.3-.8-.8-1-.8-1-.6-.4 0-.4 0-.4.7 0 1 .7 1 .7.6 1 1.6.7 2 .5 0-.4.2-.7.4-.9-1.5-.2-3-.7-3-3.3 0-.7.2-1.3.7-1.8-.1-.2-.3-.9 0-1.8 0 0 .6-.2 1.9.7a6.4 6.4 0 0 1 3.4 0c1.3-.9 1.8-.7 1.8-.7.4.9.2 1.6.1 1.8.4.5.7 1.1.7 1.8 0 2.6-1.6 3.1-3 3.3.2.2.4.6.4 1.2v1.8c0 .2.2.4.5.4A6.7 6.7 0 0 0 8 1.3Z" fill="currentColor" /></svg>,
-  notion: <svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" /><path d="M5.5 11V5h1l3.5 6h.5V5" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>,
-  slack: <svg viewBox="0 0 16 16"><rect x="1" y="6" width="7" height="2.6" rx="1.3" fill="#36c5f0" /><rect x="8" y="1" width="2.6" height="7" rx="1.3" fill="#2eb67d" /><rect x="8" y="8" width="7" height="2.6" rx="1.3" fill="#ecb22e" /><rect x="5.4" y="8" width="2.6" height="7" rx="1.3" fill="#e01e5a" /></svg>,
-  figma: <svg viewBox="0 0 16 16"><circle cx="10" cy="8" r="2.3" fill="#1abcfe" /><path d="M5.7 1.5h2.3v4.6H5.7a2.3 2.3 0 0 1 0-4.6Z" fill="#f24e1e" /><path d="M8 1.5h2.3a2.3 2.3 0 0 1 0 4.6H8Z" fill="#ff7262" /><path d="M5.7 5.7H8v4.6H5.7a2.3 2.3 0 0 1 0-4.6Z" fill="#a259ff" /><path d="M5.7 10.3H8v2.3a2.3 2.3 0 1 1-2.3-2.3Z" fill="#0acf83" /></svg>,
-  linear: <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#5e6ad2" /></svg>,
-  zendesk: <svg viewBox="0 0 16 16"><path d="M2 3h6L2 12Zm6 0a3 3 0 0 1-6 0M14 13H8l6-9Zm-6 0a3 3 0 0 1 6 0" fill="#e2593e" /></svg>,
+  github: <svg viewBox="0 0 16 16"><circle cx="4.5" cy="3.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><circle cx="4.5" cy="12.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><circle cx="11.5" cy="6" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M4.5 5v6M11.5 7.5c0 2-2 2.6-6 3.4" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>,
+  notion: <svg viewBox="0 0 16 16"><path d="M3.5 1.8h6l3 3v9.4h-9Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /><path d="M5.5 8h5M5.5 10.5h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>,
+  slack: <svg viewBox="0 0 16 16"><path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" /></svg>,
+  figma: <svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M2 6h12M6 6v8" stroke="currentColor" strokeWidth="1.3" /></svg>,
+  linear: <svg viewBox="0 0 16 16"><path d="M5.5 4h8M5.5 8h8M5.5 12h8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /><circle cx="2.6" cy="4" r=".9" fill="currentColor" /><circle cx="2.6" cy="8" r=".9" fill="currentColor" /><circle cx="2.6" cy="12" r=".9" fill="currentColor" /></svg>,
+  zendesk: <svg viewBox="0 0 16 16"><path d="M3 9a5 5 0 0 1 10 0v2.5M3 9v2.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /><rect x="2" y="9" width="2.6" height="4" rx="1" fill="currentColor" /><rect x="11.4" y="9" width="2.6" height="4" rx="1" fill="currentColor" /></svg>,
 };
 
 const fmtTime = (s = 0) => `${Math.floor(s / 60)}m ${String(Math.round(s % 60)).padStart(2, "0")}s`;
-const fmtCost = (n: number) => `$${n.toFixed(2)}`;
+const fmtCost = (n: number) => `${Math.round(n)}k токен`;
 const branchCost = (a: FleetAgent): number => (a.cost ?? 0) + (a.children ?? []).reduce((n, c) => n + branchCost(c), 0);
 
 function Pill({ status }: { status: FleetStatus }) {

@@ -30,14 +30,15 @@ const s = (d: React.ReactNode) => (
 );
 const line = { fill: "none", stroke: "currentColor", strokeWidth: 1.3, strokeLinecap: "round", strokeLinejoin: "round" } as const;
 
+// Neutral glyphs for generic systems – no vendor logos.
 const L = {
-  gmail: s(<><path d="M2 4.5v7.5h2.5V7.2L8 9.8l3.5-2.6V12H14V4.5l-1-.8L8 7.3 3 3.7Z" fill="#ea4335" /><path d="M2 4.5 3 3.7v8.3H2Z" fill="#4285f4" /><path d="M14 4.5 13 3.7v8.3h1Z" fill="#34a853" /></>),
+  mail: s(<><rect x="2" y="3.5" width="12" height="9" rx="1.5" {...line} /><path d="m2.5 4.5 5.5 4 5.5-4" {...line} /></>),
   spark: s(<path d="M8 1.5 9.3 6.7 14.5 8 9.3 9.3 8 14.5 6.7 9.3 1.5 8 6.7 6.7Z" fill="#4f7cf0" />),
-  clickup: s(<><path d="m3 10.5 2-1.5c1 1.4 1.9 2 3 2s2-.6 3-2l2 1.5c-1.5 2-3 3-5 3s-3.5-1-5-3Z" fill="#7b68ee" /><path d="m4 6.5 4-3.5 4 3.5-1.4 1.4L8 5.7 5.4 7.9Z" fill="#fc4d8f" /></>),
-  hubspot: s(<><circle cx="10" cy="9.5" r="2.3" fill="none" stroke="#ff7a59" strokeWidth="1.5" /><path d="M10 7V3.7M4 4.2l4.3 3.6M8 11.6 5.6 13.4" stroke="#ff7a59" strokeWidth="1.5" strokeLinecap="round" /><circle cx="3.7" cy="3.8" r="1.1" fill="#ff7a59" /></>),
-  gcal: s(<><rect x="2" y="2" width="12" height="12" rx="2" fill="#4285f4" /><rect x="4.5" y="4.5" width="7" height="7" rx=".5" fill="#fff" /><path d="M6.3 7h3.4M6.3 9h3.4" stroke="#4285f4" strokeWidth="1" /></>),
-  slack: s(<><rect x="2" y="6" width="5" height="2" rx="1" fill="#36c5f0" /><rect x="8" y="2" width="2" height="5" rx="1" fill="#2eb67d" /><rect x="9" y="8" width="5" height="2" rx="1" fill="#ecb22e" /><rect x="6" y="9" width="2" height="5" rx="1" fill="#e01e5a" /></>),
-  notion: s(<><rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.3" /><path d="M5.5 11.5v-7h1l3.5 7h1v-7" {...line} /></>),
+  task: s(<><rect x="2.5" y="2.5" width="11" height="11" rx="2" {...line} /><path d="m5.5 8 2 2 3-4" {...line} /></>),
+  crm: s(<><circle cx="8" cy="6" r="2.5" {...line} /><path d="M3.5 13.5c.6-2.3 2.3-3.5 4.5-3.5s3.9 1.2 4.5 3.5" {...line} /></>),
+  calendar: s(<><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" {...line} /><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" {...line} /></>),
+  chat: s(<path d="M2.5 3h11v7.5H7l-3.5 3v-3h-1Z" {...line} />),
+  docs: s(<><path d="M4 2h5l3 3v9H4Z" {...line} /><path d="M6 8.5h4M6 11h4" {...line} /></>),
 };
 const I = {
   doc: s(<><path d="M4 2h5l3 3v9H4Z" {...line} /><path d="M9 2v3h3" {...line} /></>),
@@ -54,41 +55,41 @@ const I = {
 const defaultGroups: CommandGroup[] = [
   {
     id: "suggestions",
-    label: "Suggestions",
+    label: "Санал болгох",
     commands: [
-      { id: "email", label: "Write an email", hint: "Gmail", logo: L.gmail, keywords: ["mail", "send"] },
-      { id: "ask", label: "Ask assistant", hint: "Summaries, drafts, answers", logo: L.spark, keywords: ["ai", "chat"] },
-      { id: "task", label: "Create a task", hint: "ClickUp", logo: L.clickup, keywords: ["todo"] },
-      { id: "contact", label: "Add contact to CRM", hint: "HubSpot", logo: L.hubspot, keywords: ["lead"] },
-      { id: "meeting", label: "Schedule a meeting", hint: "Google Calendar", logo: L.gcal, keywords: ["calendar", "event"] },
+      { id: "email", label: "Имэйл бичих", hint: "Имэйл", logo: L.mail, keywords: ["mail", "send", "имэйл"] },
+      { id: "ask", label: "Туслахаас асуух", hint: "Хураангуй, ноорог, хариулт", logo: L.spark, keywords: ["ai", "chat", "асуух"] },
+      { id: "task", label: "Даалгавар үүсгэх", hint: "Даалгаврын самбар", logo: L.task, keywords: ["todo", "даалгавар"] },
+      { id: "contact", label: "Харилцагч нэмэх", hint: "Харилцагчийн бүртгэл", logo: L.crm, keywords: ["lead", "харилцагч"] },
+      { id: "meeting", label: "Уулзалт товлох", hint: "Хуанли", logo: L.calendar, keywords: ["calendar", "event", "уулзалт"] },
     ],
   },
   {
     id: "share",
-    label: "Share",
+    label: "Хуваалцах",
     commands: [
-      { id: "post", label: "Post an update", hint: "#team-updates", logo: L.slack },
-      { id: "page", label: "Save as page", hint: "Notion · Meeting notes", logo: L.notion },
+      { id: "post", label: "Мэдээ нийтлэх", hint: "Багийн чат · #мэдээ", logo: L.chat },
+      { id: "page", label: "Хуудас болгон хадгалах", hint: "Баримтын сан · Уулзалтын тэмдэглэл", logo: L.docs },
     ],
   },
   {
     id: "general",
-    label: "General",
+    label: "Ерөнхий",
     commands: [
-      { id: "new-doc", label: "New document", icon: I.doc, keys: ["N"] },
-      { id: "invite", label: "Invite teammates", icon: I.user, keys: ["I"] },
-      { id: "upload", label: "Upload files", icon: I.upload, keys: ["U"] },
-      { id: "theme", label: "Switch to dark mode", icon: I.moon, keys: ["⇧", "D"] },
+      { id: "new-doc", label: "Шинэ баримт", icon: I.doc, keys: ["N"] },
+      { id: "invite", label: "Хамт олноо урих", icon: I.user, keys: ["I"] },
+      { id: "upload", label: "Файл байршуулах", icon: I.upload, keys: ["U"] },
+      { id: "theme", label: "Харанхуй горимд шилжих", icon: I.moon, keys: ["⇧", "D"] },
     ],
   },
   {
     id: "goto",
-    label: "Go to",
+    label: "Очих",
     commands: [
-      { id: "home", label: "Home", icon: I.home, keys: ["G", "H"] },
-      { id: "inbox", label: "Inbox", icon: I.inbox, keys: ["G", "I"] },
-      { id: "reports", label: "Reports", icon: I.chart, keys: ["G", "R"] },
-      { id: "settings", label: "Settings", icon: I.gear, keys: ["G", "S"] },
+      { id: "home", label: "Нүүр", icon: I.home, keys: ["G", "H"] },
+      { id: "inbox", label: "Ирсэн", icon: I.inbox, keys: ["G", "I"] },
+      { id: "reports", label: "Тайлан", icon: I.chart, keys: ["G", "R"] },
+      { id: "settings", label: "Тохиргоо", icon: I.gear, keys: ["G", "S"] },
     ],
   },
 ];
@@ -101,7 +102,7 @@ const matches = (c: Command, q: string) => {
 
 export function CommandMenu({
   groups = defaultGroups,
-  placeholder = "Type a command or search…",
+  placeholder = "Команд бичих эсвэл хайх…",
   onRun,
   onClose,
   autoFocus,

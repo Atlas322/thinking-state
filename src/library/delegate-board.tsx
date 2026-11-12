@@ -40,64 +40,36 @@ export type DelegateBoardProps = {
   className?: string;
 };
 
-const logo = {
-  claude: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      {[0, 30, 60, 90, 120, 150].map((r) => (
-        <rect key={r} x="7.35" y="2" width="1.3" height="12" rx=".65" fill="#e0703f" transform={`rotate(${r} 8 8)`} />
-      ))}
-    </svg>
-  ),
-  openai: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      {[0, 60, 120, 180, 240, 300].map((r) => (
-        <ellipse key={r} cx="8" cy="5" rx="2.3" ry="3.4" fill="none" stroke="currentColor" strokeWidth="1.1" transform={`rotate(${r} 8 8)`} />
-      ))}
-    </svg>
-  ),
-  gemini: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5Z" fill="#3b82f6" />
-    </svg>
-  ),
-};
-
+/** Neutral system glyphs (no vendor logos). */
+const glyph = (d: string, color: string) => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d={d} fill="none" stroke={color} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
 const tool = {
-  hubspot: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="10" cy="9.5" r="2.6" fill="none" stroke="#ff7a59" strokeWidth="1.5" /><path d="M10 6.9V3.5M3 3.5l5 4.3M5 14l3-2.5" stroke="#ff7a59" strokeWidth="1.5" strokeLinecap="round" /></svg>
-  ),
-  slack: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="1" y="5" width="7" height="3" rx="1.5" fill="#36c5f0" /><rect x="8" y="1" width="3" height="7" rx="1.5" fill="#2eb67d" /><rect x="8" y="8" width="7" height="3" rx="1.5" fill="#ecb22e" /><rect x="5" y="8" width="3" height="7" rx="1.5" fill="#e01e5a" />
-    </svg>
-  ),
-  notion: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" /><path d="M5 11.5v-7h1.2l3.6 7H11v-7" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>
-  ),
-  github: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 0 0-2.2 13.6c.4.1.5-.2.5-.4v-1.3c-2 .4-2.4-.9-2.4-.9-.3-.8-.8-1-.8-1-.6-.4.1-.4.1-.4.7 0 1.1.7 1.1.7.6 1.1 1.7.8 2.1.6 0-.5.3-.8.5-1-1.6-.2-3.2-.8-3.2-3.5 0-.8.3-1.4.7-1.9 0-.2-.3-.9.1-1.9 0 0 .6-.2 1.9.7a6.6 6.6 0 0 1 3.5 0c1.3-.9 1.9-.7 1.9-.7.4 1 .1 1.7.1 1.9.4.5.7 1.1.7 1.9 0 2.7-1.6 3.3-3.2 3.5.3.2.5.7.5 1.3v2c0 .2.1.5.5.4A7 7 0 0 0 8 1Z" fill="currentColor" /></svg>
-  ),
-  figma: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4.5" y="1" width="3.5" height="4.6" rx="1.75" fill="#f24e1e" /><rect x="8" y="1" width="3.5" height="4.6" rx="1.75" fill="#ff7262" /><rect x="4.5" y="5.6" width="3.5" height="4.6" rx="1.75" fill="#a259ff" /><circle cx="9.75" cy="7.9" r="1.75" fill="#1abcfe" /><rect x="4.5" y="10.2" width="3.5" height="4.6" rx="1.75" fill="#0acf83" /></svg>
-  ),
+  crm: glyph("M2.5 3.5h11v9h-11ZM6 7.2a1.3 1.3 0 1 0 0-.01M4 11c.4-1 1.1-1.5 2-1.5s1.6.5 2 1.5M9.5 6.5h2.5M9.5 9h2", "#f97316"),
+  chat: glyph("M3 3.5h10a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H7l-3 2.5v-2.5H3a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1Z", "#a855f7"),
+  docs: glyph("M4 1.8h5l3 3v9.4H4ZM9 1.8v3h3M6 8.5h4M6 11h3", "currentColor"),
+  code: glyph("M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5M9 3 7 13", "currentColor"),
+  design: glyph("M2.5 13.5 4 10l7-7 2 2-7 7ZM9.5 4.5l2 2", "#ec4899"),
 };
 
 const defaultAgents: DelegateAgent[] = [
-  { id: "researcher", name: "Researcher", model: "Opus 5.5", avatar: logo.claude, current: 7, rate: 0.08 },
-  { id: "writer", name: "Writer", model: "Sonnet 5.5", avatar: logo.claude, current: 14, rate: 0.03 },
-  { id: "coder", name: "Coder", model: "GPT-6 Sol", avatar: logo.openai, current: 21, rate: 0.06 },
-  { id: "ops", name: "Ops", model: "Gemini 3.8 Flash", avatar: logo.gemini, current: 8, rate: 0.01 },
+  { id: "researcher", name: "Судлаач", model: "Судлаач агент", current: 7, rate: 0.08 },
+  { id: "writer", name: "Бичигч", model: "Бичигч агент", current: 14, rate: 0.03 },
+  { id: "coder", name: "Кодчин", model: "Кодын агент", current: 21, rate: 0.06 },
+  { id: "ops", name: "Үйл ажиллагаа", model: "Үйл ажиллагааны агент", current: 8, rate: 0.01 },
 ];
 
 const defaultTasks: DelegateTask[] = [
-  { id: "crm", title: "Clean up CRM duplicates", estimate: 18, tools: [tool.hubspot], agentId: null },
-  { id: "scan", title: "Competitor scan", estimate: 23, agentId: "researcher" },
-  { id: "churn", title: "Summarize churn calls", estimate: 16, tools: [tool.slack, tool.notion], agentId: "researcher" },
-  { id: "notes", title: "Write release notes", estimate: 14, agentId: "writer" },
-  { id: "auth", title: "Refactor auth", estimate: 21, agentId: "coder" },
-  { id: "flaky", title: "Fix flaky checkout test", estimate: 15, tools: [tool.github], agentId: "coder" },
-  { id: "stripe", title: "Upgrade Stripe SDK", estimate: 8, agentId: "ops" },
-  { id: "pricing", title: "Update pricing page", estimate: 12, tools: [tool.figma], agentId: "ops" },
+  { id: "crm", title: "Харилцагчийн давхардал цэвэрлэх", estimate: 18, tools: [tool.crm], agentId: null },
+  { id: "scan", title: "Өрсөлдөгчийн тойм", estimate: 23, agentId: "researcher" },
+  { id: "churn", title: "Цуцлалтын ярианы хураангуй", estimate: 16, tools: [tool.chat, tool.docs], agentId: "researcher" },
+  { id: "notes", title: "Хувилбарын тэмдэглэл бичих", estimate: 14, agentId: "writer" },
+  { id: "auth", title: "Нэвтрэлтийн кодыг сайжруулах", estimate: 21, agentId: "coder" },
+  { id: "flaky", title: "Тогтворгүй төлбөрийн тестийг засах", estimate: 15, tools: [tool.code], agentId: "coder" },
+  { id: "stripe", title: "Төлбөрийн системийн сан шинэчлэх", estimate: 8, agentId: "ops" },
+  { id: "pricing", title: "Багцын хуудсыг шинэчлэх", estimate: 12, tools: [tool.design], agentId: "ops" },
 ];
 
 const clock = (ms: number) => {
@@ -106,7 +78,7 @@ const clock = (ms: number) => {
 };
 
 export function DelegateBoard({
-  title = "Delegate",
+  title = "Ажил хуваарилах",
   agents = defaultAgents,
   tasks: tasksProp = defaultTasks,
   onAssign,
@@ -115,7 +87,7 @@ export function DelegateBoard({
   onModeChange,
   suggestion,
   now: nowProp,
-  formatCost = (n) => `$${n.toFixed(2)}`,
+  formatCost = (n) => `${n.toFixed(2)} кр`,
   className = "",
 }: DelegateBoardProps) {
   const [tasks, setTasks] = React.useState(tasksProp);

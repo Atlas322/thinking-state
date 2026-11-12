@@ -41,10 +41,10 @@ export type ModelPickerProps = {
 };
 
 const defaultModels: PickerModel[] = [
-  { id: "auto", name: "Auto", description: "Picks the model for each message" },
-  { id: "haiku", name: "Haiku 5", description: "Fastest for quick answers", speed: 5, quality: 3, cost: 1, latencyMs: 300, pricePerM: 1 },
-  { id: "sonnet", name: "Sonnet 5.5", description: "Smart, fast, everyday work", speed: 4, quality: 4, cost: 3, latencyMs: 800, pricePerM: 3 },
-  { id: "opus", name: "Opus 5.5", description: "Deepest reasoning for hard tasks", speed: 2, quality: 5, cost: 5, latencyMs: 1900, pricePerM: 15 },
+  { id: "auto", name: "Автомат", description: "Мессеж бүрт тохирох агентыг сонгоно" },
+  { id: "fast", name: "Хурдан агент", description: "Богино асуултад хамгийн хурдан", speed: 5, quality: 3, cost: 1, latencyMs: 300 },
+  { id: "balanced", name: "Бичигч агент", description: "Өдөр тутмын ажилд ухаалаг, хурдан", speed: 4, quality: 4, cost: 3, latencyMs: 800 },
+  { id: "deep", name: "Судлаач агент", description: "Хэцүү ажилд хамгийн гүн бодно", speed: 2, quality: 5, cost: 5, latencyMs: 1900 },
 ];
 
 const efforts: Effort[] = ["low", "medium", "high"];
@@ -94,7 +94,7 @@ function Switch({ on, onChange, label }: { on: boolean; onChange: (v: boolean) =
 export function ModelPicker({
   models = defaultModels,
   value,
-  defaultValue = "sonnet",
+  defaultValue = "balanced",
   onChange,
   thinking,
   defaultThinking = true,
@@ -110,7 +110,7 @@ export function ModelPicker({
   onOpenChange,
   align = "start",
   side = "bottom",
-  placeholder = "Ask anything…",
+  placeholder = "Юу ч асуу…",
   className = "",
 }: ModelPickerProps) {
   const [inId, setInId] = React.useState(models.some((m) => m.id === defaultValue) ? defaultValue : models[0]?.id);
@@ -153,9 +153,7 @@ export function ModelPicker({
   }, [isOpen]);
 
   const latency = (shown.latencyMs ?? 900) * (think ? effortMul[eff] : 1) / 1000;
-  const price = shown.pricePerM ?? 3;
   const rLat = useRoll(latency);
-  const rPrice = useRoll(price);
   const routed = shown.speed == null && shown.quality == null && shown.cost == null;
   const initial = (m: PickerModel) => m.icon ?? <span className="mp-ini">{m.name[0]}</span>;
 
@@ -274,7 +272,7 @@ export function ModelPicker({
             </div>
             <div className="mp-tray">
               <span>First token <b>{routed ? "varies" : `~${rLat.toFixed(1)}s`}</b></span>
-              <span><b>{routed ? "varies" : `$${rPrice.toFixed(rPrice < 10 ? 2 : 0)}`}</b>{routed ? "" : " / M tokens"}</span>
+              <span>Cost <b>{routed || shown.cost == null ? "varies" : `${shown.cost}/5`}</b></span>
             </div>
           </div>
         </div>

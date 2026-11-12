@@ -32,30 +32,31 @@ const ico = (c: React.ReactNode) => (
   </svg>
 );
 export const judgeIcons = {
-  claude: ico(
-    <g stroke="#d97757" strokeWidth="1.4" strokeLinecap="round">
-      <path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4M5.2 2.6l5.6 10.8M10.8 2.6 5.2 13.4" />
+  research: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
+      <circle cx="7" cy="7" r="4" />
+      <path d="m10 10 3.5 3.5" />
     </g>,
   ),
-  openai: ico(
-    <g fill="none" stroke="currentColor" strokeWidth="1.1">
-      <path d="M8 2.2a2.8 2.8 0 0 1 4.6 2.6 2.8 2.8 0 0 1 .4 5A2.8 2.8 0 0 1 8.5 13a2.8 2.8 0 0 1-4.7-2.4 2.8 2.8 0 0 1-.6-5A2.8 2.8 0 0 1 8 2.2Z" />
-      <path d="M6 4.4v5l2 1.2 2-1.2V5.3M4 8.2l4-2.3 4 2.3" />
+  code: ico(<path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />),
+  review: ico(<path d="m3 8.5 3 3 7-7" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />),
+  ops: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.3">
+      <circle cx="8" cy="8" r="2.2" />
+      <path d="M8 1.8v2M8 12.2v2M1.8 8h2M12.2 8h2M3.6 3.6l1.4 1.4M11 11l1.4 1.4M3.6 12.4 5 11M11 5l1.4-1.4" strokeLinecap="round" />
     </g>,
   ),
-  gemini: ico(<path d="M8 1.5c.4 3.6 2.9 6.1 6.5 6.5-3.6.4-6.1 2.9-6.5 6.5C7.6 10.9 5.1 8.4 1.5 8 5.1 7.6 7.6 5.1 8 1.5Z" fill="#3b7cf6" />),
-  meta: ico(<path d="M2.5 10.5c0-3 1.5-5.5 3-5.5 2 0 3 5.5 5 5.5 1.3 0 2.5-1.2 2.5-3S12 5 10.5 5C8.5 5 7.5 10.5 5.5 10.5 3.6 10.5 2.5 9.5 2.5 10.5Z" fill="none" stroke="currentColor" strokeWidth="1.3" />),
 };
 
 const defaultContenders: Contender[] = [
-  { id: "idem", name: "Idempotency key", icon: judgeIcons.claude, meta: "Sonnet · +18 −4 · 3 files · 42/42 tests", output: "Sends one idempotency key per checkout, so Stripe returns the first charge on a retry instead of making a second.", code: "stripe.paymentIntents.create(params, { idempotencyKey: checkout.id })" },
-  { id: "guard", name: "Retry guard", icon: judgeIcons.openai, meta: "GPT-6 · +22 −3 · 2 files · 40/42 tests", output: "Skips the retry when a charge for the order already exists in the last minute." },
-  { id: "lock", name: "Row lock", icon: judgeIcons.gemini, meta: "Gemini · +31 −6 · 4 files · 42/42 tests", output: "Takes a row lock on the order before charging, so two requests can't charge the same order.", code: "SELECT … FROM orders WHERE id = $1 FOR UPDATE" },
-  { id: "noretry", name: "No retries", icon: judgeIcons.meta, meta: "Llama · +2 −9 · 1 file · 38/42 tests", output: "Turns off automatic retries for payment calls." },
-  { id: "hook", name: "Webhook dedupe", icon: judgeIcons.claude, meta: "Opus · +26 −2 · 3 files · 42/42 tests", output: "Drops a webhook whose event id was already handled." },
-  { id: "state", name: "State machine", icon: judgeIcons.openai, meta: "GPT-6 · +64 −20 · 6 files · 41/42 tests", output: "Moves orders through pending, charging and paid; only pending orders can be charged." },
-  { id: "debounce", name: "Button debounce", icon: judgeIcons.gemini, meta: "Gemini · +6 −1 · 1 file · 36/42 tests", output: "Disables the pay button for two seconds after a click." },
-  { id: "refund", name: "Refund later", icon: judgeIcons.meta, meta: "Llama · +40 −0 · 2 files · 39/42 tests", output: "Finds double charges every night and refunds the second one." },
+  { id: "idem", name: "Давтагдашгүй түлхүүр", icon: judgeIcons.code, meta: "Кодын агент · +18 −4 · 3 файл · 42/42 тест", output: "Захиалга бүрт нэг түлхүүр илгээдэг тул дахин оролдоход төлбөрийн систем эхний гүйлгээг буцаана, хоёр дахийг үүсгэхгүй.", code: "payments.create(params, { idempotencyKey: checkout.id })" },
+  { id: "guard", name: "Давталтын хамгаалалт", icon: judgeIcons.research, meta: "Судлаач агент · +22 −3 · 2 файл · 40/42 тест", output: "Сүүлийн нэг минутад тухайн захиалгын төлбөр аль хэдийн байвал дахин оролдохгүй." },
+  { id: "lock", name: "Мөрийн түгжээ", icon: judgeIcons.review, meta: "Шалгагч агент · +31 −6 · 4 файл · 42/42 тест", output: "Төлбөр авахаас өмнө захиалгын мөрийг түгждэг тул хоёр хүсэлт нэг захиалгаас давхар төлбөр авч чадахгүй.", code: "SELECT … FROM orders WHERE id = :id FOR UPDATE" },
+  { id: "noretry", name: "Давталтгүй", icon: judgeIcons.ops, meta: "Үйл ажиллагааны агент · +2 −9 · 1 файл · 38/42 тест", output: "Төлбөрийн дуудлагын автомат давталтыг унтраана." },
+  { id: "hook", name: "Webhook давхардал", icon: judgeIcons.code, meta: "Кодын агент · +26 −2 · 3 файл · 42/42 тест", output: "Аль хэдийн боловсруулсан үйл явдлын дугаартай webhook-ийг хаяна." },
+  { id: "state", name: "Төлөвийн машин", icon: judgeIcons.research, meta: "Судлаач агент · +64 −20 · 6 файл · 41/42 тест", output: "Захиалгыг хүлээгдэж буй, төлж буй, төлсөн төлөвөөр шилжүүлнэ; зөвхөн хүлээгдэж буй захиалгаас төлбөр авна." },
+  { id: "debounce", name: "Товчны саатал", icon: judgeIcons.review, meta: "Шалгагч агент · +6 −1 · 1 файл · 36/42 тест", output: "Дарсны дараа төлөх товчийг хоёр секунд идэвхгүй болгоно." },
+  { id: "refund", name: "Дараа буцаах", icon: judgeIcons.ops, meta: "Үйл ажиллагааны агент · +40 −0 · 2 файл · 39/42 тест", output: "Шөнө бүр давхар төлбөрийг олж, хоёр дахийг нь буцаана." },
 ];
 const defaultVerdicts: Record<string, Verdict> = {
   "0:0": { winner: "idem", scores: [9.1, 6.2] },
@@ -79,10 +80,10 @@ export function JudgeBracket({
   contenders = defaultContenders,
   verdicts = defaultVerdicts,
   judging = "1:0",
-  judge = "Claude Opus",
-  task = "Fix: customers charged twice when a payment is retried",
+  judge = "Шүүгч агент",
+  task = "Засвар: төлбөрийг дахин оролдоход харилцагчаас давхар төлбөр авч байна",
   onPick,
-  title = "Judge",
+  title = "Шүүгч",
   className = "",
 }: JudgeBracketProps) {
   const rounds = Math.max(1, Math.round(Math.log2(contenders.length)));

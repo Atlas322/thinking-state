@@ -11,7 +11,8 @@ export type LaneAgent = {
   avatar?: React.ReactNode;
 };
 
-export type LaneTool = "notion" | "slack" | "figma" | "github" | "stripe";
+/** Neutral keys: docs, chat, design, code, payments. The older vendor-named keys still work (same glyphs). */
+export type LaneTool = "docs" | "chat" | "design" | "code" | "payments" | "notion" | "slack" | "figma" | "github" | "stripe";
 
 export type LaneTask = {
   id: string;
@@ -41,80 +42,84 @@ export type AgentLanesProps = {
 
 const MIN = 60_000;
 
+/** Neutral agent shapes, no vendor marks. */
 const logo = {
   claude: (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      {[0, 30, 60, 90, 120, 150].map((r) => (
-        <rect key={r} x="7.3" y="1.5" width="1.4" height="13" rx=".7" fill="#d97757" transform={`rotate(${r} 8 8)`} />
-      ))}
+      <circle cx="8" cy="8" r="5.6" fill="none" stroke="#d97757" strokeWidth="1.6" />
     </svg>
   ),
   openai: (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      {[0, 60, 120, 180, 240, 300].map((r) => (
-        <path key={r} d="M8 2.2a2.6 2.6 0 0 1 2.6 2.6v3.4" fill="none" stroke="currentColor" strokeWidth="1.15" transform={`rotate(${r} 8 8)`} />
-      ))}
+      <rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
     </svg>
   ),
   gemini: (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M8 1c.5 3.6 3.4 6.5 7 7-3.6.5-6.5 3.4-7 7-.5-3.6-3.4-6.5-7-7 3.6-.5 6.5-3.4 7-7Z" fill="#3b82f6" />
+      <path d="M8 2 14 13.5H2Z" fill="none" stroke="#3b82f6" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  ),
+};
+
+/** Neutral system glyphs, no brand marks. Keys kept for API compatibility. */
+const legacyIcon: Record<"notion" | "slack" | "figma" | "github" | "stripe", React.ReactNode> = {
+  notion: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M3.5 1.8h6l3 3v9.4h-9Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+      <path d="M5.5 8h5M5.5 10.5h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  ),
+  slack: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2Z" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+    </svg>
+  ),
+  figma: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="2" y="2" width="12" height="12" rx="2" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M2 6h12M6 6v8" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
+  ),
+  github: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="4.5" cy="3.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="4.5" cy="12.5" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <circle cx="11.5" cy="6" r="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M4.5 5v6M11.5 7.5c0 2-2 2.6-6 3.4" fill="none" stroke="currentColor" strokeWidth="1.3" />
+    </svg>
+  ),
+  stripe: (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <rect x="1.8" y="3.5" width="12.4" height="9" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M1.8 6.5h12.4M4.5 10h2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
   ),
 };
 
 const toolIcon: Record<LaneTool, React.ReactNode> = {
-  notion: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="1.5" y="1.5" width="13" height="13" rx="2" fill="#fff" stroke="#111" strokeWidth="1.3" />
-      <path d="M5.2 11.5v-7h1l3.6 7h1v-7" fill="none" stroke="#111" strokeWidth="1.3" />
-    </svg>
-  ),
-  slack: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="1" y="6" width="6" height="2.6" rx="1.3" fill="#36c5f0" />
-      <rect x="6" y="1" width="2.6" height="6" rx="1.3" fill="#2eb67d" />
-      <rect x="9" y="7.4" width="6" height="2.6" rx="1.3" fill="#ecb22e" />
-      <rect x="7.4" y="9" width="2.6" height="6" rx="1.3" fill="#e01e5a" />
-    </svg>
-  ),
-  figma: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="4" y="1" width="4" height="4.6" rx="2" fill="#f24e1e" />
-      <rect x="8" y="1" width="4" height="4.6" rx="2" fill="#ff7262" />
-      <rect x="4" y="5.6" width="4" height="4.6" rx="2" fill="#a259ff" />
-      <circle cx="10" cy="7.9" r="2" fill="#1abcfe" />
-      <rect x="4" y="10.2" width="4" height="4.6" rx="2" fill="#0acf83" />
-    </svg>
-  ),
-  github: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path fill="currentColor" d="M8 .8a7.2 7.2 0 0 0-2.3 14c.4.1.5-.2.5-.4v-1.3c-2 .4-2.4-.9-2.4-.9-.3-.8-.8-1-.8-1-.7-.5 0-.5 0-.5.7 0 1.1.8 1.1.8.6 1.1 1.7.8 2.1.6 0-.5.3-.8.5-1-1.6-.2-3.3-.8-3.3-3.6 0-.8.3-1.4.7-1.9 0-.2-.3-.9.1-1.9 0 0 .6-.2 2 .7a7 7 0 0 1 3.6 0c1.4-.9 2-.7 2-.7.4 1 .1 1.7.1 1.9.5.5.7 1.1.7 1.9 0 2.8-1.7 3.4-3.3 3.6.3.2.5.7.5 1.3v2c0 .2.1.5.5.4A7.2 7.2 0 0 0 8 .8Z" />
-    </svg>
-  ),
-  stripe: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="1" y="1" width="14" height="14" rx="3" fill="#635bff" />
-      <path d="M10.2 5.6c-.6-.3-1.3-.5-2-.5-.8 0-1.3.3-1.3.8 0 1.3 3.6.7 3.6 3.1 0 1.3-1.1 2-2.6 2-.8 0-1.6-.2-2.3-.6" fill="none" stroke="#fff" strokeWidth="1.3" strokeLinecap="round" />
-    </svg>
-  ),
+  ...legacyIcon,
+  docs: legacyIcon.notion,
+  chat: legacyIcon.slack,
+  design: legacyIcon.figma,
+  code: legacyIcon.github,
+  payments: legacyIcon.stripe,
 };
 
 const defaultAgents: LaneAgent[] = [
-  { id: "researcher", name: "Researcher", model: "Opus 5.5", avatar: logo.claude },
-  { id: "writer", name: "Writer", model: "Sonnet 5.5", avatar: logo.claude },
-  { id: "reviewer", name: "Reviewer", model: "GPT-6 Sol", avatar: logo.openai },
-  { id: "ops", name: "Ops", model: "Gemini 3.8 Flash", avatar: logo.gemini },
+  { id: "researcher", name: "Судлаач", model: "Судлаач агент", avatar: logo.claude },
+  { id: "writer", name: "Бичигч", model: "Бичигч агент", avatar: logo.claude },
+  { id: "reviewer", name: "Шалгагч", model: "Шалгагч агент", avatar: logo.openai },
+  { id: "ops", name: "Үйл ажиллагаа", model: "Үйл ажиллагааны агент", avatar: logo.gemini },
 ];
 
 const demoTasks = (t: number): LaneTask[] => [
-  { id: "t1", agentId: "researcher", title: "Competitor pricing", status: "done", start: t - 31.6 * MIN, end: t - 21.5 * MIN, handoffTo: "t3", summary: "Pricing pages of 6 competitors, compared per seat." },
-  { id: "t2", agentId: "researcher", title: "Customer interviews", status: "running", start: t - 14 * MIN, tools: ["notion", "slack"], summary: "Tagging quotes from 18 interviews." },
-  { id: "t3", agentId: "writer", title: "Draft pricing page", status: "done", start: t - 20 * MIN, end: t - 1.6 * MIN, handoffTo: "t5", tools: ["figma", "notion"], summary: "Three tiers, copy and layout in Figma." },
-  { id: "t4", agentId: "reviewer", title: "PR #482 billing", status: "done", start: t - 31.2 * MIN, end: t - 24 * MIN, summary: "Approved with two comments." },
-  { id: "t5", agentId: "reviewer", title: "Review pricing copy", status: "running", start: t - 0.8 * MIN, tools: ["figma"], summary: "Checking tone and numbers." },
-  { id: "t6", agentId: "ops", title: "Sync CRM", status: "failed", start: t - 30.6 * MIN, end: t - 26 * MIN, summary: "HubSpot token expired." },
-  { id: "t7", agentId: "ops", title: "Rotate API keys", status: "waiting", start: t - 17 * MIN, tools: ["stripe", "github"], ask: "Rotate the live Stripe key and update the GitHub secret?" },
+  { id: "t1", agentId: "researcher", title: "Өрсөлдөгчийн тариф", status: "done", start: t - 31.6 * MIN, end: t - 21.5 * MIN, handoffTo: "t3", summary: "6 өрсөлдөгчийн тарифын хуудсыг хэрэглэгч тус бүрээр харьцуулсан." },
+  { id: "t2", agentId: "researcher", title: "Хэрэглэгчийн ярилцлага", status: "running", start: t - 14 * MIN, tools: ["docs", "chat"], summary: "18 ярилцлагаас ишлэлүүдийг ангилж байна." },
+  { id: "t3", agentId: "writer", title: "Тарифын хуудасны ноорог", status: "done", start: t - 20 * MIN, end: t - 1.6 * MIN, handoffTo: "t5", tools: ["design", "docs"], summary: "Гурван багц, бичвэр ба загвар дизайны файлд." },
+  { id: "t4", agentId: "reviewer", title: "#482 төлбөрийн засвар", status: "done", start: t - 31.2 * MIN, end: t - 24 * MIN, summary: "Хоёр сэтгэгдэлтэйгээр баталсан." },
+  { id: "t5", agentId: "reviewer", title: "Тарифын бичвэр шалгах", status: "running", start: t - 0.8 * MIN, tools: ["design"], summary: "Өнгө аяс, тоонуудыг шалгаж байна." },
+  { id: "t6", agentId: "ops", title: "Харилцагчийн бүртгэл синк", status: "failed", start: t - 30.6 * MIN, end: t - 26 * MIN, summary: "Харилцагчийн бүртгэлийн токен хүчингүй болсон." },
+  { id: "t7", agentId: "ops", title: "API түлхүүр солих", status: "waiting", start: t - 17 * MIN, tools: ["payments", "code"], ask: "Төлбөрийн системийн идэвхтэй түлхүүрийг сольж, хувилбарын хяналтын нууц утгыг шинэчлэх үү?" },
 ];
 
 const ago = (ms: number) => {
@@ -316,7 +321,7 @@ export function AgentLanes({
 }
 
 const css = `
-.al{--al-bg:#fff;--al-fg:#18181b;--al-muted:#71717a;--al-faint:#a1a1aa;--al-line:#ececef;--al-chip:#f0f0f2;--al-done:#efefef;--al-blue:#3b82f6;--al-blue-bg:#e3effd;--al-blue-fg:#4a8fe0;--al-warn:#d9480f;--al-warn-bg:#fdebd6;--al-red-bg:#fde4e4;--al-red:#e5484d;width:100%;max-width:760px;background:var(--al-bg);color:var(--al-fg);border:1px solid var(--al-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
+.al{--al-bg:#fff;--al-fg:#18181b;--al-muted:#71717a;--al-faint:#a1a1aa;--al-line:#ececef;--al-chip:#f0f0f2;--al-done:#efefef;--al-blue:#3b82f6;--al-blue-bg:#e3effd;--al-blue-fg:#4a8fe0;--al-warn:#d9480f;--al-warn-bg:#fdebd6;--al-red-bg:#fde4e4;--al-red:#e5484d;width:100%;max-width:760px;container-type:inline-size;background:var(--al-bg);color:var(--al-fg);border:1px solid var(--al-line);border-radius:12px;box-shadow:0 1px 3px #0000000d;font:400 13px/1.4 Inter,system-ui,sans-serif;position:relative}
 :where(.dark,[data-theme=dark]) .al{--al-bg:#1b1b1e;--al-fg:#ececef;--al-muted:#a1a1aa;--al-faint:#71717a;--al-line:#2e2e33;--al-chip:#2a2a2f;--al-done:#2a2a2e;--al-blue-bg:#1d2b40;--al-blue-fg:#7fb0f5;--al-warn:#f0883e;--al-warn-bg:#3a2717;--al-red-bg:#3a1e20;color-scheme:dark}
 .al *{box-sizing:border-box}.al button{font:inherit;color:inherit;cursor:pointer}
 .al-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--al-line)}
@@ -358,7 +363,7 @@ const css = `
 .al-flag{display:inline-flex;align-items:center;gap:5px;margin-left:auto;margin-right:-4px;padding:0 7px;height:22px;border-radius:5px;background:var(--al-bg);font-size:12px;color:var(--al-warn);box-shadow:0 1px 2px #0000000f}
 .al-flag svg{width:10px;height:10px;animation:al-pulse 1.6s ease-in-out infinite}
 .al-curves{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.al-curves path{fill:none;stroke:var(--al-faint);stroke-width:1;stroke-dasharray:3 3}
+.al-curves path{fill:none;stroke:var(--al-muted);stroke-width:1;stroke-dasharray:3 3}
 .al-curves path.live{stroke:var(--al-blue);animation:al-flow 1s linear infinite}
 .al-pop{position:absolute;z-index:3;top:36px;right:0;width:250px;padding:12px;border:1px solid var(--al-line);border-radius:10px;background:var(--al-bg);box-shadow:0 8px 28px #0000001f;color:var(--al-fg);white-space:normal;animation:al-in .16s ease-out}
 .al-pop.up{top:auto;bottom:36px}
@@ -374,7 +379,7 @@ const css = `
 @keyframes al-shimmer{from{background-position:100% 0}to{background-position:-100% 0}}
 @keyframes al-flow{to{stroke-dashoffset:-6}}
 @keyframes al-in{from{opacity:0;transform:translateY(-3px)}}
-@media(max-width:520px){.al-grid{grid-template-columns:40px minmax(0,1fr);padding:8px 10px 10px}.al-who{display:none}.al-bar{flex-wrap:wrap}}
+@container (max-width:520px){.al-grid{grid-template-columns:40px minmax(0,1fr);padding:8px 10px 10px}.al-who{display:none}.al-bar{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.al *{animation:none!important;transition:none!important}}
 `;
 

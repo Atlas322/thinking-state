@@ -30,29 +30,29 @@ export type ParallelAttemptsProps = {
 };
 
 const icons = {
-  claude: (
-    <svg viewBox="0 0 16 16"><g stroke="#d97757" strokeWidth="1.5" strokeLinecap="round"><path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2" /></g></svg>
+  code: (
+    <svg viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
   ),
-  openai: (
-    <svg viewBox="0 0 16 16"><g fill="none" stroke="currentColor" strokeWidth="1.1"><path d="M8 2.2a3 3 0 0 1 5 2.9 3 3 0 0 1-.6 5 3 3 0 0 1-4.4 3.7 3 3 0 0 1-5-2.9 3 3 0 0 1 .6-5A3 3 0 0 1 8 2.2Z" /><path d="M6 4.5v5L8 10.7l2-1.2V6.5L8 5.3 6 6.5" /></g></svg>
+  research: (
+    <svg viewBox="0 0 16 16"><g fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><circle cx="7" cy="7" r="4" /><path d="m10 10 3.5 3.5" /></g></svg>
   ),
-  gemini: <svg viewBox="0 0 16 16"><path d="M8 1c.5 3.6 3.4 6.5 7 7-3.6.5-6.5 3.4-7 7-.5-3.6-3.4-6.5-7-7 3.6-.5 6.5-3.4 7-7Z" fill="#3b82f6" /></svg>,
+  review: <svg viewBox="0 0 16 16"><path d="m3 8.5 3 3 7-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>,
 };
 
 const finalAttempts: Attempt[] = [
-  { id: "opus", name: "Opus 5.5", approach: "Add a retry with backoff", icon: icons.claude, status: "done", progress: 1, score: 78, note: "20/20 runs green · adds 1.4s per test", took: "2m 36s", cost: 0.31 },
-  { id: "gpt", name: "GPT-6 Sol", approach: "Mock the payment API", icon: icons.openai, status: "done", progress: 1, score: 94, note: "20/20 runs green · suite 30% faster", took: "2m 06s", cost: 0.27 },
-  { id: "gemini", name: "Gemini 3.8 Pro", approach: "Wait for the network to settle", icon: icons.gemini, status: "failed", progress: 0.62, note: "Still flaky – 3 of 20 runs failed", took: "1m 44s", cost: 0.18 },
+  { id: "code", name: "Кодын агент", approach: "Хүлээлттэй давталт нэмэх", icon: icons.code, status: "done", progress: 1, score: 78, note: "20/20 удаа амжилттай · тест бүрт 1.4 сек нэмнэ", took: "2м 36с", cost: 31200 },
+  { id: "research", name: "Судлаач агент", approach: "Төлбөрийн системийн дуудлагыг дуурайх", icon: icons.research, status: "done", progress: 1, score: 94, note: "20/20 удаа амжилттай · тестүүд 30% хурдан", took: "2м 06с", cost: 27400 },
+  { id: "review", name: "Шалгагч агент", approach: "Сүлжээ тогтворжихыг хүлээх", icon: icons.review, status: "failed", progress: 0.62, note: "Тогтворгүй хэвээр – 20-оос 3 нь унасан", took: "1м 44с", cost: 18100 },
 ];
-const demoSteps = ["Reading the test", "Running the suite", "Scoring 20 runs"];
+const demoSteps = ["Тестийг уншиж байна", "Тестүүдийг ажиллуулж байна", "20 ажиллуулалтыг үнэлж байна"];
 const demoSpeed = [1, 0.82, 0.68];
 
 export function ParallelAttempts({
   attempts: attemptsProp,
-  task = "Fix the flaky checkout test",
+  task = "Тогтворгүй төлбөрийн тестийг засах",
   picked: pickedProp,
   onPick,
-  formatCost = (n) => `$${n.toFixed(2)}`,
+  formatCost = (n) => (n >= 1000 ? `${(n / 1000).toFixed(1)}k токен` : `${n} токен`),
   title,
   className = "",
 }: ParallelAttemptsProps) {

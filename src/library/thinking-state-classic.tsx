@@ -357,117 +357,90 @@ export function ThinkingState({
 const steps: ThinkingStep[] = [
   {
     kind: "search",
-    label: "Searching",
+    label: "Хайж байна",
     sources: [
       {
-        label: "Slack – #team-offsite",
-        href: "https://slack.com/",
-        tooltip: "slack.com",
-        icon: <SlackMark />,
+        label: "Багийн чат – #аялал",
+        href: "https://example.com/chat/team-trip",
+        tooltip: "example.com/chat",
+        icon: <ChatMark />,
       },
       {
-        label: "X – @lisbonguide",
-        href: "https://x.com/",
-        tooltip: "x.com",
-        icon: <XMark />,
+        label: "Аяллын хөтөч – Хөвсгөл",
+        href: "https://example.com/guide/khuvsgul",
+        tooltip: "example.com/guide",
+        icon: <LetterMark letter="А" />,
       },
       {
-        label: "Notion – Offsite plan",
-        href: "https://notion.so/",
-        tooltip: "notion.so",
-        icon: <NotionMark />,
+        label: "Баримтын сан – Аяллын төлөвлөгөө",
+        href: "https://example.com/docs/team-trip",
+        tooltip: "example.com/docs",
+        icon: <DocMark />,
       },
       {
-        label: "Wikipedia – Lisbon",
-        href: "https://en.wikipedia.org/wiki/Lisbon",
-        tooltip: "en.wikipedia.org/wiki/Lisbon",
-        icon: <WikipediaMark />,
+        label: "Нэвтэрхий толь – Хөвсгөл нуур",
+        href: "https://example.com/wiki/khuvsgul",
+        tooltip: "example.com/wiki",
+        icon: <LetterMark letter="Н" />,
       },
     ],
     moreSources: [
       {
-        label: "Google Flights – LIS",
-        href: "https://www.google.com/travel/flights",
-        tooltip: "google.com/travel/flights",
+        label: "Нислэгийн хуваарь – Мөрөн",
+        href: "https://example.com/flights/muren",
+        tooltip: "example.com/flights",
       },
       {
-        label: "Booking.com – Lisbon",
-        href: "https://www.booking.com",
-        tooltip: "booking.com",
+        label: "Буудлын захиалга – Хатгал",
+        href: "https://example.com/stays/khatgal",
+        tooltip: "example.com/stays",
       },
       {
-        label: "Airbnb – Alfama",
-        href: "https://www.airbnb.com",
-        tooltip: "airbnb.com",
+        label: "Жуулчны бааз – Ханх",
+        href: "https://example.com/camps/khankh",
+        tooltip: "example.com/camps",
       },
     ],
   },
-  { kind: "step", label: "Reading 7 sources about the trip" },
-  { kind: "step", label: "Comparing flights and hotels" },
-  { kind: "step", label: "Checking dates against the team calendar" },
-  { kind: "step", label: "Drafting the offsite agenda" },
+  { kind: "step", label: "Аяллын тухай 7 эх сурвалж уншиж байна" },
+  { kind: "step", label: "Нислэг, буудлыг харьцуулж байна" },
+  { kind: "step", label: "Огноог багийн хуанлитай тулгаж байна" },
+  { kind: "step", label: "Аяллын хөтөлбөрийн ноорог бичиж байна" },
 ];
 
-function SlackMark() {
+function ChatMark() {
   return (
     <svg aria-hidden="true" viewBox="0 0 16 16">
-      <rect x="1" y="5" width="7" height="3" rx="1.5" fill="#36c5f0" />
-      <circle cx="6.5" cy="2.5" r="1.5" fill="#36c5f0" />
-      <rect x="8" y="1" width="3" height="7" rx="1.5" fill="#2eb67d" />
-      <circle cx="13.5" cy="6.5" r="1.5" fill="#2eb67d" />
-      <rect x="8" y="8" width="7" height="3" rx="1.5" fill="#ecb22e" />
-      <circle cx="9.5" cy="13.5" r="1.5" fill="#ecb22e" />
-      <rect x="5" y="8" width="3" height="7" rx="1.5" fill="#e01e5a" />
-      <circle cx="2.5" cy="9.5" r="1.5" fill="#e01e5a" />
-    </svg>
-  );
-}
-function XMark() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 16 16">
-      <rect width="16" height="16" rx="3" fill="#111" />
       <path
-        d="m4 3 8 10h-2L2 3h2Zm0 10L12 3"
-        transform="translate(1 0)"
+        d="M2.5 3h11v8H6.5L3 13.5V11h-.5Z"
         fill="none"
-        stroke="white"
-        strokeWidth="1"
-      />
-    </svg>
-  );
-}
-function NotionMark() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 16 16">
-      <rect
-        x="1"
-        y="1"
-        width="14"
-        height="14"
-        rx="1.5"
-        fill="white"
-        stroke="#111"
+        stroke="currentColor"
         strokeWidth="1.2"
-      />
-      <path
-        d="M4 12V4h1.5l5 8H12V4M3 4h4m2 0h4M3 12h4"
-        fill="none"
-        stroke="#111"
-        strokeWidth="1.2"
+        strokeLinejoin="round"
       />
     </svg>
   );
 }
-function WikipediaMark() {
+function DocMark() {
   return (
     <svg aria-hidden="true" viewBox="0 0 16 16">
-      <rect width="16" height="16" rx="2" fill="white" />
       <path
-        d="m2 4 3.5 8L8 6l2.5 6L14 4M1 4h4m1 0h4m2 0h3"
+        d="M4 1.8h5.5L12.5 5v9.2H4ZM6 8h4.5M6 10.5h4.5"
         fill="none"
-        stroke="#111"
-        strokeWidth="1"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+function LetterMark({ letter }: { letter: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16">
+      <rect x="1" y="1" width="14" height="14" rx="3" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <text x="8" y="11.4" textAnchor="middle" fontSize="9" fontWeight="600" fill="currentColor">
+        {letter}
+      </text>
     </svg>
   );
 }

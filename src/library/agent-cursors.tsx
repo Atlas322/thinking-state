@@ -54,79 +54,79 @@ export type AgentCursorsProps = {
   className?: string;
 };
 
+/** Neutral role glyphs, no brand marks. */
 const marks: Record<string, React.ReactNode> = {
   researcher: (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      {[0, 30, 60, 90, 120, 150].map((r) => (
-        <rect key={r} x="7.3" y="2" width="1.4" height="12" rx=".7" fill="#e8703c" transform={`rotate(${r} 8 8)`} />
-      ))}
+      <circle cx="7" cy="7" r="4.2" fill="none" stroke="#e8703c" strokeWidth="1.6" />
+      <path d="m10.2 10.2 3.6 3.6" stroke="#e8703c" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   ),
   designer: (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M8 1.5c.5 3.6 2.9 6 6.5 6.5-3.6.5-6 2.9-6.5 6.5-.5-3.6-2.9-6-6.5-6.5 3.6-.5 6-2.9 6.5-6.5Z" fill="#5b8def" />
+      <path d="M8 2 14 13H2Z" fill="none" stroke="#5b8def" strokeWidth="1.6" strokeLinejoin="round" />
     </svg>
   ),
   coder: (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="M2 13V3h3l3 4 3-4h3v10h-2.6V7.4L8 11 4.6 7.4V13Z" fill="#f2a33a" />
+      <path d="M5.5 4 2 8l3.5 4M10.5 4 14 8l-3.5 4" fill="none" stroke="#f2a33a" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
   writer: (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <circle cx="8" cy="8" r="5.6" fill="none" stroke="currentColor" strokeWidth="1.3" />
-      <path d="M8 2.4v11.2M2.4 8h11.2M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1" />
+      <path d="M3 13l1-3.5 7-7 2.5 2.5-7 7Z M9.5 4l2.5 2.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
     </svg>
   ),
 };
 
+/** `cost` is spend in thousands of tokens. */
 const defaultAgents: CursorAgent[] = [
-  { id: "researcher", name: "Researcher", cost: 0.36 },
-  { id: "designer", name: "Designer", cost: 0.23 },
-  { id: "coder", name: "Coder", cost: 0.23 },
-  { id: "writer", name: "Writer", cost: 0.1 },
+  { id: "researcher", name: "Судлаач", cost: 36 },
+  { id: "designer", name: "Дизайнер", cost: 23 },
+  { id: "coder", name: "Кодлогч", cost: 23 },
+  { id: "writer", name: "Бичигч", cost: 10 },
 ];
 
 const defaultBlocks: DocBlock[] = [
-  { id: "title", kind: "title", text: "Pulse 2.0 – launch brief" },
+  { id: "title", kind: "title", text: "Пульс 2.0 – нээлтийн товчоо" },
   {
     id: "lede",
     kind: "paragraph",
-    text: "Teams lose 38% of their week to status updates. Pulse turns that work into a short daily brief, so nobody has to write one.",
+    text: "Багууд долоо хоногийнхоо 38%-ийг явцын тайланд зарцуулдаг. Пульс энэ ажлыг өдөр бүрийн богино товчоо болгож, хэн ч бичих шаардлагагүй болгоно.",
   },
   { id: "img", kind: "image", float: "left" },
   {
     id: "hero",
     kind: "paragraph",
-    text: "The hero is the brief itself: one calm screen a team lead reads on Monday morning. Short, current and written from the work, so the week starts without a status meeting.",
+    text: "Гол дүр нь товчоо өөрөө: багийн ахлагч даваа гарагийн өглөө уншдаг нэг тайван дэлгэц. Богино, шинэлэг, ажлаас нь бичигдсэн тул долоо хоног явцын хуралгүй эхэлнэ.",
   },
-  { id: "rollout", kind: "heading", text: "Rollout" },
+  { id: "rollout", kind: "heading", text: "Нэвтрүүлэлт" },
   {
     id: "code",
     kind: "code",
-    text: 'const rollout = {\n  waitlist: "Nov 3",\n  everyone: "second week of November",\n};',
+    text: "const rollout = {\n  waitlist: \"11/3\",\n  everyone: \"11-р сарын хоёр дахь долоо хоног\",\n};",
   },
-  { id: "launch", kind: "paragraph", text: "Launch week: one short post, a demo video and an email to the waitlist." },
-  { id: "ships", kind: "heading", text: "What ships" },
-  { id: "i1", kind: "item", text: "Daily briefs for every project, written from the work itself" },
-  { id: "i2", kind: "item", text: "Nudges when a task has been quiet for too long" },
+  { id: "launch", kind: "paragraph", text: "Нээлтийн долоо хоног: нэг богино пост, демо бичлэг, хүлээлгийн жагсаалт руу имэйл." },
+  { id: "ships", kind: "heading", text: "Юу гарах вэ" },
+  { id: "i1", kind: "item", text: "Төсөл бүрт өдөр тутмын товчоо, ажлаас нь шууд бичигдэнэ" },
+  { id: "i2", kind: "item", text: "Даалгавар удаан чимээгүй байвал сануулга" },
 ];
 
 const defaultSuggestions: DocSuggestion[] = [
-  { id: "s1", agent: "writer", block: "title", at: 19, remove: "brief", insert: "plan", note: "Plan fits the rollout section" },
-  { id: "s2", agent: "coder", block: "code", at: 52, remove: "second week of November", insert: "Nov 10", note: "Same format as the waitlist date" },
+  { id: "s1", agent: "writer", block: "title", at: 21, remove: "товчоо", insert: "төлөвлөгөө", note: "Нэвтрүүлэлтийн хэсэгт төлөвлөгөө гэдэг нь тохирно" },
+  { id: "s2", agent: "coder", block: "code", at: 51, remove: "11-р сарын хоёр дахь долоо хоног", insert: "11/10", note: "Хүлээлгийн жагсаалтын огноотой ижил формат" },
 ];
 
 const defaultComments: DocComment[] = [
-  { id: "c1", agent: "coder", block: "rollout", text: 'Should waitlist and everyone share one date format? I\'d use "Nov 3" everywhere.' },
-  { id: "c2", agent: "researcher", block: "lede", text: "Q3 survey of 1,240 teams: 38%, not 40%." },
+  { id: "c1", agent: "coder", block: "rollout", text: 'Хүлээлгийн жагсаалт ба бүх хэрэглэгчид нэг огнооны формат хэрэглэх үү? Би хаа сайгүй "11/3" гэж бичье.' },
+  { id: "c2", agent: "researcher", block: "lede", text: "3-р улирлын 1,240 багийн судалгаа: 40% биш, 38%." },
 ];
 
 const defaultCursors: Record<string, AgentCursor> = {
-  researcher: { block: "lede", at: 18, doing: "checking a number" },
-  designer: { block: "img", doing: "resizing" },
-  coder: { block: "code", at: 75 },
-  writer: { block: "title", at: 24, typing: true },
+  researcher: { block: "lede", at: 25, doing: "тоо шалгаж байна" },
+  designer: { block: "img", doing: "хэмжээ өөрчилж байна" },
+  coder: { block: "code", at: 86 },
+  writer: { block: "title", at: 27, typing: true },
 };
 
 const Pointer = ({ agent, doing }: { agent: CursorAgent; doing?: string }) => (
@@ -143,15 +143,15 @@ const Pointer = ({ agent, doing }: { agent: CursorAgent; doing?: string }) => (
 );
 
 export function AgentCursors({
-  title = "Product / Launches",
+  title = "Бүтээгдэхүүн / Нээлтүүд",
   agents = defaultAgents,
   blocks = defaultBlocks,
   suggestions: suggestionsProp = defaultSuggestions,
   cursors = defaultCursors,
   comments: commentsProp = defaultComments,
   tabs = [
-    { id: "doc", label: "Doc" },
-    { id: "table", label: "Table" },
+    { id: "doc", label: "Баримт" },
+    { id: "table", label: "Хүснэгт" },
   ],
   tab: tabProp,
   onTabChange,
@@ -161,7 +161,7 @@ export function AgentCursors({
   onReject,
   onAcceptAll,
   onResolveComment,
-  formatCost = (n) => `$${n.toFixed(2)}`,
+  formatCost = (n) => `${Math.round(n)}k токен`,
   height = 560,
   className = "",
 }: AgentCursorsProps) {

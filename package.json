@@ -51,6 +51,7 @@
     "release:lib": "node scripts/release-lib.mjs",
     "tokens:site": "node scripts/site-css.mjs && node scripts/ts-css.mjs",
     "check:spacing": "node scripts/check-spacing.mjs",
+    "check:content": "vitest run src/content.test.tsx",
     "tokens:figma": "node scripts/figma-variables.mjs",
     "check:motion": "node scripts/check-quality.mjs --motion",
     "check:icons": "node scripts/check-quality.mjs --icons",

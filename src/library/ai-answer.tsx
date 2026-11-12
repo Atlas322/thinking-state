@@ -39,42 +39,34 @@ export type AIAnswerProps = {
 };
 
 const icons: Record<string, React.ReactNode> = {
-  Notion: (
+  "Баримтын сан": (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="1.5" y="1.5" width="13" height="13" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M5 11.5v-7h1.2l3.6 7H11v-7" fill="none" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M4 1.5h5.5l3 3v10h-8.5z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M6 8h4.5M6 10.5h4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </svg>
   ),
-  Slack: (
+  "Багийн чат": (
     <svg viewBox="0 0 16 16" aria-hidden="true">
-      <rect x="1" y="5" width="7" height="3" rx="1.5" fill="#36c5f0" />
-      <rect x="8" y="1" width="3" height="7" rx="1.5" fill="#2eb67d" />
-      <rect x="8" y="8" width="7" height="3" rx="1.5" fill="#ecb22e" />
-      <rect x="5" y="8" width="3" height="7" rx="1.5" fill="#e01e5a" />
-    </svg>
-  ),
-  Wikipedia: (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="m2 4 3.5 8L8 6l2.5 6L14 4M1 4h3m2 0h4m2 0h3" fill="none" stroke="currentColor" strokeWidth="1" />
+      <path d="M2 3h12v8H6.5L3 14v-3H2z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
     </svg>
   ),
 };
 
 const defaultSources: AnswerSource[] = [
-  { id: "notion", provider: "Notion", title: "Offsite plan – shortlist and budget" },
-  { id: "slack", provider: "Slack", title: "#team-offsite – who can make which dates" },
-  { id: "wiki", provider: "Wikipedia", title: "Alfama – the oldest district of Lisbon" },
-  { id: "airbnb", provider: "Airbnb", title: "Two linked houses in Alfama" },
-  { id: "hotel", provider: "Booking", title: "Hotel quote for 12 guests" },
-  { id: "flights", provider: "Google Flights", title: "Berlin and Munich to Lisbon" },
+  { id: "notion", provider: "Баримтын сан", title: "Гадуур уулзалтын төлөвлөгөө – сонголт ба төсөв" },
+  { id: "slack", provider: "Багийн чат", title: "#баг-уулзалт – хэн аль өдөр боломжтой вэ" },
+  { id: "wiki", provider: "Нэвтэрхий толь", title: "Тэрэлж – Горхи-Тэрэлжийн байгалийн цогцолборт газар" },
+  { id: "airbnb", provider: "Түрээсийн байр", title: "Хоорондоо холбогдсон хоёр гэр бааз" },
+  { id: "hotel", provider: "Амралтын газар", title: "12 зочны санал" },
+  { id: "flights", provider: "Тээврийн хуваарь", title: "Улаанбаатараас Тэрэлж хүрэх автобус" },
 ];
 
 const defaultAnswer: AnswerBlock[] = [
   {
     kind: "p",
     parts: [
-      { bold: "Alfama" },
-      " is the best fit for the 12-person offsite: walkable, quiet in the mornings and inside the budget you set ",
+      { bold: "Тэрэлж" },
+      " 12 хүний гадуур уулзалтад хамгийн тохиромжтой: алхаад хүрэх зайтай, өглөө нам гүм, тогтоосон төсөвт багтана ",
       { cite: ["notion", "wiki"] },
       ".",
     ],
@@ -82,16 +74,16 @@ const defaultAnswer: AnswerBlock[] = [
   {
     kind: "list",
     items: [
-      [{ bold: "Dates:" }, " 14–16 May works for everyone, Jonas joins on day two ", { cite: ["slack"] }, "."],
+      [{ bold: "Огноо:" }, " 5-р сарын 14–16 бүгдэд тохирно, Болд хоёр дахь өдөр нэгдэнэ ", { cite: ["slack"] }, "."],
       [
-        { bold: "Stay:" },
-        " two linked houses in Alfama come to €2,880 for three nights, about 20% less than the hotel ",
+        { bold: "Байр:" },
+        " Тэрэлжийн хоёр гэр бааз гурван шөнөөр амралтын газраас 20% орчим хямд ",
         { cite: ["airbnb", "hotel"] },
         ".",
       ],
       [
-        { bold: "Flights:" },
-        " direct flights from Berlin and Munich land before 10:30, so day one can start after lunch ",
+        { bold: "Хүрэх:" },
+        " өглөөний автобус 10:30-аас өмнө хүрэх тул эхний өдрийг үдээс хойш эхлүүлж болно ",
         { cite: ["flights"] },
         ".",
       ],
@@ -99,7 +91,7 @@ const defaultAnswer: AnswerBlock[] = [
   },
   {
     kind: "p",
-    parts: ["Book the houses this week – only one May weekend is still free ", { cite: ["airbnb"] }, "."],
+    parts: ["Гэр баазаа энэ долоо хоногт захиал – 5-р сард ганцхан амралтын өдөр сул байна ", { cite: ["airbnb"] }, "."],
   },
 ];
 
@@ -107,10 +99,10 @@ const partLength = (p: AnswerPart) =>
   typeof p === "string" ? p.length : "bold" in p ? p.bold.length : 1;
 
 export function AIAnswer({
-  question = "Where should we hold the team offsite in Lisbon?",
+  question = "Багийн гадуур уулзалтыг хаана хийх вэ?",
   sources = defaultSources,
   answer = defaultAnswer,
-  related = ["Compare the houses with the hotel", "Draft a three-day agenda"],
+  related = ["Гэр баазыг амралтын газартай харьцуулах", "Гурван өдрийн хөтөлбөр гаргах"],
   answeredIn = 5.9,
   speed = 3,
   className = "",

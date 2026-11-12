@@ -44,26 +44,26 @@ export type CostWaterfallProps = {
 };
 
 const defaultSteps: CostStep[] = [
-  { id: "plan", name: "Plan the report", kind: "llm", status: "done", model: "Opus 5.5", tokensIn: 4100, tokensOut: 960, cost: 0.04, duration: 3000, input: "Plan a report on LLM API prices in 2026.", output: "1. Gather list prices 2. Compare cache discounts 3. Write" },
+  { id: "plan", name: "Тайлангийн төлөвлөгөө", kind: "llm", status: "done", model: "Төлөвлөгч агент", tokensIn: 4100, tokensOut: 960, cost: 0.04, duration: 3000, input: "2026 оны зах зээлийн тойм тайланг төлөвлө.", output: "1. Эх сурвалж цуглуулах 2. Харьцуулах 3. Бичих" },
   {
-    id: "research", name: "Researcher", kind: "agent", status: "done", model: "Gemini 3.8 Flash", duration: 8500,
+    id: "research", name: "Судлаач", kind: "agent", status: "done", model: "Судлаач агент", duration: 8500,
     children: [
-      { id: "ws1", name: "web_search", kind: "tool", status: "done", detail: "API prices 2026", cost: 0.01, duration: 1300 },
-      { id: "ws2", name: "web_search", kind: "tool", status: "done", detail: "cache discounts", cost: 0.01, duration: 1100 },
-      { id: "fp", name: "fetch_pages", kind: "tool", status: "done", detail: "9 pages", duration: 2100 },
-      { id: "sum", name: "Summarize sources", kind: "llm", status: "done", model: "Gemini 3.8 Flash", tokensIn: 38400, tokensOut: 1300, cost: 0.01, duration: 3600 },
+      { id: "ws1", name: "web_search", kind: "tool", status: "done", detail: "зах зээл 2026", cost: 0.01, duration: 1300 },
+      { id: "ws2", name: "web_search", kind: "tool", status: "done", detail: "өрсөлдөгчид", cost: 0.01, duration: 1100 },
+      { id: "fp", name: "fetch_pages", kind: "tool", status: "done", detail: "9 хуудас", duration: 2100 },
+      { id: "sum", name: "Эх сурвалж нэгтгэх", kind: "llm", status: "done", model: "Судлаач агент", tokensIn: 38400, tokensOut: 1300, cost: 0.01, duration: 3600 },
     ],
   },
-  { id: "write", name: "Write the report", kind: "llm", status: "done", model: "Opus 5.5", tokensIn: 21800, tokensOut: 5600, cost: 0.25, duration: 7500 },
+  { id: "write", name: "Тайлан бичих", kind: "llm", status: "done", model: "Бичигч агент", tokensIn: 21800, tokensOut: 5600, cost: 0.25, duration: 7500 },
   {
-    id: "review", name: "Reviewer", kind: "agent", status: "done", model: "Haiku 5.5", duration: 3300,
+    id: "review", name: "Шалгагч", kind: "agent", status: "done", model: "Шалгагч агент", duration: 3300,
     children: [
-      { id: "facts", name: "Check facts", kind: "llm", status: "done", model: "Haiku 5.5", tokensIn: 26000, tokensOut: 700, cost: 0.03, duration: 2000 },
-      { id: "links", name: "check_links", kind: "tool", status: "failed", detail: "31 links", duration: 1100, error: "3 links returned 404" },
+      { id: "facts", name: "Баримт шалгах", kind: "llm", status: "done", model: "Шалгагч агент", tokensIn: 26000, tokensOut: 700, cost: 0.03, duration: 2000 },
+      { id: "links", name: "check_links", kind: "tool", status: "failed", detail: "31 холбоос", duration: 1100, error: "3 холбоос 404 буцаалаа" },
     ],
   },
-  { id: "apply", name: "Apply review", kind: "llm", status: "done", model: "Sonnet 5.5", tokensIn: 24500, tokensOut: 1900, cost: 0.1, duration: 2800 },
-  { id: "save", name: "Save report", kind: "tool", status: "running", detail: "Notion", duration: 438 },
+  { id: "apply", name: "Засвар оруулах", kind: "llm", status: "done", model: "Бичигч агент", tokensIn: 24500, tokensOut: 1900, cost: 0.1, duration: 2800 },
+  { id: "save", name: "Тайлан хадгалах", kind: "tool", status: "running", detail: "баримтын сан", duration: 438 },
 ];
 
 type Totals = { cost: number; tin: number; tout: number };
@@ -81,20 +81,18 @@ const sum = (s: CostStep): Totals =>
 const fmtTok = (n: number) => (n >= 10000 ? `${(n / 1000).toFixed(1)}k` : n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`);
 const fmtTokShort = (n: number) => (n >= 100000 ? `${Math.round(n / 1000)}k` : fmtTok(n));
 const fmtTime = (ms?: number) => (ms == null ? "–" : ms < 1000 ? `${Math.round(ms)}ms` : `${(ms / 1000).toFixed(1)}s`);
-const dollars = (n: number) => `$${n.toFixed(2)}`;
+/** Cost in usage credits (кр), not money. */
+const dollars = (n: number) => `${n.toFixed(2)} кр`;
 
 const Ico = {
-  anthropic: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><g stroke="#d97757" strokeWidth="1.5" strokeLinecap="round"><path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4" /></g></svg>
-  ),
-  gemini: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1c.5 3.6 3.4 6.5 7 7-3.6.5-6.5 3.4-7 7-.5-3.6-3.4-6.5-7-7 3.6-.5 6.5-3.4 7-7Z" fill="#3b82f6" /></svg>
+  agent: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="1.2"><circle cx="8" cy="8" r="5.5" /><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none" /></g></svg>
   ),
   globe: (
     <svg viewBox="0 0 16 16" aria-hidden="true"><g fill="none" stroke="#3b82f6" strokeWidth="1.2"><circle cx="8" cy="8" r="5.5" /><path d="M2.5 8h11M8 2.5c-2.4 3-2.4 8 0 11M8 2.5c2.4 3 2.4 8 0 11" /></g></svg>
   ),
-  notion: (
-    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="2" fill="#fff" stroke="currentColor" strokeWidth="1.2" /><path d="M5.5 11V5h1l3 6h1V5" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg>
+  doc: (
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2h5l3 3v9H4Z M9 2v3h3" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
   ),
   tool: (
     <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2.5a3 3 0 0 0-2.8 4L2.8 11a1.2 1.2 0 0 0 1.7 1.7L9 8.3a3 3 0 0 0 4-3.6l-1.8 1.7-1.6-.4-.4-1.6Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" /></svg>
@@ -104,17 +102,16 @@ const Ico = {
 function iconFor(s: CostStep): React.ReactNode {
   if (s.icon) return s.icon;
   const m = (s.model ?? s.detail ?? "").toLowerCase();
-  if (/opus|sonnet|haiku|claude/.test(m)) return Ico.anthropic;
-  if (/gemini/.test(m)) return Ico.gemini;
-  if (/notion/.test(m)) return Ico.notion;
+  if (/агент|agent/.test(m)) return Ico.agent;
+  if (/сан|doc/.test(m)) return Ico.doc;
   if (/search|fetch|link/.test(s.name)) return Ico.globe;
   return Ico.tool;
 }
 
 export function CostWaterfall({
   steps = defaultSteps,
-  task = "Report on LLM API prices in 2026",
-  title = "Run cost",
+  task = "2026 оны зах зээлийн тойм тайлан",
+  title = "Ажиллагааны зардал",
   status,
   mode: modeIn,
   defaultMode = "cost",
@@ -237,7 +234,7 @@ export function CostWaterfall({
           <span className="cw-chart">
             {ticks.map((t) => (
               <span key={t} className="cw-tick" style={{ left: pct(t) }}>
-                {mode === "cost" ? `$${t === 0 ? "0" : t.toFixed(2)}` : t === 0 ? "0" : `${t / 1000}k`}
+                {mode === "cost" ? (t === 0 ? "0" : t.toFixed(2)) : t === 0 ? "0" : `${t / 1000}k`}
               </span>
             ))}
           </span>

@@ -32,25 +32,15 @@ export type FallbackChainProps = {
   className?: string;
 };
 
-const L = {
-  claude: (
-    <svg viewBox="0 0 16 16"><g stroke="#d97757" strokeWidth="1.5" strokeLinecap="round"><path d="M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2" /></g></svg>
-  ),
-  openai: (
-    <svg viewBox="0 0 16 16"><g fill="none" stroke="currentColor" strokeWidth="1.1"><path d="M8 2.2a3 3 0 0 1 5 2.9 3 3 0 0 1-.6 5 3 3 0 0 1-4.4 3.7 3 3 0 0 1-5-2.9 3 3 0 0 1 .6-5A3 3 0 0 1 8 2.2Z" /><path d="M6 4.5v5L8 10.7l2-1.2V6.5L8 5.3 6 6.5" /></g></svg>
-  ),
-  gemini: <svg viewBox="0 0 16 16"><path d="M8 1c.5 3.6 3.4 6.5 7 7-3.6.5-6.5 3.4-7 7-.5-3.6-3.4-6.5-7-7 3.6-.5 6.5-3.4 7-7Z" fill="#3b82f6" /></svg>,
-  grok: <svg viewBox="0 0 16 16"><path d="M3 12.5 12 3.5M5 3.5a5 5 0 0 1 7.5 6M11 12.5A5 5 0 0 1 3.5 7" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>,
-};
-
 const defaultAttempts: FallbackAttempt[] = [
-  { id: "a1", model: "Claude Opus 5.5", provider: "AWS Bedrock", logo: L.claude, status: "failed", reason: "Rate limited · 429", took: 1.6, cost: 0 },
-  { id: "a2", model: "GPT-6", provider: "Azure OpenAI", logo: L.openai, status: "failed", reason: "Timed out", took: 5.0, cost: 0.0006 },
-  { id: "a3", model: "Gemini 3.8 Pro", provider: "Google Vertex", logo: L.gemini, status: "answered", tokens: 412, took: 1.9, cost: 0.0021 },
-  { id: "a4", model: "Grok 4", provider: "xAI", logo: L.grok, status: "skipped" },
+  { id: "a1", model: "Судлаач агент", provider: "Үүлэн сервер А", status: "failed", reason: "Хязгаар хэтэрсэн · 429", took: 1.6, cost: 0 },
+  { id: "a2", model: "Бичигч агент", provider: "Үүлэн сервер Б", status: "failed", reason: "Хугацаа хэтэрсэн", took: 5.0, cost: 0.0006 },
+  { id: "a3", model: "Шалгагч агент", provider: "Үүлэн сервер В", status: "answered", tokens: 412, took: 1.9, cost: 0.0021 },
+  { id: "a4", model: "Кодын агент", provider: "Дотоод сервер", status: "skipped" },
 ];
 
-const money = (n: number) => (n === 0 ? "$0" : `$${n.toFixed(4)}`);
+/** Usage credits (кр), not money. */
+const money = (n: number) => (n === 0 ? "0 кр" : `${n.toFixed(4)} кр`);
 const ROW = 60;
 const GAP = 10;
 
@@ -71,8 +61,8 @@ function statusText(a: FallbackAttempt) {
 
 export function FallbackChain({
   attempts = defaultAttempts,
-  title = "Summarize support ticket",
-  route = "openrouter/auto",
+  title = "Дэмжлэгийн хүсэлтийг хураангуйлах",
+  route = "автомат чиглүүлэлт",
   request,
   response,
   now,

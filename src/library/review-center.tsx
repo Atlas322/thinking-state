@@ -51,18 +51,19 @@ const ico = (c: React.ReactNode) => (
   </svg>
 );
 export const reviewIcons = {
-  gemini: ico(<path d="M8 1.5c.4 3.6 2.9 6.1 6.5 6.5-3.6.4-6.1 2.9-6.5 6.5C7.6 10.9 5.1 8.4 1.5 8 5.1 7.6 7.6 5.1 8 1.5Z" fill="#3b7cf6" />),
-  claude: ico(
-    <g stroke="#d97757" strokeWidth="1.4" strokeLinecap="round">
-      <path d="M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4M5.2 2.6l5.6 10.8M10.8 2.6 5.2 13.4" />
+  finance: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+      <rect x="2" y="3.5" width="12" height="9" rx="1.6" />
+      <path d="M2 6.5h12M4.5 10h2.5" />
     </g>,
   ),
-  openai: ico(
-    <g fill="none" stroke="currentColor" strokeWidth="1.1">
-      <path d="M8 2.2a2.8 2.8 0 0 1 4.6 2.6 2.8 2.8 0 0 1 .4 5A2.8 2.8 0 0 1 8.5 13a2.8 2.8 0 0 1-4.7-2.4 2.8 2.8 0 0 1-.6-5A2.8 2.8 0 0 1 8 2.2Z" />
-      <path d="M6 4.4v5l2 1.2 2-1.2V5.3M4 8.2l4-2.3 4 2.3" />
+  ops: ico(
+    <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
+      <circle cx="8" cy="8" r="2.2" />
+      <path d="M8 1.8v2M8 12.2v2M1.8 8h2M12.2 8h2M3.6 3.6l1.4 1.4M11 11l1.4 1.4M3.6 12.4 5 11M11 5l1.4-1.4" />
     </g>,
   ),
+  code: ico(<path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />),
 };
 
 const T0 = Date.now();
@@ -70,31 +71,31 @@ const m = (n: number) => T0 - n * 60000;
 const defaultItems: ReviewItem[] = [
   {
     id: "inv",
-    title: "Pay INV-2207 from Acme Logistics",
-    agent: "Finance agent",
-    model: "Gemini 3.8 Pro",
-    icon: reviewIcons.gemini,
-    type: "Invoice",
+    title: "INV-2207 нэхэмжлэлийг төлөх",
+    agent: "Санхүүгийн агент",
+    model: "Шалгагч агент",
+    icon: reviewIcons.finance,
+    type: "Нэхэмжлэл",
     risk: "high",
     confidence: 0.62,
     createdAt: m(0),
-    reasoning: "Amount and line items match PO-118. The bank details differ from the last six payments to Acme.",
+    reasoning: "Дүн ба мөрүүд PO-118-тай таарч байна. Харин дансны мэдээлэл энэ нийлүүлэгчид өмнө хийсэн зургаан төлбөрөөс өөр.",
     fields: [
-      { label: "Amount", value: "$12,480.00" },
-      { label: "Due", value: "Oct 24" },
+      { label: "Мөр", value: "12 бараа" },
+      { label: "Хугацаа", value: "10/24" },
       {
-        label: "IBAN",
-        value: [{ text: "DE89 •••• 3000", note: "New IBAN – changed by email two days ago. Confirm it by phone before paying.", source: "Email from billing@acme-logistics.co" }],
+        label: "Данс",
+        value: [{ text: "•••• 3000", note: "Шинэ данс – хоёр өдрийн өмнө имэйлээр солигдсон. Төлөхөөс өмнө утсаар баталгаажуул.", source: "Нийлүүлэгчийн имэйл" }],
       },
     ],
-    sources: ["INV-2207.pdf", "PO-118", "Vendor email"],
+    sources: ["INV-2207.pdf", "PO-118", "Нийлүүлэгчийн имэйл"],
   },
-  { id: "mig", title: "Split customers.name into first and last name", agent: "Data agent", model: "Claude Opus 5.5", icon: reviewIcons.claude, type: "Migration", risk: "medium", confidence: 0.81, createdAt: m(14), reasoning: "Adds two columns and backfills them from the existing name; the old column stays until the app is updated.", fields: [{ label: "Rows", value: "48,210" }, { label: "Downtime", value: "None" }], sources: ["0042_split_name.sql"] },
-  { id: "keys", title: "Rotate the Stripe API keys", agent: "Ops agent", model: "Claude Opus 5.5", icon: reviewIcons.claude, type: "Plan", risk: "medium", confidence: 0.66, createdAt: m(11), reasoning: "The live key is 14 months old. Rotation needs a deploy of the checkout service right after.", sources: ["Runbook – key rotation"] },
-  { id: "ref", title: "Refund order #4821 for Maya Chen", agent: "Support agent", model: "Claude Sonnet 5", icon: reviewIcons.claude, type: "Refund", risk: "low", confidence: 0.92, createdAt: m(9), reasoning: "The parcel was returned and scanned at the warehouse yesterday.", fields: [{ label: "Amount", value: "$84.00" }, { label: "Method", value: "Original card" }] },
-  { id: "tag", title: "Tag 14 tickets as Billing", agent: "Support agent", model: "Claude Sonnet 5", icon: reviewIcons.claude, type: "Triage", risk: "low", confidence: 0.88, createdAt: m(6), reasoning: "All 14 mention an invoice, a charge or a refund in the first message." },
-  { id: "bump", title: "Bump @stripe/stripe-js to 4.2.1", agent: "Code agent", model: "GPT-6", icon: reviewIcons.openai, type: "Code change", risk: "low", confidence: 0.64, createdAt: m(4), reasoning: "Patch release; the changelog lists only bug fixes. Tests pass." },
-  { id: "post", title: "Post release notes to #announcements", agent: "Comms agent", model: "GPT-6", icon: reviewIcons.openai, type: "Slack message", risk: "low", confidence: 0.9, createdAt: m(2), reasoning: "Summarises the 3.2 release in four bullets with a link to the changelog." },
+  { id: "mig", title: "Харилцагчийн нэрийг овог, нэр болгон салгах", agent: "Өгөгдлийн агент", model: "Кодын агент", icon: reviewIcons.code, type: "Шилжүүлэлт", risk: "medium", confidence: 0.81, createdAt: m(14), reasoning: "Хоёр багана нэмж, одоогийн нэрээс бөглөнө; апп шинэчлэгдтэл хуучин багана үлдэнэ.", fields: [{ label: "Мөр", value: "48,210" }, { label: "Зогсолт", value: "Байхгүй" }], sources: ["0042_split_name.sql"] },
+  { id: "keys", title: "Төлбөрийн системийн түлхүүрийг солих", agent: "Үйл ажиллагааны агент", model: "Судлаач агент", icon: reviewIcons.ops, type: "Төлөвлөгөө", risk: "medium", confidence: 0.66, createdAt: m(11), reasoning: "Бодит түлхүүр 14 сартай. Солисны дараа төлбөрийн үйлчилгээг шууд дахин байршуулах шаардлагатай.", sources: ["Заавар – түлхүүр солих"] },
+  { id: "ref", title: "#4821 захиалгын төлбөрийг буцаах", agent: "Тусламжийн агент", model: "Бичигч агент", icon: reviewIcons.finance, type: "Буцаалт", risk: "low", confidence: 0.92, createdAt: m(9), reasoning: "Илгээмж буцаж ирээд өчигдөр агуулахад бүртгэгдсэн.", fields: [{ label: "Бараа", value: "1 ширхэг" }, { label: "Арга", value: "Анхны карт" }] },
+  { id: "tag", title: "14 хүсэлтийг «Төлбөр» гэж ангилах", agent: "Тусламжийн агент", model: "Бичигч агент", icon: reviewIcons.ops, type: "Ангилал", risk: "low", confidence: 0.88, createdAt: m(6), reasoning: "14-үүлээ эхний мессеждээ нэхэмжлэл, төлбөр эсвэл буцаалтыг дурдсан." },
+  { id: "bump", title: "Төлбөрийн сангийн хувилбарыг 4.2.1 болгох", agent: "Кодын агент", model: "Кодын агент", icon: reviewIcons.code, type: "Кодын өөрчлөлт", risk: "low", confidence: 0.64, createdAt: m(4), reasoning: "Засварын хувилбар; өөрчлөлтийн жагсаалтад зөвхөн алдааны засвар бий. Тестүүд давсан." },
+  { id: "post", title: "Хувилбарын тэмдэглэлийг #мэдэгдэл суваг руу илгээх", agent: "Харилцааны агент", model: "Бичигч агент", icon: reviewIcons.ops, type: "Багийн чатын мессеж", risk: "low", confidence: 0.9, createdAt: m(2), reasoning: "3.2 хувилбарыг дөрвөн цэгээр товчилж, өөрчлөлтийн жагсаалтын холбоосыг хавсаргасан." },
 ];
 
 const waited = (ms: number) => {
@@ -119,7 +120,7 @@ export function ReviewCenter({
   filter: filterProp,
   defaultFilter = "all",
   onFilterChange,
-  title = "Review center",
+  title = "Хянах төв",
   className = "",
 }: ReviewCenterProps) {
   const [tick, setTick] = React.useState(() => Date.now());

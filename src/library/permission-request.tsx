@@ -36,10 +36,10 @@ const Spark = () => (
     <path d="M8 1c.5 3.6 3.4 6.5 7 7-3.6.5-6.5 3.4-7 7-.5-3.6-3.4-6.5-7-7 3.6-.5 6.5-3.4 7-7Z" fill="#3b82f6" />
   </svg>
 );
-const Stripe = () => (
+const PaymentsIcon = () => (
   <svg viewBox="0 0 16 16" aria-hidden="true">
-    <rect width="16" height="16" rx="3" fill="#635bff" />
-    <path d="M10.4 6.1c-.5-.3-1.2-.5-1.9-.5-.6 0-.9.2-.9.5 0 .9 3.3.5 3.3 2.9 0 1.3-1 2-2.6 2-.8 0-1.6-.2-2.2-.5V9.2c.6.3 1.4.6 2.1.6.6 0 .9-.2.9-.5 0-1-3.3-.6-3.3-2.9 0-1.2 1-2 2.5-2 .7 0 1.4.1 2.1.4Z" fill="#fff" />
+    <rect x="1.8" y="3.5" width="12.4" height="9" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.2" />
+    <path d="M1.8 6.5h12.4M4.3 10h2.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
   </svg>
 );
 const Receipt = () => (
@@ -55,14 +55,14 @@ const fmtLeft = (ms: number) => {
 };
 
 function Card({
-  agent = { name: "Ops agent" },
-  action = "refund $240",
-  target = "Stripe · live mode",
-  toolIcon = <Stripe />,
+  agent = { name: "Үйл ажиллагааны агент" },
+  action = "2 захиалгын төлбөрийг буцаах",
+  target = "Төлбөрийн систем · бодит горим",
+  toolIcon = <PaymentsIcon />,
   risk = "risky",
   reason,
   preview = [],
-  previewTitle = "What will happen",
+  previewTitle = "Юу болох вэ",
   previewLimit = 3,
   scopes = ["once", "timed", "always"],
   scope: scopeIn,
@@ -162,7 +162,7 @@ function Card({
       }}
     >
       <div className="pr-top">
-        <span className="pr-av">{agent.avatar ?? (agent.name.match(/\b\w/g) ?? []).slice(0, 2).join("")}</span>
+        <span className="pr-av">{agent.avatar ?? (agent.name.match(/(?<![\p{L}\p{N}])[\p{L}\p{N}]/gu) ?? []).slice(0, 2).join("")}</span>
         <div className="pr-who">
           <div className="pr-title">
             <strong>{agent.name}</strong> <span className="pr-muted">wants to</span> <strong>{action}</strong>
@@ -234,20 +234,20 @@ export function PermissionRequest(props: PermissionRequestProps) {
       <div className="pr-stack">
         <style>{css}</style>
         <Card
-          agent={{ name: "Sales agent" }}
-          action="send 40 emails"
+          agent={{ name: "Борлуулалтын агент" }}
+          action="40 имэйл илгээх"
           defaultDecision={{ allow: false, scope: "once", at: 0 }}
         />
         <Card
-          agent={{ name: "Ops agent", avatar: <Spark /> }}
-          action="refund $240"
-          target="Stripe · live mode"
+          agent={{ name: "Үйл ажиллагааны агент", avatar: <Spark /> }}
+          action="2 захиалгын төлбөрийг буцаах"
+          target="Төлбөрийн систем · бодит горим"
           risk="destructive"
-          reason="Two orders were charged twice after the checkout outage this morning."
-          previewTitle="Refunds"
+          reason="Өнөө өглөөний тасалдлын дараа хоёр захиалгаас давхар төлбөр авсан."
+          previewTitle="Буцаалт"
           preview={[
-            { id: "4821", label: "Order #4821 · Lena Fischer", meta: "$120.00" },
-            { id: "4822", label: "Order #4822 · Tom Okafor", meta: "$120.00" },
+            { id: "4821", label: "Захиалга #4821 · Сараа Б.", meta: "2 удаа төлсөн" },
+            { id: "4822", label: "Захиалга #4822 · Тэмүүлэн Г.", meta: "2 удаа төлсөн" },
           ]}
         />
       </div>

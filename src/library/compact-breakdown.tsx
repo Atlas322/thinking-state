@@ -24,31 +24,31 @@ const demo: Record<string, { items: BreakdownItem[]; delta: number }> = {
   "7d": {
     delta: 12.4,
     items: [
-      { label: "Direct", value: 4820 },
-      { label: "Organic search", value: 3910 },
-      { label: "Referrals", value: 2240 },
-      { label: "Social", value: 1680 },
-      { label: "Email", value: 940 },
+      { label: "Шууд", value: 4820 },
+      { label: "Хайлт", value: 3910 },
+      { label: "Холбоос", value: 2240 },
+      { label: "Сошиал", value: 1680 },
+      { label: "Имэйл", value: 940 },
     ],
   },
   "30d": {
     delta: 8.1,
     items: [
-      { label: "Direct", value: 18450 },
-      { label: "Organic search", value: 19870 },
-      { label: "Referrals", value: 8120 },
-      { label: "Social", value: 6340 },
-      { label: "Email", value: 4210 },
+      { label: "Шууд", value: 18450 },
+      { label: "Хайлт", value: 19870 },
+      { label: "Холбоос", value: 8120 },
+      { label: "Сошиал", value: 6340 },
+      { label: "Имэйл", value: 4210 },
     ],
   },
   "90d": {
     delta: -3.2,
     items: [
-      { label: "Direct", value: 52300 },
-      { label: "Organic search", value: 58900 },
-      { label: "Referrals", value: 21400 },
-      { label: "Social", value: 22800 },
-      { label: "Email", value: 13100 },
+      { label: "Шууд", value: 52300 },
+      { label: "Хайлт", value: 58900 },
+      { label: "Холбоос", value: 21400 },
+      { label: "Сошиал", value: 22800 },
+      { label: "Имэйл", value: 13100 },
     ],
   },
 };
@@ -231,4 +231,8 @@ const css = `
 @media(prefers-reduced-motion:reduce){.cbd *{animation:none!important;transition:none!important}}
 `;
 
-export default CompactBreakdown;
+/** Catalog preview: the demo counts visitors by channel, not money. */
+const visitors = (n: number) => Math.round(n).toLocaleString("en-US");
+export default function CompactBreakdownPreview() {
+  return <CompactBreakdown title="Сувгаар ирсэн зочид" totalLabel="Нийт зочин" format={visitors} />;
+}
