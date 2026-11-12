@@ -121,6 +121,7 @@
     "name": "Agent Reply",
     "category": "Agents",
     "pro": true,
+    "origin": "Thinking State original",
     "description": "One structured agent reply: summary, findings, proposal, openable outputs, choice buttons with an own-answer field, and folded sources",
     "exportName": "AgentReply",
     "usage": "import { AgentReply } from \"./agent-reply\";\n\nexport default function App() {\n  return (\n    <AgentReply\n      agent=\"Project agent\"\n      summary=\"Draft is ready for review.\"\n      findings={[\"Hero copy updated\", \"Two tasks still open\"]}\n      outputs={[{ label: \"landing.html\", kind: \"site\" }]}\n      choices={[\"Ship it\", \"Revise\"]}\n      onChoose={(c) => console.log(c)}\n    />\n  );\n}"
@@ -982,6 +983,7 @@
     "name": "Explainer Carousel",
     "category": "Social",
     "pro": true,
+    "origin": "Thinking State original",
     "description": "1080x1440 education carousel: staircase cover, numbered step slides (figure, three points, rule, next-slide hook), rules sheet, plus figure primitives - token chips, score bars, context budget stack, embedding scatter, tool-call sequence, MCP hub, RAG chunks, agent loop, eval grid, three-circle Venn",
     "exportName": "ExplainerSlide",
     "usage": "import { ExplainerSlide, BudgetStack } from \"./explainer-carousel\";\n\nexport default function App() {\n  return <ExplainerSlide n={1} title=\"Title\" page={2} total={12} lede=\"One sentence.\" figure={<BudgetStack ghost=\"\" head=\"\" parts={[]} warn={[\"\", \"\"]} />} />;\n}",

@@ -2,7 +2,7 @@
 
 Thinking State is the engine that shows an agent's work as live widgets — the product layer of INAI, live at [thinkstate.site](https://thinkstate.site). This repository is its component library (formerly called Component Studio): a searchable, copyable React component library covering all **90 components** listed on [affectUI](https://www.affectui.com/components). The app includes a categorized menu, live previews, light/dark themes, favorites, source code, usage examples, and **Copy prompt**.
 
-**23 components use the original MIT source**, with Clean and Classic styles. **67 are independent recreations** of public previews and documented behavior. They are not affectUI Pro source, and they do not all match the original appearance or API. See [VISUAL_REVIEW.md](./VISUAL_REVIEW.md) for the actual browser comparison and remaining differences.
+**23 components use the original MIT source**, with Clean and Classic styles. **67 are independent recreations** of public previews and documented behavior. They are not affectUI Pro source, and they do not all match the original appearance or API. Beyond the affectUI list, 15 components are Thinking State's own (marked «Thinking State» in the catalog) and 2 are ported from React Bits (MIT + Commons Clause, notice kept in the file). See [VISUAL_REVIEW.md](./VISUAL_REVIEW.md) for the actual browser comparison and remaining differences.
 
 The [architecture audit](./ARCHITECTURE_AUDIT.md) verifies how affectUI uses the shadcn registry and records the implementation gaps. The 67 independent recreations should not be treated as exact substitutes for affectUI Pro.
 
