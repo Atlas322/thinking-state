@@ -238,10 +238,10 @@ function StructureView({ scoped, L, onPick, onPerson, current }: { scoped: Compa
   return <ul className="cv-tree cv-tree-root">{roots.map((r) => node(r, 0, seen))}</ul>;
 }
 
-function AgentCard({ a, c, L, showOwner }: { a: Company["agents"][number]; c: Company; L: CompanyViewLabels; showOwner?: boolean }) {
+function AgentCard({ a, c, L, showOwner, focus }: { a: Company["agents"][number]; c: Company; L: CompanyViewLabels; showOwner?: boolean; focus?: boolean }) {
   const owner = a.ownerId ? actorOf(c, a.ownerId) : null;
   return (
-    <li className="cv-agent">
+    <li className={`cv-agent${focus ? " is-focus" : ""}`} data-agent={a.id}>
       <span className="cv-agent-top">
         <Avatar actor={{ name: a.name, kind: "agent" }} size={26} />
         <span className="cv-agent-id">
@@ -283,7 +283,7 @@ function AgentCard({ a, c, L, showOwner }: { a: Company["agents"][number]; c: Co
   );
 }
 
-function AgentsView({ c, scoped, L, onPerson }: { c: Company; scoped: Company; L: CompanyViewLabels; onPerson: (id: string) => void }) {
+function AgentsView({ c, scoped, L, onPerson, focus }: { c: Company; scoped: Company; L: CompanyViewLabels; onPerson: (id: string) => void; focus?: string | null }) {
   const inScope = new Set(scoped.people.map((p) => p.id));
   const sections = scoped.units
     .map((u) => {
@@ -314,7 +314,7 @@ function AgentsView({ c, scoped, L, onPerson }: { c: Company; scoped: Company; L
                 <span className={`cv-link${agents.length ? "" : " is-none"}`} aria-hidden="true" />
                 <ul className="cv-agent-list">
                   {agents.map((a) => (
-                    <AgentCard key={a.id} a={a} c={c} L={L} />
+                    <AgentCard key={a.id} a={a} c={c} L={L} focus={focus === a.id} />
                   ))}
                 </ul>
               </li>
@@ -333,7 +333,7 @@ function AgentsView({ c, scoped, L, onPerson }: { c: Company; scoped: Company; L
                 <span className="cv-link" aria-hidden="true" />
                 <ul className="cv-agent-list">
                   {loose.map((a) => (
-                    <AgentCard key={a.id} a={a} c={c} L={L} showOwner />
+                    <AgentCard key={a.id} a={a} c={c} L={L} showOwner focus={focus === a.id} />
                   ))}
                 </ul>
               </li>
@@ -454,6 +454,7 @@ export function CompanyView({
   const methodology = methodologyProp ?? methodOwn;
   const [personId, setPersonId] = React.useState<string | null>(null);
   const [collectionType, setCollectionType] = React.useState<string | null>(null);
+  const [focusAgent, setFocusAgent] = React.useState<string | null>(null);
   const rootRef = React.useRef<HTMLDivElement>(null);
   const tabsRef = React.useRef<(HTMLButtonElement | null)[]>([]);
   const firstView = React.useRef(true);
@@ -532,21 +533,42 @@ export function CompanyView({
   /** Relation values (ids, names or [[links]]) → chip with icon; units switch scope, people open profiles. */
   const resolve = (field: string, raw: string): Relation | null => {
     const v = raw.replace(/^\[\[|\]\]$/g, "").split("|")[0].split("/").pop()?.replace(/\.md$/, "") ?? raw;
+    const lc = v.trim().toLowerCase();
+    const f = field.toLowerCase();
     const unitHit = company.units.find((u) => u.id === raw || u.name === v);
     if (unitHit)
       return { label: unitHit.name, icon: UNIT_ICON[unitHit.kind] ?? "layout-grid", onClick: () => pickUnit(unitHit) };
-    const personHit = company.people.find((x) => x.id === raw || x.name === v);
+    // Owners are often an agent's short name (gtd, wiki): agents by id or role first, then people, then agent names.
+    const agentById = company.agents.find((x) => x.id.toLowerCase() === lc || x.role.toLowerCase() === lc);
+    if (agentById) return { label: agentById.name, icon: "bot", onClick: () => openAgent(agentById.id) };
+    const personHit = company.people.find((x) => x.id === raw || x.name === v || x.name.toLowerCase() === lc);
     if (personHit) return { label: personHit.name, icon: "user", onClick: () => setPersonId(personHit.id) };
-    const agentHit = company.agents.find((x) => x.id === raw || x.name === v);
-    if (agentHit) return { label: agentHit.name, icon: "bot" };
+    const agentByName = company.agents.find((x) => x.name.toLowerCase() === lc);
+    if (agentByName) return { label: agentByName.name, icon: "bot", onClick: () => openAgent(agentByName.id) };
     const projectHit = company.projects.find((x) => x.id === raw || x.name === v);
     if (projectHit) return { label: projectHit.name, icon: "folder" };
-    const f = field.toLowerCase();
     if (f === "company") return { label: v, icon: "building-2" };
     if (f.includes("area")) return { label: v, icon: "layout-grid" };
+    // Owner-like values that match no one stay plain text.
+    if (["owner", "assignee", "person", "people", "manager", "author", "agent"].includes(f)) return { label: v, plain: true };
     return null;
   };
   const segmentText = company.segmentLabel ?? L.segment[company.segment] ?? company.segment;
+  function openAgent(id: string) {
+    const a = company.agents.find((x) => x.id === id);
+    const u = a && company.units.find((x) => x.id === a.unitId);
+    if (u) pickUnit(u);
+    else setCollectionType(null);
+    setView("agents");
+    setFocusAgent(id);
+  }
+  React.useEffect(() => {
+    if (!focusAgent || view !== "agents" || collectionType) return;
+    const el = rootRef.current?.querySelector(`[data-agent="${typeof CSS !== "undefined" && CSS.escape ? CSS.escape(focusAgent) : focusAgent}"]`) as HTMLElement | null;
+    el?.scrollIntoView?.({ block: "center", behavior: "smooth" });
+    const t = setTimeout(() => setFocusAgent(null), 2400);
+    return () => clearTimeout(t);
+  }, [focusAgent, view, collectionType]);
   const scopeName = unit?.name ?? company.name;
 
   const render = (v: CompanyViewKey) =>
@@ -565,7 +587,7 @@ export function CompanyView({
     ) : v === "structure" ? (
       <StructureView scoped={scoped} L={L} onPick={pickUnit} onPerson={setPersonId} current={scope.unitId} />
     ) : v === "agents" ? (
-      <AgentsView c={company} scoped={scoped} L={L} onPerson={setPersonId} />
+      <AgentsView c={company} scoped={scoped} L={L} onPerson={setPersonId} focus={focusAgent} />
     ) : v === "workflows" ? (
       <WorkflowView c={company} scoped={scoped} L={L} />
     ) : v === "raci" ? (
@@ -967,6 +989,8 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 .cv-link.is-none::before,.cv-link.is-none::after{opacity:0}
 .cv-agent-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin:0;padding:0;list-style:none}
 .cv-agent{display:flex;flex-direction:column;gap:6px;padding:9px 10px;border:1px solid color-mix(in srgb,var(--cv-accent) 22%,var(--cv-line));border-radius:10px;background:var(--cv-bg)}
+.cv-agent.is-focus{border-color:var(--cv-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--cv-accent) 22%,transparent);animation:cv-focus 1.2s ease 2}
+@keyframes cv-focus{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--cv-accent) 12%,transparent)}}
 .cv-agent-top{display:flex;align-items:center;gap:8px;min-width:0}
 .cv-agent-id{display:flex;flex-direction:column;min-width:0}
 .cv-agent-id strong{font-weight:600}
