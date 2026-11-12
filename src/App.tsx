@@ -686,7 +686,7 @@ export default function App() {
                             </div>
                           }
                         >
-                          {chat.isChat ? <ChatPreview chat={chat} /> : Preview && (autoplayScripts[entry.slug] ? <Autoplay script={autoplayScripts[entry.slug]}><Preview /></Autoplay> : <Preview />)}
+                          {chat.isChat ? (autoplayScripts[entry.slug] ? <Autoplay script={autoplayScripts[entry.slug]}><ChatPreview chat={chat} /></Autoplay> : <ChatPreview chat={chat} />) : Preview && (autoplayScripts[entry.slug] ? <Autoplay script={autoplayScripts[entry.slug]}><Preview /></Autoplay> : <Preview />)}
                         </Suspense>
                       </PreviewBoundary>
                       </Replay>

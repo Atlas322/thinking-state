@@ -322,6 +322,7 @@ const css = /* css */ `
   --ui-csc-neutral-fill: rgba(255, 255, 255, 0.08);
   --ui-csc-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
 }
+.ui-csc__row:nth-child(1){animation-delay:120ms}.ui-csc__row:nth-child(2){animation-delay:260ms}.ui-csc__row:nth-child(3){animation-delay:400ms}.ui-csc__row:nth-child(4){animation-delay:540ms}.ui-csc__row:nth-child(5){animation-delay:680ms}.ui-csc__row:nth-child(6){animation-delay:820ms}.ui-csc__row:nth-child(7){animation-delay:960ms}.ui-csc__row:nth-child(8){animation-delay:1100ms}.ui-csc__row:nth-child(9){animation-delay:1240ms}.ui-csc__row:nth-child(10){animation-delay:1380ms}
 `;
 
 /** Working example; use the named ChangeSummary export in your application. */

@@ -36,27 +36,36 @@ const chrome =
   ].find((p) => fs.existsSync(p));
 if (!chrome) throw new Error("Chrome not found; set CHROME=/path/to/chrome");
 
-const port = 9800 + Math.floor(Math.random() * 150);
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), "ts-layout-"));
-const proc = spawn(chrome, [
-  "--headless=new",
-  `--remote-debugging-port=${port}`,
-  `--user-data-dir=${profile}`,
-  "--no-first-run",
-  "--hide-scrollbars",
-  ...(process.env.CI ? ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"] : []),
-  "--force-prefers-reduced-motion",
-  "about:blank",
-]);
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+// Chrome sometimes does not open its debugging port in time (seen on CI): retry on a fresh port.
+let proc;
 let target;
-for (let i = 0; i < 150 && !target; i++) {
-  await wait(200);
-  try {
-    target = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find((t) => t.type === "page");
-  } catch {}
+for (let attempt = 1; attempt <= 3 && !target; attempt++) {
+  const port = 9800 + Math.floor(Math.random() * 150);
+  proc = spawn(chrome, [
+    "--headless=new",
+    `--remote-debugging-port=${port}`,
+    `--user-data-dir=${profile}`,
+    "--no-first-run",
+    "--hide-scrollbars",
+    ...(process.env.CI ? ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"] : []),
+    "--force-prefers-reduced-motion",
+    "about:blank",
+  ]);
+  for (let i = 0; i < 150 && !target; i++) {
+    await wait(200);
+    try {
+      target = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()).find((t) => t.type === "page");
+    } catch {}
+  }
+  if (!target) {
+    console.log(`Chrome did not expose a debugger page on port ${port} (attempt ${attempt}/3)`);
+    proc.kill();
+    await wait(500);
+  }
 }
-if (!target) throw new Error(`Chrome did not expose a debugger page on port ${port}`);
+if (!target) throw new Error("Chrome did not expose a debugger page after 3 attempts");
 const ws = new WebSocket(target.webSocketDebuggerUrl);
 await new Promise((r) => ws.addEventListener("open", r, { once: true }));
 let id = 0;
