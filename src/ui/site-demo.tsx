@@ -53,10 +53,10 @@ export const DEMO_NAV: NavItem[] = [
 ];
 
 export const DEMO_FOOTER: FooterColumn[] = [
-  { id: "product", label: "Бүтээгдэхүүн", groups: [{ label: "", links: [{ label: "Second Brain", href: "#brain" }, { label: "Агентын урсгал", href: "#flow" }, { label: "Эрх ба батлалт", href: "#consent" }] }] },
-  { id: "solutions", label: "Шийдэл", groups: [{ label: "", links: [{ label: "Хувь хүн", href: "#personal" }, { label: "Баг", href: "#team" }, { label: "Компани", href: "#company" }] }] },
-  { id: "resources", label: "Нөөц", groups: [{ label: "", links: [{ label: "Уншвар", href: "#reading" }, { label: "Нэр томьёо", href: "#glossary" }, { label: "Шинэчлэл", href: "#changelog" }] }] },
-  { id: "company", label: "Компани", groups: [{ label: "", links: [{ label: "Бидний тухай", href: "#about" }, { label: "Холбоо барих", href: "#contact" }] }] },
+  { id: "product", label: "Бүтээгдэхүүн", groups: [{ label: "", links: [{ label: "Second Brain", href: "#brain", icon: "layers" }, { label: "Агентын урсгал", href: "#flow", icon: "workflow" }, { label: "Эрх ба батлалт", href: "#consent", icon: "shield-check" }] }] },
+  { id: "solutions", label: "Шийдэл", groups: [{ label: "", links: [{ label: "Хувь хүн", href: "#personal", icon: "user" }, { label: "Баг", href: "#team", icon: "users" }, { label: "Компани", href: "#company", icon: "briefcase" }] }] },
+  { id: "resources", label: "Нөөц", groups: [{ label: "", links: [{ label: "Уншвар", href: "#reading", icon: "book-open" }, { label: "Нэр томьёо", href: "#glossary", icon: "hash" }, { label: "Шинэчлэл", href: "#changelog", icon: "git-commit-horizontal" }] }] },
+  { id: "company", label: "Компани", groups: [{ label: "", links: [{ label: "Бидний тухай", href: "#about", icon: "circle-help" }, { label: "Холбоо барих", href: "#contact", icon: "mail" }] }] },
 ];
 
 export const DEMO_SCENARIOS: ChatScenario[] = [

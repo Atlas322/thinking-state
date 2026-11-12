@@ -14,6 +14,7 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const arg = (name, fallback) => {
   const i = process.argv.indexOf(`--${name}`);
@@ -115,6 +116,27 @@ const PROBE = (ms) => `new Promise((done) => {
   }, ${ms});
 })`;
 
+// --icons, static: icons come from allowed sources only (2026-11-13) — Lucide shapes (ISC) with
+// animated-Lucide motions (lucide-animated, MIT) through <Icon name animate> in src/company/icons.tsx.
+// No PixelIcon, no hand-drawn icon <svg> in the shared system (src/ui, src/company, src/layout);
+// data marks (progress rings, charts) are not icons and may draw their own <svg>.
+const sourceFails = [];
+if (doIcons) {
+  const notices = fs.readFileSync(new URL("../THIRD_PARTY_NOTICES.md", import.meta.url), "utf8");
+  if (!/## Lucide[\s\S]*ISC License/.test(notices)) sourceFails.push("icons   THIRD_PARTY_NOTICES.md: Lucide (ISC) notice missing");
+  if (!/## lucide-animated[\s\S]*MIT License/.test(notices)) sourceFails.push("icons   THIRD_PARTY_NOTICES.md: lucide-animated (MIT) notice missing");
+  const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((d) => (d.isDirectory() ? walk(path.join(dir, d.name)) : [path.join(dir, d.name)]));
+  const src = fileURLToPath(new URL("../src", import.meta.url));
+  for (const file of walk(src).filter((f) => /\.tsx?$/.test(f))) {
+    const text = fs.readFileSync(file, "utf8");
+    const rel = path.relative(src, file).split(path.sep).join("/");
+    if (/\bPixelIcon\b/.test(text)) sourceFails.push(`icons   src/${rel}: PixelIcon is not an allowed icon source (use <Icon name>)`);
+    if (/^(ui|company|layout)\//.test(rel) && rel !== "company/icons.tsx" && !/test\./.test(rel))
+      for (const m of text.matchAll(/<svg\b[^>]*>/g))
+        if (!/className="[^"]*(ring|chart|spark|bar|graph)/.test(m[0])) sourceFails.push(`icons   src/${rel}: hand-drawn <svg> — use <Icon name> from company/icons`);
+  }
+}
+
 const results = [];
 await send("Emulation.setDeviceMetricsOverride", { width: 1440, height: 1000, deviceScaleFactor: 1, mobile: false });
 await send("Page.enable");
@@ -128,7 +150,7 @@ for (const slug of slugs) {
   results.push({ slug, ...r });
 }
 
-const fails = [];
+const fails = [...sourceFails];
 const newBaseline = { motion: [], icons: {} };
 for (const r of results) {
   // the original 90's standard: a sequence, not everything at once — at least MIN_STEPS separate time steps
