@@ -5,15 +5,20 @@
  * will see (preview), scopes, duration. The decision is controlled or
  * internal; `onDecide` reports it.
  *
- * Story (catalog / marketing, `demo`): request arrives → the scope is
- * chosen → waiting on the person → allowed (or declined) → the folded
- * result («Зөвшөөрлөө · … · Өөрчлөх») → rest → loop. Without `demo` it is a
+ * Story (catalog / marketing, `demo`), with Agent Trail's detail
+ * (2026-11-13): the request arrives with its trail — «Ажлыг эхлүүлсэн» →
+ * «Хэрэгцээт эрхийг тодорхойлов» (what it will see enters as tagged
+ * sub-rows, one by one) → «Таны шийдвэр» (a gate, waiting) — and a «2/3»
+ * counter; the scope is chosen → waiting on the person (the allow button
+ * pulses) → allowed (or declined): the gate ticks, then the folded result
+ * («Зөвшөөрлөө · … · Өөрчлөх») → rest → loop. Without `demo` it is a
  * plain interactive card. Destructive actions never offer «always».
  */
 import * as React from "react";
 import { Icon, type IconName } from "../company/icons";
 import { useScenario, MotionControls, MotionStyles, type ScenarioStep } from "../motion";
 import { Badge, Button, IconTile, PrimitiveStyles, Tabs, type StatusTone } from "./primitives";
+import { AgentTrail, type TrailStep } from "../library/agent-trail";
 
 export type ConsentScope = "once" | "timed" | "always";
 export type ConsentDecision = { allow: boolean; scope: ConsentScope; until?: string };
@@ -32,6 +37,8 @@ export type AgentConsentLabels = {
   scopes: Record<ConsentScope, string>;
   risk: Record<ConsentRisk, string>;
   scopeLabel: string;
+  /** The trail above the decision. */
+  trail: { title: string; started: string; scoped: string; decide: string; reading: string };
 };
 export const agentConsentLabelsMn: AgentConsentLabels = {
   title: "Эрхийн хүсэлт",
@@ -46,6 +53,7 @@ export const agentConsentLabelsMn: AgentConsentLabels = {
   scopes: { once: "Нэг удаа", timed: "Хугацаатай", always: "Үргэлж" },
   risk: { safe: "Аюулгүй", risky: "Эрсдэлтэй", destructive: "Буцаахгүй" },
   scopeLabel: "Хамрах хүрээ",
+  trail: { title: "Агентын явц", started: "Ажлыг эхлүүлсэн", scoped: "Хэрэгцээт эрхийг тодорхойлов", decide: "Таны шийдвэр", reading: "Шалгаж байна" },
 };
 
 const RISK_TONE: Record<ConsentRisk, StatusTone> = { safe: "done", risky: "needs-you", destructive: "error" };
@@ -119,6 +127,35 @@ export function AgentConsent({
   };
   const scopeName = (s: ConsentScope) => (s === "timed" ? durationLabel : L.scopes[s]);
 
+  // the trail: what the agent did before it asked, and the gate it waits on
+  const began = React.useRef<Record<string, number>>({});
+  if (!began.current[stage]) began.current[stage] = Date.now();
+  const reading = playing && stage === "request";
+  const trail: TrailStep[] = [
+    { id: "start", title: L.trail.started, state: "done", duration: 4000 },
+    {
+      id: "scope",
+      title: L.trail.scoped,
+      state: reading ? "running" : "done",
+      status: L.trail.reading,
+      startedAt: reading ? began.current.request : undefined,
+      duration: 1400,
+      substeps: preview.map((p, i) => ({
+        id: `${p.label}-${i}`,
+        title: p.label,
+        tag: L.scopes[scope],
+        tagTone: (risk === "destructive" ? 4 : risk === "risky" ? 1 : 3) as 1 | 3 | 4,
+        detail: p.meta,
+      })),
+    },
+    {
+      id: "decide",
+      title: L.trail.decide,
+      state: decision ? "done" : stage === "waiting" || !playing ? "waiting" : "pending",
+      gate: true,
+    },
+  ];
+
   return (
     <section ref={sc.ref} className={`ts-loop-region ts-consent ${className}`} {...sc.attrs} data-controls="hover" data-stage={stage} aria-label={L.title}>
       <PrimitiveStyles />
@@ -155,6 +192,9 @@ export function AgentConsent({
             </span>
             <Badge tone={RISK_TONE[risk]}>{L.risk[risk]}</Badge>
           </header>
+          <div className="ts-consent-trail">
+            <AgentTrail title={L.trail.title} steps={trail} expanded={reading || !playing ? ["scope"] : []} />
+          </div>
           {reason && (
             <p className="ts-consent-reason">
               <Icon name="circle-help" size={14} />
@@ -171,7 +211,7 @@ export function AgentConsent({
               </span>
               <ul>
                 {preview.map((p, i) => (
-                  <li key={`${p.label}-${i}`}>
+                  <li key={`${p.label}-${i}`} style={{ "--i": i } as React.CSSProperties}>
                     <Icon name={p.icon ?? "file-text"} size={14} />
                     <span>{p.label}</span>
                     {p.meta && <small>{p.meta}</small>}
@@ -220,6 +260,14 @@ export function AgentConsent({
 }
 
 const CSS = `
+.ts-consent-trail .atr{max-width:none;padding:0;border:0;box-shadow:none;background:none;--atr-bg:transparent;--atr-fg:var(--ts-fg,#080808);--atr-muted:var(--ts-muted,#5e5a52);--atr-faint:var(--ts-muted,#5e5a52);--atr-line:var(--ts-line,#d8d3c6);--atr-accent:var(--ts-accent-fg,#1b5cff);font-family:inherit;font-size:13.5px}
+.ts-consent-trail .atr-title{font:600 11px var(--ts-font-mono,"IBM Plex Mono",monospace);letter-spacing:.06em;text-transform:uppercase;color:var(--ts-muted,#5e5a52)}
+.ts-consent-trail .atr-step{animation:ts-consent-row .42s var(--ts-motion-spring-settle,cubic-bezier(.34,1.56,.64,1)) both}
+.ts-consent-trail .atr-step:nth-child(2){animation-delay:.12s}.ts-consent-trail .atr-step:nth-child(3){animation-delay:.24s}
+.ts-consent-trail .atr-pending .atr-name{opacity:.55}
+.ts-consent-preview li{animation:ts-consent-row .42s var(--ts-motion-spring-settle,cubic-bezier(.34,1.56,.64,1)) both;animation-delay:calc(var(--i,0) * 120ms + .3s)}
+@keyframes ts-consent-row{from{opacity:0;transform:translateY(4px)}}
+@media (prefers-reduced-motion:reduce){.ts-consent-trail .atr-step,.ts-consent-preview li{animation:none}}
 .ts-consent{max-width:520px;font-family:var(--ts-font,Inter,system-ui,sans-serif);color:var(--ts-fg,#080808)}
 .ts-consent-card,.ts-consent-folded{border:1px solid var(--ts-line,#d8d3c6);border-radius:var(--ts-radius-card,12px);background:var(--ts-surface,#f7f5ee);box-shadow:var(--ts-elevation,none)}
 .ts-consent-card{display:grid;gap:var(--ts-space-4,16px);padding:var(--ts-space-4,16px)}
