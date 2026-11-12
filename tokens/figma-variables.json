@@ -32,8 +32,8 @@
       "token": "--ts-accent-soft",
       "type": "COLOR",
       "values": {
-        "cream": "#dfe6fb",
-        "dark": "#233154"
+        "cream": "#dce5ff",
+        "dark": "#16224a"
       }
     },
     {
@@ -239,8 +239,8 @@
       "token": "--ts-electric-soft",
       "type": "COLOR",
       "values": {
-        "cream": "#dfe6fb",
-        "dark": "#233154"
+        "cream": "#dce5ff",
+        "dark": "#16224a"
       }
     },
     {
@@ -258,7 +258,7 @@
       "type": "COLOR",
       "values": {
         "cream": "#5c5a55",
-        "dark": "#8f8c86"
+        "dark": "#a3a09a"
       }
     },
     {
@@ -460,6 +460,15 @@
       }
     },
     {
+      "name": "color/on-accent-soft",
+      "token": "--ts-on-accent-soft",
+      "type": "COLOR",
+      "values": {
+        "cream": "#0f3fb8",
+        "dark": "#8fb0ff"
+      }
+    },
+    {
       "name": "color/on-cat-1",
       "token": "--ts-on-cat-1",
       "type": "COLOR",
@@ -493,6 +502,15 @@
       "values": {
         "cream": "#ffffff",
         "dark": "#ffffff"
+      }
+    },
+    {
+      "name": "color/on-red",
+      "token": "--ts-on-red",
+      "type": "COLOR",
+      "values": {
+        "cream": "#ffffff",
+        "dark": "#1f1e1d"
       }
     },
     {
@@ -673,6 +691,15 @@
       "values": {
         "cream": "#0c8ce9",
         "dark": "#0c8ce9"
+      }
+    },
+    {
+      "name": "color/selected-bg",
+      "token": "--ts-selected-bg",
+      "type": "COLOR",
+      "values": {
+        "cream": "#0a7acb",
+        "dark": "#0a7acb"
       }
     },
     {
