@@ -293,6 +293,7 @@ const css = `
 @media(max-width:400px){.ec-row{grid-template-columns:20px minmax(0,1fr) 42px 46px}.ec-bar{display:none}}
 @media(prefers-reduced-motion:reduce){.ec *,.ec{animation:none!important;transition:none!important}}
 .ec-row{animation:ecrowrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.ec-row:nth-child(1){animation-delay:0ms}.ec-row:nth-child(2){animation-delay:110ms}.ec-row:nth-child(3){animation-delay:220ms}.ec-row:nth-child(4){animation-delay:330ms}.ec-row:nth-child(5){animation-delay:440ms}.ec-row:nth-child(6){animation-delay:550ms}.ec-row:nth-child(7){animation-delay:660ms}.ec-row:nth-child(8){animation-delay:770ms}.ec-row:nth-child(9){animation-delay:880ms}.ec-row:nth-child(10){animation-delay:990ms}.ec-row:nth-child(11){animation-delay:1100ms}.ec-row:nth-child(12){animation-delay:1210ms}@keyframes ecrowrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.ec-row{animation:none}}
+.ec-tag{white-space:nowrap;flex:none}
 `;
 
 export default ExperimentCard;

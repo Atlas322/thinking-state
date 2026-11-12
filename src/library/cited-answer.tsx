@@ -312,6 +312,7 @@ const css = `
 @keyframes ca-in{from{opacity:0;transform:translateY(-3px)}}
 @media(max-width:480px){.ca-body{padding:12px 16px 14px}.ca-foot{padding-left:16px}}
 @media(prefers-reduced-motion:reduce){.ca *{animation:none!important;transition:none!important}}
+.ca-action{white-space:nowrap;font-size:13px!important}
 `;
 
 export default CitedAnswer;

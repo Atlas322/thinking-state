@@ -480,6 +480,7 @@ const css = `
 @keyframes acu-slide{from{opacity:0;transform:translateX(-4px)}}
 @media(max-width:520px){.acu-page{padding:24px 18px 0 44px}.acu-count{display:none}.acu-img{float:none!important;width:100%}}
 @media(prefers-reduced-motion:reduce){.acu *,.acu *::after{animation:none!important;transition:none!important}}
+.acu-all{font-size:13px!important;white-space:nowrap}.acu-face{font-size:13px!important}
 `;
 
 export default AgentCursors;

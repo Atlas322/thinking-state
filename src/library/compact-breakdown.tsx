@@ -230,6 +230,7 @@ const css = `
 @media(max-width:340px){.cbd-head{flex-wrap:wrap}.cbd-pct{display:none}}
 @media(prefers-reduced-motion:reduce){.cbd *{animation:none!important;transition:none!important}}
 .cbd-list>li{animation:cbdlistlirise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.cbd-list>li:nth-child(1){animation-delay:0ms}.cbd-list>li:nth-child(2){animation-delay:100ms}.cbd-list>li:nth-child(3){animation-delay:200ms}.cbd-list>li:nth-child(4){animation-delay:300ms}.cbd-list>li:nth-child(5){animation-delay:400ms}.cbd-list>li:nth-child(6){animation-delay:500ms}.cbd-list>li:nth-child(7){animation-delay:600ms}.cbd-list>li:nth-child(8){animation-delay:700ms}.cbd-list>li:nth-child(9){animation-delay:800ms}.cbd-list>li:nth-child(10){animation-delay:900ms}.cbd-list>li:nth-child(11){animation-delay:1000ms}.cbd-list>li:nth-child(12){animation-delay:1100ms}@keyframes cbdlistlirise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.cbd-list>li{animation:none}}
+.cbd-seg button{white-space:nowrap;flex:none}
 `;
 
 /** Catalog preview: the demo counts visitors by channel, not money. */

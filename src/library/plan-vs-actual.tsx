@@ -337,6 +337,7 @@ const css = `
 @keyframes pva-sheen{from{background-position:-100% 0}to{background-position:200% 0}}
 @media (prefers-reduced-motion:reduce){.pva-root *{animation:none!important;transition:none!important}}
 @media (max-width:560px){.pva-root{--pva-name:130px}.pva-task,.pva-key,.pva-st,.pva-spin{display:none}.pva-tick.odd{display:none}.pva-stats{gap:8px}.pva-foot{grid-template-columns:minmax(0,1fr);height:auto;padding:8px 16px}.pva-foot .pva-track{display:flex;flex-wrap:wrap;gap:6px;margin:0}.pva-foot .pva-flag{position:static;transform:none;margin:0}}
+.pva-chip{white-space:nowrap}
 `;
 
 export default PlanVsActual;

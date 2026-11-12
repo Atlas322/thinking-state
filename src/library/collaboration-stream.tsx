@@ -539,7 +539,7 @@ const css = `
 .cs-composer textarea{display:block;width:100%;border:0;resize:none;background:none;color:var(--cs-fg);font:inherit;font-size:13px;line-height:20px;outline:none;min-height:40px}
 .cs-composer textarea::placeholder{color:var(--cs-muted)}
 .cs-composer footer{display:flex;align-items:center;gap:10px;margin-top:4px}
-.cs-at{border:0;background:none;color:var(--cs-muted);font-size:14px!important;width:22px;height:22px;border-radius:5px;padding:0}
+.cs-at{border:0;background:none;color:var(--cs-muted);font-size:13px!important;width:22px;height:22px;border-radius:5px;padding:0}
 .cs-at:hover{background:var(--cs-soft)}
 .cs-target{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--cs-muted)}
 .cs-send{margin-left:auto;width:26px;height:26px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--cs-fg);color:var(--cs-card)!important;transition:opacity .15s}
@@ -555,6 +555,7 @@ const css = `
 @media (prefers-reduced-motion:reduce){.cs-root *{animation:none!important}.cs-writing{-webkit-text-fill-color:currentColor}}
 @media (max-width:560px){.cs-stream{height:420px}.cs-msg{gap:8px}.cs-card time{padding-left:10px}.cs-details dl{grid-template-columns:1fr 1fr}}
 .cs-msg{animation:csmsgrise .55s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}.cs-msg:nth-child(1){animation-delay:0ms}.cs-msg:nth-child(2){animation-delay:90ms}.cs-msg:nth-child(3){animation-delay:180ms}.cs-msg:nth-child(4){animation-delay:270ms}.cs-msg:nth-child(5){animation-delay:360ms}.cs-msg:nth-child(6){animation-delay:450ms}.cs-msg:nth-child(7){animation-delay:540ms}.cs-msg:nth-child(8){animation-delay:630ms}.cs-msg:nth-child(9){animation-delay:720ms}.cs-msg:nth-child(10){animation-delay:810ms}.cs-msg:nth-child(11){animation-delay:900ms}.cs-msg:nth-child(12){animation-delay:990ms}@keyframes csmsgrise{from{opacity:0;transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){.cs-msg{animation:none}}
+
 `;
 
 export default CollaborationStream;
