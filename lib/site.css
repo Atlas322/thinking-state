@@ -1,0 +1,338 @@
+/*
+ * @inai/thinking-state/site.css — GENERATED from tokens.css (npm run tokens:site).
+ * Thinking State tokens for a whole page: cream on :root, dark (Чиглэл 2) on
+ * :root[data-theme="dark"]; one Electric accent; status triads --ts-status-*.
+ * Use the --ts-color-* / --ts-font-heading|text|label names below: they are the stable contract.
+ */
+
+:where(:root, .ts-theme-cream, [data-ts-theme="cream"]) {
+  --ts-page: #f0ede4;
+  --ts-surface: #f7f5ee;
+  --ts-soft: #efebe1;
+  --ts-soft-2: #e8e3d6;
+  --ts-line: #d8d3c6;
+  --ts-fg: #080808;
+  --ts-muted: #45433f;
+  --ts-faint: #5c5a55;
+  --ts-side: #e8e4da;
+  --ts-rail: #e8e4da;
+  --ts-raised: #efebe1;
+  --ts-electric: #1b5cff;
+  --ts-electric-fg: #1b5cff;
+  --ts-electric-soft: #dce5ff;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-elevation: 0 1px 2px rgb(8 8 8 / 0.06), 0 6px 18px rgb(8 8 8 / 0.05);
+  --ts-link: #1b5cff;
+  --ts-seg-on: #f7f5ee;
+  --ts-code: #ebe7dd;
+  --ts-green: #5e7a5f;
+  --ts-green-soft: #e3eadf;
+  --ts-amber: #a85a12;
+  --ts-amber-soft: #f2e3cc;
+  --ts-red: #c2362f;
+  --ts-red-soft: #f4dad6;
+  --ts-yellow: #9a7400;
+  --ts-yellow-soft: #f1e7c4;
+  --ts-violet: #6b47c9;
+  --ts-violet-soft: #e5ddf3;
+  --ts-teal: #0f7a70;
+  --ts-teal-soft: #d6e9e4;
+  /* priority */
+  --ts-prio-high: #a8483a;
+  --ts-prio-high-bg: #f1e2dc;
+  --ts-prio-medium: #86672a;
+  --ts-prio-medium-bg: #efe7d4;
+  --ts-prio-low: #5c5a55;
+  --ts-prio-low-bg: #ece8dd;
+  /* categories (methodology, technology, business, product): always vivid on
+     small marks — icon squares, top bars, progress, chips; large areas stay neutral */
+  --ts-cat-1: #f5a524;
+  --ts-cat-1-bg: color-mix(in srgb, var(--ts-cat-1) 16%, var(--ts-surface));
+  --ts-cat-2: #0c8ce9;
+  --ts-cat-2-bg: color-mix(in srgb, var(--ts-cat-2) 16%, var(--ts-surface));
+  --ts-cat-3: #22c55e;
+  --ts-cat-3-bg: color-mix(in srgb, var(--ts-cat-3) 16%, var(--ts-surface));
+  --ts-cat-4: #a855f7;
+  --ts-cat-4-bg: color-mix(in srgb, var(--ts-cat-4) 16%, var(--ts-surface));
+  /* tiles and warm dark (Next Action, frontmatter, «Таны ээлж») */
+  --ts-tile-ochre: #e8e2d2;
+  --ts-tile-slate: #e4e6e9;
+  --ts-ink: #262522;
+  --ts-ink-card: #33312d;
+  --ts-ink-muted: #a3a099;
+  --ts-ink-label: #aebbda;
+  --ts-font: "Inter", system-ui, sans-serif;
+  --ts-font-display: var(--ts-font-head);
+  --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--ts-page);
+  color: var(--ts-fg);
+  --ts-accent-strong: #1b5cff;
+  --ts-btn-bg: #fbfaf6;
+  --ts-btn-line: #a8a296;
+  --ts-btn-fg: #14130f;
+  --ts-folder: #e8b931;
+  --ts-cat-1-fg: #6e5420;
+  --ts-cat-2-fg: #0b5fa5;
+  --ts-cat-3-fg: #3f5e41;
+  --ts-cat-4-fg: #6b2fa8;
+  --ts-on-cat-1: #14130f;
+  --ts-on-cat-2: #ffffff;
+  --ts-on-cat-3: #0b2414;
+  --ts-on-cat-4: #ffffff;
+  --ts-status-running-bg: #e3effd;
+  --ts-status-running-border: #b8d3f6;
+  --ts-status-running-fg: #1d5fb8;
+  --ts-status-needs-you-bg: #fdebd6;
+  --ts-status-needs-you-border: #f2c597;
+  --ts-status-needs-you-fg: #a33e0b;
+  --ts-status-error-bg: #fde4e4;
+  --ts-status-error-border: #f4b4b6;
+  --ts-status-error-fg: #b4232a;
+  --ts-status-done-bg: #e3eadf;
+  --ts-status-done-border: #bfd2bb;
+  --ts-status-done-fg: #3f5e41;
+  --ts-status-idle-bg: #efebe1;
+  --ts-status-idle-border: #d8d3c6;
+  --ts-status-idle-fg: #45433f;
+  --ts-on-accent-soft: #0f3fb8;
+  --ts-on-red: #ffffff;
+}
+
+:where(:root[data-theme="dark"], :root.dark, .ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
+  /* cool deep dark (2026-11-13): the same on the site and in the app */
+  --ts-page: #141416;
+  --ts-surface: #1b1b1e;
+  --ts-soft: #26262a;
+  --ts-soft-2: #2e2e33;
+  --ts-line: #303036;
+  --ts-fg: #ececef;
+  --ts-muted: #a1a1aa;
+  --ts-faint: #9a9aa2;
+  --ts-side: #0f0f11;
+  --ts-raised: #26262a;
+  --ts-rail: #0f0f11;
+  --ts-electric: #4d7fff;
+  /* #4D7FFF is for icons and large text; small accent text uses the lighter blue, filled buttons --ts-accent-strong */
+  --ts-electric-fg: #7aa2ff;
+  --ts-electric-soft: #16224a;
+  --ts-accent: var(--ts-electric);
+  --ts-accent-fg: var(--ts-electric-fg);
+  --ts-accent-soft: var(--ts-electric-soft);
+  --ts-elevation: 0 0 0 1px var(--ts-line);
+  --ts-seg-on: #26262a;
+  --ts-code: #0f0f11;
+  --ts-green: #4ade80;
+  --ts-green-soft: #12291a;
+  --ts-amber: #eba659;
+  --ts-amber-soft: #33240f;
+  --ts-red: #f87171;
+  --ts-red-soft: #3a1d1f;
+  --ts-yellow: #e8c25a;
+  --ts-yellow-soft: #352c10;
+  --ts-violet: #a78bfa;
+  --ts-violet-soft: #2a2140;
+  --ts-teal: #5eead4;
+  --ts-teal-soft: #123330;
+  --ts-link: #7aa2ff;
+  --ts-prio-high: #e7907f;
+  --ts-prio-high-bg: #3a2420;
+  --ts-prio-medium: #d9b56a;
+  --ts-prio-medium-bg: #332a17;
+  --ts-prio-low: #b0ada5;
+  --ts-prio-low-bg: #26252a;
+  --ts-cat-1: #f5a524;
+  --ts-cat-1-bg: color-mix(in srgb, var(--ts-cat-1) 16%, var(--ts-surface));
+  --ts-cat-2: #0c8ce9;
+  --ts-cat-2-bg: color-mix(in srgb, var(--ts-cat-2) 16%, var(--ts-surface));
+  --ts-cat-3: #22c55e;
+  --ts-cat-3-bg: color-mix(in srgb, var(--ts-cat-3) 16%, var(--ts-surface));
+  --ts-cat-4: #a855f7;
+  --ts-cat-4-bg: color-mix(in srgb, var(--ts-cat-4) 16%, var(--ts-surface));
+  --ts-tile-ochre: #26262a;
+  --ts-tile-slate: #26262a;
+  --ts-ink: #0f0f11;
+  --ts-ink-card: #1b1b1e;
+  --ts-ink-muted: #a1a1aa;
+  --ts-ink-label: #a9beff;
+  --ts-font: "Inter", system-ui, sans-serif;
+  --ts-font-display: var(--ts-font-head);
+  --ts-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: dark;
+  background: var(--ts-page);
+  color: var(--ts-fg);
+  --ts-accent-strong: #1b5cff;
+  --ts-btn-bg: #26262a;
+  --ts-btn-line: #55544f;
+  --ts-btn-fg: #f2f0eb;
+  --ts-folder: #e8b931;
+  --ts-cat-1-fg: #f5c46a;
+  --ts-cat-2-fg: #6fbaf5;
+  --ts-cat-3-fg: #7ddf9c;
+  --ts-cat-4-fg: #cfa1fb;
+  --ts-on-cat-1: #14130f;
+  --ts-on-cat-2: #ffffff;
+  --ts-on-cat-3: #0b2414;
+  --ts-on-cat-4: #ffffff;
+  --ts-status-running-bg: #1d2b40;
+  --ts-status-running-border: #2c4a72;
+  --ts-status-running-fg: #7fb0f5;
+  --ts-status-needs-you-bg: #3a2717;
+  --ts-status-needs-you-border: #6b4220;
+  --ts-status-needs-you-fg: #f0883e;
+  --ts-status-error-bg: #3a1e20;
+  --ts-status-error-border: #6e3033;
+  --ts-status-error-fg: #f2777b;
+  --ts-status-done-bg: #1f2d22;
+  --ts-status-done-border: #355238;
+  --ts-status-done-fg: #8fcf96;
+  --ts-status-idle-bg: #26262a;
+  --ts-status-idle-border: #4e4d49;
+  --ts-status-idle-fg: #a1a1aa;
+  --ts-on-accent-soft: #8fb0ff;
+  --ts-on-red: #0f0f11;
+}
+
+/* data-ts-mode (view | manage) no longer changes colours: one accent everywhere. */
+
+/*
+ * Type (both themes): headings Inter Semi Bold with −2 % tracking; scale is
+ * the former serif heading sizes × 0.82 (Figma light frames, 2026-11-12).
+ */
+:where(:root) {
+  --ts-font-head: "Inter", system-ui, sans-serif;
+  --ts-head-weight: 600;
+  --ts-head-tracking: -0.02em;
+  --ts-type-display: 59px;
+  --ts-type-h1: 36px;
+  --ts-type-h2: 33px;
+  --ts-type-h3: 20px;
+}
+
+/*
+ * Shape: controls 8, cards 12, pills round; the block layout (marketing,
+ * Figma section 10) uses square corners for blocks, CTAs and tags. The
+ * split CTA's ↗ cell is a deeper Electric.
+ */
+:where(:root) {
+  --ts-radius-control: 8px;
+  --ts-radius-card: 12px;
+  --ts-radius-pill: 999px;
+  --ts-radius-tile: 6px;
+  --ts-radius-block: 0;
+  --ts-cta-arrow: #1550e0;
+}
+
+/*
+ * Selected / active state (2026-11-12, Figma section 09): the active
+ * tab, chip, segment, scenario or flow card is blue (--ts-selected-bg) with white text
+ * and icons — the same on cream and dark; never indigo. A count inside a
+ * selected pill uses white at 20 %. Unselected elements keep their surface.
+ */
+:where(:root) {
+  --ts-selected: #0c8ce9;
+  /* filled selected state under white text: same hue, lightest with >= 4.5:1
+     (#0C8CE9 is 3.5:1). #0C8CE9 stays for focus rings, borders, indicators. */
+  --ts-selected-bg: #0a7acb;
+  --ts-on-selected: #ffffff;
+  --ts-on-selected-soft: rgb(255 255 255 / 0.2);
+}
+
+/*
+ * Spacing (theme-independent). 4 px base: --ts-space-1…10 = 4 8 12 16 24 32
+ * 48 64 72 96. Rhythm: stack-sm/md/lg between elements, control = the minimum
+ * under a segmented control or tab row (16), section = between page sections
+ * (72, Figma «Нүүр v02»). Controls carry no outer margin; the parent's gap
+ * (Stack) spaces them. Declared on :root only, so a host's :root override
+ * reaches themed elements too.
+ */
+:where(:root) {
+  --ts-space-1: 4px;
+  --ts-space-2: 8px;
+  --ts-space-3: 12px;
+  --ts-space-4: 16px;
+  --ts-space-5: 24px;
+  --ts-space-6: 32px;
+  --ts-space-7: 48px;
+  --ts-space-8: 64px;
+  --ts-space-9: 72px;
+  --ts-space-10: 96px;
+  --ts-gap-stack-sm: var(--ts-space-2);
+  --ts-gap-stack-md: var(--ts-space-4);
+  --ts-gap-stack-lg: var(--ts-space-5);
+  --ts-gap-control: var(--ts-space-4);
+  --ts-gap-section: var(--ts-space-9);
+}
+
+/*
+ * Motion (--ts-motion-*): durations, easings and springs, theme-independent.
+ * Springs are physical (src/motion/spring.ts) rendered as CSS linear() curves;
+ * pair --ts-motion-spring-NAME with --ts-motion-spring-NAME-duration.
+ * Browsers without linear() get a cubic-bezier of the same character.
+ * Generated by motionTokensCss() — package.test.ts keeps them in sync.
+ */
+:where(:root, [data-ts-theme]) {
+  --ts-motion-dur-xs: 120ms;
+  --ts-motion-dur-sm: 200ms;
+  --ts-motion-dur-md: 320ms;
+  --ts-motion-dur-lg: 560ms;
+  --ts-motion-dur-xl: 900ms;
+  --ts-motion-loop-move: 1200ms;
+  --ts-motion-loop-rest: 4000ms;
+  --ts-motion-loop-period: 5200ms;
+  --ts-motion-loop-count: 3;
+  --ts-motion-stagger: 100ms;
+  --ts-motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ts-motion-ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ts-motion-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --ts-motion-ease-loop: cubic-bezier(0.45, 0, 0.55, 1);
+  --ts-motion-spring-soft-duration: 702ms;
+  --ts-motion-spring-settle-duration: 789ms;
+  --ts-motion-spring-heavy-duration: 1160ms;
+  --ts-motion-spring-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ts-motion-spring-settle: cubic-bezier(0.25, 1.2, 0.5, 1);
+  --ts-motion-spring-heavy: cubic-bezier(0.25, 1.2, 0.5, 1);
+}
+@supports (animation-timing-function: linear(0, 1)) {
+  :where(:root, [data-ts-theme]) {
+    --ts-motion-spring-soft: linear(0, 0.004 1%, 0.023 2.5%, 0.078 5%, 0.151 7.5%, 0.462 17%, 0.56 20.5%, 0.634 23.5%, 0.698 26.5%, 0.761 30%, 0.812 33.5%, 0.858 37.5%, 0.898 42%, 0.929 47%, 0.953 52.5%, 0.971 58.5%, 0.991 73.5%, 1);
+    --ts-motion-spring-settle: linear(0, 0.008 1.5%, 0.029 3%, 0.061 4.5%, 0.101 6%, 0.197 9%, 0.529 18.5%, 0.621 21.5%, 0.701 24.5%, 0.77 27.5%, 0.836 31%, 0.881 34%, 0.922 37.5%, 0.957 41.5%, 0.98 45.5%, 0.996 50%, 1.006 55%, 1.011 65.5%, 1);
+    --ts-motion-spring-heavy: linear(0, 0.004 1%, 0.021 2.5%, 0.05 4%, 0.102 6%, 0.198 9%, 0.513 18%, 0.62 21.5%, 0.699 24.5%, 0.768 27.5%, 0.833 31%, 0.878 34%, 0.918 37.5%, 0.953 41.5%, 0.976 45.5%, 0.993 50%, 1.004 55.5%, 1.009 66.5%, 1);
+  }
+}
+
+/* Stable aliases (declared wherever a theme or mode is, so they follow it). */
+:where(:root, [data-theme="dark"], [data-ts-theme], [data-ts-mode]) {
+  --ts-color-bg: var(--ts-page);
+  --ts-color-side: var(--ts-side);
+  --ts-color-rail: var(--ts-rail);
+  --ts-color-surface: var(--ts-surface);
+  --ts-color-raised: var(--ts-raised);
+  --ts-color-tile: var(--ts-tile-ochre);
+  --ts-color-line: var(--ts-line);
+  --ts-color-text: var(--ts-fg);
+  --ts-color-text-muted: var(--ts-muted);
+  --ts-color-text-faint: var(--ts-faint);
+  --ts-color-accent: var(--ts-accent);
+  --ts-color-accent-text: var(--ts-accent-fg);
+  --ts-color-accent-soft: var(--ts-accent-soft);
+  --ts-color-electric: var(--ts-electric);
+  --ts-color-accent-strong: var(--ts-accent-strong);
+  --ts-color-folder: var(--ts-folder);
+  --ts-color-link: var(--ts-link);
+  --ts-color-amber: var(--ts-amber);
+  --ts-color-amber-soft: var(--ts-amber-soft);
+  --ts-color-green: var(--ts-green);
+  --ts-color-red: var(--ts-red);
+  --ts-shadow: var(--ts-elevation);
+  --ts-font-heading: var(--ts-font-display);
+  --ts-font-text: var(--ts-font);
+  --ts-font-label: var(--ts-font-mono);
+}
+
+:where(body) {
+  background: var(--ts-page);
+  color: var(--ts-fg);
+  font-family: var(--ts-font);
+}
