@@ -151,6 +151,8 @@ export type CompanyViewProps = {
   /** Unit to open first; its kind decides the level. */
   defaultUnitId?: string;
   defaultView?: CompanyViewKey;
+  /** Tabs to show, in this order (default: all of COMPANY_VIEWS). A host that does not use a template, e.g. a public page, leaves out «method» and «raci». When the open view is not listed, the first listed one opens. */
+  views?: CompanyViewKey[];
   /** Drive the open tab from outside (a catalog story); the user's own clicks still work, and leaving it undefined hands the tab back. */
   view?: CompanyViewKey;
   onScopeChange?: (scope: { level: CompanyLevel; unitId: string | null }) => void;
@@ -479,6 +481,7 @@ export function CompanyView({
   defaultUnitId,
   defaultView = "method",
   view: viewProp,
+  views,
   onScopeChange,
   labels: labelsProp,
   className = "",
@@ -496,7 +499,12 @@ export function CompanyView({
     return { level: lv, unitId: firstUnit(lv)?.id ?? null };
   })();
   const [scope, setScopeState] = React.useState(initial);
-  const [view, setView] = React.useState<CompanyViewKey>(viewProp ?? defaultView);
+  const shownViews = React.useMemo(() => {
+    const list = (views ?? COMPANY_VIEWS).filter((v, i, a) => COMPANY_VIEWS.includes(v) && a.indexOf(v) === i);
+    return list.length ? list : COMPANY_VIEWS;
+  }, [views]);
+  const [viewRaw, setView] = React.useState<CompanyViewKey>(viewProp ?? defaultView);
+  const view = shownViews.includes(viewRaw) ? viewRaw : shownViews[0];
   React.useEffect(() => {
     if (viewProp) setView(viewProp);
   }, [viewProp]);
@@ -521,7 +529,7 @@ export function CompanyView({
       firstView.current = false;
       return;
     }
-    const tab = tabsRef.current[COMPANY_VIEWS.indexOf(view)];
+    const tab = tabsRef.current[shownViews.indexOf(view)];
     const strip = tab?.parentElement;
     if (tab && strip) strip.scrollTo?.({ left: tab.offsetLeft - strip.clientWidth / 2 + tab.clientWidth / 2, behavior: "smooth" });
   }, [view]);
@@ -770,7 +778,7 @@ export function CompanyView({
             {unitChips}
           </div>
         </header>
-        {COMPANY_VIEWS.map((v, i) => (
+        {shownViews.map((v, i) => (
           <section key={v} className="cv-section" aria-labelledby={`${uid}-${v}`} style={{ "--i": i } as React.CSSProperties}>
             <h3 id={`${uid}-${v}`} className="cv-section-h">
               <span className="cv-num">{String(i + 1).padStart(2, "0")}</span>
@@ -784,7 +792,7 @@ export function CompanyView({
         {collections.length > 0 && (
           <section className="cv-section" aria-labelledby={`${uid}-types`}>
             <h3 id={`${uid}-types`} className="cv-section-h">
-              <span className="cv-num">{String(COMPANY_VIEWS.length + 1).padStart(2, "0")}</span>
+              <span className="cv-num">{String(shownViews.length + 1).padStart(2, "0")}</span>
               <Icon name="database" size={20} />
               {L.types}
               <span className="cv-count">{collections.length}</span>
@@ -935,13 +943,13 @@ export function CompanyView({
             onKeyDown={(e) => {
               if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
               e.preventDefault();
-              const at = COMPANY_VIEWS.indexOf(view);
-              const n = (at + (e.key === "ArrowRight" ? 1 : -1) + COMPANY_VIEWS.length) % COMPANY_VIEWS.length;
-              setView(COMPANY_VIEWS[n]);
+              const at = shownViews.indexOf(view);
+              const n = (at + (e.key === "ArrowRight" ? 1 : -1) + shownViews.length) % shownViews.length;
+              setView(shownViews[n]);
               tabsRef.current[n]?.focus();
             }}
           >
-            {COMPANY_VIEWS.map((v, i) => (
+            {shownViews.map((v, i) => (
               <button
                 key={v}
                 ref={(el) => {
