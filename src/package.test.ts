@@ -57,7 +57,7 @@ describe("@inai/thinking-state package", () => {
     for (const need of ['[data-ts-theme="cream"]', '[data-ts-theme="dark"]', '[data-ts-theme="manage"]'])
       expect(css).toContain(need);
     // warm grey dark (11-12), one Electric accent, no indigo
-    for (const v of ["--ts-page: #262624;", "--ts-side: #1f1e1d;", "--ts-surface: #30302e;", "--ts-fg: #ecebe7;", "--ts-electric: #4d7fff;", "--ts-accent-strong: #1b5cff;"])
+    for (const v of ["--ts-page: #141416;", "--ts-side: #0f0f11;", "--ts-surface: #1b1b1e;", "--ts-fg: #ececef;", "--ts-electric: #4d7fff;", "--ts-accent-strong: #1b5cff;"])
       expect(css).toContain(v);
     expect(css).not.toMatch(/--ts-indigo|data-ts-mode="manage"\]/);
     // status triads on both themes

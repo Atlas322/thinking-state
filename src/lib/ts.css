@@ -102,18 +102,18 @@
 }
 
 :where(:root[data-theme="dark"], :root.dark, .ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
-  /* warm grey dark (2026-11-12): the same on the site and in the app */
-  --ts-page: #262624;
-  --ts-surface: #30302e;
-  --ts-soft: #3a3a37;
-  --ts-soft-2: #42423f;
-  --ts-line: #3e3d3a;
-  --ts-fg: #ecebe7;
-  --ts-muted: #b7b5ae;
-  --ts-faint: #a3a09a;
-  --ts-side: #1f1e1d;
-  --ts-raised: #3a3a37;
-  --ts-rail: #1f1e1d;
+  /* cool deep dark (2026-11-13, itge.e: «тод, баруун талынх шиг»): the same on the site and in the app */
+  --ts-page: #141416;
+  --ts-surface: #1b1b1e;
+  --ts-soft: #26262a;
+  --ts-soft-2: #2e2e33;
+  --ts-line: #303036;
+  --ts-fg: #ececef;
+  --ts-muted: #a1a1aa;
+  --ts-faint: #9a9aa2;
+  --ts-side: #0f0f11;
+  --ts-raised: #26262a;
+  --ts-rail: #0f0f11;
   --ts-electric: #4d7fff;
   /* #4D7FFF is for icons and large text; small accent text uses the lighter blue, filled buttons --ts-accent-strong */
   --ts-electric-fg: #7aa2ff;
@@ -122,8 +122,8 @@
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
   --ts-elevation: 0 0 0 1px var(--ts-line);
-  --ts-seg-on: #3a3a37;
-  --ts-code: #1f1e1d;
+  --ts-seg-on: #26262a;
+  --ts-code: #0f0f11;
   --ts-green: #4ade80;
   --ts-green-soft: #12291a;
   --ts-amber: #eba659;
@@ -151,11 +151,11 @@
   --ts-cat-3-bg: color-mix(in srgb, var(--ts-cat-3) 16%, var(--ts-surface));
   --ts-cat-4: #a855f7;
   --ts-cat-4-bg: color-mix(in srgb, var(--ts-cat-4) 16%, var(--ts-surface));
-  --ts-tile-ochre: #3a3a37;
-  --ts-tile-slate: #3a3a37;
-  --ts-ink: #1f1e1d;
-  --ts-ink-card: #30302e;
-  --ts-ink-muted: #b7b5ae;
+  --ts-tile-ochre: #26262a;
+  --ts-tile-slate: #26262a;
+  --ts-ink: #0f0f11;
+  --ts-ink-card: #1b1b1e;
+  --ts-ink-muted: #a1a1aa;
   --ts-ink-label: #a9beff;
   --ts-font: "Inter", system-ui, sans-serif;
   --ts-font-display: var(--ts-font-head);
@@ -164,7 +164,7 @@
   background: var(--ts-page);
   color: var(--ts-fg);
   --ts-accent-strong: #1b5cff;
-  --ts-btn-bg: #3a3a37;
+  --ts-btn-bg: #26262a;
   --ts-btn-line: #55544f;
   --ts-btn-fg: #f2f0eb;
   --ts-folder: #e8b931;
@@ -188,11 +188,11 @@
   --ts-status-done-bg: #1f2d22;
   --ts-status-done-border: #355238;
   --ts-status-done-fg: #8fcf96;
-  --ts-status-idle-bg: #3a3a37;
+  --ts-status-idle-bg: #26262a;
   --ts-status-idle-border: #4e4d49;
-  --ts-status-idle-fg: #b7b5ae;
+  --ts-status-idle-fg: #a1a1aa;
   --ts-on-accent-soft: #8fb0ff;
-  --ts-on-red: #1f1e1d;
+  --ts-on-red: #0f0f11;
 }
 
 /* data-ts-mode (view | manage) no longer changes colours: one accent everywhere. */

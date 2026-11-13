@@ -8,7 +8,7 @@ describe("Figma export (npm run tokens:figma)", () => {
     const v = JSON.parse((await fs()).readFileSync("tokens/figma-variables.json", "utf8"));
     const get = (n: string) => v.variables.find((x: { name: string }) => x.name === n);
     expect(v.$meta.modes).toEqual(["cream", "dark"]);
-    expect(get("color/page").values).toEqual({ cream: "#f0ede4", dark: "#262624" });
+    expect(get("color/page").values).toEqual({ cream: "#f0ede4", dark: "#141416" });
     expect(get("color/accent-strong").values).toEqual({ cream: "#1b5cff", dark: "#1b5cff" });
     expect(get("space/space-4").values.cream).toBe(16);
     expect(get("radius/tile").type).toBe("FLOAT");
