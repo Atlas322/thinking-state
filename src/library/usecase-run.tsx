@@ -94,7 +94,7 @@ const defaultLabels: UseCaseRunLabels = {
 export const useCaseRunDemo: UseCaseRunData = {
   title: "Бүх сувгийн асуултад эх сурвалжтай хариу",
   segment: "Хэрэглэгчийн туслалцаа",
-  company: "ac.me Box (зохиомол)",
+  company: "ac.me Хайрцаг (зохиомол)",
   agent: "Туслалцааны агент",
   input: { channel: "Вэбийн чат", text: "Захиалгаа нэг сар түр зогсоож болох уу? Хөнгөлөлт маань хэвээр үлдэх үү?" },
   method: "Туслалцааны хариултын загвар",
