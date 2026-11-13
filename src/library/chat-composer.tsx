@@ -26,6 +26,27 @@ export type ChatComposerProps = {
   connectedApps?: string[];
   onAppsChange?: (connected: string[]) => void;
   className?: string;
+  /** Host mode (Second Brain app, 2026-11-13): the host owns the text, files, menus and send. No approval button,
+   * voice, folders or apps; the model picker shows only when `models` is passed. */
+  host?: boolean;
+  /** Controlled text (host mode). */
+  value?: string;
+  onValueChange?: (text: string, caret: number) => void;
+  textareaRef?: React.Ref<HTMLTextAreaElement>;
+  /** Extra props for the textarea (onKeyDown runs first; preventDefault skips the built-in Enter send). */
+  textareaProps?: Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "value" | "onChange" | "ref">;
+  /** Inside the card, above the field: attachment chips, mention chips, pop-up menus. */
+  above?: React.ReactNode;
+  /** Toolbar, after the attach button: e.g. a ModelPicker or run controls. */
+  tools?: React.ReactNode;
+  /** Send allowed (host mode: text or files). Default: text is not empty. */
+  canSend?: boolean;
+  /** Sending: the button spins and is disabled. */
+  busy?: boolean;
+  /** Files are being dragged over (highlight the card). */
+  dragging?: boolean;
+  disabled?: boolean;
+  labels?: { field?: string; send?: string; attach?: string };
 };
 const defaultModels: ChatModel[] = [
   { id: "auto", name: "Автомат", description: "Даалгаварт тохирох загварыг сонгоно" },
@@ -306,7 +327,7 @@ function Picker({
 
 export function ChatComposer({
   placeholder = "Бичиж эхлээрэй…",
-  models = defaultModels,
+  models: modelsProp,
   loadMs = 1300,
   dictation = "Энэ долоо хоногт юу гаргасан тухай багт товч мэдээ бичээрэй.",
   onSend,
@@ -320,8 +341,27 @@ export function ChatComposer({
   connectedApps = initialConnections,
   onAppsChange,
   className = "",
+  host = false,
+  value,
+  onValueChange,
+  textareaRef,
+  textareaProps,
+  above,
+  tools,
+  canSend,
+  busy = false,
+  dragging = false,
+  disabled = false,
+  labels,
 }: ChatComposerProps) {
-  const [message, setMessage] = React.useState("");
+  const models = modelsProp ?? (host ? [] : defaultModels);
+  const [inMessage, setInMessage] = React.useState("");
+  const message = value ?? inMessage;
+  const setMessage = (next: string | ((old: string) => string), caret?: number) => {
+    const text = typeof next === "function" ? next(message) : next;
+    if (value === undefined) setInMessage(text);
+    onValueChange?.(text, caret ?? text.length);
+  };
   const [modelId, setModelId] = React.useState(models[0]?.id ?? "auto");
   const [currentFolder, setCurrentFolder] = React.useState<string | null>(
     folder ?? null,
@@ -335,7 +375,13 @@ export function ChatComposer({
   const [wordsHeard, setWordsHeard] = React.useState(0);
   const [files, setFiles] = React.useState<File[]>([]);
   const [notice, setNotice] = React.useState("");
-  const textarea = React.useRef<HTMLTextAreaElement>(null);
+  const textarea = React.useRef<HTMLTextAreaElement | null>(null);
+  const setTextarea = (node: HTMLTextAreaElement | null) => {
+    textarea.current = node;
+    if (typeof textareaRef === "function") textareaRef(node);
+    else if (textareaRef) (textareaRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
+  };
+  const sendable = (canSend ?? Boolean(message.trim())) && !busy && !disabled;
   const fileInput = React.useRef<HTMLInputElement>(null);
   const voiceButton = React.useRef<HTMLButtonElement>(null);
   const mounted = React.useRef(true);
@@ -373,13 +419,14 @@ export function ChatComposer({
     const field = textarea.current;
     if (field) {
       field.style.height = "auto";
-      field.style.height = `${Math.max(48, Math.min(220, field.scrollHeight))}px`;
+      field.style.height = `${Math.max(host ? 40 : 48, Math.min(220, field.scrollHeight))}px`;
     }
   }, [message]);
   const send = () => {
-    if (!message.trim() || recording) return;
+    if (!sendable || recording) return;
     const text = message.trim();
     onSend?.(text, { model: selectedModel?.id ?? "auto" });
+    if (host) return;
     setNotice(onSend ? "Мессеж илгээгдлээ" : `Мессеж бэлэн: ${text}`);
     setMessage("");
     setFiles([]);
@@ -426,6 +473,7 @@ export function ChatComposer({
   return (
     <section
       className={`cc-composer ${className}`}
+      data-host={host || undefined}
       aria-label="Мессеж бичих хэсэг"
       onKeyDown={(event) => {
         if (event.key === "Escape" && recording) {
@@ -437,10 +485,12 @@ export function ChatComposer({
       <style>{css}</style>
       <div
         className="cc-card"
+        data-drag={dragging || undefined}
         onClick={(event) => {
           if (event.target === event.currentTarget) textarea.current?.focus();
         }}
       >
+        {above}
         <div className="cc-input-area">
           {recording ? (
             <div
@@ -455,13 +505,19 @@ export function ChatComposer({
             </div>
           ) : (
             <textarea
-              ref={textarea}
-              aria-label="Мессеж"
+              aria-label={labels?.field ?? "Мессеж"}
               rows={1}
               placeholder={placeholder}
+              disabled={disabled}
+              {...textareaProps}
+              ref={setTextarea}
               value={message}
-              onChange={(event) => setMessage(event.target.value)}
+              onChange={(event) =>
+                setMessage(event.target.value, event.target.selectionStart)
+              }
               onKeyDown={(event) => {
+                textareaProps?.onKeyDown?.(event);
+                if (event.defaultPrevented) return;
                 if (
                   event.key === "Enter" &&
                   !event.shiftKey &&
@@ -509,12 +565,14 @@ export function ChatComposer({
           <button
             type="button"
             className="cc-icon-button"
-            aria-label="Файл хавсаргах"
+            aria-label={labels?.attach ?? "Файл хавсаргах"}
+            title={labels?.attach ?? "Файл хавсаргах"}
             onClick={() => (onAttach ? onAttach() : fileInput.current?.click())}
           >
             <Glyph name="plus" />
           </button>
-          {!recording && (
+          {tools}
+          {!recording && !host && (
             <button
               type="button"
               className={`cc-approval ${approval}`}
@@ -566,6 +624,7 @@ export function ChatComposer({
             </div>
           ) : (
             <>
+              {models.length > 0 && (
               <Picker
                 label="Загвар сонгох"
                 items={models.map((model) => ({
@@ -588,6 +647,8 @@ export function ChatComposer({
                 <span>{selectedModel?.name ?? "Автомат"}</span>
                 <Glyph name="down" />
               </Picker>
+              )}
+              {!host && (
               <button
                 type="button"
                 ref={voiceButton}
@@ -600,19 +661,23 @@ export function ChatComposer({
               >
                 <Glyph name="mic" />
               </button>
+              )}
               <button
                 type="button"
                 className="cc-send"
-                aria-label="Мессеж илгээх"
-                disabled={!message.trim()}
+                aria-label={labels?.send ?? "Мессеж илгээх"}
+                title={labels?.send}
+                aria-busy={busy || undefined}
+                disabled={!sendable}
                 onClick={send}
               >
-                <Glyph name="arrow" />
+                {busy ? <span className="cc-spin" aria-hidden="true" /> : <Glyph name="arrow" />}
               </button>
             </>
           )}
         </div>
       </div>
+      {!host && (
       <div className="cc-bottom-row">
         {folders.length > 0 && (
           <Picker
@@ -674,6 +739,7 @@ export function ChatComposer({
           </Picker>
         )}
       </div>
+      )}
       {approvalError && (
         <p role="alert" className="cc-error">
           {approvalError}
@@ -690,6 +756,7 @@ const css = `
 .cc-composer{--cc-ink:rgba(0,0,0,.88);--cc-tray:#f4f4f5;--cc-muted:rgba(0,0,0,.6);--cc-bg:#fff;--cc-edge:rgba(0,0,0,.08);--cc-hover:rgba(0,0,0,.04);--cc-focus:#5587e9;--cc-shadow:0 0 0 .5px rgba(0,0,0,.08),0 1px 1px -1px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.05);width:100%;max-width:680px;min-width:0;background:var(--cc-tray);border-radius:20px;box-shadow:0 0 0 1px var(--cc-edge);font:400 15px/22px Inter,system-ui,sans-serif;color:var(--cc-ink);container-type:inline-size;text-align:left;isolation:isolate}
 :where(.dark,[data-theme=dark]) .cc-composer{--cc-ink:rgba(255,255,255,.88);--cc-tray:#1c1c1e;--cc-muted:rgba(255,255,255,.6);--cc-bg:#252527;--cc-edge:rgba(255,255,255,.08);--cc-hover:rgba(255,255,255,.06);--cc-shadow:0 0 0 .5px rgba(255,255,255,.1),0 1px 3px #0002;color-scheme:dark}
 .cc-composer *{box-sizing:border-box}.cc-composer svg{display:block;width:16px;height:16px;flex:none}.cc-composer button,.cc-composer textarea{font:inherit;color:inherit}.cc-composer button{cursor:pointer}.cc-composer button:disabled{cursor:default}.cc-composer :focus-visible{outline:2px solid var(--cc-focus);outline-offset:3px}.cc-card{background:var(--cc-bg);border-radius:20px;box-shadow:0 0 0 1px var(--cc-edge),0 1px 3px rgba(0,0,0,.05);padding:16px 12px 10px;position:relative;cursor:text;transition:box-shadow .2s}.cc-input-area{min-height:48px;padding:0 5px}.cc-input-area textarea{width:100%;min-height:48px;field-sizing:content;max-height:220px;resize:none;background:none;border:0;outline:none;padding:0;line-height:1.65;display:block;caret-color:var(--cc-ink)}.cc-input-area textarea:focus-visible{outline:none}.cc-input-area textarea::placeholder{color:var(--cc-muted)}.cc-toolbar{display:flex;align-items:center;gap:6px;margin-top:6px;min-width:0;cursor:default}.cc-toolbar-space{flex:1;min-width:3px}.cc-icon-button,.cc-send{display:grid;place-items:center;border:0;background:none;border-radius:8px;width:30px;height:30px;padding:0;flex:none;color:var(--cc-muted)!important;transition:background .16s,transform .16s}.cc-icon-button:hover{background:var(--cc-hover);color:var(--cc-ink)!important}.cc-icon-button:active,.cc-send:active{transform:scale(.94)}.cc-send{background:var(--cc-ink);color:var(--cc-bg)!important;border-radius:8px;width:34px;height:34px;margin-left:4px}.cc-send:disabled{background:var(--cc-tray);color:var(--cc-muted)!important;box-shadow:0 0 0 1px var(--cc-edge)}.cc-approval{display:flex;align-items:center;gap:7px;padding:5px 8px;font-size:15px!important;border:0;background:none;border-radius:7px;white-space:nowrap;color:var(--cc-muted)!important;transition:background .2s,color .2s}.cc-approval:hover{background:var(--cc-hover)}.cc-approval svg{width:18px;height:18px}.cc-approval.loading svg{animation:cc-wave .6s ease-in-out infinite}.cc-approval.granted{background:var(--cc-hover);color:var(--cc-ink)!important;animation:cc-appear .25s both}.cc-bottom-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 10px 8px;min-width:0}.cc-picker{position:relative;min-width:0}.cc-picker-trigger{display:flex;align-items:center;gap:6px;border:0;border-radius:7px;background:none;padding:5px 7px;font-size:15px!important;white-space:nowrap;min-width:0;color:var(--cc-muted)!important;max-width:100%}.cc-picker-trigger:hover,.cc-picker-trigger[aria-expanded=true]{background:var(--cc-hover);color:var(--cc-ink)!important}.cc-picker-trigger>span:first-child>svg{width:14px;height:14px}.cc-picker-trigger>svg:last-child{width:14px;height:14px;opacity:.65}.cc-toolbar .cc-picker-trigger{color:var(--cc-ink)!important}.cc-folder-ico svg{width:18px;height:18px}.cc-bottom-row .cc-picker-trigger{font-size:14.5px!important}.cc-folders{flex:1;min-width:0}.cc-folder-name{overflow:hidden;text-overflow:ellipsis}.cc-apps{margin-left:auto;flex:none}.cc-menu{position:absolute;bottom:calc(100% + 9px);left:0;width:max-content;min-width:190px;max-width:min(280px,calc(100cqw - 20px));max-height:280px;overflow:auto;background:var(--cc-bg);border:1px solid var(--cc-edge);box-shadow:var(--cc-shadow),0 10px 30px #0002;border-radius:12px;padding:5px;z-index:30;outline:none!important;animation:cc-menu-in .18s cubic-bezier(.22,1,.36,1);transform-origin:bottom left;cursor:default}.cc-picker[data-align=right] .cc-menu{left:auto;right:0;transform-origin:bottom right}.cc-picker[data-below=true] .cc-menu{bottom:auto;top:calc(100% + 9px);transform-origin:top left}.cc-picker[data-below=true][data-align=right] .cc-menu{transform-origin:top right}.cc-menu-heading{display:block;padding:5px 8px;font-size:10px;color:var(--cc-muted)}.cc-menu-row{display:flex;align-items:center;gap:9px;padding:8px;border-radius:7px;cursor:pointer;min-height:34px;transition:background .12s}.cc-menu-row[data-highlighted=true]{background:var(--cc-hover)}.cc-menu-row>span:not(.cc-app-mark){flex:1;min-width:0}.cc-menu-row strong{display:block;font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis}.cc-menu-row small{display:block;color:var(--cc-muted);font-size:10px;margin-top:1px}.cc-menu-row>svg:last-child{width:13px;height:13px}.cc-menu-row>svg:first-child{color:var(--cc-muted)}.cc-menu-empty{font-size:11px;padding:8px;color:var(--cc-muted)}.cc-app-logos{display:flex;align-items:center;gap:6px;margin-left:4px}.cc-app-mark{display:grid;place-items:center;width:17px;height:17px;flex:none;border-radius:4px}.cc-app-mark>svg,.cc-app-mark>img{width:17px;height:17px}.cc-attachments{display:flex;flex-wrap:wrap;gap:5px;margin:8px 5px}.cc-attachments>span{display:flex;align-items:center;gap:6px;font-size:11px;background:var(--cc-hover);border:1px solid var(--cc-edge);padding:3px 6px;border-radius:5px;max-width:100%;overflow-wrap:anywhere}.cc-attachments button{border:0;background:none;padding:2px}.cc-attachments svg{width:12px;height:12px}.cc-transcript{min-height:48px;color:var(--cc-muted);line-height:1.65}.cc-transcript>span{animation:cc-appear .25s both}.cc-recording-controls{display:flex;align-items:center;gap:6px;min-width:0}.cc-recording-label{font-size:10px;color:var(--cc-muted);white-space:nowrap}.cc-audio{display:flex;align-items:center;gap:2px;height:22px;overflow:hidden;color:var(--cc-muted);margin-right:5px}.cc-audio i{width:2px;border-radius:2px;background:currentColor;animation:cc-audio .7s ease-in-out infinite alternate}.cc-error{color:#c62828;font-size:11px;margin:9px 6px 0}.cc-notice{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0}
+.cc-card[data-drag]{box-shadow:0 0 0 2px var(--cc-focus)}.cc-spin{width:15px;height:15px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:cc-rot .7s linear infinite}@keyframes cc-rot{to{transform:rotate(360deg)}}.cc-composer[data-host]{max-width:none}.cc-composer[data-host] .cc-card{padding:10px 10px 8px}.cc-composer[data-host] .cc-input-area,.cc-composer[data-host] .cc-input-area textarea{min-height:40px}.cc-composer[data-host] textarea:disabled{opacity:.6}
 @container(max-width:430px){.cc-card{padding:14px 10px 10px}.cc-toolbar{gap:2px}.cc-picker-trigger{padding:5px;font-size:11px!important;gap:4px}.cc-approval{font-size:10px!important;gap:3px;padding:5px}.cc-approval svg{width:12px;height:12px}.cc-icon-button{width:26px}.cc-bottom-row{gap:8px;padding:10px 0 0}.cc-app-logos{gap:0}.cc-app-mark{width:14px;height:14px}.cc-app-mark>svg{width:13px;height:13px}.cc-recording-label{display:none}}
 @container(max-width:330px){.cc-approval>span{max-width:74px;overflow:hidden;text-overflow:ellipsis}.cc-app-logos .cc-app-mark:nth-child(n+2){display:none}.cc-toolbar .cc-picker-trigger>span:first-child{display:none}.cc-audio{max-width:35px}}
 @keyframes cc-wave{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(15deg)}}@keyframes cc-appear{from{opacity:0;filter:blur(2px)}to{opacity:1;filter:blur(0)}}@keyframes cc-menu-in{from{opacity:0;transform:translateY(3px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes cc-audio{from{transform:scaleY(.35)}to{transform:scaleY(1)}}@media(prefers-reduced-motion:reduce){.cc-composer *{animation:none!important;transition:none!important}}

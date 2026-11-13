@@ -15,7 +15,7 @@ export type PickerModel = {
   latencyMs?: number;
   pricePerM?: number;
 };
-export type Effort = "low" | "medium" | "high";
+export type Effort = "low" | "medium" | "high" | "";
 
 export type ModelPickerProps = {
   models?: PickerModel[];
@@ -38,6 +38,13 @@ export type ModelPickerProps = {
   side?: "bottom" | "top";
   placeholder?: string;
   className?: string;
+  /** Host mode (Second Brain app, 2026-11-13): only the trigger and the menu — no own field, send button, web search
+   * or estimate tray; the host's composer holds them. The thinking switch goes, effort is always shown. */
+  host?: boolean;
+  /** Host mode: an extra first effort choice meaning «use the default» (value ""), e.g. "Анхдагч". */
+  effortAuto?: string;
+  /** Host mode: the trigger's short effort tag (default: the effort label when one is chosen). */
+  effortTag?: string;
 };
 
 const defaultModels: PickerModel[] = [
@@ -47,9 +54,9 @@ const defaultModels: PickerModel[] = [
   { id: "deep", name: "Судлаач агент", description: "Хэцүү ажилд хамгийн гүн бодно", speed: 2, quality: 5, cost: 5, latencyMs: 1900 },
 ];
 
-const efforts: Effort[] = ["low", "medium", "high"];
-const effortLabel: Record<Effort, string> = { low: "Бага", medium: "Дунд", high: "Өндөр" };
-const effortMul: Record<Effort, number> = { low: 1.6, medium: 2.6, high: 4.2 };
+const baseEfforts: Effort[] = ["low", "medium", "high"];
+const effortLabel: Record<Effort, string> = { low: "Бага", medium: "Дунд", high: "Өндөр", "": "Анхдагч" };
+const effortMul: Record<Effort, number> = { low: 1.6, medium: 2.6, high: 4.2, "": 2.6 };
 
 function useRoll(target: number, ms = 300) {
   const [v, setV] = React.useState(target);
@@ -113,7 +120,12 @@ export function ModelPicker({
   side = "bottom",
   placeholder = "Юу ч асуу…",
   className = "",
+  host = false,
+  effortAuto,
+  effortTag,
 }: ModelPickerProps) {
+  const efforts: Effort[] = host && effortAuto ? ["", ...baseEfforts] : baseEfforts;
+  const effLabel = (x: Effort) => (x === "" && effortAuto ? effortAuto : effortLabel[x]);
   const [inId, setInId] = React.useState(models.some((m) => m.id === defaultValue) ? defaultValue : models[0]?.id);
   const [inThink, setInThink] = React.useState(defaultThinking);
   const [inWeb, setInWeb] = React.useState(defaultWebSearch);
@@ -122,7 +134,7 @@ export function ModelPicker({
   const [active, setActive] = React.useState<string | null>(null);
   const [text, setText] = React.useState("");
   const id = value ?? inId;
-  const think = thinking ?? inThink;
+  const think = host ? true : thinking ?? inThink;
   const web = webSearch ?? inWeb;
   const eff = effort ?? inEffort;
   const isOpen = open ?? inOpen;
@@ -172,9 +184,9 @@ export function ModelPicker({
   };
 
   return (
-    <div className={`mp ${className}`} ref={rootRef} onKeyDown={(e) => { if (e.key === "Escape" && isOpen) { setOpen(false); trigRef.current?.focus(); } }}>
+    <div className={`mp ${className}`} data-host={host || undefined} ref={rootRef} onKeyDown={(e) => { if (e.key === "Escape" && isOpen) { setOpen(false); trigRef.current?.focus(); } }}>
       <style>{css}</style>
-      <textarea className="mp-input" rows={1} placeholder={placeholder} value={text} onChange={(e) => setText(e.target.value)} aria-label="Мессеж" />
+      {!host && <textarea className="mp-input" rows={1} placeholder={placeholder} value={text} onChange={(e) => setText(e.target.value)} aria-label="Мессеж" />}
       <div className="mp-bar">
         <div className="mp-anchor">
           <button
@@ -184,13 +196,13 @@ export function ModelPicker({
             aria-haspopup="listbox"
             aria-expanded={isOpen}
             aria-controls={listId}
-            aria-label={`Загвар: ${model.name}${think ? ", гүн бодолт асаалттай" : ""}`}
+            aria-label={host ? `Загвар: ${model.name}, хүчин чармайлт: ${effLabel(eff)}` : `Загвар: ${model.name}${think ? ", гүн бодолт асаалттай" : ""}`}
             onClick={() => { setOpen(!isOpen); if (!isOpen) requestAnimationFrame(() => listRef.current?.focus()); }}
             onKeyDown={(e) => { if (e.key === "ArrowDown") { e.preventDefault(); setOpen(true); requestAnimationFrame(() => listRef.current?.focus()); } }}
           >
             {initial(model)}
             <span key={model.id} className="mp-name">{model.name}</span>
-            <span className={`mp-bulb${think ? " is-on" : ""}`}><Bulb /></span>
+            {host ? (effortTag ?? (eff ? effortLabel[eff] : "")) && <span className="mp-tag">{effortTag ?? effortLabel[eff]}</span> : <span className={`mp-bulb${think ? " is-on" : ""}`}><Bulb /></span>}
             <svg className="mp-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
           </button>
           <div className={`mp-menu mp-${side} mp-${align}${isOpen ? " is-open" : ""}`} inert={!isOpen ? true : undefined}>
@@ -239,10 +251,14 @@ export function ModelPicker({
               })}
             </div>
             <div className="mp-sep" />
+            {host ? (
+              <div className="mp-set"><span className="mp-set-l"><Bulb /><span>Хүчин чармайлт<small>Хэр гүн бодох вэ</small></span></span></div>
+            ) : (
             <div className="mp-set">
               <span className="mp-set-l"><Bulb /><span>Гүн бодолт<small>Хариулахаасаа өмнө бодно</small></span></span>
               <Switch on={think} label="Гүн бодолт" onChange={(v) => { if (thinking === undefined) setInThink(v); onThinkingChange?.(v); }} />
             </div>
+            )}
             <div className={`mp-effort-wrap${think ? " is-open" : ""}`}>
               <div className="mp-effort-in">
                 <div
@@ -251,35 +267,35 @@ export function ModelPicker({
                   aria-label="Хүчин чармайлт"
                   onKeyDown={(e) => {
                     const i = efforts.indexOf(eff);
-                    const n = e.key === "ArrowRight" ? Math.min(2, i + 1) : e.key === "ArrowLeft" ? Math.max(0, i - 1) : i;
+                    const n = e.key === "ArrowRight" ? Math.min(efforts.length - 1, i + 1) : e.key === "ArrowLeft" ? Math.max(0, i - 1) : i;
                     if (n !== i) { if (effort === undefined) setInEffort(efforts[n]); onEffortChange?.(efforts[n]); }
                   }}
                 >
-                  <span className="mp-eff-thumb" style={{ transform: `translateX(${efforts.indexOf(eff) * 100}%)` }} />
+                  <span className="mp-eff-thumb" style={{ width: `calc((100% - 4px)/${efforts.length})`, transform: `translateX(${Math.max(0, efforts.indexOf(eff)) * 100}%)` }} />
                   {efforts.map((x) => (
                     <button key={x} type="button" role="radio" aria-checked={x === eff} tabIndex={x === eff ? 0 : -1} onClick={() => { if (effort === undefined) setInEffort(x); onEffortChange?.(x); }}>
-                      {effortLabel[x]}
+                      {effLabel(x)}
                     </button>
                   ))}
                 </div>
               </div>
             </div>
-            <div className="mp-set">
+            {!host && <div className="mp-set">
               <span className="mp-set-l">
                 <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeWidth="1.3" /><path d="M2 8h12M8 2c-2.2 2.4-2.2 9.6 0 12M8 2c2.2 2.4 2.2 9.6 0 12" fill="none" stroke="currentColor" strokeWidth="1.3" /></svg>
                 <span>Вэб хайлт<small>Шаардлагатай үед хайж олно</small></span>
               </span>
               <Switch on={web} label="Вэб хайлт" onChange={(v) => { if (webSearch === undefined) setInWeb(v); onWebSearchChange?.(v); }} />
-            </div>
-            <div className="mp-tray">
+            </div>}
+            {!host && <div className="mp-tray">
               <span>Эхний хариу <b>{routed ? "өөр өөр" : `~${rLat.toFixed(1)} с`}</b></span>
               <span>Зардал <b>{routed || shown.cost == null ? "өөр өөр" : `${shown.cost}/5`}</b></span>
-            </div>
+            </div>}
           </div>
         </div>
-        <button type="button" className="mp-send" aria-label="Илгээх" disabled={!text.trim()}>
+        {!host && <button type="button" className="mp-send" aria-label="Илгээх" disabled={!text.trim()}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
+        </button>}
       </div>
     </div>
   );
@@ -335,6 +351,7 @@ const css = `
 .mp-tray{display:flex;justify-content:space-between;margin:6px -6px -6px;padding:9px 14px;border-top:1px solid var(--mp-line);border-radius:0 0 10px 10px;background:var(--mp-soft);font-size:12px;color:var(--mp-muted);font-variant-numeric:tabular-nums}
 .mp-tray b{color:var(--mp-fg);font-weight:500}
 .mp :focus-visible{outline:2px solid var(--mp-blue);outline-offset:2px}
+.mp[data-host]{width:auto;max-width:none;background:none;border:0;box-shadow:none;display:inline-block}.mp[data-host] .mp-bar{padding:0}.mp[data-host] .mp-trigger{margin-left:0;font-size:12.5px!important;color:var(--mp-muted)}.mp[data-host] .mp-trigger:hover{color:var(--mp-fg)}.mp[data-host] .mp-menu{width:340px;max-width:calc(100vw - 32px)}.mp[data-host] .mp-head,.mp[data-host] .mp-opt{grid-template-columns:minmax(0,1fr)}.mp[data-host] .mp-head span:not(:first-child),.mp[data-host] .mp-bars,.mp[data-host] .mp-varies{display:none}.mp-tag{font-size:11px;padding:0 5px;border-radius:4px;background:var(--mp-soft);color:var(--mp-muted)}
 @keyframes mp-fade{from{opacity:0}}
 @media(max-width:480px){.mp-menu{width:calc(100vw - 88px);max-width:380px}.mp-opt small{display:none}}
 @media(prefers-reduced-motion:reduce){.mp *{animation:none!important;transition:none!important}}
