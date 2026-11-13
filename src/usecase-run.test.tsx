@@ -15,7 +15,7 @@ describe("Use Case Run", () => {
   it("opens a source quote from a step reference", () => {
     render(<UseCaseRun />);
     fireEvent.click(screen.getAllByRole("button", { name: /Санах ойгоос олсон 2/ })[0]);
-    expect(screen.getByRole("note").textContent).toContain("Хоёр хуваан төлөх");
+    expect(screen.getByRole("note").textContent).toContain("Түр зогсоолт хөнгөлөлтийг");
   });
   it("saves the artifact only after a person approves, and can undo", () => {
     const onDecide = vi.fn();
