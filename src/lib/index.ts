@@ -49,6 +49,8 @@ export { PrDeployStatus } from "../library/pr-deploy-status";
 export type { PrDeployStatusData, PrDeployStatusProps, PdDeploy, PdPullRequest } from "../library/pr-deploy-status";
 export { DecisionInboxChat } from "../library/decision-inbox-chat";
 export type { DecisionInboxChatData, DecisionInboxChatProps, DecisionChatItem, DecisionChatOption } from "../library/decision-inbox-chat";
+export { UseCaseRun, useCaseRunDemo } from "../library/usecase-run";
+export type { UseCaseRunData, UseCaseRunProps, UseCaseRunLabels, UseCaseSource, UseCaseStep } from "../library/usecase-run";
 export { SessionBoard, toSessionState } from "../library/session-board";
 export type { SessionBoardInput, SessionBoardProps, SessionBoardSession, SessionBoardGroup, SessionBoardProject } from "../library/session-board";
 

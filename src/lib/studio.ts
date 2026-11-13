@@ -161,6 +161,8 @@ export { PrDeployStatus } from "../library/pr-deploy-status";
 export type { PdPrState, PdReview, PdDeployState, PdStepState, PdPullRequest, PdDeploy, PrDeployStatusData, PrDeployStatusLabels, PrDeployStatusProps } from "../library/pr-deploy-status";
 export { DecisionInboxChat } from "../library/decision-inbox-chat";
 export type { DecisionChatOption, DecisionChatItem, DecisionInboxChatData, DecisionInboxChatLabels, DecisionInboxChatProps } from "../library/decision-inbox-chat";
+export { UseCaseRun } from "../library/usecase-run";
+export type { UseCaseSource, UseCaseStep, UseCaseRunData, UseCaseRunLabels, UseCaseRunProps } from "../library/usecase-run";
 export { SessionBoard } from "../library/session-board";
 export type { SessionState, SessionPrState, SessionBoardView, SessionTone, SessionBoardSession, SessionBoardInput, SessionBoardGroup, SessionBoardLink, SessionBoardProject, SessionBoardLabels, SessionBoardProps } from "../library/session-board";
 export { SetupGuide } from "../library/setup-guide";
