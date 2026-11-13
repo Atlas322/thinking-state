@@ -121,7 +121,7 @@
 }
 
 :where(.ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
-  /* cool deep dark (2026-11-13, itge.e: «тод, баруун талынх шиг»): the same on the site and in the app */
+  /* cool deep dark (2026-11-13): the same on the site and in the app */
   --ts-page: #141416;
   --ts-surface: #1b1b1e;
   --ts-soft: #26262a;
