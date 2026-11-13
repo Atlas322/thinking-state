@@ -624,3 +624,17 @@ describe("area ids show unit names (inai-sh #28 export)", () => {
     expect(panel.textContent).toContain("Бүтээгдэхүүн хөгжүүлэлт › Сайт");
   });
 });
+
+describe("CompanyView views prop", () => {
+  it("shows only the listed tabs, in that order, and opens the first when the default is not listed", () => {
+    render(<CompanyView company={studio} views={["dashboard", "agents", "decisions"]} />);
+    const tabs = screen.getAllByRole("tab").map((t) => t.textContent ?? "");
+    expect(tabs).toHaveLength(3);
+    expect(screen.getByRole("tab", { selected: true }).textContent).toContain(tabs[0]);
+    expect(screen.queryByRole("tab", { name: /RACI/ })).toBeNull();
+  });
+  it("keeps all tabs when the list is empty or unknown", () => {
+    render(<CompanyView company={studio} views={[]} />);
+    expect(screen.getAllByRole("tab").length).toBe(7);
+  });
+});
