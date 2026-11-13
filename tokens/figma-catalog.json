@@ -1,7 +1,7 @@
 {
   "$meta": {
     "source": "src/catalog.json (npm run tokens:figma)",
-    "count": 108
+    "count": 109
   },
   "components": [
     {
@@ -981,6 +981,17 @@
       "name": "Decision Inbox · Chat",
       "category": "Chat widgets",
       "export": "DecisionInboxChat",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "usecase-run",
+      "name": "Use Case Run",
+      "category": "Agents",
+      "export": "UseCaseRun",
       "variants": [
         "clean"
       ],

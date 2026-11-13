@@ -816,6 +816,16 @@
     "usage": "import { DecisionInboxChat } from \"./decision-inbox-chat\";\n\nexport default function App() {\n  return <DecisionInboxChat onDecide={(d, o) => console.log(d.id, o?.id)} />; // props: title, decisions (title, context, project, due, urgent, options with recommended), chosen, labels\n}"
   },
   {
+    "slug": "usecase-run",
+    "name": "Use Case Run",
+    "category": "Agents",
+    "pro": true,
+    "origin": "Thinking State original",
+    "description": "Нэг бизнесийн use case-ийг INAI-ийн мөчлөгөөр нэг картад: оролт, Agent Memory-оос олсон эх сурвалжийн chip (дарахад ишлэл, зам), арга зүй, алхмууд, хүн батлах, vault руу буцах artifact. Батлахаас өмнө artifact ноорог хэвээр.",
+    "exportName": "UseCaseRun",
+    "usage": "import { UseCaseRun } from \"./usecase-run\";\n\nexport default function App() {\n  return <UseCaseRun onDecide={(s) => console.log(s)} />; // props: title, segment, company, agent, input, method, sources (label, where, quote), steps (uses), approval, artifact, status, labels\n}"
+  },
+  {
     "slug": "session-board",
     "name": "Session Board",
     "category": "Chat widgets",
