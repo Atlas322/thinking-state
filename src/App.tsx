@@ -462,7 +462,7 @@ export default function App() {
               <section className="library-hero">
                 <div className="eyebrow">
                   <span className="live-dot" />
-                  THINKING STATE · THE ENGINE
+                  THINKING STATE · VISIBLE CHAIN OF THOUGHT
                 </div>
                 <h1>
                   Good interfaces.
