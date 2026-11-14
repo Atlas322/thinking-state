@@ -470,8 +470,8 @@ export default function App() {
                   <span>A better starting point.</span>
                 </h1>
                 <p>
-                  Thinking State is the engine that shows an agent’s work as live
-                  widgets. {catalog.length} interactive components for agents,
+                  Thinking State is the visible chain of thought: every action an
+                  agent takes with you in chat, as live widgets. {catalog.length} interactive components for agents,
                   conversations, and the rest of your product. Explore, copy, and
                   make them yours.
                 </p>
