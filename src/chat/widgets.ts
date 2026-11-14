@@ -59,6 +59,30 @@ export const chatWidgets: ChatWidget[] = [
       views: [(p.view as string) ?? (p.defaultView as string) ?? "groups"],
     }),
   },
+  {
+    slug: "next-step-box",
+    load: () =>
+      import("../library/next-step-box").then((m) => ({
+        Component: as(m.NextStepBox),
+        demo: m.nextStepBoxDemo,
+      })),
+  },
+  {
+    slug: "session-offer",
+    load: () =>
+      import("../library/session-offer").then((m) => ({
+        Component: as(m.SessionOffer),
+        demo: m.sessionOfferDemo,
+      })),
+  },
+  {
+    slug: "side-sessions",
+    load: () =>
+      import("../library/side-sessions").then((m) => ({
+        Component: as(m.SideSessions),
+        demo: m.sideSessionsDemo,
+      })),
+  },
 ];
 
 export const chatWidgetFor = (slug: string) =>

@@ -172,6 +172,66 @@ export const chatWidgetSchemas: WidgetSchema[] = [
       idle: ["inbox", "planning", "next-action", "someday"],
     },
   },
+  {
+    slug: "next-step-box",
+    name: "Next-Step Box",
+    feeds: "Turn wrap-up",
+    role: "Report",
+    props: {
+      recap: { type: "string", required: true, note: "2–3 sentences: what is now true, what is not done or verified" },
+      ask: { type: "string", note: "One decision, ≤100 chars; omit when nothing waits on the person" },
+      actions: { type: '{ id, label, kind?: "app" | "reply" }[]', note: "1–2; the first is the agent pick (primary)" },
+      blocked: { type: "boolean", note: "Work stops until answered" },
+      state: { type: '"wrapping" | "ready" | "answered"' },
+      chosen: { type: "string", note: "Action id once answered" },
+    },
+  },
+  {
+    slug: "session-offer",
+    name: "Session Offer",
+    feeds: "Side sessions",
+    role: "Entity",
+    props: {
+      title: { type: "string", required: true },
+      brief: { type: "string" },
+      initiation: { type: '"offer" | "own_initiative" | "user_asked"', note: "offer = New session / Do it here; own_initiative = Start / Dismiss" },
+      context: { type: '"fork" | "fresh"' },
+      where: { type: "string", note: "Worktree branch, folder or cloud" },
+      name: { type: "string", note: "Short session name once started" },
+      state: { type: '"offered" | "starting" | "started" | "dismissed" | "here"' },
+    },
+    statusMap: {
+      offered: ["proposed", "offered"],
+      started: ["running", "in-progress"],
+      dismissed: ["dismissed", "cancelled"],
+    },
+  },
+  {
+    slug: "side-sessions",
+    name: "Side Sessions",
+    feeds: "Session family (list_sessions {linked: true})",
+    role: "Log",
+    props: {
+      sessions: { type: "SideSession[]", required: true },
+    },
+    items: {
+      SideSession: {
+        id: { type: "string", required: true },
+        title: { type: "string", required: true },
+        state: { type: '"needs" | "running" | "idle" | "done"', required: true },
+        line: { type: "string", note: "Latest report or what it waits on" },
+        branch: { type: "string" },
+        pr: { type: "number" },
+        steps: { type: '("check" | "update" | "archive")[]', note: "Close-out chain; archive only after check" },
+      },
+    },
+    statusMap: {
+      needs: ["waiting", "blocked", "needs-input"],
+      running: ["working", "starting", "in-progress"],
+      idle: ["idle", "paused"],
+      done: ["completed", "done"],
+    },
+  },
 ];
 
 export const schemaFor = (slug: string) => chatWidgetSchemas.find((s) => s.slug === slug);

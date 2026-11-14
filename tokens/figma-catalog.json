@@ -1,7 +1,7 @@
 {
   "$meta": {
     "source": "src/catalog.json (npm run tokens:figma)",
-    "count": 109
+    "count": 113
   },
   "components": [
     {
@@ -1003,6 +1003,50 @@
       "name": "Session Board",
       "category": "Chat widgets",
       "export": "SessionBoard",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "next-step-box",
+      "name": "Next-Step Box",
+      "category": "Chat widgets",
+      "export": "NextStepBox",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "session-offer",
+      "name": "Session Offer",
+      "category": "Chat widgets",
+      "export": "SessionOffer",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "side-sessions",
+      "name": "Side Sessions",
+      "category": "Chat widgets",
+      "export": "SideSessions",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "chapter-divider",
+      "name": "Chapter Divider",
+      "category": "Chat",
+      "export": "ChapterDivider",
       "variants": [
         "clean"
       ],

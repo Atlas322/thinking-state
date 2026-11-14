@@ -836,6 +836,46 @@
     "usage": "import { SessionBoard } from \"./session-board\";\n\nexport default function App() {\n  return <SessionBoard />; // props: project, groups, sessions (group, parent, state, pr, line), onSessionClick, view, defaultView, onViewChange, views, labels\n}"
   },
   {
+    "slug": "next-step-box",
+    "name": "Next-Step Box",
+    "category": "Chat widgets",
+    "pro": true,
+    "origin": "Thinking State original",
+    "description": "Ажлын төгсгөлийн хайрцаг: 2–3 өгүүлбэр recap (юу болсон, юу дуусаагүй), шийдвэр хүнийх бол нэг асуулт ба 1–2 товч — эхнийх нь agent-ийн сонголт (primary). «blocked» төлөв нь ажил хариуг хүлээж байгааг шар өнгөөр тэмдэглэнэ. Төлөв: дүгнэж байна → бэлэн → хариулсан.",
+    "exportName": "NextStepBox",
+    "usage": "import { NextStepBox } from \"./next-step-box\";\n\nexport default function App() {\n  return <NextStepBox onAction={(a) => console.log(a)} />; // props: recap, ask, actions (id, label, kind: app | reply), blocked, state, chosen, labels\n}"
+  },
+  {
+    "slug": "session-offer",
+    "name": "Session Offer",
+    "category": "Chat widgets",
+    "pro": true,
+    "origin": "Thinking State original",
+    "description": "Ажлыг тусдаа сешнд гаргах санал: гарчиг, товч brief, контекст (энэ чатаас салбарлах эсвэл шинээр), хаана ажиллах. Санал бол «Шинэ сешн / Энд хийх», agent-ийн өөрийн санал бол «Эхлүүлэх / Хэрэггүй». Төлөв: санал → эхэлж байна → эхэлсэн, эсвэл цуцалсан / энд хийнэ.",
+    "exportName": "SessionOffer",
+    "usage": "import { SessionOffer } from \"./session-offer\";\n\nexport default function App() {\n  return <SessionOffer onChoose={(c) => console.log(c)} />; // props: title, brief, initiation (offer | own_initiative | user_asked), context (fork | fresh), where, name, state, onOpen, labels\n}"
+  },
+  {
+    "slug": "side-sessions",
+    "name": "Side Sessions",
+    "category": "Chat widgets",
+    "pro": true,
+    "origin": "Thinking State original",
+    "description": "Чатын хажуугийн самбар: энэ сешнээс эхэлсэн дэд сешнүүд төлөвөөр — Таны ээлж, Ажиллаж байна, Хүлээгдэж буй, Дууссан. Тайлан нотолгоо биш тул дууссан мөр бүр «Шалгах → Шинэчлэх → Архивлах» гинжтэй; шалгаагүй бол архивлахгүй.",
+    "exportName": "SideSessions",
+    "usage": "import { SideSessions } from \"./side-sessions\";\n\nexport default function App() {\n  return <SideSessions onStep={(s, step) => console.log(s.id, step)} />; // props: sessions (state: needs | running | idle | done, line, branch, pr, steps), onOpen, labels\n}"
+  },
+  {
+    "slug": "chapter-divider",
+    "name": "Chapter Divider",
+    "category": "Chat",
+    "pro": true,
+    "origin": "Thinking State original",
+    "description": "Agent ажлын шинэ үе шатанд (судлах → бүтээх → шалгах) шилжихэд тавьдаг бүлэг: яриан дахь хуваагч шугам, гарчиг ба нэг мөр тойм, бүлгүүдийн жагсаалт (TOC) — дарж тухайн бүлэг рүү үсэрнэ.",
+    "exportName": "ChapterDivider",
+    "usage": "import { ChapterDivider } from \"./chapter-divider\";\n\nexport default function App() {\n  return <ChapterDivider onJump={(c) => console.log(c.id)} />; // props: chapters (id, title, summary), current, divider, labels\n}"
+  },
+  {
     "slug": "setup-guide",
     "name": "Setup Guide",
     "category": "Feedback",
