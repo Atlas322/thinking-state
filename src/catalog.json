@@ -826,6 +826,38 @@
     "usage": "import { UseCaseRun } from \"./usecase-run\";\n\nexport default function App() {\n  return <UseCaseRun onDecide={(s) => console.log(s)} />; // props: title, segment, company, agent, input, method, sources (label, where, quote), steps (uses), approval, artifact, status, labels\n}"
   },
   {
+    "slug": "brain-map",
+    "name": "Brain Map",
+    "category": "Agents",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/brain",
+    "description": "Нүүрний hero: төвд нэг тархи, түүнээс санах ой · агентууд · бодол гэсэн салбар, салбар бүрт ажил нь бичигдсэн агентууд. Нэг санаа, том, цэвэр. Brain Growth-тэй нэг суурьтай (src/brain: seed-тэй layout, нэг SVG). Өөрөө ≤5 секундэд тархи → салбар → агент дараалан гарна; progress (0–1) өгвөл scroll-оор удирдана.",
+    "exportName": "BrainMap",
+    "usage": "import { BrainMap } from \"./brain-map\";\n\nexport default function App() {\n  return <BrainMap />; // props: title, caption, core, branches (label, agents: name, job), progress (0–1), seed, labels\n}"
+  },
+  {
+    "slug": "brain-growth",
+    "name": "Brain Growth",
+    "category": "Agents",
+    "pro": true,
+    "origin": "Thinking State original",
+    "module": "src/brain",
+    "description": "Санамжууд холбогдож тархи өснө: хувийн тархи → багийн тархи → байгууллагын тархи. Цэг томрохгүй, холбоо нэмэгдэнэ; санамж, холбооны тоо хамт өснө. Хуудасны scroll progress (0–1)-ийг prop-оор авна; өгөөгүй бол өөрөө ≤5 секундэд өрнөнө, reduced motion үед эцсийн төлөв. Seed тогтмол (SSR тогтвортой).",
+    "exportName": "BrainGrowth",
+    "usage": "import { BrainGrowth } from \"./brain-growth\";\n\nexport default function App() {\n  return <BrainGrowth progress={scrollProgress} />; // props: title, stages (3: label, caption), progress (0–1), seed, labels (memories, links)\n}"
+  },
+  {
+    "slug": "module-scene",
+    "name": "Module Scene",
+    "category": "Agents",
+    "pro": true,
+    "origin": "Thinking State original",
+    "description": "Бэлэн шийдлийн үзэгдэл: 4 хэлтэс (борлуулалт, үйл ажиллагаа, санхүү, мэдлэг), тус бүрт дугаар, гарчиг, агент одоо юу хийж байгаа нэг мөр, жишээ 3 тоо — бүгд дээд талын нэг тархинд утсаар холбогдсон. Картууд ижил бүтэцтэй тул харьцуулахад хялбар.",
+    "exportName": "ModuleScene",
+    "usage": "import { ModuleScene } from \"./module-scene\";\n\nexport default function App() {\n  return <ModuleScene />; // props: title, core, modules (title, agent, job, kpis: value, label), note, labels\n}"
+  },
+  {
     "slug": "session-board",
     "name": "Session Board",
     "category": "Chat widgets",

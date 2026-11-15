@@ -163,6 +163,8 @@ export { DecisionInboxChat } from "../library/decision-inbox-chat";
 export type { DecisionChatOption, DecisionChatItem, DecisionInboxChatData, DecisionInboxChatLabels, DecisionInboxChatProps } from "../library/decision-inbox-chat";
 export { UseCaseRun } from "../library/usecase-run";
 export type { UseCaseSource, UseCaseStep, UseCaseRunData, UseCaseRunLabels, UseCaseRunProps } from "../library/usecase-run";
+export { ModuleScene } from "../library/module-scene";
+export type { ModuleSceneKpi, ModuleSceneModule, ModuleSceneData, ModuleSceneLabels, ModuleSceneProps } from "../library/module-scene";
 export { SessionBoard } from "../library/session-board";
 export type { SessionState, SessionPrState, SessionBoardView, SessionTone, SessionBoardSession, SessionBoardInput, SessionBoardGroup, SessionBoardLink, SessionBoardProject, SessionBoardLabels, SessionBoardProps } from "../library/session-board";
 export { NextStepBox } from "../library/next-step-box";

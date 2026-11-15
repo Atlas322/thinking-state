@@ -178,7 +178,7 @@ const css = `
 .nsb.is-wrapping .nsb-dot{background:var(--nsb-accent);animation:nsb-pulse 1.1s ease-in-out infinite}
 .nsb.is-blocked .nsb-dot{background:var(--nsb-amber)}
 .nsb-title{margin:0;font-size:13px;font-weight:600;color:var(--nsb-muted);letter-spacing:.01em}
-.nsb-tag{margin-left:auto;display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;font-size:12px;background:var(--nsb-soft);color:var(--nsb-muted)}
+.nsb-tag{margin-left:auto;flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;font-size:12px;background:var(--nsb-soft);color:var(--nsb-muted)}
 .nsb.is-blocked .nsb-tag{background:var(--nsb-amber-soft);color:var(--nsb-amber)}
 .nsb.is-answered .nsb-tag{background:var(--nsb-green-soft);color:var(--nsb-green)}
 .nsb-recap{margin:0;animation:nsb-in .4s ease both}

@@ -51,6 +51,14 @@ export { DecisionInboxChat } from "../library/decision-inbox-chat";
 export type { DecisionInboxChatData, DecisionInboxChatProps, DecisionChatItem, DecisionChatOption } from "../library/decision-inbox-chat";
 export { UseCaseRun, useCaseRunDemo } from "../library/usecase-run";
 export type { UseCaseRunData, UseCaseRunProps, UseCaseRunLabels, UseCaseSource, UseCaseStep } from "../library/usecase-run";
+export { BrainMap, brainMapDemo } from "../library/brain-map";
+export type { BrainMapData, BrainMapProps, BrainMapLabels, BrainMapBranch, BrainMapAgent } from "../library/brain-map";
+export { BrainGrowth, brainGrowthDemo, brainGrowthStops } from "../library/brain-growth";
+export type { BrainGrowthData, BrainGrowthProps, BrainGrowthLabels, BrainGrowthStage } from "../library/brain-growth";
+export { BrainField, layoutBrain, useBrainProgress } from "../brain/field";
+export type { BrainCluster, BrainLink, BrainTone, BrainFieldProps } from "../brain/field";
+export { ModuleScene, moduleSceneDemo } from "../library/module-scene";
+export type { ModuleSceneData, ModuleSceneProps, ModuleSceneLabels, ModuleSceneModule, ModuleSceneKpi } from "../library/module-scene";
 export { SessionBoard, toSessionState } from "../library/session-board";
 export type { SessionBoardInput, SessionBoardProps, SessionBoardSession, SessionBoardGroup, SessionBoardProject } from "../library/session-board";
 
