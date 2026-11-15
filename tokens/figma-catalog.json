@@ -1,7 +1,7 @@
 {
   "$meta": {
     "source": "src/catalog.json (npm run tokens:figma)",
-    "count": 113
+    "count": 116
   },
   "components": [
     {
@@ -992,6 +992,39 @@
       "name": "Use Case Run",
       "category": "Agents",
       "export": "UseCaseRun",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "brain-map",
+      "name": "Brain Map",
+      "category": "Agents",
+      "export": "BrainMap",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/brain",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "brain-growth",
+      "name": "Brain Growth",
+      "category": "Agents",
+      "export": "BrainGrowth",
+      "variants": [
+        "clean"
+      ],
+      "module": "src/brain",
+      "origin": "Thinking State original"
+    },
+    {
+      "slug": "module-scene",
+      "name": "Module Scene",
+      "category": "Agents",
+      "export": "ModuleScene",
       "variants": [
         "clean"
       ],
