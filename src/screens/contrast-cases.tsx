@@ -12,6 +12,7 @@ import { BuildWizard } from "./build-wizard";
 import { MethodQuiz, methodQuizDemo } from "./method-quiz";
 import { buildRecipeDemo } from "./build-recipe-demo";
 import { AppScreen, SCREENS } from "./app-screens";
+import { FinanceReport } from "./finance-report";
 import { acmeDemo } from "./acme";
 import { RoleDashboard } from "../company/role-dashboard";
 import { acmeGroup } from "../company/fixtures";
@@ -48,6 +49,7 @@ function Cases() {
               </Host>
             ))}
             <Host page={page} id={`build-wizard ${win}`}><BuildWizard recipe={buildRecipeDemo} theme={win} /></Host>
+            <Host page={page} id={`finance-report ${win}`}><FinanceReport theme={win} /></Host>
             <Host page={page} id={`method-quiz ${win}`}><MethodQuiz {...methodQuizDemo} theme={win} /></Host>
             <Host page={page} id={`role-dashboard ${win}`}><RoleDashboard company={acmeGroup} personId={acmeGroup.people[0].id} theme={win} today={today} /></Host>
             {SCREENS.map((s) => (
