@@ -124,9 +124,11 @@
   .rp-log > div > :last-child { grid-column: 1 / -1; }
 }
 
-/* Print: A4, light colours, no page breaks inside blocks, links spelled out */
-@page { size: A4; margin: 16mm 14mm; }
+/* Print: A4, light colours, no page breaks inside blocks, links spelled out. The page size is a
+   named page used only by .rp, so a host that imports report.css keeps its own print setup. */
+@page rp { size: A4; margin: 16mm 14mm; }
 @media print {
+  .rp { page: rp; }
   .rp { background: #fff; color: #000; font-size: 11pt; }
   .rp-page { max-width: none; padding: 0; }
   .rp-section { padding-top: 12mm; }

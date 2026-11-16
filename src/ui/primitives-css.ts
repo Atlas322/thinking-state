@@ -42,7 +42,6 @@ export const PRIMITIVES_CSS = `
 .ts-tabs{display:flex;gap:2px;max-width:100%;overflow-x:auto;scrollbar-width:none}
 .ts-tabs.is-segmented{display:inline-flex;padding:4px;border-radius:calc(var(--ts-radius-control,8px) + 2px);background:var(--ts-soft,#efebe1)}
 .ts-tabs.is-tabs{border-bottom:1px solid var(--ts-line,#d8d3c6);padding:4px}
-.ts-tab:focus-visible{box-shadow:0 0 0 1px var(--ts-surface,#fff),0 0 0 2px ${SEL}}
 .ts-tab{display:inline-flex;align-items:center;gap:6px;flex:none;box-sizing:border-box;border:1px solid transparent;border-radius:var(--ts-radius-control,8px);background:none;color:var(--ts-muted,#5e5a52);font-weight:500;white-space:nowrap;cursor:pointer;transition:background var(--ts-motion-dur-xs,120ms),color var(--ts-motion-dur-xs,120ms)}
 .ts-tabs.is-md .ts-tab{height:32px;padding:0 12px;font-size:13.5px}
 .ts-tabs.is-sm .ts-tab{height:26px;padding:0 9px;font-size:12.5px}
@@ -73,6 +72,10 @@ ${STATUSES.map((st) => `.ts-tile.is-${st}{background:var(--ts-status-${st}-bg);b
 .ts-card.is-interactive{cursor:pointer;transition:border-color var(--ts-motion-dur-xs,120ms),transform var(--ts-motion-dur-sm,200ms) var(--ts-motion-spring-soft,ease-out)}
 .ts-card.is-interactive:hover{border-color:color-mix(in srgb,var(--ts-fg,#080808) 25%,var(--ts-line,#d8d3c6));transform:translateY(-1px)}
 .ts-card.is-selected{border-color:${SEL};box-shadow:0 0 0 1px ${SEL}}
+/* The focus ring adds to a control's own shadow instead of replacing it (elevation, selected ring). */
+.ts-btn.is-secondary:focus-visible{box-shadow:0 0 0 1px var(--ts-surface,#fff),0 0 0 2px ${SEL},0 1px 2px rgb(0 0 0 / .12)}
+.ts-card.is-interactive:focus-visible{box-shadow:0 0 0 1px var(--ts-surface,#fff),0 0 0 2px ${SEL},var(--ts-elevation,0 0 #0000)}
+.ts-card.is-interactive.is-selected:focus-visible{box-shadow:0 0 0 1px ${SEL},0 0 0 3px var(--ts-surface,#fff),0 0 0 4px ${SEL}}
 
 .ts-text{margin:0;color:var(--ts-fg,#080808)}
 .ts-text:is(.is-display,.is-h1,.is-h2,.is-h3){font-family:var(--ts-font-head,var(--ts-font-display,Inter,system-ui,sans-serif));font-weight:var(--ts-head-weight,600);letter-spacing:var(--ts-head-tracking,-.02em);text-wrap:balance}

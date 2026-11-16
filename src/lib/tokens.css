@@ -68,7 +68,8 @@
   --ts-prio-low: #5c5a55;
   --ts-prio-low-bg: #ece8dd;
   /* categories (methodology, technology, business, product): always vivid on
-     small marks — icon squares, top bars, progress, chips; large areas stay neutral */
+     small marks — icon squares, top bars, progress, chips; large areas stay neutral.
+     Not for charts: 1 and 3 fail the colour-blind check (CVD ΔE 4.7); charts use --ts-series-*. */
   --ts-cat-1: #f5a524;
   --ts-cat-1-bg: color-mix(in srgb, var(--ts-cat-1) 16%, var(--ts-surface));
   --ts-cat-2: #0c8ce9;

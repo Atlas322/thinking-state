@@ -308,10 +308,10 @@ export function BuildWizard({ recipe, quiz, defaultAnswers = {}, segment, segmen
   const steps = visibleSteps(recipe, a);
   const n = steps.length;
   // A default step past the visible steps (e.g. a segment with fewer steps) lands on the last question.
-  React.useEffect(() => { if (step > n) setStep(n - 1); }, [step, n]);
+  React.useEffect(() => { if (step > n) setStep(Math.max(0, n - 1)); }, [step, n]);
   const done = step >= n;
   const s = steps[Math.min(step, n - 1)];
-  const fields = fieldsFor(s, a, branchKey);
+  const fields = s ? fieldsFor(s, a, branchKey) : [];
   const set = (k: string, v: WizardAnswers[string]) => setA((x) => ({ ...x, [k]: v }));
   const dark = theme === "dark";
   const missing = fields.some((f) => f.required && !textOf(a[f.key]));

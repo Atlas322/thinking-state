@@ -311,7 +311,7 @@ const css = `
 .ca-faint{color:var(--ca-faint)}
 .ca-action{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 10px;border:1px solid var(--ca-line);border-radius:var(--ts-radius,7px);background:var(--ca-bg);font-size:13.5px!important;font-weight:500;box-shadow:0 1px 1px #00000008}
 .ca-action:hover{background:var(--ca-chip)}.ca-action svg{width:14px;height:14px;color:var(--ca-muted)}
-.ca :focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--ca-bg),0 0 0 2px var(--ca-accent)}
+.ca :focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--ca-bg),0 0 0 2px var(--ca-accent)}.ca-stack .ca-badge:focus-visible{box-shadow:0 0 0 1.5px var(--ca-bg),0 0 0 2.5px var(--ca-accent)}
 @keyframes ca-in{from{opacity:0;transform:translateY(-3px)}}
 @media(max-width:480px){.ca-body{padding:12px 16px 14px}.ca-foot{padding-left:16px}}
 @media(prefers-reduced-motion:reduce){.ca *{animation:none!important;transition:none!important}}
