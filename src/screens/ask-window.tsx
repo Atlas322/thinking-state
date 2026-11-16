@@ -141,6 +141,7 @@ const CSS = `
 .aw-send{position:relative;display:grid;place-items:center;flex:none;width:26px;height:26px;border:0;border-radius:var(--ts-radius,6px);background:var(--ts-electric);color:var(--ts-on-electric);cursor:pointer}
 .aw-send:focus-visible,.aw-item:focus-visible{outline:2px solid var(--ts-electric);outline-offset:1px}
 .aw .ts-think,.aw [class*="thinking"]{font-size:13px}
+.aw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .aw-in{animation:aw-in ${motionVar.duration("md")} ${motionVar.easing("enter")} both}
 .aw-chips .aw-in{animation-delay:calc(var(--i,0) * ${LOOP.stagger}ms)}
 @keyframes aw-in{from{opacity:0;transform:translateY(4px)}}
@@ -187,10 +188,16 @@ export function AskWindow({
     return out;
   }, [thinking.length, sources.length, answer.length]);
   const run = useScenario<Frame, HTMLDivElement>(frames, { loops: 1, rest: 0 });
+  // Plays once: after the first finish it stays finished, even when the hero scrolls out and back in.
+  const finished = React.useRef(false);
   const last = frames[frames.length - 1].state;
-  const f = play === "static" || run.loopState === "paused" ? last : run.state ?? last;
+  if (run.state?.phase === "done") finished.current = true;
+  const f = play === "static" || run.loopState === "paused" || finished.current ? last : run.state ?? last;
   const animate = f !== last || run.playing;
-  React.useEffect(() => { onPhase?.(f.phase); }, [f.phase, onPhase]);
+  // The latest callback by ref: a new inline onPhase each render must not re-fire the same phase.
+  const onPhaseRef = React.useRef(onPhase);
+  onPhaseRef.current = onPhase;
+  React.useEffect(() => { onPhaseRef.current?.(f.phase); }, [f.phase]);
   const shownQuestion = f.typed >= 1 ? question : question.slice(0, Math.ceil(question.length * f.typed));
   const [current, setCurrent] = React.useState<string | undefined>(activeChat ?? chats[0]?.id);
   const dark = theme === "dark";
@@ -226,7 +233,7 @@ export function AskWindow({
         )}
         <div className="aw-main">
           <div className="aw-thread" ref={run.ref} {...run.attrs} data-phase={f.phase}>
-            <div className={`aw-q ${f.typed < 1 ? "aw-typing" : ""}`} aria-label={question}>{shownQuestion}</div>
+            <div className={`aw-q ${f.typed < 1 ? "aw-typing" : ""}`}><span aria-hidden={f.typed < 1}>{shownQuestion}</span>{f.typed < 1 && <span className="aw-sr">{question}</span>}</div>
             {thinking.length > 0 && f.steps > 0 && (
               <div className={animate ? "aw-in" : undefined}>
                 <ThinkingState steps={thinking.slice(0, f.steps)} live={{ done: f.phase !== "think", seconds: f.steps }} collapseOnDone workedLabel={(ms) => `Бодсон ${Math.max(1, Math.round(ms / 1000))} с`} />

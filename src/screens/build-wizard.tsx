@@ -174,7 +174,7 @@ export function toDraftCompany(recipe: WizardRecipe, a: WizardAnswers): Company 
   return {
     id: "draft",
     name,
-    segment: textOf(a[branchKey]) || "team",
+    segment: textOf(a[branchKey]),
     source: "visitor",
     methodology: method,
     model: model as unknown as Company["model"],
@@ -307,6 +307,8 @@ export function BuildWizard({ recipe, quiz, defaultAnswers = {}, segment, segmen
   const [custom, setCustom] = React.useState<Record<string, string>>({});
   const steps = visibleSteps(recipe, a);
   const n = steps.length;
+  // A default step past the visible steps (e.g. a segment with fewer steps) lands on the last question.
+  React.useEffect(() => { if (step > n) setStep(n - 1); }, [step, n]);
   const done = step >= n;
   const s = steps[Math.min(step, n - 1)];
   const fields = fieldsFor(s, a, branchKey);

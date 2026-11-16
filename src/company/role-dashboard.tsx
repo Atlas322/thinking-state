@@ -61,7 +61,8 @@ export type RoleDashboardProps = {
 };
 
 const DAY = 86_400_000;
-const iso = (d: Date) => d.toISOString().slice(0, 10);
+// Local calendar date (not UTC): «today» must be the reader's day, e.g. 07:00 in UTC+8 is still today.
+const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const days = (a: string, b: Date) => Math.round((new Date(a + "T00:00:00Z").getTime() - new Date(iso(b) + "T00:00:00Z").getTime()) / DAY);
 const isDone = (s: string) => /^(done|completed|closed|cancel)/i.test(s);
 const isWaiting = (s: string) => /^(waiting|blocked|on-hold|hold)/i.test(s);
@@ -215,7 +216,8 @@ const CSS = `
 /** A person by id, by role name or by its URL form (`?role=Санхүүгийн-захирал`, any case). */
 export function findPerson(c: Company, key?: string | null) {
   if (!key) return undefined;
-  const norm = (x: string) => decodeURIComponent(x).trim().toLowerCase().replace(/[\s_-]+/g, " ");
+  const decode = (x: string) => { try { return decodeURIComponent(x); } catch { return x; } };
+  const norm = (x: string) => decode(x).trim().toLowerCase().replace(/[\s_-]+/g, " ");
   const k = norm(key);
   return c.people.find((p) => p.id === key) ?? c.people.find((p) => norm(p.role) === k) ?? c.people.find((p) => norm(p.role).startsWith(k));
 }

@@ -102,7 +102,7 @@ export const BRAND_MARK = BRAND_LOGO;
 export const brandTrademarkNoteMn =
   "Slack, Notion, Google Calendar, Gmail, Google Drive, Google Sheets, Google Slides, Google Meet, Microsoft Word, Microsoft Excel, Microsoft PowerPoint, Microsoft Outlook, Microsoft Teams, Microsoft OneDrive, Obsidian, Figma, GitHub, Linear нь эзэмшигчдийнхээ бүртгэлтэй барааны тэмдэг. Лого нь зөвхөн мэдээллийн эх сурвалжийг заана; түншлэл, дэмжлэгийг илэрхийлэхгүй.";
 
-const BRAND_THEME_CSS = `.ts-brand-swap .ts-brand-d{display:none!important}:where(.dark,[data-theme=dark]) .ts-brand-swap .ts-brand-l{display:none!important}:where(.dark,[data-theme=dark]) .ts-brand-swap .ts-brand-d{display:block!important}`;
+const BRAND_THEME_CSS = `.ts-brand-swap .ts-brand-d{display:none!important}:where(.dark,[data-theme=dark]) .ts-brand-swap .ts-brand-l{display:none!important}:where(.dark,[data-theme=dark]) .ts-brand-swap .ts-brand-d{display:block!important}:where(.dark,[data-theme=dark]) :where([data-theme=light]) .ts-brand-swap .ts-brand-l{display:block!important}:where(.dark,[data-theme=dark]) :where([data-theme=light]) .ts-brand-swap .ts-brand-d{display:none!important}`;
 
 /** The source-kind icon on its tile: token background, token border, currentColor glyph — the same in both themes. */
 export function SourceIcon({ kind, size = 16, tile = true, logo, brand }: { kind: SourceKind; size?: number; tile?: boolean; logo?: React.ReactNode; brand?: string }) {
@@ -199,7 +199,8 @@ export function SourcePreview({
     document.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onDown);
     return () => { document.removeEventListener("keydown", onKey); document.removeEventListener("pointerdown", onDown); };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- setOpen reads openProp/onOpenChange, listed here
+  }, [open, openProp, onOpenChange]);
 
   const kindText = source.kindLabel ?? labels.kinds[source.kind];
   return (
