@@ -15,7 +15,7 @@ export type LoopRule = [children: (number | "*" | "o1" | "o2" | "o3")[], keyfram
 export type Keyframe =
   | "draw" | "blink" | "pulse" | "bob" | "nudge" | "nudge-up" | "nudge-down" | "spin" | "spin-slow" | "turn"
   | "swing" | "breathe" | "run" | "rise" | "hop" | "slide" | "orbit" | "cursor" | "grow" | "wave";
-export type Overlay = { kind: "dot-run"; path: string } | { kind: "bubbles" } | { kind: "day" };
+export type Overlay = { kind: "dot-run"; path: string } | { kind: "bubbles" } | { kind: "day" } | { kind: "waves" };
 export type IconLoop = { dur: number; rules: LoopRule[]; overlay?: Overlay[] };
 
 const BRAIN_L = "M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z";
@@ -24,7 +24,7 @@ const BRAIN_R = "M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6
 const THOUGHT_L = "M9.2 6.8C7 8 8.6 10.4 7 11.6S6.4 15.4 8.6 16.4";
 const THOUGHT_R = "M14.8 6.8C17 8 15.4 10.4 17 11.6S17.6 15.4 15.4 16.4";
 
-/** New Lucide shapes for the loops (ISC): brain, flask, code, file. */
+/** New Lucide shapes for the loops (ISC): brain, flask, code, file, megaphone. */
 export const LOOP_SHAPES = {
   brain: [
     BRAIN_L,
@@ -44,6 +44,8 @@ export const LOOP_SHAPES = {
   ],
   "code-xml": ["m18 16 4-4-4-4", "m6 8-4 4 4 4", "m14.5 4-5 16"],
   file: ["M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z", "M14 2v4a2 2 0 0 0 2 2h4"],
+  // Lucide megaphone (ISC), for «Маркетинг ба контент» (2026-11-17)
+  megaphone: ["m3 11 18-5v12L3 14v-3z", "M11.6 16.8a3 3 0 1 1-5.8-1.6"],
 } as const;
 
 const L = (dur: number, ...rules: LoopRule[]): IconLoop => ({ dur, rules });
@@ -55,6 +57,7 @@ export const ICON_LOOP: Record<string, IconLoop> = {
   brain: { dur: 3.2, rules: [[[3], "pulse"]], overlay: [{ kind: "dot-run", path: THOUGHT_L }, { kind: "dot-run", path: THOUGHT_R }] }, // a thought runs through both halves
   "file-text": seq(3.2, "draw", [3, 4, 5], 0.35), // lines write themselves
   file: L(3, [["*"], "bob"]),
+  megaphone: { dur: 2.8, rules: [[["*"], "swing", 0, "--ts-il-r:-6deg;transform-origin:20% 60%"]], overlay: [{ kind: "waves" }] }, // the horn tilts and sound waves go out
   bot: L(3.4, [[5, 6], "blink"], [[1], "pulse", 0.6]), // eyes blink, antenna glows
   "flask-conical": { dur: 2.8, rules: [[[2], "pulse"]], overlay: [{ kind: "bubbles" }] }, // bubbles rise
   workflow: seq(3, "pulse", [1, 2, 3], 0.45), // nodes connect in turn
@@ -156,6 +159,7 @@ const KEYFRAMES = `
 @keyframes ts-il-cursor{0%,49%{opacity:1}50%,100%{opacity:.15}}
 @keyframes ts-il-run{0%{offset-distance:0%;opacity:0}10%,85%{opacity:1}100%{offset-distance:100%;opacity:0}}
 @keyframes ts-il-rise{0%{transform:translateY(0);opacity:0}25%{opacity:1}100%{transform:translateY(-6px);opacity:0}}
+@keyframes ts-il-wave-out{0%{opacity:0;transform:translateX(-1px) scale(.8)}30%{opacity:1}100%{opacity:0;transform:translateX(2px) scale(1.15)}}
 @keyframes ts-il-day{0%,22%{transform:translate(0,0)}25%,47%{transform:translate(4.5px,0)}50%,72%{transform:translate(9px,0)}75%,97%{transform:translate(0,4.5px)}100%{transform:translate(0,0)}}
 `;
 
@@ -176,6 +180,8 @@ export function iconLoopCss(): string {
       const s = sel(name, `o${i + 1}` as "o1");
       if (o.kind === "dot-run") css += `${s}{offset-path:path("${o.path}");offset-rotate:0deg;animation:ts-il-run ${loop.dur}s linear calc(var(--ts-il-phase,0s) + ${i * (loop.dur / 2)}s) infinite}\n`;
       if (o.kind === "bubbles") css += `${s} circle{animation:ts-il-rise ${loop.dur}s ease-out calc(var(--ts-il-phase,0s)) infinite}${s} circle+circle{animation-delay:calc(var(--ts-il-phase,0s) + ${loop.dur / 2}s)}\n`;
+      if (o.kind === "waves") css += `${s} path{transform-box:fill-box;transform-origin:left center;animation:ts-il-wave-out ${loop.dur}s ease-out calc(var(--ts-il-phase,0s)) infinite}${s} path+path{animation-delay:calc(var(--ts-il-phase,0s) + ${loop.dur / 3}s)}
+`;
       if (o.kind === "day") css += `${s}{transform-box:view-box;transform-origin:0 0;animation:ts-il-day ${loop.dur}s steps(1,end) var(--ts-il-phase,0s) infinite}\n`;
     });
   }

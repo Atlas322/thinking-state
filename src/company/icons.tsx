@@ -268,6 +268,7 @@ function LoopIcon({ name, size, className, label }: { name: IconName; size: numb
         {(loop?.overlay ?? []).map((o, i) =>
           o.kind === "dot-run" ? <circle key={`o${i}`} className={`ts-il-o${i + 1}`} data-moving="" data-run="" r="1.5" fill="var(--ts-electric-fg,currentColor)" stroke="none" />
           : o.kind === "bubbles" ? <g key={`o${i}`} className={`ts-il-o${i + 1}`} data-moving="" fill="currentColor" stroke="none"><circle cx="10.5" cy="19" r="1.1" /><circle cx="13.5" cy="18.5" r=".9" /></g>
+          : o.kind === "waves" ? <g key={`o${i}`} className={`ts-il-o${i + 1}`} data-moving="" fill="none" stroke="currentColor"><path d="M21.5 9.5c.8.7.8 3.3 0 4" /><path d="M23 8c1.5 1.5 1.5 6.5 0 8" /></g>
           : <rect key={`o${i}`} className={`ts-il-o${i + 1}`} x="6.5" y="12.5" width="3" height="3" rx=".6" fill="currentColor" stroke="none" />,
         )}
       </svg>
