@@ -50,8 +50,9 @@ describe("CitedAnswer theme", () => {
 import { BRAND_LOGO, BRAND_NAME, SourceIcon, brandTrademarkNoteMn } from "./library/source-preview";
 describe("SourceIcon app logos (svgl)", () => {
   it("has the apps the chips cite, and no Microsoft or Adobe marks", () => {
-    expect(Object.keys(BRAND_LOGO).sort()).toEqual(["figma", "github", "gmail", "google-calendar", "google-drive", "linear", "notion", "obsidian", "slack"]);
-    expect(Object.keys(BRAND_LOGO).some((k) => /word|excel|powerpoint|microsoft|adobe|photoshop/.test(k))).toBe(false);
+    for (const k of ["slack", "notion", "google-calendar", "gmail", "google-drive", "google-sheets", "google-slides", "google-meet", "microsoft-word", "microsoft-excel", "microsoft-powerpoint", "microsoft-outlook", "microsoft-teams", "microsoft-onedrive", "obsidian", "figma", "github", "linear"]) expect(BRAND_LOGO[k], k).toBeTruthy();
+    expect(Object.keys(BRAND_LOGO).some((k) => /adobe|photoshop/.test(k))).toBe(false); // Adobe still waits for a decision
+    for (const k of Object.keys(BRAND_LOGO)) expect(BRAND_NAME[k], k).toBeTruthy();
     for (const k of Object.keys(BRAND_LOGO)) expect(brandTrademarkNoteMn).toContain(BRAND_NAME[k]);
   });
   it("draws the logo unmodified as an image at the icon size; GitHub swaps for dark", () => {
@@ -62,7 +63,7 @@ describe("SourceIcon app logos (svgl)", () => {
     expect(container.querySelector("[role=img]")?.getAttribute("aria-label")).toBe("Slack");
     rerender(<SourceIcon kind="document" brand="github" size={12} tile={false} />);
     expect(container.querySelector("img.ts-brand-d")).toBeTruthy();
-    rerender(<SourceIcon kind="document" brand="word" size={12} tile={false} />);
+    rerender(<SourceIcon kind="document" brand="photoshop" size={12} tile={false} />);
     expect(container.querySelector("img")).toBeNull();
   });
 });
