@@ -1,5 +1,5 @@
 /**
- * Demo content for BuildWizard — copied from web-app's recipes (Output/build-asuumj_v08.json,
+ * Demo content for BuildWizard — copied from web-app's recipes (Output/app-texts_vfinal.json (build_wizard),
  * Output/method-quiz_v02.json, 2026-11-17). The site passes its own JSON; this is for previews and tests.
  */
 import type { WizardRecipe } from "./build-wizard";
@@ -557,7 +557,7 @@ export const buildRecipeDemo: WizardRecipe = {
    {
     "label": "Агентын санал",
     "from": "Company.agents",
-    "rule": "delegate сонголт бүрээс нэг агент; never → memory-д хориг"
+    "rule": "delegate сонголт бүрээс нэг агент; never → memory талбарт хориг"
    },
    {
     "label": "Арга зүй",
