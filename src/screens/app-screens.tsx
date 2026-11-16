@@ -213,7 +213,7 @@ export function InboxScreen({ data, labels = appScreenLabelsMn }: { data: Screen
   return (
     <>
       <h1 className="aps-h1">{labels.inbox}</h1>
-      <p className="aps-sub">{open} шинэ зүйл. Агент газрыг нь санал болгосон — та батална.</p>
+      <p className="aps-sub">{open} шинэ зүйл. Агент газрыг нь санал болгосон — хүн батална.</p>
       <div className="aps-fieldwrap">
         <label htmlFor="aps-capture">Цуглуулах</label>
         <div className="aps-field">{icons.spark}<input id="aps-capture" readOnly value="" placeholder="Санаа, холбоос, файл…" /><span className="aps-key">⌘⇧Space</span><button type="button" className="aps-btn primary split"><em>Хадгалах</em><span className="aps-cell">{icons.arrow}</span></button></div>

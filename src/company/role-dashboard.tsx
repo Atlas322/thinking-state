@@ -28,7 +28,7 @@ export const roleDashboardLabelsMn: RoleDashboardLabels = {
   waitingK: "Хүлээгдэж буй",
   agents: "Агент",
   decisions: "Шийдвэр · 30 хоног",
-  approve: "Агент бэлдсэн — та батална",
+  approve: "Агент бэлдсэн — хүн батална",
   approveOthers: "Агент бэлдсэн — батлалт хүлээж буй",
   approveTitle: "Таны батлах алхам",
   yourStep: "Таны алхам",
