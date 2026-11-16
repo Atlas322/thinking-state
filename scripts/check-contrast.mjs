@@ -84,6 +84,7 @@ const SCAN = (selector, exclude = "", strict = false) => `(() => {
 
 const page = await launch();
 const list = slugs();
+let screensScanned = 0;
 await page.viewport(width);
 let total = 0;
 let invisible = 0;
@@ -115,7 +116,11 @@ if (!process.argv.includes("--no-screens")) {
   await wait(1500);
   const cases = await page.evaluate(`[...document.querySelectorAll("[data-contrast-case]")].map((e) => e.dataset.contrastCase)`);
   if (!cases?.length) { console.log("contrast.html: no cases rendered"); process.exitCode = 1; }
-  for (const c of cases ?? []) {
+  // --only also picks screens cases: a case runs when one of its words is a requested slug (ask-window).
+  const only = arg("only", "").split(",").filter(Boolean);
+  const picked = (cases ?? []).filter((c) => !only.length || only.some((o) => c.split(" ").includes(o)));
+  screensScanned = picked.length;
+  for (const c of picked) {
     current = c;
     const hits = await scan(`[data-contrast-case="${c}"]`, "", true);
     if (hits.length) {
@@ -124,6 +129,11 @@ if (!process.argv.includes("--no-screens")) {
       for (const h of hits) console.log("      " + h);
     }
   }
+}
+// A slug that matches nothing must not pass in silence (validators call --only <file name>).
+if (arg("only", "") && !list.length && !screensScanned) {
+  console.log(`contrast: --only ${arg("only", "")} matched no catalog entry and no /contrast.html case. Add it to src/catalog.json or src/screens/contrast-cases.tsx.`);
+  process.exitCode = 1;
 }
 if (exceptions.length) {
   console.log(`disabled controls below the bar (exempt, WCAG 1.4.3 "inactive user interface component"): ${exceptions.length}`);
