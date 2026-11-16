@@ -215,3 +215,5 @@ export { SwipeRow } from "../library/swipe-row";
 export type { SwipeAction, SwipeRowProps } from "../library/swipe-row";
 export { ExplainerSlide } from "../library/explainer-carousel";
 export type { ExplainerSlideProps, ExplainerFormat, ExplainerTheme, StairCoverProps, StatementSlideProps } from "../library/explainer-carousel";
+// Demo props for hosts (<camelName>Demo, ac.me): <ApprovalCard {...approvalCardDemo} />
+export * from "./demos";
