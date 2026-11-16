@@ -66,68 +66,89 @@ const CSS = `
  background:color-mix(in srgb,var(--ts-surface,#f7f5ee) 62%,transparent);backdrop-filter:blur(28px) saturate(1.4);-webkit-backdrop-filter:blur(28px) saturate(1.4);
  border:1px solid color-mix(in srgb,#fff 55%,transparent);box-shadow:0 1px 0 rgb(255 255 255/.5) inset,0 30px 80px -20px rgb(8 8 8/.28)}
 [data-ts-theme="dark"] .aps-win{border-color:rgb(255 255 255/.10);box-shadow:0 1px 0 rgb(255 255 255/.06) inset,0 30px 80px -20px rgb(0 0 0/.6)}
-.aps-bar{display:flex;align-items:center;gap:14px;height:52px;padding:0 16px;border-bottom:1px solid color-mix(in srgb,var(--ts-line,#d8d3c6) 70%,transparent);flex:none}
+.aps-bar{display:flex;align-items:center;gap:14px;height:60px;padding:0 18px;border-bottom:1px solid color-mix(in srgb,var(--ts-line,#d8d3c6) 70%,transparent);flex:none}
 .aps-dots{display:flex;gap:7px}.aps-dots i{width:11px;height:11px;border-radius:50%;background:var(--ts-line,#d8d3c6)}
-.aps-brand{font-weight:600;letter-spacing:-.02em;font-size:14px;display:flex;align-items:center;gap:8px}
+.aps-brand{font:500 19px Spectral,Georgia,serif;display:flex;align-items:center;gap:8px}
 .aps-logo{width:22px;height:22px;border-radius:7px;background:#1b5cff;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
 .aps-tabs{display:flex;gap:2px;padding:3px;border-radius:12px;background:color-mix(in srgb,var(--ts-soft,#efebe1) 80%,transparent);margin:0 auto}
-.aps-tab{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--ts-muted,#45433f);font:500 13px Inter,sans-serif;padding:6px 12px;border-radius:9px;cursor:pointer}
+.aps-tab{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--ts-muted,#45433f);font:500 14.5px Inter,sans-serif;padding:8px 14px;border-radius:9px;cursor:pointer}
 .aps-tab[aria-current="page"]{background:var(--ts-surface,#f7f5ee);color:var(--ts-fg,#080808);box-shadow:var(--ts-elevation)}
-.aps-search{display:flex;align-items:center;gap:8px;width:220px;height:32px;padding:0 10px;border-radius:10px;font-size:13px;color:var(--ts-faint,#5c5a55);background:color-mix(in srgb,var(--ts-soft,#efebe1) 80%,transparent)}
+.aps-search{display:flex;align-items:center;gap:8px;width:240px;height:38px;padding:0 12px;border-radius:10px;font-size:14.5px;color:var(--ts-faint,#5c5a55);background:color-mix(in srgb,var(--ts-soft,#efebe1) 80%,transparent)}
 .aps-body{display:flex;flex:1;min-height:0}
 .aps-side{width:208px;flex:none;padding:14px 10px;display:flex;flex-direction:column;gap:2px;border-right:1px solid color-mix(in srgb,var(--ts-line,#d8d3c6) 70%,transparent)}
-.aps-side .aps-tab{justify-content:flex-start;padding:8px 10px;font-size:13.5px}
+.aps-side .aps-tab{justify-content:flex-start;padding:10px 12px;font-size:15px}
 .aps-side h6{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--ts-faint);margin:14px 10px 6px}
 .aps-count{margin-left:auto;font:500 11px "IBM Plex Mono",monospace;color:var(--ts-faint)}
-.aps-main{flex:1;min-width:0;overflow:auto;padding:26px 30px}
-.aps-h1{font-weight:600;letter-spacing:-.02em;font-size:24px;margin:0 0 4px}
-.aps-sub{color:var(--ts-muted);font-size:14px;margin:0 0 20px}
-.aps-label{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--ts-faint)}
+.aps-main{flex:1;min-width:0;overflow:auto;padding:32px 40px}
+.aps-h1{font:500 36px/1.15 Spectral,Georgia,serif;letter-spacing:-.01em;margin:0 0 8px}
+.aps-sub{color:var(--ts-muted);font-size:16px;line-height:1.5;margin:0 0 24px}
+.aps-label{font:500 12px "IBM Plex Mono",monospace;letter-spacing:.04em;text-transform:uppercase;color:var(--ts-faint)}
 .aps-card{background:color-mix(in srgb,var(--ts-surface,#f7f5ee) 82%,transparent);border:1px solid color-mix(in srgb,var(--ts-line,#d8d3c6) 80%,transparent);border-radius:14px}
 .aps-next{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;background:#ff7a1a;color:#1a0d00;font:600 10.5px "IBM Plex Mono",monospace;letter-spacing:.04em}
 .aps-next span{font:500 12px Inter,sans-serif;letter-spacing:0}
-.aps-chip{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;font-size:12px;color:var(--ts-muted);background:var(--ts-soft,#efebe1)}
+.aps-chip{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:999px;font-size:13.5px;color:var(--ts-muted);background:var(--ts-soft,#efebe1)}
 .aps-chip.e{color:var(--ts-electric-fg,#1b5cff);background:var(--ts-electric-soft,#dce5ff)}
 .aps-capture{display:flex;align-items:center;gap:10px;padding:14px 16px;margin-bottom:18px}
 .aps-capture input{flex:1;border:0;background:none;font:15px Inter,sans-serif;color:var(--ts-fg);outline:0}
 .aps-key{font:500 11px "IBM Plex Mono",monospace;color:var(--ts-faint);border:1px solid var(--ts-line);border-radius:6px;padding:2px 6px}
 .aps-list{display:flex;flex-direction:column}
-.aps-row{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:start;padding:14px 16px;border-top:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent)}
+.aps-row{display:grid;grid-template-columns:40px 1fr auto;gap:14px;align-items:center;padding:18px 20px;border-top:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent)}
 .aps-row:first-child{border-top:0}
 .aps-row.done{opacity:.55}
-.aps-ico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--ts-soft);color:var(--ts-muted)}
-.aps-row b{font-weight:500;font-size:14.5px;display:block;margin-bottom:3px}
-.aps-meta{font-size:12.5px;color:var(--ts-faint);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.aps-ico{width:40px;height:40px;align-self:start;border-radius:10px;display:grid;place-items:center;background:var(--ts-soft);color:var(--ts-muted)}
+.aps-row b{font-weight:500;font-size:16.5px;display:block;margin-bottom:3px}
+.aps-meta{font-size:14px;color:var(--ts-faint);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .aps-row .aps-next{margin-top:8px}
 .aps-grid{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start}
 .aps-note{padding:26px 28px}
-.aps-note p{font-size:16px;line-height:1.6;margin:0 0 12px}
-.aps-note h2{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.2;margin:10px 0 16px}
+.aps-note p{font-size:17.5px;line-height:1.65;margin:0 0 12px}
+.aps-note h2{font:500 38px/1.15 Spectral,Georgia,serif;letter-spacing:-.01em;line-height:1.2;margin:10px 0 16px}
 .aps-src{margin-top:18px;padding-top:14px;border-top:1px dashed var(--ts-line);font-size:13px;color:var(--ts-muted)}
-.aps-link{display:flex;gap:10px;padding:12px 14px;border-top:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent)}
+.aps-link{display:flex;gap:12px;padding:14px 16px;border-top:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent)}
 .aps-link:first-of-type{border-top:0}
-.aps-dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:none}
-.aps-link b{font-weight:500;font-size:13.5px;display:block}
-.aps-link small{font-size:12px;color:var(--ts-faint)}
+.aps-dot{position:relative;z-index:1;width:12px;height:12px;border-radius:50%;margin-top:5px;flex:none;box-shadow:0 0 0 4px var(--ts-surface)}
+.aps-link b{font-weight:500;font-size:15px;display:block}
+.aps-link small{font-size:13px;color:var(--ts-faint)}
 .aps-progress{height:6px;border-radius:9px;background:var(--ts-soft-2,#e8e3d6);overflow:hidden;margin:10px 0 4px}
 .aps-progress i{display:block;height:100%;background:#1b5cff;border-radius:9px}
 .aps-nextcard{padding:18px 20px;margin:18px 0;border-color:#ff7a1a;background:color-mix(in srgb,#ff7a1a 9%,var(--ts-surface))}
-.aps-nextcard h3{font-size:19px;font-weight:600;letter-spacing:-.02em;margin:10px 0 6px}
-.aps-task{display:grid;grid-template-columns:18px 1fr auto auto;gap:12px;align-items:center;padding:11px 16px;border-top:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);font-size:14px}
+.aps-nextcard h3{font:500 26px/1.2 Spectral,Georgia,serif;margin:10px 0 6px}
+.aps-task{display:grid;grid-template-columns:18px 1fr auto auto;gap:12px;align-items:center;padding:14px 18px;border-top:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);font-size:15.5px}
 .aps-task:first-child{border-top:0}
 .aps-st{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--ts-faint)}
 .aps-st.done{background:var(--ts-green,#5e7a5f);border-color:var(--ts-green)}
 .aps-st.doing{border-color:#1b5cff;border-right-color:transparent}
 .aps-st.waiting{border-color:#ff7a1a;border-style:dashed}
 .aps-task.done span:nth-child(2){text-decoration:line-through;color:var(--ts-faint)}
-.aps-truth{padding:16px 18px}.aps-truth li{font-size:13.5px;margin:8px 0;color:var(--ts-muted)}.aps-truth ul{padding-left:18px;margin:8px 0 0}
+.aps-truth{padding:16px 18px}.aps-truth li{font-size:15px;margin:8px 0;color:var(--ts-muted)}.aps-truth ul{padding-left:18px;margin:8px 0 0}
 .aps-chatgrid{display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start}
 .aps-chat{min-width:0;display:flex;flex-direction:column;gap:16px}
-.aps-q{align-self:flex-end;max-width:70%;padding:12px 16px;border-radius:16px 16px 4px 16px;background:#1b5cff;color:#fff;font-size:15px;line-height:1.45}
+.aps-q{align-self:flex-end;max-width:80%;padding:14px 18px;border-radius:18px 18px 4px 18px;background:#1b5cff;color:#fff;font-size:17px;line-height:1.45}
 .aps-composer{display:flex;align-items:center;gap:10px;padding:12px 14px;margin-top:4px}
 .aps-composer>span:not(.aps-send){flex:1;color:var(--ts-faint);font-size:14.5px}
 .aps-send{width:32px;height:32px;border-radius:10px;background:#1b5cff;color:#fff;display:grid;place-items:center}
 .aps-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.aps-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 16px;border-radius:10px;font:500 14.5px Inter,sans-serif;cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s,transform .1s;white-space:nowrap}
+.aps-btn:focus-visible,.aps-field:focus-within{outline:2px solid #1b5cff;outline-offset:2px}
+.aps-btn:active{transform:translateY(1px)}
+.aps-btn:disabled{opacity:.45;cursor:not-allowed}
+.aps-btn.primary{background:#1b5cff;color:#fff}.aps-btn.primary:hover{background:#1449d6}
+.aps-btn.secondary{background:var(--ts-surface);color:var(--ts-fg);border-color:var(--ts-line)}.aps-btn.secondary:hover{border-color:var(--ts-faint)}
+.aps-btn.ghost{background:none;color:var(--ts-muted)}.aps-btn.ghost:hover{background:var(--ts-soft)}
+.aps-actions{display:flex;gap:8px;align-items:center}
+.aps-fieldwrap{margin-bottom:22px}
+.aps-fieldwrap label{display:block;font:500 14px Inter,sans-serif;margin:0 0 8px}
+.aps-field{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:14px;background:var(--ts-surface);border:1.5px solid var(--ts-line)}
+.aps-field input{flex:1;min-width:0;border:0;background:none;font:16.5px Inter,sans-serif;color:var(--ts-fg);outline:0;min-height:38px}
+.aps-field input::placeholder{color:var(--ts-faint)}
+.aps-help{font-size:13.5px;color:var(--ts-faint);margin:8px 2px 0}
+.aps-path{display:flex;align-items:center;font-size:14px}
+.aps-path i{width:8px;height:8px;border-radius:50%;background:var(--ts-faint);flex:none}
+.aps-path i.to{background:#1b5cff;box-shadow:0 0 0 3px var(--ts-electric-soft)}
+.aps-path s{width:26px;height:1.5px;background:linear-gradient(90deg,var(--ts-faint),#1b5cff);margin:0 6px}
+.aps-path b{color:var(--ts-electric-fg);font-weight:500;font-size:14px;margin:0 0 0 8px;display:inline}
+.aps-spine{position:relative}
+.aps-spine::before{content:"";position:absolute;left:21px;top:26px;bottom:26px;width:1.5px;background:var(--ts-line)}
 .aps-still *,.aps-still *::before,.aps-still *::after{animation-duration:0s!important;animation-delay:0s!important;transition:none!important}
 `;
 
@@ -154,7 +175,7 @@ export function AppWindow({ screen, variant = "tabs", labels = appScreenLabelsMn
     <div className="aps-win" data-variant={variant}>
       <div className="aps-bar">
         <div className="aps-dots"><i /><i /><i /></div>
-        <div className="aps-brand"><span className="aps-logo">S</span>{labels.brand}</div>
+        <div className="aps-brand"><span className="aps-logo"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 10 7 4l4 6" stroke="#fff" strokeWidth="1.4" fill="none" /><circle cx="3" cy="10" r="1.8" fill="#fff" /><circle cx="7" cy="4" r="1.8" fill="#fff" /><circle cx="11" cy="10" r="1.8" fill="#fff" /></svg></span>{labels.brand}</div>
         {variant === "tabs" ? (
           <nav className="aps-tabs" aria-label={labels.brand}>
             {SCREENS.map((k) => <Tab key={k} k={k} on={k === screen} labels={labels} onSelect={onSelect} />)}
@@ -186,17 +207,22 @@ export function InboxScreen({ data, labels = appScreenLabelsMn }: { data: Screen
     <>
       <h1 className="aps-h1">{labels.inbox}</h1>
       <p className="aps-sub">{open} шинэ зүйл. Агент газрыг нь санал болгосон — та батална.</p>
-      <div className="aps-card aps-capture">{icons.spark}<input readOnly value="" placeholder="Санаа, холбоос, файл… бүгдийг энд хая" aria-label="Цуглуулах" /><span className="aps-key">⌘⇧Space</span></div>
+      <div className="aps-fieldwrap">
+        <label htmlFor="aps-capture">Цуглуулах</label>
+        <div className="aps-field">{icons.spark}<input id="aps-capture" readOnly value="" placeholder="Санаа, холбоос, файл…" /><span className="aps-key">⌘⇧Space</span><button type="button" className="aps-btn primary">Хадгалах</button></div>
+        <p className="aps-help">Агент Inbox-д орсон зүйлийг ангилж, газрыг нь санал болгоно.</p>
+      </div>
       <div className="aps-card aps-list">
         {data.inbox.map((i) => (
           <div key={i.id} className={"aps-row" + (i.processed ? " done" : "")}>
             <span className="aps-ico">{icons[i.kind]}</span>
             <div>
               <b>{i.title}</b>
-              <div className="aps-meta">{i.meta}<span className="aps-chip e">→ {i.suggest}</span></div>
+              <div className="aps-meta">{i.meta}</div>
+              <div className="aps-path" style={{ marginTop: 8 }}><i /><s /><i className="to" /><b>{i.suggest}</b></div>
               {i.next && <div className="aps-next">{labels.next} <span>{i.next}</span></div>}
             </div>
-            {i.processed ? <span className="aps-chip">{icons.check}Ангилсан</span> : <span className="aps-chip">Батлах</span>}
+            {i.processed ? <span className="aps-chip">{icons.check}Ангилсан</span> : <div className="aps-actions"><button type="button" className="aps-btn ghost">Өөрчлөх</button><button type="button" className="aps-btn secondary">{icons.check}Батлах</button></div>}
           </div>
         ))}
       </div>
@@ -216,7 +242,7 @@ export function NoteScreen({ data }: { data: ScreenData }) {
       </article>
       <aside>
         <div className="aps-label" style={{ margin: "4px 2px 8px" }}>Холбоос · яагаад</div>
-        <div className="aps-card">
+        <div className="aps-card aps-spine">
           {n.links.map((l) => (
             <div key={l.id} className="aps-link">
               <span className="aps-dot" style={{ background: linkColor[l.kind] }} />
@@ -242,7 +268,7 @@ export function ProjectScreen({ data, labels = appScreenLabelsMn }: { data: Scre
         <div className="aps-card aps-nextcard">
           <span className="aps-next">{labels.next}</span>
           <h3>{p.next.title}</h3>
-          <div className="aps-meta">{p.next.context}<span>·</span>{p.next.owner}</div>
+          <div className="aps-meta" style={{ justifyContent: "space-between" }}><span>{p.next.context} · {p.next.owner}</span><span className="aps-actions"><button type="button" className="aps-btn ghost">Хойшлуулах</button><button type="button" className="aps-btn primary">Эхлэх</button></span></div>
         </div>
         <div className="aps-card">
           {p.tasks.map((t) => (
@@ -270,7 +296,7 @@ export function ChatScreen({ data }: { data: ScreenData }) {
       <div className="aps-chat">
         <div className="aps-q">{c.question}</div>
         <CitedAnswer segments={c.segments} sources={c.sources} pagesRead={3} />
-        <div className="aps-card aps-composer">{icons.spark}<span>Дараагийн асуултаа бич…</span><span className="aps-send">{icons.arrow}</span></div>
+        <div className="aps-field">{icons.spark}<input readOnly value="" placeholder="Дараагийн асуултаа бич…" aria-label="Асуулт" /><button type="button" className="aps-btn primary" aria-label="Илгээх">{icons.arrow}</button></div>
       </div>
       <aside className="aps-chat">
         <div className="aps-head"><span className="aps-label">Thinking State</span><RunningNow tasks={c.running} brand={null} align="end" /></div>
