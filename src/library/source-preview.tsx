@@ -157,6 +157,9 @@ const CSS = `
 .sp-pop{position:absolute;left:0;z-index:20;width:340px;max-width:calc(100vw - 32px);padding:16px;border:1px solid var(--ts-line);border-radius:var(--ts-radius,6px);background:var(--ts-surface);box-shadow:var(--ts-elevation);animation:sp-in .16s ease-out both}
 .sp-pop[data-placement="bottom"]{top:calc(100% + 8px)}.sp-pop[data-placement="top"]{bottom:calc(100% + 8px)}
 @keyframes sp-in{from{opacity:0;transform:translateY(4px)}}
+/* Phones: the popover opens as a sheet along the bottom of the screen, full width with a 16px gutter,
+   instead of hanging off the chip past the edge of a narrow column (catalog check, 390 px). */
+@media (max-width:480px){.sp-pop,.sp-pop[data-placement]{position:fixed;left:16px;right:16px;bottom:16px;top:auto;width:auto;max-width:none;max-height:70vh;overflow:auto}}
 @media (prefers-reduced-motion:reduce){.sp-pop{animation:none}}
 .sp-head{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:start}
 .sp-tile{display:inline-grid;place-items:center;flex:none;box-sizing:border-box;border:1px solid var(--ts-faint);border-radius:var(--ts-radius,6px);background:var(--ts-soft);color:var(--ts-fg)}
