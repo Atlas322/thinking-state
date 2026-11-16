@@ -95,3 +95,7 @@ export type { PreviewSource, SourceKind, SourcePreviewLabels, SourcePreviewProps
 // Cited answer (site hero, chat): sources as icon tiles, citations, quoted preview
 export { CitedAnswer } from "../library/cited-answer";
 export type { CitedAnswerProps, CitedSegment, CitedSource } from "../library/cited-answer";
+
+// Ask Window: the site hero's Ask block (app window + sidebar + sources + cited answer)
+export { AskWindow, askWindowDemo, askWindowLabelsMn } from "../screens/ask-window";
+export type { AskSource, AskWindowLabels, AskWindowProps } from "../screens/ask-window";
