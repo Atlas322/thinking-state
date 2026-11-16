@@ -13,6 +13,7 @@ import { CitedAnswer, type CitedSegment, type CitedSource } from "../library/cit
 import { CostWaterfall, type CostStep } from "../library/cost-waterfall";
 import { ApprovalCard } from "../library/approval-card";
 import { SourceIcon } from "../library/source-preview";
+import { CashRiver, cashRiverDemo } from "./cash-river";
 
 /** trend = direction of the change (arrow); good = whether that change is good news (colour). Never colour alone. */
 export type FinanceKpi = { label: string; value: string; delta?: string; trend?: "up" | "down" | "flat"; good?: boolean; cite?: string };
@@ -159,6 +160,9 @@ export function FinanceReport({ theme, className = "", ...data }: FinanceReportP
       <div className="fr-row">
         <KPIChart title="Мөнгөн урсгал · үлдэгдэл" value={d.cash.value} delta={d.cash.delta} labels={d.cash.labels} tooltipLabels={d.cash.labels.map((l) => `${l} сар`)} series={d.cash.series} format={(n) => mn(n)} footer="Орох ба гарах мөнгө, сүүлийн 6 сар, сая ₮" />
         <ApprovalCard title={d.approval.title} description={d.approval.description} risk="medium" details={d.approval.details} />
+      </div>
+      <div className="fr-wide">
+        <CashRiver {...cashRiverDemo} title="Мөнгөний гол · 10-р сар" />
       </div>
       <div className="fr-wide">
         <CostWaterfall title="Агент тайланг хэрхэн бэлдсэн" task={`Санхүүгийн тайлан · ${d.period}`} steps={d.steps} status="done" defaultCollapsed={[]} formatCost={(n) => `${mn(n)} ₮`} />

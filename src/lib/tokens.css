@@ -317,6 +317,11 @@
   font: inherit;
   letter-spacing: inherit;
 }
+/* A button takes its text colour from where it sits: the browser's buttontext follows the page's
+   color-scheme, so a light card on a dark page got white button text (CashRiver, 1.16:1). */
+:where(button) {
+  color: inherit;
+}
 
 /*
  * Line icons (2026-11-17): Lucide-style stroke icons are 14 px with a 1.25
