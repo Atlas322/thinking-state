@@ -174,6 +174,12 @@ builds `lib/`, runs the tests, commits `lib/` on `release/vX.Y.Z`, tags it,
 and returns to your branch. Push with `git push origin release/vX.Y.Z vX.Y.Z`.
 `lib/` is git-ignored everywhere else, so it never lands in a PR.
 
+Run releases only from a dedicated release worktree (e.g. `.claude/worktrees/release`, detached):
+`git checkout <announced sha>` there, then release and push from there. The script switches the
+worktree's branch (to `release/vX.Y.Z` and back); run in a worktree where someone is working, it
+lets their next commit land on the released branch (screens.11, 2026-11-17). Work on the next
+version happens in its own worktree; announce «ready» with the branch and the SHA.
+
 ## Reports, decks and one-page HTML: `report.css`
 
 One stylesheet for reports and one-page HTML. It imports `tokens.css`, so

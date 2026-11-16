@@ -7,6 +7,8 @@
 // Rule: the version bump is the last commit before a release; start the next version on its own
 //       branch. The guard below stops a release when commits sit on top of the bump.
 // Between releases: npm run check:release-drift warns when commits sit on a published version.
+// Run it only in a dedicated release worktree (checkout the announced SHA there): it switches
+// branches, so in a worktree someone is working in, their next commit lands on the released branch.
 // Push afterwards:  git push origin release/<tag> <tag>
 // Consumers:        npm i github:Atlas322/thinking-state#<tag>
 import { execSync } from "node:child_process";
