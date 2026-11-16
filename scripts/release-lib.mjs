@@ -4,6 +4,8 @@
 // 2. makes a commit on release/<tag> that adds the built lib/ (lib/ is
 //    git-ignored on normal branches, so it never lands in a PR)
 // 3. tags that commit and returns to the branch you started from
+// Rule: the version bump is the last commit before a release; start the next version on its own
+//       branch. The guard below stops a release when commits sit on top of the bump.
 // Push afterwards:  git push origin release/<tag> <tag>
 // Consumers:        npm i github:Atlas322/thinking-state#<tag>
 import { execSync } from "node:child_process";
@@ -23,6 +25,19 @@ if (out("git status --porcelain --untracked-files=no")) {
 const version = JSON.parse(out("node -p \"JSON.stringify(require('./package.json').version)\""));
 if (`v${version}` !== tag) {
   console.error(`package.json version is ${version}; bump it to ${tag.slice(1)} first.`);
+  process.exit(1);
+}
+// Guard (2026-11-17): the release is the version-bump commit itself. Work committed after the bump
+// (the next version started on the same branch) would slip into this tag, so stop and say which commits.
+const bump = out("git log -1 --format=%H -- package.json");
+const head = out("git rev-parse HEAD");
+if (bump !== head) {
+  console.error(
+    `HEAD is not the version-bump commit for ${tag}. These commits came after it and would be released too:\n` +
+      out(`git log --oneline ${bump}..HEAD`) +
+      `\nRelease from the bump commit (git checkout ${bump.slice(0, 7)}) or bump the version again on top.` +
+      "\nStart the next version on its own branch.",
+  );
   process.exit(1);
 }
 const start = out("git rev-parse --abbrev-ref HEAD");
