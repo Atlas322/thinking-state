@@ -4,13 +4,15 @@
 //    The thin line-icon tokens (--ts-icon-size, --ts-icon-stroke) apply to Lucide line icons only.
 // 2. Focus and selected rings on chips, buttons and tabs follow the corner radius and are 1 px:
 //    a box-shadow ring, never a 2 px outline (older Safari draws outlines square).
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { cleanup, render } from "@testing-library/react";
-import fs from "node:fs";
 import { BRAND_LOGO, SourceIcon, SourcePreview } from "./library/source-preview";
 
 afterEach(cleanup);
-const read = (p: string) => fs.readFileSync(p, "utf8"); // vitest runs from the repo root
+// node:fs by dynamic import, as the other file-reading tests: the build's tsc has no Node types.
+const nodeFs = async () => (await import(/* @vite-ignore */ "node:" + "fs")) as { readFileSync: (p: string, e: string) => string };
+let read: (p: string) => string = () => "";
+beforeAll(async () => { const fs = await nodeFs(); read = (p) => fs.readFileSync(p, "utf8"); }); // vitest runs from the repo root
 
 describe("brand logo standard", () => {
   it("a source chip shows the brand mark at 14 px, unmodified, with no line-icon stroke", () => {

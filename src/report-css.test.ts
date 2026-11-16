@@ -1,8 +1,13 @@
-import { describe, expect, it } from "vitest";
-import fs from "node:fs";
+import { beforeAll, describe, expect, it } from "vitest";
+// node:fs by dynamic import, as the other file-reading tests: the build's tsc has no Node types.
+const nodeFs = async () => (await import(/* @vite-ignore */ "node:" + "fs")) as { readFileSync: (p: string, e: string) => string };
+let read: (p: string) => string = () => "";
+beforeAll(async () => { const fs = await nodeFs(); read = (p) => fs.readFileSync(p, "utf8"); }); // vitest runs from the repo root
+
 
 describe("report.css", () => {
-  const css = fs.readFileSync("src/lib/report.css", "utf8");
+  let css = "";
+  beforeAll(() => { css = read("src/lib/report.css"); });
   it("imports tokens.css and adds no colours of its own outside print", () => {
     expect(css).toMatch(/@import url\("\.\/tokens\.css"\)/);
     const screen = css.split("@media print")[0];
