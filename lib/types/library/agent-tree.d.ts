@@ -1,0 +1,30 @@
+import * as React from "react";
+export type TreeAgent = {
+    id: string;
+    name: string;
+    task: string;
+    model?: string;
+    avatar?: React.ReactNode;
+    tools?: React.ReactNode[];
+    status: "queued" | "running" | "waiting" | "done" | "failed" | "stopped";
+    ask?: string;
+    error?: string;
+    cost?: number;
+    started?: number;
+    ended?: number;
+    children?: TreeAgent[];
+};
+export type AgentTreeProps = {
+    root?: TreeAgent;
+    collapsed?: string[];
+    defaultCollapsed?: string[];
+    onCollapsedChange?: (collapsed: string[]) => void;
+    onResolve?: (agent: TreeAgent, action: "approve" | "reject" | "retry" | "dismiss") => void;
+    onSelect?: (agent: TreeAgent) => void;
+    now?: number;
+    formatCost?: (amount: number) => string;
+    title?: string;
+    className?: string;
+};
+export declare function AgentTree({ root, collapsed, defaultCollapsed, onCollapsedChange, onResolve, onSelect, now, formatCost, title, className, }: AgentTreeProps): React.JSX.Element;
+export default function AgentTreePreview(): React.JSX.Element;
