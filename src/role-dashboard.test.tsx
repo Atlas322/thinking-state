@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { RoleDashboard, roleView } from "./screens/role-dashboard";
+import { RoleDashboard, roleView } from "./company/role-dashboard";
 import { acmeGroup } from "./company/fixtures";
 afterEach(cleanup);
 const today = new Date("2026-11-17T00:00:00Z");
@@ -38,5 +38,21 @@ describe("RoleDashboard", () => {
     rerender(<RoleDashboard company={acmeGroup} personId={id} today={today} onPersonChange={(x) => (id = x)} />);
     expect(screen.getByRole("heading", { name: "Санхүүгийн захирал" })).toBeTruthy();
     expect(screen.getByText("Хаалтыг батлах")).toBeTruthy();
+  });
+});
+
+import { CompanyView } from "./company/company-view";
+import { findPerson } from "./company/role-dashboard";
+describe("CompanyView «Албан тушаалаар»", () => {
+  it("finds a position by id, role name or URL form", () => {
+    expect(findPerson(acmeGroup, "p-oyunaa")?.role).toBe("Санхүүгийн захирал");
+    expect(findPerson(acmeGroup, "санхүүгийн-захирал")?.id).toBe("p-oyunaa");
+    expect(findPerson(acmeGroup, encodeURIComponent("Дэлгүүрийн менежер"))?.id).toBe("p-munkh");
+    expect(findPerson(acmeGroup, "байхгүй")).toBeUndefined();
+  });
+  it("role= opens the tab on that position", () => {
+    render(<CompanyView company={acmeGroup} role="Санхүүгийн захирал" today={today} />);
+    expect(screen.getByRole("tab", { name: /Албан тушаалаар/, selected: true })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Санхүүгийн захирал" })).toBeTruthy();
   });
 });

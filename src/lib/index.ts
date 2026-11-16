@@ -109,5 +109,5 @@ export { BuildWizard, buildWizardLabelsMn, toDraftCompany } from "../screens/bui
 export type { BuildWizardLabels, BuildWizardProps, WizardAnswers, WizardField, WizardOption, WizardRecipe, WizardStep } from "../screens/build-wizard";
 
 // Role Dashboard: one company from one position (burning first, agent proposals to approve, timeline, brief)
-export { RoleDashboard, roleDashboardLabelsMn, roleView } from "../screens/role-dashboard";
-export type { RoleDashboardLabels, RoleDashboardProps, RoleView } from "../screens/role-dashboard";
+export { RoleDashboard, findPerson, roleDashboardLabelsMn, roleView } from "../company/role-dashboard";
+export type { RoleDashboardLabels, RoleDashboardProps, RoleView } from "../company/role-dashboard";

@@ -9,7 +9,7 @@
  * Lens by position: the head of an institution/company sees its units; finance sees the revenue model.
  */
 import * as React from "react";
-import type { Company, CompanyProject, CompanyTask, CompanyUnit } from "../company/types";
+import type { Company, CompanyProject, CompanyTask, CompanyUnit } from "./types";
 
 export type RoleDashboardLabels = {
   burning: string; burningEmpty: string; overdue: (d: number) => string; waiting: string; soon: (d: number) => string;
@@ -52,7 +52,10 @@ export type RoleDashboardProps = {
   /** Lets the viewer switch position (shows the position pills). */
   onPersonChange?: (id: string) => void;
   today?: Date;
+  /** Light or dark; left out, the board follows the host page's theme. */
   theme?: "light" | "dark";
+  /** Inside another window (CompanyView): no own frame or title bar. */
+  bare?: boolean;
   labels?: Partial<RoleDashboardLabels>;
   className?: string;
 };
@@ -204,11 +207,20 @@ const CSS = `
 .rd-meter i{display:block;height:100%;background:var(--ts-electric)}
 .rd-kr{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:4px 10px;align-items:center;font-size:13px}
 .rd-kr span:nth-child(2){text-align:right;font-variant-numeric:tabular-nums;color:var(--ts-muted)}
-@container (max-width:860px){.rd-grid{grid-template-columns:1fr}.rd-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.rd-bare{border:0;box-shadow:none;border-radius:0;background:transparent}.rd-bare .rd-body{padding:16px 0 0}.rd-bare .rd-roles{padding:0 0 10px}
+@container (max-width:860px){.rd-grid{grid-template-columns:minmax(0,1fr)}.rd-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (max-width:520px){.rd-body{padding:16px}.rd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.rd-lane{grid-template-columns:96px minmax(0,1fr)}}
 `;
 
-export function RoleDashboard({ company: c, personId, onPersonChange, today = new Date(), theme = "light", labels: labelsIn, className = "" }: RoleDashboardProps) {
+/** A person by id, by role name or by its URL form (`?role=Санхүүгийн-захирал`, any case). */
+export function findPerson(c: Company, key?: string | null) {
+  if (!key) return undefined;
+  const norm = (x: string) => decodeURIComponent(x).trim().toLowerCase().replace(/[\s_-]+/g, " ");
+  const k = norm(key);
+  return c.people.find((p) => p.id === key) ?? c.people.find((p) => norm(p.role) === k) ?? c.people.find((p) => norm(p.role).startsWith(k));
+}
+
+export function RoleDashboard({ company: c, personId, onPersonChange, today = new Date(), theme, bare = false, labels: labelsIn, className = "" }: RoleDashboardProps) {
   const L = { ...roleDashboardLabelsMn, ...labelsIn };
   const v = roleView(c, personId, today);
   const dark = theme === "dark";
@@ -223,13 +235,17 @@ export function RoleDashboard({ company: c, personId, onPersonChange, today = ne
   const kindOf = (p: CompanyProject, t: CompanyTask) => isDone(t.status) ? "done" : isWaiting(t.status) ? "waiting" : (t.due ?? p.due) && days((t.due ?? p.due)!, today) < 0 ? "late" : "open";
 
   return (
-    <div className={`rd ${dark ? "dark" : ""} ${className}`} data-ts-theme={dark ? "dark" : "cream"} data-theme={dark ? "dark" : "light"}>
+    <div
+      className={`rd ${bare ? "rd-bare" : ""} ${dark ? "dark" : ""} ${className}`}
+      data-ts-theme={theme ? (dark ? "dark" : "cream") : undefined}
+      data-theme={theme ? (dark ? "dark" : "light") : undefined}
+    >
       <style>{CSS}</style>
-      <div className="rd-bar">
+      {!bare && <div className="rd-bar">
         <div className="rd-dots" aria-hidden="true"><i /><i /><i /></div>
         <b>{c.name} · {v.person.role}</b>
         <time dateTime={iso(today)}>{L.today} · {iso(today)}</time>
-      </div>
+      </div>}
       {onPersonChange && (
         <div className="rd-roles" role="group" aria-label={L.scope}>
           {c.people.map((p) => (

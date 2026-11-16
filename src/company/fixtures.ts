@@ -3,7 +3,9 @@ import type { Collection, Company } from "./types";
 /**
  * Fixtures in the Company contract until the company-schema session's export
  * lands. Read-only data, as the app only views a vault.
- * - ac.me Group (OKR): from the ac.me world (inai-sh/acme/out).
+ * - ac.me Group (OKR): from the ac.me world (inai-sh/acme/out). ac.me is a made-up demo company:
+ *   every person (Ч.Хонгорзул, Д.Оюунаа …) is a fictional demo name, not a real person
+ *   (2026-11-17; RoleDashboard shows these names by position).
  * - «Нүүдэл студи» (BMC): a fictional studio (зохиомол) — team, CVs, links
  *   and projects are made up. Real people and clients never go in fixtures;
  *   check:content guards it (REAL_NAMES).
