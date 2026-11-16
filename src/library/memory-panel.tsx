@@ -35,7 +35,7 @@ export type MemoryPanelProps = {
 
 const defaultMemories: Memory[] = [
   { id: "m1", text: "Эхлээд товч хариулт, дэлгэрэнгүйг асуухад нь өгнө", category: "Шийдвэр", source: "Чатаас", date: "10/12" },
-  { id: "m2", text: "Шинэ хувилбарыг зөвхөн Мягмар гарагт гаргана", category: "Шийдвэр", source: "Та нэмсэн", date: "10/2", paused: true },
+  { id: "m2", text: "Шинэ хувилбарыг зөвхөн Мягмар гарагт гаргана", category: "Шийдвэр", source: "Гараар нэмсэн", date: "10/2", paused: true },
   { id: "m3", text: "Дизайнд 4px-ийн торон систем ашиглана", category: "Шийдвэр", source: "Дизайны файлаас", date: "10/7" },
   { id: "m4", text: "Баасан гараг бүр харилцагчдад шинэчлэлийн тойм илгээх", category: "Даалгавар", source: "Чатаас", date: "10/9" },
   { id: "m5", text: "Бүртгэлийн урсгалыг 10/24-нөөс өмнө шинэчлэх", category: "Даалгавар", source: "Чатаас", date: "10/11" },
@@ -89,7 +89,7 @@ export function MemoryPanel({
   title = "Санах ой",
   maxHeight = 360,
   undoFor = 5000,
-  addedSource = "Та нэмсэн",
+  addedSource = "Гараар нэмсэн",
   action,
   className = "",
 }: MemoryPanelProps) {

@@ -73,9 +73,9 @@ const defaultGates: ApprovalGate[] = [
     reason: "Багаас гадуурх харилцагчид илгээнэ",
     status: "edited",
     at: "саяхан",
-    note: "Гарчиг: Шинэ багц – таны нөхцөл хэвээр",
+    note: "Гарчиг: Шинэ багц – нөхцөл хэвээр",
     input:
-      "Гарчиг: Шинэ багц, таны нөхцөл хэвээр\n\nСайн байна уу, {first_name}. Даваа гарагаас багцуудаа шинэчилнэ. Туршилтын хэрэглэгчийн хувьд та өнөөдрийн нөхцөлөө нэг жил хадгална.",
+      "Гарчиг: Шинэ багц, нөхцөл хэвээр\n\nСайн байна уу, {first_name}. Даваа гарагаас багцуудаа шинэчилнэ. Туршилтын хэрэглэгчийн хувьд та өнөөдрийн нөхцөлөө нэг жил хадгална.",
   },
   {
     id: "browser",
@@ -197,11 +197,11 @@ export function ApprovalGates({
           {task && <span className="gate-task">{task}</span>}
           <span className={`gate-pill ${open.length ? "gate-wait" : "gate-ok"}`}>
             <i />
-            {open.length ? "Таныг хүлээж байна" : live ? "Ажиллаж байна" : "Бүгд шийдэгдсэн"}
+            {open.length ? "Батлалт хүлээж байна" : live ? "Ажиллаж байна" : "Бүгд шийдэгдсэн"}
           </span>
         </header>
         <dl className="gate-stats">
-          <div><dt>Таныг хүлээж байна</dt><dd>{open.length}</dd></div>
+          <div><dt>Батлалт хүлээж байна</dt><dd>{open.length}</dd></div>
           <div><dt>Шийдсэн</dt><dd>{decidedCount}/{gates.length}</dd></div>
           <div><dt>Ажил</dt><dd>{runText}</dd></div>
         </dl>

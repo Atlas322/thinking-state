@@ -51,9 +51,9 @@ export type RunningNowProps = {
 const defaultLabels: RunningNowLabels = {
   title: "Арын даалгаврууд",
   running: "ажиллаж байна",
-  needsYou: "таны ээлж",
-  needsYouOne: "таны ээлж",
-  needsYouBadge: "Таны ээлж",
+  needsYou: "хүний ээлж",
+  needsYouOne: "хүний ээлж",
+  needsYouBadge: "Хүний ээлж",
   paused: "Түр зогссон",
   pausedCount: "түр зогссон",
   done: "Дууссан",
