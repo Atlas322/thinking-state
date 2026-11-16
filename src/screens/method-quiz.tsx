@@ -32,6 +32,10 @@ export type MethodQuizProps = {
   theme?: "light" | "dark";
   onComplete?: (method: Methodology, answers: Record<string, string>) => void;
   onCta?: (method: Methodology) => void;
+  /** One line under the result, e.g. «Дараа нь сольж болно». */
+  note?: string;
+  /** Hide the window chrome (title bar) when the quiz sits inside another window. */
+  bare?: boolean;
   labels?: Partial<MethodQuizLabels>;
   className?: string;
 };
@@ -96,12 +100,17 @@ const CSS = `
 .mq-row i b{display:block;height:100%;background:var(--ts-faint)}
 .mq-row[data-top="true"] i b{background:var(--ts-electric)}
 .mq-row span:last-child{font:500 12px var(--ts-mono,"IBM Plex Mono",monospace);color:var(--ts-faint);text-align:right}
+.mq-note{font-size:14px;color:var(--ts-muted);margin:8px 0 0}
+.mq-bare{border:0;box-shadow:none;border-radius:0;background:transparent}
+.mq-bare .mq-rail{display:none}
+.mq-bare .mq-main{padding:0}
+.mq-bare .mq-progress{display:none}
 @container (max-width:680px){.mq-rail{display:none}.mq-main{padding:20px}}
 `;
 const check = <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>;
 const arrow = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>;
 
-export function MethodQuiz({ questions, methods, defaultAnswers = {}, defaultStep = 0, theme = "light", onComplete, onCta, labels: labelsIn, className = "" }: MethodQuizProps) {
+export function MethodQuiz({ questions, methods, defaultAnswers = {}, defaultStep = 0, theme = "light", onComplete, onCta, note, bare = false, labels: labelsIn, className = "" }: MethodQuizProps) {
   const labels = { ...methodQuizLabelsMn, ...labelsIn };
   const [answers, setAnswers] = React.useState<Record<string, string>>(defaultAnswers);
   const [step, setStep] = React.useState(defaultStep);
@@ -121,13 +130,13 @@ export function MethodQuiz({ questions, methods, defaultAnswers = {}, defaultSte
   };
 
   return (
-    <div className={`mq ${dark ? "dark" : ""} ${className}`} data-ts-theme={dark ? "dark" : "cream"} data-theme={dark ? "dark" : "light"}>
+    <div className={`mq ${bare ? "mq-bare" : ""} ${dark ? "dark" : ""} ${className}`} data-ts-theme={dark ? "dark" : "cream"} data-theme={dark ? "dark" : "light"}>
       <style>{CSS}</style>
-      <div className="mq-bar">
+      {!bare && <div className="mq-bar">
         <div className="mq-dots" aria-hidden="true"><i /><i /><i /></div>
         <span className="mq-title">{labels.title}</span>
         <span className="mq-count">{done ? labels.result : labels.step(step + 1, n)}</span>
-      </div>
+      </div>}
       <div className="mq-split">
         <ol className="mq-rail">
           {questions.map((x, i) => (
@@ -163,6 +172,7 @@ export function MethodQuiz({ questions, methods, defaultAnswers = {}, defaultSte
                 <h3>{top.name}</h3>
                 <p>{top.why}</p>
                 <p><b>{labels.firstStep}</b> {top.firstStep}</p>
+                {note && <p className="mq-note">{note}</p>}
               </div>
               <div className="mq-bars" aria-label={labels.match}>
                 {ranked.map((m) => (

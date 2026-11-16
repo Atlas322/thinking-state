@@ -103,3 +103,7 @@ export type { AskSource, AskWindowLabels, AskWindowProps } from "../screens/ask-
 // Method Quiz: the build page's questionnaire → recommended method (BMC · PMBOK · OKR · Lean Canvas)
 export { MethodQuiz, methodQuizDemo, methodQuizLabelsMn, scoreMethods } from "../screens/method-quiz";
 export type { MethodQuizLabels, MethodQuizProps, QuizMethod, QuizOption, QuizQuestion } from "../screens/method-quiz";
+
+// Build Wizard: the build page's four-step «Бүтээх горим» → a draft Company (MethodQuiz inside step 2)
+export { BuildWizard, buildWizardLabelsMn, toDraftCompany } from "../screens/build-wizard";
+export type { BuildWizardLabels, BuildWizardProps, WizardAnswers, WizardField, WizardOption, WizardRecipe, WizardStep } from "../screens/build-wizard";
