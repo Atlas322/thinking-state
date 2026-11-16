@@ -87,3 +87,7 @@ export { AppScreen, AppWindow, InboxScreen, NoteScreen, ProjectScreen, ChatScree
 export type { AppScreenProps, AppWindowProps, AppScreenLabels, ScreenKey, ScreenTheme, WindowVariant } from "../screens/app-screens";
 export { acmeDemo } from "../screens/acme";
 export type { ScreenData, InboxItem, AtomNote, NoteLink, AppProject, ProjectTask, CaptureKind } from "../screens/acme";
+
+// Source chip + file preview popover (site hero, chat)
+export { SourcePreview, sourcePreviewLabelsMn } from "../library/source-preview";
+export type { PreviewSource, SourceKind, SourcePreviewLabels, SourcePreviewProps } from "../library/source-preview";

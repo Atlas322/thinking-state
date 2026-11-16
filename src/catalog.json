@@ -262,6 +262,16 @@
     "usage": "import { CitedAnswer } from \"./cited-answer\";\n\nexport default function App() {\n  return <CitedAnswer />;\n}"
   },
   {
+    "slug": "source-preview",
+    "name": "Source Preview",
+    "category": "Chat",
+    "pro": true,
+    "origin": "Thinking State original",
+    "description": "Эх сурвалжийн chip: дарахад файлын preview нээгдэнэ – төрлийн icon (баримт, календарь, мессеж) эсвэл брэндийн лого, гарчиг, төрөл, огноо, тэмдэглэсэн ишлэл, «Апп-д нээх». Escape эсвэл гадна дарахад хаагдана.",
+    "exportName": "SourcePreview",
+    "usage": "import { SourcePreview } from \"./source-preview\";\n\nexport default function App() {\n  return <SourcePreview source={{ id: \"r\", title: \"Тайлан\", kind: \"document\", date: \"2026-11-02\", quote: \"…\" }} onOpenInApp={(s) => open(s.id)} />;\n}"
+  },
+  {
     "slug": "collaboration-stream",
     "name": "Collaboration Stream",
     "category": "Agents",

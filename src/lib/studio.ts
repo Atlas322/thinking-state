@@ -63,6 +63,8 @@ export { Checkbox } from "../library/checkbox";
 export type { CheckboxProps } from "../library/checkbox";
 export { CitedAnswer } from "../library/cited-answer";
 export type { CitedSegment, CitedSource, CitedAnswerProps } from "../library/cited-answer";
+export { SourcePreview, sourcePreviewLabelsMn } from "../library/source-preview";
+export type { SourceKind, PreviewSource, SourcePreviewLabels, SourcePreviewProps } from "../library/source-preview";
 export { CollaborationStream } from "../library/collaboration-stream";
 export type { StreamAgent, StreamFile, StreamDetails, StreamPart, StreamMessage, CollaborationStreamProps } from "../library/collaboration-stream";
 export { Combobox } from "../library/combobox";

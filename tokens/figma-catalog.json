@@ -1,7 +1,7 @@
 {
   "$meta": {
     "source": "src/catalog.json (npm run tokens:figma)",
-    "count": 116
+    "count": 117
   },
   "components": [
     {
@@ -325,6 +325,17 @@
       ],
       "module": null,
       "origin": "affectUI recreation"
+    },
+    {
+      "slug": "source-preview",
+      "name": "Source Preview",
+      "category": "Chat",
+      "export": "SourcePreview",
+      "variants": [
+        "clean"
+      ],
+      "module": null,
+      "origin": "Thinking State original"
     },
     {
       "slug": "collaboration-stream",
