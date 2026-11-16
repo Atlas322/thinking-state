@@ -57,8 +57,8 @@ const icons: Record<ScreenKey | CaptureKind | "search" | "arrow" | "check" | "sp
 };
 
 const CSS = `
-.aps-root{--aps-r:0px;--aps-r-shell:14px;--aps-sans:"IBM Plex Sans",system-ui,sans-serif;--aps-serif:Spectral,Georgia,serif;--aps-mono:"IBM Plex Mono",monospace;
- --aps-h2:48px;--aps-h3:28px;--aps-lead:20px;--aps-body:16px;--aps-label:12px;--aps-icon:16px;--aps-stroke:1.5}
+.aps-root{--aps-r:6px;--aps-r-shell:14px;--aps-sans:Inter,system-ui,sans-serif;--aps-serif:Spectral,Georgia,serif;--aps-mono:"IBM Plex Mono",monospace;
+ --aps-h2:24px;--aps-h3:18px;--aps-lead:16px;--aps-body:16px;--aps-small:14px;--aps-label:12px;--aps-btn:40px;--aps-icon:16px;--aps-stroke:1.5}
 .aps-stage{position:relative;overflow:hidden;padding:56px;min-height:100%;box-sizing:border-box;background:var(--ts-page,#f0ede4);font-family:var(--aps-sans);color:var(--ts-fg,#080808)}
 .aps-stage::before,.aps-stage::after{content:"";position:absolute;border-radius:50%;filter:blur(40px);pointer-events:none}
 .aps-stage::before{width:520px;height:520px;left:-120px;top:-140px;background:radial-gradient(circle,#1b5cff 0%,transparent 68%);opacity:.32}
@@ -88,7 +88,7 @@ const CSS = `
 .aps-card{background:color-mix(in srgb,var(--ts-surface,#f7f5ee) 82%,transparent);border:1px solid color-mix(in srgb,var(--ts-line,#d8d3c6) 80%,transparent);border-radius:var(--aps-r)}
 .aps-next{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:var(--aps-r);background:#ff7a1a;color:#1a0d00;font:600 var(--aps-label) var(--aps-mono);letter-spacing:.04em}
 .aps-next span{font:500 12px var(--aps-sans);letter-spacing:0}
-.aps-chip{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--aps-r);font-size:var(--aps-body);color:var(--ts-muted);background:var(--ts-soft,#efebe1)}
+.aps-chip{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--aps-r);font-size:var(--aps-small);color:var(--ts-muted);background:var(--ts-soft,#efebe1)}
 .aps-chip.e{color:var(--ts-electric-fg,#1b5cff);background:var(--ts-electric-soft,#dce5ff)}
 .aps-capture{display:flex;align-items:center;gap:10px;padding:14px 16px;margin-bottom:18px}
 .aps-capture input{flex:1;border:0;background:none;font:15px var(--aps-sans);color:var(--ts-fg);outline:0}
@@ -99,7 +99,7 @@ const CSS = `
 .aps-row.done{opacity:.55}
 .aps-ico{width:40px;height:40px;align-self:start;border-radius:var(--aps-r);display:grid;place-items:center;background:var(--ts-soft);color:var(--ts-muted)}
 .aps-row b{font-weight:500;font-size:var(--aps-body);display:block;margin-bottom:3px}
-.aps-meta{font-size:var(--aps-body);color:var(--ts-faint);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.aps-meta{font-size:var(--aps-small);color:var(--ts-faint);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .aps-row .aps-next{margin-top:8px}
 .aps-grid{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start}
 .aps-note{padding:26px 28px}
@@ -110,7 +110,7 @@ const CSS = `
 .aps-link:first-of-type{border-top:0}
 .aps-dot{position:relative;z-index:1;width:12px;height:12px;border-radius:50%;margin-top:5px;flex:none;box-shadow:0 0 0 4px var(--ts-surface)}
 .aps-link b{font-weight:500;font-size:var(--aps-body);display:block}
-.aps-link small{font-size:var(--aps-body);color:var(--ts-faint)}
+.aps-link small{font-size:var(--aps-small);color:var(--ts-faint)}
 .aps-progress{height:6px;border-radius:var(--aps-r);background:var(--ts-soft-2,#e8e3d6);overflow:hidden;margin:10px 0 4px}
 .aps-progress i{display:block;height:100%;background:#1b5cff;border-radius:var(--aps-r)}
 .aps-nextcard{padding:18px 20px;margin:18px 0;border-color:#ff7a1a;background:color-mix(in srgb,#ff7a1a 9%,var(--ts-surface))}
@@ -130,7 +130,7 @@ const CSS = `
 .aps-composer>span:not(.aps-send){flex:1;color:var(--ts-faint);font-size:var(--aps-body)}
 .aps-send{width:32px;height:32px;border-radius:var(--aps-r);background:#1b5cff;color:#fff;display:grid;place-items:center}
 .aps-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.aps-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 20px;border-radius:var(--aps-r);font:500 var(--aps-body) var(--aps-sans);cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s,transform .1s;white-space:nowrap}
+.aps-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:var(--aps-btn);padding:0 16px;border-radius:var(--aps-r);font:500 var(--aps-body) var(--aps-sans);cursor:pointer;border:1px solid transparent;transition:background .15s,border-color .15s,transform .1s;white-space:nowrap}
 .aps-btn:focus-visible,.aps-field:focus-within{outline:2px solid #1b5cff;outline-offset:2px}
 .aps-btn:active{transform:translateY(1px)}
 .aps-btn:disabled{opacity:.45;cursor:not-allowed}
@@ -138,17 +138,21 @@ const CSS = `
 .aps-btn.secondary{background:transparent;color:var(--ts-fg);border:1.5px solid var(--ts-fg)}.aps-btn.secondary:hover{border-color:var(--ts-faint)}
 .aps-btn.ghost{background:none;color:var(--ts-fg);text-decoration:underline;text-decoration-color:var(--ts-line);text-underline-offset:4px}.aps-btn.ghost:hover{color:var(--ts-electric-fg);text-decoration-color:currentColor}
 .aps-actions{display:flex;gap:8px;align-items:center}
+.aps-btn.split{padding:0 0 0 16px;gap:0;align-items:stretch}.aps-btn.split>em{font-style:normal;display:flex;align-items:center}
+.aps-cell{display:grid;place-items:center;width:var(--aps-btn);margin-left:16px;border-left:1.5px solid currentColor;opacity:.9;transition:transform .2s}
+.aps-btn.primary .aps-cell{border-left-color:rgb(255 255 255/.4)}.aps-btn.split:hover .aps-cell svg{transform:translateX(2px)}
+.aps-btn.icon{padding:0;width:var(--aps-btn)}
 .aps-fieldwrap{margin-bottom:22px}
 .aps-fieldwrap label{display:block;font:500 var(--aps-body) var(--aps-sans);margin:0 0 8px}
 .aps-field{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:var(--aps-r);background:var(--ts-surface);border:1.5px solid var(--ts-line)}
 .aps-field input{flex:1;min-width:0;border:0;background:none;font:var(--aps-body) var(--aps-sans);color:var(--ts-fg);outline:0;min-height:38px}
 .aps-field input::placeholder{color:var(--ts-faint)}
-.aps-help{font-size:var(--aps-body);color:var(--ts-faint);margin:8px 2px 0}
-.aps-path{display:flex;align-items:center;font-size:var(--aps-body)}
+.aps-help{font-size:var(--aps-small);color:var(--ts-faint);margin:8px 2px 0}
+.aps-path{display:flex;align-items:center;font-size:var(--aps-small)}
 .aps-path i{width:8px;height:8px;border-radius:50%;background:var(--ts-faint);flex:none}
 .aps-path i.to{background:#1b5cff;box-shadow:0 0 0 3px var(--ts-electric-soft)}
 .aps-path s{width:26px;height:1.5px;background:linear-gradient(90deg,var(--ts-faint),#1b5cff);margin:0 6px}
-.aps-path b{color:var(--ts-electric-fg);font-weight:500;font-size:var(--aps-body);margin:0 0 0 8px;display:inline}
+.aps-path b{color:var(--ts-electric-fg);font-weight:500;font-size:var(--aps-small);margin:0 0 0 8px;display:inline}
 .aps-spine{position:relative}
 .aps-spine::before{content:"";position:absolute;left:21px;top:26px;bottom:26px;width:1.5px;background:var(--ts-line)}
 .aps-still *,.aps-still *::before,.aps-still *::after{animation-duration:0s!important;animation-delay:0s!important;transition:none!important}
@@ -211,7 +215,7 @@ export function InboxScreen({ data, labels = appScreenLabelsMn }: { data: Screen
       <p className="aps-sub">{open} шинэ зүйл. Агент газрыг нь санал болгосон — та батална.</p>
       <div className="aps-fieldwrap">
         <label htmlFor="aps-capture">Цуглуулах</label>
-        <div className="aps-field">{icons.spark}<input id="aps-capture" readOnly value="" placeholder="Санаа, холбоос, файл…" /><span className="aps-key">⌘⇧Space</span><button type="button" className="aps-btn primary">Хадгалах</button></div>
+        <div className="aps-field">{icons.spark}<input id="aps-capture" readOnly value="" placeholder="Санаа, холбоос, файл…" /><span className="aps-key">⌘⇧Space</span><button type="button" className="aps-btn primary split"><em>Хадгалах</em><span className="aps-cell">{icons.arrow}</span></button></div>
         <p className="aps-help">Агент Inbox-д орсон зүйлийг ангилж, газрыг нь санал болгоно.</p>
       </div>
       <div className="aps-card aps-list">
@@ -224,7 +228,7 @@ export function InboxScreen({ data, labels = appScreenLabelsMn }: { data: Screen
               <div className="aps-path" style={{ marginTop: 8 }}><i /><s /><i className="to" /><b>{i.suggest}</b></div>
               {i.next && <div className="aps-next">{labels.next} <span>{i.next}</span></div>}
             </div>
-            {i.processed ? <span className="aps-chip">{icons.check}Ангилсан</span> : <div className="aps-actions"><button type="button" className="aps-btn ghost">Өөрчлөх</button><button type="button" className="aps-btn secondary">{icons.check}Батлах</button></div>}
+            {i.processed ? <span className="aps-chip">{icons.check}Ангилсан</span> : <div className="aps-actions"><button type="button" className="aps-btn ghost">Өөрчлөх</button><button type="button" className="aps-btn secondary split"><em>Батлах</em><span className="aps-cell">{icons.check}</span></button></div>}
           </div>
         ))}
       </div>
@@ -270,7 +274,7 @@ export function ProjectScreen({ data, labels = appScreenLabelsMn }: { data: Scre
         <div className="aps-card aps-nextcard">
           <span className="aps-next">{labels.next}</span>
           <h3>{p.next.title}</h3>
-          <div className="aps-meta" style={{ justifyContent: "space-between" }}><span>{p.next.context} · {p.next.owner}</span><span className="aps-actions"><button type="button" className="aps-btn ghost">Хойшлуулах</button><button type="button" className="aps-btn primary">Эхлэх</button></span></div>
+          <div className="aps-meta" style={{ justifyContent: "space-between" }}><span>{p.next.context} · {p.next.owner}</span><span className="aps-actions"><button type="button" className="aps-btn ghost">Хойшлуулах</button><button type="button" className="aps-btn primary split"><em>Эхлэх</em><span className="aps-cell">{icons.arrow}</span></button></span></div>
         </div>
         <div className="aps-card">
           {p.tasks.map((t) => (
@@ -298,7 +302,7 @@ export function ChatScreen({ data }: { data: ScreenData }) {
       <div className="aps-chat">
         <div className="aps-q">{c.question}</div>
         <CitedAnswer segments={c.segments} sources={c.sources} pagesRead={3} />
-        <div className="aps-field">{icons.spark}<input readOnly value="" placeholder="Дараагийн асуултаа бич…" aria-label="Асуулт" /><button type="button" className="aps-btn primary" aria-label="Илгээх">{icons.arrow}</button></div>
+        <div className="aps-field">{icons.spark}<input readOnly value="" placeholder="Дараагийн асуултаа бич…" aria-label="Асуулт" /><button type="button" className="aps-btn primary icon" aria-label="Илгээх">{icons.arrow}</button></div>
       </div>
       <aside className="aps-chat">
         <div className="aps-head"><span className="aps-label">Thinking State</span><RunningNow tasks={c.running} brand={null} align="end" /></div>
