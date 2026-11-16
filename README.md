@@ -212,6 +212,16 @@ Put `class="rp"` and a theme (`data-ts-theme="cream"`, or `"dark"` with `data-th
   with `outline: 1px solid transparent` kept for forced-colors mode. No 2 px
   outlines (older Safari draws outlines square).
 
+## Contrast check (`npm run check:contrast`)
+
+Needs `npm run dev` (or `--url`). It scans every catalog preview in both themes, then
+`/contrast.html`: the screens outside the catalog (AskWindow, BuildWizard, MethodQuiz,
+RoleDashboard, AppScreen) in both themes, on a light and a dark host page, and AskWindow at
+every phase (ask, think, sources, answer, done). Text needs 4.5:1, large text and icons 3:1;
+in the screens matrix near-invisible text (below 1.1:1) fails too. Flags: `--screens-only`,
+`--no-screens`, `--themes light,dark`. `npm run check:release-drift` warns when commits sit
+on top of a published version.
+
 ## Validate and build
 
 ```sh

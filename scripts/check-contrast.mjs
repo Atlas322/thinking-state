@@ -5,13 +5,17 @@
 //   npm run dev     (another terminal; or pass --url)
 //   node scripts/check-contrast.mjs [--url http://127.0.0.1:5173] [--only a,b] [--width 1440] [--themes light,dark] [--shell]
 // --shell also scans the catalog chrome (sidebar, header) once per theme.
-import { arg, launch, openSlug, setTheme, slugs } from "./cdp.mjs";
+// After the catalog it opens /contrast.html: the screens outside the catalog in both themes, on a
+// light and a dark host page, and AskWindow at every phase (ask, think, sources, answer, done).
+// --screens-only skips the catalog; --no-screens skips the screens.
+import { arg, launch, openSlug, setTheme, slugs, wait } from "./cdp.mjs";
 
 const base = arg("url", "http://127.0.0.1:5173");
 const width = Number(arg("width", "1440"));
 
-const SCAN = (selector, exclude = "") => `(() => {
+const SCAN = (selector, exclude = "", strict = false) => `(() => {
   const exclude = ${JSON.stringify(exclude)};
+  const strict = ${strict};
   const cv = document.createElement("canvas").getContext("2d", { willReadFrequently: true });
   const rgba = (c) => { cv.clearRect(0, 0, 1, 1); cv.fillStyle = "#000"; cv.fillStyle = c; cv.fillRect(0, 0, 1, 1); const d = cv.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255]; };
   const lum = (a) => { const c = a.slice(0, 3).map((v) => v / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
@@ -69,7 +73,9 @@ const SCAN = (selector, exclude = "") => `(() => {
     // Same colour as the background: nothing is painted where the scanner looks. Either the
     // state hides it (an unchecked tick) or the real backdrop is a sibling, pseudo-element or
     // image the ancestor walk cannot see. Counted, not reported; a human sees these at once.
-    if (got < 1.1) { skipped.invisible++; continue; }
+    // In the screens matrix (strict) every backdrop is known, so near-equal colours are a real
+    // failure: white text on a cream window (the «Бодсон 3 с» line, screens.8) measures 1.07.
+    if (got < 1.1 && !strict) { skipped.invisible++; continue; }
     if (got < need - 0.005 && off) disabled.add(got.toFixed(2) + " " + (isSvg ? "glyph" : "text") + " " + el.tagName.toLowerCase() + "." + String(el.className.baseVal ?? el.className).split(" ")[0] + (text ? " «" + text.slice(0, 32) + "»" : ""));
     else if (got < need - 0.005) out.add(got.toFixed(2) + " " + hex(fg) + "/" + hex(bg) + " " + (isSvg ? "glyph" : "text") + " " + el.tagName.toLowerCase() + "." + String(el.className.baseVal ?? el.className).split(" ")[0] + (text ? " «" + text.slice(0, 32) + "»" : ""));
   }
@@ -83,13 +89,13 @@ let total = 0;
 let invisible = 0;
 const exceptions = [];
 let current = "";
-const scan = async (selector, exclude) => {
-  const r = (await page.evaluate(SCAN(selector, exclude))) ?? { hits: [], skipped: { invisible: 0 }, disabled: [] };
+const scan = async (selector, exclude, strict = false) => {
+  const r = (await page.evaluate(SCAN(selector, exclude, strict))) ?? { hits: [], skipped: { invisible: 0 }, disabled: [] };
   invisible += r.skipped.invisible;
   exceptions.push(...r.disabled.map((d) => `${current} ${d}`));
   return r.hits;
 };
-for (const theme of arg("themes", "light,dark").split(",")) {
+for (const theme of process.argv.includes("--screens-only") ? [] : arg("themes", "light,dark").split(",")) {
   await setTheme(page, base, theme);
   for (const slug of list) {
     await openSlug(page, base, slug, theme);
@@ -99,6 +105,22 @@ for (const theme of arg("themes", "light,dark").split(",")) {
     if (hits.length) {
       total += hits.length;
       console.log(`${theme.padEnd(5)} ${slug}`);
+      for (const h of hits) console.log("      " + h);
+    }
+  }
+}
+if (!process.argv.includes("--no-screens")) {
+  await page.send("Page.navigate", { url: `${base}/contrast.html` });
+  for (let i = 0; i < 40 && !(await page.evaluate(`document.querySelectorAll("[data-contrast-case]").length`)); i++) await wait(250);
+  await wait(1500);
+  const cases = await page.evaluate(`[...document.querySelectorAll("[data-contrast-case]")].map((e) => e.dataset.contrastCase)`);
+  if (!cases?.length) { console.log("contrast.html: no cases rendered"); process.exitCode = 1; }
+  for (const c of cases ?? []) {
+    current = c;
+    const hits = await scan(`[data-contrast-case="${c}"]`, "", true);
+    if (hits.length) {
+      total += hits.length;
+      console.log(c);
       for (const h of hits) console.log("      " + h);
     }
   }
