@@ -80,3 +80,10 @@ export { ScenarioChat, scenarioChatLabelsMn } from "../ui/scenario-chat";
 export type { ChatScenario, ChatSourceType, ScenarioChatLabels, ScenarioChatProps } from "../ui/scenario-chat";
 export { AgentConsent, agentConsentLabelsMn } from "../ui/agent-consent";
 export type { AgentConsentLabels, AgentConsentProps, ConsentDecision, ConsentRisk, ConsentScope } from "../ui/agent-consent";
+
+// Second Brain app screens (2026-11-17): one screen library for inai.sh, social and Journal.
+// Glass window + six screens; data via props. acmeDemo = the made-up ACME case (no real people).
+export { AppScreen, AppWindow, InboxScreen, NoteScreen, ProjectScreen, ChatScreen, MemoryScreen, TeamScreen, SCREENS, appScreenLabelsMn } from "../screens/app-screens";
+export type { AppScreenProps, AppWindowProps, AppScreenLabels, ScreenKey, ScreenTheme, WindowVariant } from "../screens/app-screens";
+export { acmeDemo } from "../screens/acme";
+export type { ScreenData, InboxItem, AtomNote, NoteLink, AppProject, ProjectTask, CaptureKind } from "../screens/acme";
