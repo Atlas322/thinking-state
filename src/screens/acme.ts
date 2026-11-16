@@ -81,7 +81,7 @@ export const acmeDemo: ScreenData = {
     kind: "Шийдвэр",
     date: "2026-11-14",
     body: [
-      "ACME-ийн шинэ харилцагчдын 62% нь хамгийн хямд багцыг сонгоод, гурван сарын дотор дээд багц руу шилждэг.",
+      "ACME компанийн шинэ харилцагчдын 62% нь хамгийн хямд багцыг сонгоод, гурван сарын дотор дээд багц руу шилждэг.",
       "Тиймээс дунд түвшин нэмж, шилжих алхмыг богиносгоно. Дээд багцын үнэ хэвээр.",
     ],
     source: "Харилцагчийн хадгалалтын тайлан 2026 · 3-р улирлын борлуулалт",
@@ -142,7 +142,7 @@ export const acmeDemo: ScreenData = {
     ],
     running: [
       { id: "r1", title: "Үнийн хүснэгтийн ноорог", step: "Хувилбаруудыг харьцуулж байна", done: 3, total: 5, state: "running" },
-      { id: "r2", title: "Нийлүүлэлтийн хоцролт", step: "Таны шийдвэр хэрэгтэй", done: 2, total: 4, state: "needs-you" },
+      { id: "r2", title: "Нийлүүлэлтийн хоцролт", step: "Шийдвэр хэрэгтэй", done: 2, total: 4, state: "needs-you" },
       { id: "r3", title: "Долоо хоногийн тойм", step: "Бэлэн", done: 4, total: 4, state: "done" },
     ],
   },
@@ -150,7 +150,7 @@ export const acmeDemo: ScreenData = {
     { id: "m1", text: "Хямдралыг зөвхөн жилийн төлбөрт өгнө", category: "Шийдвэр", source: "Атомаас", date: "11/02" },
     { id: "m2", text: "Үнийн өөрчлөлтийг сарын 1-нд л зарлана", category: "Шийдвэр", source: "Чатаас", date: "11/10" },
     { id: "m3", text: "Дунд түвшин нэмэхээр шийдсэн", category: "Шийдвэр", source: "Атомаас", date: "11/14" },
-    { id: "m4", text: "Баасан гараг бүр борлуулалтын тойм гаргана", category: "Хэмнэл", source: "Таны нэмсэн", date: "10/28" },
+    { id: "m4", text: "Баасан гараг бүр борлуулалтын тойм гаргана", category: "Хэмнэл", source: "Гараар нэмсэн", date: "10/28" },
     { id: "m5", text: "Тайланг эхлээд нэг өгүүлбэрээр, дараа нь задална", category: "Хэв маяг", source: "Чатаас", date: "10/30" },
     { id: "m6", text: "Санхүүгийн тооцоог Санхүүгийн агент баталгаажуулна", category: "Баг", source: "Багийн самбараас", date: "11/05" },
     { id: "m7", text: "Нийлүүлэгчийн хоцролтыг 24 цагт мэдэгдэнэ", category: "Хэмнэл", source: "Имэйлээс", date: "11/17", paused: true },
@@ -164,7 +164,7 @@ export const acmeDemo: ScreenData = {
     ],
     sessions: [
       { id: "price", title: "Үнийн шинэчлэл", line: "Гурван түвшний хүснэгтийг харьцуулж байна", state: "running", group: "projects", owner: "Борлуулалт", sharedWith: ["Санхүү"] },
-      { id: "price-fin", title: "Санхүүгийн нөлөөлөл", line: "Таны шийдвэрийг хүлээж байна: дунд түвшний үнэ", state: "waiting", group: "projects", parent: "price", owner: "Санхүү" },
+      { id: "price-fin", title: "Санхүүгийн нөлөөлөл", line: "Шийдвэр хүлээж байна: дунд түвшний үнэ", state: "waiting", group: "projects", parent: "price", owner: "Санхүү" },
       { id: "price-web", title: "Үнийн хуудас", line: "Ноорог бэлэн, нийтлэхээс өмнө зөвшөөрөл", state: "done", group: "projects", parent: "price", owner: "Вэб" },
       { id: "stock", title: "Агуулахын шилжилт", line: "Нийлүүлэлтийн хоцролтыг төлөвлөгөөнд оруулж байна", state: "running", group: "projects", owner: "Үйл ажиллагаа" },
       { id: "onb", title: "Шинэ ажилтны чиглүүлэг", line: "Нэг хуудсын ноорог хүлээгдэж байна", state: "idle", group: "areas", owner: "Хүний нөөц" },

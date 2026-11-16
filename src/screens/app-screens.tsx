@@ -318,7 +318,7 @@ export function MemoryScreen({ data }: { data: ScreenData }) {
   return (
     <div style={{ maxWidth: 760, margin: "0 auto" }}>
       <h1 className="aps-h1">Санах ой</h1>
-      <p className="aps-sub">Агент юуг санаж байгааг та харж, засаж, мартуулна. Бүгд эх сурвалжтай.</p>
+      <p className="aps-sub">Агент юуг санаж байгааг хүн харж, засаж, мартуулна. Бүгд эх сурвалжтай.</p>
       <MemoryPanel memories={data.memories} categories={data.memoryCategories} title={`${data.company}-ийн санах ой`} maxHeight={520} />
     </div>
   );
