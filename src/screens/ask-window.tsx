@@ -81,8 +81,9 @@ export type AskWindowProps = {
 };
 export type AskPhase = "ask" | "think" | "sources" | "answer" | "done";
 
-const I = (d: React.ReactNode, size = 15) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>
+// Line icons follow the library tokens (--ts-icon-size, --ts-icon-stroke); a size argument overrides the size only.
+const I = (d: React.ReactNode, size?: number) => (
+  <svg width={size ?? 14} height={size ?? 14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ width: size ?? "var(--ts-icon-size,14px)", height: size ?? "var(--ts-icon-size,14px)", strokeWidth: "var(--ts-icon-stroke,1.25)" }}>{d}</svg>
 );
 // Lucide shapes (ISC): inbox, sun, folder, circle-dot, book-open, bot, message-circle, square-pen, arrow-up.
 const NAV_ICON: Record<AskNavItem["icon"], React.ReactNode> = {
@@ -104,20 +105,20 @@ const CSS = `
 .aw-dots{display:flex;gap:5px}.aw-dots i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--ts-faint) 35%,transparent)}
 .aw-title{flex:1;text-align:center;font-weight:500;font-size:12px;color:var(--ts-faint);margin-right:34px}
 .aw-split{display:flex;height:400px}
-.aw-side{width:184px;flex:none;border-right:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);background:var(--ts-soft);padding:8px 6px;display:flex;flex-direction:column;gap:1px;overflow:hidden}
-.aw-ws{display:flex;align-items:center;gap:8px;padding:6px 6px 10px}
+.aw-side{width:164px;flex:none;border-right:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);background:var(--ts-soft);padding:var(--ts-space-2,8px);display:flex;flex-direction:column;gap:1px;overflow:hidden}
+.aw-ws{display:flex;align-items:center;gap:var(--ts-space-2,8px);padding:2px 0 var(--ts-space-2,8px)}
 .aw-ws b{width:22px;height:22px;border-radius:var(--ts-radius,6px);display:grid;place-items:center;background:var(--ts-fg);color:var(--ts-surface);font-size:11px;font-weight:600;flex:none}
 .aw-ws span{display:flex;flex-direction:column;line-height:1.25;min-width:0}
 .aw-ws strong{font-weight:500;font-size:13px}
 .aw-ws small{font-size:11px;color:var(--ts-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.aw-item{position:relative;display:flex;align-items:center;gap:8px;height:28px;padding:0 8px;border:0;border-radius:var(--ts-radius,6px);background:none;font:inherit;font-size:13px;color:var(--ts-muted);text-align:left;cursor:pointer;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aw-item{position:relative;display:flex;align-items:center;gap:6px;height:26px;padding:0 6px;border:0;border-radius:var(--ts-radius,6px);background:none;font:inherit;font-size:13px;color:var(--ts-muted);text-align:left;cursor:pointer;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .aw-item svg{flex:none;color:var(--ts-faint)}
 .aw-item:hover{background:color-mix(in srgb,var(--ts-fg) 6%,transparent);color:var(--ts-fg)}
 .aw-item[aria-current="true"]{background:color-mix(in srgb,var(--ts-fg) 8%,transparent);color:var(--ts-fg);font-weight:500}
 .aw-item[aria-current="true"] svg{color:var(--ts-electric-fg)}
 .aw-item small{margin-left:auto;font-size:11px;color:var(--ts-faint)}
 .aw-item>span{overflow:hidden;text-overflow:ellipsis}
-.aw-side h6{font-weight:500;font-size:11px;color:var(--ts-faint);margin:14px 8px 4px}
+.aw-side h6{font-weight:500;font-size:11px;color:var(--ts-faint);margin:var(--ts-space-3,12px) 6px 2px}
 .aw-new{color:var(--ts-fg)}
 /* Compact controls keep a 44px hit area through an invisible halo. */
 .aw-item::after,.aw-send::after,.aw .sp-chip::after{content:"";position:absolute;inset:50% auto auto 50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}
@@ -139,7 +140,7 @@ const CSS = `
 .aw-compose input{flex:1;min-width:0;height:26px;border:0;background:none;outline:0;font:inherit;font-size:13px;color:var(--ts-fg)}
 .aw-compose input::placeholder{color:var(--ts-faint)}
 .aw-send{position:relative;display:grid;place-items:center;flex:none;width:26px;height:26px;border:0;border-radius:var(--ts-radius,6px);background:var(--ts-electric);color:var(--ts-on-electric);cursor:pointer}
-.aw-send:focus-visible,.aw-item:focus-visible{outline:2px solid var(--ts-electric);outline-offset:1px}
+.aw-send:focus-visible,.aw-item:focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--ts-surface),0 0 0 2px var(--ts-electric)}
 .aw .ts-think,.aw [class*="thinking"]{font-size:13px}
 .aw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .aw-in{animation:aw-in ${motionVar.duration("md")} ${motionVar.easing("enter")} both}

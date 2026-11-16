@@ -174,6 +174,21 @@ builds `lib/`, runs the tests, commits `lib/` on `release/vX.Y.Z`, tags it,
 and returns to your branch. Push with `git push origin release/vX.Y.Z vX.Y.Z`.
 `lib/` is git-ignored everywhere else, so it never lands in a PR.
 
+## Icons, brand logos and focus rings (rules, locked by `src/icon-and-ring.test.tsx`)
+
+- **Line icons** (Lucide-style strokes) follow two tokens in `tokens.css`:
+  `--ts-icon-size: 14px` and `--ts-icon-stroke: 1.25`. Change them there and
+  every line icon changes; do not hard-code a stroke width in a component.
+- **Brand logos** (`SourceIcon brand="slack"`, the `BRAND_LOGO` marks from
+  svgl.app) are not line icons. In a source chip they show the official colour
+  mark at 14 px, unmodified: no recolouring, filter, stroke or crop. The
+  journal/b2 chips are the reference. The icon tokens never apply to them.
+- **Focus and selected rings** on chips, buttons and tabs are 1 px and follow
+  the corner radius: a selected chip changes its 1 px `border-color`; a
+  keyboard focus ring is `box-shadow: 0 0 0 1px <surface>, 0 0 0 2px <accent>`
+  with `outline: 1px solid transparent` kept for forced-colors mode. No 2 px
+  outlines (older Safari draws outlines square).
+
 ## Validate and build
 
 ```sh

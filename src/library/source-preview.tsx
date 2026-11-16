@@ -123,7 +123,7 @@ export function SourceIcon({ kind, size = 16, tile = true, logo, brand }: { kind
   }
   const glyph = kind === "brand" && logo
     ? <span className="sp-letter" style={{ display: "grid", placeItems: "center", width: size, height: size, flex: "none", overflow: "hidden" }}>{logo}</span>
-    : <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{SOURCE_ICON[kind === "brand" ? "document" : kind]}</svg>;
+    : <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" style={{ strokeWidth: "var(--ts-icon-stroke,1.25)" }} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{SOURCE_ICON[kind === "brand" ? "document" : kind]}</svg>;
   if (!tile) return glyph;
   return (
     <span
@@ -152,7 +152,8 @@ const CSS = `
 .sp-chip>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sp-chip:hover{border-color:var(--ts-faint)}
 .sp-chip[aria-expanded="true"]{border-color:var(--ts-electric);color:var(--ts-electric-fg)}
-.sp-chip:focus-visible,.sp-open:focus-visible,.sp-x:focus-visible{outline:2px solid var(--ts-electric);outline-offset:2px}
+/* Rings are box-shadows so they follow --ts-radius in every browser (older Safari draws outlines square); 1px line, keyboard only. The transparent outline stays for forced-colors mode. */
+.sp-chip:focus-visible,.sp-open:focus-visible,.sp-x:focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--ts-surface),0 0 0 2px var(--ts-electric)}
 .sp-pop{position:absolute;left:0;z-index:20;width:340px;max-width:calc(100vw - 32px);padding:16px;border:1px solid var(--ts-line);border-radius:var(--ts-radius,6px);background:var(--ts-surface);box-shadow:var(--ts-elevation);animation:sp-in .16s ease-out both}
 .sp-pop[data-placement="bottom"]{top:calc(100% + 8px)}.sp-pop[data-placement="top"]{bottom:calc(100% + 8px)}
 @keyframes sp-in{from{opacity:0;transform:translateY(4px)}}

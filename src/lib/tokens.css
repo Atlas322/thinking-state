@@ -288,6 +288,17 @@
 }
 
 /*
+ * Line icons (2026-11-17): Lucide-style stroke icons are 14 px with a 1.25
+ * stroke, so they read sharp and fine next to 13 px text. One place to change
+ * them everywhere. Brand logos (SourceIcon brand=…) are NOT line icons: they
+ * keep their own colours and size and never take these tokens.
+ */
+:where(:root) {
+  --ts-icon-size: 14px;
+  --ts-icon-stroke: 1.25;
+}
+
+/*
  * Motion (--ts-motion-*): durations, easings and springs, theme-independent.
  * Springs are physical (src/motion/spring.ts) rendered as CSS linear() curves;
  * pair --ts-motion-spring-NAME with --ts-motion-spring-NAME-duration.
