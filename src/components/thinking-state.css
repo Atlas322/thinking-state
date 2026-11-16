@@ -36,6 +36,19 @@
   --thinking-shadow:
     0 0 0 0.5px rgb(255 255 255 / 7%), 0 1px 2px rgb(0 0 0 / 15%);
 }
+/* A light island (data-theme=light, e.g. a light AskWindow) inside a dark page keeps light colours. */
+:where(.dark, [data-theme="dark"]) :where([data-theme="light"], .light) .thinking-state,
+.thinking-state:where([data-theme="light"], .light) {
+  --thinking-fg: rgb(0 0 0 / 88%);
+  --thinking-muted: rgb(0 0 0 / 61%);
+  --thinking-line: rgb(0 0 0 / 8%);
+  --thinking-dot: rgb(0 0 0 / 25%);
+  --thinking-blue: #4d80ed;
+  --thinking-chip: #fff;
+  --thinking-hover: #f4f4f5;
+  --thinking-tip: #fff;
+  --thinking-shadow: 0 0 0 .5px rgb(0 0 0 / 6%), 0 1px 1px -1px rgb(0 0 0 / 10%), 0 1px 2px rgb(0 0 0 / 5%);
+}
 .thinking-state *,
 .thinking-state *::before,
 .thinking-state *::after {

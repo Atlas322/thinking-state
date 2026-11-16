@@ -74,6 +74,8 @@ export type AskWindowProps = {
   /** "auto" (default): plays the run once when it comes into view — question, thinking, sources light up,
    * the answer streams in with its citations. "static": the finished state. Reduced motion is always static. */
   play?: "auto" | "static";
+  /** Freeze the window at one phase of the run (docs, screenshots, the contrast check). Overrides play. */
+  phase?: AskPhase;
   /** Each phase of the run as it starts — for syncing e.g. the hero's brain pulse. */
   onPhase?: (phase: AskPhase) => void;
   labels?: Partial<AskWindowLabels>;
@@ -168,6 +170,7 @@ export function AskWindow({
   onNavigate,
   thinking = [],
   play = "auto",
+  phase,
   onPhase,
   labels: labelsIn,
   className = "",
@@ -190,10 +193,14 @@ export function AskWindow({
   }, [thinking.length, sources.length, answer.length]);
   const run = useScenario<Frame, HTMLDivElement>(frames, { loops: 1, rest: 0 });
   // Plays once: after the first finish it stays finished, even when the hero scrolls out and back in.
+  // New content (a different question or answer) plays again.
   const finished = React.useRef(false);
+  const finishedFor = React.useRef(frames);
+  if (finishedFor.current !== frames) { finishedFor.current = frames; finished.current = false; }
   const last = frames[frames.length - 1].state;
   if (run.state?.phase === "done") finished.current = true;
-  const f = play === "static" || run.loopState === "paused" || finished.current ? last : run.state ?? last;
+  const frozen = phase ? [...frames].reverse().find((x) => x.state.phase === phase)?.state : undefined;
+  const f = frozen ?? (play === "static" || run.loopState === "paused" || finished.current ? last : run.state ?? last);
   const animate = f !== last || run.playing;
   // The latest callback by ref: a new inline onPhase each render must not re-fire the same phase.
   const onPhaseRef = React.useRef(onPhase);

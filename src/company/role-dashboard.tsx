@@ -171,7 +171,7 @@ const CSS = `
 .rd-dot{width:10px;height:10px;border-radius:50%}
 .rd-dot[data-k="late"]{background:var(--ts-red)}.rd-dot[data-k="waiting"]{background:var(--ts-amber)}.rd-dot[data-k="soon"]{background:var(--ts-electric)}
 .rd-chip{font:500 11px var(--ts-mono,"IBM Plex Mono",monospace);padding:3px 8px;border-radius:var(--ts-radius,6px);white-space:nowrap;border:1px solid currentColor}
-.rd-chip[data-k="late"]{color:var(--ts-red)}.rd-chip[data-k="waiting"]{color:var(--ts-amber)}.rd-chip[data-k="soon"]{color:var(--ts-electric-fg)}
+.rd-chip[data-k="late"]{color:var(--ts-red)}.rd-chip[data-k="waiting"]{color:var(--ts-status-needs-you-fg)}.rd-chip[data-k="soon"]{color:var(--ts-on-accent-soft)}
 .rd-empty{margin:0;font-size:14px;color:var(--ts-faint);font-style:italic}
 .rd-appr{border:1px solid var(--ts-electric);border-radius:var(--ts-radius,6px);padding:12px;display:flex;flex-direction:column;gap:8px;background:color-mix(in srgb,var(--ts-electric-soft) 55%,var(--ts-page))}
 .rd-appr b{font-size:14px;font-weight:600}

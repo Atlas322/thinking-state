@@ -89,14 +89,15 @@ const CSS = `
 .aps-next{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:var(--aps-r);background:#ff7a1a;color:#1a0d00;font:600 var(--aps-label) var(--aps-mono);letter-spacing:.04em}
 .aps-next span{font:500 12px var(--aps-sans);letter-spacing:0}
 .aps-chip{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--aps-r);font-size:var(--aps-small);color:var(--ts-muted);background:var(--ts-soft,#efebe1)}
-.aps-chip.e{color:var(--ts-electric-fg,#1b5cff);background:var(--ts-electric-soft,#dce5ff)}
+.aps-chip.e{color:var(--ts-on-accent-soft,#0f3fb8);background:var(--ts-electric-soft,#dce5ff)}
 .aps-capture{display:flex;align-items:center;gap:10px;padding:14px 16px;margin-bottom:18px}
 .aps-capture input{flex:1;border:0;background:none;font:15px var(--aps-sans);color:var(--ts-fg);outline:0}
 .aps-key{font:500 var(--aps-label) var(--aps-mono);color:var(--ts-faint);border:1px solid var(--ts-line);border-radius:var(--aps-r);padding:2px 6px}
 .aps-list{display:flex;flex-direction:column}
 .aps-row{display:grid;grid-template-columns:40px 1fr auto;gap:14px;align-items:center;padding:18px 20px;border-top:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent)}
 .aps-row:first-child{border-top:0}
-.aps-row.done{opacity:.55}
+/* A filed item steps back by colour, not opacity, so its text keeps 4.5:1. */
+.aps-row.done b,.aps-row.done .aps-meta,.aps-row.done .aps-chip{color:var(--ts-muted)}.aps-row.done b{font-weight:400}
 .aps-ico{width:40px;height:40px;align-self:start;border-radius:var(--aps-r);display:grid;place-items:center;background:var(--ts-soft);color:var(--ts-muted)}
 .aps-row b{font-weight:500;font-size:var(--aps-body);display:block;margin-bottom:3px}
 .aps-meta{font-size:var(--aps-small);color:var(--ts-faint);display:flex;gap:8px;align-items:center;flex-wrap:wrap}

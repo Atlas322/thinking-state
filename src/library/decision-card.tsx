@@ -389,7 +389,7 @@ const css = `
 .dc-num{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:var(--ts-radius,5px);background:var(--dc-soft);color:var(--dc-muted);font-size:11.5px;font-variant-numeric:tabular-nums}
 .dc-body{display:flex;flex-direction:column;min-width:0}
 .dc-title{display:flex;align-items:center;gap:8px}
-.dc-rec{height:17px;padding:0 5px;border-radius:var(--ts-radius,4px);background:color-mix(in srgb,var(--dc-accent) 12%,transparent);color:var(--dc-accent);font-size:10.5px;font-weight:500;line-height:17px}
+.dc-rec{height:17px;padding:0 5px;border-radius:var(--ts-radius,4px);background:color-mix(in srgb,var(--dc-accent) 12%,transparent);color:color-mix(in srgb,var(--dc-accent) 65%,var(--dc-fg));font-size:10.5px;font-weight:500;line-height:17px}
 .dc-sum{color:var(--dc-muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dc-own{margin:4px -6px 0;cursor:text}
 .dc-own input{flex:1;min-width:0;height:28px;border:0;background:none;outline:none;color:var(--dc-fg);font:inherit;border-bottom:1px solid transparent}
