@@ -66,6 +66,10 @@ export type BuildWizardProps = {
   /** MethodQuiz content (method-quiz JSON); without it «Мэдэхгүй байна» picks the fallback method. */
   quiz?: Pick<MethodQuizProps, "questions" | "methods" | "note">;
   defaultAnswers?: WizardAnswers;
+  /** Pre-picks the branch (segment), e.g. from `build.html?segment=team`. Unknown values are ignored;
+   * aliases map other names onto a recipe option (institutional → company). */
+  segment?: string | null;
+  segmentAliases?: Record<string, string>;
   /** Index among the steps visible for the answers. */
   defaultStep?: number;
   theme?: "light" | "dark";
@@ -103,6 +107,26 @@ const fieldsFor = (s: WizardStep, a: WizardAnswers, branchKey?: string): WizardF
   return raw.filter((f) => shown(f.show_if, a)).map((f) => resolveField(f, a, branchKey));
 };
 const MODEL_KEYS = ["customers", "channels", "revenue", "partners", "activities", "resources", "relationships", "costs", "problem", "solution", "metrics", "advantage"];
+
+/** Other names a link may use for a segment; the recipe's own option values win. */
+export const SEGMENT_ALIASES: Record<string, string> = { institutional: "company", institution: "company", organization: "company", individual: "personal", solo: "personal" };
+
+/** A segment from a link (`?segment=`) → one of the recipe's branch options, or undefined. */
+export function resolveSegment(recipe: WizardRecipe, value?: string | null, aliases: Record<string, string> = SEGMENT_ALIASES): string | undefined {
+  if (!value) return undefined;
+  const key = recipe.branch_key ?? "segment";
+  const field = recipe.steps.flatMap((s) => s.fields ?? []).find((f) => f.key === key);
+  const options = (field?.options ?? []).map((o) => (typeof o === "string" ? o : o.value));
+  const v = value.trim().toLowerCase();
+  if (options.includes(v)) return v;
+  const alias = aliases[v];
+  return alias && options.includes(alias) ? alias : undefined;
+}
+
+/** Reads `?segment=` from a URL search string (the host passes it on). */
+export function segmentFromSearch(search: string): string | null {
+  return new URLSearchParams(search).get("segment");
+}
 
 /** Answers → a draft Company (contract unchanged). Empty answers stay out; people are roles, not names. */
 export function toDraftCompany(recipe: WizardRecipe, a: WizardAnswers): Company {
@@ -270,11 +294,14 @@ const check = <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke
 const arrow = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>;
 const plus = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>;
 
-export function BuildWizard({ recipe, quiz, defaultAnswers = {}, defaultStep = 0, theme = "light", onComplete, onCta, labels: labelsIn, className = "" }: BuildWizardProps) {
+export function BuildWizard({ recipe, quiz, defaultAnswers = {}, segment, segmentAliases = SEGMENT_ALIASES, defaultStep = 0, theme = "light", onComplete, onCta, labels: labelsIn, className = "" }: BuildWizardProps) {
   const labels = { ...buildWizardLabelsMn, ...labelsIn };
   const uid = React.useId();
   const branchKey = recipe.branch_key ?? "segment";
-  const [a, setA] = React.useState<WizardAnswers>(defaultAnswers);
+  const [a, setA] = React.useState<WizardAnswers>(() => {
+    const seg = resolveSegment(recipe, segment, segmentAliases);
+    return seg && !defaultAnswers[branchKey] ? { ...defaultAnswers, [branchKey]: seg } : defaultAnswers;
+  });
   const [step, setStep] = React.useState(defaultStep);
   const [quizOpen, setQuizOpen] = React.useState(false);
   const [custom, setCustom] = React.useState<Record<string, string>>({});

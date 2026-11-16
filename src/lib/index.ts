@@ -105,7 +105,7 @@ export { MethodQuiz, methodQuizDemo, methodQuizLabelsMn, scoreMethods } from "..
 export type { MethodQuizLabels, MethodQuizProps, QuizMethod, QuizOption, QuizQuestion } from "../screens/method-quiz";
 
 // Build Wizard: the build page's four-step «Бүтээх горим» → a draft Company (MethodQuiz inside step 2)
-export { BuildWizard, buildWizardLabelsMn, toDraftCompany } from "../screens/build-wizard";
+export { BuildWizard, SEGMENT_ALIASES, buildWizardLabelsMn, resolveSegment, segmentFromSearch, toDraftCompany } from "../screens/build-wizard";
 export type { BuildWizardLabels, BuildWizardProps, WizardAnswers, WizardField, WizardOption, WizardRecipe, WizardStep } from "../screens/build-wizard";
 
 // Role Dashboard: one company from one position (burning first, agent proposals to approve, timeline, brief)

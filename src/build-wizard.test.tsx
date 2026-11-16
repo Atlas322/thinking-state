@@ -69,3 +69,29 @@ describe("BuildWizard (recipe v05, adaptive)", () => {
     expect(d.collections?.map((c) => c.type)).toEqual(["habit"]);
   });
 });
+
+import { resolveSegment, segmentFromSearch } from "./screens/build-wizard";
+describe("BuildWizard ?segment= (4 brain pages)", () => {
+  it("maps the link's segment onto a recipe option", () => {
+    expect(segmentFromSearch("?segment=team&x=1")).toBe("team");
+    for (const [v, want] of [["personal", "personal"], ["team", "team"], ["company", "company"], ["institutional", "company"], ["TEAM", "team"], ["nope", undefined], [null, undefined]] as const)
+      expect(resolveSegment(buildRecipeDemo, v), String(v)).toBe(want);
+  });
+  it("pre-picks the segment: the steps and the time line follow it", () => {
+    render(<BuildWizard recipe={buildRecipeDemo} segment="personal" />);
+    expect((screen.getByLabelText(/Ганцаараа/) as HTMLInputElement).checked).toBe(true);
+    expect(screen.getByText(/≈5 минут · 5 алхам/)).toBeTruthy();
+    expect(screen.getByText("1 / 5")).toBeTruthy();
+  });
+  it("institutional opens the company branch; an unknown value leaves the choice open", () => {
+    const { unmount } = render(<BuildWizard recipe={buildRecipeDemo} segment="institutional" />);
+    expect((screen.getByLabelText(/Олон хэлтэстэй байгууллага/) as HTMLInputElement).checked).toBe(true);
+    unmount();
+    render(<BuildWizard recipe={buildRecipeDemo} segment="other" />);
+    expect(screen.getAllByRole("radio").some((r) => (r as HTMLInputElement).checked)).toBe(false);
+  });
+  it("an answer already given wins over the link", () => {
+    render(<BuildWizard recipe={buildRecipeDemo} segment="personal" defaultAnswers={{ segment: "team" }} />);
+    expect((screen.getByLabelText(/Нэг баг/) as HTMLInputElement).checked).toBe(true);
+  });
+});
