@@ -37,7 +37,7 @@
 .rp-measure { max-width: 68ch; }
 
 /* Type scale (Stratic 12·14·16·22·27·40·64·83; headings follow the token head font and weight) */
-.rp h1, .rp h2, .rp h3 { font-family: var(--ts-font-head, Spectral, Georgia, serif); font-weight: var(--ts-head-weight, 600); letter-spacing: var(--ts-head-tracking, -0.02em); color: var(--ts-fg); text-wrap: balance; margin: 0 0 var(--ts-space-4, 16px); }
+.rp h1, .rp h2, .rp h3 { scroll-margin-top: var(--ts-space-5, 24px); overflow-wrap: anywhere; font-family: var(--ts-font-head, Spectral, Georgia, serif); font-weight: var(--ts-head-weight, 600); letter-spacing: var(--ts-head-tracking, -0.02em); color: var(--ts-fg); text-wrap: balance; margin: 0 0 var(--ts-space-4, 16px); }
 .rp h1 { font-size: clamp(40px, 6vw, 83px); line-height: 1.02; letter-spacing: -0.02em; }
 .rp h2 { font-size: clamp(27px, 3.4vw, 40px); line-height: 1.1; margin-top: var(--ts-space-7, 48px); }
 .rp h3 { font-size: 22px; line-height: 1.2; margin-top: var(--ts-space-5, 24px); }
@@ -65,7 +65,7 @@
 .rp figcaption { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; font: 500 12px/1.4 var(--ts-font-mono); color: var(--ts-faint); }
 
 /* Changelog rows (Journal lane): date · version · kind · text */
-.rp-log { border-top: 1px solid var(--ts-fg); font-size: 15px; line-height: 1.5; }
+.rp-log { border-top: 1px solid var(--ts-fg); font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
 .rp-log > div { display: grid; grid-template-columns: 130px 120px 110px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--ts-line); }
 .rp-k { justify-self: start; font: 500 11px/1 var(--ts-font-mono); text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: var(--ts-radius-tile, 6px); background: var(--ts-soft-2); color: var(--ts-fg); }
 .rp-k.is-added { background: var(--ts-electric); color: var(--ts-on-electric, #fff); }
