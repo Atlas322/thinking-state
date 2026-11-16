@@ -26,6 +26,7 @@ export default defineConfig({
         "cash-river": resolve(import.meta.dirname, "src/lib/entries/cash-river.ts"),
         "ceo-daily": resolve(import.meta.dirname, "src/lib/entries/ceo-daily.ts"),
         "cited-answer": resolve(import.meta.dirname, "src/lib/entries/cited-answer.ts"),
+        "content-pipeline": resolve(import.meta.dirname, "src/lib/entries/content-pipeline.ts"),
         "converge-net": resolve(import.meta.dirname, "src/lib/entries/converge-net.ts"),
         "finance-report": resolve(import.meta.dirname, "src/lib/entries/finance-report.ts"),
         "method-quiz": resolve(import.meta.dirname, "src/lib/entries/method-quiz.ts"),

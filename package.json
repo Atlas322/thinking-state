@@ -44,6 +44,10 @@
       "types": "./lib/types/lib/entries/cited-answer.d.ts",
       "import": "./lib/cited-answer.js"
     },
+    "./content-pipeline": {
+      "types": "./lib/types/lib/entries/content-pipeline.d.ts",
+      "import": "./lib/content-pipeline.js"
+    },
     "./converge-net": {
       "types": "./lib/types/lib/entries/converge-net.d.ts",
       "import": "./lib/converge-net.js"

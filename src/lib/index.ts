@@ -122,3 +122,5 @@ export { RoleDashboard, findPerson, roleDashboardLabelsMn, roleView } from "../c
 export type { RoleDashboardLabels, RoleDashboardProps, RoleView } from "../company/role-dashboard";
 export { ConvergeNet, convergeNetDemo, drawConvergeNet, convergeNetLayout } from "../motion/converge-net";
 export type { ConvergeNetProps } from "../motion/converge-net";
+export { ContentPipeline, contentPipelineDemo } from "../screens/content-pipeline";
+export type { ContentPipelineProps, PipelineStep, PipelineActor } from "../screens/content-pipeline";

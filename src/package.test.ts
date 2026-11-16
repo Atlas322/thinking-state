@@ -30,7 +30,7 @@ function reachable(entry: string, seen = new Set<string>()) {
 describe("@inai/thinking-state package", () => {
   it("is named and exported for git installs", () => {
     expect(pkg.name).toBe("@inai/thinking-state");
-    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./studio", "./app-shell", "./ask-window", "./build-wizard", "./cash-river", "./ceo-daily", "./cited-answer", "./converge-net", "./finance-report", "./method-quiz", "./role-dashboard", "./source-preview", "./thinking-state", "./tokens.css", "./site.css", "./ts.css", "./report.css", "./package.json"]);
+    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./studio", "./app-shell", "./ask-window", "./build-wizard", "./cash-river", "./ceo-daily", "./cited-answer", "./content-pipeline", "./converge-net", "./finance-report", "./method-quiz", "./role-dashboard", "./source-preview", "./thinking-state", "./tokens.css", "./site.css", "./ts.css", "./report.css", "./package.json"]);
     expect(pkg.files).toContain("lib");
     expect(pkg.peerDependencies.react).toMatch(/\^19/);
     expect((pkg.dependencies as Record<string, string>).react).toBeUndefined();
