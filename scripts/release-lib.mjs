@@ -27,6 +27,20 @@ if (`v${version}` !== tag) {
   console.error(`package.json version is ${version}; bump it to ${tag.slice(1)} first.`);
   process.exit(1);
 }
+// Guard (2026-11-17): a tag is cut once. If it already exists here or on origin, stop — never move a
+// published tag; bump to the next version instead.
+const localTag = out(`git tag -l ${tag}`);
+let remoteTag = "";
+try {
+  remoteTag = out(`git ls-remote --tags origin refs/tags/${tag}`);
+} catch {
+  console.error(`Could not reach origin to check whether ${tag} exists. Check the network and run again.`);
+  process.exit(1);
+}
+if (localTag || remoteTag) {
+  console.error(`${tag} already exists${remoteTag ? " on origin" : " locally"}. A published tag is never moved: bump package.json to the next version and release that.`);
+  process.exit(1);
+}
 // Guard (2026-11-17): the release is the version-bump commit itself. Work committed after the bump
 // (the next version started on the same branch) would slip into this tag, so stop and say which commits.
 const bump = out("git log -1 --format=%H -- package.json");
