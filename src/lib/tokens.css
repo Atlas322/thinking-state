@@ -40,6 +40,7 @@
   --ts-electric: #1b5cff;
   --ts-electric-fg: #1b5cff;
   --ts-electric-soft: #dce5ff;
+  --ts-on-electric: #ffffff;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
@@ -137,6 +138,7 @@
   /* #4D7FFF is for icons and large text; small accent text uses the lighter blue, filled buttons --ts-accent-strong */
   --ts-electric-fg: #7aa2ff;
   --ts-electric-soft: #16224a;
+  --ts-on-electric: #0b1020;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);

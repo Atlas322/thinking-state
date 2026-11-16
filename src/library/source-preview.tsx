@@ -6,7 +6,7 @@
  */
 import * as React from "react";
 
-export type SourceKind = "document" | "calendar" | "message" | "brand";
+export type SourceKind = "document" | "calendar" | "message" | "decision" | "meeting" | "note" | "link" | "brand";
 export type PreviewSource = {
   id: string;
   title: string;
@@ -25,7 +25,7 @@ export type SourcePreviewLabels = { open: string; close: string; kinds: Record<S
 export const sourcePreviewLabelsMn: SourcePreviewLabels = {
   open: "Апп-д нээх",
   close: "Хаах",
-  kinds: { document: "Баримт", calendar: "Календарь", message: "Мессеж", brand: "Апп" },
+  kinds: { document: "Баримт", calendar: "Календарь", message: "Мессеж", decision: "Шийдвэр", meeting: "Уулзалт", note: "Тэмдэглэл", link: "Холбоос", brand: "Апп" },
 };
 export type SourcePreviewProps = {
   source?: PreviewSource;
@@ -50,25 +50,40 @@ const demoSource: PreviewSource = {
   highlight: "62% нь гурван сарын дотор",
 };
 
-const glyphs: Record<Exclude<SourceKind, "brand">, React.ReactNode> = {
-  document: <><path d="M4 2h5.5L12 4.5V14H4Z" /><path d="M9.5 2v2.5H12M6 8.5h4M6 11h3" /></>,
-  calendar: <><rect x="2.5" y="3.5" width="11" height="10" rx="1.5" /><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" /></>,
-  message: <path d="M3 3h10v7H8l-3 3v-3H3Z" />,
+/**
+ * One icon per source kind. Shapes are copied from the Thinking State icon set (src/company/icons.tsx,
+ * Lucide, ISC): file-text, calendar-days, message-circle, git-branch, users-round, pencil, link.
+ * Stroke 1.5, currentColor — the tile and the theme give the colour.
+ */
+export const SOURCE_ICON: Record<Exclude<SourceKind, "brand">, React.ReactNode> = {
+  document: <><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></>,
+  calendar: <><path d="M8 2v4" /><path d="M16 2v4" /><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M3 10h18" /><path d="M8 14h.01" /><path d="M12 14h.01" /><path d="M16 14h.01" /><path d="M8 18h.01" /><path d="M12 18h.01" /><path d="M16 18h.01" /></>,
+  message: <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />,
+  decision: <><path d="M6 3v12" /><circle cx="18" cy="6" r="3" /><circle cx="6" cy="18" r="3" /><path d="M18 9a9 9 0 0 1-9 9" /></>,
+  meeting: <><path d="M18 21a8 8 0 0 0-16 0" /><circle cx="10" cy="8" r="5" /><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /></>,
+  note: <><path d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z" /><path d="m15 5 4 4" /></>,
+  link: <><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></>,
 };
 
-function KindIcon({ source, size = 16 }: { source: PreviewSource; size?: number }) {
-  if (source.kind === "brand") {
-    return (
-      <span className="sp-logo" style={{ width: size + 4, height: size + 4 }} aria-hidden="true">
-        {source.logo ?? (source.brandName ?? source.title).slice(0, 1)}
-      </span>
-    );
-  }
+/** The source-kind icon on its tile: token background, token border, currentColor glyph — the same in both themes. */
+export function SourceIcon({ kind, size = 16, tile = true, logo, letter }: { kind: SourceKind; size?: number; tile?: boolean; logo?: React.ReactNode; letter?: string }) {
+  const glyph = kind === "brand"
+    ? <span className="sp-letter" style={{ display: "grid", placeItems: "center", width: "100%", height: "100%", fontWeight: 600, fontSize: Math.max(11, size * 0.7), lineHeight: 1 }}>{logo ?? letter ?? "?"}</span>
+    : <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{SOURCE_ICON[kind]}</svg>;
+  if (!tile) return glyph;
   return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {glyphs[source.kind]}
-    </svg>
+    <span
+      className="sp-tile"
+      style={{ display: "inline-grid", placeItems: "center", flex: "none", boxSizing: "border-box", width: size + 12, height: size + 12, border: "1px solid var(--ts-faint)", borderRadius: "var(--ts-radius, 6px)", background: "var(--ts-soft)", color: "var(--ts-fg)" }}
+      aria-hidden="true"
+    >
+      {glyph}
+    </span>
   );
+}
+
+function KindIcon({ source, size = 16 }: { source: PreviewSource; size?: number }) {
+  return <SourceIcon kind={source.kind} size={size} tile={false} logo={source.logo} letter={(source.brandName ?? source.title).slice(0, 1)} />;
 }
 
 function Marked({ text, mark }: { text: string; mark?: string }) {
@@ -78,31 +93,31 @@ function Marked({ text, mark }: { text: string; mark?: string }) {
 }
 
 const CSS = `
-.sp{position:relative;display:inline-block;font-family:var(--ts-font,Inter,system-ui,sans-serif);color:var(--ts-fg,#141412)}
-.sp-chip{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:0 10px;border:1px solid var(--ts-line,#cfcabe);border-radius:var(--ts-radius,6px);background:var(--ts-surface,#f7f5ef);color:inherit;font-weight:500;font-size:14px;line-height:1;cursor:pointer;max-width:280px}
+.sp{position:relative;display:inline-block;font-family:var(--ts-font,Inter,system-ui,sans-serif);color:var(--ts-fg)}
+.sp-chip{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:0 10px;border:1px solid var(--ts-line);border-radius:var(--ts-radius,6px);background:var(--ts-surface);color:inherit;font-weight:500;font-size:14px;line-height:1;cursor:pointer;max-width:280px}
 .sp-chip>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sp-chip:hover{border-color:var(--ts-faint,#5c5a55)}
-.sp-chip[aria-expanded="true"]{border-color:var(--ts-electric,#1b5cff);color:var(--ts-electric-fg,#1b5cff)}
-.sp-chip:focus-visible,.sp-open:focus-visible,.sp-x:focus-visible{outline:2px solid var(--ts-electric,#1b5cff);outline-offset:2px}
-.sp-pop{position:absolute;left:0;z-index:20;width:340px;max-width:calc(100vw - 32px);padding:16px;border:1px solid var(--ts-line,#cfcabe);border-radius:var(--ts-radius,6px);background:var(--ts-surface,#f7f5ef);box-shadow:0 12px 32px -8px rgb(20 20 18/.22);animation:sp-in .16s ease-out both}
+.sp-chip:hover{border-color:var(--ts-faint)}
+.sp-chip[aria-expanded="true"]{border-color:var(--ts-electric);color:var(--ts-electric-fg)}
+.sp-chip:focus-visible,.sp-open:focus-visible,.sp-x:focus-visible{outline:2px solid var(--ts-electric);outline-offset:2px}
+.sp-pop{position:absolute;left:0;z-index:20;width:340px;max-width:calc(100vw - 32px);padding:16px;border:1px solid var(--ts-line);border-radius:var(--ts-radius,6px);background:var(--ts-surface);box-shadow:var(--ts-elevation);animation:sp-in .16s ease-out both}
 .sp-pop[data-placement="bottom"]{top:calc(100% + 8px)}.sp-pop[data-placement="top"]{bottom:calc(100% + 8px)}
 @keyframes sp-in{from{opacity:0;transform:translateY(4px)}}
 @media (prefers-reduced-motion:reduce){.sp-pop{animation:none}}
-.sp-head{display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:start}
-.sp-ico{width:36px;height:36px;display:grid;place-items:center;border-radius:var(--ts-radius,6px);background:var(--ts-soft,#efebe1);color:var(--ts-muted,#5c5a55)}
-.sp-logo{display:grid;place-items:center;border-radius:var(--ts-radius,6px);background:#1b5cff;color:#fff;font-weight:600;font-size:12px;line-height:1;overflow:hidden}
-.sp-logo img,.sp-logo svg{width:100%;height:100%;object-fit:contain}
+.sp-head{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:start}
+.sp-tile{display:inline-grid;place-items:center;flex:none;box-sizing:border-box;border:1px solid var(--ts-faint);border-radius:var(--ts-radius,6px);background:var(--ts-soft);color:var(--ts-fg)}
+.sp-letter{display:grid;place-items:center;width:100%;height:100%;font-weight:600;font-size:12px;line-height:1}
+.sp-letter img,.sp-letter svg{width:100%;height:100%;object-fit:contain}
 .sp-title{font-weight:600;font-size:16px;line-height:1.3;margin:0}
-.sp-meta{font:400 12px/1.4 var(--ts-mono,"IBM Plex Mono",monospace);letter-spacing:.04em;text-transform:uppercase;color:var(--ts-faint,#5c5a55);margin-top:4px}
-.sp-x{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:var(--ts-radius,6px);background:none;color:var(--ts-muted,#5c5a55);cursor:pointer}
-.sp-x:hover{background:var(--ts-soft,#efebe1)}
-.sp-quote{margin:14px 0 0;padding:0 0 0 12px;border-left:2px solid var(--ts-line,#cfcabe);font-weight:400;font-size:14px;line-height:1.55;color:var(--ts-muted,#5c5a55)}
-.sp-quote mark{background:var(--ts-electric-soft,#dce5ff);color:var(--ts-fg,#141412);padding:0 2px;border-radius:2px}
+.sp-meta{font:400 12px/1.4 var(--ts-mono,"IBM Plex Mono",monospace);letter-spacing:.04em;text-transform:uppercase;color:var(--ts-faint);margin-top:4px}
+.sp-x{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:var(--ts-radius,6px);background:none;color:var(--ts-muted);cursor:pointer}
+.sp-x:hover{background:var(--ts-soft)}
+.sp-quote{margin:14px 0 0;padding:0 0 0 12px;border-left:2px solid var(--ts-line);font-weight:400;font-size:14px;line-height:1.55;color:var(--ts-muted)}
+.sp-quote mark{background:var(--ts-electric-soft);color:var(--ts-fg);padding:0 2px;border-radius:2px}
 .sp-foot{display:flex;justify-content:flex-end;margin-top:14px}
-.sp-open{display:inline-flex;align-items:stretch;min-height:44px;border:0;border-radius:var(--ts-radius,6px);background:#1b5cff;color:#fff;font-weight:500;font-size:14px;line-height:1;cursor:pointer;padding:0 0 0 16px}
+.sp-open{display:inline-flex;align-items:stretch;min-height:44px;border:0;border-radius:var(--ts-radius,6px);background:var(--ts-electric);color:var(--ts-on-electric);font-weight:500;font-size:14px;line-height:1;cursor:pointer;padding:0 0 0 16px}
 .sp-open>em{font-style:normal;display:flex;align-items:center}
-.sp-open>span{display:grid;place-items:center;width:44px;margin-left:16px;border-left:1.5px solid rgb(255 255 255/.4)}
-.sp-open:hover{background:#2a69ff}
+.sp-open>span{display:grid;place-items:center;width:44px;margin-left:16px;border-left:1.5px solid color-mix(in srgb,var(--ts-on-electric) 40%,transparent)}
+.sp-open:hover{background:color-mix(in srgb,var(--ts-electric) 88%,var(--ts-on-electric))}
 `;
 
 export function SourcePreview({
@@ -143,7 +158,7 @@ export function SourcePreview({
       {open && (
         <div id={popId} className="sp-pop" role="dialog" aria-label={source.title} data-placement={placement}>
           <div className="sp-head">
-            <span className="sp-ico"><KindIcon source={source} /></span>
+            <SourceIcon kind={source.kind} size={18} logo={source.logo} letter={(source.brandName ?? source.title).slice(0, 1)} />
             <div>
               <p className="sp-title">{source.title}</p>
               <div className="sp-meta">{kindText}{source.date ? ` · ${source.date}` : ""}</div>

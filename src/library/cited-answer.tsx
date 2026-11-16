@@ -81,8 +81,6 @@ const defaultSegments: CitedSegment[] = [
   { text: " Үлдсэнийг урсгалаар дамжуул, ингэснээр хариулт бичигдэж байх үед хүмүүс эхний үгсийг харна." },
 ];
 
-const tints = ["#eef0f3", "#e3f4e8", "#e6f1fb", "#fbefe3", "#f1e8fb"];
-const inks = ["#5b5b63", "#166534", "#1d63b8", "#9a4f0c", "#6d3fb8"];
 
 function Mark({ quote, highlight }: { quote: string; highlight?: string }) {
   const i = highlight ? quote.indexOf(highlight) : -1;
@@ -133,7 +131,6 @@ export function CitedAnswer({
     return (
       <span
         className={`ca-badge ca-badge-${size}`}
-        style={{ background: tints[n % tints.length], color: inks[n % inks.length] }}
         aria-hidden="true"
       >
         {src?.icon ?? (src ? initial(src) : "?")}
@@ -149,8 +146,8 @@ export function CitedAnswer({
       <div className="ca-body">
         <div className="ca-head">
           <span className="ca-stack">
-            {sources.map((s, n) => (
-              <span key={s.id} className="ca-badge ca-badge-s" style={{ background: tints[n % tints.length], color: inks[n % inks.length] }}>
+            {sources.map((s) => (
+              <span key={s.id} className="ca-badge ca-badge-s">
                 {s.icon ?? initial(s)}
               </span>
             ))}
@@ -202,7 +199,7 @@ export function CitedAnswer({
               onBlur={() => setHover(null)}
               onClick={() => toggle(s.id)}
             >
-              <span className="ca-badge ca-badge-s" style={{ background: tints[n % tints.length], color: inks[n % inks.length] }}>
+              <span className="ca-badge ca-badge-s">
                 {s.icon ?? initial(s)}
               </span>
               {s.site}
@@ -282,7 +279,8 @@ const css = `
 .ca-body{padding:14px 20px 16px}
 .ca-head{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ca-muted);margin-bottom:12px}
 .ca-stack{display:flex}.ca-stack .ca-badge{margin-right:-2px;box-shadow:0 0 0 1.5px var(--ca-bg)}
-.ca-badge{display:inline-grid;place-items:center;width:14px;height:14px;border-radius:var(--ts-radius,3px);font-size:8.5px;font-weight:600;flex:none}
+.ca-badge{display:inline-grid;place-items:center;width:20px;height:20px;box-sizing:border-box;border:1px solid var(--ts-faint,currentColor);border-radius:var(--ts-radius,6px);background:var(--ts-soft,transparent);color:var(--ts-fg,currentColor);font-size:11px;font-weight:600;flex:none}
+.ca-badge svg{width:12px;height:12px;stroke-width:1.75}
 .ca-prose p{margin:0 0 10px}.ca-prose p:last-child{margin:0}
 .ca-seg{transition:color .2s,background .2s;border-radius:var(--ts-radius,3px)}
 .ca-focus .ca-seg{color:var(--ca-faint)}

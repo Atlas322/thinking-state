@@ -34,6 +34,6 @@ describe("SourcePreview", () => {
   it("shows a brand's first letter when no logo is given", () => {
     render(<SourcePreview source={{ id: "b", title: "Ноорог", kind: "brand", brandName: "Самбар" }} defaultOpen />);
     expect(screen.getByText("Апп")).toBeTruthy();
-    expect(document.querySelectorAll(".sp-logo")[0].textContent).toBe("С");
+    expect(document.querySelectorAll(".sp-letter")[0].textContent).toBe("С");
   });
 });
