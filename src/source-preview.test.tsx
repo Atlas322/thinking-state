@@ -49,9 +49,9 @@ describe("CitedAnswer theme", () => {
 
 import { BRAND_LOGO, BRAND_NAME, SourceIcon, brandTrademarkNoteMn } from "./library/source-preview";
 describe("SourceIcon app logos (svgl)", () => {
-  it("has the apps the chips cite, and no Microsoft or Adobe marks", () => {
-    for (const k of ["slack", "notion", "google-calendar", "gmail", "google-drive", "google-sheets", "google-slides", "google-meet", "microsoft-word", "microsoft-excel", "microsoft-powerpoint", "microsoft-outlook", "microsoft-teams", "microsoft-onedrive", "obsidian", "figma", "github", "linear"]) expect(BRAND_LOGO[k], k).toBeTruthy();
-    expect(Object.keys(BRAND_LOGO).some((k) => /adobe|photoshop/.test(k))).toBe(false); // Adobe still waits for a decision
+  it("has the apps the chips cite; of Adobe only Premiere Pro (content pipeline, 2026-11-17)", () => {
+    for (const k of ["slack", "notion", "google-calendar", "gmail", "google-drive", "google-sheets", "google-slides", "google-meet", "microsoft-word", "microsoft-excel", "microsoft-powerpoint", "microsoft-outlook", "microsoft-teams", "microsoft-onedrive", "obsidian", "figma", "github", "linear", "meta", "threads", "elevenlabs", "adobe-premiere"]) expect(BRAND_LOGO[k], k).toBeTruthy();
+    expect(Object.keys(BRAND_LOGO).filter((k) => /adobe|photoshop/.test(k))).toEqual(["adobe-premiere"]); // other Adobe marks still wait for a decision
     for (const k of Object.keys(BRAND_LOGO)) expect(BRAND_NAME[k], k).toBeTruthy();
     for (const k of Object.keys(BRAND_LOGO)) expect(brandTrademarkNoteMn).toContain(BRAND_NAME[k]);
   });
