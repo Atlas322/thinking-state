@@ -8,6 +8,10 @@ import { catalog, hasClassic } from "./registry";
 import { contentHits, englishWords, readableText } from "./content-rules";
 
 const modules = import.meta.glob<{ default: ComponentType }>("./library/*.tsx");
+// Each case imports a library module on first use. In a fresh worktree (empty transform cache)
+// under the full parallel run one import can take over 5 s (swipe-row, screens.12 release), so
+// this file gets 30 s per case, as the studio bundle test does.
+vi.setConfig({ testTimeout: 30_000 });
 
 beforeAll(() => {
   Object.defineProperty(window, "matchMedia", {
