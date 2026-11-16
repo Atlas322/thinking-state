@@ -107,3 +107,7 @@ export type { MethodQuizLabels, MethodQuizProps, QuizMethod, QuizOption, QuizQue
 // Build Wizard: the build page's four-step «Бүтээх горим» → a draft Company (MethodQuiz inside step 2)
 export { BuildWizard, buildWizardLabelsMn, toDraftCompany } from "../screens/build-wizard";
 export type { BuildWizardLabels, BuildWizardProps, WizardAnswers, WizardField, WizardOption, WizardRecipe, WizardStep } from "../screens/build-wizard";
+
+// Role Dashboard: one company from one position (burning first, agent proposals to approve, timeline, brief)
+export { RoleDashboard, roleDashboardLabelsMn, roleView } from "../screens/role-dashboard";
+export type { RoleDashboardLabels, RoleDashboardProps, RoleView } from "../screens/role-dashboard";
