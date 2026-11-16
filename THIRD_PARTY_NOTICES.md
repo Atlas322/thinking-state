@@ -33,3 +33,15 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Brand marks in Source Preview (2026-11-17)
+
+`BRAND_MARK` in `src/library/source-preview.tsx` embeds the Figma, GitHub and Linear marks from [Simple Icons](https://github.com/simple-icons/simple-icons) 16.37.0 (CC0-1.0, see LICENSE.simple-icons). They are shown in one colour, unmodified, only to indicate that a cited source lives in that app, as each owner's public guidelines allow:
+
+| Brand | Guideline read | Permission relied on |
+|---|---|---|
+| Figma | https://www.figma.com/using-the-figma-brand/ | identifying Figma truthfully, «works with»; black-and-white logo offered |
+| GitHub | https://brand.github.com/foundations/logo | «Show integration»; white, black or grey only, no modification |
+| Linear | https://linear.app/brand | logo icon where a chip design is required; monochrome preferred |
+
+Not included (kind line icon instead): Slack (official file and usage rules not reachable), Obsidian (commercial use needs contact), Notion (no published rules found), Google products (rules behind Partner Marketing Hub sign-in), Gmail, Microsoft, Adobe (excluded by the project). Brand names and logos remain the trademarks of their owners; hosts show `brandTrademarkNoteMn` in the page footer.

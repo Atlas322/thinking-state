@@ -24,6 +24,8 @@ export type AskSource = {
   quote?: string;
   highlight?: string;
   logo?: React.ReactNode;
+  /** App the source lives in, e.g. "figma" — shows its mark where its guidelines allow (BRAND_MARK). */
+  brand?: string;
 };
 export type AskNavItem = { id: string; label: string; icon: "inbox" | "today" | "projects" | "areas" | "resources" | "agents"; count?: number };
 export type AskChat = { id: string; title: string };
@@ -153,8 +155,8 @@ export function AskWindow({
   const [focus, setFocus] = React.useState<string | null>(openSource ?? null);
   const [current, setCurrent] = React.useState<string | undefined>(activeChat ?? chats[0]?.id);
   const dark = theme === "dark";
-  const cited: CitedSource[] = sources.map((s) => ({ id: s.id, title: s.title, site: s.label, date: s.date, quote: s.quote, highlight: s.highlight, icon: <SourceIcon kind={s.kind} size={12} tile={false} logo={s.logo} /> }));
-  const preview = (s: AskSource): PreviewSource => ({ id: s.id, title: s.title, kind: s.kind, kindLabel: s.label, date: s.date, quote: s.quote, highlight: s.highlight, logo: s.logo });
+  const cited: CitedSource[] = sources.map((s) => ({ id: s.id, title: s.title, site: s.label, date: s.date, quote: s.quote, highlight: s.highlight, icon: <SourceIcon kind={s.kind} size={12} tile={false} logo={s.logo} brand={s.brand} /> }));
+  const preview = (s: AskSource): PreviewSource => ({ id: s.id, title: s.title, kind: s.kind, kindLabel: s.label, date: s.date, quote: s.quote, highlight: s.highlight, logo: s.logo, brand: s.brand });
   const submit = (e: React.FormEvent) => { e.preventDefault(); if (text.trim()) { onAsk?.(text.trim()); setText(""); } };
 
   return (
@@ -224,10 +226,12 @@ export const askWindowDemo: AskWindowProps = {
     { text: "Үнийн шинэчлэлийг 10-р сарын багийн уулзалтаар шийдсэн.", cite: ["m"] },
     { text: " Дунд түвшин нэмж, дээд багцын үнэ хэвээр үлдэнэ.", cite: ["d"] },
     { text: " Шалтгаан нь хямд багцаас ахиулах хүсэлт олширсон явдал.", cite: ["s"] },
+    { text: " Шинэ үнийн хуудасны дизайн бэлэн.", cite: ["f"] },
   ],
   sources: [
     { id: "d", kind: "decision", title: "Үнийн бодлого", label: "Шийдвэр", date: "2026.10", quote: "Дунд түвшин нэмж, дээд багцын үнийг хэвээр үлдээнэ.", highlight: "Дунд түвшин нэмж" },
     { id: "m", kind: "meeting", title: "Багийн уулзалт · 10-р сар", label: "Уулзалт", date: "2026.10", quote: "Үнийн хоёр хувилбарыг харьцуулж, харилцагчдад урьдчилан мэдэгдэхээр тохирлоо.", highlight: "урьдчилан мэдэгдэх" },
     { id: "s", kind: "message", title: "Борлуулалтын суваг", label: "Мессеж", date: "2026.10", quote: "Хямд багцаас ахиулах хүсэлт энэ сард 40 гаруй ирлээ.", highlight: "40 гаруй" },
+    { id: "f", kind: "document", brand: "figma", title: "Үнийн хуудасны дизайн", label: "Дизайн · Figma", date: "2026.11", quote: "Гурван түвшний хүснэгт, дунд түвшин нь «Санал болгосон» тэмдэгтэй.", highlight: "Гурван түвшний хүснэгт" },
   ],
 };

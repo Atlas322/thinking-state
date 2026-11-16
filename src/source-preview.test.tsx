@@ -46,3 +46,15 @@ describe("CitedAnswer theme", () => {
     expect(container.querySelector(".ca")?.getAttribute("data-theme")).toBe("light");
   });
 });
+
+import { BRAND_MARK, SourceIcon } from "./library/source-preview";
+describe("SourceIcon brand marks", () => {
+  it("draws an allowed brand's mark, and the kind icon for any other brand", () => {
+    expect(Object.keys(BRAND_MARK).sort()).toEqual(["figma", "github", "linear"]);
+    const { container, rerender } = render(<SourceIcon kind="document" brand="figma" tile={false} />);
+    expect(container.querySelector("svg")?.getAttribute("aria-label")).toBe("figma");
+    expect(container.querySelector("svg")?.getAttribute("fill")).toBe("currentColor");
+    rerender(<SourceIcon kind="message" brand="slack" tile={false} />);
+    expect(container.querySelector("svg")?.getAttribute("aria-label")).toBeNull();
+  });
+});
