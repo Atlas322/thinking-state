@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ICON_LOOP, LOOP_SHAPES, iconLoopCss, loopPhase } from "./icon-loops";
 
 /**
  * One icon set for Thinking State's company views: Lucide shapes (ISC
@@ -113,26 +114,29 @@ const SHAPES = {
   search: ["c:11,11,8", "m21 21-4.3-4.3"],
   "user-check": ["M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", "c:9,7,4", "m16 11 2 2 4-4"],
   ellipsis: ["c:12,12,1", "c:19,12,1", "c:5,12,1"],
+  // brain, flask-conical, code-xml, file (2026-11-17, for the meaning loops)
+  ...LOOP_SHAPES,
 } as const;
 
 export type IconName = keyof typeof SHAPES;
 
-function shape(s: string, i: number) {
+function shape(s: string, i: number, loop = false) {
+  const pl = loop ? { pathLength: 1 } : {};
   const [kind, rest] = s.length > 2 && s[1] === ":" ? [s[0], s.slice(2)] : ["d", s];
   if (kind === "c") {
     const [cx, cy, r] = rest.split(",");
-    return <circle key={i} cx={cx} cy={cy} r={r} />;
+    return <circle key={i} cx={cx} cy={cy} r={r} {...pl} />;
   }
   if (kind === "r") {
     const [x, y, w, h, rx] = rest.split(",");
-    return <rect key={i} x={x} y={y} width={w} height={h} rx={rx} />;
+    return <rect key={i} x={x} y={y} width={w} height={h} rx={rx} {...pl} />;
   }
   if (kind === "e") {
     const [cx, cy, rx, ry] = rest.split(",");
-    return <ellipse key={i} cx={cx} cy={cy} rx={rx} ry={ry} />;
+    return <ellipse key={i} cx={cx} cy={cy} rx={rx} ry={ry} {...pl} />;
   }
-  if (kind === "p") return <polygon key={i} points={rest} />;
-  return <path key={i} d={rest} />;
+  if (kind === "p") return <polygon key={i} points={rest} {...pl} />;
+  return <path key={i} d={rest} {...pl} />;
 }
 
 /**
@@ -169,11 +173,14 @@ export function Icon({
   /**
    * Animated Lucide (lucide-animated, MIT): true / "hover" plays the icon's
    * motion when it or its link / button is hovered or focused; "once" plays it
-   * when it mounts. Transform, opacity and stroke only; off under reduced motion.
+   * when it mounts. "loop" plays the icon's own meaning loop forever (icon-loops.ts:
+   * the brain's dot runs, the bot blinks, the flask bubbles). Transform, opacity and
+   * stroke only; off under reduced motion.
    */
-  animate?: boolean | "hover" | "once";
+  animate?: boolean | "hover" | "once" | "loop";
 }) {
   const filled = variant === "filled" ? FILLED[name] : undefined;
+  if (animate === "loop" && !filled) return <LoopIcon name={name} size={size} className={className} label={label} />;
   const anim = animate ? { "data-anim": ANIM_OF[name] ?? "pop", "data-anim-on": animate === "once" ? "once" : "hover" } : undefined;
   const animStyle = animate ? (
     <style href="ts-icon-anim" precedence="default">
@@ -218,8 +225,42 @@ export function Icon({
       aria-hidden={label ? undefined : true}
       focusable="false"
     >
-      {SHAPES[name].map(shape)}
+      {SHAPES[name].map((s, i) => shape(s, i))}
     </svg>
+    </>
+  );
+}
+
+const LOOP_CSS = iconLoopCss();
+function LoopIcon({ name, size, className, label }: { name: IconName; size: number; className: string; label?: string }) {
+  const loop = ICON_LOOP[name];
+  return (
+    <>
+      <style href="ts-icon-loop" precedence="default">{LOOP_CSS}</style>
+      <svg
+        data-loop={name}
+        className={`cv-icon ${className}`}
+        style={{ ["--ts-il-phase" as string]: loopPhase(name) }}
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={size < 16 ? 1.75 : 2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        role={label ? "img" : undefined}
+        aria-label={label}
+        aria-hidden={label ? undefined : true}
+        focusable="false"
+      >
+        {SHAPES[name].map((s, i) => shape(s, i, true))}
+        {(loop?.overlay ?? []).map((o, i) =>
+          o.kind === "dot-run" ? <circle key={`o${i}`} className={`ts-il-o${i + 1}`} data-moving="" r="1.5" fill="var(--ts-electric-fg,currentColor)" stroke="none" />
+          : o.kind === "bubbles" ? <g key={`o${i}`} className={`ts-il-o${i + 1}`} data-moving="" fill="currentColor" stroke="none"><circle cx="10.5" cy="19" r="1.1" /><circle cx="13.5" cy="18.5" r=".9" /></g>
+          : <rect key={`o${i}`} className={`ts-il-o${i + 1}`} x="6.5" y="12.5" width="3" height="3" rx=".6" fill="currentColor" stroke="none" />,
+        )}
+      </svg>
     </>
   );
 }
