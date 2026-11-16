@@ -23,6 +23,7 @@
     "./tokens.css": "./lib/tokens.css",
     "./site.css": "./lib/site.css",
     "./ts.css": "./lib/ts.css",
+    "./report.css": "./lib/report.css",
     "./package.json": "./package.json"
   },
   "files": [

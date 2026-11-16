@@ -174,6 +174,28 @@ builds `lib/`, runs the tests, commits `lib/` on `release/vX.Y.Z`, tags it,
 and returns to your branch. Push with `git push origin release/vX.Y.Z vX.Y.Z`.
 `lib/` is git-ignored everywhere else, so it never lands in a PR.
 
+## Reports, decks and one-page HTML: `report.css`
+
+One stylesheet for reports and one-page HTML. It imports `tokens.css`, so
+colours, fonts and spacing follow the library; it adds no colours of its own.
+Put `class="rp"` and a theme (`data-ts-theme="cream"`, or `"dark"` with `data-theme="dark"`) on `<body>`; the example is `src/lib/report-example.html`.
+
+```html
+<link rel="stylesheet" href="node_modules/@inai/thinking-state/lib/report.css">
+<body class="rp" data-ts-theme="cream"><main class="rp-page">…</main></body>
+```
+
+| Block | Class |
+|---|---|
+| Page (1400 max, 50 px margins; 16 px on phones) | `.rp-page`, `.rp-section` |
+| Stratic 4-column grid (one column under 860 px) | `.rp-grid` + `.rp-span-2/3/4` |
+| Headings (Spectral 400), kicker (Plex Mono), lead | `h1 h2 h3`, `.rp-kicker`, `.rp-lead` |
+| Table (mono header, 2 px top rule) | `table`, `.num` |
+| Callout, note, warning | `.rp-callout`, `.is-note`, `.is-warn` |
+| Figure and caption | `figure`, `figcaption` |
+| Changelog rows (date · version · kind · text) | `.rp-log`, `.rp-k.is-added/.is-removed` |
+| Print (A4, no breaks inside blocks, links spelled out) | automatic; `.rp-noprint` hides |
+
 ## Icons, brand logos and focus rings (rules, locked by `src/icon-and-ring.test.tsx`)
 
 - **Line icons** (Lucide-style strokes) follow two tokens in `tokens.css`:
