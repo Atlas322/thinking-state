@@ -2,7 +2,7 @@
  * CeoDaily (2026-11-17, screens.15): «Удирдлагын тойм», the CEO's day in the AppShell. the owner's
  * seven parts: KPI · өдрийн шугам · уулзалт (click → overview) · хүрээгээр бүлэглэсэн төслүүд ·
  * санхүүгийн зорилт · хянагдах гэрээ · агентын хянагч. Based on Goomnet's today/control pages.
- * Figma: «Second Brain» · 00 App shell · PARA + GTD v02 (923:8739 маркетинг, 923:8907 логистик).
+ * Figma: «Second Brain» · 00 App shell · PARA + GTD v02 (component set 924:9078: Компани=Маркетинг|Логистик).
  * Meaning never rides on colour alone: deltas carry an arrow and words, over-budget is written.
  */
 import * as React from "react";
