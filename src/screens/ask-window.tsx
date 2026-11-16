@@ -1,7 +1,12 @@
 /**
- * Ask Window (2026-11-17, variant B of three) — the site hero's Ask block as one app window:
- * title bar (dots, title, view/edit tabs) · a narrow sidebar (workspace, sources) · Ask · source chips
- * (SourcePreview) · the cited answer (CitedAnswer). Tokens only (--ts-*), radius --ts-radius, 44px targets.
+ * Ask Window (2026-11-17, v3 «lightweight») — the site hero's Ask block as one Second Brain app window,
+ * with the proportions of a calm chat app: thin lines, a quiet grey side, generous white space, small
+ * icons, one accent.
+ * - Side: the brain's own menu (PARA: Inbox · Өнөөдөр · Төслүүд · Хүрээ · Нөөц · Агентууд) and the
+ *   brain's recent chats, one of them open. Sources are not in the side; they sit under the answer as chips.
+ * - Main: the question as a sent message, source chips (SourcePreview), the cited answer in serif for
+ *   reading, and the composer at the bottom.
+ * Tokens only (--ts-*), radius --ts-radius; compact controls keep a 44px hit area.
  *
  *   <AskWindow question="…" answer={segments} sources={sources} onAsk={(q) => …} onOpenSource={(s) => …} />
  */
@@ -13,104 +18,144 @@ export type AskSource = {
   id: string;
   title: string;
   kind: SourceKind;
-  /** Short type label shown in the sidebar and preview, e.g. «Шийдвэр». */
+  /** Short type label shown in the preview, e.g. «Шийдвэр». */
   label: string;
   date?: string;
   quote?: string;
   highlight?: string;
   logo?: React.ReactNode;
 };
-export type AskWindowLabels = { title: string; view: string; edit: string; sources: string; send: string; placeholder: string; pagesRead: (n: number) => string };
+export type AskNavItem = { id: string; label: string; icon: "inbox" | "today" | "projects" | "areas" | "resources" | "agents"; count?: number };
+export type AskChat = { id: string; title: string };
+export type AskWindowLabels = { title: string; send: string; placeholder: string; chats: string; newChat: string; brain: string; pagesRead: (n: number) => string };
 export const askWindowLabelsMn: AskWindowLabels = {
-  title: "INAI · Thinking State",
-  view: "Үзэх",
-  edit: "Засах",
-  sources: "Эх сурвалж",
+  title: "Second Brain",
   send: "Асуух",
-  placeholder: "Асуух зүйлээ бич…",
+  placeholder: "Тархинаасаа асуу…",
+  chats: "Тархины чатууд",
+  newChat: "Шинэ чат",
+  brain: "Тархи",
   pagesRead: (n) => `${n} хуудас уншсан`,
 };
+export const askNavMn: AskNavItem[] = [
+  { id: "inbox", label: "Inbox", icon: "inbox" },
+  { id: "today", label: "Өнөөдөр", icon: "today" },
+  { id: "projects", label: "Төслүүд", icon: "projects" },
+  { id: "areas", label: "Хүрээ", icon: "areas" },
+  { id: "resources", label: "Нөөц", icon: "resources" },
+  { id: "agents", label: "Агентууд", icon: "agents" },
+];
 export type AskWindowProps = {
   question: string;
   answer: CitedSegment[];
   sources: AskSource[];
-  /** Workspace shown at the top of the sidebar, e.g. { name: "ACME", note: "демо" }. */
+  /** The brain this window shows, e.g. { name: "ACME", note: "демо" }. */
   workspace?: { name: string; note?: string };
+  /** The brain's menu (PARA). */
+  nav?: AskNavItem[];
+  /** Recent chats of the brain; `activeChat` is the open one. */
+  chats?: AskChat[];
+  activeChat?: string;
   /** Light (default) or dark window; works inside any page theme. */
   theme?: "light" | "dark";
   /** The chip whose preview starts open (screenshots, the hero's first frame). */
   openSource?: string;
-  /** Hide the sidebar (narrow screens hide it automatically below 720px). */
+  /** Hide the side (narrow windows hide it on their own). */
   sidebar?: boolean;
   onAsk?: (question: string) => void;
   onOpenSource?: (source: AskSource) => void;
+  onNavigate?: (id: string) => void;
   labels?: Partial<AskWindowLabels>;
   className?: string;
 };
 
-const CSS = `
-.aw{font-family:var(--ts-font,Inter,system-ui,sans-serif);font-size:14px;line-height:1.5;background:var(--ts-surface);color:var(--ts-fg);border:1px solid var(--ts-line);border-radius:var(--ts-radius,6px);box-shadow:0 24px 48px -16px rgb(8 12 40/.4),0 8px 16px -8px rgb(8 12 40/.3);overflow:hidden;container-type:inline-size;max-width:720px}
-.aw-bar{display:flex;align-items:center;gap:10px;height:32px;padding:0 10px;border-bottom:1px solid var(--ts-line);background:var(--ts-soft)}
-.aw-dots{display:flex;gap:5px}.aw-dots i{width:9px;height:9px;border-radius:50%;background:var(--ts-line)}
-.aw-title{font-weight:500;font-size:12px;color:var(--ts-muted)}
-.aw-tabs{margin-left:auto;display:flex;gap:2px;padding:2px;border-radius:var(--ts-radius,6px);background:var(--ts-soft-2)}
-.aw-tabs button{position:relative;border:0;background:none;font:inherit;font-weight:500;font-size:12px;height:22px;padding:0 8px;border-radius:calc(var(--ts-radius,6px) - 2px);color:var(--ts-muted);cursor:pointer}
-.aw-tabs button[aria-pressed="true"]{background:var(--ts-surface);color:var(--ts-fg);box-shadow:var(--ts-elevation)}
-/* Compact controls keep a 44px hit area through an invisible halo. */
-.aw-tabs button::after,.aw-item::after,.aw-send::after{content:"";position:absolute;inset:50% auto auto 50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}
-.aw *{box-sizing:border-box}
-.aw-split{display:flex;min-height:340px}
-.aw-side{width:200px;flex:none;border-right:1px solid var(--ts-line);background:var(--ts-soft);padding:10px 8px;display:flex;flex-direction:column;gap:1px}
-.aw-side h6{font:500 11px var(--ts-mono,"IBM Plex Mono",monospace);letter-spacing:.06em;color:var(--ts-faint);margin:10px 6px 4px;text-transform:uppercase}
-.aw-item{position:relative;display:flex;align-items:center;gap:8px;height:30px;padding:0 6px;border:0;border-radius:var(--ts-radius,6px);background:none;font:inherit;font-weight:500;font-size:13px;color:var(--ts-muted);text-align:left;cursor:pointer;width:100%}
-.aw-item:hover{background:var(--ts-soft-2)}
-.aw-item[aria-current="true"]{background:var(--ts-surface);color:var(--ts-fg);box-shadow:var(--ts-elevation)}
-.aw-item small{margin-left:auto;font:500 11px var(--ts-mono,"IBM Plex Mono",monospace);color:var(--ts-faint)}
-.aw-ws{cursor:default}
-.aw-main{flex:1;min-width:0;padding:12px 16px 16px;display:flex;flex-direction:column;gap:10px}
-.aw-ask{display:flex;align-items:center;gap:8px;padding:0 0 0 10px;height:40px;border:1px solid var(--ts-electric);border-radius:var(--ts-radius,6px);background:var(--ts-page);box-shadow:0 0 0 3px var(--ts-electric-soft)}
-.aw-ask>svg{color:var(--ts-electric-fg);flex:none;width:16px;height:16px}
-.aw-ask input{flex:1;min-width:0;border:0;background:none;outline:0;font:inherit;font-weight:500;font-size:14px;color:var(--ts-fg)}
-.aw-ask input::placeholder{color:var(--ts-faint)}
-.aw-send{position:relative;display:grid;place-items:center;flex:none;width:32px;height:32px;margin:3px;border:0;border-radius:calc(var(--ts-radius,6px) - 2px);background:var(--ts-electric);color:var(--ts-on-electric);cursor:pointer}
-.aw-send svg{width:16px;height:16px}
-.aw-send:focus-visible,.aw-item:focus-visible,.aw-tabs button:focus-visible{outline:2px solid var(--ts-electric);outline-offset:2px}
-.aw-chips{position:relative;display:flex;flex-wrap:wrap;gap:6px}
-.aw .sp-chip{position:relative;min-height:28px;height:28px;padding:0 8px;font-size:13px}
-.aw .sp-chip::after{content:"";position:absolute;inset:50% auto auto 50%;width:100%;height:44px;transform:translate(-50%,-50%)}
-.aw .sp-pop{width:300px;padding:12px}.aw .sp-title{font-size:14px}.aw .sp-quote{margin-top:10px;font-size:13px}.aw .sp-foot{margin-top:10px}.aw .sp-open{position:relative;min-height:32px;font-size:13px}.aw .sp-open>span{width:32px}.aw .sp-open::after{content:"";position:absolute;inset:50% 0 auto 0;height:44px;transform:translateY(-50%)}.aw .sp-x{position:relative}.aw .sp-x::after{content:"";position:absolute;inset:50% auto auto 50%;width:44px;height:44px;transform:translate(-50%,-50%)}
-.aw .ca{max-width:none;border:0;box-shadow:none;background:transparent;font-size:14px;line-height:1.55}
-.aw .ca-body{padding:0}
-.aw .ca-head{font-size:12px}
-.aw .ca-chips,.aw .ca-foot{display:none}
-@container (max-width:600px){.aw-side{display:none}.aw .sp{position:static}.aw .sp-pop{left:0;right:0;width:auto;max-width:none}}
-`;
+const I = (d: React.ReactNode, size = 15) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>
+);
+// Lucide shapes (ISC): inbox, sun, folder, circle-dot, book-open, bot, message-circle, square-pen, arrow-up.
+const NAV_ICON: Record<AskNavItem["icon"], React.ReactNode> = {
+  inbox: I(<><path d="M22 12h-6l-2 3h-4l-2-3H2" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></>),
+  today: I(<><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></>),
+  projects: I(<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />),
+  areas: I(<><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="1" /></>),
+  resources: I(<><path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></>),
+  agents: I(<><path d="M12 8V4H8" /><rect x="4" y="8" width="16" height="12" rx="2" /><path d="M2 14h2M20 14h2M15 13v2M9 13v2" /></>),
+};
+const chatIcon = I(<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />, 14);
+const newIcon = I(<><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" /></>, 14);
+const upIcon = I(<><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></>, 16);
 
-const spark = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z" /></svg>;
-const arrow = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>;
-const building = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" /><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" /><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" /><path d="M10 6h4M10 10h4M10 14h4M10 18h4" /></svg>;
+const CSS = `
+.aw{font-family:var(--ts-font,Inter,system-ui,sans-serif);font-size:13px;line-height:1.5;font-weight:400;background:var(--ts-surface);color:var(--ts-fg);border:1px solid color-mix(in srgb,var(--ts-line) 80%,transparent);border-radius:calc(var(--ts-radius,6px) + 4px);box-shadow:0 1px 2px rgb(8 12 40/.06),0 24px 56px -24px rgb(8 12 40/.45);overflow:hidden;container-type:inline-size;max-width:720px}
+.aw *{box-sizing:border-box}
+.aw-bar{display:flex;align-items:center;gap:10px;height:28px;padding:0 10px;border-bottom:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);background:var(--ts-soft)}
+.aw-dots{display:flex;gap:5px}.aw-dots i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--ts-faint) 35%,transparent)}
+.aw-title{flex:1;text-align:center;font-weight:500;font-size:12px;color:var(--ts-faint);margin-right:34px}
+.aw-split{display:flex;height:400px}
+.aw-side{width:184px;flex:none;border-right:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);background:var(--ts-soft);padding:8px 6px;display:flex;flex-direction:column;gap:1px;overflow:hidden}
+.aw-ws{display:flex;align-items:center;gap:8px;padding:6px 6px 10px}
+.aw-ws b{width:22px;height:22px;border-radius:var(--ts-radius,6px);display:grid;place-items:center;background:var(--ts-fg);color:var(--ts-surface);font-size:11px;font-weight:600;flex:none}
+.aw-ws span{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.aw-ws strong{font-weight:500;font-size:13px}
+.aw-ws small{font-size:11px;color:var(--ts-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aw-item{position:relative;display:flex;align-items:center;gap:8px;height:28px;padding:0 8px;border:0;border-radius:var(--ts-radius,6px);background:none;font:inherit;font-size:13px;color:var(--ts-muted);text-align:left;cursor:pointer;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aw-item svg{flex:none;color:var(--ts-faint)}
+.aw-item:hover{background:color-mix(in srgb,var(--ts-fg) 6%,transparent);color:var(--ts-fg)}
+.aw-item[aria-current="true"]{background:color-mix(in srgb,var(--ts-fg) 8%,transparent);color:var(--ts-fg);font-weight:500}
+.aw-item[aria-current="true"] svg{color:var(--ts-electric-fg)}
+.aw-item small{margin-left:auto;font-size:11px;color:var(--ts-faint)}
+.aw-item>span{overflow:hidden;text-overflow:ellipsis}
+.aw-side h6{font-weight:500;font-size:11px;color:var(--ts-faint);margin:14px 8px 4px}
+.aw-new{color:var(--ts-fg)}
+/* Compact controls keep a 44px hit area through an invisible halo. */
+.aw-item::after,.aw-send::after,.aw .sp-chip::after{content:"";position:absolute;inset:50% auto auto 50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}
+.aw-main{flex:1;min-width:0;display:flex;flex-direction:column}
+.aw-thread{flex:1;min-height:0;overflow:auto;padding:18px 28px 8px;display:flex;flex-direction:column;gap:14px}
+.aw-q{align-self:flex-end;max-width:82%;padding:7px 12px;border-radius:calc(var(--ts-radius,6px) + 4px);background:color-mix(in srgb,var(--ts-fg) 6%,transparent);font-size:13px}
+.aw-chips{position:relative;display:flex;flex-wrap:wrap;gap:6px}
+.aw .sp-chip{position:relative;min-height:24px;height:24px;padding:0 8px;font-size:12px;border-color:color-mix(in srgb,var(--ts-line) 80%,transparent);background:transparent}
+.aw .sp-chip svg{width:12px;height:12px}
+.aw .sp-pop{width:280px;padding:12px}.aw .sp-title{font-size:13px}.aw .sp-quote{margin-top:10px;font-size:13px}.aw .sp-foot{margin-top:10px}
+.aw .sp-open{position:relative;min-height:30px;font-size:12px}.aw .sp-open>span{width:30px}
+.aw .sp-open::after,.aw .sp-x::after{content:"";position:absolute;inset:50% auto auto 50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}.aw .sp-x{position:relative}
+.aw .ca{max-width:none;border:0;box-shadow:none;background:transparent;font:400 15px/1.6 Spectral,Georgia,serif}
+.aw .ca-body{padding:0}
+.aw .ca-head{font:400 11px var(--ts-font,Inter,sans-serif);color:var(--ts-faint);margin-bottom:6px}
+.aw .ca-chips,.aw .ca-foot{display:none}
+.aw-compose{margin:8px 20px 16px;display:flex;align-items:flex-end;gap:8px;padding:8px 8px 8px 12px;border:1px solid color-mix(in srgb,var(--ts-line) 90%,transparent);border-radius:calc(var(--ts-radius,6px) + 4px);background:var(--ts-page);box-shadow:0 1px 2px rgb(8 12 40/.05)}
+.aw-compose:focus-within{border-color:var(--ts-faint)}
+.aw-compose input{flex:1;min-width:0;height:26px;border:0;background:none;outline:0;font:inherit;font-size:13px;color:var(--ts-fg)}
+.aw-compose input::placeholder{color:var(--ts-faint)}
+.aw-send{position:relative;display:grid;place-items:center;flex:none;width:26px;height:26px;border:0;border-radius:var(--ts-radius,6px);background:var(--ts-electric);color:var(--ts-on-electric);cursor:pointer}
+.aw-send:focus-visible,.aw-item:focus-visible{outline:2px solid var(--ts-electric);outline-offset:1px}
+@container (max-width:560px){.aw-side{display:none}.aw-thread{padding:14px 14px 6px}.aw-compose{margin:6px 10px 10px}.aw .sp{position:static}.aw .sp-pop{left:0;right:0;width:auto;max-width:none}}
+`;
 
 export function AskWindow({
   question,
   answer,
   sources,
   workspace,
+  nav = askNavMn,
+  chats = [],
+  activeChat,
   theme = "light",
   openSource,
   sidebar = true,
   onAsk,
   onOpenSource,
+  onNavigate,
   labels: labelsIn,
   className = "",
 }: AskWindowProps) {
   const labels = { ...askWindowLabelsMn, ...labelsIn };
-  const [mode, setMode] = React.useState<"view" | "edit">("view");
-  const [text, setText] = React.useState(question);
+  const [text, setText] = React.useState("");
   const [focus, setFocus] = React.useState<string | null>(openSource ?? null);
+  const [current, setCurrent] = React.useState<string | undefined>(activeChat ?? chats[0]?.id);
   const dark = theme === "dark";
   const cited: CitedSource[] = sources.map((s) => ({ id: s.id, title: s.title, site: s.label, date: s.date, quote: s.quote, highlight: s.highlight, icon: <SourceIcon kind={s.kind} size={12} tile={false} logo={s.logo} /> }));
   const preview = (s: AskSource): PreviewSource => ({ id: s.id, title: s.title, kind: s.kind, kindLabel: s.label, date: s.date, quote: s.quote, highlight: s.highlight, logo: s.logo });
-  const submit = (e: React.FormEvent) => { e.preventDefault(); if (text.trim()) onAsk?.(text.trim()); };
+  const submit = (e: React.FormEvent) => { e.preventDefault(); if (text.trim()) { onAsk?.(text.trim()); setText(""); } };
 
   return (
     <div className={`aw ${dark ? "dark" : ""} ${className}`} data-ts-theme={dark ? "dark" : "cream"} data-theme={dark ? "dark" : "light"}>
@@ -118,41 +163,46 @@ export function AskWindow({
       <div className="aw-bar">
         <div className="aw-dots" aria-hidden="true"><i /><i /><i /></div>
         <span className="aw-title">{labels.title}</span>
-        <div className="aw-tabs">
-          <button type="button" aria-pressed={mode === "view"} onClick={() => setMode("view")}>{labels.view}</button>
-          <button type="button" aria-pressed={mode === "edit"} onClick={() => setMode("edit")}>{labels.edit}</button>
-        </div>
       </div>
       <div className="aw-split">
         {sidebar && (
-          <nav className="aw-side" aria-label={labels.sources}>
-            {workspace && <div className="aw-item aw-ws" aria-current="true">{building}{workspace.name}{workspace.note && <small>{workspace.note}</small>}</div>}
-            <h6>{labels.sources}</h6>
-            {sources.map((s) => (
-              <button key={s.id} type="button" className="aw-item" aria-current={focus === s.id} onClick={() => { setFocus(focus === s.id ? null : s.id); onOpenSource?.(s); }}>
-                <SourceIcon kind={s.kind} size={14} logo={s.logo} />{s.label}{s.date && <small>{s.date}</small>}
-              </button>
+          <nav className="aw-side" aria-label={labels.title}>
+            {workspace && (
+              <div className="aw-ws">
+                <b aria-hidden="true">{workspace.name.slice(0, 1)}</b>
+                <span><strong>{workspace.name}</strong><small>{workspace.note ? `${labels.brain} · ${workspace.note}` : labels.brain}</small></span>
+              </div>
+            )}
+            <button type="button" className="aw-item aw-new" onClick={() => onNavigate?.("new")}>{newIcon}<span>{labels.newChat}</span></button>
+            {nav.map((n) => (
+              <button key={n.id} type="button" className="aw-item" onClick={() => onNavigate?.(n.id)}>{NAV_ICON[n.icon]}<span>{n.label}</span>{n.count != null && <small>{n.count}</small>}</button>
+            ))}
+            {chats.length > 0 && <h6>{labels.chats}</h6>}
+            {chats.map((c) => (
+              <button key={c.id} type="button" className="aw-item" aria-current={current === c.id} onClick={() => { setCurrent(c.id); onNavigate?.(`chat:${c.id}`); }}>{chatIcon}<span>{c.title}</span></button>
             ))}
           </nav>
         )}
         <div className="aw-main">
-          <form className="aw-ask" onSubmit={submit}>
-            {spark}
-            <input value={text} onChange={(e) => setText(e.target.value)} placeholder={labels.placeholder} aria-label={labels.send} readOnly={mode === "view" && !onAsk} />
-            <button type="submit" className="aw-send" aria-label={labels.send}>{arrow}</button>
-          </form>
-          <div className="aw-chips">
-            {sources.map((s) => (
-              <SourcePreview
-                key={s.id}
-                source={preview(s)}
-                open={focus === s.id}
-                onOpenChange={(o) => setFocus(o ? s.id : null)}
-                onOpenInApp={onOpenSource ? () => onOpenSource(s) : undefined}
-              />
-            ))}
+          <div className="aw-thread">
+            <div className="aw-q">{question}</div>
+            <div className="aw-chips">
+              {sources.map((s) => (
+                <SourcePreview
+                  key={s.id}
+                  source={preview(s)}
+                  open={focus === s.id}
+                  onOpenChange={(o) => setFocus(o ? s.id : null)}
+                  onOpenInApp={onOpenSource ? () => onOpenSource(s) : undefined}
+                />
+              ))}
+            </div>
+            <CitedAnswer theme={theme} segments={answer} sources={cited} pagesRead={sources.length} />
           </div>
-          <CitedAnswer theme={theme} segments={answer} sources={cited} pagesRead={sources.length} />
+          <form className="aw-compose" onSubmit={submit}>
+            <input value={text} onChange={(e) => setText(e.target.value)} placeholder={labels.placeholder} aria-label={labels.placeholder} />
+            <button type="submit" className="aw-send" aria-label={labels.send}>{upIcon}</button>
+          </form>
         </div>
       </div>
     </div>
@@ -163,6 +213,13 @@ export function AskWindow({
 export const askWindowDemo: AskWindowProps = {
   question: "Үнийн шинэчлэлийг хэзээ, яагаад шийдсэн бэ?",
   workspace: { name: "ACME", note: "демо" },
+  nav: askNavMn.map((n) => (n.id === "inbox" ? { ...n, count: 4 } : n)),
+  chats: [
+    { id: "price", title: "Үнийн бодлого" },
+    { id: "stock", title: "Нийлүүлэлтийн хоцролт" },
+    { id: "onb", title: "Шинэ ажилтны чиглүүлэг" },
+  ],
+  activeChat: "price",
   answer: [
     { text: "Үнийн шинэчлэлийг 10-р сарын багийн уулзалтаар шийдсэн.", cite: ["m"] },
     { text: " Дунд түвшин нэмж, дээд багцын үнэ хэвээр үлдэнэ.", cite: ["d"] },

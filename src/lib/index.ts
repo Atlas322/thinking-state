@@ -97,8 +97,8 @@ export { CitedAnswer } from "../library/cited-answer";
 export type { CitedAnswerProps, CitedSegment, CitedSource } from "../library/cited-answer";
 
 // Ask Window: the site hero's Ask block (app window + sidebar + sources + cited answer)
-export { AskWindow, askWindowDemo, askWindowLabelsMn } from "../screens/ask-window";
-export type { AskSource, AskWindowLabels, AskWindowProps } from "../screens/ask-window";
+export { AskWindow, askNavMn, askWindowDemo, askWindowLabelsMn } from "../screens/ask-window";
+export type { AskChat, AskNavItem, AskSource, AskWindowLabels, AskWindowProps } from "../screens/ask-window";
 
 // Method Quiz: the build page's questionnaire → recommended method (BMC · PMBOK · OKR · Lean Canvas)
 export { MethodQuiz, methodQuizDemo, methodQuizLabelsMn, scoreMethods } from "../screens/method-quiz";

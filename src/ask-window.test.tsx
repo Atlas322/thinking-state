@@ -4,19 +4,24 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { AskWindow, askWindowDemo } from "./screens/ask-window";
 afterEach(cleanup);
 
-describe("AskWindow", () => {
-  it("renders the question, sidebar sources, chips and the cited answer", () => {
+describe("AskWindow (lightweight)", () => {
+  it("the side is the brain's menu and its chats, not the sources", () => {
     render(<AskWindow {...askWindowDemo} />);
-    expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe(askWindowDemo.question);
-    expect(screen.getByRole("navigation").textContent).toContain("Уулзалт");
-    expect(screen.getByRole("button", { name: "Багийн уулзалт · 10-р сар" })).toBeTruthy();
+    const nav = screen.getByRole("navigation").textContent ?? "";
+    for (const t of ["Inbox", "Өнөөдөр", "Төслүүд", "Хүрээ", "Нөөц", "Агентууд", "Тархины чатууд", "Үнийн бодлого"]) expect(nav).toContain(t);
+    expect(nav).not.toContain("Эх сурвалж");
+    expect(screen.getByRole("button", { name: "Үнийн бодлого", current: true })).toBeTruthy();
+  });
+  it("shows the question as a sent message, the source chips and the cited answer", () => {
+    render(<AskWindow {...askWindowDemo} />);
+    expect(screen.getByText(askWindowDemo.question)).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Багийн уулзалт · 10-р сар" }));
+    expect(screen.getByRole("dialog", { name: "Багийн уулзалт · 10-р сар" })).toBeTruthy();
     expect(document.querySelector(".ca")?.getAttribute("data-theme")).toBe("light");
   });
-  it("opens a chip's preview from the sidebar and calls onAsk on submit", () => {
+  it("asks from the composer", () => {
     const onAsk = vi.fn();
     render(<AskWindow {...askWindowDemo} onAsk={onAsk} />);
-    fireEvent.click(screen.getAllByRole("button", { name: /Уулзалт/ })[0]);
-    expect(screen.getByRole("dialog", { name: "Багийн уулзалт · 10-р сар" })).toBeTruthy();
     fireEvent.change(screen.getByRole("textbox"), { target: { value: "Дараагийн алхам?" } });
     fireEvent.click(screen.getByRole("button", { name: "Асуух" }));
     expect(onAsk).toHaveBeenCalledWith("Дараагийн алхам?");
