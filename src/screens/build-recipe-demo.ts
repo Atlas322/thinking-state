@@ -1,5 +1,5 @@
 /**
- * Demo content for BuildWizard — copied from web-app's recipes (Output/build-asuumj_v05.json,
+ * Demo content for BuildWizard — copied from web-app's recipes (Output/build-asuumj_v07.json,
  * Output/method-quiz_v01.json, 2026-11-17). The site passes its own JSON; this is for previews and tests.
  */
 import type { WizardRecipe } from "./build-wizard";
@@ -9,9 +9,9 @@ export const buildRecipeDemo: WizardRecipe = {
  "branch_key": "segment",
  "intro": {
   "eyebrow": "Бүтээх",
-  "title": "Танай ажил *нэг тархинд* хэрхэн буух вэ?",
-  "lead": "Хэдэн асуултад хариулахад танай төсөл, хүрээ, давтагддаг ажил, агентад даатгах зүйл нэг ноорог болно.",
-  "privacy": "Хариулт таны хөтчид хадгалагдана. Уулзалт товлох үед л бидэнд ирнэ.",
+  "title": "Ажил *нэг тархинд* хэрхэн буух вэ?",
+  "lead": "Хэдэн асуултад хариулахад төсөл, хүрээ, давтагддаг ажил, агентад даатгах зүйл нэг ноорог болно.",
+  "privacy": "Хариулт энэ хөтчид хадгалагдана. Уулзалт товлох үед л INAI руу илгээгдэнэ.",
   "time_by_segment": {
    "personal": "≈5 минут · 5 алхам",
    "team": "≈8 минут · 7 алхам",
@@ -93,7 +93,7 @@ export const buildRecipeDemo: WizardRecipe = {
        ]
       },
       "team": {
-       "label": "Баг тань ямар чиглэлүүдийг тогтмол хариуцдаг вэ?",
+       "label": "Баг ямар чиглэлүүдийг тогтмол хариуцдаг вэ?",
        "options": [
         "Борлуулалт",
         "Маркетинг",
@@ -243,7 +243,7 @@ export const buildRecipeDemo: WizardRecipe = {
        "placeholder": "Жишээ: Нэхэмжлэх илгээх"
       },
       "team": {
-       "label": "Баг тань ямар ажлыг тогтмол давтдаг вэ?",
+       "label": "Баг ямар ажлыг тогтмол давтдаг вэ?",
        "placeholder": "Жишээ: Шинэ харилцагч бүртгэх"
       },
       "company": {
@@ -421,7 +421,7 @@ export const buildRecipeDemo: WizardRecipe = {
   {
    "id": "agents",
    "title": "Агентад юуг даатгах вэ?",
-   "lead": "Агент танай журмаар ажиллаж, шийдвэрийг хүнд үлдээнэ.",
+   "lead": "Агент байгууллагын журмаар ажиллаж, шийдвэрийг хүнд үлдээнэ.",
    "fields": [
     {
      "key": "delegate",
@@ -539,7 +539,7 @@ export const buildRecipeDemo: WizardRecipe = {
   }
  ],
  "result": {
-  "title": "Танай тархины ноорог бэлэн.",
+  "title": "Тархины ноорог бэлэн.",
   "lead": "Хариултаар зурсан хүрээ, төсөл, журам, агентын саналыг үзээд, засах зүйлээ уулзалтаар ярилцъя.",
   "sections": [
    {
