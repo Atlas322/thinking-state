@@ -216,6 +216,26 @@
   --ts-on-red: #0f0f11;
 }
 
+/*
+ * Chart series (2026-11-17, report.css dashboards): four categorical hues in a
+ * fixed order, checked with the dataviz validator against each theme's surface
+ * (lightness band, chroma, CVD ΔE >= 8, normal ΔE >= 15). Assign in order,
+ * never cycle; a 5th series folds into "Other". Light slots 2–4 sit under 3:1
+ * on cream, so charts that use them carry visible labels or a table.
+ */
+:where(.ts-theme-cream, [data-ts-theme="cream"]) {
+  --ts-series-1: #2a78d6;
+  --ts-series-2: #eb6834;
+  --ts-series-3: #1baf7a;
+  --ts-series-4: #eda100;
+}
+:where(.ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
+  --ts-series-1: #3987e5;
+  --ts-series-2: #d95926;
+  --ts-series-3: #199e70;
+  --ts-series-4: #c98500;
+}
+
 /* data-ts-mode (view | manage) no longer changes colours: one accent everywhere. */
 
 /*

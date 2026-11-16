@@ -194,6 +194,7 @@ Put `class="rp"` and a theme (`data-ts-theme="cream"`, or `"dark"` with `data-th
 | Callout, note, warning | `.rp-callout`, `.is-note`, `.is-warn` |
 | Figure and caption | `figure`, `figcaption` |
 | Changelog rows (date · version · kind · text) | `.rp-log`, `.rp-k.is-added/.is-removed` |
+| Dashboard panels: KPI, meter, ranked bars, stacked bar + legend, sparkline, status (series colours `--ts-series-1…4`, validated) | `.rp-dash`, `.rp-panel`, `.rp-kpi`, `.rp-meter`, `.rp-bars`, `.rp-stack`, `.rp-legend`, `.rp-spark`, `.rp-status` |
 | Print (A4, no breaks inside blocks, links spelled out) | automatic; `.rp-noprint` hides |
 
 ## Icons, brand logos and focus rings (rules, locked by `src/icon-and-ring.test.tsx`)
