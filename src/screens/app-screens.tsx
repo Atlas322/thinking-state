@@ -57,8 +57,8 @@ const icons: Record<ScreenKey | CaptureKind | "search" | "arrow" | "check" | "sp
 };
 
 const CSS = `
-.aps-root{--aps-r:6px;--aps-r-shell:14px;--aps-sans:Inter,system-ui,sans-serif;--aps-serif:Spectral,Georgia,serif;--aps-mono:"IBM Plex Mono",monospace;
- --aps-h2:24px;--aps-h3:18px;--aps-lead:16px;--aps-body:16px;--aps-small:14px;--aps-label:12px;--aps-btn:40px;--aps-icon:16px;--aps-stroke:1.5}
+.aps-root{--ts-radius:6px;--aps-r:var(--ts-radius);--aps-r-shell:var(--ts-radius);--aps-sans:Inter,system-ui,sans-serif;--aps-serif:Spectral,Georgia,serif;--aps-mono:"IBM Plex Mono",monospace;
+ --aps-h2:24px;--aps-h3:18px;--aps-lead:16px;--aps-body:16px;--aps-small:14px;--aps-label:12px;--aps-btn:44px;--aps-icon:16px;--aps-stroke:1.5}
 .aps-stage{position:relative;overflow:hidden;padding:56px;min-height:100%;box-sizing:border-box;background:var(--ts-page,#f0ede4);font-family:var(--aps-sans);color:var(--ts-fg,#080808)}
 .aps-stage::before,.aps-stage::after{content:"";position:absolute;border-radius:50%;filter:blur(40px);pointer-events:none}
 .aps-stage::before{width:520px;height:520px;left:-120px;top:-140px;background:radial-gradient(circle,#1b5cff 0%,transparent 68%);opacity:.32}
