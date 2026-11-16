@@ -165,7 +165,7 @@ textarea.bw-input{min-height:72px;resize:vertical;line-height:1.5}
 .bw-nav{display:flex;gap:8px;align-items:center;margin-top:auto}
 .bw-nav .bw-sp{flex:1}
 .bw-btn{display:inline-flex;align-items:stretch;min-height:44px;border-radius:var(--ts-radius,6px);font:inherit;font-weight:500;font-size:15px;cursor:pointer;padding:0;border:0;background:none;color:var(--ts-fg)}
-.bw-btn>em{font-style:normal;display:flex;align-items:center;padding:0 16px}
+.bw-btn>em{font-style:normal;display:flex;align-items:center;padding:0 16px;white-space:nowrap}
 .bw-btn>span{display:grid;place-items:center;width:44px;border-left:1.5px solid color-mix(in srgb,currentColor 35%,transparent)}
 .bw-btn.primary{background:var(--ts-electric);color:var(--ts-on-electric)}
 .bw-btn.secondary{border:1.5px solid var(--ts-fg)}
@@ -179,7 +179,7 @@ textarea.bw-input{min-height:72px;resize:vertical;line-height:1.5}
 .bw-block p{margin:0;font-size:14px;line-height:1.45}
 .bw-block[data-empty="true"] p{color:var(--ts-faint);font-style:italic}
 .bw-tag{align-self:flex-start;font:500 12px var(--ts-mono,"IBM Plex Mono",monospace);letter-spacing:.06em;color:var(--ts-electric-fg);border:1px solid var(--ts-electric);border-radius:var(--ts-radius,6px);padding:3px 8px}
-@container (max-width:680px){.bw-rail{display:none}.bw-main{padding:20px}.bw-cards,.bw-draft,.bw-grid{grid-template-columns:1fr}}
+@container (max-width:680px){.bw-rail{display:none}.bw-main{padding:20px}.bw-cards,.bw-draft,.bw-grid{grid-template-columns:1fr}.bw-choices:not([data-multi]){flex-direction:column}.bw-choices:not([data-multi]) .bw-pick{justify-content:space-between}.bw-nav{flex-wrap:wrap}}
 `;
 const check = <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>;
 const arrow = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>;
@@ -249,7 +249,7 @@ export function BuildWizard({ recipe, quiz, defaultAnswers = {}, defaultStep = 0
         <fieldset key={f.key} className="bw-field">
           <legend>{f.label}{req}</legend>
           {hint}
-          <div className="bw-choices">
+          <div className="bw-choices" data-multi={multi || undefined}>
             {options.map((o) => (
               <label key={o.value} className="bw-pick">
                 <input

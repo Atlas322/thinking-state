@@ -277,7 +277,7 @@ export const buildRecipeDemo: WizardRecipe = {
   "preview": "CompanyView (methodology-ийн дагуу), draft",
   "ctas": [
    {
-    "label": "Ноороглоо үзэх",
+    "label": "Нооргоо үзэх",
     "variant": "primary",
     "href": "/company.html?c=draft"
    },
