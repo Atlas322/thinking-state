@@ -7,6 +7,8 @@
  * Colours come from the tokens: --ts-on-electric on Electric, --ts-electric on cream.
  */
 import * as React from "react";
+import { convergeStagesLayout, drawConvergeStages, paraNetGroups, type NetGroup } from "./converge-net-stages";
+export { paraNetGroups, convergeStagesLayout, drawConvergeStages, type NetGroup, type NetShape } from "./converge-net-stages";
 
 export type ConvergeNetProps = {
   /** How many dots (default 72). */
@@ -21,6 +23,14 @@ export type ConvergeNetProps = {
   duration?: number;
   /** Freeze one frame (0 = start, 1.4 = the finished network). */
   t?: number;
+  /**
+   * Four-stage mode (screens.17): edges → local graph → groups → turning sphere with an axis.
+   * A number 0..4 freezes that moment; "loop" plays 0→4 and repeats; "scroll" follows the page
+   * scroll while the canvas crosses the viewport. Reduced motion shows stage 4.
+   */
+  stage?: number | "loop" | "scroll";
+  /** Stage 3–4 groups (label, shape, colour token). Default: PARA (paraNetGroups). */
+  groups?: NetGroup[];
   /** Accessible description; the canvas is an image of it. */
   label?: string;
   className?: string;
@@ -70,10 +80,36 @@ export function drawConvergeNet(x: CanvasRenderingContext2D, W: number, H: numbe
   x.globalAlpha = 1;
 }
 
-export function ConvergeNet({ nodes = 72, seed = 7, tone = "electric", play = "loop", duration = 6000, t, label = "Мэдээллийн урсгал захаас орж ирж, цэгүүд нэг сүлжээ болно", className = "", style }: ConvergeNetProps) {
+export function ConvergeNet({ stage, groups = paraNetGroups, nodes = 72, seed = 7, tone = "electric", play = "loop", duration = 6000, t, label = "Мэдээллийн урсгал захаас орж ирж, цэгүүд нэг сүлжээ болно", className = "", style }: ConvergeNetProps) {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const net = React.useMemo(() => convergeNetLayout(nodes, seed), [nodes, seed]);
+  const net4 = React.useMemo(() => (stage === undefined ? null : convergeStagesLayout(nodes, seed, groups.length)), [stage === undefined, nodes, seed, groups.length]);
   React.useEffect(() => {
+    if (!net4) return;
+    const cv = ref.current;
+    const x = cv?.getContext?.("2d");
+    if (!cv || !x) return;
+    const cs = getComputedStyle(cv);
+    const tok = (n: string) => cs.getPropertyValue(n).trim() || cs.color;
+    const colors = groups.map((g) => tok(g.color));
+    const accent = cs.color, ink = tok("--ts-fg");
+    let W = 0, H = 0, raf = 0;
+    const size = () => { const D = window.devicePixelRatio || 1; W = cv.clientWidth; H = cv.clientHeight; cv.width = Math.max(1, W * D); cv.height = Math.max(1, H * D); x.setTransform(D, 0, 0, D, 0, 0); };
+    const draw = (tt: number) => drawConvergeStages(x, W, H, tt, net4, groups, colors, accent, ink);
+    size();
+    const reduce = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const still = typeof stage === "number" ? Math.min(Math.max(stage, 0), 4) : reduce ? 4 : undefined;
+    const scrollT = () => { const r = cv.getBoundingClientRect(); const vh = window.innerHeight || 1; return Math.min(Math.max((vh - r.top) / (vh + r.height), 0), 1) * 4; };
+    const ro = typeof ResizeObserver === "function" ? new ResizeObserver(() => { size(); draw(still ?? (stage === "scroll" ? scrollT() : 4)); }) : null;
+    ro?.observe(cv);
+    let onScroll: (() => void) | null = null;
+    if (still !== undefined) draw(still);
+    else if (stage === "scroll") { onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => draw(scrollT())); }; window.addEventListener("scroll", onScroll, { passive: true }); draw(scrollT()); }
+    else { const T0 = performance.now(); const loop = (now: number) => { /* 0→4, then hold one fifth of the cycle */ draw(Math.min((((now - T0) / duration) * 5) % 5, 4)); raf = requestAnimationFrame(loop); }; raf = requestAnimationFrame(loop); }
+    return () => { cancelAnimationFrame(raf); ro?.disconnect(); if (onScroll) window.removeEventListener("scroll", onScroll); };
+  }, [net4, stage, groups, duration, tone]);
+  React.useEffect(() => {
+    if (net4) return;
     const cv = ref.current;
     const x = cv?.getContext?.("2d");
     if (!cv || !x) return;
@@ -101,7 +137,7 @@ export function ConvergeNet({ nodes = 72, seed = 7, tone = "electric", play = "l
       raf = requestAnimationFrame(loop);
     }
     return () => { cancelAnimationFrame(raf); ro?.disconnect(); };
-  }, [net, tone, play, duration, t]);
+  }, [net, net4, tone, play, duration, t]);
   const color = tone === "cream" ? "var(--ts-electric,#1b5cff)" : "var(--ts-on-electric,#fff)";
   const bg = tone === "cream" ? "var(--ts-page,#f0ede4)" : "var(--ts-electric,#1b5cff)";
   return (
@@ -110,11 +146,15 @@ export function ConvergeNet({ nodes = 72, seed = 7, tone = "electric", play = "l
       role="img"
       aria-label={label}
       data-tone={tone}
+      data-stage={stage === undefined ? undefined : String(stage)}
       className={`ts-converge-net ${className}`}
       style={{ display: "block", width: "100%", height: "100%", minHeight: 240, color, background: bg, ...style }}
     />
   );
 }
+
+/** Four stages, PARA groups, on the page surface (home v6 interlude). */
+export const convergeNetStagesDemo: ConvergeNetProps = { stage: "loop", nodes: 64, seed: 11, tone: "cream", duration: 12000, label: "Мэдээлэл захаас орж ирж, нэг note-ийн эргэн тойронд сүлжээ болж, PARA-гийн дөрвөн бүлэгт хуваагдан, тэнхлэгээ тойрон эргэх бөмбөрцөг болно" };
 
 export const convergeNetDemo: ConvergeNetProps = { nodes: 72, seed: 7, tone: "electric", play: "loop", duration: 6000 };
 

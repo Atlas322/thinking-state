@@ -154,5 +154,5 @@ export const roleDashboardDemo: RoleDashboardProps = { company: acmeGroup, perso
 export { askWindowDemo };
 export { ceoDailyDemo, ceoDailyLogisticsDemo, appShellDemo, appShellLogisticsDemo, ceoDailyScreenDemo } from "../screens/ceo-daily";
 export { buildWizardDemo } from "../screens/build-wizard";
-export { convergeNetDemo } from "../motion/converge-net";
+export { convergeNetDemo, convergeNetStagesDemo } from "../motion/converge-net";
 export { contentPipelineDemo } from "../screens/content-pipeline";

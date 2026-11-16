@@ -120,7 +120,7 @@ export type { BuildWizardLabels, BuildWizardProps, WizardAnswers, WizardField, W
 // Role Dashboard: one company from one position (burning first, agent proposals to approve, timeline, brief)
 export { RoleDashboard, findPerson, roleDashboardLabelsMn, roleView } from "../company/role-dashboard";
 export type { RoleDashboardLabels, RoleDashboardProps, RoleView } from "../company/role-dashboard";
-export { ConvergeNet, convergeNetDemo, drawConvergeNet, convergeNetLayout } from "../motion/converge-net";
+export { ConvergeNet, convergeNetDemo, convergeNetStagesDemo, drawConvergeNet, convergeNetLayout, paraNetGroups, convergeStagesLayout, drawConvergeStages, type NetGroup, type NetShape } from "../motion/converge-net";
 export type { ConvergeNetProps } from "../motion/converge-net";
 export { ContentPipeline, contentPipelineDemo } from "../screens/content-pipeline";
 export type { ContentPipelineProps, PipelineStep, PipelineActor } from "../screens/content-pipeline";
