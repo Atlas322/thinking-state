@@ -13,6 +13,8 @@
 import * as React from "react";
 import { CitedAnswer, type CitedSegment, type CitedSource } from "../library/cited-answer";
 import { SourceIcon, SourcePreview, type PreviewSource, type SourceKind } from "../library/source-preview";
+import { ThinkingState, type ThinkingStep } from "../library/thinking-state";
+import { useScenario, type ScenarioStep } from "../motion";
 
 export type AskSource = {
   id: string;
@@ -67,9 +69,17 @@ export type AskWindowProps = {
   onAsk?: (question: string) => void;
   onOpenSource?: (source: AskSource) => void;
   onNavigate?: (id: string) => void;
+  /** The visible chain of thought shown before the answer (plan, search, tool calls). */
+  thinking?: ThinkingStep[];
+  /** "auto" (default): plays the run once when it comes into view — question, thinking, sources light up,
+   * the answer streams in with its citations. "static": the finished state. Reduced motion is always static. */
+  play?: "auto" | "static";
+  /** Each phase of the run as it starts — for syncing e.g. the hero's brain pulse. */
+  onPhase?: (phase: AskPhase) => void;
   labels?: Partial<AskWindowLabels>;
   className?: string;
 };
+export type AskPhase = "ask" | "think" | "sources" | "answer" | "done";
 
 const I = (d: React.ReactNode, size = 15) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>
@@ -120,7 +130,7 @@ const CSS = `
 .aw .sp-pop{width:280px;padding:12px}.aw .sp-title{font-size:13px}.aw .sp-quote{margin-top:10px;font-size:13px}.aw .sp-foot{margin-top:10px}
 .aw .sp-open{position:relative;min-height:30px;font-size:12px}.aw .sp-open>span{width:30px}
 .aw .sp-open::after,.aw .sp-x::after{content:"";position:absolute;inset:50% auto auto 50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}.aw .sp-x{position:relative}
-.aw .ca{max-width:none;border:0;box-shadow:none;background:transparent;font:400 15px/1.6 Spectral,Georgia,serif}
+.aw .ca{max-width:none;border:0;box-shadow:none;background:transparent;font:400 15px/1.6 var(--ts-font,Inter,system-ui,sans-serif)}
 .aw .ca-body{padding:0}
 .aw .ca-head{font:400 11px var(--ts-font,Inter,sans-serif);color:var(--ts-faint);margin-bottom:6px}
 .aw .ca-chips,.aw .ca-foot{display:none}
@@ -130,6 +140,13 @@ const CSS = `
 .aw-compose input::placeholder{color:var(--ts-faint)}
 .aw-send{position:relative;display:grid;place-items:center;flex:none;width:26px;height:26px;border:0;border-radius:var(--ts-radius,6px);background:var(--ts-electric);color:var(--ts-on-electric);cursor:pointer}
 .aw-send:focus-visible,.aw-item:focus-visible{outline:2px solid var(--ts-electric);outline-offset:1px}
+.aw .ts-think,.aw [class*="thinking"]{font-size:13px}
+.aw-in{animation:aw-in .32s cubic-bezier(.2,.8,.2,1) both}
+.aw-chips .aw-in{animation-delay:calc(var(--i,0) * 140ms)}
+@keyframes aw-in{from{opacity:0;transform:translateY(4px)}}
+.aw-q.aw-typing::after{content:"";display:inline-block;width:1px;height:1em;margin-left:2px;vertical-align:-2px;background:currentColor;animation:aw-caret 1s steps(1) infinite}
+@keyframes aw-caret{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.aw-in,.aw-q.aw-typing::after{animation:none}}
 @container (max-width:560px){.aw-side{display:none}.aw-thread{padding:14px 14px 6px}.aw-compose{margin:6px 10px 10px}.aw .sp{position:static}.aw .sp-pop{left:0;right:0;width:auto;max-width:none}}
 `;
 
@@ -147,12 +164,34 @@ export function AskWindow({
   onAsk,
   onOpenSource,
   onNavigate,
+  thinking = [],
+  play = "auto",
+  onPhase,
   labels: labelsIn,
   className = "",
 }: AskWindowProps) {
   const labels = { ...askWindowLabelsMn, ...labelsIn };
   const [text, setText] = React.useState("");
   const [focus, setFocus] = React.useState<string | null>(openSource ?? null);
+  // The run: ask (question types) → think (one step each) → sources (chips light up) → answer (segment by segment) → done.
+  type Frame = { phase: AskPhase; typed: number; steps: number; chips: number; segs: number };
+  const frames = React.useMemo<ScenarioStep<Frame>[]>(() => {
+    const out: ScenarioStep<Frame>[] = [];
+    const T = thinking.length, C = sources.length, A = answer.length;
+    out.push({ state: { phase: "ask", typed: 0.45, steps: 0, chips: 0, segs: 0 }, hold: 260 });
+    out.push({ state: { phase: "ask", typed: 1, steps: 0, chips: 0, segs: 0 }, hold: 420 });
+    for (let i = 1; i <= T; i++) out.push({ state: { phase: "think", typed: 1, steps: i, chips: 0, segs: 0 }, hold: 650 });
+    out.push({ state: { phase: "sources", typed: 1, steps: T, chips: C, segs: 0 }, hold: 300 + C * 140 });
+    for (let i = 1; i <= A; i++) out.push({ state: { phase: "answer", typed: 1, steps: T, chips: C, segs: i }, hold: 480 });
+    out.push({ state: { phase: "done", typed: 1, steps: T, chips: C, segs: A }, hold: 1000 });
+    return out;
+  }, [thinking.length, sources.length, answer.length]);
+  const run = useScenario<Frame, HTMLDivElement>(frames, { loops: 1, rest: 0 });
+  const last = frames[frames.length - 1].state;
+  const f = play === "static" || run.loopState === "paused" ? last : run.state ?? last;
+  const animate = f !== last || run.playing;
+  React.useEffect(() => { onPhase?.(f.phase); }, [f.phase, onPhase]);
+  const shownQuestion = f.typed >= 1 ? question : question.slice(0, Math.ceil(question.length * f.typed));
   const [current, setCurrent] = React.useState<string | undefined>(activeChat ?? chats[0]?.id);
   const dark = theme === "dark";
   const cited: CitedSource[] = sources.map((s) => ({ id: s.id, title: s.title, site: s.label, date: s.date, quote: s.quote, highlight: s.highlight, icon: <SourceIcon kind={s.kind} size={12} tile={false} logo={s.logo} brand={s.brand} /> }));
@@ -186,20 +225,32 @@ export function AskWindow({
           </nav>
         )}
         <div className="aw-main">
-          <div className="aw-thread">
-            <div className="aw-q">{question}</div>
-            <div className="aw-chips">
-              {sources.map((s) => (
-                <SourcePreview
-                  key={s.id}
-                  source={preview(s)}
-                  open={focus === s.id}
-                  onOpenChange={(o) => setFocus(o ? s.id : null)}
-                  onOpenInApp={onOpenSource ? () => onOpenSource(s) : undefined}
-                />
-              ))}
-            </div>
-            <CitedAnswer theme={theme} segments={answer} sources={cited} pagesRead={sources.length} />
+          <div className="aw-thread" ref={run.ref} {...run.attrs} data-phase={f.phase}>
+            <div className={`aw-q ${f.typed < 1 ? "aw-typing" : ""}`} aria-label={question}>{shownQuestion}</div>
+            {thinking.length > 0 && f.steps > 0 && (
+              <div className={animate ? "aw-in" : undefined}>
+                <ThinkingState steps={thinking.slice(0, f.steps)} live={{ done: f.phase !== "think", seconds: f.steps }} collapseOnDone workedLabel={(ms) => `Бодсон ${Math.max(1, Math.round(ms / 1000))} с`} />
+              </div>
+            )}
+            {f.chips > 0 && (
+              <div className="aw-chips">
+                {sources.slice(0, f.chips).map((s, i) => (
+                  <span key={s.id} className={animate ? "aw-in" : undefined} style={{ ["--i" as string]: i } as React.CSSProperties}>
+                    <SourcePreview
+                      source={preview(s)}
+                      open={focus === s.id}
+                      onOpenChange={(o) => setFocus(o ? s.id : null)}
+                      onOpenInApp={onOpenSource ? () => onOpenSource(s) : undefined}
+                    />
+                  </span>
+                ))}
+              </div>
+            )}
+            {f.segs > 0 && (
+              <div aria-live="polite" aria-busy={f.phase !== "done"}>
+                <CitedAnswer theme={theme} segments={answer.slice(0, f.segs)} sources={cited} pagesRead={sources.length} />
+              </div>
+            )}
           </div>
           <form className="aw-compose" onSubmit={submit}>
             <input value={text} onChange={(e) => setText(e.target.value)} placeholder={labels.placeholder} aria-label={labels.placeholder} />
@@ -222,6 +273,11 @@ export const askWindowDemo: AskWindowProps = {
     { id: "onb", title: "Шинэ ажилтны чиглүүлэг" },
   ],
   activeChat: "price",
+  thinking: [
+    { kind: "step", label: "Асуултыг задлав: хэзээ, яагаад", completedLabel: "Асуултыг задлав" },
+    { kind: "search", label: "Тархинаас 3 эх сурвалж хайж байна", completedLabel: "3 эх сурвалж олдлоо", sources: [{ label: "Шийдвэр" }, { label: "Уулзалт" }, { label: "Мессеж" }] },
+    { kind: "step", label: "Шийдвэр, уулзалтыг тулгаж байна", completedLabel: "Шийдвэр ба уулзалтыг тулгав" },
+  ],
   answer: [
     { text: "Үнийн шинэчлэлийг 10-р сарын багийн уулзалтаар шийдсэн.", cite: ["m"] },
     { text: " Дунд түвшин нэмж, дээд багцын үнэ хэвээр үлдэнэ.", cite: ["d"] },

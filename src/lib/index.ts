@@ -98,6 +98,7 @@ export type { CitedAnswerProps, CitedSegment, CitedSource } from "../library/cit
 
 // Ask Window: the site hero's Ask block (app window + sidebar + sources + cited answer)
 export { AskWindow, askNavMn, askWindowDemo, askWindowLabelsMn } from "../screens/ask-window";
+export type { AskPhase } from "../screens/ask-window";
 export type { AskChat, AskNavItem, AskSource, AskWindowLabels, AskWindowProps } from "../screens/ask-window";
 
 // Method Quiz: the build page's questionnaire → recommended method (BMC · PMBOK · OKR · Lean Canvas)
