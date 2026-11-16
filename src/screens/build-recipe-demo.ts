@@ -1,241 +1,478 @@
 /**
- * Demo content for BuildWizard — copied from web-app's recipes (Output/build-asuumj_v02.json,
+ * Demo content for BuildWizard — copied from web-app's recipes (Output/build-asuumj_v05.json,
  * Output/method-quiz_v01.json, 2026-11-17). The site passes its own JSON; this is for previews and tests.
  */
 import type { WizardRecipe } from "./build-wizard";
 import type { MethodQuizProps } from "./method-quiz";
 
 export const buildRecipeDemo: WizardRecipe = {
+ "branch_key": "segment",
  "intro": {
   "eyebrow": "Бүтээх",
-  "title": "Өөрийн компанийг *нэг тархинд* буулга.",
-  "lead": "Хэдэн асуултад хариулахад танай компанийн Thinking State бэлэн болно. Дараа нь хамтдаа сайжруулна.",
-  "time": "10 орчим минут",
-  "privacy": "Хариулт таны хөтчид хадгалагдана. Уулзалт товлох үед л бидэнд ирнэ."
+  "title": "Танай ажил *нэг тархинд* хэрхэн буух вэ?",
+  "lead": "Хэдэн асуултад хариулахад танай төсөл, хүрээ, давтагддаг ажил, агентад даатгах зүйл нэг ноорог болно.",
+  "privacy": "Хариулт таны хөтчид хадгалагдана. Уулзалт товлох үед л бидэнд ирнэ.",
+  "time_by_segment": {
+   "personal": "≈5 минут · 5 алхам",
+   "team": "≈8 минут · 7 алхам",
+   "company": "≈10 минут · 7 алхам"
+  },
+  "time_note": "Сегмент сонгомогц хугацаа ба алхмын тоо шинэчлэгдэнэ"
  },
  "steps": [
   {
-   "id": "basics",
-   "title": "Танай компани",
+   "id": "who",
+   "title": "Эхлээд танилцъя",
    "fields": [
     {
      "key": "name",
-     "label": "Компанийн нэр",
+     "label": "Компани эсвэл өөрийн нэр",
      "type": "text",
-     "required": true
+     "required": true,
+     "maps_to": "Company.name"
+    },
+    {
+     "key": "segment",
+     "label": "Хэдүүлээ ажилладаг вэ?",
+     "type": "choice",
+     "required": true,
+     "maps_to": "Company.segment",
+     "options": [
+      {
+       "value": "personal",
+       "label": "Ганцаараа",
+       "hint": "Personal Brain — өөрийн ажил, амьдрал"
+      },
+      {
+       "value": "team",
+       "label": "Нэг баг",
+       "hint": "Team Brain — 3-аас 60 орчим хүн"
+      },
+      {
+       "value": "company",
+       "label": "Олон хэлтэстэй байгууллага",
+       "hint": "Company Brain"
+      }
+     ]
     },
     {
      "key": "line",
      "label": "Нэг өгүүлбэрээр юу хийдэг вэ?",
      "type": "text",
-     "placeholder": "Жишээ: Хотын жижиг дэлгүүрүүдэд бараа хүргэдэг."
+     "maps_to": "Company.facts[].value",
+     "fact_label": "Юу хийдэг"
     },
     {
-     "key": "size",
-     "label": "Хэдэн хүнтэй вэ?",
-     "type": "choice",
-     "options": [
-      {
-       "value": "personal",
-       "label": "Ганцаараа эсвэл цөөхүүлээ",
-       "hint": "Personal Brain"
-      },
-      {
-       "value": "team",
-       "label": "Баг",
-       "hint": "Team Brain"
-      },
-      {
-       "value": "company",
-       "label": "Олон хэлтэстэй",
-       "hint": "Company Brain"
-      }
-     ]
+     "key": "why",
+     "label": "Юуны төлөө үүнийг хийдэг вэ?",
+     "type": "text",
+     "maps_to": "Company.model.value"
     }
    ]
   },
   {
-   "id": "methodology",
-   "title": "Танай арга зүй аль вэ?",
-   "lead": "Thinking State танай өөрийн арга зүйгээр зурагдана. Аль нь ойр байна, тэрийгээ сонго — дараа нь сольж болно.",
+   "id": "areas",
+   "title": "Тогтмол анхаардаг хүрээ",
+   "lead": "Хүрээ гэдэг нь дуусдаггүй, тогтмол хариуцдаг зүйл. Төсөл дуусдаг, хүрээ үргэлжилдэг.",
    "fields": [
     {
+     "key": "areas",
+     "type": "multi",
+     "allow_custom": true,
+     "maps_to": "Company.units[].name kind: area",
+     "by_segment": {
+      "personal": {
+       "label": "Ямар хүрээг тогтмол анхаардаг вэ?",
+       "options": [
+        "Ажил",
+        "Эрүүл мэнд",
+        "Гэр бүл",
+        "Санхүү",
+        "Суралцах",
+        "Гэр орон"
+       ]
+      },
+      "team": {
+       "label": "Баг тань ямар чиглэлүүдийг тогтмол хариуцдаг вэ?",
+       "options": [
+        "Борлуулалт",
+        "Маркетинг",
+        "Бүтээгдэхүүн",
+        "Харилцагчийн үйлчилгээ",
+        "Санхүү",
+        "Хүний нөөц"
+       ]
+      },
+      "company": {
+       "label": "Ямар хэлтэс, салбартай вэ?",
+       "options": [
+        "Удирдлага",
+        "Борлуулалт",
+        "Маркетинг",
+        "Үйлдвэрлэл",
+        "Санхүү",
+        "Хүний нөөц",
+        "IT",
+        "Хууль"
+       ]
+      }
+     }
+    },
+    {
+     "key": "unit_kind",
+     "label": "Эдгээр нь танайд юу вэ?",
+     "type": "choice",
+     "show_if": {
+      "segment": "company"
+     },
+     "maps_to": "Company.units[].kind",
+     "options": [
+      {
+       "value": "department",
+       "label": "Хэлтэс"
+      },
+      {
+       "value": "team",
+       "label": "Баг"
+      },
+      {
+       "value": "institution",
+       "label": "Тусдаа салбар, байгууллага"
+      }
+     ]
+    },
+    {
+     "key": "area_standard",
+     "label": "Хамгийн чухал хүрээнд «хэвийн байдал» юу вэ?",
+     "type": "text",
+     "placeholder": "Жишээ: Захиалга 24 цагт хариулагдана.",
+     "maps_to": "Company.facts[].value"
+    }
+   ]
+  },
+  {
+   "id": "projects",
+   "title": "Одоо явж буй төслүүд",
+   "fields": [
+    {
+     "key": "projects",
+     "label": "Одоо ямар ажил явж байна? (3 хүртэл)",
+     "type": "list",
+     "max": 3,
+     "maps_to": "Company.projects[].name"
+    },
+    {
+     "key": "project_done",
+     "label": "Хамгийн чухал нь дууссан гэдгийг юугаар мэдэх вэ?",
+     "type": "text",
+     "maps_to": "Company.projects[].tasks[].title"
+    },
+    {
+     "key": "project_due",
+     "label": "Хэзээ дуусах ёстой вэ?",
+     "type": "date",
+     "optional": true,
+     "maps_to": "Company.projects[].end"
+    },
+    {
+     "key": "project_tool",
+     "label": "Төслөө одоо юугаар хөтөлдөг вэ?",
+     "type": "choice",
+     "show_if": {
+      "segment": [
+       "team",
+       "company"
+      ]
+     },
+     "maps_to": "Company.facts[].value",
+     "options": [
+      "Excel, хүснэгт",
+      "Notion",
+      "Trello, Jira гэх мэт",
+      "Чат, имэйлээр",
+      "Хөтөлдөггүй"
+     ]
+    },
+    {
      "key": "methodology",
+     "label": "Ажлаа ямар аргаар төлөвлөдөг вэ?",
      "type": "cards",
-     "required": true,
+     "maps_to": "Company.methodology",
      "options": [
       {
        "value": "bmc",
        "label": "Бизнес загварын канвас",
-       "short": "BMC",
-       "text": "Хэнд, ямар үнэ цэнэ өгч, яаж орлого олохоо нэг хуудсанд харна.",
-       "fits": "Тогтвортой ажиллаж буй бизнес"
+       "short": "BMC"
       },
       {
        "value": "lean-canvas",
        "label": "Lean Canvas",
-       "short": "Lean",
-       "text": "Асуудал, шийдэл, хэмжүүрээ хурдан шалгана.",
-       "fits": "Шинэ санаа, гарааны бизнес"
+       "short": "Lean"
       },
       {
        "value": "okr",
        "label": "Зорилго ба гол үр дүн",
-       "short": "OKR",
-       "text": "Улирлын зорилго, түүнд хүрснийг хэмжих үр дүн.",
-       "fits": "Өсөлтөд төвлөрсөн баг"
+       "short": "OKR"
       },
       {
        "value": "pmbok",
        "label": "Төслийн удирдлага",
-       "short": "PMBOK",
-       "text": "Төслийн үе шат, хуваарь, эрсдэл, хариуцлага.",
-       "fits": "Төсөл, гэрээгээр ажилладаг байгууллага"
+       "short": "PMBOK"
       }
      ],
      "unsure": {
       "label": "Мэдэхгүй байна",
-      "text": "Дөрвөн богино асуултаар тохирох аргыг санал болгоно.",
       "fallback": "bmc"
      }
     }
    ]
   },
   {
-   "id": "model",
-   "title": "Гол зургаа",
-   "lead": "Сонгосон арга зүйн блокоор асууна. Мэдэхгүй хэсгээ алгасаарай.",
-   "by_methodology": {
-    "bmc": [
-     {
-      "key": "customers",
-      "label": "Хэнд зориулдаг вэ?"
-     },
-     {
-      "key": "value",
-      "label": "Тэдэнд ямар үнэ цэнэ өгдөг вэ?"
-     },
-     {
-      "key": "channels",
-      "label": "Тэдэнд хэрхэн хүрдэг вэ?"
-     },
-     {
-      "key": "relationships",
-      "label": "Харилцагчтайгаа хэрхэн харьцдаг вэ?"
-     },
-     {
-      "key": "revenue",
-      "label": "Юугаар орлого олдог вэ?"
-     },
-     {
-      "key": "activities",
-      "label": "Өдөр бүр хамгийн их юу хийдэг вэ?"
-     },
-     {
-      "key": "resources",
-      "label": "Юугүйгээр ажил зогсох вэ?"
-     },
-     {
-      "key": "partners",
-      "label": "Хэнтэй хамтардаг вэ?"
-     },
-     {
-      "key": "costs",
-      "label": "Мөнгө хамгийн их юунд зарцуулагддаг вэ?"
+   "id": "routines",
+   "title": "Давтагддаг ажил ба дадал",
+   "lead": "Давтагддаг ажил бүр стандарт журам (SOP) болж, дараа нь агентад даатгагдаж болно.",
+   "fields": [
+    {
+     "key": "sops",
+     "type": "list",
+     "max": 3,
+     "maps_to": "Company.workflows[].name",
+     "by_segment": {
+      "personal": {
+       "label": "Долоо хоног бүр давтагддаг ямар ажил байна?",
+       "placeholder": "Жишээ: Нэхэмжлэх илгээх"
+      },
+      "team": {
+       "label": "Баг тань ямар ажлыг тогтмол давтдаг вэ?",
+       "placeholder": "Жишээ: Шинэ харилцагч бүртгэх"
+      },
+      "company": {
+       "label": "Хэлтэс хооронд ямар ажил тогтмол дамждаг вэ?",
+       "placeholder": "Жишээ: Худалдан авалтын хүсэлт батлах"
+      }
      }
-    ],
-    "lean-canvas": [
-     {
-      "key": "problem",
-      "label": "Ямар асуудлыг шийддэг вэ?"
+    },
+    {
+     "key": "sop_trigger",
+     "label": "Хамгийн их давтагддаг нь юунаас эхэлдэг вэ?",
+     "type": "choice",
+     "maps_to": "Company.workflows[].trigger",
+     "options": [
+      "Тодорхой цагт",
+      "Имэйл, мессеж ирэхэд",
+      "Хүсэлт ирэхэд",
+      "Өөр ажил дуусахад"
+     ]
+    },
+    {
+     "key": "sop_written",
+     "label": "Энэ ажлын журам бичигдсэн үү?",
+     "type": "choice",
+     "maps_to": "Company.facts[].value",
+     "options": [
+      "Тийм, баримт бий",
+      "Хагас — толгойд л",
+      "Үгүй"
+     ]
+    },
+    {
+     "key": "habits",
+     "label": "Ямар дадлыг тогтмол барихыг хүсэж байна?",
+     "type": "list",
+     "max": 3,
+     "show_if": {
+      "segment": "personal"
      },
-     {
-      "key": "customers",
-      "label": "Тэр асуудал хэнд хамгийн их тулгардаг вэ?"
-     },
-     {
-      "key": "solution",
-      "label": "Хэрхэн шийддэг вэ?"
-     },
-     {
-      "key": "value",
-      "label": "Яагаад бусдыг биш, таныг сонгох вэ?"
-     },
-     {
-      "key": "metrics",
-      "label": "Ажил явж байгааг юугаар мэддэг вэ?"
-     },
-     {
-      "key": "advantage",
-      "label": "Бусад хуулж чадахгүй юу байна вэ?"
-     },
-     {
-      "key": "channels",
-      "label": "Хэрэглэгчид хэрхэн хүрдэг вэ?"
-     },
-     {
-      "key": "revenue",
-      "label": "Юугаар орлого олдог вэ?"
-     },
-     {
-      "key": "costs",
-      "label": "Гол зардал юу вэ?"
-     }
-    ],
-    "okr": [
-     {
-      "key": "objectives",
-      "label": "Энэ улиралд юунд хүрэхийг хүсэж байна вэ?",
-      "type": "list",
-      "max": 3
-     },
-     {
-      "key": "key_results",
-      "label": "Хүрснээ юугаар мэдэх вэ?",
-      "type": "list",
-      "per": "objective",
-      "max": 3,
-      "hint": "Тоо нь танай өөрийн зорилт — бид нөхөж бичихгүй."
-     }
-    ],
-    "pmbok": [
-     {
-      "key": "projects",
-      "label": "Одоо явж буй гол төслүүд аль вэ?",
-      "type": "list",
-      "max": 5
-     },
-     {
-      "key": "phase",
-      "label": "Тэд аль шатандаа явж байна вэ?",
-      "type": "choice",
-      "options": [
-       "Эхлүүлэх",
-       "Төлөвлөх",
-       "Гүйцэтгэх",
-       "Хянах",
-       "Хаах"
+     "maps_to": "Company.collections[].items[].title",
+     "collection": "habit"
+    },
+    {
+     "key": "rituals",
+     "label": "Баг ямар тогтмол уулзалт, тайлантай вэ?",
+     "type": "multi",
+     "show_if": {
+      "segment": [
+       "team",
+       "company"
       ]
      },
-     {
-      "key": "risks",
-      "label": "Хамгийн их санаа зовоодог эрсдэл юу вэ?"
-     },
-     {
-      "key": "stakeholders",
-      "label": "Шийдвэрийг хэн гаргадаг вэ?"
-     }
-    ]
-   }
+     "maps_to": "Company.collections[].items[].title",
+     "collection": "ritual",
+     "options": [
+      "Өдөр бүрийн товч уулзалт",
+      "Долоо хоногийн тойм",
+      "Сарын тайлан",
+      "Улирлын төлөвлөлт",
+      "Байхгүй"
+     ]
+    }
+   ]
   },
   {
-   "id": "brain",
-   "title": "Танай мэдлэг хаана байна?",
+   "id": "people",
+   "title": "Хэн юуг хариуцдаг вэ?",
+   "show_if": {
+    "segment": [
+     "team",
+     "company"
+    ]
+   },
+   "fields": [
+    {
+     "key": "roles",
+     "label": "Гол үүргүүдийг нэрлэнэ үү (нэргүйгээр, зөвхөн үүрэг)",
+     "type": "list",
+     "max": 6,
+     "placeholder": "Жишээ: Борлуулалтын менежер",
+     "maps_to": "Company.people[].role"
+    },
+    {
+     "key": "decider",
+     "label": "Чухал шийдвэрийг хэн гаргадаг вэ?",
+     "type": "choice",
+     "maps_to": "Company.facts[].value",
+     "options": [
+      "Нэг удирдагч",
+      "Удирдлагын баг",
+      "Хэлтэс бүр өөрөө",
+      "Тодорхойгүй"
+     ]
+    },
+    {
+     "key": "handoff",
+     "label": "Ажил хүнээс хүнд шилжихэд юу хамгийн их гээгддэг вэ?",
+     "type": "choice",
+     "maps_to": "Company.facts[].value",
+     "options": [
+      "Шийдвэрийн шалтгаан",
+      "Харилцагчийн түүх",
+      "Файл, баримт",
+      "Дараагийн алхам"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "knowledge",
+   "title": "Мэдлэг хаана байна?",
    "fields": [
     {
      "key": "tools",
      "label": "Өдөр бүр ямар хэрэгсэл ашигладаг вэ?",
      "type": "multi",
+     "maps_to": "Company.collections[].items[].title",
+     "collection": "tool",
+     "options": [
+      "Word",
+      "Excel",
+      "Gmail",
+      "Slack",
+      "PowerPoint",
+      "Photoshop",
+      "Notion",
+      "Figma",
+      "Adobe",
+      "Higgsfield",
+      "Бусад"
+     ]
+    },
+    {
+     "key": "resources",
+     "label": "Байнга эргэж хардаг нөөц юу вэ?",
+     "type": "multi",
+     "maps_to": "Company.collections[].items[].title",
+     "collection": "resource",
+     "options": [
+      "Гэрээ, загвар баримт",
+      "Үнийн жагсаалт",
+      "Харилцагчийн жагсаалт",
+      "Сургалтын материал",
+      "Судалгаа, тайлан"
+     ]
+    },
+    {
+     "key": "pain",
+     "label": "Мэдлэг хамгийн их хаана алдагддаг вэ?",
+     "type": "choice",
+     "maps_to": "Company.facts[].value",
+     "options": [
+      "Ажилтан солигдоход",
+      "Уулзалтын дараа",
+      "Чат, имэйлд будилж",
+      "Файл олдохгүй",
+      "Мэдэхгүй"
+     ]
+    },
+    {
+     "key": "first_question",
+     "label": "Тархинаасаа хамгийн түрүүнд юу асуумаар байна?",
+     "type": "text",
+     "placeholder": "Жишээ: Өнгөрсөн сард үнийн талаар ямар шийдвэр гаргасан бэ?",
+     "maps_to": "Company.notes[].title"
+    }
+   ],
+   "show_if": {
+    "segment": [
+     "team",
+     "company"
+    ]
+   }
+  },
+  {
+   "id": "agents",
+   "title": "Агентад юуг даатгах вэ?",
+   "lead": "Агент танай журмаар ажиллаж, шийдвэрийг хүнд үлдээнэ.",
+   "fields": [
+    {
+     "key": "delegate",
+     "label": "Аль ажлыг хамгийн түрүүнд даатгамаар байна?",
+     "type": "multi",
+     "max": 3,
+     "maps_to": "Company.agents[].role",
+     "options": [
+      "Ирсэн имэйл, хүсэлтийг ангилах",
+      "Уулзалтын тэмдэглэл, дараагийн алхам",
+      "Тайлан бэлтгэх",
+      "Харилцагчийн асуултад хариулах",
+      "Судалгаа, мэдээ цуглуулах",
+      "Давтагддаг журмыг гүйцэтгэх"
+     ]
+    },
+    {
+     "key": "never",
+     "label": "Юуг хэзээ ч агентад даатгахгүй вэ?",
+     "type": "text",
+     "placeholder": "Жишээ: Төлбөр батлах",
+     "maps_to": "Company.agents[].memory"
+    },
+    {
+     "key": "goal",
+     "label": "Энэ улиралд юунд заавал хүрэх вэ?",
+     "type": "text",
+     "maps_to": "Company.okrs[].title"
+    }
+   ],
+   "show_if": {
+    "segment": [
+     "team",
+     "company"
+    ]
+   }
+  },
+  {
+   "id": "knowledge-agents",
+   "title": "Мэдлэг ба агент",
+   "lead": "Мэдлэгээ хаана хадгалдаг, юуг агентад даатгах вэ.",
+   "show_if": {
+    "segment": "personal"
+   },
+   "fields": [
+    {
+     "key": "tools",
+     "label": "Өдөр бүр ямар хэрэгсэл ашигладаг вэ?",
+     "type": "multi",
+     "maps_to": "Company.collections[].items[].title",
+     "collection": "tool",
      "options": [
       "Word",
       "Excel",
@@ -254,6 +491,7 @@ export const buildRecipeDemo: WizardRecipe = {
      "key": "pain",
      "label": "Мэдлэг хамгийн их хаана алдагддаг вэ?",
      "type": "choice",
+     "maps_to": "Company.facts[].value",
      "options": [
       "Ажилтан солигдоход",
       "Уулзалтын дараа",
@@ -266,15 +504,67 @@ export const buildRecipeDemo: WizardRecipe = {
      "key": "first_question",
      "label": "Тархинаасаа хамгийн түрүүнд юу асуумаар байна?",
      "type": "text",
-     "placeholder": "Жишээ: Өнгөрсөн сард үнийн талаар ямар шийдвэр гаргасан бэ?"
+     "placeholder": "Жишээ: Өнгөрсөн сард үнийн талаар ямар шийдвэр гаргасан бэ?",
+     "maps_to": "Company.notes[].title"
+    },
+    {
+     "key": "delegate",
+     "label": "Аль ажлыг хамгийн түрүүнд даатгамаар байна?",
+     "type": "multi",
+     "max": 3,
+     "maps_to": "Company.agents[].role",
+     "options": [
+      "Ирсэн имэйл, хүсэлтийг ангилах",
+      "Уулзалтын тэмдэглэл, дараагийн алхам",
+      "Тайлан бэлтгэх",
+      "Харилцагчийн асуултад хариулах",
+      "Судалгаа, мэдээ цуглуулах",
+      "Давтагддаг журмыг гүйцэтгэх"
+     ]
+    },
+    {
+     "key": "never",
+     "label": "Юуг хэзээ ч агентад даатгахгүй вэ?",
+     "type": "text",
+     "placeholder": "Жишээ: Төлбөр батлах",
+     "maps_to": "Company.agents[].memory"
+    },
+    {
+     "key": "goal",
+     "label": "Энэ улиралд юунд заавал хүрэх вэ?",
+     "type": "text",
+     "maps_to": "Company.okrs[].title"
     }
    ]
   }
  ],
  "result": {
   "title": "Танай тархины ноорог бэлэн.",
-  "lead": "Хариултаар зурсан Thinking State-ийг үзээд, засах зүйлээ уулзалтаар ярилцъя.",
-  "preview": "CompanyView (methodology-ийн дагуу), draft",
+  "lead": "Хариултаар зурсан хүрээ, төсөл, журам, агентын саналыг үзээд, засах зүйлээ уулзалтаар ярилцъя.",
+  "sections": [
+   {
+    "label": "Хүрээ",
+    "from": "Company.units"
+   },
+   {
+    "label": "Төсөл",
+    "from": "Company.projects"
+   },
+   {
+    "label": "Журам (SOP)",
+    "from": "Company.workflows"
+   },
+   {
+    "label": "Агентын санал",
+    "from": "Company.agents",
+    "rule": "delegate сонголт бүрээс нэг агент; never → memory-д хориг"
+   },
+   {
+    "label": "Арга зүй",
+    "from": "Company.methodology"
+   }
+  ],
+  "empty": "Хоосон — дараа нь бөглөнө",
   "ctas": [
    {
     "label": "Нооргоо үзэх",
