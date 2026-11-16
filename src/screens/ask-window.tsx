@@ -278,8 +278,19 @@ export function AskWindow({
 }
 
 /** ACME demo (made-up company; every figure is a demo number). */
+// Demo copy from web-app's app-texts_vfinal.json (ask_window_demo). ACME is made up.
+export const askWindowDemoNote = "ac.me — жишээ өгөгдөл, бодит харилцагч биш";
+/** Six micro messages for a host's live line (e.g. the hero brain), in run order. */
+export const askWindowMicroMn = [
+  "санах ой хайж байна…",
+  "шийдвэр олдлоо · Үнийн бодлого",
+  "уулзалтын тэмдэглэл · 10-р сар",
+  "Slack · хэлэлцүүлэг холбогдлоо",
+  "эх сурвалж нэгтгэж байна…",
+  "хариу бэлэн",
+];
 export const askWindowDemo: AskWindowProps = {
-  question: "Үнийн шинэчлэлийг хэзээ, яагаад шийдсэн бэ?",
+  question: "Өнгөрсөн сард үнийн талаар ямар шийдвэр гаргасан бэ?",
   workspace: { name: "ACME", note: "демо" },
   nav: askNavMn.map((n) => (n.id === "inbox" ? { ...n, count: 4 } : n)),
   chats: [
@@ -289,20 +300,17 @@ export const askWindowDemo: AskWindowProps = {
   ],
   activeChat: "price",
   thinking: [
-    { kind: "step", label: "Асуултыг задлав: хэзээ, яагаад", completedLabel: "Асуултыг задлав" },
-    { kind: "search", label: "Тархинаас 3 эх сурвалж хайж байна", completedLabel: "3 эх сурвалж олдлоо", sources: [{ label: "Шийдвэр" }, { label: "Уулзалт" }, { label: "Мессеж" }] },
-    { kind: "step", label: "Шийдвэр, уулзалтыг тулгаж байна", completedLabel: "Шийдвэр ба уулзалтыг тулгав" },
+    { kind: "search", label: "санах ой хайж байна…", completedLabel: "3 эх сурвалж", sources: [{ label: "Шийдвэр" }, { label: "Уулзалт" }, { label: "Slack" }] },
+    { kind: "step", label: "эх сурвалж нэгтгэж байна…", completedLabel: "хариу бэлэн" },
   ],
   answer: [
     { text: "Үнийн шинэчлэлийг 10-р сарын багийн уулзалтаар шийдсэн.", cite: ["m"] },
-    { text: " Дунд түвшин нэмж, дээд багцын үнэ хэвээр үлдэнэ.", cite: ["d"] },
-    { text: " Шалтгаан нь хямд багцаас ахиулах хүсэлт олширсон явдал.", cite: ["s"] },
-    { text: " Шинэ үнийн хуудасны дизайн бэлэн.", cite: ["f"] },
+    { text: " Шалтгааныг Slack дээрх хэлэлцүүлэгт,", cite: ["s"] },
+    { text: " эцсийн шийдвэрийг «Үнийн бодлого» тэмдэглэлд бичсэн.", cite: ["d"] },
   ],
   sources: [
-    { id: "d", kind: "decision", brand: "notion", title: "Үнийн бодлого", label: "Шийдвэр · Notion", date: "2026.10", quote: "Дунд түвшин нэмж, дээд багцын үнийг хэвээр үлдээнэ.", highlight: "Дунд түвшин нэмж" },
-    { id: "m", kind: "meeting", brand: "google-calendar", title: "Багийн уулзалт · 10-р сар", label: "Уулзалт · Google Calendar", date: "2026.10", quote: "Үнийн хоёр хувилбарыг харьцуулж, харилцагчдад урьдчилан мэдэгдэхээр тохирлоо.", highlight: "урьдчилан мэдэгдэх" },
-    { id: "s", kind: "message", brand: "slack", title: "#sales · үнийн хэлэлцүүлэг", label: "Мессеж · Slack", date: "2026.10", quote: "Хямд багцаас ахиулах хүсэлт энэ сард 40 гаруй ирлээ.", highlight: "40 гаруй" },
-    { id: "f", kind: "document", brand: "figma", title: "Үнийн хуудасны дизайн", label: "Дизайн · Figma", date: "2026.11", quote: "Гурван түвшний хүснэгт, дунд түвшин нь «Санал болгосон» тэмдэгтэй.", highlight: "Гурван түвшний хүснэгт" },
+    { id: "d", kind: "decision", brand: "notion", title: "Үнийн бодлого", label: "Шийдвэр", date: "2026.10", quote: "Үнийг шинэчлэхээр шийдэв. Шалтгаан: зардал өссөн, өрсөлдөгчдийн үнэ өөрчлөгдсөн. Хэрэгжүүлэх: дараагийн улирлаас. Эзэн: борлуулалтын баг.", highlight: "Үнийг шинэчлэхээр шийдэв." },
+    { id: "m", kind: "meeting", brand: "google-calendar", title: "Багийн уулзалт · 10-р сар", label: "Уулзалтын тэмдэглэл", date: "2026.10", quote: "Үнийн хоёр хувилбарыг харьцуулав. Харилцагчдад урьдчилан мэдэгдэхээр тохирлоо. Эцсийн шийдвэрийг «Үнийн бодлого» тэмдэглэлд бичнэ.", highlight: "урьдчилан мэдэгдэхээр" },
+    { id: "s", kind: "message", brand: "slack", title: "#sales · үнийн хэлэлцүүлэг", label: "Slack thread", date: "2026.10", quote: "Зардал өссөнийг санхүүгийн баг мэдэгдэв. Борлуулалтын баг харилцагчийн хариуг хуваалцав. Уулзалтаар шийдэхээр тохирлоо.", highlight: "Зардал өссөнийг" },
   ],
 };
