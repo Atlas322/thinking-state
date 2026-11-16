@@ -1,5 +1,5 @@
 /**
- * Demo content for BuildWizard — copied from web-app's recipes (Output/build-asuumj_v07.json,
+ * Demo content for BuildWizard — copied from web-app's recipes (Output/build-asuumj_v08.json,
  * Output/method-quiz_v02.json, 2026-11-17). The site passes its own JSON; this is for previews and tests.
  */
 import type { WizardRecipe } from "./build-wizard";
@@ -120,7 +120,7 @@ export const buildRecipeDemo: WizardRecipe = {
     },
     {
      "key": "unit_kind",
-     "label": "Эдгээр нь танайд юу вэ?",
+     "label": "Эдгээр нь байгууллагад юу вэ?",
      "type": "choice",
      "show_if": {
       "segment": "company"

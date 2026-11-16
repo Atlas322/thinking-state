@@ -27,7 +27,7 @@ describe("BuildWizard (recipe v05, adaptive)", () => {
     fireEvent.click(screen.getByLabelText(/Олон хэлтэстэй байгууллага/));
     next();
     expect(screen.getByText("Ямар хэлтэс, салбартай вэ?")).toBeTruthy(); // by_segment: company
-    expect(screen.getByText("Эдгээр нь танайд юу вэ?")).toBeTruthy(); // show_if: company
+    expect(screen.getByText("Эдгээр нь байгууллагад юу вэ?")).toBeTruthy(); // show_if: company
     fireEvent.click(screen.getByRole("button", { name: "Алгасах" }));
     expect(heading("Одоо явж буй төслүүд")).toBeTruthy();
   });

@@ -217,7 +217,7 @@ export function InboxScreen({ data, labels = appScreenLabelsMn }: { data: Screen
       <div className="aps-fieldwrap">
         <label htmlFor="aps-capture">Цуглуулах</label>
         <div className="aps-field">{icons.spark}<input id="aps-capture" readOnly value="" placeholder="Санаа, холбоос, файл…" /><span className="aps-key">⌘⇧Space</span><button type="button" className="aps-btn primary split"><em>Хадгалах</em><span className="aps-cell">{icons.arrow}</span></button></div>
-        <p className="aps-help">Агент Inbox-д орсон зүйлийг ангилж, газрыг нь санал болгоно.</p>
+        <p className="aps-help">Агент Inbox дотор орсон зүйлийг ангилж, газрыг нь санал болгоно.</p>
       </div>
       <div className="aps-card aps-list">
         {data.inbox.map((i) => (
