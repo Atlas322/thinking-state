@@ -14,7 +14,7 @@ import * as React from "react";
 import { CitedAnswer, type CitedSegment, type CitedSource } from "../library/cited-answer";
 import { SourceIcon, SourcePreview, type PreviewSource, type SourceKind } from "../library/source-preview";
 import { ThinkingState, type ThinkingStep } from "../library/thinking-state";
-import { useScenario, type ScenarioStep } from "../motion";
+import { LOOP, motionVar, useScenario, type ScenarioStep } from "../motion";
 
 export type AskSource = {
   id: string;
@@ -141,8 +141,8 @@ const CSS = `
 .aw-send{position:relative;display:grid;place-items:center;flex:none;width:26px;height:26px;border:0;border-radius:var(--ts-radius,6px);background:var(--ts-electric);color:var(--ts-on-electric);cursor:pointer}
 .aw-send:focus-visible,.aw-item:focus-visible{outline:2px solid var(--ts-electric);outline-offset:1px}
 .aw .ts-think,.aw [class*="thinking"]{font-size:13px}
-.aw-in{animation:aw-in .32s cubic-bezier(.2,.8,.2,1) both}
-.aw-chips .aw-in{animation-delay:calc(var(--i,0) * 140ms)}
+.aw-in{animation:aw-in ${motionVar.duration("md")} ${motionVar.easing("enter")} both}
+.aw-chips .aw-in{animation-delay:calc(var(--i,0) * ${LOOP.stagger}ms)}
 @keyframes aw-in{from{opacity:0;transform:translateY(4px)}}
 .aw-q.aw-typing::after{content:"";display:inline-block;width:1px;height:1em;margin-left:2px;vertical-align:-2px;background:currentColor;animation:aw-caret 1s steps(1) infinite}
 @keyframes aw-caret{50%{opacity:0}}
