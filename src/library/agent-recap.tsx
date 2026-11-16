@@ -91,6 +91,7 @@ export function AgentRecap({
   locale,
   className = "",
 }: AgentRecapProps) {
+  const uid = React.useId();
   const t0 = ms(since);
   const t1 = ms(until ?? Date.now());
   const span = Math.max(1, t1 - t0);
@@ -146,11 +147,11 @@ export function AgentRecap({
   };
 
   return (
-    <section className={`ar ${className}`} aria-labelledby="ar-h" style={{ ["--ar-replay" as string]: `${replay}ms` }}>
+    <section className={`ar ${className}`} aria-labelledby={`${uid}ar-h`} style={{ ["--ar-replay" as string]: `${replay}ms` }}>
       <style>{css}</style>
       <header className="ar-top">
         <div>
-          <h3 id="ar-h">{title}</h3>
+          <h3 id={`${uid}ar-h`}>{title}</h3>
           {subtitle !== undefined ? <p>{subtitle}</p> : <p>{time(since)}-аас хойш <span className="ar-dur">{hours} цаг {mins} мин</span></p>}
         </div>
         <div className="ar-counts">
