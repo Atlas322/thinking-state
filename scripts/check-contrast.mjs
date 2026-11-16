@@ -132,7 +132,8 @@ if (!process.argv.includes("--no-screens")) {
 }
 // A slug that matches nothing must not pass in silence (validators call --only <file name>).
 if (arg("only", "") && !list.length && !screensScanned) {
-  console.log(`contrast: --only ${arg("only", "")} matched no catalog entry and no /contrast.html case. Add it to src/catalog.json or src/screens/contrast-cases.tsx.`);
+  const why = process.argv.includes("--no-screens") ? " (the /contrast.html cases were skipped by --no-screens; drop it to scan them)" : " and no /contrast.html case";
+  console.log(`contrast: --only ${arg("only", "")} matched no catalog entry${why}. Add it to src/catalog.json or src/screens/contrast-cases.tsx.`);
   process.exitCode = 1;
 }
 if (exceptions.length) {

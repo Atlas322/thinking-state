@@ -187,6 +187,16 @@ export function Icon({
       {ICON_ANIM_CSS}
     </style>
   ) : null;
+  if (filled && animate === "loop")
+    // A filled icon keeps its own shape; its loop moves the whole mark (the folder bobs).
+    return (
+      <>
+        <style href="ts-icon-loop" precedence="default">{LOOP_CSS}</style>
+        <svg data-loop={`${name}-filled`} className={`cv-icon is-filled ${className}`} style={{ ["--ts-il-phase" as string]: loopPhase(name) }} width={size} height={size} viewBox="0 0 24 24" role={label ? "img" : undefined} aria-label={label} aria-hidden={label ? undefined : true} focusable="false">
+          {filled(size)}
+        </svg>
+      </>
+    );
   if (filled)
     return (
       <>
@@ -256,7 +266,7 @@ function LoopIcon({ name, size, className, label }: { name: IconName; size: numb
       >
         {SHAPES[name].map((s, i) => shape(s, i, true))}
         {(loop?.overlay ?? []).map((o, i) =>
-          o.kind === "dot-run" ? <circle key={`o${i}`} className={`ts-il-o${i + 1}`} data-moving="" r="1.5" fill="var(--ts-electric-fg,currentColor)" stroke="none" />
+          o.kind === "dot-run" ? <circle key={`o${i}`} className={`ts-il-o${i + 1}`} data-moving="" data-run="" r="1.5" fill="var(--ts-electric-fg,currentColor)" stroke="none" />
           : o.kind === "bubbles" ? <g key={`o${i}`} className={`ts-il-o${i + 1}`} data-moving="" fill="currentColor" stroke="none"><circle cx="10.5" cy="19" r="1.1" /><circle cx="13.5" cy="18.5" r=".9" /></g>
           : <rect key={`o${i}`} className={`ts-il-o${i + 1}`} x="6.5" y="12.5" width="3" height="3" rx=".6" fill="currentColor" stroke="none" />,
         )}

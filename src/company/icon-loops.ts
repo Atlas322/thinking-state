@@ -13,7 +13,7 @@
  */
 export type LoopRule = [children: (number | "*" | "o1" | "o2" | "o3")[], keyframe: Keyframe, delay?: number, extra?: string];
 export type Keyframe =
-  | "draw" | "blink" | "pulse" | "bob" | "nudge" | "nudge-up" | "nudge-down" | "spin" | "spin-slow"
+  | "draw" | "blink" | "pulse" | "bob" | "nudge" | "nudge-up" | "nudge-down" | "spin" | "spin-slow" | "turn"
   | "swing" | "breathe" | "run" | "rise" | "hop" | "slide" | "orbit" | "cursor" | "grow" | "wave";
 export type Overlay = { kind: "dot-run"; path: string } | { kind: "bubbles" } | { kind: "day" };
 export type IconLoop = { dur: number; rules: LoopRule[]; overlay?: Overlay[] };
@@ -71,6 +71,7 @@ export const ICON_LOOP: Record<string, IconLoop> = {
   "calendar-x": L(3, [[5, 6], "draw"]),
   // vault and work
   folder: L(3, [["*"], "bob"]),
+  "folder-filled": L(3, [["*"], "bob"]), // <Icon name="folder" variant="filled" animate="loop">
   circle: L(3, [["*"], "breathe"]),
   "git-branch": L(3, [[4], "draw"], [[2, 3], "pulse", 0.4]),
   atom: L(3.6, [[2, 3], "spin-slow"], [[1], "pulse"]),
@@ -99,7 +100,7 @@ export const ICON_LOOP: Record<string, IconLoop> = {
   "chart-pie": L(3, [[1], "hop"], [[2], "draw", 0.3]),
   "circle-dot": L(2.8, [[2], "breathe"], [[1], "pulse", 0.6]),
   "panel-right": L(3, [[2], "slide"]),
-  "rotate-ccw": L(3, [["*"], "spin-slow", 0, "animation-direction:reverse"]),
+  "rotate-ccw": L(3, [["*"], "turn", 0, "animation-direction:reverse"]), // a full turn, so the arrow never snaps back
   landmark: seq(3.2, "grow", [2, 3, 4, 5], 0.25),
   "building-2": seq(3.2, "pulse", [4, 5, 6, 7], 0.35),
   briefcase: L(3, [["*"], "hop"]),
@@ -145,6 +146,7 @@ const KEYFRAMES = `
 @keyframes ts-il-nudge-down{0%,100%{transform:translateY(0)}50%{transform:translateY(1.5px)}}
 @keyframes ts-il-spin{to{transform:rotate(360deg)}}
 @keyframes ts-il-spin-slow{0%{transform:rotate(0)}40%,100%{transform:rotate(180deg)}}
+@keyframes ts-il-turn{0%{transform:rotate(0)}45%,100%{transform:rotate(360deg)}}
 @keyframes ts-il-swing{0%,100%{transform:rotate(0)}30%{transform:rotate(var(--ts-il-r,-8deg))}70%{transform:rotate(calc(var(--ts-il-r,-8deg) * -.7))}}
 @keyframes ts-il-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 @keyframes ts-il-grow{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.6)}}
@@ -178,6 +180,8 @@ export function iconLoopCss(): string {
     });
   }
   css += `@media (prefers-reduced-motion:reduce){.cv-icon[data-loop],.cv-icon[data-loop] *{animation:none!important}.cv-icon[data-loop] [data-moving]{display:none}}\n`;
+  // Without offset-path on SVG (Safari < 16) the running dots would sit at the corner: hide them.
+  css += `@supports not (offset-path:path("M0 0")){.cv-icon[data-loop] [data-run]{display:none}}`;
   return css;
 }
 
