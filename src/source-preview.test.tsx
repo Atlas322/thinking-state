@@ -47,15 +47,23 @@ describe("CitedAnswer theme", () => {
   });
 });
 
-import { BRAND_MARK, SourceIcon } from "./library/source-preview";
-describe("SourceIcon brand marks", () => {
-  it("draws an allowed brand's mark, and the kind icon for any other brand", () => {
-    expect(Object.keys(BRAND_MARK).sort()).toEqual(["figma", "github", "linear"]);
-    const { container, rerender } = render(<SourceIcon kind="document" brand="figma" tile={false} />);
-    expect(container.querySelector("svg")?.getAttribute("aria-label")).toBe("figma");
-    expect(container.querySelector("svg")?.getAttribute("fill")).toBe("currentColor");
-    rerender(<SourceIcon kind="message" brand="slack" tile={false} />);
-    expect(container.querySelector("svg")?.getAttribute("aria-label")).toBeNull();
+import { BRAND_LOGO, BRAND_NAME, SourceIcon, brandTrademarkNoteMn } from "./library/source-preview";
+describe("SourceIcon app logos (svgl)", () => {
+  it("has the apps the chips cite, and no Microsoft or Adobe marks", () => {
+    expect(Object.keys(BRAND_LOGO).sort()).toEqual(["figma", "github", "gmail", "google-calendar", "google-drive", "linear", "notion", "obsidian", "slack"]);
+    expect(Object.keys(BRAND_LOGO).some((k) => /word|excel|powerpoint|microsoft|adobe|photoshop/.test(k))).toBe(false);
+    for (const k of Object.keys(BRAND_LOGO)) expect(brandTrademarkNoteMn).toContain(BRAND_NAME[k]);
+  });
+  it("draws the logo unmodified as an image at the icon size; GitHub swaps for dark", () => {
+    const { container, rerender } = render(<SourceIcon kind="message" brand="Slack" size={12} tile={false} />);
+    const img = container.querySelector("img.ts-brand-l") as HTMLImageElement;
+    expect(img.getAttribute("src")).toBe(BRAND_LOGO.slack.light);
+    expect(img.style.width).toBe("12px");
+    expect(container.querySelector("[role=img]")?.getAttribute("aria-label")).toBe("Slack");
+    rerender(<SourceIcon kind="document" brand="github" size={12} tile={false} />);
+    expect(container.querySelector("img.ts-brand-d")).toBeTruthy();
+    rerender(<SourceIcon kind="document" brand="word" size={12} tile={false} />);
+    expect(container.querySelector("img")).toBeNull();
   });
 });
 
@@ -65,5 +73,14 @@ describe("SourceIcon logo size", () => {
     const box = container.querySelector(".sp-letter") as HTMLElement;
     expect(box.style.width).toBe("12px");
     expect(box.style.height).toBe("12px");
+  });
+});
+
+describe("SourceIcon theme swap scope", () => {
+  it("only a logo with a dark variant takes part in the swap", () => {
+    const { container } = render(<><SourceIcon kind="document" brand="github" tile={false} /><SourceIcon kind="message" brand="slack" tile={false} /></>);
+    const spans = container.querySelectorAll(".ts-brand");
+    expect(spans[0].classList.contains("ts-brand-swap")).toBe(true);
+    expect(spans[1].classList.contains("ts-brand-swap")).toBe(false);
   });
 });

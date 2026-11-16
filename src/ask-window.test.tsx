@@ -15,7 +15,7 @@ describe("AskWindow (lightweight)", () => {
   it("shows the question as a sent message, the source chips and the cited answer", () => {
     render(<AskWindow {...askWindowDemo} />);
     expect(screen.getByText(askWindowDemo.question)).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Багийн уулзалт · 10-р сар" }));
+    fireEvent.click([...document.querySelectorAll(".sp-chip")].find((b) => b.textContent?.includes("Багийн уулзалт"))!);
     expect(screen.getByRole("dialog", { name: "Багийн уулзалт · 10-р сар" })).toBeTruthy();
     expect(document.querySelector(".ca")?.getAttribute("data-theme")).toBe("light");
   });

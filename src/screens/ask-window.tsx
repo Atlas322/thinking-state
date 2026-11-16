@@ -229,9 +229,9 @@ export const askWindowDemo: AskWindowProps = {
     { text: " Шинэ үнийн хуудасны дизайн бэлэн.", cite: ["f"] },
   ],
   sources: [
-    { id: "d", kind: "decision", title: "Үнийн бодлого", label: "Шийдвэр", date: "2026.10", quote: "Дунд түвшин нэмж, дээд багцын үнийг хэвээр үлдээнэ.", highlight: "Дунд түвшин нэмж" },
-    { id: "m", kind: "meeting", title: "Багийн уулзалт · 10-р сар", label: "Уулзалт", date: "2026.10", quote: "Үнийн хоёр хувилбарыг харьцуулж, харилцагчдад урьдчилан мэдэгдэхээр тохирлоо.", highlight: "урьдчилан мэдэгдэх" },
-    { id: "s", kind: "message", title: "Борлуулалтын суваг", label: "Мессеж", date: "2026.10", quote: "Хямд багцаас ахиулах хүсэлт энэ сард 40 гаруй ирлээ.", highlight: "40 гаруй" },
+    { id: "d", kind: "decision", brand: "notion", title: "Үнийн бодлого", label: "Шийдвэр · Notion", date: "2026.10", quote: "Дунд түвшин нэмж, дээд багцын үнийг хэвээр үлдээнэ.", highlight: "Дунд түвшин нэмж" },
+    { id: "m", kind: "meeting", brand: "google-calendar", title: "Багийн уулзалт · 10-р сар", label: "Уулзалт · Google Calendar", date: "2026.10", quote: "Үнийн хоёр хувилбарыг харьцуулж, харилцагчдад урьдчилан мэдэгдэхээр тохирлоо.", highlight: "урьдчилан мэдэгдэх" },
+    { id: "s", kind: "message", brand: "slack", title: "#sales · үнийн хэлэлцүүлэг", label: "Мессеж · Slack", date: "2026.10", quote: "Хямд багцаас ахиулах хүсэлт энэ сард 40 гаруй ирлээ.", highlight: "40 гаруй" },
     { id: "f", kind: "document", brand: "figma", title: "Үнийн хуудасны дизайн", label: "Дизайн · Figma", date: "2026.11", quote: "Гурван түвшний хүснэгт, дунд түвшин нь «Санал болгосон» тэмдэгтэй.", highlight: "Гурван түвшний хүснэгт" },
   ],
 };
