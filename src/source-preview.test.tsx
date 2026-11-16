@@ -31,9 +31,10 @@ describe("SourcePreview", () => {
     rerender(<SourcePreview source={src} defaultOpen />);
     expect(screen.queryByRole("button", { name: /Апп-д нээх/ })).toBeNull();
   });
-  it("shows a brand's first letter when no logo is given", () => {
+  it("falls back to the document line icon when a brand has no logo", () => {
     render(<SourcePreview source={{ id: "b", title: "Ноорог", kind: "brand", brandName: "Самбар" }} defaultOpen />);
     expect(screen.getByText("Апп")).toBeTruthy();
-    expect(document.querySelectorAll(".sp-letter")[0].textContent).toBe("С");
+    expect(document.querySelector(".sp-letter")).toBeNull();
+    expect(document.querySelectorAll(".sp-tile svg").length).toBeGreaterThan(0);
   });
 });

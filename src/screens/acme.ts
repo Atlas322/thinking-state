@@ -1,6 +1,7 @@
 /**
  * ACME — a made-up company for the Second Brain app screens (inai.sh, social, Journal).
  * Fictional case only: no real people, no client data. Roles and agents stand in for names.
+ * Every figure (62%, 8–11%, 58% …) is a demo number, not real data.
  */
 import type { PlanStep } from "../library/agent-plan";
 import type { CitedSegment, CitedSource } from "../library/cited-answer";

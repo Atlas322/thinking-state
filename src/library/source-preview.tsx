@@ -17,7 +17,7 @@ export type PreviewSource = {
   quote?: string;
   /** Words inside quote to mark. */
   highlight?: string;
-  /** Brand logo for kind="brand" (an <img> or <svg>); falls back to the first letter of brandName. */
+  /** Brand logo for kind="brand" (an <img> or <svg>); without it the document icon is shown. */
   logo?: React.ReactNode;
   brandName?: string;
 };
@@ -40,6 +40,7 @@ export type SourcePreviewProps = {
   className?: string;
 };
 
+// Demo data: ACME is a made-up company — 62% and every other figure here are demo numbers, not real data.
 const demoSource: PreviewSource = {
   id: "retention",
   title: "Харилцагчийн хадгалалтын тайлан 2026",
@@ -66,10 +67,11 @@ export const SOURCE_ICON: Record<Exclude<SourceKind, "brand">, React.ReactNode> 
 };
 
 /** The source-kind icon on its tile: token background, token border, currentColor glyph — the same in both themes. */
-export function SourceIcon({ kind, size = 16, tile = true, logo, letter }: { kind: SourceKind; size?: number; tile?: boolean; logo?: React.ReactNode; letter?: string }) {
-  const glyph = kind === "brand"
-    ? <span className="sp-letter" style={{ display: "grid", placeItems: "center", width: "100%", height: "100%", fontWeight: 600, fontSize: Math.max(11, size * 0.7), lineHeight: 1 }}>{logo ?? letter ?? "?"}</span>
-    : <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{SOURCE_ICON[kind]}</svg>;
+export function SourceIcon({ kind, size = 16, tile = true, logo }: { kind: SourceKind; size?: number; tile?: boolean; logo?: React.ReactNode }) {
+  // A brand shows its logo; without one (demos may not name brands) it falls back to the document line icon.
+  const glyph = kind === "brand" && logo
+    ? <span className="sp-letter" style={{ display: "grid", placeItems: "center", width: "100%", height: "100%" }}>{logo}</span>
+    : <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{SOURCE_ICON[kind === "brand" ? "document" : kind]}</svg>;
   if (!tile) return glyph;
   return (
     <span
@@ -83,7 +85,7 @@ export function SourceIcon({ kind, size = 16, tile = true, logo, letter }: { kin
 }
 
 function KindIcon({ source, size = 16 }: { source: PreviewSource; size?: number }) {
-  return <SourceIcon kind={source.kind} size={size} tile={false} logo={source.logo} letter={(source.brandName ?? source.title).slice(0, 1)} />;
+  return <SourceIcon kind={source.kind} size={size} tile={false} logo={source.logo} />;
 }
 
 function Marked({ text, mark }: { text: string; mark?: string }) {
@@ -158,7 +160,7 @@ export function SourcePreview({
       {open && (
         <div id={popId} className="sp-pop" role="dialog" aria-label={source.title} data-placement={placement}>
           <div className="sp-head">
-            <SourceIcon kind={source.kind} size={18} logo={source.logo} letter={(source.brandName ?? source.title).slice(0, 1)} />
+            <SourceIcon kind={source.kind} size={18} logo={source.logo} />
             <div>
               <p className="sp-title">{source.title}</p>
               <div className="sp-meta">{kindText}{source.date ? ` · ${source.date}` : ""}</div>
