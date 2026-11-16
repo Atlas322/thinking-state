@@ -152,3 +152,4 @@ export const dashboardDemo: P<typeof Dashboard> = { c: acmeGroup, scoped: acmeGr
 export const raciDemo: P<typeof RaciView> = { c: acmeGroup, scoped: acmeGroup, onPerson: () => {}, empty: "RACI тохируулаагүй байна" };
 export const roleDashboardDemo: RoleDashboardProps = { company: acmeGroup, personId: acmeGroup.people[0]?.id ?? "", today: TODAY };
 export { askWindowDemo };
+export { ceoDailyDemo, ceoDailyLogisticsDemo, appShellDemo, appShellLogisticsDemo, ceoDailyScreenDemo } from "../screens/ceo-daily";

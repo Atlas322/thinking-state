@@ -13,6 +13,7 @@ import { MethodQuiz, methodQuizDemo } from "./method-quiz";
 import { buildRecipeDemo } from "./build-recipe-demo";
 import { AppScreen, SCREENS } from "./app-screens";
 import { FinanceReport } from "./finance-report";
+import { CeoDailyScreen, ceoDailyScreenDemo, appShellLogisticsDemo, ceoDailyLogisticsDemo } from "./ceo-daily";
 import { acmeDemo } from "./acme";
 import { RoleDashboard } from "../company/role-dashboard";
 import { acmeGroup } from "../company/fixtures";
@@ -50,6 +51,8 @@ function Cases() {
             ))}
             <Host page={page} id={`build-wizard ${win}`}><BuildWizard recipe={buildRecipeDemo} theme={win} /></Host>
             <Host page={page} id={`finance-report ${win}`}><FinanceReport theme={win} /></Host>
+            <Host page={page} id={`ceo-daily marketing ${win}`}><div data-ts-theme={win === "dark" ? "dark" : "cream"} data-theme={win} className={win === "dark" ? "dark" : ""}><CeoDailyScreen {...ceoDailyScreenDemo} /></div></Host>
+            <Host page={page} id={`ceo-daily logistics ${win}`}><div data-ts-theme={win === "dark" ? "dark" : "cream"} data-theme={win} className={win === "dark" ? "dark" : ""}><CeoDailyScreen shell={appShellLogisticsDemo} daily={ceoDailyLogisticsDemo} /></div></Host>
             <Host page={page} id={`method-quiz ${win}`}><MethodQuiz {...methodQuizDemo} theme={win} /></Host>
             <Host page={page} id={`role-dashboard ${win}`}><RoleDashboard company={acmeGroup} personId={acmeGroup.people[0].id} theme={win} today={today} /></Host>
             {SCREENS.map((s) => (

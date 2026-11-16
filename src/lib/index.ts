@@ -100,6 +100,10 @@ export type { CitedAnswerProps, CitedSegment, CitedSource } from "../library/cit
 export { AskWindow, askNavMn, askWindowDemo, askWindowDemoNote, askWindowLabelsMn, askWindowMicroMn } from "../screens/ask-window";
 export { FinanceReport, financeReportDemo } from "../screens/finance-report";
 export { CashRiver, cashRiverDemo } from "../screens/cash-river";
+export { AppShell, PARA_KEYS, paraBaseMn, acmeParaVocab, appShellLabelsMn } from "../screens/app-shell";
+export type { AppShellProps, AppShellView, AppShellLabels, ParaKey, ParaVocab } from "../screens/app-shell";
+export { CeoDaily, CeoDailyScreen, CeoMeetingOverview, ceoDailyDemo, ceoDailyLogisticsDemo, appShellDemo, appShellLogisticsDemo, ceoDailyScreenDemo } from "../screens/ceo-daily";
+export type { CeoDailyProps, CeoDailyData, CeoKpi, CeoDayItem, CeoMeeting, CeoArea, CeoProject, CeoGoal, CeoContract, CeoAgent } from "../screens/ceo-daily";
 export type { CashRiverProps, CashEvent, CashToggle } from "../screens/cash-river";
 export type { FinanceReportData, FinanceReportProps, FinanceKpi, FinanceLine } from "../screens/finance-report";
 export type { AskPhase } from "../screens/ask-window";
