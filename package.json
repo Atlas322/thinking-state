@@ -20,6 +20,54 @@
       "types": "./lib/types/lib/studio.d.ts",
       "import": "./lib/studio.js"
     },
+    "./app-shell": {
+      "types": "./lib/types/lib/entries/app-shell.d.ts",
+      "import": "./lib/app-shell.js"
+    },
+    "./ask-window": {
+      "types": "./lib/types/lib/entries/ask-window.d.ts",
+      "import": "./lib/ask-window.js"
+    },
+    "./build-wizard": {
+      "types": "./lib/types/lib/entries/build-wizard.d.ts",
+      "import": "./lib/build-wizard.js"
+    },
+    "./cash-river": {
+      "types": "./lib/types/lib/entries/cash-river.d.ts",
+      "import": "./lib/cash-river.js"
+    },
+    "./ceo-daily": {
+      "types": "./lib/types/lib/entries/ceo-daily.d.ts",
+      "import": "./lib/ceo-daily.js"
+    },
+    "./cited-answer": {
+      "types": "./lib/types/lib/entries/cited-answer.d.ts",
+      "import": "./lib/cited-answer.js"
+    },
+    "./converge-net": {
+      "types": "./lib/types/lib/entries/converge-net.d.ts",
+      "import": "./lib/converge-net.js"
+    },
+    "./finance-report": {
+      "types": "./lib/types/lib/entries/finance-report.d.ts",
+      "import": "./lib/finance-report.js"
+    },
+    "./method-quiz": {
+      "types": "./lib/types/lib/entries/method-quiz.d.ts",
+      "import": "./lib/method-quiz.js"
+    },
+    "./role-dashboard": {
+      "types": "./lib/types/lib/entries/role-dashboard.d.ts",
+      "import": "./lib/role-dashboard.js"
+    },
+    "./source-preview": {
+      "types": "./lib/types/lib/entries/source-preview.d.ts",
+      "import": "./lib/source-preview.js"
+    },
+    "./thinking-state": {
+      "types": "./lib/types/lib/entries/thinking-state.d.ts",
+      "import": "./lib/thinking-state.js"
+    },
     "./tokens.css": "./lib/tokens.css",
     "./site.css": "./lib/site.css",
     "./ts.css": "./lib/ts.css",
