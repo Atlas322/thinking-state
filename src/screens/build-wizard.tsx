@@ -8,6 +8,7 @@
  * Tokens only (--ts-*), radius --ts-radius, 44px targets.
  */
 import * as React from "react";
+import { buildRecipeDemo, methodQuizRecipeDemo } from "./build-recipe-demo";
 import type { Collection, Company, Methodology } from "../company/types";
 import { MethodQuiz, type MethodQuizProps } from "./method-quiz";
 
@@ -62,7 +63,8 @@ export const buildWizardLabelsMn: BuildWizardLabels = {
   chooseMax: (n) => `${n} хүртэл сонгоно`,
 };
 export type BuildWizardProps = {
-  recipe: WizardRecipe;
+  /** Without it the ac.me demo recipe (web-app app-texts_vfinal) is used, so a page can mount it with no props. */
+  recipe?: WizardRecipe;
   /** MethodQuiz content (method-quiz JSON); without it «Мэдэхгүй байна» picks the fallback method. */
   quiz?: Pick<MethodQuizProps, "questions" | "methods" | "note">;
   defaultAnswers?: WizardAnswers;
@@ -294,7 +296,7 @@ const check = <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke
 const arrow = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>;
 const plus = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>;
 
-export function BuildWizard({ recipe, quiz, defaultAnswers = {}, segment, segmentAliases = SEGMENT_ALIASES, defaultStep = 0, theme = "light", onComplete, onCta, labels: labelsIn, className = "" }: BuildWizardProps) {
+export function BuildWizard({ recipe = buildRecipeDemo, quiz = methodQuizRecipeDemo, defaultAnswers = {}, segment, segmentAliases = SEGMENT_ALIASES, defaultStep = 0, theme = "light", onComplete, onCta, labels: labelsIn, className = "" }: BuildWizardProps) {
   const labels = { ...buildWizardLabelsMn, ...labelsIn };
   const uid = React.useId();
   const branchKey = recipe.branch_key ?? "segment";
@@ -530,3 +532,6 @@ export function BuildWizard({ recipe, quiz, defaultAnswers = {}, segment, segmen
     </div>
   );
 }
+
+/** Host demo: <BuildWizard {...buildWizardDemo} /> (ac.me recipe, method quiz). */
+export const buildWizardDemo: BuildWizardProps = { recipe: buildRecipeDemo, quiz: methodQuizRecipeDemo };

@@ -153,3 +153,5 @@ export const raciDemo: P<typeof RaciView> = { c: acmeGroup, scoped: acmeGroup, o
 export const roleDashboardDemo: RoleDashboardProps = { company: acmeGroup, personId: acmeGroup.people[0]?.id ?? "", today: TODAY };
 export { askWindowDemo };
 export { ceoDailyDemo, ceoDailyLogisticsDemo, appShellDemo, appShellLogisticsDemo, ceoDailyScreenDemo } from "../screens/ceo-daily";
+export { buildWizardDemo } from "../screens/build-wizard";
+export { convergeNetDemo } from "../motion/converge-net";
