@@ -289,6 +289,16 @@
 }
 
 /*
+ * Form controls inherit the page font (2026-11-17, screens.14). Browsers give button, input,
+ * select and textarea their own system font, so a library button in a host page fell back to a
+ * narrow font. Zero specificity (:where): any component or host rule still wins.
+ */
+:where(button, input, select, textarea) {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+/*
  * Line icons (2026-11-17): Lucide-style stroke icons are 14 px with a 1.25
  * stroke, so they read sharp and fine next to 13 px text. One place to change
  * them everywhere. Brand logos (SourceIcon brand=…) are NOT line icons: they

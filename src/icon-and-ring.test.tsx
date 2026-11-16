@@ -78,3 +78,11 @@ describe("focus outline ratchet", () => {
     expect(n).toBeLessThanOrEqual(OUTLINE_BASELINE);
   });
 });
+
+describe("form controls inherit the font", () => {
+  it("tokens.css resets button, input, select, textarea to font: inherit at zero specificity", async () => {
+    const fs = (await import(/* @vite-ignore */ "node:" + "fs")) as { readFileSync: (p: string, e: string) => string };
+    const css = fs.readFileSync("src/lib/tokens.css", "utf8");
+    expect(css).toMatch(/:where\(button, input, select, textarea\) \{\s*font: inherit;/);
+  });
+});
