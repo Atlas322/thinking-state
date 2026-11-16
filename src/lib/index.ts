@@ -91,3 +91,7 @@ export type { ScreenData, InboxItem, AtomNote, NoteLink, AppProject, ProjectTask
 // Source chip + file preview popover (site hero, chat)
 export { SourcePreview, SourceIcon, SOURCE_ICON, sourcePreviewLabelsMn } from "../library/source-preview";
 export type { PreviewSource, SourceKind, SourcePreviewLabels, SourcePreviewProps } from "../library/source-preview";
+
+// Cited answer (site hero, chat): sources as icon tiles, citations, quoted preview
+export { CitedAnswer } from "../library/cited-answer";
+export type { CitedAnswerProps, CitedSegment, CitedSource } from "../library/cited-answer";

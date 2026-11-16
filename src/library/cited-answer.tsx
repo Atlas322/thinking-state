@@ -26,6 +26,8 @@ export type CitedAnswerProps = {
   onOpenSource?: (source: CitedSource) => void;
   onPreviewChange?: (id: string | null) => void;
   action?: { label: string; onClick: () => void };
+  /** Force the card light or dark regardless of the page theme. */
+  theme?: "light" | "dark";
   className?: string;
 };
 
@@ -102,6 +104,7 @@ export function CitedAnswer({
   onOpenSource,
   onPreviewChange,
   action = { label: "Үргэлжлүүлэн асуух", onClick: () => {} },
+  theme,
   className = "",
 }: CitedAnswerProps) {
   const [hover, setHover] = React.useState<string | null>(null);
@@ -141,7 +144,7 @@ export function CitedAnswer({
   const initial = (s: CitedSource) => s.site.charAt(0).toUpperCase();
 
   return (
-    <section className={`ca ${active ? "ca-focus" : ""} ${className}`}>
+    <section className={`ca ${active ? "ca-focus" : ""} ${className}`} data-theme={theme}>
       <style>{css}</style>
       <div className="ca-body">
         <div className="ca-head">
@@ -274,12 +277,14 @@ export function CitedAnswer({
 
 const css = `
 .ca{--ca-bg:#fff;--ca-fg:#18181b;--ca-muted:#65656d;--ca-faint:#65656d;--ca-line:#ececef;--ca-chip:#f4f4f5;--ca-lit:#e8f1fd;--ca-accent:#3b82f6;--ca-mark:#fdf0b8;width:100%;max-width:442px;background:var(--ca-bg);color:var(--ca-fg);border:1px solid var(--ca-line);border-radius:var(--ts-radius,12px);box-shadow:0 1px 2px #0000000a;font:400 14px/1.57 Inter,system-ui,sans-serif;overflow:hidden}
-:where(.dark,[data-theme=dark]) .ca{--ca-bg:#1b1b1e;--ca-fg:#ececef;--ca-muted:#a1a1aa;--ca-faint:#9a9aa2;--ca-line:#2e2e33;--ca-chip:#2a2a2f;--ca-lit:#1d3150;--ca-accent:#6aa3ff;--ca-mark:#5a4a12;color-scheme:dark}
+:where(.dark,[data-theme=dark]) .ca,.ca[data-theme=dark]{--ca-bg:#1b1b1e;--ca-fg:#ececef;--ca-muted:#a1a1aa;--ca-faint:#9a9aa2;--ca-line:#2e2e33;--ca-chip:#2a2a2f;--ca-lit:#1d3150;--ca-accent:#6aa3ff;--ca-mark:#5a4a12;color-scheme:dark}
+/* theme="light" (or a [data-theme=light] wrapper) keeps the card light inside a dark page */
+:where(.dark,[data-theme=dark]) :where([data-theme=light]) .ca,.ca[data-theme=light]{--ca-bg:#fff;--ca-fg:#18181b;--ca-muted:#65656d;--ca-faint:#65656d;--ca-line:#ececef;--ca-chip:#f4f4f5;--ca-lit:#e8f1fd;--ca-accent:#3b82f6;--ca-mark:#fdf0b8;color-scheme:light}
 .ca *{box-sizing:border-box}.ca button{font:inherit;color:inherit;cursor:pointer}
 .ca-body{padding:14px 20px 16px}
 .ca-head{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ca-muted);margin-bottom:12px}
 .ca-stack{display:flex}.ca-stack .ca-badge{margin-right:-2px;box-shadow:0 0 0 1.5px var(--ca-bg)}
-.ca-badge{display:inline-grid;place-items:center;width:20px;height:20px;box-sizing:border-box;border:1px solid var(--ts-faint,currentColor);border-radius:var(--ts-radius,6px);background:var(--ts-soft,transparent);color:var(--ts-fg,currentColor);font-size:11px;font-weight:600;flex:none}
+.ca-badge{display:inline-grid;place-items:center;width:20px;height:20px;box-sizing:border-box;border:1px solid var(--ca-faint);border-radius:var(--ts-radius,6px);background:var(--ca-chip);color:var(--ca-fg);font-size:11px;font-weight:600;flex:none}
 .ca-badge svg{width:12px;height:12px;stroke-width:1.75}
 .ca-prose p{margin:0 0 10px}.ca-prose p:last-child{margin:0}
 .ca-seg{transition:color .2s,background .2s;border-radius:var(--ts-radius,3px)}

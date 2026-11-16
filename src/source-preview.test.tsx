@@ -38,3 +38,11 @@ describe("SourcePreview", () => {
     expect(document.querySelectorAll(".sp-tile svg").length).toBeGreaterThan(0);
   });
 });
+
+import { CitedAnswer } from "./library/cited-answer";
+describe("CitedAnswer theme", () => {
+  it("passes theme to data-theme so a light card can sit in a dark page", () => {
+    const { container } = render(<div className="dark"><CitedAnswer theme="light" /></div>);
+    expect(container.querySelector(".ca")?.getAttribute("data-theme")).toBe("light");
+  });
+});
