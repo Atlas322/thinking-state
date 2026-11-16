@@ -92,7 +92,7 @@ export function SourceIcon({ kind, size = 16, tile = true, logo, brand }: { kind
     return <span className="sp-tile" style={{ display: "inline-grid", placeItems: "center", flex: "none", boxSizing: "border-box", width: size + 12, height: size + 12, border: "1px solid var(--ts-faint)", borderRadius: "var(--ts-radius, 6px)", background: "var(--ts-soft)", color: "var(--ts-fg)" }}>{svg}</span>;
   }
   const glyph = kind === "brand" && logo
-    ? <span className="sp-letter" style={{ display: "grid", placeItems: "center", width: "100%", height: "100%" }}>{logo}</span>
+    ? <span className="sp-letter" style={{ display: "grid", placeItems: "center", width: size, height: size, flex: "none", overflow: "hidden" }}>{logo}</span>
     : <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{SOURCE_ICON[kind === "brand" ? "document" : kind]}</svg>;
   if (!tile) return glyph;
   return (

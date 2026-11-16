@@ -58,3 +58,12 @@ describe("SourceIcon brand marks", () => {
     expect(container.querySelector("svg")?.getAttribute("aria-label")).toBeNull();
   });
 });
+
+describe("SourceIcon logo size", () => {
+  it("a brand logo stays inside the icon size (a big SVG does not blow up the chip)", () => {
+    const { container } = render(<SourceIcon kind="brand" size={12} tile={false} logo={<svg viewBox="0 0 2000 2000" />} />);
+    const box = container.querySelector(".sp-letter") as HTMLElement;
+    expect(box.style.width).toBe("12px");
+    expect(box.style.height).toBe("12px");
+  });
+});
