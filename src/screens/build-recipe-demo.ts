@@ -1,6 +1,6 @@
 /**
  * Demo content for BuildWizard — copied from web-app's recipes (Output/build-asuumj_v07.json,
- * Output/method-quiz_v01.json, 2026-11-17). The site passes its own JSON; this is for previews and tests.
+ * Output/method-quiz_v02.json, 2026-11-17). The site passes its own JSON; this is for previews and tests.
  */
 import type { WizardRecipe } from "./build-wizard";
 import type { MethodQuizProps } from "./method-quiz";
@@ -624,7 +624,7 @@ export const methodQuizRecipeDemo: Pick<MethodQuizProps, "questions" | "methods"
   },
   {
    "id": "stage",
-   "title": "Танай ажил аль шатандаа явж байна?",
+   "title": "Ажил аль шатандаа явж байна?",
    "options": [
     {
      "id": "early",

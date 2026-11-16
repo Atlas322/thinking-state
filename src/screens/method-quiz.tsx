@@ -16,7 +16,7 @@ export const methodQuizLabelsMn: MethodQuizLabels = {
   step: (i, n) => `${i} / ${n}`,
   back: "Буцах",
   next: "Дараах",
-  result: "Танд тохирох арга",
+  result: "Тохирох арга",
   restart: "Дахин эхлэх",
   cta: "Уулзалт товлох",
   match: "Арга бүрийн оноо",
