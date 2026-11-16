@@ -30,7 +30,7 @@ function reachable(entry: string, seen = new Set<string>()) {
 describe("@inai/thinking-state package", () => {
   it("is named and exported for git installs", () => {
     expect(pkg.name).toBe("@inai/thinking-state");
-    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./studio", "./tokens.css", "./site.css", "./ts.css", "./package.json"]);
+    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./studio", "./tokens.css", "./site.css", "./ts.css", "./report.css", "./package.json"]);
     expect(pkg.files).toContain("lib");
     expect(pkg.peerDependencies.react).toMatch(/\^19/);
     expect((pkg.dependencies as Record<string, string>).react).toBeUndefined();
@@ -76,5 +76,5 @@ describe("@inai/thinking-state/studio", () => {
     const catalog = (await import("./catalog.json")).default as { slug: string; exportName: string; module?: string }[];
     const studio = (await import("./lib/studio")) as Record<string, unknown>;
     for (const e of catalog.filter((x) => !x.module)) expect(typeof studio[e.exportName], e.slug).toBe("function");
-  });
+  }, 30_000); // imports the whole studio bundle (≈1.7 MB); under a full parallel run it can pass 5 s
 });

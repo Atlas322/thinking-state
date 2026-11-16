@@ -102,6 +102,7 @@ export function AgentSteering({
   placeholder = "Агентад заавар өгөх…",
   className = "",
 }: AgentSteeringProps) {
+  const uid = React.useId();
   const [ownSteps, setOwnSteps] = React.useState<SteerStep[]>(defaultSteps);
   const [ownQueue, setOwnQueue] = React.useState<SteerNote[]>([]);
   const [ownStatus, setOwnStatus] = React.useState(statusProp);
@@ -275,7 +276,7 @@ export function AgentSteering({
               value={draft}
               placeholder={placeholder}
               aria-label="Агентад заавар өгөх"
-              aria-describedby="as-hint"
+              aria-describedby={`${uid}as-hint`}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Escape") setDraft("");
@@ -289,7 +290,7 @@ export function AgentSteering({
               <svg viewBox="0 0 16 16"><path d="M8 12.5v-9M4 7.5l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           </div>
-          <div className="as-hint" id="as-hint">
+          <div className="as-hint" id={`${uid}as-hint`}>
             <kbd><Enter /></kbd>дараагийн алхамд
             <kbd>⌘</kbd><kbd><Enter /></kbd>одоо тасална
           </div>

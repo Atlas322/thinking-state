@@ -705,13 +705,14 @@ const demoLabel: React.CSSProperties = { margin: "0 0 8px", fontSize: 13, color:
 const demoRule: React.CSSProperties = { height: 1, background: "rgba(0,0,0,.08)", margin: "20px 0" };
 
 export default function Demo() {
+  const uid = React.useId();
   const [section, setSection] = React.useState("overview");
   const [period, setPeriod] = React.useState("yearly");
   return (
     <div style={{ width: "100%", maxWidth: 440, padding: 20, borderRadius: 12, border: "1px solid rgba(0,0,0,.08)", background: "#fff", boxSizing: "border-box" }}>
-      <p id="sc-demo-dashboard" style={demoLabel}>Хянах самбар</p>
+      <p id={`${uid}sc-demo-dashboard`} style={demoLabel}>Хянах самбар</p>
       <SegmentedControl
-        aria-labelledby="sc-demo-dashboard"
+        aria-labelledby={`${uid}sc-demo-dashboard`}
         value={section}
         onChange={setSection}
         options={[
@@ -722,11 +723,11 @@ export default function Demo() {
         ]}
       />
       <div style={demoRule} />
-      <p id="sc-demo-layout" style={demoLabel}>Харагдац</p>
+      <p id={`${uid}sc-demo-layout`} style={demoLabel}>Харагдац</p>
       <SegmentedControl
         size="sm"
         variant="tray"
-        aria-labelledby="sc-demo-layout"
+        aria-labelledby={`${uid}sc-demo-layout`}
         defaultValue="board"
         options={[
           { value: "list", label: "Жагсаалт", icon: <ListIcon /> },
@@ -735,10 +736,10 @@ export default function Demo() {
         ]}
       />
       <div style={demoRule} />
-      <p id="sc-demo-billing" style={demoLabel}>Төлбөрийн давтамж</p>
+      <p id={`${uid}sc-demo-billing`} style={demoLabel}>Төлбөрийн давтамж</p>
       <SegmentedControl
         variant="underline"
-        aria-labelledby="sc-demo-billing"
+        aria-labelledby={`${uid}sc-demo-billing`}
         value={period}
         onChange={setPeriod}
         options={[

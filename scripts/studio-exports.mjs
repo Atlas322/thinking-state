@@ -42,6 +42,8 @@ export function studioTs(entries) {
  * Each component carries its own styles and reads the --ts-* tokens.
  */
 ${lines.join("\n")}
+// Demo props for hosts (<camelName>Demo, ac.me): <ApprovalCard {...approvalCardDemo} />
+export * from "./demos";
 `;
 }
 

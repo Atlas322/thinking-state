@@ -20,6 +20,7 @@
   --ts-electric: #1b5cff;
   --ts-electric-fg: #1b5cff;
   --ts-electric-soft: #dce5ff;
+  --ts-on-electric: #ffffff;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
@@ -47,7 +48,8 @@
   --ts-prio-low: #5c5a55;
   --ts-prio-low-bg: #ece8dd;
   /* categories (methodology, technology, business, product): always vivid on
-     small marks — icon squares, top bars, progress, chips; large areas stay neutral */
+     small marks — icon squares, top bars, progress, chips; large areas stay neutral.
+     Not for charts: 1 and 3 fail the colour-blind check (CVD ΔE 4.7); charts use --ts-series-*. */
   --ts-cat-1: #f5a524;
   --ts-cat-1-bg: color-mix(in srgb, var(--ts-cat-1) 16%, var(--ts-surface));
   --ts-cat-2: #0c8ce9;
@@ -117,6 +119,7 @@
   /* #4D7FFF is for icons and large text; small accent text uses the lighter blue, filled buttons --ts-accent-strong */
   --ts-electric-fg: #7aa2ff;
   --ts-electric-soft: #16224a;
+  --ts-on-electric: #0b1020;
   --ts-accent: var(--ts-electric);
   --ts-accent-fg: var(--ts-electric-fg);
   --ts-accent-soft: var(--ts-electric-soft);
@@ -194,6 +197,26 @@
   --ts-on-red: #0f0f11;
 }
 
+/*
+ * Chart series (2026-11-17, report.css dashboards): four categorical hues in a
+ * fixed order, checked with the dataviz validator against each theme's surface
+ * (lightness band, chroma, CVD ΔE >= 8, normal ΔE >= 15). Assign in order,
+ * never cycle; a 5th series folds into "Other". Light slots 2–4 sit under 3:1
+ * on cream, so charts that use them carry visible labels or a table.
+ */
+:where(.ts-theme-cream, [data-ts-theme="cream"]) {
+  --ts-series-1: #2a78d6;
+  --ts-series-2: #eb6834;
+  --ts-series-3: #1baf7a;
+  --ts-series-4: #eda100;
+}
+:where(.ts-theme-dark, [data-ts-theme="dark"], .ts-theme-manage, [data-ts-theme="manage"]) {
+  --ts-series-1: #3987e5;
+  --ts-series-2: #d95926;
+  --ts-series-3: #199e70;
+  --ts-series-4: #c98500;
+}
+
 /* data-ts-mode (view | manage) no longer changes colours: one accent everywhere. */
 
 /*
@@ -263,6 +286,32 @@
   --ts-gap-stack-lg: var(--ts-space-5);
   --ts-gap-control: var(--ts-space-4);
   --ts-gap-section: var(--ts-space-9);
+}
+
+/*
+ * Form controls inherit the page font (2026-11-17, screens.14). Browsers give button, input,
+ * select and textarea their own system font, so a library button in a host page fell back to a
+ * narrow font. Zero specificity (:where): any component or host rule still wins.
+ */
+:where(button, input, select, textarea) {
+  font: inherit;
+  letter-spacing: inherit;
+}
+/* A button takes its text colour from where it sits: the browser's buttontext follows the page's
+   color-scheme, so a light card on a dark page got white button text (CashRiver, 1.16:1). */
+:where(button) {
+  color: inherit;
+}
+
+/*
+ * Line icons (2026-11-17): Lucide-style stroke icons are 14 px with a 1.25
+ * stroke, so they read sharp and fine next to 13 px text. One place to change
+ * them everywhere. Brand logos (SourceIcon brand=…) are NOT line icons: they
+ * keep their own colours and size and never take these tokens.
+ */
+:where(:root) {
+  --ts-icon-size: 14px;
+  --ts-icon-stroke: 1.25;
 }
 
 /*

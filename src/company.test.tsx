@@ -635,6 +635,6 @@ describe("CompanyView views prop", () => {
   });
   it("keeps all tabs when the list is empty or unknown", () => {
     render(<CompanyView company={studio} views={[]} />);
-    expect(screen.getAllByRole("tab").length).toBe(7);
+    expect(screen.getAllByRole("tab").length).toBe(8); // + «Албан тушаалаар» (2026-11-17)
   });
 });

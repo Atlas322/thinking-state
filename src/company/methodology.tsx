@@ -213,14 +213,16 @@ function OkrView({ c, scoped }: { c: Company; scoped: Company }) {
   return (
     <div className="cv-okrs">
       {okrs.map((o, i) => {
-        const avg = o.keyResults.length ? Math.round(o.keyResults.reduce((n, k) => n + Math.max(0, Math.min(100, k.progress)), 0) / o.keyResults.length) : 0;
+        // Progress not given yet (a visitor's draft) is shown as «—», never as a made-up 0 %.
+        const known = o.keyResults.filter((k) => Number.isFinite(k.progress));
+        const avg = known.length ? Math.round(known.reduce((n, k) => n + Math.max(0, Math.min(100, k.progress)), 0) / known.length) : null;
         const owner = o.ownerId ? actorOf(c, o.ownerId) : null;
         return (
           <article key={o.id} className="cv-okr" style={{ "--i": i } as React.CSSProperties} aria-label={o.title}>
             <header>
               <span className="cv-okr-o">O{i + 1}</span>
               <strong>{o.title}</strong>
-              <span className="cv-okr-pct">{avg}%</span>
+              <span className="cv-okr-pct">{avg === null ? "—" : `${avg}%`}</span>
             </header>
             {owner && (
               <span className="cv-okr-owner">
@@ -234,10 +236,10 @@ function OkrView({ c, scoped }: { c: Company; scoped: Company }) {
                     <span className="cv-okr-k">KR{j + 1}</span>
                     {k.title}
                   </span>
-                  <span className="cv-kr-bar" role="progressbar" aria-label={k.title} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(k.progress)}>
-                    <span style={{ width: `${Math.max(0, Math.min(100, k.progress))}%` }} />
+                  <span className="cv-kr-bar" role="progressbar" aria-label={k.title} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Number.isFinite(k.progress) ? Math.round(k.progress) : undefined}>
+                    <span style={{ width: `${Number.isFinite(k.progress) ? Math.max(0, Math.min(100, k.progress)) : 0}%` }} />
                   </span>
-                  <span className="cv-kr-n">{Math.round(k.progress)}%</span>
+                  <span className="cv-kr-n">{Number.isFinite(k.progress) ? `${Math.round(k.progress)}%` : "—"}</span>
                 </li>
               ))}
             </ul>

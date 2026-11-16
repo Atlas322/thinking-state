@@ -80,3 +80,39 @@ export { ScenarioChat, scenarioChatLabelsMn } from "../ui/scenario-chat";
 export type { ChatScenario, ChatSourceType, ScenarioChatLabels, ScenarioChatProps } from "../ui/scenario-chat";
 export { AgentConsent, agentConsentLabelsMn } from "../ui/agent-consent";
 export type { AgentConsentLabels, AgentConsentProps, ConsentDecision, ConsentRisk, ConsentScope } from "../ui/agent-consent";
+
+// Second Brain app screens (2026-11-17): one screen library for inai.sh, social and Journal.
+// Glass window + six screens; data via props. acmeDemo = the made-up ACME case (no real people).
+export { AppScreen, AppWindow, InboxScreen, NoteScreen, ProjectScreen, ChatScreen, MemoryScreen, TeamScreen, SCREENS, appScreenLabelsMn } from "../screens/app-screens";
+export type { AppScreenProps, AppWindowProps, AppScreenLabels, ScreenKey, ScreenTheme, WindowVariant } from "../screens/app-screens";
+export { acmeDemo } from "../screens/acme";
+export type { ScreenData, InboxItem, AtomNote, NoteLink, AppProject, ProjectTask, CaptureKind } from "../screens/acme";
+
+// Source chip + file preview popover (site hero, chat)
+export { BRAND_LOGO, BRAND_MARK, BRAND_NAME, SourcePreview, SourceIcon, SOURCE_ICON, brandTrademarkNoteMn, sourcePreviewLabelsMn } from "../library/source-preview";
+export type { PreviewSource, SourceKind, SourcePreviewLabels, SourcePreviewProps } from "../library/source-preview";
+
+// Cited answer (site hero, chat): sources as icon tiles, citations, quoted preview
+export { CitedAnswer } from "../library/cited-answer";
+export type { CitedAnswerProps, CitedSegment, CitedSource } from "../library/cited-answer";
+
+// Ask Window: the site hero's Ask block (app window + sidebar + sources + cited answer)
+export { AskWindow, askNavMn, askWindowDemo, askWindowDemoNote, askWindowLabelsMn, askWindowMicroMn } from "../screens/ask-window";
+export { FinanceReport, financeReportDemo } from "../screens/finance-report";
+export { CashRiver, cashRiverDemo } from "../screens/cash-river";
+export type { CashRiverProps, CashEvent, CashToggle } from "../screens/cash-river";
+export type { FinanceReportData, FinanceReportProps, FinanceKpi, FinanceLine } from "../screens/finance-report";
+export type { AskPhase } from "../screens/ask-window";
+export type { AskChat, AskNavItem, AskSource, AskWindowLabels, AskWindowProps } from "../screens/ask-window";
+
+// Method Quiz: the build page's questionnaire → recommended method (BMC · PMBOK · OKR · Lean Canvas)
+export { MethodQuiz, methodQuizDemo, methodQuizLabelsMn, scoreMethods } from "../screens/method-quiz";
+export type { MethodQuizLabels, MethodQuizProps, QuizMethod, QuizOption, QuizQuestion } from "../screens/method-quiz";
+
+// Build Wizard: the build page's four-step «Бүтээх горим» → a draft Company (MethodQuiz inside step 2)
+export { BuildWizard, SEGMENT_ALIASES, buildWizardLabelsMn, resolveSegment, segmentFromSearch, toDraftCompany } from "../screens/build-wizard";
+export type { BuildWizardLabels, BuildWizardProps, WizardAnswers, WizardField, WizardOption, WizardRecipe, WizardStep } from "../screens/build-wizard";
+
+// Role Dashboard: one company from one position (burning first, agent proposals to approve, timeline, brief)
+export { RoleDashboard, findPerson, roleDashboardLabelsMn, roleView } from "../company/role-dashboard";
+export type { RoleDashboardLabels, RoleDashboardProps, RoleView } from "../company/role-dashboard";

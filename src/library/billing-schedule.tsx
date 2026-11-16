@@ -79,6 +79,7 @@ export function BillingSchedule({
   onChange,
   className = "",
 }: BillingScheduleProps) {
+  const uid = React.useId();
   const [phase, setPhase] = React.useState(phaseProp);
   const [start, setStart] = React.useState(defaultStart);
   const [duration, setDuration] = React.useState("Нэг удаагийн");
@@ -154,13 +155,13 @@ export function BillingSchedule({
           </span>
         </label>
         <div className="bs-field bs-menu-wrap">
-          <span id="bs-dur">Хугацаа</span>
+          <span id={`${uid}bs-dur`}>Хугацаа</span>
           <button
             type="button"
             className="bs-input bs-select"
             aria-haspopup="listbox"
             aria-expanded={menu === "duration"}
-            aria-labelledby="bs-dur"
+            aria-labelledby={`${uid}bs-dur`}
             onClick={() => setMenu(menu === "duration" ? null : "duration")}
           >
             <span>{duration}</span>

@@ -26,6 +26,7 @@ import {
 import { Avatar, CountUp, Lines, initials } from "./ui";
 import { CollectionView, Empty, TypeBadge, collectionCss, type Relation } from "./collection";
 import { Icon, UNIT_ICON, typeIcon, typeLabel, type IconName } from "./icons";
+import { RoleDashboard, findPerson } from "./role-dashboard";
 
 /**
  * Company View — draws any company in the Company contract: business model,
@@ -42,8 +43,8 @@ import { Icon, UNIT_ICON, typeIcon, typeLabel, type IconName } from "./icons";
  */
 
 export type CompanyLayout = "workspace" | "brief";
-export type CompanyViewKey = "method" | "dashboard" | "structure" | "agents" | "workflows" | "raci" | "decisions";
-export const COMPANY_VIEWS: CompanyViewKey[] = ["method", "dashboard", "structure", "agents", "workflows", "raci", "decisions"];
+export type CompanyViewKey = "method" | "dashboard" | "roles" | "structure" | "agents" | "workflows" | "raci" | "decisions";
+export const COMPANY_VIEWS: CompanyViewKey[] = ["method", "dashboard", "roles", "structure", "agents", "workflows", "raci", "decisions"];
 
 export type CompanyViewLabels = Record<CompanyViewKey | CompanyLevel | UnitKind | "model", string> & {
   /** «Шинэчлэгдсэн» — prefix of Company.exportedAt. */
@@ -87,6 +88,7 @@ export const companyLabelsMn: CompanyViewLabels = {
   agents: "Хүн ба агент",
   workflows: "Ажлын урсгал",
   decisions: "Шийдвэр",
+  roles: "Албан тушаалаар",
   institution: "Институц",
   company: "Компани",
   team: "Баг",
@@ -155,6 +157,9 @@ export type CompanyViewProps = {
   views?: CompanyViewKey[];
   /** Drive the open tab from outside (a catalog story); the user's own clicks still work, and leaving it undefined hands the tab back. */
   view?: CompanyViewKey;
+  /** «Албан тушаалаар»: the position to open — a person id or a role name (e.g. from `?role=` in the URL). Given, the tab opens first. */
+  role?: string;
+  onRoleChange?: (personId: string) => void;
   onScopeChange?: (scope: { level: CompanyLevel; unitId: string | null }) => void;
   labels?: Partial<CompanyViewLabels>;
   className?: string;
@@ -177,6 +182,7 @@ const TAB_ICON: Record<CompanyViewKey, IconName> = {
   workflows: "workflow",
   raci: "grid-3x3",
   decisions: "git-branch",
+  roles: "users-round",
 };
 /* ───────────── views ───────────── */
 
@@ -482,6 +488,8 @@ export function CompanyView({
   defaultView = "method",
   view: viewProp,
   views,
+  role: roleProp,
+  onRoleChange,
   onScopeChange,
   labels: labelsProp,
   className = "",
@@ -503,7 +511,9 @@ export function CompanyView({
     const list = (views ?? COMPANY_VIEWS).filter((v, i, a) => COMPANY_VIEWS.includes(v) && a.indexOf(v) === i);
     return list.length ? list : COMPANY_VIEWS;
   }, [views]);
-  const [viewRaw, setView] = React.useState<CompanyViewKey>(viewProp ?? defaultView);
+  const [viewRaw, setView] = React.useState<CompanyViewKey>(viewProp ?? (roleProp ? "roles" : defaultView));
+  const [roleId, setRoleId] = React.useState<string | undefined>(() => findPerson(company, roleProp)?.id);
+  React.useEffect(() => { const p = findPerson(company, roleProp); if (p) setRoleId(p.id); }, [company, roleProp]);
   const view = shownViews.includes(viewRaw) ? viewRaw : shownViews[0];
   React.useEffect(() => {
     if (viewProp) setView(viewProp);
@@ -590,6 +600,7 @@ export function CompanyView({
     workflows: scoped.workflows.length,
     raci: scoped.projects.filter((p) => p.raci).length,
     decisions: scoped.projects.reduce((n, p) => n + p.decisions.length, 0),
+    roles: company.people.length,
   };
   const tabLabel = (v: CompanyViewKey) => (v === "method" ? methodologyShort[methodology] : L[v]);
   const person = company.people.find((p) => p.id === personId) ?? null;
@@ -657,6 +668,16 @@ export function CompanyView({
       <WorkflowView c={company} scoped={scoped} L={L} />
     ) : v === "raci" ? (
       <RaciView c={company} scoped={scoped} onPerson={setPersonId} empty="RACI бүртгэгдээгүй." />
+    ) : v === "roles" ? (
+      company.people.length ? (
+        <RoleDashboard
+          company={company}
+          personId={roleId ?? company.people[0].id}
+          onPersonChange={(id) => { setRoleId(id); onRoleChange?.(id); }}
+          today={today}
+          bare
+        />
+      ) : <Empty text="Албан тушаал бүртгэгдээгүй." icon="users-round" />
     ) : (
       <DecisionsView scoped={scoped} L={L} />
     );

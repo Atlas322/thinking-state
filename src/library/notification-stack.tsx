@@ -23,7 +23,7 @@ SOFTWARE.
 */
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useId, useLayoutEffect, useRef, useState } from "react";
 
 /*
  * Notification Stack (clean style) – notices stacked behind each other, in a single self-contained file.
@@ -65,6 +65,7 @@ export function NotificationStack({
   onDismiss,
   className,
 }: NotificationStackProps) {
+  const uid = useId();
   const [items, setItems] = useState(notices);
   const [leaving, setLeaving] = useState<Set<string>>(new Set());
   // New notices from the parent join the stack; dismissed ones stay gone
@@ -150,7 +151,7 @@ export function NotificationStack({
               className="ui-nsc__card"
               data-depth={gone ? undefined : depth}
               data-leaving={gone || undefined}
-              aria-labelledby={`${notice.id}-title`}
+              aria-labelledby={`${uid}${notice.id}-title`}
               aria-hidden={isBehind || undefined}
               inert={isBehind || gone}
               style={{
@@ -189,7 +190,7 @@ export function NotificationStack({
                   </button>
                 </div>
                 <h3
-                  id={`${notice.id}-title`}
+                  id={`${uid}${notice.id}-title`}
                   className="ui-nsc__title"
                   dir="auto"
                 >

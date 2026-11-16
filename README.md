@@ -174,6 +174,60 @@ builds `lib/`, runs the tests, commits `lib/` on `release/vX.Y.Z`, tags it,
 and returns to your branch. Push with `git push origin release/vX.Y.Z vX.Y.Z`.
 `lib/` is git-ignored everywhere else, so it never lands in a PR.
 
+Run releases only from a dedicated release worktree (e.g. `.claude/worktrees/release`, detached):
+`git checkout <announced sha>` there, then release and push from there. The script switches the
+worktree's branch (to `release/vX.Y.Z` and back); run in a worktree where someone is working, it
+lets their next commit land on the released branch (screens.11, 2026-11-17). Work on the next
+version happens in its own worktree; announce «ready» with the branch and the SHA.
+
+## Reports, decks and one-page HTML: `report.css`
+
+One stylesheet for reports and one-page HTML. It imports `tokens.css`, so
+colours, fonts and spacing follow the library; it adds no colours of its own.
+Put `class="rp"` and a theme (`data-ts-theme="cream"`, or `"dark"` with `data-theme="dark"`) on `<body>`; the example is `src/lib/report-example.html`.
+
+```html
+<link rel="stylesheet" href="node_modules/@inai/thinking-state/lib/report.css">
+<body class="rp" data-ts-theme="cream"><main class="rp-page">…</main></body>
+```
+
+| Block | Class |
+|---|---|
+| Page (1400 max, 50 px margins; 16 px on phones) | `.rp-page`, `.rp-section` |
+| Stratic 4-column grid (one column under 860 px) | `.rp-grid` + `.rp-span-2/3/4` |
+| Headings (Spectral 400), kicker (Plex Mono), lead | `h1 h2 h3`, `.rp-kicker`, `.rp-lead` |
+| Table (mono header, 2 px top rule) | `table`, `.num` |
+| Callout, note, warning | `.rp-callout`, `.is-note`, `.is-warn` |
+| Figure and caption | `figure`, `figcaption` |
+| Changelog rows (date · version · kind · text) | `.rp-log`, `.rp-k.is-added/.is-removed` |
+| Dashboard panels: KPI, meter, ranked bars, stacked bar + legend, sparkline, status (series colours `--ts-series-1…4`, validated) | `.rp-dash`, `.rp-panel`, `.rp-kpi`, `.rp-meter`, `.rp-bars`, `.rp-stack`, `.rp-legend`, `.rp-spark`, `.rp-status` |
+| Print (A4, no breaks inside blocks, links spelled out) | automatic; `.rp-noprint` hides |
+
+## Icons, brand logos and focus rings (rules, locked by `src/icon-and-ring.test.tsx`)
+
+- **Line icons** (Lucide-style strokes) follow two tokens in `tokens.css`:
+  `--ts-icon-size: 14px` and `--ts-icon-stroke: 1.25`. Change them there and
+  every line icon changes; do not hard-code a stroke width in a component.
+- **Brand logos** (`SourceIcon brand="slack"`, the `BRAND_LOGO` marks from
+  svgl.app) are not line icons. In a source chip they show the official colour
+  mark at 14 px, unmodified: no recolouring, filter, stroke or crop. The
+  journal/b2 chips are the reference. The icon tokens never apply to them.
+- **Focus and selected rings** on chips, buttons and tabs are 1 px and follow
+  the corner radius: a selected chip changes its 1 px `border-color`; a
+  keyboard focus ring is `box-shadow: 0 0 0 1px <surface>, 0 0 0 2px <accent>`
+  with `outline: 1px solid transparent` kept for forced-colors mode. No 2 px
+  outlines (older Safari draws outlines square).
+
+## Contrast check (`npm run check:contrast`)
+
+Needs `npm run dev` (or `--url`). It scans every catalog preview in both themes, then
+`/contrast.html`: the screens outside the catalog (AskWindow, BuildWizard, MethodQuiz,
+RoleDashboard, AppScreen) in both themes, on a light and a dark host page, and AskWindow at
+every phase (ask, think, sources, answer, done). Text needs 4.5:1, large text and icons 3:1;
+in the screens matrix near-invisible text (below 1.1:1) fails too. Flags: `--screens-only`,
+`--no-screens`, `--themes light,dark`. `npm run check:release-drift` warns when commits sit
+on top of a published version.
+
 ## Validate and build
 
 ```sh

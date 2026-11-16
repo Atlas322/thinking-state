@@ -54,6 +54,7 @@ export function StepperForm({
   onComplete,
   className = "",
 }: StepperFormProps) {
+  const uid = React.useId();
   const [values, setValues] = React.useState<StepperValues>(() => {
     const name = initialValues?.name ?? "Студи 24";
     return { name, url: initialValues?.url ?? slug(name), invites: initialValues?.invites ?? [], plan: initialValues?.plan ?? "Pro" };
@@ -123,12 +124,12 @@ export function StepperForm({
   const s = STEPS[step];
   const field = (name: string, label: string, control: React.ReactNode, hint?: string) => (
     <div className="sf-field">
-      <label htmlFor={`sf-${name}`}>{label}</label>
+      <label htmlFor={`${uid}sf-${name}`}>{label}</label>
       <div key={errors[name] ? shake : 0} className={errors[name] ? "sf-bad" : ""}>
         {control}
       </div>
       {errors[name] ? (
-        <p className="sf-err" role="alert" id={`sf-${name}-err`}>
+        <p className="sf-err" role="alert" id={`${uid}sf-${name}-err`}>
           {errors[name]}
         </p>
       ) : (
@@ -181,7 +182,7 @@ export function StepperForm({
                   "name",
                   "Орон зайн нэр",
                   <input
-                    id="sf-name"
+                    id={`${uid}sf-name`}
                     className="sf-input"
                     value={values.name}
                     aria-invalid={!!errors.name}
@@ -198,7 +199,7 @@ export function StepperForm({
                   <div className="sf-input sf-prefixed">
                     <span>affect.app/</span>
                     <input
-                      id="sf-url"
+                      id={`${uid}sf-url`}
                       value={values.url}
                       aria-invalid={!!errors.url}
                       onChange={(e) => {
@@ -230,7 +231,7 @@ export function StepperForm({
                     </span>
                   ))}
                   <input
-                    id="sf-invites"
+                    id={`${uid}sf-invites`}
                     value={draft}
                     placeholder={values.invites.length ? "" : "name@example.mn"}
                     onChange={(e) => {
