@@ -111,7 +111,9 @@
  * it keeps the host's theme and only changes the surfaces. Under a dark ancestor it does nothing: dark
  * is the same for the site and the app.
  */
-:where(.ts-surface-app):not(:where(.dark, [data-theme="dark"], [data-ts-theme="dark"]), :where(.dark, [data-theme="dark"], [data-ts-theme="dark"]) *) {
+/* second selector: a light window inside a dark band of a page (the site hero: section.dark > [data-theme="light"]) is still the light app */
+:where(.ts-surface-app):not(:where(.dark, [data-theme="dark"], [data-ts-theme="dark"]), :where(.dark, [data-theme="dark"], [data-ts-theme="dark"]) *),
+:where([data-theme="light"] .ts-surface-app):not(:where([data-theme="dark"], [data-ts-theme="dark"]), :where([data-theme="dark"], [data-ts-theme="dark"]) *) {
   --ts-page: #f6f6f4;
   --ts-surface: #ffffff;
   --ts-soft: #f1f1ee;

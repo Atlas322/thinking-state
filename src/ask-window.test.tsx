@@ -47,6 +47,24 @@ describe("AskWindow run (Thinking State)", () => {
     expect(screen.getByText(askWindowDemo.question)).toBeTruthy();
     vi.useRealTimers();
   });
+  it("a new question in the same window plays again: the frame stays mounted, the thread starts over", () => {
+    vi.useFakeTimers();
+    const phases: string[] = [];
+    const { rerender, container } = render(<AskWindow {...askWindowDemo} onPhase={(p) => phases.push(p)} />);
+    for (let i = 0; i < 40; i++) act(() => { vi.advanceTimersByTime(250); });
+    expect(phases.at(-1)).toBe("done");
+    const frame = container.querySelector(".ash-win");
+    const menu = container.querySelector(".ash-nav");
+    phases.length = 0;
+    rerender(<AskWindow {...askWindowDemo} question="Өнгөрсөн сард зардал яагаад өссөн бэ?" onPhase={(p) => phases.push(p)} />);
+    expect(document.querySelector(".ca")).toBeNull(); // the old answer is gone at once, nothing of it lingers
+    expect(document.querySelectorAll(".sp-chip").length).toBe(0);
+    for (let i = 0; i < 40; i++) act(() => { vi.advanceTimersByTime(250); });
+    expect([...new Set(phases)]).toEqual(["ask", "think", "sources", "answer", "done"]);
+    expect(container.querySelector(".ash-win")).toBe(frame); // same nodes: the window did not remount
+    expect(container.querySelector(".ash-nav")).toBe(menu);
+    vi.useRealTimers();
+  });
   it("static shows the finished run at once (reduced motion behaves the same)", () => {
     const phases: string[] = [];
     render(<AskWindow {...askWindowDemo} play="static" onPhase={(p) => phases.push(p)} />);

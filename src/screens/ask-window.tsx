@@ -176,9 +176,22 @@ export function AskWindow({
   const finishedFor = React.useRef(frames);
   if (finishedFor.current !== frames) { finishedFor.current = frames; finished.current = false; }
   const last = frames[frames.length - 1].state;
-  if (run.state?.phase === "done") finished.current = true;
+  // A new question in the same window (the host switches scenario without remounting, so the frame, the menu
+  // and anything behind the window stay still): the thread starts over — question, thinking, sources, answer.
+  // The lengths alone do not tell two scenarios apart, so the content itself is the key.
+  const contentKey = `${question}|${answer.length}|${sources.map((x) => x.id).join(",")}`;
+  const playedKey = React.useRef(contentKey);
+  const fresh = playedKey.current !== contentKey;
+  if (fresh) finished.current = false;
+  else if (run.state?.phase === "done") finished.current = true;
+  React.useEffect(() => {
+    if (playedKey.current === contentKey) return;
+    playedKey.current = contentKey;
+    setFocus(null);
+    run.replay();
+  }, [contentKey]); // eslint-disable-line react-hooks/exhaustive-deps
   const frozen = phase ? [...frames].reverse().find((x) => x.state.phase === phase)?.state : undefined;
-  const f = frozen ?? (play === "static" || run.loopState === "paused" || finished.current ? last : run.state ?? last);
+  const f = frozen ?? (play === "static" ? last : fresh ? frames[0].state : run.loopState === "paused" || finished.current ? last : run.state ?? last);
   const animate = f !== last || run.playing;
   // The latest callback by ref: a new inline onPhase each render must not re-fire the same phase.
   const onPhaseRef = React.useRef(onPhase);
@@ -186,6 +199,7 @@ export function AskWindow({
   React.useEffect(() => { onPhaseRef.current?.(f.phase); }, [f.phase]);
   const shownQuestion = f.typed >= 1 ? question : question.slice(0, Math.ceil(question.length * f.typed));
   const [current, setCurrent] = React.useState<string | undefined>(activeChat ?? chats[0]?.id);
+  React.useEffect(() => { if (activeChat) setCurrent(activeChat); }, [activeChat]); // the host moves the open chat with the scenario
   const dark = theme === "dark";
   const cited: CitedSource[] = sources.map((s) => ({ id: s.id, title: s.title, site: s.label, date: s.date, quote: s.quote, highlight: s.highlight, icon: <SourceIcon kind={s.kind} size={12} tile={false} logo={s.logo} brand={s.brand} /> }));
   const preview = (s: AskSource): PreviewSource => ({ id: s.id, title: s.title, kind: s.kind, kindLabel: s.label, date: s.date, quote: s.quote, highlight: s.highlight, logo: s.logo, brand: s.brand });
