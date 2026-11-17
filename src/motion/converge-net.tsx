@@ -19,7 +19,8 @@ export type ConvergeNetProps = {
   tone?: "electric" | "cream";
   /** "loop" (default) plays and repeats; "once" plays to the end and stays; "static" shows the end. */
   play?: "loop" | "once" | "static";
-  /** One pass, ms (default 6000). */
+  /** One pass, ms (default 6000). Sizing: the canvas fills a parent with a height; in a parent with
+   *  height:auto it keeps 16:9 (aspect-ratio), so it never grows with its own pixel buffer. */
   duration?: number;
   /** Freeze one frame (0 = start, 1.4 = the finished network). */
   t?: number;
@@ -101,7 +102,7 @@ export function ConvergeNet({ stage, center, notes, groups = paraNetGroups, node
     const colors = groups.map((g) => tok(g.color));
     const accent = cs.color, ink = tok("--ts-fg");
     let W = 0, H = 0, raf = 0;
-    const size = () => { const D = window.devicePixelRatio || 1; W = cv.clientWidth; H = cv.clientHeight; cv.width = Math.max(1, W * D); cv.height = Math.max(1, H * D); x.setTransform(D, 0, 0, D, 0, 0); };
+    const size = () => { const D = window.devicePixelRatio || 1; const w = cv.clientWidth, h = cv.clientHeight; if (w === W && h === H) return; W = w; H = h; cv.width = Math.max(1, W * D); cv.height = Math.max(1, H * D); x.setTransform(D, 0, 0, D, 0, 0); };
     const draw = (tt: number) => drawConvergeStages(x, W, H, tt, net4, groups, colors, accent, ink);
     size();
     const reduce = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -123,7 +124,7 @@ export function ConvergeNet({ stage, center, notes, groups = paraNetGroups, node
     const fg = getComputedStyle(cv).color || "white";
     let W = 0, H = 0, raf = 0;
     const size = () => {
-      const D = window.devicePixelRatio || 1; W = cv.clientWidth; H = cv.clientHeight;
+      const D = window.devicePixelRatio || 1; const w = cv.clientWidth, h = cv.clientHeight; if (w === W && h === H) return; W = w; H = h;
       cv.width = Math.max(1, W * D); cv.height = Math.max(1, H * D); x.setTransform(D, 0, 0, D, 0, 0);
     };
     size();
@@ -157,7 +158,7 @@ export function ConvergeNet({ stage, center, notes, groups = paraNetGroups, node
       data-tone={tone}
       data-stage={stage === undefined ? undefined : String(stage)}
       className={`ts-converge-net ${className}`}
-      style={{ display: "block", width: "100%", height: "100%", minHeight: 240, color, background: bg, ...(labelled ? {} : style) }}
+      style={{ display: "block", width: "100%", height: "100%", minHeight: 240, aspectRatio: "16 / 9", color, background: bg, ...(labelled ? {} : style) }}
     />
   );
   if (!labelled || !net4) return canvas;

@@ -59,6 +59,13 @@ describe("ConvergeNet stage 2 with labels", () => {
   });
 });
 
+describe("ConvergeNet sizing", () => {
+  it("keeps 16:9 in a parent with no height, so the canvas never grows with its pixel buffer", () => {
+    const { container } = render(<ConvergeNet {...convergeNetGraphDemo} />);
+    expect((container.querySelector("canvas") as HTMLCanvasElement).style.aspectRatio).toBe("16 / 9");
+  });
+});
+
 describe("BuildWizard with no props", () => {
   it("mounts with the ac.me demo recipe (no branch_key crash)", () => {
     const { container } = render(<BuildWizard />);
