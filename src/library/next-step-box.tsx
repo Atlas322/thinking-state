@@ -169,7 +169,7 @@ export function NextStepBox({
 }
 
 const css = `
-.nsb{--nsb-bg:var(--ts-surface,#fff);--nsb-fg:var(--ts-fg,#18181b);--nsb-muted:var(--ts-muted,#65656d);--nsb-line:var(--ts-line,#ececef);--nsb-soft:var(--ts-soft,#f4f4f5);--nsb-accent:var(--ts-accent,#1b5cff);--nsb-accent-soft:var(--ts-accent-soft,#e8f1fe);--nsb-amber:var(--ts-amber,#c2620a);--nsb-amber-soft:var(--ts-amber-soft,#fff4e0);--nsb-green:var(--ts-green,#16a34a);--nsb-green-soft:var(--ts-green-soft,#e9f8ee);width:100%;max-width:560px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;padding:14px 16px;border:1px solid var(--nsb-line);border-radius:14px;background:var(--nsb-bg);color:var(--nsb-fg);font:400 14px/1.45 var(--ts-font,Inter,system-ui,sans-serif);animation:nsb-in .35s ease both}
+.nsb{--nsb-bg:var(--ts-surface,#fff);--nsb-fg:var(--ts-fg,#18181b);--nsb-muted:var(--ts-muted,#65656d);--nsb-line:var(--ts-line,#ececef);--nsb-soft:var(--ts-soft,#f4f4f5);--nsb-accent:var(--ts-accent,#1b5cff);--nsb-accent-soft:var(--ts-accent-soft,#e8f1fe);--nsb-amber:var(--ts-amber,#a85a12);--nsb-amber-soft:var(--ts-amber-soft,#fff4e0);--nsb-green:var(--ts-green,#16a34a);--nsb-green-soft:var(--ts-green-soft,#e9f8ee);width:100%;max-width:560px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;padding:14px 16px;border:1px solid var(--nsb-line);border-radius:14px;background:var(--nsb-bg);color:var(--nsb-fg);font:400 14px/1.45 var(--ts-font,Inter,system-ui,sans-serif);animation:nsb-in .35s ease both}
 :where(.dark,[data-theme=dark]) .nsb{--nsb-bg:var(--ts-surface,#1b1b1e);--nsb-fg:var(--ts-fg,#ececef);--nsb-muted:var(--ts-muted,#a1a1aa);--nsb-line:var(--ts-line,#2e2e33);--nsb-soft:var(--ts-soft,#26262a);--nsb-accent:var(--ts-accent,#7c9cff);--nsb-accent-soft:var(--ts-accent-soft,#1b2a44);--nsb-amber:var(--ts-amber,#eba659);--nsb-amber-soft:var(--ts-amber-soft,#3a2a12);--nsb-green:var(--ts-green,#4ade80);--nsb-green-soft:var(--ts-green-soft,#16301f);color-scheme:dark}
 .nsb.is-blocked{border-color:color-mix(in srgb,var(--nsb-amber) 45%,var(--nsb-line))}
 .nsb svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
@@ -187,8 +187,8 @@ const css = `
 .nsb-actions{display:flex;flex-wrap:wrap;gap:8px}
 .nsb-btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--nsb-line);background:var(--nsb-bg);color:var(--nsb-fg);font:inherit;font-weight:500;cursor:pointer;transition:background .15s,border-color .15s}
 .nsb-btn:hover{background:var(--nsb-soft)}
-.nsb-btn.is-primary{background:var(--nsb-accent);border-color:var(--nsb-accent);color:#fff}
-.nsb-btn.is-primary:hover{background:color-mix(in srgb,var(--nsb-accent) 88%,#000)}
+.nsb-btn.is-primary{background:var(--ts-accent-strong,#1b5cff);border-color:var(--ts-accent-strong,#1b5cff);color:#fff}
+.nsb-btn.is-primary:hover{background:color-mix(in srgb,var(--ts-accent-strong,#1b5cff) 88%,#000)}
 .nsb-btn:focus-visible{outline:2px solid var(--nsb-accent);outline-offset:2px}
 .nsb-chosen{margin:0;display:inline-flex;align-items:center;gap:6px;color:var(--nsb-green);font-weight:500}
 .nsb-skel{display:flex;flex-direction:column;gap:7px}

@@ -1193,7 +1193,7 @@ button.cv-person:hover{background:color-mix(in srgb,var(--cv-accent-soft) 60%,va
 .cv-tabs button span{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--cv-soft);font-size:11.5px;line-height:18px;text-align:center;font-variant-numeric:tabular-nums}
 .cv-tabs button:hover{color:var(--cv-fg)}
 .cv-tabs button[aria-selected=true]{background:var(--ts-selected-bg,#0a7acb);color:var(--ts-on-selected,#fff);border-radius:6px}
-.cv-tabs button[aria-selected=true] span{background:var(--ts-on-selected-soft,rgb(255 255 255 / .2));color:var(--ts-on-selected,#fff)}
+.cv-tabs button[aria-selected=true] span{background:var(--ts-on-selected,#fff);color:var(--ts-selected-strong,#0a6ab0)}
 .cv-tabs button[aria-selected=true]::after{content:none}
 .cv-panel{padding:18px 20px 22px;animation:cv-fade .22s ease both}
 /* brief template */
