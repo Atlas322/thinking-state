@@ -128,5 +128,6 @@ export { BrainCover, brainCoverDemo, type BrainSource, type BrainApi, type Brain
 export { placeBrainLabels, labelsApart, type LabelBox, type LabelNode, type LabelBounds } from "../motion/brain-labels";
 export { SecondBrainApp, secondBrainAppDemo, APP_VIEWS, type AppViewId, type SecondBrainAppProps } from "../screens/second-brain-app";
 export { EntityMention, withMentions, entityMentionDemo, type Mention, type EntityMentionProps } from "../library/entity-mention";
+export { AgentAvatar, agentRoleFrom, agentStatusFrom, agentAvatarLabelsMn, agentAvatarDemo, AGENT_ROLES, type AgentRole, type AgentAvatarStatus, type AgentAvatarProps, type AgentAvatarLabels } from "../library/agent-avatar";
 export { citedSegmentsFrom, type AnswerParts } from "../library/cited-answer";
 export { askWindowMentionsDemo, askDemoMentions } from "../screens/ask-demo-data";

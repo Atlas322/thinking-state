@@ -39,7 +39,8 @@ export type AgentFleetProps = {
 const steps3: FleetStep[] = [{ title: "a" }, { title: "b" }, { title: "c" }];
 
 /** `cost` is spend in thousands of tokens. `model` holds a generic agent role. */
-const defaultAgents: FleetAgent[] = [
+/** The built-in ac.me demo team (made-up). Exported so an entry can decorate it, e.g. with role avatars. */
+export const fleetDemoAgents: FleetAgent[] = [
   {
     id: "launch", name: "Нээлтийн ахлагч", model: "Төлөвлөгч агент", avatar: "anthropic", tools: ["slack", "notion", "github"],
     status: "running", task: "Шинэ тарифын хуудсыг баасан гараг гэхэд нээх", took: 850,
@@ -156,7 +157,7 @@ function summary(a: FleetAgent) {
 }
 
 export function AgentFleet({
-  agents = defaultAgents,
+  agents = fleetDemoAgents,
   open,
   defaultOpen,
   onOpenChange,
@@ -270,7 +271,7 @@ const css = `
 .af-card:hover{border-color:color-mix(in srgb,var(--af-fg) 18%,transparent)}
 .af-card.is-dim{--af-fg:var(--af-muted);background:var(--af-chip);border-color:transparent;box-shadow:none}.af-card.is-dim:hover{--af-fg:inherit;background:var(--af-bg);border-color:var(--af-line)}
 .af-head{display:flex;align-items:flex-start;gap:8px}
-.af-av{display:grid;place-items:center;width:22px;height:22px;flex:none;margin-top:3px;color:var(--af-fg)}.af-av svg{width:15px;height:15px}
+.af-av{display:grid;place-items:center;width:22px;height:22px;flex:none;margin-top:3px;color:var(--af-fg)}.af-av>svg{width:15px;height:15px}
 .af-name{display:flex;flex-direction:column;min-width:0;flex:1}.af-name strong{font-weight:500;font-size:13px}.af-name small{font-size:11px;color:var(--af-faint)}
 .af-pill{display:inline-flex;align-items:center;gap:4px;height:18px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:500;flex:none}
 .af-pill svg{width:10px;height:10px}
