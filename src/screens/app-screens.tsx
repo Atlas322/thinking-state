@@ -8,7 +8,7 @@
  * `still` freezes motion (MotionProvider paused + no CSS animation) for screenshots.
  */
 import * as React from "react";
-import { AppShell, paraBaseMn, type AppShellView } from "./app-shell";
+import { AppShell, paraBaseMn, type AppShellProps, type AppShellView } from "./app-shell";
 import { AgentPlan } from "../library/agent-plan";
 import { CitedAnswer } from "../library/cited-answer";
 import { DecisionCard } from "../library/decision-card";
@@ -160,7 +160,7 @@ const VIEW_SCREEN: Partial<Record<AppShellView, ScreenKey>> = { inbox: "inbox", 
  * The window = AppShell (screens.20, CONTEXT v15): the one Second Brain app with the PARA + GTD
  * menu and ⌘K ask. Kept under its old name for callers; `variant` no longer changes anything.
  */
-export function AppWindow({ screen, company = "ACME", counts = {}, onSelect, children }: AppWindowProps & { company?: string }) {
+export function AppWindow({ screen, company = "ACME", counts = {}, onSelect, children, shell }: AppWindowProps & { company?: string; shell?: Partial<AppShellProps> }) {
   return (
     <AppShell
       className="aps-win"
@@ -170,6 +170,7 @@ export function AppWindow({ screen, company = "ACME", counts = {}, onSelect, chi
       active={SCREEN_VIEW[screen]}
       onNavigate={(v) => { const k = VIEW_SCREEN[v]; if (k) onSelect?.(k); }}
       onAsk={() => onSelect?.("chat")}
+      {...shell}
     >
       {children}
     </AppShell>
@@ -317,10 +318,12 @@ export type AppScreenProps = {
   labels?: AppScreenLabels;
   onSelect?: (k: ScreenKey) => void;
   className?: string;
+  /** Shell overrides (company, counts, height, onNavigate…) so a host shows this screen inside its own app. */
+  shell?: Partial<AppShellProps>;
 };
 
 /** One screen in its glass window on a themed stage. */
-export function AppScreen({ screen, data, theme = "day", variant = "tabs", still = false, labels = appScreenLabelsMn, onSelect, className = "" }: AppScreenProps) {
+export function AppScreen({ screen, data, theme = "day", variant = "tabs", still = false, labels = appScreenLabelsMn, onSelect, className = "", shell }: AppScreenProps) {
   const dark = theme === "night";
   const body = {
     inbox: <InboxScreen data={data} labels={labels} />,
@@ -341,7 +344,7 @@ export function AppScreen({ screen, data, theme = "day", variant = "tabs", still
       >
         <style>{CSS}</style>
         <div className="aps-stage">
-          <AppWindow screen={screen} variant={variant} labels={labels} counts={counts} onSelect={onSelect} company={data.company}>{body}</AppWindow>
+          <AppWindow screen={screen} variant={variant} labels={labels} counts={counts} onSelect={onSelect} company={data.company} shell={shell}>{body}</AppWindow>
         </div>
       </div>
     </MotionProvider>

@@ -92,6 +92,10 @@
       "types": "./lib/types/lib/entries/role-dashboard.d.ts",
       "import": "./lib/role-dashboard.js"
     },
+    "./second-brain-app": {
+      "types": "./lib/types/lib/entries/second-brain-app.d.ts",
+      "import": "./lib/second-brain-app.js"
+    },
     "./session-board": {
       "types": "./lib/types/lib/entries/session-board.d.ts",
       "import": "./lib/session-board.js"

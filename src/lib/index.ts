@@ -126,3 +126,4 @@ export { ContentPipeline, contentPipelineDemo } from "../screens/content-pipelin
 export type { ContentPipelineProps, PipelineStep, PipelineActor } from "../screens/content-pipeline";
 export { BrainCover, brainCoverDemo, type BrainSource, type BrainApi, type BrainAnchor } from "../motion/brain-cover";
 export { placeBrainLabels, labelsApart, type LabelBox, type LabelNode, type LabelBounds } from "../motion/brain-labels";
+export { SecondBrainApp, secondBrainAppDemo, APP_VIEWS, type AppViewId, type SecondBrainAppProps } from "../screens/second-brain-app";

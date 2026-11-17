@@ -30,7 +30,7 @@ function reachable(entry: string, seen = new Set<string>()) {
 describe("@inai/thinking-state package", () => {
   it("is named and exported for git installs", () => {
     expect(pkg.name).toBe("@inai/thinking-state");
-    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./studio", "./agent-fleet", "./agent-handoff", "./agent-plan", "./app-shell", "./approval-card", "./ask-window", "./brain-cover", "./build-wizard", "./cash-river", "./ceo-daily", "./cited-answer", "./content-pipeline", "./converge-net", "./decision-inbox-chat", "./finance-report", "./integration-picker", "./method-quiz", "./role-dashboard", "./session-board", "./source-preview", "./thinking-state", "./tokens.css", "./site.css", "./ts.css", "./report.css", "./package.json"]);
+    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./studio", "./agent-fleet", "./agent-handoff", "./agent-plan", "./app-shell", "./approval-card", "./ask-window", "./brain-cover", "./build-wizard", "./cash-river", "./ceo-daily", "./cited-answer", "./content-pipeline", "./converge-net", "./decision-inbox-chat", "./finance-report", "./integration-picker", "./method-quiz", "./role-dashboard", "./second-brain-app", "./session-board", "./source-preview", "./thinking-state", "./tokens.css", "./site.css", "./ts.css", "./report.css", "./package.json"]);
     expect(pkg.files).toContain("lib");
     expect(pkg.peerDependencies.react).toMatch(/\^19/);
     expect((pkg.dependencies as Record<string, string>).react).toBeUndefined();

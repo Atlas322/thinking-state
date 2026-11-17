@@ -38,6 +38,7 @@ export default defineConfig({
         "integration-picker": resolve(import.meta.dirname, "src/lib/entries/integration-picker.ts"),
         "method-quiz": resolve(import.meta.dirname, "src/lib/entries/method-quiz.ts"),
         "role-dashboard": resolve(import.meta.dirname, "src/lib/entries/role-dashboard.ts"),
+        "second-brain-app": resolve(import.meta.dirname, "src/lib/entries/second-brain-app.ts"),
         "session-board": resolve(import.meta.dirname, "src/lib/entries/session-board.ts"),
         "source-preview": resolve(import.meta.dirname, "src/lib/entries/source-preview.ts"),
         "thinking-state": resolve(import.meta.dirname, "src/lib/entries/thinking-state.ts"),

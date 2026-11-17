@@ -504,3 +504,12 @@ export default function Demo() {
     </div>
   );
 }
+
+/** ac.me demo (screens.21): three decisions waiting for a person. */
+export const decisionInboxDemo: DecisionInboxProps = {
+  decisions: [
+    { id: "price", title: "Дунд түвшний багц нэмэх үү?", detail: "ac.me Retail · агент 3 эх сурвалжаас санал бэлдсэн", primary: "Батлах", secondary: "Дахин харах" },
+    { id: "supplier", title: "Нийлүүлэгчийг солих уу?", detail: "Хоцролт 3 удаа давтагдсан · 2 санал", primary: "Шинэ нийлүүлэгч", secondary: "Хүлээх" },
+    { id: "promo", title: "Баасан гарагийн хямдралыг сунгах уу?", detail: "Борлуулалт +12% · нөөц 9 хоногийн", primary: "Сунгах", secondary: "Зогсоох", collapsed: true },
+  ],
+};
