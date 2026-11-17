@@ -22,8 +22,13 @@ describe("entries draw with their own demo", () => {
     expect(C, `${slug} exports ${name}`).toBeTruthy();
     const demo = mod[name[0].toLowerCase() + name.slice(1) + "Demo"];
     expect(demo, `${slug} exports its demo`).toBeTruthy();
-    const { container } = render(<C {...demo} />);
-    expect((container.textContent ?? "").trim().length, slug).toBeGreaterThan(20);
-    expect(/[А-Яа-яӨөҮү]/.test(container.textContent ?? ""), `${slug} speaks Mongolian`).toBe(true);
+    // the plain demo and every role demo (<name><Role>Demo, e.g. reviewCenterMarketingDemo)
+    const stem = name[0].toLowerCase() + name.slice(1);
+    for (const key of Object.keys(mod).filter((k) => k.startsWith(stem) && /Demo$/.test(k))) {
+      const { container, unmount } = render(<C {...mod[key]} />);
+      expect((container.textContent ?? "").trim().length, key).toBeGreaterThan(20);
+      expect(/[А-Яа-яӨөҮү]/.test(container.textContent ?? ""), `${key} speaks Mongolian`).toBe(true);
+      unmount();
+    }
   });
 });
