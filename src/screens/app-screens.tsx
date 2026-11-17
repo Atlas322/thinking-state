@@ -323,10 +323,12 @@ export type AppScreenProps = {
   className?: string;
   /** Shell overrides (company, counts, height, onNavigate…) so a host shows this screen inside its own app. */
   shell?: Partial<AppShellProps>;
+  /** Shown above the screen's body, inside the window (the host's tabs). */
+  lead?: React.ReactNode;
 };
 
 /** One screen in its glass window on a themed stage. */
-export function AppScreen({ screen, data, theme = "day", variant = "tabs", still = false, labels = appScreenLabelsMn, onSelect, className = "", shell }: AppScreenProps) {
+export function AppScreen({ screen, data, theme = "day", variant = "tabs", still = false, labels = appScreenLabelsMn, onSelect, className = "", shell, lead }: AppScreenProps) {
   const dark = theme === "night";
   const body = {
     inbox: <InboxScreen data={data} labels={labels} />,
@@ -347,7 +349,7 @@ export function AppScreen({ screen, data, theme = "day", variant = "tabs", still
       >
         <style>{CSS}</style>
         <div className="aps-stage">
-          <AppWindow screen={screen} variant={variant} labels={labels} counts={counts} onSelect={onSelect} company={data.company} shell={shell}>{body}</AppWindow>
+          <AppWindow screen={screen} variant={variant} labels={labels} counts={counts} onSelect={onSelect} company={data.company} shell={shell}>{lead}{body}</AppWindow>
         </div>
       </div>
     </MotionProvider>
