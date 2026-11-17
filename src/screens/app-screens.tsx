@@ -8,6 +8,7 @@
  * `still` freezes motion (MotionProvider paused + no CSS animation) for screenshots.
  */
 import * as React from "react";
+import { APP_FRAME_CSS } from "./app-frame";
 import { AgentPlan } from "../library/agent-plan";
 import { CitedAnswer } from "../library/cited-answer";
 import { DecisionCard } from "../library/decision-card";
@@ -59,23 +60,20 @@ const icons: Record<ScreenKey | CaptureKind | "search" | "arrow" | "check" | "sp
 const CSS = `
 .aps-root{--ts-radius:6px;--aps-r:var(--ts-radius);--aps-r-shell:var(--ts-radius);--aps-sans:Inter,system-ui,sans-serif;--aps-serif:Spectral,Georgia,serif;--aps-mono:"IBM Plex Mono",monospace;
  --aps-h2:24px;--aps-h3:18px;--aps-lead:16px;--aps-body:16px;--aps-small:14px;--aps-label:12px;--aps-btn:44px;--aps-icon:16px;--aps-stroke:1.5}
-.aps-stage{position:relative;overflow:hidden;padding:56px;min-height:100%;box-sizing:border-box;background:var(--ts-page,#f0ede4);font-family:var(--aps-sans);color:var(--ts-fg,#080808)}
-.aps-stage::before,.aps-stage::after{content:"";position:absolute;border-radius:50%;filter:blur(40px);pointer-events:none}
-.aps-stage::before{width:520px;height:520px;left:-120px;top:-140px;background:radial-gradient(circle,#1b5cff 0%,transparent 68%);opacity:.32}
-.aps-stage::after{width:460px;height:460px;right:-80px;bottom:-160px;background:radial-gradient(circle,#ff7a1a 0%,transparent 68%);opacity:.30}
-[data-ts-theme="dark"] .aps-stage::before{opacity:.42}[data-ts-theme="dark"] .aps-stage::after{opacity:.26}
-.aps-win{position:relative;z-index:1;display:flex;flex-direction:column;height:760px;max-width:1240px;margin:0 auto;border-radius:var(--aps-r-shell);overflow:hidden;
+.aps-stage{height:100%;font-family:var(--aps-sans);color:var(--ts-fg)}
+.aps-win{container-type:inline-size;position:relative;z-index:1;display:flex;flex-direction:column;height:760px;max-width:1240px;margin:0 auto;border-radius:var(--aps-r-shell);overflow:hidden;
  background:color-mix(in srgb,var(--ts-surface,#f7f5ee) 62%,transparent);backdrop-filter:blur(28px) saturate(1.4);-webkit-backdrop-filter:blur(28px) saturate(1.4);
  border:1px solid color-mix(in srgb,#fff 55%,transparent);box-shadow:0 1px 0 rgb(255 255 255/.5) inset,0 30px 80px -20px rgb(8 8 8/.28)}
 [data-ts-theme="dark"] .aps-win{border-color:rgb(255 255 255/.10);box-shadow:0 1px 0 rgb(255 255 255/.06) inset,0 30px 80px -20px rgb(0 0 0/.6)}
 .aps-bar{display:flex;align-items:center;gap:14px;height:60px;padding:0 18px;border-bottom:1px solid color-mix(in srgb,var(--ts-line,#d8d3c6) 70%,transparent);flex:none}
 .aps-dots{display:flex;gap:7px}.aps-dots i{width:11px;height:11px;border-radius:50%;background:var(--ts-line,#d8d3c6)}
-.aps-brand{font:400 var(--aps-lead) var(--aps-serif);display:flex;align-items:center;gap:8px}
+.aps-brand{font:400 var(--aps-lead) var(--aps-serif);white-space:nowrap;flex:none;display:flex;align-items:center;gap:8px}
 .aps-logo{width:22px;height:22px;border-radius:var(--aps-r);background:#1b5cff;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
-.aps-tabs{display:flex;gap:2px;padding:3px;border-radius:var(--aps-r);background:color-mix(in srgb,var(--ts-soft,#efebe1) 80%,transparent);margin:0 auto}
-.aps-tab{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--ts-muted,#45433f);font:500 var(--aps-body) var(--aps-sans);padding:8px 14px;border-radius:var(--aps-r);cursor:pointer}
+.aps-tabs{display:flex;gap:2px;padding:3px;border-radius:var(--aps-r);background:color-mix(in srgb,var(--ts-soft,#efebe1) 80%,transparent);margin:0 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+.aps-tab{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--ts-muted,#45433f);font:500 var(--aps-body) var(--aps-sans);padding:8px 14px;border-radius:var(--aps-r);cursor:pointer;white-space:nowrap;flex:none}
 .aps-tab[aria-current="page"]{background:var(--ts-surface,#f7f5ee);color:var(--ts-fg,#080808);box-shadow:var(--ts-elevation)}
-.aps-search{display:flex;align-items:center;gap:8px;width:240px;height:38px;padding:0 12px;border-radius:var(--aps-r);font-size:var(--aps-body);color:var(--ts-faint,#5c5a55);background:color-mix(in srgb,var(--ts-soft,#efebe1) 80%,transparent)}
+.aps-search{display:flex;align-items:center;gap:8px;width:240px;flex:0 1 240px;min-width:0;white-space:nowrap;overflow:hidden;height:38px;padding:0 12px;border-radius:var(--aps-r);font-size:var(--aps-body);color:var(--ts-faint,#5c5a55);background:color-mix(in srgb,var(--ts-soft,#efebe1) 80%,transparent)}
+.aps-search-t{overflow:hidden;text-overflow:ellipsis;min-width:0}.aps-search>svg,.aps-search .aps-key{flex:none}
 .aps-body{display:flex;flex:1;min-height:0}
 .aps-side{width:208px;flex:none;padding:14px 10px;display:flex;flex-direction:column;gap:2px;border-right:1px solid color-mix(in srgb,var(--ts-line,#d8d3c6) 70%,transparent)}
 .aps-side .aps-tab{justify-content:flex-start;padding:10px 12px;font-size:var(--aps-body)}
@@ -156,16 +154,12 @@ const CSS = `
 .aps-path b{color:var(--ts-electric-fg);font-weight:500;font-size:var(--aps-small);margin:0 0 0 8px;display:inline}
 .aps-spine{position:relative}
 .aps-spine::before{content:"";position:absolute;left:21px;top:26px;bottom:26px;width:1.5px;background:var(--ts-line)}
+.aps-win.aw{max-width:1240px;height:100%;margin:0 auto}.aps-win .aw-split{height:auto}
+.aps-grid>*,.aps-chatgrid>*{min-width:0}
+@container (max-width:980px){.aps-grid,.aps-chatgrid{grid-template-columns:minmax(0,1fr)}.aps-main{padding:24px}}
+@container (max-width:560px){.aps-main{padding:16px}.aps-task{grid-template-columns:18px minmax(0,1fr) auto}.aps-task>:nth-child(3){display:none}}
 .aps-still *,.aps-still *::before,.aps-still *::after{animation-duration:0s!important;animation-delay:0s!important;transition:none!important}
 `;
-
-function Tab({ k, on, labels, onSelect, count }: { k: ScreenKey; on: boolean; labels: AppScreenLabels; onSelect?: (k: ScreenKey) => void; count?: number }) {
-  return (
-    <button type="button" className="aps-tab" aria-current={on ? "page" : undefined} onClick={() => onSelect?.(k)}>
-      {icons[k]}{labels[k]}{count != null && <span className="aps-count">{count}</span>}
-    </button>
-  );
-}
 
 export type AppWindowProps = {
   screen: ScreenKey;
@@ -176,28 +170,26 @@ export type AppWindowProps = {
   children: React.ReactNode;
 };
 
-/** The glass window: traffic dots, brand, tabs (variant A) or a side menu (variant B). */
-export function AppWindow({ screen, variant = "tabs", labels = appScreenLabelsMn, counts = {}, onSelect, children }: AppWindowProps) {
+/**
+ * The window: the one Second Brain app frame (app-frame.ts, same as AskWindow) — dots and the
+ * centred title, the quiet side menu, the screen in the main pane. `variant` is kept for old
+ * callers; both values now draw the same frame.
+ */
+export function AppWindow({ screen, labels = appScreenLabelsMn, counts = {}, onSelect, children }: AppWindowProps) {
   return (
-    <div className="aps-win" data-variant={variant}>
-      <div className="aps-bar">
-        <div className="aps-dots"><i /><i /><i /></div>
-        <div className="aps-brand"><span className="aps-logo"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 10 7 4l4 6" stroke="#fff" strokeWidth="1.4" fill="none" /><circle cx="3" cy="10" r="1.8" fill="#fff" /><circle cx="7" cy="4" r="1.8" fill="#fff" /><circle cx="11" cy="10" r="1.8" fill="#fff" /></svg></span>{labels.brand}</div>
-        {variant === "tabs" ? (
-          <nav className="aps-tabs" aria-label={labels.brand}>
-            {SCREENS.map((k) => <Tab key={k} k={k} on={k === screen} labels={labels} onSelect={onSelect} />)}
-          </nav>
-        ) : <div style={{ flex: 1 }} />}
-        <div className="aps-search">{icons.search}{labels.search}<span className="aps-key" style={{ marginLeft: "auto" }}>⌘K</span></div>
+    <div className="aw aps-win">
+      <div className="aw-bar">
+        <div className="aw-dots" aria-hidden="true"><i /><i /><i /></div>
+        <span className="aw-title">{labels.brand}</span>
       </div>
-      <div className="aps-body">
-        {variant === "sidebar" && (
-          <nav className="aps-side" aria-label={labels.brand}>
-            {SCREENS.slice(0, 3).map((k) => <Tab key={k} k={k} on={k === screen} labels={labels} onSelect={onSelect} count={counts[k]} />)}
-            <h6>Thinking State</h6>
-            {SCREENS.slice(3).map((k) => <Tab key={k} k={k} on={k === screen} labels={labels} onSelect={onSelect} count={counts[k]} />)}
-          </nav>
-        )}
+      <div className="aw-split aps-body">
+        <nav className="aw-side" aria-label={labels.brand}>
+          {SCREENS.map((k) => (
+            <button key={k} type="button" className="aw-item" aria-current={k === screen ? "true" : undefined} onClick={() => onSelect?.(k)}>
+              {icons[k]}<span>{labels[k]}</span>{counts[k] != null && <small>{counts[k]}</small>}
+            </button>
+          ))}
+        </nav>
         <main className="aps-main">{children}</main>
       </div>
     </div>
@@ -367,7 +359,7 @@ export function AppScreen({ screen, data, theme = "day", variant = "tabs", still
         data-theme={dark ? "dark" : "light"}
         style={{ height: "100%" }}
       >
-        <style>{CSS}</style>
+        <style>{APP_FRAME_CSS + CSS}</style>
         <div className="aps-stage">
           <AppWindow screen={screen} variant={variant} labels={labels} counts={counts} onSelect={onSelect}>{body}</AppWindow>
         </div>
