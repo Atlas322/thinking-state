@@ -149,5 +149,5 @@ export { askWindowDemo };
 export { citedAnswerDemo, sourcePreviewDemo, thinkingStateDemo } from "../screens/ask-demo-data";
 export { ceoDailyDemo, ceoDailyLogisticsDemo, appShellDemo, appShellLogisticsDemo, ceoDailyScreenDemo } from "../screens/ceo-daily";
 export { buildWizardDemo } from "../screens/build-wizard";
-export { convergeNetDemo, convergeNetStagesDemo } from "../motion/converge-net";
+export { convergeNetDemo, convergeNetStagesDemo, convergeNetGraphDemo } from "../motion/converge-net";
 export { contentPipelineDemo } from "../screens/content-pipeline";

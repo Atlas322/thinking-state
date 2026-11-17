@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
-import { ConvergeNet, convergeNetLayout, convergeStagesLayout, paraNetGroups } from "./motion/converge-net";
+import { ConvergeNet, convergeNetLayout, convergeStagesLayout, convergeNetGraphDemo, paraNetGroups, pickNoteNodes } from "./motion/converge-net";
 import { BuildWizard } from "./screens/build-wizard";
 
 afterEach(cleanup);
@@ -37,6 +37,25 @@ describe("ConvergeNet four stages", () => {
     expect(a.nodes[0].graph).toEqual([0.5, 0.5]);
     expect(new Set(a.nodes.map((n) => n.g)).size).toBe(4);
     for (const n of a.nodes) expect(Math.hypot(...n.sph)).toBeCloseTo(1, 5);
+  });
+});
+
+describe("ConvergeNet stage 2 with labels", () => {
+  it("draws the centre and each note as a link with its preview, on distinct dots", () => {
+    render(<ConvergeNet {...convergeNetGraphDemo} notes={[{ label: "Уулзалт", href: "/a", preview: "Хоёр хувилбар" }, { label: "Тайлан", href: "/b" }]} />);
+    expect(screen.getByRole("link", { name: /Уулзалт/ }).getAttribute("href")).toBe("/a");
+    expect(screen.getByRole("link", { name: /Тайлан/ })).toBeTruthy();
+    expect(screen.getByText("Хоёр хувилбар")).toBeTruthy();
+    expect(screen.getByText("Үнийн бодлого")).toBeTruthy();
+    const picks = pickNoteNodes(convergeStagesLayout(64, 11), 7);
+    expect(new Set(picks).size).toBe(7);
+    expect(picks).not.toContain(0);
+  });
+  it("shows no labels while the graph moves (loop) or past stage 2", () => {
+    const { container, rerender } = render(<ConvergeNet {...convergeNetGraphDemo} stage="loop" />);
+    expect(container.querySelector(".cnl")).toBeNull();
+    rerender(<ConvergeNet {...convergeNetGraphDemo} stage={3} />);
+    expect(container.querySelector(".cnl")).toBeNull();
   });
 });
 

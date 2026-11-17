@@ -7,8 +7,8 @@
  * Colours come from the tokens: --ts-on-electric on Electric, --ts-electric on cream.
  */
 import * as React from "react";
-import { convergeStagesLayout, drawConvergeStages, paraNetGroups, type NetGroup } from "./converge-net-stages";
-export { paraNetGroups, convergeStagesLayout, drawConvergeStages, type NetGroup, type NetShape } from "./converge-net-stages";
+import { convergeStagesLayout, drawConvergeStages, paraNetGroups, pickNoteNodes, type NetGroup, type NetNote } from "./converge-net-stages";
+export { paraNetGroups, convergeStagesLayout, drawConvergeStages, pickNoteNodes, type NetGroup, type NetShape, type NetNote } from "./converge-net-stages";
 
 export type ConvergeNetProps = {
   /** How many dots (default 72). */
@@ -29,6 +29,13 @@ export type ConvergeNetProps = {
    * scroll while the canvas crosses the viewport. Reduced motion shows stage 4.
    */
   stage?: number | "loop" | "scroll";
+  /**
+   * Stage 2 (local graph) with labels: the note in the centre and up to ~8 linked notes. Each is a
+   * link; hover or focus lights its dot and shows the short preview. Drawn only while the graph
+   * stands still at stage 1.5–2 (a number), so labels never chase moving dots.
+   */
+  center?: { label: string; href?: string };
+  notes?: NetNote[];
   /** Stage 3–4 groups (label, shape, colour token). Default: PARA (paraNetGroups). */
   groups?: NetGroup[];
   /** Accessible description; the canvas is an image of it. */
@@ -80,7 +87,7 @@ export function drawConvergeNet(x: CanvasRenderingContext2D, W: number, H: numbe
   x.globalAlpha = 1;
 }
 
-export function ConvergeNet({ stage, groups = paraNetGroups, nodes = 72, seed = 7, tone = "electric", play = "loop", duration = 6000, t, label = "Мэдээллийн урсгал захаас орж ирж, цэгүүд нэг сүлжээ болно", className = "", style }: ConvergeNetProps) {
+export function ConvergeNet({ stage, center, notes, groups = paraNetGroups, nodes = 72, seed = 7, tone = "electric", play = "loop", duration = 6000, t, label = "Мэдээллийн урсгал захаас орж ирж, цэгүүд нэг сүлжээ болно", className = "", style }: ConvergeNetProps) {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const net = React.useMemo(() => convergeNetLayout(nodes, seed), [nodes, seed]);
   const net4 = React.useMemo(() => (stage === undefined ? null : convergeStagesLayout(nodes, seed, groups.length)), [stage === undefined, nodes, seed, groups.length]);
@@ -140,7 +147,9 @@ export function ConvergeNet({ stage, groups = paraNetGroups, nodes = 72, seed = 
   }, [net, net4, tone, play, duration, t]);
   const color = tone === "cream" ? "var(--ts-electric,#1b5cff)" : "var(--ts-on-electric,#fff)";
   const bg = tone === "cream" ? "var(--ts-page,#f0ede4)" : "var(--ts-electric,#1b5cff)";
-  return (
+  const labelled = net4 && typeof stage === "number" && stage >= 1.5 && stage <= 2 && (center || notes?.length);
+  const picks = React.useMemo(() => (labelled && net4 ? pickNoteNodes(net4, notes?.length ?? 0) : []), [labelled, net4, notes?.length]);
+  const canvas = (
     <canvas
       ref={ref}
       role="img"
@@ -148,13 +157,73 @@ export function ConvergeNet({ stage, groups = paraNetGroups, nodes = 72, seed = 
       data-tone={tone}
       data-stage={stage === undefined ? undefined : String(stage)}
       className={`ts-converge-net ${className}`}
-      style={{ display: "block", width: "100%", height: "100%", minHeight: 240, color, background: bg, ...style }}
+      style={{ display: "block", width: "100%", height: "100%", minHeight: 240, color, background: bg, ...(labelled ? {} : style) }}
     />
+  );
+  if (!labelled || !net4) return canvas;
+  const at = (i: number) => ({ left: `${net4.nodes[i].graph[0] * 100}%`, top: `${net4.nodes[i].graph[1] * 100}%` });
+  /** Label toward the inside: left of the dot on the left half, except near the edge where it turns inward. */
+  const side = (x: number) => (x < 0.25 ? "r" : x < 0.5 ? "l" : x > 0.75 ? "l" : "r");
+  const tag = (n: { label: string; href?: string; preview?: string }, i: number, key: string, main = false) => {
+    const body = <><i aria-hidden="true" /><b>{n.label}</b>{(n.preview || !main) && <span role="tooltip"><em>{n.label}</em>{n.preview}</span>}</>;
+    return (
+      <li key={key} className={`cnl-n${main ? " is-center" : ""}`} style={at(i)} data-side={side(net4.nodes[i].graph[0])} data-half={net4.nodes[i].graph[0] < 0.5 ? "l" : "r"}>
+        {n.href ? <a href={n.href}>{body}</a> : <span tabIndex={0}>{body}</span>}
+      </li>
+    );
+  };
+  return (
+    <div className={`cnl ${className}`} data-tone={tone} style={{ position: "relative", ...style }}>
+      <style>{CNL_CSS}</style>
+      {canvas}
+      <ul aria-label={label}>
+        {center && tag(center, 0, "c", true)}
+        {notes?.map((n, k) => picks[k] !== undefined && tag(n, picks[k], `n${k}`))}
+      </ul>
+    </div>
   );
 }
 
+const CNL_CSS = `
+.cnl{container-type:inline-size}
+.cnl ul{list-style:none;margin:0;padding:0;position:absolute;inset:0;pointer-events:none}
+.cnl-n{position:absolute;transform:translate(-5px,-50%);pointer-events:auto}
+.cnl-n[data-side=l]{transform:translate(calc(-100% + 5px),-50%)}
+.cnl-n>a,.cnl-n>span{position:relative;display:flex;align-items:center;gap:8px;min-height:32px;padding:0 6px;border-radius:var(--ts-radius,6px);color:var(--ts-fg);text-decoration:none;font:500 13px/1.2 var(--ts-font,Inter,system-ui,sans-serif);outline:none}
+.cnl-n[data-side=l]>a,.cnl-n[data-side=l]>span{flex-direction:row-reverse}
+.cnl-n i{width:10px;height:10px;border-radius:50%;background:var(--ts-electric);box-shadow:0 0 0 3px var(--ts-page);flex:none;transition:transform .15s}
+.cnl-n b{font-weight:500;white-space:nowrap;background:color-mix(in srgb,var(--ts-page) 86%,transparent);padding:2px 4px;border-radius:4px}
+.cnl-n.is-center{transform:translate(-50%,-50%)}.cnl-n.is-center>*{flex-direction:column;gap:6px}
+.cnl-n.is-center i{width:18px;height:18px}.cnl-n.is-center b{font-weight:600;font-size:14px}
+.cnl-n>*:hover i,.cnl-n>*:focus-visible i{transform:scale(1.5)}
+.cnl-n>*:hover b,.cnl-n>*:focus-visible b{color:var(--ts-electric-fg,var(--ts-electric))}
+.cnl-n>*:focus-visible{box-shadow:0 0 0 2px var(--ts-electric)}
+.cnl-n [role=tooltip]{position:absolute;top:calc(100% + 6px);left:0;z-index:2;width:220px;padding:10px 12px;border:1px solid var(--ts-line);border-radius:var(--ts-radius,6px);background:var(--ts-surface);color:var(--ts-muted);font-weight:400;font-size:12px;line-height:1.45;white-space:normal;box-shadow:var(--ts-elevation);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .15s,transform .15s,visibility .15s}
+.cnl-n[data-half=r] [role=tooltip]{left:auto;right:0}
+.cnl-n [role=tooltip] em{display:none;font-style:normal;font-weight:600;color:var(--ts-fg);margin-bottom:2px}
+.cnl-n>*:hover [role=tooltip],.cnl-n>*:focus-visible [role=tooltip]{opacity:1;visibility:visible;transform:none}
+@container (max-width:560px){.cnl-n:not(.is-center) b{display:none}.cnl-n [role=tooltip] em{display:block}.cnl-n [role=tooltip]{width:46cqw}}
+@media (prefers-reduced-motion:reduce){.cnl-n i,.cnl-n [role=tooltip]{transition:none}}
+`;
+
 /** Four stages, PARA groups, on the page surface (home v6 interlude). */
 export const convergeNetStagesDemo: ConvergeNetProps = { stage: "loop", nodes: 64, seed: 11, tone: "cream", duration: 12000, label: "Мэдээлэл захаас орж ирж, нэг note-ийн эргэн тойронд сүлжээ болж, PARA-гийн дөрвөн бүлэгт хуваагдан, тэнхлэгээ тойрон эргэх бөмбөрцөг болно" };
+
+/** Stage 2 with labels: the home interlude's local graph (web-builder, t≈1.9 of converge-net-4). */
+export const convergeNetGraphDemo: ConvergeNetProps = {
+  stage: 2, nodes: 64, seed: 11, tone: "cream",
+  label: "Нэг тэмдэглэлийн эргэн тойронд холбогдсон тэмдэглэлүүд",
+  center: { label: "Үнийн бодлого" },
+  notes: [
+    { label: "Багийн уулзалт · 10-р сар", preview: "Үнийн хоёр хувилбарыг харьцуулав." },
+    { label: "#sales хэлэлцүүлэг", preview: "Зардал өссөнийг санхүүгийн баг мэдэгдэв." },
+    { label: "Зардлын тайлан", preview: "Түүхий эдийн үнэ 12% өсөв." },
+    { label: "Харилцагчийн санал", preview: "Дунд багцыг тодорхой болгохыг хүссэн." },
+    { label: "Өрсөлдөгчийн үнэ", preview: "Гурван өрсөлдөгчийн үнийг харьцуулав." },
+    { label: "Санхүүгийн зорилт", preview: "Сарын давтагдах орлого +8%." },
+    { label: "Үнийн хуудас", preview: "Сайтын үнийн хуудсыг 11/26-нд шинэчилнэ." },
+  ],
+};
 
 export const convergeNetDemo: ConvergeNetProps = { nodes: 72, seed: 7, tone: "electric", play: "loop", duration: 6000 };
 

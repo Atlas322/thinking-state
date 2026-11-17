@@ -7,6 +7,23 @@
  */
 export type NetShape = "circle" | "square" | "triangle" | "diamond";
 export type NetGroup = { label: string; shape: NetShape; color: string };
+/** A labelled note on the stage-2 local graph: a link, with an optional short preview. */
+export type NetNote = { label: string; href?: string; preview?: string };
+
+/**
+ * Which dots carry the labelled notes: `count` dots on the graph ring (radius .14–.34), spread by
+ * angle so the labels do not crowd; returns node indices (deterministic for a layout).
+ */
+export function pickNoteNodes(net: ReturnType<typeof convergeStagesLayout>, count: number): number[] {
+  const ring = net.nodes.map((n, i) => ({ i, dx: n.graph[0] - 0.5, dy: n.graph[1] - 0.5 })).filter((v) => v.i > 0).map((v) => ({ ...v, r: Math.hypot(v.dx / 1.2, v.dy), a: Math.atan2(v.dy, v.dx) })).filter((v) => v.r > 0.14 && v.r < 0.34);
+  const out: number[] = [];
+  for (let k = 0; k < count; k++) {
+    const target = -Math.PI + ((k + 0.5) * 2 * Math.PI) / count;
+    const best = ring.filter((v) => !out.includes(v.i)).sort((a, b) => Math.abs(Math.atan2(Math.sin(a.a - target), Math.cos(a.a - target))) - Math.abs(Math.atan2(Math.sin(b.a - target), Math.cos(b.a - target))))[0];
+    if (best) out.push(best.i);
+  }
+  return out;
+}
 
 /** PARA groups: Төсөл · Хүрээ · Нөөц · Архив, colours as token names. */
 export const paraNetGroups: NetGroup[] = [
