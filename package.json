@@ -44,6 +44,10 @@
       "types": "./lib/types/lib/entries/ask-window.d.ts",
       "import": "./lib/ask-window.js"
     },
+    "./brain-cover": {
+      "types": "./lib/types/lib/entries/brain-cover.d.ts",
+      "import": "./lib/brain-cover.js"
+    },
     "./build-wizard": {
       "types": "./lib/types/lib/entries/build-wizard.d.ts",
       "import": "./lib/build-wizard.js"

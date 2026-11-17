@@ -123,6 +123,7 @@ export const dashboardDemo: P<typeof Dashboard> = { c: acmeGroup, scoped: acmeGr
 export const raciDemo: P<typeof RaciView> = { c: acmeGroup, scoped: acmeGroup, onPerson: () => {}, empty: "RACI тохируулаагүй байна" };
 export { roleDashboardDemo } from "../company/role-dashboard-demo";
 export { askWindowDemo };
+export { brainCoverDemo } from "../motion/brain-cover";
 export { approvalCardDemo } from "../library/approval-card";
 export { agentPlanDemo } from "../library/agent-plan";
 export { agentHandoffDemo } from "../library/agent-handoff";

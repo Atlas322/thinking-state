@@ -26,6 +26,7 @@ export default defineConfig({
         "app-shell": resolve(import.meta.dirname, "src/lib/entries/app-shell.ts"),
         "approval-card": resolve(import.meta.dirname, "src/lib/entries/approval-card.ts"),
         "ask-window": resolve(import.meta.dirname, "src/lib/entries/ask-window.ts"),
+        "brain-cover": resolve(import.meta.dirname, "src/lib/entries/brain-cover.ts"),
         "build-wizard": resolve(import.meta.dirname, "src/lib/entries/build-wizard.ts"),
         "cash-river": resolve(import.meta.dirname, "src/lib/entries/cash-river.ts"),
         "ceo-daily": resolve(import.meta.dirname, "src/lib/entries/ceo-daily.ts"),
