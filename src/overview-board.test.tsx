@@ -22,7 +22,7 @@ describe("OverviewBoard (screens.22)", () => {
   it("the status bar is told in words and numbers, and each state has its own shape", () => {
     const { container } = render(<OverviewBoard {...overviewBoardLogisticsDemo} still />);
     const legend = [...container.querySelectorAll(".ob-legend li")];
-    expect(legend.map((li) => li.textContent)).toEqual(["6 Дууссан", "2 Явж байна", "1 Таныг хүлээж байна", "1 Саатсан", "1 Эхлээгүй"]);
+    expect(legend.map((li) => li.textContent)).toEqual(["6 Дууссан", "2 Явж байна", "1 Шийдвэр хүлээж байна", "1 Саатсан", "1 Эхлээгүй"]);
     expect(new Set(legend.map((li) => li.querySelector(".ob-mark")?.getAttribute("data-shape"))).size).toBe(5);
     expect(container.querySelector(".ob-h small")?.textContent).toBe("нийт 11");
   });

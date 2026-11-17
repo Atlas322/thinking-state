@@ -26,7 +26,7 @@ export type BoardTimeline = { title?: string; /** One label per column (weeks, m
 
 export type OverviewBoardLabels = { tone: Record<BoardTone, string>; status: string; timeline: string; today: string; of: string };
 export const overviewBoardLabelsMn: OverviewBoardLabels = {
-  tone: { running: "Явж байна", "needs-you": "Таныг хүлээж байна", error: "Саатсан", done: "Дууссан", idle: "Эхлээгүй" },
+  tone: { running: "Явж байна", "needs-you": "Шийдвэр хүлээж байна", error: "Саатсан", done: "Дууссан", idle: "Эхлээгүй" },
   status: "Ажлын төлөв",
   timeline: "Төлөвлөгөө",
   today: "Өнөөдөр",
@@ -277,7 +277,7 @@ export function OverviewBoard({ eyebrow, title, sentence, actions = [], kpis = [
   );
 }
 
-/** Demo · Хүрээ: ac.me Cargo-ийн санхүү, 10-р сар (тоо нь FinanceReport-ийн демотой ижил). */
+/** Demo · area: finance at ac.me Cargo, October (the same four numbers as the FinanceReport demo). */
 export const overviewBoardAreaDemo: OverviewBoardProps = {
   eyebrow: "Хүрээ · ac.me Cargo · демо",
   title: "Санхүү",
@@ -298,7 +298,7 @@ export const overviewBoardAreaDemo: OverviewBoardProps = {
   ],
   lists: [
     {
-      title: "Таны шийдвэр хүлээж буй",
+      title: "Шийдвэр хүлээж буй",
       items: [
         { title: "Засварын төсвийг 42 саяар нэмэх", meta: "Санхүүгийн агент · өнөөдөр", tone: "needs-you", tag: "Батлах" },
         { title: "Түлшний гэрээг шинэчлэх", meta: "Худалдан авалт · 11/21 хүртэл", tone: "needs-you", tag: "Батлах" },
@@ -315,16 +315,16 @@ export const overviewBoardAreaDemo: OverviewBoardProps = {
   ],
 };
 
-/** Demo · Төсөл: «Үнийн шинэчлэл» (AppScreen-ий төслийн демотой ижил ажил, эзэд). Багана = долоо хоног. */
+/** Demo · project: the price update (the same tasks and owners as the AppScreen project demo). A column is a week. */
 export const overviewBoardProjectDemo: OverviewBoardProps = {
   eyebrow: "Төсөл · Борлуулалт · ac.me · демо",
   title: "Үнийн шинэчлэл",
-  sentence: "9 алхмын 5 нь дууссан; гурван түвшний хүснэгтийн ноорог 11/19-нд гарч, дунд түвшний үнийг та шийднэ.",
+  sentence: "9 алхмын 5 нь дууссан; гурван түвшний хүснэгтийн ноорог 11/19-нд гарч, дунд түвшний үнэ шийдвэр хүлээж байна.",
   actions: [{ label: "Тархинаас асуух" }, { label: "Шийдвэр гаргах", primary: true }],
   kpis: [
     { label: "Явц", value: "5/9", note: "алхам дууссан" },
     { label: "Дуусах огноо", value: "11/26", note: "8 хоног үлдсэн" },
-    { label: "Таныг хүлээж буй", value: "1", note: "шийдвэр" },
+    { label: "Хүлээгдэж буй", value: "1", note: "шийдвэр" },
     { label: "Ажиллаж буй агент", value: "4" },
   ],
   status: [
@@ -349,7 +349,7 @@ export const overviewBoardProjectDemo: OverviewBoardProps = {
       title: "Дараагийн алхам",
       items: [
         { title: "Гурван түвшний хүснэгтийн ноорог гаргах", meta: "Үнийн агент · 11/19", tone: "running" },
-        { title: "Дунд түвшний үнийг шийдэх", meta: "Та · 11/21", tone: "needs-you", tag: "Шийдэх" },
+        { title: "Дунд түвшний үнийг шийдэх", meta: "Захирал · 11/21", tone: "needs-you", tag: "Шийдэх" },
       ],
     },
     {
@@ -362,11 +362,11 @@ export const overviewBoardProjectDemo: OverviewBoardProps = {
   ],
 };
 
-/** Demo · Хүрээ: маркетинг (ac.me Retail). */
+/** Demo · area: marketing at ac.me Retail. */
 export const overviewBoardMarketingDemo: OverviewBoardProps = {
   eyebrow: "Хүрээ · ac.me Retail · демо",
   title: "Маркетинг",
-  sentence: "11-р сарын аяны 12 контентын 7 нь нийтлэгдсэн; хоёр ноорог таны зөвшөөрлийг хүлээж байна.",
+  sentence: "11-р сарын аяны 12 контентын 7 нь нийтлэгдсэн; хоёр ноорог зөвшөөрөл хүлээж байна.",
   actions: [{ label: "Тархинаас асуух" }, { label: "Ноорог шалгах", primary: true }],
   kpis: [
     { label: "Нийтэлсэн контент", value: "7/12", note: "энэ сард" },
@@ -378,12 +378,12 @@ export const overviewBoardMarketingDemo: OverviewBoardProps = {
   status: [
     { tone: "done", value: 7, label: "Нийтэлсэн" },
     { tone: "running", value: 2, label: "Бичиж байна" },
-    { tone: "needs-you", value: 2, label: "Таны зөвшөөрлийг хүлээж байна" },
+    { tone: "needs-you", value: 2, label: "Зөвшөөрөл хүлээж байна" },
     { tone: "idle", value: 1, label: "Эхлээгүй" },
   ],
   lists: [
     {
-      title: "Таны зөвшөөрлийг хүлээж буй",
+      title: "Зөвшөөрөл хүлээж буй",
       items: [
         { title: "Өвлийн хямдралын нийтлэл", meta: "Бичигч агент · 11/19", tone: "needs-you", tag: "Шалгах" },
         { title: "Имэйл: шинэ харилцагчид", meta: "Бичигч агент · 11/20", tone: "needs-you", tag: "Шалгах" },
@@ -400,11 +400,11 @@ export const overviewBoardMarketingDemo: OverviewBoardProps = {
   ],
 };
 
-/** Demo · Төсөл: логистик (ac.me Cargo) — агуулахын шилжилт. Багана = долоо хоног. */
+/** Demo · project: logistics at ac.me Cargo, the warehouse move. A column is a week. */
 export const overviewBoardLogisticsDemo: OverviewBoardProps = {
   eyebrow: "Төсөл · Үйл ажиллагаа · ac.me Cargo · демо",
   title: "Агуулахын шилжилт",
-  sentence: "Шинэ агуулах руу нүүх ажил хуваарьтаа явж байна; тавиурын нийлүүлэлт таван хоног хоцорч, нэг шийдвэр таныг хүлээж байна.",
+  sentence: "Шинэ агуулах руу нүүх ажил хуваарьтаа явж байна; тавиурын нийлүүлэлт таван хоног хоцорч, нэг зардал батлах шийдвэр хүлээж байна.",
   actions: [{ label: "Тархинаас асуух" }, { label: "Шийдвэр гаргах", primary: true }],
   kpis: [
     { label: "Явц", value: "6/11", note: "алхам дууссан" },
@@ -434,7 +434,7 @@ export const overviewBoardLogisticsDemo: OverviewBoardProps = {
     {
       title: "Дараагийн алхам",
       items: [
-        { title: "Нүүлгэх зардлыг батлах", meta: "Та · 11/20", tone: "needs-you", tag: "Батлах" },
+        { title: "Нүүлгэх зардлыг батлах", meta: "Захирал · 11/20", tone: "needs-you", tag: "Батлах" },
         { title: "Тээврийн хуваарийг эцэслэх", meta: "Төлөвлөгч агент · 11/20", tone: "running" },
       ],
     },
