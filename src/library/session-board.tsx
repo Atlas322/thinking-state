@@ -40,6 +40,8 @@ export type SessionBoardSession = {
   owner?: string;
   /** Who else works on it (team / company sharing layer). */
   sharedWith?: string[];
+  /** Who runs it, as a picture (an AgentAvatar): replaces the owner's initials; the owner's name stays for assistive tech. */
+  avatar?: React.ReactNode;
 };
 
 /** What callers pass: `state`, or a vault/Notion `status` that maps onto it. */
@@ -460,9 +462,13 @@ export function SessionBoard({
         )}
         {s.owner && (
           <span className="sb-who" title={s.sharedWith?.length ? `${s.owner} ${L.sharedWith} ${s.sharedWith.join(", ")}` : s.owner}>
-            <span aria-hidden="true">
-              {s.owner.trim().split(/\s+/).map((w) => w.charAt(0)).join("").slice(0, 2).toUpperCase()}
-            </span>
+            {s.avatar ? (
+              <span className="sb-av" aria-hidden="true">{s.avatar}</span>
+            ) : (
+              <span aria-hidden="true">
+                {s.owner.trim().split(/\s+/).map((w) => w.charAt(0)).join("").slice(0, 2).toUpperCase()}
+              </span>
+            )}
             {s.sharedWith?.length ? <span className="sb-who-more" aria-hidden="true">+{s.sharedWith.length}</span> : null}
             <span className="sb-sr">
               {s.owner}
@@ -839,6 +845,7 @@ const css = `
 .sb[data-scope=mine] [data-cw-other]{display:none!important}
 .sb-who{display:inline-flex;align-items:center;gap:2px;height:20px}
 .sb-who>span:first-child{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--sb-soft);border:1px solid var(--sb-line);color:var(--sb-muted);font-size:9.5px;font-weight:600}
+.sb-who>span.sb-av{display:inline-flex;width:auto;height:auto;border:0;border-radius:0;background:none}
 .sb-who-more{font-size:11px;color:var(--sb-faint)}
 .sb-seg{display:inline-flex;gap:2px;max-width:100%;padding:2px;border-radius:var(--ts-radius,8px);background:var(--sb-soft);overflow-x:auto;scrollbar-width:none}
 .sb-seg::-webkit-scrollbar{display:none}

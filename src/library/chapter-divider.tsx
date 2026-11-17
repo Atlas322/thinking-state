@@ -133,7 +133,7 @@ const css = `
 .cd-i{width:18px;height:18px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--cd-soft);font-size:11px;font-variant-numeric:tabular-nums}
 .cd-toc .is-past .cd-t{color:var(--cd-fg)}
 .cd-toc .is-current button{background:var(--cd-accent-soft);color:var(--cd-fg);font-weight:500}
-.cd-toc .is-current .cd-i{background:var(--cd-accent);color:#fff}
+.cd-toc .is-current .cd-i{background:var(--ts-accent-strong,#1b5cff);color:#fff}
 .cd-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cd-now{font-size:11px;color:var(--cd-accent)}
 @keyframes cd-in{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}

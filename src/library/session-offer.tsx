@@ -202,7 +202,7 @@ const css = `
 .so-actions{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
 .so-btn{min-height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--so-line);background:var(--so-bg);color:var(--so-fg);font:inherit;font-weight:500;cursor:pointer}
 .so-btn:hover{background:var(--so-soft)}
-.so-btn.is-primary{background:var(--so-accent);border-color:var(--so-accent);color:#fff}
+.so-btn.is-primary{background:var(--ts-accent-strong,#1b5cff);border-color:var(--ts-accent-strong,#1b5cff);color:#fff}
 .so-btn:focus-visible{outline:2px solid var(--so-accent);outline-offset:2px}
 @keyframes so-spin{to{transform:rotate(360deg)}}
 @keyframes so-in{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}

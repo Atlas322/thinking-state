@@ -31,6 +31,8 @@ export type AgentAvatarProps = {
   size?: number;
   /** The row already names the agent and its status: hide the avatar from assistive tech. */
   decorative?: boolean;
+  /** The slot already draws a tile (AgentHandoff, AgentLanes): no border or surface of its own. */
+  bare?: boolean;
   labels?: AgentAvatarLabels;
   className?: string;
 };
@@ -53,6 +55,7 @@ const SHAPE: Record<AgentAvatarStatus, string> = { running: "circle", "needs-you
 
 const CSS = `
 .aav{position:relative;display:inline-grid;place-items:center;flex:none;width:var(--aav-size,26px);height:var(--aav-size,26px);border:1px solid var(--ts-line);border-radius:var(--ts-radius,6px);background:var(--ts-surface);color:var(--ts-fg);vertical-align:middle}
+.aav[data-bare]{border:0;background:none;color:inherit}
 .aav-icon{width:60%;height:60%;fill:none;stroke:currentColor;stroke-width:var(--ts-icon-stroke,1.5);stroke-linecap:round;stroke-linejoin:round}
 .aav-dot{position:absolute;right:-3px;bottom:-3px;display:grid;place-items:center;width:10px;height:10px;box-sizing:border-box;border:1.5px solid var(--ts-surface);background:var(--aav-mark);color:var(--ts-surface)}
 .aav-dot[data-shape="circle"]{border-radius:50%}
@@ -71,13 +74,14 @@ const CSS = `
 @media (prefers-reduced-motion:reduce){.aav[data-status="running"] .aav-dot{animation:none}}
 `;
 
-export function AgentAvatar({ role = "agent", status, size, decorative = false, labels = agentAvatarLabelsMn, className = "" }: AgentAvatarProps) {
+export function AgentAvatar({ role = "agent", status, size, decorative = false, bare = false, labels = agentAvatarLabelsMn, className = "" }: AgentAvatarProps) {
   const name = labels.roles[role] + (status ? ` · ${labels.status[status]}` : "");
   return (
     <span
       className={`aav ${className}`.trim()}
       data-role={role}
       data-status={status}
+      data-bare={bare ? "" : undefined}
       style={size ? ({ "--aav-size": `${size}px` } as React.CSSProperties) : undefined}
       {...(decorative ? { "aria-hidden": true } : { role: "img", "aria-label": name, title: name })}
     >
@@ -95,7 +99,7 @@ export function AgentAvatar({ role = "agent", status, size, decorative = false, 
 const ROLE_WORDS: [RegExp, AgentRole][] = [
   [/төлөвлө/i, "planner"], [/бичигч|бичвэр|контент/i, "writer"], [/дизайн/i, "designer"], [/код|хөгжүүл|вэб/i, "coder"],
   [/тусламж|харилцагч/i, "support"], [/судлаач|судалгаа|шинжээч/i, "research"], [/үйл ажиллагаа|хувилбар/i, "ops"],
-  [/санхүү|үнийн|тооцоо|нягтлан/i, "finance"], [/борлуулалт|маркетинг/i, "sales"],
+  [/санхүү|үнийн|тооцоо|нягтлан/i, "finance"], [/борлуулалт|маркетинг/i, "sales"], [/шалгагч|хянагч/i, "research"],
 ];
 /** A role line such as «Кодын агент» → the role; anything else is a generic agent. */
 export function agentRoleFrom(label: string | undefined): AgentRole {

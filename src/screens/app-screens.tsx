@@ -15,6 +15,7 @@ import { DecisionCard } from "../library/decision-card";
 import { RunningNow } from "../library/running-now";
 import { MemoryPanel } from "../library/memory-panel";
 import { SessionBoard } from "../library/session-board";
+import { AgentAvatar, agentRoleFrom } from "../library/agent-avatar";
 import { MotionProvider } from "../motion";
 import type { CaptureKind, ScreenData } from "./acme";
 
@@ -299,11 +300,13 @@ export function MemoryScreen({ data }: { data: ScreenData }) {
 
 export function TeamScreen({ data }: { data: ScreenData }) {
   const t = data.team;
+  // one avatar per agent across the app: the role is read from the owner line, the row's dot already tells the state
+  const sessions = t.sessions.map((x) => (x.avatar || !x.owner ? x : { ...x, avatar: <AgentAvatar role={agentRoleFrom(x.owner)} size={20} decorative /> }));
   return (
     <>
       <h1 className="aps-h1">Нэг тархитай баг</h1>
       <p className="aps-sub">Хүн бүр, агент бүр нэг санах ойгоос уншиж, нэг самбар дээр ажиллана.</p>
-      <SessionBoard project={t.project} groups={t.groups} sessions={t.sessions} me={t.me} />
+      <SessionBoard project={t.project} groups={t.groups} sessions={sessions} me={t.me} />
     </>
   );
 }

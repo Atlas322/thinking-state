@@ -86,7 +86,7 @@ export type AgentHandoffProps = {
   className?: string;
 };
 /** `cost` is spend in thousands of tokens. */
-const defaultAgents: HandoffAgent[] = [
+export const handoffDemoAgents: HandoffAgent[] = [
   {
     id: "research",
     name: "Судлаач",
@@ -236,7 +236,7 @@ function Avatar({ agent }: { agent: HandoffAgent }) {
   );
 }
 export function AgentHandoff({
-  agents = defaultAgents,
+  agents = handoffDemoAgents,
   handoffs = defaultHandoffs,
   tasks = defaultTasks,
   onAssign,
