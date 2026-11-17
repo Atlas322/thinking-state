@@ -357,3 +357,6 @@ const css = `
 `;
 
 export default IntegrationPicker;
+
+/** Demo props (screens.19): the built-in ac.me defaults are the demo, so it is empty on purpose. */
+export const integrationPickerDemo: React.ComponentProps<typeof IntegrationPicker> = {};

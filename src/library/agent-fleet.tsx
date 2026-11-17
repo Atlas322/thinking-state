@@ -305,3 +305,6 @@ const css = `
 `;
 
 export default AgentFleet;
+
+/** Demo props (screens.19): the built-in ac.me defaults are the demo, so it is empty on purpose. */
+export const agentFleetDemo: React.ComponentProps<typeof AgentFleet> = {};

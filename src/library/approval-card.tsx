@@ -447,3 +447,15 @@ export function Demo() {
 }
 
 export default Demo;
+
+/** ac.me demo (screens.19): the per-component entry exports it, so a host needs no studio. */
+export const approvalCardDemo: React.ComponentProps<typeof ApprovalCard> = {
+  title: "Үнийн шинэчлэлийг батлах",
+  description: "ac.me Retail · дунд түвшний багц, 12-р сарын 1-нээс",
+  risk: "medium",
+  details: [
+    { label: "Өөрчлөлт", value: "Дунд багц нэмэгдэнэ, дээд багцын үнэ хэвээр" },
+    { label: "Нөлөө", value: "Сарын орлого +4%, цуцлалт −2 нэгж (таамаг)" },
+    { label: "Эх сурвалж", value: "Үнийн бодлого · Багийн уулзалт · #sales" },
+  ],
+};

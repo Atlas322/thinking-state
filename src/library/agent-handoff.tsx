@@ -720,3 +720,6 @@ export default function Demo() {
     />
   );
 }
+
+/** Demo props (screens.19): the built-in ac.me defaults are the demo, so it is empty on purpose. */
+export const agentHandoffDemo: React.ComponentProps<typeof AgentHandoff> = {};

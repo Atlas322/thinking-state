@@ -20,9 +20,25 @@
       "types": "./lib/types/lib/studio.d.ts",
       "import": "./lib/studio.js"
     },
+    "./agent-fleet": {
+      "types": "./lib/types/lib/entries/agent-fleet.d.ts",
+      "import": "./lib/agent-fleet.js"
+    },
+    "./agent-handoff": {
+      "types": "./lib/types/lib/entries/agent-handoff.d.ts",
+      "import": "./lib/agent-handoff.js"
+    },
+    "./agent-plan": {
+      "types": "./lib/types/lib/entries/agent-plan.d.ts",
+      "import": "./lib/agent-plan.js"
+    },
     "./app-shell": {
       "types": "./lib/types/lib/entries/app-shell.d.ts",
       "import": "./lib/app-shell.js"
+    },
+    "./approval-card": {
+      "types": "./lib/types/lib/entries/approval-card.d.ts",
+      "import": "./lib/approval-card.js"
     },
     "./ask-window": {
       "types": "./lib/types/lib/entries/ask-window.d.ts",
@@ -52,9 +68,17 @@
       "types": "./lib/types/lib/entries/converge-net.d.ts",
       "import": "./lib/converge-net.js"
     },
+    "./decision-inbox-chat": {
+      "types": "./lib/types/lib/entries/decision-inbox-chat.d.ts",
+      "import": "./lib/decision-inbox-chat.js"
+    },
     "./finance-report": {
       "types": "./lib/types/lib/entries/finance-report.d.ts",
       "import": "./lib/finance-report.js"
+    },
+    "./integration-picker": {
+      "types": "./lib/types/lib/entries/integration-picker.d.ts",
+      "import": "./lib/integration-picker.js"
     },
     "./method-quiz": {
       "types": "./lib/types/lib/entries/method-quiz.d.ts",
@@ -63,6 +87,10 @@
     "./role-dashboard": {
       "types": "./lib/types/lib/entries/role-dashboard.d.ts",
       "import": "./lib/role-dashboard.js"
+    },
+    "./session-board": {
+      "types": "./lib/types/lib/entries/session-board.d.ts",
+      "import": "./lib/session-board.js"
     },
     "./source-preview": {
       "types": "./lib/types/lib/entries/source-preview.d.ts",

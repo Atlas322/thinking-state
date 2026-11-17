@@ -11,17 +11,14 @@ import type * as React from "react";
 import type { ComponentProps } from "react";
 import { acmeGroup } from "../company/acme-group";
 import type { Collection } from "../company/types";
-import type { ApprovalCard } from "../library/approval-card";
 import type { DataTable } from "../library/data-table";
 import type { KPIChart } from "../library/kpi-chart";
 import type { CostWaterfall } from "../library/cost-waterfall";
 import type { DecisionInbox } from "../library/decision-inbox";
 import type { BreakdownChart } from "../library/breakdown-chart";
 import type { ProgressTracker } from "../library/progress-tracker";
-import type { AgentPlan } from "../library/agent-plan";
 import type { ApprovalGates } from "../library/approval-gates";
 import type { FallbackChain } from "../library/fallback-chain";
-import type { AgentHandoff } from "../library/agent-handoff";
 import type { AgentQueue } from "../library/agent-queue";
 import type { AutonomyDial } from "../library/autonomy-dial";
 import type { RunningNow } from "../library/running-now";
@@ -50,16 +47,6 @@ const acmeTasks: Collection = {
 const acmeCollections: Collection[] = [acmeTasks];
 
 // ── Шийдвэр ба батлалт (ac.me Retail) ──
-export const approvalCardDemo: P<typeof ApprovalCard> = {
-  title: "Үнийн шинэчлэлийг батлах",
-  description: "ac.me Retail · дунд түвшний багц, 12-р сарын 1-нээс",
-  risk: "medium",
-  details: [
-    { label: "Өөрчлөлт", value: "Дунд багц нэмэгдэнэ, дээд багцын үнэ хэвээр" },
-    { label: "Нөлөө", value: "Сарын орлого +4%, цуцлалт −2 нэгж (таамаг)" },
-    { label: "Эх сурвалж", value: "Үнийн бодлого · Багийн уулзалт · #sales" },
-  ],
-};
 export const decisionInboxDemo: P<typeof DecisionInbox> = {
   decisions: [
     { id: "price", title: "Дунд түвшний багц нэмэх үү?", detail: "ac.me Retail · агент 3 эх сурвалжаас санал бэлдсэн", primary: "Батлах", secondary: "Дахин харах" },
@@ -120,17 +107,7 @@ export const progressTrackerDemo: P<typeof ProgressTracker> = {
     { id: "open", label: "Нээлтийн өдрийн мэдэгдэл" },
   ],
 };
-export const agentPlanDemo: P<typeof AgentPlan> = {
-  title: "ac.me Cargo · сарын тайлан бэлдэх төлөвлөгөө",
-  steps: [
-    { id: "1", title: "Ерөнхий журнал унших", tool: "Нягтлан бодох бүртгэл", status: "done", duration: 6.2 },
-    { id: "2", title: "Банкны хуулгатай тулгах", tool: "Банк", status: "done", duration: 3.4 },
-    { id: "3", title: "Зөрүүг тайлбарлах", detail: "засвар, түлш", status: "active" },
-    { id: "4", title: "Тайланг батлалтад илгээх", status: "pending" },
-  ],
-};
 export const fallbackChainDemo: P<typeof FallbackChain> = { title: "ac.me Cargo · ачааны байршлын мэдээлэл", route: "GPS → тээвэрлэгчийн систем → жолоочид асуух" };
-export const agentHandoffDemo: P<typeof AgentHandoff> = {};
 export const agentQueueDemo: P<typeof AgentQueue> = {};
 export const runningNowDemo: P<typeof RunningNow> = {};
 export const memoryPanelDemo: P<typeof MemoryPanel> = {};
@@ -146,6 +123,11 @@ export const dashboardDemo: P<typeof Dashboard> = { c: acmeGroup, scoped: acmeGr
 export const raciDemo: P<typeof RaciView> = { c: acmeGroup, scoped: acmeGroup, onPerson: () => {}, empty: "RACI тохируулаагүй байна" };
 export { roleDashboardDemo } from "../company/role-dashboard-demo";
 export { askWindowDemo };
+export { approvalCardDemo } from "../library/approval-card";
+export { agentPlanDemo } from "../library/agent-plan";
+export { agentHandoffDemo } from "../library/agent-handoff";
+export { agentFleetDemo } from "../library/agent-fleet";
+export { integrationPickerDemo } from "../library/integration-picker";
 export { citedAnswerDemo, sourcePreviewDemo, thinkingStateDemo } from "../screens/ask-demo-data";
 export { ceoDailyDemo, ceoDailyLogisticsDemo, appShellDemo, appShellLogisticsDemo, ceoDailyScreenDemo } from "../screens/ceo-daily";
 export { buildWizardDemo } from "../screens/build-wizard";

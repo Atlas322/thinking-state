@@ -344,3 +344,14 @@ input.apl-name:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--apl-bl
 `;
 
 export default AgentPlan;
+
+/** ac.me demo (screens.19): the per-component entry exports it, so a host needs no studio. */
+export const agentPlanDemo: React.ComponentProps<typeof AgentPlan> = {
+  title: "ac.me Cargo · сарын тайлан бэлдэх төлөвлөгөө",
+  steps: [
+    { id: "1", title: "Ерөнхий журнал унших", tool: "Нягтлан бодох бүртгэл", status: "done", duration: 6.2 },
+    { id: "2", title: "Банкны хуулгатай тулгах", tool: "Банк", status: "done", duration: 3.4 },
+    { id: "3", title: "Зөрүүг тайлбарлах", detail: "засвар, түлш", status: "active" },
+    { id: "4", title: "Тайланг батлалтад илгээх", status: "pending" },
+  ],
+};
