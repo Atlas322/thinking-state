@@ -6,12 +6,12 @@ import { AskWindow, askWindowDemo } from "./screens/ask-window";
 afterEach(cleanup);
 
 describe("AskWindow (lightweight)", () => {
-  it("the side is the brain's menu and its chats, not the sources", () => {
+  it("the side is the one AppShell menu (PARA + GTD) with the brain's chats, not the sources", () => {
     render(<AskWindow {...askWindowDemo} />);
     const nav = screen.getByRole("navigation").textContent ?? "";
-    for (const t of ["Inbox", "Өнөөдөр", "Төслүүд", "Хүрээ", "Нөөц", "Агентууд", "Тархины чатууд", "Үнийн бодлого"]) expect(nav).toContain(t);
+    for (const t of ["Inbox", "Өнөөдөр", "Төсөл", "Хүлээгдэж буй", "Архив", "Хүрээ", "Нөөц", "Агентууд", "Тархины чатууд", "Үнийн бодлого"]) expect(nav).toContain(t);
     expect(nav).not.toContain("Эх сурвалж");
-    expect(screen.getByRole("button", { name: "Үнийн бодлого", current: true })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Үнийн бодлого", current: "page" })).toBeTruthy();
   });
   it("shows the question as a sent message, the source chips and the cited answer", () => {
     render(<AskWindow {...askWindowDemo} play="static" />);
@@ -52,5 +52,19 @@ describe("AskWindow run (Thinking State)", () => {
     render(<AskWindow {...askWindowDemo} play="static" onPhase={(p) => phases.push(p)} />);
     expect(phases).toEqual(["done"]);
     expect(document.querySelector(".ca")).toBeTruthy();
+  });
+});
+
+import { AppScreen } from "./screens/app-screens";
+import { acmeDemo } from "./screens/acme";
+describe("one app window (screens.20, CONTEXT v15)", () => {
+  it("AskWindow and AppScreen draw the same AppShell: one bar, one ⌘K ask, one PARA + GTD menu", () => {
+    const { container } = render(<><AskWindow {...askWindowDemo} play="static" /><AppScreen screen="project" data={acmeDemo} still /></>);
+    expect(container.querySelectorAll(".ash-win")).toHaveLength(2);
+    expect(container.querySelectorAll(".ash-bar")).toHaveLength(2);
+    expect(screen.getAllByRole("button", { name: /Тархинаасаа асуу/ })).toHaveLength(2);
+    expect(container.querySelectorAll(".aps-tab, .aw-bar, .aw-side")).toHaveLength(0);
+    const menus = screen.getAllByRole("navigation", { name: "Апп-ын цэс" }).map((n) => [...n.querySelectorAll(".ash-it span")].slice(0, 9).map((s) => s.textContent).join("|"));
+    expect(menus[0]).toBe(menus[1]);
   });
 });

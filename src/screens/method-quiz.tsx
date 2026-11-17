@@ -67,7 +67,7 @@ const CSS = `
 .mq-rail li[data-state="now"]{font-weight:600}
 .mq-main{flex:1;min-width:0;padding:28px 32px;display:flex;flex-direction:column;gap:20px}
 .mq-progress{height:4px;border-radius:4px;background:var(--ts-soft-2);overflow:hidden}
-.mq-progress i{display:block;height:100%;background:var(--ts-electric);transition:width .25s ease}
+.mq-progress i{display:block;height:100%;background:var(--ts-electric);transition:width var(--ts-motion-dur-sm,200ms) var(--ts-motion-ease-standard,ease)}
 .mq-q{font:400 24px/1.2 Spectral,Georgia,serif;margin:0}
 .mq-help{margin:-8px 0 0;font-size:14px;color:var(--ts-muted)}
 .mq-opts{display:grid;gap:8px;margin:0;padding:0;border:0}

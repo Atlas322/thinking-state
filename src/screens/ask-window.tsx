@@ -14,7 +14,7 @@ import * as React from "react";
 import { CitedAnswer, type CitedSegment, type CitedSource } from "../library/cited-answer";
 import { SourceIcon, SourcePreview, type PreviewSource, type SourceKind } from "../library/source-preview";
 import { ThinkingState, type ThinkingStep } from "../library/thinking-state";
-import { APP_FRAME_CSS } from "./app-frame";
+import { AppShell } from "./app-shell";
 import { askDemoAnswer, askDemoSources, askDemoThinking } from "./ask-demo-data";
 import { LOOP, motionVar, useScenario, type ScenarioStep } from "../motion";
 
@@ -89,20 +89,12 @@ export type AskPhase = "ask" | "think" | "sources" | "answer" | "done";
 const I = (d: React.ReactNode, size?: number) => (
   <svg width={size ?? 14} height={size ?? 14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ width: size ?? "var(--ts-icon-size,14px)", height: size ?? "var(--ts-icon-size,14px)", strokeWidth: "var(--ts-icon-stroke,1.25)" }}>{d}</svg>
 );
-// Lucide shapes (ISC): inbox, sun, folder, circle-dot, book-open, bot, message-circle, square-pen, arrow-up.
-const NAV_ICON: Record<AskNavItem["icon"], React.ReactNode> = {
-  inbox: I(<><path d="M22 12h-6l-2 3h-4l-2-3H2" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></>),
-  today: I(<><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></>),
-  projects: I(<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />),
-  areas: I(<><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="1" /></>),
-  resources: I(<><path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></>),
-  agents: I(<><path d="M12 8V4H8" /><rect x="4" y="8" width="16" height="12" rx="2" /><path d="M2 14h2M20 14h2M15 13v2M9 13v2" /></>),
-};
-const chatIcon = I(<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />, 14);
-const newIcon = I(<><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" /></>, 14);
 const upIcon = I(<><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></>, 16);
 
 const CSS = `
+.aw{font-family:var(--ts-font,Inter,system-ui,sans-serif);font-size:13px;line-height:1.5;font-weight:400;color:var(--ts-fg);max-width:720px}
+.aw *{box-sizing:border-box}
+.aw .ash-main{padding:0;display:flex;overflow:hidden;background:var(--ts-surface)}.aw .ash-view{flex:1;display:flex;min-width:0;min-height:0}
 .aw-new{color:var(--ts-fg)}
 /* Compact controls keep a 44px hit area through an invisible halo. */
 .aw-item::after,.aw-send::after,.aw .sp-chip::after{content:"";position:absolute;inset:50% auto auto 50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}
@@ -130,7 +122,7 @@ const CSS = `
 .aw-in{animation:aw-in ${motionVar.duration("md")} ${motionVar.easing("enter")} both}
 .aw-chips .aw-in{animation-delay:calc(var(--i,0) * ${LOOP.stagger}ms)}
 @keyframes aw-in{from{opacity:0;transform:translateY(4px)}}
-.aw-q.aw-typing::after{content:"";display:inline-block;width:1px;height:1em;margin-left:2px;vertical-align:-2px;background:currentColor;animation:aw-caret 1s steps(1) infinite}
+.aw-q.aw-typing::after{content:"";display:inline-block;width:1px;height:1em;margin-left:2px;vertical-align:-2px;background:currentColor;animation:aw-caret var(--ts-motion-dur-xl,900ms) steps(1) infinite}
 @keyframes aw-caret{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.aw-in,.aw-q.aw-typing::after{animation:none}}
 @container (max-width:560px){.aw-side{display:none}.aw-thread{padding:14px 14px 6px}.aw-compose{margin:6px 10px 10px}.aw .sp{position:static}.aw .sp-pop{left:0;right:0;width:auto;max-width:none}}
@@ -197,30 +189,25 @@ export function AskWindow({
 
   return (
     <div className={`aw ${dark ? "dark" : ""} ${className}`} data-ts-theme={dark ? "dark" : "cream"} data-theme={dark ? "dark" : "light"}>
-      <style>{APP_FRAME_CSS + CSS}</style>
-      <div className="aw-bar">
-        <div className="aw-dots" aria-hidden="true"><i /><i /><i /></div>
-        <span className="aw-title">{labels.title}</span>
-      </div>
-      <div className="aw-split">
-        {sidebar && (
-          <nav className="aw-side" aria-label={labels.title}>
-            {workspace && (
-              <div className="aw-ws">
-                <b aria-hidden="true">{workspace.name.slice(0, 1)}</b>
-                <span><strong>{workspace.name}</strong><small>{workspace.note ? `${labels.brain} · ${workspace.note}` : labels.brain}</small></span>
-              </div>
-            )}
-            <button type="button" className="aw-item aw-new" onClick={() => onNavigate?.("new")}>{newIcon}<span>{labels.newChat}</span></button>
-            {nav.map((n) => (
-              <button key={n.id} type="button" className="aw-item" onClick={() => onNavigate?.(n.id)}>{NAV_ICON[n.icon]}<span>{n.label}</span>{n.count != null && <small>{n.count}</small>}</button>
-            ))}
-            {chats.length > 0 && <h6>{labels.chats}</h6>}
+      <style>{CSS}</style>
+      <AppShell
+        company={{ name: workspace?.name ?? labels.title, note: workspace?.note ? `${labels.brain} · ${workspace.note}` : labels.brain }}
+        counts={{ inbox: nav.find((n) => n.id === "inbox")?.count }}
+        active="ask"
+        nav={sidebar}
+        height={400}
+        title={labels.title}
+        onNavigate={(v) => onNavigate?.(v)}
+        onAsk={() => onNavigate?.("new")}
+        navExtra={
+          <>
+            {chats.length > 0 && <p className="ash-h">{labels.chats}</p>}
             {chats.map((c) => (
-              <button key={c.id} type="button" className="aw-item" aria-current={current === c.id} onClick={() => { setCurrent(c.id); onNavigate?.(`chat:${c.id}`); }}>{chatIcon}<span>{c.title}</span></button>
+              <button key={c.id} type="button" className="ash-it" aria-current={current === c.id ? "page" : undefined} onClick={() => { setCurrent(c.id); onNavigate?.(`chat:${c.id}`); }}><span>{c.title}</span></button>
             ))}
-          </nav>
-        )}
+          </>
+        }
+      >
         <div className="aw-main">
           <div className="aw-thread" ref={run.ref} {...run.attrs} data-phase={f.phase}>
             <div className={`aw-q ${f.typed < 1 ? "aw-typing" : ""}`}><span aria-hidden={f.typed < 1}>{shownQuestion}</span>{f.typed < 1 && <span className="aw-sr">{question}</span>}</div>
@@ -254,7 +241,7 @@ export function AskWindow({
             <button type="submit" className="aw-send" aria-label={labels.send}>{upIcon}</button>
           </form>
         </div>
-      </div>
+      </AppShell>
     </div>
   );
 }

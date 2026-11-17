@@ -233,7 +233,7 @@ const CSS = `
 .bw-time{margin:12px 6px 0;padding-top:12px;border-top:1px solid var(--ts-line);font:500 12px var(--ts-mono,"IBM Plex Mono",monospace);color:var(--ts-faint);letter-spacing:.02em}
 .bw-main{flex:1;min-width:0;padding:28px 32px;display:flex;flex-direction:column;gap:20px}
 .bw-progress{height:4px;border-radius:4px;background:var(--ts-soft-2);overflow:hidden}
-.bw-progress i{display:block;height:100%;background:var(--ts-electric);transition:width .25s ease}
+.bw-progress i{display:block;height:100%;background:var(--ts-electric);transition:width var(--ts-motion-dur-sm,200ms) var(--ts-motion-ease-standard,ease)}
 .bw-intro{display:flex;flex-direction:column;gap:6px;padding-bottom:16px;border-bottom:1px solid var(--ts-line)}
 .bw-intro span{font:500 12px var(--ts-mono,"IBM Plex Mono",monospace);letter-spacing:.06em;color:var(--ts-faint);text-transform:uppercase}
 .bw-intro p{margin:0;font-size:15px;line-height:1.5;color:var(--ts-muted)}
