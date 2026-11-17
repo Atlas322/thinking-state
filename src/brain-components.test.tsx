@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { act, cleanup, render, screen } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { layoutBrain } from "./brain/field";
 import { BrainMap, brainMapDemo } from "./library/brain-map";
@@ -78,5 +78,26 @@ describe("Module Scene", () => {
   it("takes its own departments", () => {
     render(<ModuleScene modules={[{ id: "x", title: "Хүний нөөц", agent: "Сонгон шалгаруулагч", job: "Анкет ангилав", kpis: [{ value: "5", label: "ярилцлага" }] }]} />);
     expect(screen.getByText("Хүний нөөц")).toBeTruthy();
+  });
+});
+
+describe("BrainMap answers the pointer (screens.23)", () => {
+  it("a branch lights up on the picture and in its list column together; a tap pins it, a second tap lets go", () => {
+    const { container } = render(<BrainMap progress={1} />);
+    const marks = [...container.querySelectorAll("button.bm-mark")] as HTMLElement[];
+    const cols = [...container.querySelectorAll(".bm-col")] as HTMLElement[];
+    expect(marks).toHaveLength(3);
+    expect(container.querySelector(".bm")?.hasAttribute("data-active")).toBe(false);
+    fireEvent.click(cols[1].querySelector("button")!); // «Агентууд» in the list
+    expect(marks[1].hasAttribute("data-hot")).toBe(true); // the same branch on the picture
+    expect(cols[1].hasAttribute("data-hot")).toBe(true);
+    expect(cols[0].hasAttribute("data-hot")).toBe(false);
+    expect(container.querySelector(".bf")?.hasAttribute("data-active")).toBe(true);
+    const hotDots = container.querySelectorAll(".bf-dots circle[data-hot]").length;
+    const allDots = container.querySelectorAll(".bf-dots circle").length;
+    expect(hotDots).toBeGreaterThan(40); // the core stays with the branch
+    expect(hotDots).toBeLessThan(allDots);
+    fireEvent.click(marks[1]);
+    expect(container.querySelector(".bm")?.hasAttribute("data-active")).toBe(false);
   });
 });

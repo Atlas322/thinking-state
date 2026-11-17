@@ -39,8 +39,9 @@ export type BrainLink = {
   strands?: number;
 };
 
-type Dot = { key: string; x: number; y: number; at: number; tone: BrainTone };
-type Line = { key: string; x1: number; y1: number; x2: number; y2: number; at: number; cross: boolean };
+/** `g` = the branch a dot or a link belongs to (the cluster id before «:»); the core is its own group. */
+type Dot = { key: string; x: number; y: number; at: number; tone: BrainTone; g: string };
+type Line = { key: string; x1: number; y1: number; x2: number; y2: number; at: number; cross: boolean; g: string };
 
 /** Small deterministic PRNG (mulberry32). */
 export function seeded(seed: number) {
@@ -66,20 +67,21 @@ export function layoutBrain(clusters: BrainCluster[], links: BrainLink[], seed =
     const at = c.at ?? 0;
     const span = c.span ?? 0.2;
     const tone = c.tone ?? "branch";
+    const g = c.id.split(":")[0];
     const list: Dot[] = [];
     for (let i = 0; i < c.n; i++) {
       // sunflower spread with a little jitter: even density, no overlaps
       const rr = c.n === 1 ? 0 : c.r * Math.sqrt((i + 0.5) / c.n);
       const a = i * 2.39996 + (rand() - 0.5) * 0.5;
       const j = c.n === 1 ? 0 : (rand() - 0.5) * c.r * 0.12;
-      list.push({ key: `${c.id}-${i}`, x: r2(c.x + Math.cos(a) * rr + j), y: r2(c.y + Math.sin(a) * rr + j), at: at + (span * i) / Math.max(1, c.n), tone });
+      list.push({ key: `${c.id}-${i}`, x: r2(c.x + Math.cos(a) * rr + j), y: r2(c.y + Math.sin(a) * rr + j), at: at + (span * i) / Math.max(1, c.n), tone, g });
     }
     // links inside a cluster: sunflower neighbours differ by Fibonacci steps
     const steps = c.n > 20 ? [8, 13] : c.n > 6 ? [3, 5] : [1];
     list.forEach((d, i) =>
       steps.forEach((s) => {
         const e = list[i + s];
-        if (e) lines.push({ key: `${d.key}~${e.key}`, x1: d.x, y1: d.y, x2: e.x, y2: e.y, at: Math.max(d.at, e.at) + 0.04, cross: false });
+        if (e) lines.push({ key: `${d.key}~${e.key}`, x1: d.x, y1: d.y, x2: e.x, y2: e.y, at: Math.max(d.at, e.at) + 0.04, cross: false, g });
       }),
     );
     dots.push(...list);
@@ -93,11 +95,12 @@ export function layoutBrain(clusters: BrainCluster[], links: BrainLink[], seed =
     const db = byCluster.get(l.to);
     if (!a || !b || !da || !db) continue;
     const at = l.at ?? 0;
+    const g = l.to.split(":")[0];
     if (!l.strands) {
       const len = Math.hypot(b.x - a.x, b.y - a.y) || 1;
       const ux = (b.x - a.x) / len;
       const uy = (b.y - a.y) / len;
-      lines.push({ key: `${l.from}=${l.to}`, x1: r2(a.x + ux * (a.r + 4)), y1: r2(a.y + uy * (a.r + 4)), x2: r2(b.x - ux * (b.r + 4)), y2: r2(b.y - uy * (b.r + 4)), at, cross: true });
+      lines.push({ key: `${l.from}=${l.to}`, x1: r2(a.x + ux * (a.r + 4)), y1: r2(a.y + uy * (a.r + 4)), x2: r2(b.x - ux * (b.r + 4)), y2: r2(b.y - uy * (b.r + 4)), at, cross: true, g });
       continue;
     }
     // strands: from dots on the facing side of each cluster
@@ -107,7 +110,7 @@ export function layoutBrain(clusters: BrainCluster[], links: BrainLink[], seed =
     for (let s = 0; s < l.strands; s++) {
       const p = fa[Math.floor(rand() * fa.length)];
       const q = fb[Math.floor(rand() * fb.length)];
-      lines.push({ key: `${l.from}=${l.to}-${s}`, x1: p.x, y1: p.y, x2: q.x, y2: q.y, at: at + s * 0.025, cross: true });
+      lines.push({ key: `${l.from}=${l.to}-${s}`, x1: p.x, y1: p.y, x2: q.x, y2: q.y, at: at + s * 0.025, cross: true, g });
     }
   }
   return { dots, lines };
@@ -150,21 +153,33 @@ export type BrainFieldProps = {
   /** Accessible description of the picture. */
   label: string;
   className?: string;
+  /** A branch id: its dots and links stay bright, the rest steps back. The core always stays. */
+  active?: string | null;
+  /** Idle life once the picture is drawn: dots breathe, pulses travel the links from the core out. Off under reduced motion. */
+  alive?: boolean;
 };
 
 /** The SVG: links under dots; each element shows once progress reaches it. */
-export function BrainField({ clusters, links, progress, seed = 7, height = 320, label, className = "" }: BrainFieldProps) {
+export function BrainField({ clusters, links, progress, seed = 7, height = 320, label, className = "", active = null, alive = false }: BrainFieldProps) {
+  const hot = (g: string) => (active && (g === active || g === "core") ? "" : undefined);
   const { dots, lines } = React.useMemo(() => layoutBrain(clusters, links, seed), [clusters, links, seed]);
   return (
-    <svg className={`bf ${className}`} viewBox={`0 0 400 ${height}`} role="img" aria-label={label}>
+    <svg className={`bf ${className}`} viewBox={`0 0 400 ${height}`} role="img" aria-label={label} data-active={active ? "" : undefined} data-alive={alive ? "" : undefined}>
       <g className="bf-lines">
         {lines.map((l) => (
-          <line key={l.key} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} className={l.cross ? "bf-cross" : "bf-in"} data-on={progress >= l.at || undefined} />
+          <line key={l.key} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} className={l.cross ? "bf-cross" : "bf-in"} data-on={progress >= l.at || undefined} data-hot={hot(l.g)} />
         ))}
       </g>
+      {alive && (
+        <g className="bf-pulses" aria-hidden="true">
+          {lines.filter((l) => l.cross && progress >= l.at).map((l, i) => (
+            <circle key={l.key} cx={l.x1} cy={l.y1} r={1.8} className="bf-pulse" data-hot={hot(l.g)} style={{ ["--dx" as string]: `${l.x2 - l.x1}px`, ["--dy" as string]: `${l.y2 - l.y1}px`, ["--i" as string]: i } as React.CSSProperties} />
+          ))}
+        </g>
+      )}
       <g className="bf-dots">
         {dots.map((d) => (
-          <circle key={d.key} cx={d.x} cy={d.y} r={d.tone === "leaf" ? 4 : d.tone === "core" ? 2.4 : 2} className={`bf-${d.tone}`} data-on={progress >= d.at || undefined} />
+          <circle key={d.key} cx={d.x} cy={d.y} r={d.tone === "leaf" ? 4 : d.tone === "core" ? 2.4 : 2} className={`bf-${d.tone}`} data-on={progress >= d.at || undefined} data-hot={hot(d.g)} style={{ ["--i" as string]: d.key.length + Math.round(d.x) } as React.CSSProperties} />
         ))}
       </g>
     </svg>
@@ -190,5 +205,13 @@ export const brainFieldCss = `
 .bf .bf-branch{fill:var(--bf-branch,var(--ts-fg,#18181b))}
 .bf .bf-branch[data-on]{opacity:.7}
 .bf .bf-leaf{fill:var(--bf-surface,var(--ts-surface,#fff));stroke:var(--bf-core,var(--ts-accent,#4f7cf0));stroke-width:2;vector-effect:non-scaling-stroke}
-@media(prefers-reduced-motion:reduce){.bf line,.bf circle{transition:none}}
+.bf[data-active] line:not([data-hot]){opacity:.1}
+.bf[data-active] circle:not([data-hot]){opacity:.22}
+.bf[data-active] .bf-cross[data-hot]{opacity:1;stroke-width:1.6}
+.bf[data-alive] circle[data-on]:not(.bf-pulse){animation:bf-breathe var(--ts-motion-loop-period,5200ms) var(--ts-motion-ease-loop,ease-in-out) infinite;animation-delay:calc(var(--i,0) * -173ms)}
+.bf .bf-pulse{fill:var(--bf-cross,var(--ts-accent,#4f7cf0));opacity:0;transform:none;animation:bf-travel calc(var(--ts-motion-loop-move,1200ms) * 2) var(--ts-motion-ease-standard,ease-in-out) infinite;animation-delay:calc(var(--i,0) * 310ms)}
+.bf[data-active] .bf-pulse:not([data-hot]){animation:none;opacity:0}
+@keyframes bf-breathe{50%{transform:scale(1.22)}}
+@keyframes bf-travel{0%{transform:translate(0,0);opacity:0}15%{opacity:.9}70%{opacity:.9}100%{transform:translate(var(--dx),var(--dy));opacity:0}}
+@media(prefers-reduced-motion:reduce){.bf line,.bf circle{transition:none}.bf[data-alive] circle,.bf .bf-pulse{animation:none!important}.bf .bf-pulse{display:none}}
 `;

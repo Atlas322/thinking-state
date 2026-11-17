@@ -106,9 +106,26 @@ export function BrainMap({ progress: progressProp, seed = 11, labels: labelsProp
   const uid = React.useId();
   const geo = React.useMemo(() => geometry(d.branches), [d.branches]);
   const p = useBrainProgress(progressProp);
+  // One branch in focus at a time: hovering or focusing a label on the picture or its column in the list lights
+  // the same branch in both places; a tap pins it (touch has no hover), a second tap lets go.
+  const [hover, setHover] = React.useState<string | null>(null);
+  const [pinned, setPinned] = React.useState<string | null>(null);
+  const active = hover ?? pinned;
+  const over = (id: string | null) => ({ onPointerEnter: () => setHover(id), onPointerLeave: () => setHover(null), onFocus: () => setHover(id), onBlur: () => setHover(null) });
+  const pin = (id: string) => setPinned((x) => (x === id ? null : id));
+  // The net lives only while it is on screen (no idle work off screen) and never under reduced motion.
+  const stage = React.useRef<HTMLDivElement>(null);
+  const [inView, setInView] = React.useState(false);
+  React.useEffect(() => {
+    const el = stage.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { rootMargin: "0px 0px -5% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <section className={`bm ${className}`} aria-labelledby={d.title ? `${uid}-h` : undefined} aria-label={d.title ? undefined : L.picture}>
+    <section className={`bm ${className}`} data-active={active ? "" : undefined} aria-labelledby={d.title ? `${uid}-h` : undefined} aria-label={d.title ? undefined : L.picture}>
       <style>{brainFieldCss + css}</style>
       {(d.title || d.caption) && (
         <header className="bm-head">
@@ -116,24 +133,24 @@ export function BrainMap({ progress: progressProp, seed = 11, labels: labelsProp
           {d.caption && <p className="bm-cap">{d.caption}</p>}
         </header>
       )}
-      <div className="bm-stage">
-        <BrainField clusters={geo.clusters} links={geo.links} progress={p} seed={seed} label={L.picture} />
+      <div className="bm-stage" ref={stage}>
+        <BrainField clusters={geo.clusters} links={geo.links} progress={p} seed={seed} label={L.picture} active={active} alive={p >= 1 && inView} />
         <span className="bm-mark is-core" style={{ left: `${(CX / 400) * 100}%`, top: `${(CY / 320) * 100}%` }} data-on>
           {d.core}
         </span>
         {geo.places.map((pl, i) => (
-          <span key={pl.id} className="bm-mark" style={{ left: `${(pl.x / 400) * 100}%`, top: `${(pl.y / 320) * 100}%` }} data-on={p >= pl.at + 0.06 || undefined}>
+          <button key={pl.id} type="button" className="bm-mark" style={{ left: `${(pl.x / 400) * 100}%`, top: `${(pl.y / 320) * 100}%` }} data-on={p >= pl.at + 0.06 || undefined} data-hot={active === pl.id || undefined} aria-pressed={pinned === pl.id} onClick={() => pin(pl.id)} {...over(pl.id)}>
             {d.branches[i].label}
-          </span>
+          </button>
         ))}
       </div>
       <ul className="bm-legend">
         {d.branches.map((b, i) => (
-          <li key={b.id} className="bm-col" data-on={p >= geo.places[i].at + 0.06 || undefined}>
-            <span className="bm-col-h">
+          <li key={b.id} className="bm-col" data-on={p >= geo.places[i].at + 0.06 || undefined} data-hot={active === b.id || undefined} {...over(b.id)}>
+            <button type="button" className="bm-col-h" aria-pressed={pinned === b.id} onClick={() => pin(b.id)}>
               <span className="bm-n">{String(i + 1).padStart(2, "0")}</span>
               {b.label}
-            </span>
+            </button>
             <ul className="bm-agents">
               {b.agents.slice(0, 3).map((a, k) => (
                 <li key={a.id} className="bm-agent" data-on={p >= geo.places[i].agents[k].at || undefined}>
@@ -163,10 +180,18 @@ const css = `
 .bm-stage{position:relative;max-width:640px;margin:0 auto}
 .bm-mark{position:absolute;transform:translate(-50%,-50%) scale(.92);padding:3px 10px;border:1px solid var(--bm-line);border-radius:var(--ts-radius-pill,999px);background:var(--bm-surface);font-size:13px;font-weight:600;white-space:nowrap;opacity:0;transition:opacity .4s,transform .4s var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1))}
 .bm-mark[data-on]{opacity:1;transform:translate(-50%,-50%)}
+button.bm-mark{font-family:inherit;color:inherit;cursor:pointer;min-height:28px}
+button.bm-mark:hover,.bm-mark[data-hot]{border-color:var(--bm-accent-text);color:var(--bm-accent-text);background:var(--bm-accent-soft)}
+.bm[data-active] button.bm-mark[data-on]:not([data-hot]){opacity:.5}
+.bm :focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--bm-surface),0 0 0 2px var(--bm-accent-text)}
 .bm-mark.is-core{padding:5px 14px;border-color:color-mix(in srgb,var(--bm-accent) 40%,var(--bm-line));color:var(--bm-accent-text);font-size:15px}
 .bm-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 20px;margin:16px 0 0;padding:0;list-style:none}
 .bm-col{padding-top:10px;border-top:1px solid var(--bm-line);opacity:0;transition:opacity .4s}
 .bm-col[data-on]{opacity:1}
+.bm[data-active] .bm-col[data-on]:not([data-hot]){opacity:.45}
+.bm-col[data-hot]{border-top-color:var(--bm-accent-text)}
+.bm-col[data-hot] .bm-col-h,.bm-col[data-hot] .bm-n{color:var(--bm-accent-text)}
+button.bm-col-h{padding:0;border:0;background:none;font:inherit;font-weight:600;color:inherit;cursor:pointer;min-height:28px;border-radius:4px}
 .bm-col-h{display:flex;align-items:center;gap:8px;font-weight:600}
 .bm-n{font:500 12px/1 var(--ts-font-mono,ui-monospace,monospace);color:var(--bm-muted)}
 .bm-agents{display:grid;gap:6px;margin:8px 0 0;padding:0;list-style:none}
