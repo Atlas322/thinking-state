@@ -71,7 +71,7 @@ const CSS = `
 --ob-error:var(--ts-status-error-fg,#b4232a);--ob-error-bg:var(--ts-status-error-bg,#fde4e4);--ob-error-line:var(--ts-status-error-border,#f4b4b6);
 --ob-done:var(--ts-status-done-fg,#3f5e41);--ob-done-bg:var(--ts-status-done-bg,#e3eadf);--ob-done-line:var(--ts-status-done-border,#bfd2bb);
 --ob-idle:var(--ts-status-idle-fg,#45433f);--ob-idle-bg:var(--ts-status-idle-bg,#efebe1);--ob-idle-line:var(--ts-status-idle-border,#d8d3c6);
-container:ob / inline-size;display:grid;gap:20px;width:100%;box-sizing:border-box;color:var(--ob-fg);font:400 14px/1.5 var(--ts-font,Inter,system-ui,sans-serif);text-align:left}
+container:ob / inline-size;display:grid;gap:16px;width:100%;box-sizing:border-box;color:var(--ob-fg);font:400 14px/1.5 var(--ts-font,Inter,system-ui,sans-serif);text-align:left}
 :where(.dark,[data-theme=dark]) .ob{--ob-bg:var(--ts-surface,#1b1b1e);--ob-fg:var(--ts-fg,#ececef);--ob-muted:var(--ts-muted,#a1a1aa);--ob-faint:var(--ts-faint,#9a9aa2);--ob-line:var(--ts-line,#303036);--ob-soft:var(--ts-soft,#26262a);--ob-good:var(--ts-status-done-fg,#8fcf96);--ob-bad:var(--ts-status-error-fg,#f2777b);
 --ob-running:var(--ts-status-running-fg,#7fb0f5);--ob-running-bg:var(--ts-status-running-bg,#1d2b40);--ob-running-line:var(--ts-status-running-border,#2c4a72);
 --ob-needs-you:var(--ts-status-needs-you-fg,#f0883e);--ob-needs-you-bg:var(--ts-status-needs-you-bg,#3a2717);--ob-needs-you-line:var(--ts-status-needs-you-border,#6b4220);
@@ -120,17 +120,18 @@ container:ob / inline-size;display:grid;gap:20px;width:100%;box-sizing:border-bo
 .ob [data-tone=done]{--c:var(--ob-done);--cb:var(--ob-done-bg);--cl:var(--ob-done-line)}
 .ob [data-tone=idle]{--c:var(--ob-idle);--cb:var(--ob-idle-bg);--cl:var(--ob-idle-line)}
 .ob-tl{--cols:4;--side:minmax(180px,38%)}
+.ob-tl .ob-legend{margin-bottom:14px}
 .ob-tl-ticks,.ob-tl-row{display:grid;grid-template-columns:var(--side) minmax(0,1fr);gap:12px;align-items:center}
 .ob-tl-ticks>div{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));font:500 11px/1.6 var(--ts-font-mono,ui-monospace,monospace);color:var(--ob-faint)}
 .ob-tl-ticks>div span{padding-left:6px;border-left:1px solid var(--ob-line)}
 .ob-tl ol{list-style:none;margin:0;padding:0;position:relative}
-.ob-tl-row{min-height:40px;border-top:1px solid var(--ob-line)}
-.ob-tl-name{display:grid;gap:0;min-width:0;padding:6px 0}
+.ob-tl-row{min-height:38px;border-top:1px solid var(--ob-line)}
+.ob-tl-name{display:grid;gap:0;min-width:0;padding:4px 0;line-height:1.35}
 .ob-tl-name b{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;min-width:0}
 .ob-tl-name b span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ob-tl-name small{padding-left:18px;font-size:12px;color:var(--ob-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ob-tl-track{position:relative;height:40px;background:repeating-linear-gradient(to right,var(--ob-line) 0 1px,transparent 1px calc(100%/var(--cols)))}
-.ob-tl-bar{position:absolute;top:9px;height:22px;left:calc(var(--s)/var(--cols)*100%);width:calc((var(--e) - var(--s))/var(--cols)*100%);min-width:10px;border:1px solid var(--cl);border-radius:6px;background:var(--cb);transform-origin:left;animation:ob-grow var(--ts-motion-dur-lg,560ms) var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}
+.ob-tl-track{position:relative;height:38px;background:repeating-linear-gradient(to right,var(--ob-line) 0 1px,transparent 1px calc(100%/var(--cols)))}
+.ob-tl-bar{position:absolute;top:9px;height:20px;left:calc(var(--s)/var(--cols)*100%);width:calc((var(--e) - var(--s))/var(--cols)*100%);min-width:10px;border:1px solid var(--cl);border-radius:6px;background:var(--cb);transform-origin:left;animation:ob-grow var(--ts-motion-dur-lg,560ms) var(--ts-motion-ease-enter,cubic-bezier(.05,.7,.1,1)) both}
 .ob-tl-bar[data-tone=running]::after{content:"";position:absolute;inset:-1px auto -1px -1px;width:55%;border-radius:6px 0 0 6px;background:color-mix(in srgb,var(--c) 30%,transparent)}
 .ob-tl-bar[data-tone=done]{background:color-mix(in srgb,var(--c) 30%,var(--cb))}
 .ob-tl-bar[data-tone=idle]{border-style:dashed}
@@ -156,6 +157,8 @@ container:ob / inline-size;display:grid;gap:20px;width:100%;box-sizing:border-bo
 export function OverviewBoard({ eyebrow, title, sentence, actions = [], kpis = [], statusTitle, status = [], timeline, lists = [], still = false, labels = overviewBoardLabelsMn, className = "" }: OverviewBoardProps) {
   const total = status.reduce((n, s) => n + s.value, 0);
   const word = (s: BoardSegment) => s.label ?? labels.tone[s.tone];
+  const hasStatus = status.length > 0 && total > 0;
+  const hasTimeline = !!timeline && timeline.rows.length > 0;
   const sideRef = React.useRef<HTMLDivElement>(null);
   const [sideW, setSideW] = React.useState(0);
   // the today line sits over the tracks; the name column's width is measured, not guessed
@@ -205,43 +208,46 @@ export function OverviewBoard({ eyebrow, title, sentence, actions = [], kpis = [
         </ul>
       )}
 
-      {status.length > 0 && total > 0 && (
-        <div className="ob-card">
-          <h3 className="ob-h">{statusTitle ?? labels.status}<small>{labels.of} {total}</small></h3>
-          <div className="ob-bar" aria-hidden="true">
-            {status.filter((s) => s.value > 0).map((s) => <i key={s.tone} data-tone={s.tone} style={{ flex: `${s.value} 0 0` }} />)}
-          </div>
-          <ul className="ob-legend">
-            {status.map((s) => (
-              <li key={s.tone} data-tone={s.tone}><Mark tone={s.tone} /><b>{s.value}</b> {word(s)}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {timeline && timeline.rows.length > 0 && (
-        <div className="ob-card ob-tl" style={{ "--cols": timeline.ticks.length, "--side-w": `${sideW}px` } as React.CSSProperties}>
-          <h3 className="ob-h">{timeline.title ?? labels.timeline}</h3>
-          <div className="ob-tl-ticks" aria-hidden="true">
-            <div ref={sideRef} />
-            <div>{timeline.ticks.map((t) => <span key={t}>{t}</span>)}</div>
-          </div>
-          <ol>
-            {timeline.rows.map((r) => (
-              <li key={r.id ?? r.label} className="ob-tl-row" data-tone={r.tone}>
-                <div className="ob-tl-name">
-                  <b><Mark tone={r.tone} /><span>{r.label}</span></b>
-                  <small>{r.owner ? `${r.owner} · ` : ""}{r.when} · {labels.tone[r.tone]}</small>
-                </div>
-                <div className="ob-tl-track" aria-hidden="true">
-                  <i className="ob-tl-bar" data-tone={r.tone} style={{ "--s": r.start, "--e": r.end } as React.CSSProperties} />
-                </div>
-              </li>
-            ))}
-            {timeline.today !== undefined && sideW > 0 && (
-              <li className="ob-tl-today" aria-hidden="true" style={{ "--t": timeline.today } as React.CSSProperties}><span>{timeline.todayLabel ?? labels.today}</span></li>
-            )}
-          </ol>
+      {(hasStatus || hasTimeline) && (
+        <div className={`ob-card${hasTimeline ? " ob-tl" : ""}`} style={hasTimeline ? ({ "--cols": timeline!.ticks.length, "--side-w": `${sideW}px` } as React.CSSProperties) : undefined}>
+          {/* a board with a plan shows its status as the plan's legend: one card, not two */}
+          <h3 className="ob-h">{hasTimeline ? timeline!.title ?? labels.timeline : statusTitle ?? labels.status}{hasStatus && <small>{labels.of} {total}</small>}</h3>
+          {hasStatus && (
+            <>
+              <div className="ob-bar" aria-hidden="true">
+                {status.filter((s) => s.value > 0).map((s) => <i key={s.tone} data-tone={s.tone} style={{ flex: `${s.value} 0 0` }} />)}
+              </div>
+              <ul className="ob-legend">
+                {status.map((s) => (
+                  <li key={s.tone} data-tone={s.tone}><Mark tone={s.tone} /><b>{s.value}</b> {word(s)}</li>
+                ))}
+              </ul>
+            </>
+          )}
+          {hasTimeline && (
+            <>
+              <div className="ob-tl-ticks" aria-hidden="true">
+                <div ref={sideRef} />
+                <div>{timeline!.ticks.map((t) => <span key={t}>{t}</span>)}</div>
+              </div>
+              <ol>
+                {timeline!.rows.map((r) => (
+                  <li key={r.id ?? r.label} className="ob-tl-row" data-tone={r.tone}>
+                    <div className="ob-tl-name">
+                      <b><Mark tone={r.tone} /><span>{r.label}</span></b>
+                      <small>{r.owner ? `${r.owner} · ` : ""}{r.when} · {labels.tone[r.tone]}</small>
+                    </div>
+                    <div className="ob-tl-track" aria-hidden="true">
+                      <i className="ob-tl-bar" data-tone={r.tone} style={{ "--s": r.start, "--e": r.end } as React.CSSProperties} />
+                    </div>
+                  </li>
+                ))}
+                {timeline!.today !== undefined && sideW > 0 && (
+                  <li className="ob-tl-today" aria-hidden="true" style={{ "--t": timeline!.today } as React.CSSProperties}><span>{timeline!.todayLabel ?? labels.today}</span></li>
+                )}
+              </ol>
+            </>
+          )}
         </div>
       )}
 
