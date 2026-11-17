@@ -15,7 +15,6 @@ import type { ApprovalCard } from "../library/approval-card";
 import type { DataTable } from "../library/data-table";
 import type { KPIChart } from "../library/kpi-chart";
 import type { CostWaterfall } from "../library/cost-waterfall";
-import type { CitedAnswer } from "../library/cited-answer";
 import type { DecisionInbox } from "../library/decision-inbox";
 import type { BreakdownChart } from "../library/breakdown-chart";
 import type { ProgressTracker } from "../library/progress-tracker";
@@ -31,7 +30,6 @@ import type { CollectionPanel } from "../company/company-view";
 import type { CompanyMini } from "../company/company-mini";
 import type { Dashboard } from "../company/dashboard";
 import type { RaciView } from "../company/raci";
-import type { RoleDashboardProps } from "../company/role-dashboard";
 import { financeReportDemo } from "../screens/finance-report";
 import { askWindowDemo } from "../screens/ask-window";
 
@@ -110,10 +108,6 @@ export const breakdownChartDemo: P<typeof BreakdownChart> = {
   dimensions: [{ key: "line", label: "Зардал", values: fin.pnl.filter((l) => !l.total && l.now < 0).map((l) => l.line) }, { key: "month", label: "Сар", values: ["10-р сар"] }],
   measures: [{ key: "amount", label: "Дүн", unit: "сая ₮", field: "amount" }],
 };
-export const citedAnswerDemo: P<typeof CitedAnswer> = {
-  segments: askWindowDemo.answer,
-  sources: (askWindowDemo.sources ?? []).map((s) => ({ id: s.id, title: s.title, site: s.label, date: s.date, quote: s.quote, highlight: s.highlight })),
-};
 
 // ── Агент ба ажлын урсгал (ac.me) ──
 export const progressTrackerDemo: P<typeof ProgressTracker> = {
@@ -150,8 +144,9 @@ export const companyCollectionDemo: P<typeof CollectionPanel> = {
 export const companyMiniDemo: P<typeof CompanyMini> = { company: acmeGroup, today: TODAY };
 export const dashboardDemo: P<typeof Dashboard> = { c: acmeGroup, scoped: acmeGroup, today: TODAY, empty: "Энэ шүүлтүүрт ажил алга" };
 export const raciDemo: P<typeof RaciView> = { c: acmeGroup, scoped: acmeGroup, onPerson: () => {}, empty: "RACI тохируулаагүй байна" };
-export const roleDashboardDemo: RoleDashboardProps = { company: acmeGroup, personId: acmeGroup.people[0]?.id ?? "", today: TODAY };
+export { roleDashboardDemo } from "../company/role-dashboard-demo";
 export { askWindowDemo };
+export { citedAnswerDemo, sourcePreviewDemo, thinkingStateDemo } from "../screens/ask-demo-data";
 export { ceoDailyDemo, ceoDailyLogisticsDemo, appShellDemo, appShellLogisticsDemo, ceoDailyScreenDemo } from "../screens/ceo-daily";
 export { buildWizardDemo } from "../screens/build-wizard";
 export { convergeNetDemo, convergeNetStagesDemo } from "../motion/converge-net";

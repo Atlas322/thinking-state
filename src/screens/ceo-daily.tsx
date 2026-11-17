@@ -6,7 +6,8 @@
  * Meaning never rides on colour alone: deltas carry an arrow and words, over-budget is written.
  */
 import * as React from "react";
-import { AppShell, acmeParaVocab, type AppShellProps } from "./app-shell";
+import { AppShell, appShellDemo, appShellLogisticsDemo, type AppShellProps } from "./app-shell";
+export { appShellDemo, appShellLogisticsDemo };
 
 export type CeoKpi = { label: string; value: string; delta?: string; good?: boolean };
 export type CeoDayItem = { id: string; time: string; title: string; meta?: string; kind: "meeting" | "task" | "agent" | "post" };
@@ -283,18 +284,6 @@ export const ceoDailyLogisticsDemo: CeoDailyProps = {
   ],
   defaultMeeting: "m3",
   note: NOTE,
-};
-export const appShellDemo: Omit<AppShellProps, "children"> = {
-  company: { name: "ac.me Маркетинг", note: "Маркетингийн баг" },
-  vocab: acmeParaVocab.marketing,
-  counts: { inbox: 7, waiting: 3 },
-  active: "ceo",
-};
-export const appShellLogisticsDemo: Omit<AppShellProps, "children"> = {
-  company: { name: "ac.me Логистик", note: "Логистикийн компани" },
-  vocab: acmeParaVocab.logistics,
-  counts: { inbox: 9, waiting: 4 },
-  active: "ceo",
 };
 export const ceoDailyScreenDemo = { shell: appShellDemo, daily: ceoDailyDemo };
 

@@ -15,6 +15,7 @@ import { CitedAnswer, type CitedSegment, type CitedSource } from "../library/cit
 import { SourceIcon, SourcePreview, type PreviewSource, type SourceKind } from "../library/source-preview";
 import { ThinkingState, type ThinkingStep } from "../library/thinking-state";
 import { APP_FRAME_CSS } from "./app-frame";
+import { askDemoAnswer, askDemoSources, askDemoThinking } from "./ask-demo-data";
 import { LOOP, motionVar, useScenario, type ScenarioStep } from "../motion";
 
 export type AskSource = {
@@ -280,18 +281,7 @@ export const askWindowDemo: AskWindowProps = {
     { id: "onb", title: "Шинэ ажилтны чиглүүлэг" },
   ],
   activeChat: "price",
-  thinking: [
-    { kind: "search", label: "санах ой хайж байна…", completedLabel: "3 эх сурвалж", sources: [{ label: "Шийдвэр" }, { label: "Уулзалт" }, { label: "Slack" }] },
-    { kind: "step", label: "эх сурвалж нэгтгэж байна…", completedLabel: "хариу бэлэн" },
-  ],
-  answer: [
-    { text: "Үнийн шинэчлэлийг 10-р сарын багийн уулзалтаар шийдсэн.", cite: ["m"] },
-    { text: " Шалтгааныг Slack дээрх хэлэлцүүлэгт,", cite: ["s"] },
-    { text: " эцсийн шийдвэрийг «Үнийн бодлого» тэмдэглэлд бичсэн.", cite: ["d"] },
-  ],
-  sources: [
-    { id: "d", kind: "decision", brand: "notion", title: "Үнийн бодлого", label: "Шийдвэр", date: "2026.10", quote: "Үнийг шинэчлэхээр шийдэв. Шалтгаан: зардал өссөн, өрсөлдөгчдийн үнэ өөрчлөгдсөн. Хэрэгжүүлэх: дараагийн улирлаас. Эзэн: борлуулалтын баг.", highlight: "Үнийг шинэчлэхээр шийдэв." },
-    { id: "m", kind: "meeting", brand: "google-calendar", title: "Багийн уулзалт · 10-р сар", label: "Уулзалтын тэмдэглэл", date: "2026.10", quote: "Үнийн хоёр хувилбарыг харьцуулав. Харилцагчдад урьдчилан мэдэгдэхээр тохирлоо. Эцсийн шийдвэрийг «Үнийн бодлого» тэмдэглэлд бичнэ.", highlight: "урьдчилан мэдэгдэхээр" },
-    { id: "s", kind: "message", brand: "slack", title: "#sales · үнийн хэлэлцүүлэг", label: "Slack thread", date: "2026.10", quote: "Зардал өссөнийг санхүүгийн баг мэдэгдэв. Борлуулалтын баг харилцагчийн хариуг хуваалцав. Уулзалтаар шийдэхээр тохирлоо.", highlight: "Зардал өссөнийг" },
-  ],
+  thinking: askDemoThinking,
+  answer: askDemoAnswer,
+  sources: askDemoSources,
 };

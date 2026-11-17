@@ -122,4 +122,18 @@ export const acmeParaVocab: Record<"marketing" | "logistics", ParaVocab> = {
   },
 };
 
+/** ac.me demo shells (moved here in screens.18 so the app-shell entry carries its own demo). */
+export const appShellDemo: Omit<AppShellProps, "children"> = {
+  company: { name: "ac.me Маркетинг", note: "Маркетингийн баг" },
+  vocab: acmeParaVocab.marketing,
+  counts: { inbox: 7, waiting: 3 },
+  active: "ceo",
+};
+export const appShellLogisticsDemo: Omit<AppShellProps, "children"> = {
+  company: { name: "ac.me Логистик", note: "Логистикийн компани" },
+  vocab: acmeParaVocab.logistics,
+  counts: { inbox: 9, waiting: 4 },
+  active: "ceo",
+};
+
 export default AppShell;
