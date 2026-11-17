@@ -1,6 +1,6 @@
 {
   "name": "@inai/thinking-state",
-  "version": "0.3.7-screens.17",
+  "version": "0.3.7-screens.18",
   "description": "Thinking State — the visible chain of thought: an agent's chat actions as live widgets: company renderer, vault collections, chat widgets, icons and tokens.",
   "private": true,
   "type": "module",
