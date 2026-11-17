@@ -20,6 +20,122 @@
       "types": "./lib/types/lib/studio.d.ts",
       "import": "./lib/studio.js"
     },
+    "./agent-findings": {
+      "types": "./lib/types/lib/entries/agent-findings.d.ts",
+      "import": "./lib/agent-findings.js"
+    },
+    "./writing-assistant": {
+      "types": "./lib/types/lib/entries/writing-assistant.d.ts",
+      "import": "./lib/writing-assistant.js"
+    },
+    "./review-center": {
+      "types": "./lib/types/lib/entries/review-center.d.ts",
+      "import": "./lib/review-center.js"
+    },
+    "./cost-waterfall": {
+      "types": "./lib/types/lib/entries/cost-waterfall.d.ts",
+      "import": "./lib/cost-waterfall.js"
+    },
+    "./breakdown-chart": {
+      "types": "./lib/types/lib/entries/breakdown-chart.d.ts",
+      "import": "./lib/breakdown-chart.js"
+    },
+    "./billing-schedule": {
+      "types": "./lib/types/lib/entries/billing-schedule.d.ts",
+      "import": "./lib/billing-schedule.js"
+    },
+    "./project-report": {
+      "types": "./lib/types/lib/entries/project-report.d.ts",
+      "import": "./lib/project-report.js"
+    },
+    "./away-summary": {
+      "types": "./lib/types/lib/entries/away-summary.d.ts",
+      "import": "./lib/away-summary.js"
+    },
+    "./running-now": {
+      "types": "./lib/types/lib/entries/running-now.d.ts",
+      "import": "./lib/running-now.js"
+    },
+    "./agent-monitor": {
+      "types": "./lib/types/lib/entries/agent-monitor.d.ts",
+      "import": "./lib/agent-monitor.js"
+    },
+    "./kpi-chart": {
+      "types": "./lib/types/lib/entries/kpi-chart.d.ts",
+      "import": "./lib/kpi-chart.js"
+    },
+    "./delegate-board": {
+      "types": "./lib/types/lib/entries/delegate-board.d.ts",
+      "import": "./lib/delegate-board.js"
+    },
+    "./tool-access-map": {
+      "types": "./lib/types/lib/entries/tool-access-map.d.ts",
+      "import": "./lib/tool-access-map.js"
+    },
+    "./next-step-box": {
+      "types": "./lib/types/lib/entries/next-step-box.d.ts",
+      "import": "./lib/next-step-box.js"
+    },
+    "./usecase-run": {
+      "types": "./lib/types/lib/entries/usecase-run.d.ts",
+      "import": "./lib/usecase-run.js"
+    },
+    "./plan-vs-actual": {
+      "types": "./lib/types/lib/entries/plan-vs-actual.d.ts",
+      "import": "./lib/plan-vs-actual.js"
+    },
+    "./trace-waterfall": {
+      "types": "./lib/types/lib/entries/trace-waterfall.d.ts",
+      "import": "./lib/trace-waterfall.js"
+    },
+    "./scheduled-runs": {
+      "types": "./lib/types/lib/entries/scheduled-runs.d.ts",
+      "import": "./lib/scheduled-runs.js"
+    },
+    "./autonomy-dial": {
+      "types": "./lib/types/lib/entries/autonomy-dial.d.ts",
+      "import": "./lib/autonomy-dial.js"
+    },
+    "./agent-lanes": {
+      "types": "./lib/types/lib/entries/agent-lanes.d.ts",
+      "import": "./lib/agent-lanes.js"
+    },
+    "./agent-queue": {
+      "types": "./lib/types/lib/entries/agent-queue.d.ts",
+      "import": "./lib/agent-queue.js"
+    },
+    "./fallback-chain": {
+      "types": "./lib/types/lib/entries/fallback-chain.d.ts",
+      "import": "./lib/fallback-chain.js"
+    },
+    "./decision-inbox": {
+      "types": "./lib/types/lib/entries/decision-inbox.d.ts",
+      "import": "./lib/decision-inbox.js"
+    },
+    "./decision-tree": {
+      "types": "./lib/types/lib/entries/decision-tree.d.ts",
+      "import": "./lib/decision-tree.js"
+    },
+    "./approval-gates": {
+      "types": "./lib/types/lib/entries/approval-gates.d.ts",
+      "import": "./lib/approval-gates.js"
+    },
+    "./agent-ledger": {
+      "types": "./lib/types/lib/entries/agent-ledger.d.ts",
+      "import": "./lib/agent-ledger.js"
+    },
+    "./memory-panel": {
+      "types": "./lib/types/lib/entries/memory-panel.d.ts",
+      "import": "./lib/memory-panel.js"
+    },
+    "./brain-map": {
+      "types": "./lib/types/lib/entries/brain-map.d.ts",
+      "import": "./lib/brain-map.js"
+    },
+    "./context-map": {
+      "types": "./lib/types/lib/entries/context-map.d.ts",
+      "import": "./lib/context-map.js"
+    },
     "./agent-fleet": {
       "types": "./lib/types/lib/entries/agent-fleet.d.ts",
       "import": "./lib/agent-fleet.js"

@@ -1,3 +1,4 @@
+import { readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import pkg from "../package.json";
 
@@ -30,7 +31,10 @@ function reachable(entry: string, seen = new Set<string>()) {
 describe("@inai/thinking-state package", () => {
   it("is named and exported for git installs", () => {
     expect(pkg.name).toBe("@inai/thinking-state");
-    expect(Object.keys(pkg.exports)).toEqual([".", "./chat", "./studio", "./agent-fleet", "./agent-handoff", "./agent-plan", "./app-shell", "./approval-card", "./ask-window", "./brain-cover", "./build-wizard", "./cash-river", "./ceo-daily", "./cited-answer", "./content-pipeline", "./converge-net", "./decision-inbox-chat", "./finance-report", "./integration-picker", "./method-quiz", "./role-dashboard", "./second-brain-app", "./session-board", "./source-preview", "./thinking-state", "./tokens.css", "./site.css", "./ts.css", "./report.css", "./package.json"]);
+    // the fixed entries, plus one export per file in src/lib/entries (screens.23: 30 more for the solution pages)
+    const fixed = [".", "./chat", "./studio", "./agent-fleet", "./agent-handoff", "./agent-plan", "./app-shell", "./approval-card", "./ask-window", "./brain-cover", "./build-wizard", "./cash-river", "./ceo-daily", "./cited-answer", "./content-pipeline", "./converge-net", "./decision-inbox-chat", "./finance-report", "./integration-picker", "./method-quiz", "./role-dashboard", "./second-brain-app", "./session-board", "./source-preview", "./thinking-state", "./tokens.css", "./site.css", "./ts.css", "./report.css", "./package.json"];
+    const perComponent = readdirSync("src/lib/entries").map((f) => "./" + f.replace(/\.ts$/, ""));
+    expect(new Set(Object.keys(pkg.exports))).toEqual(new Set([...fixed, ...perComponent]));
     expect(pkg.files).toContain("lib");
     expect(pkg.peerDependencies.react).toMatch(/\^19/);
     expect((pkg.dependencies as Record<string, string>).react).toBeUndefined();
