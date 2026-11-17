@@ -21,16 +21,19 @@ export type BoardSegment = { tone: BoardTone; value: number; /** Overrides the t
 export type BoardAction = { label: string; primary?: boolean; href?: string; onClick?: () => void };
 export type BoardItem = { id?: string; title: string; meta?: string; tone?: BoardTone; tag?: string };
 export type BoardList = { title: string; items: BoardItem[]; empty?: string };
+/** One fact about the record, as an app shows it beside the work: «Эзэн · Борлуулалт». `tone` adds the state mark; `progress` (0–1) draws a bar under the value. */
+export type BoardProperty = { label: string; value: string; tone?: BoardTone; progress?: number };
 export type BoardTimelineRow = { id?: string; label: string; owner?: string; /** Start and end in columns, fractions allowed (1.5 = the middle of the second column). */ start: number; end: number; tone: BoardTone; /** The dates as text: "11/12 – 11/19". */ when: string };
 export type BoardTimeline = { title?: string; /** One label per column (weeks, months). */ ticks: string[]; /** Where today falls, in columns. */ today?: number; todayLabel?: string; rows: BoardTimelineRow[] };
 
-export type OverviewBoardLabels = { tone: Record<BoardTone, string>; status: string; timeline: string; today: string; of: string };
+export type OverviewBoardLabels = { tone: Record<BoardTone, string>; status: string; timeline: string; today: string; of: string; properties: string };
 export const overviewBoardLabelsMn: OverviewBoardLabels = {
   tone: { running: "Явж байна", "needs-you": "Шийдвэр хүлээж байна", error: "Саатсан", done: "Дууссан", idle: "Эхлээгүй" },
   status: "Ажлын төлөв",
   timeline: "Төлөвлөгөө",
   today: "Өнөөдөр",
   of: "нийт",
+  properties: "Шинж чанар",
 };
 
 export type OverviewBoardProps = {
@@ -41,7 +44,10 @@ export type OverviewBoardProps = {
   sentence: string;
   /** At most two; the rest belongs in the views behind the board. */
   actions?: BoardAction[];
-  /** Four numbers. */
+  /** The record's properties (status, owner, dates, progress…): an inspector column beside the work, as in an app. */
+  properties?: BoardProperty[];
+  propertiesTitle?: string;
+  /** Up to four numbers, only where they are real measures (an area's money, a campaign's reach). */
   kpis?: BoardKpi[];
   statusTitle?: string;
   status?: BoardSegment[];
@@ -71,7 +77,7 @@ const CSS = `
 --ob-error:var(--ts-status-error-fg,#b4232a);--ob-error-bg:var(--ts-status-error-bg,#fde4e4);--ob-error-line:var(--ts-status-error-border,#f4b4b6);
 --ob-done:var(--ts-status-done-fg,#3f5e41);--ob-done-bg:var(--ts-status-done-bg,#e3eadf);--ob-done-line:var(--ts-status-done-border,#bfd2bb);
 --ob-idle:var(--ts-status-idle-fg,#45433f);--ob-idle-bg:var(--ts-status-idle-bg,#efebe1);--ob-idle-line:var(--ts-status-idle-border,#d8d3c6);
-container:ob / inline-size;display:grid;gap:16px;width:100%;box-sizing:border-box;color:var(--ob-fg);font:400 14px/1.5 var(--ts-font,Inter,system-ui,sans-serif);text-align:left}
+container:ob / inline-size;display:grid;gap:14px;font-size:13px;width:100%;box-sizing:border-box;color:var(--ob-fg);font:400 14px/1.5 var(--ts-font,Inter,system-ui,sans-serif);text-align:left}
 :where(.dark,[data-theme=dark]) .ob{--ob-bg:var(--ts-surface,#1b1b1e);--ob-fg:var(--ts-fg,#ececef);--ob-muted:var(--ts-muted,#a1a1aa);--ob-faint:var(--ts-faint,#9a9aa2);--ob-line:var(--ts-line,#303036);--ob-soft:var(--ts-soft,#26262a);--ob-good:var(--ts-status-done-fg,#8fcf96);--ob-bad:var(--ts-status-error-fg,#f2777b);
 --ob-running:var(--ts-status-running-fg,#7fb0f5);--ob-running-bg:var(--ts-status-running-bg,#1d2b40);--ob-running-line:var(--ts-status-running-border,#2c4a72);
 --ob-needs-you:var(--ts-status-needs-you-fg,#f0883e);--ob-needs-you-bg:var(--ts-status-needs-you-bg,#3a2717);--ob-needs-you-line:var(--ts-status-needs-you-border,#6b4220);
@@ -81,25 +87,25 @@ container:ob / inline-size;display:grid;gap:16px;width:100%;box-sizing:border-bo
 .ob *{box-sizing:border-box}
 .ob-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:start}
 .ob-eyebrow{grid-column:1/-1;margin:0;font-size:12px;font-weight:500;letter-spacing:.02em;color:var(--ob-faint)}
-.ob-title{margin:0;font:600 24px/1.2 var(--ts-font-head,var(--ts-font,Inter,system-ui,sans-serif));letter-spacing:-.01em;text-wrap:balance}
-.ob-lede{grid-column:1;margin:0;max-width:62ch;font-size:15px;line-height:1.5;color:var(--ob-muted);text-wrap:pretty}
+.ob-title{margin:0;font:600 20px/1.25 var(--ts-font,Inter,system-ui,sans-serif);letter-spacing:-.01em;text-wrap:balance}
+.ob-lede{grid-column:1;margin:0;max-width:68ch;font-size:13.5px;line-height:1.5;color:var(--ob-muted);text-wrap:pretty}
 .ob-actions{grid-column:2;grid-row:2/4;display:flex;gap:8px;align-self:start}
-.ob-btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 14px;border:1px solid var(--ts-btn-line,var(--ob-line));border-radius:var(--ts-radius-control,8px);background:var(--ts-btn-bg,var(--ob-bg));color:var(--ts-btn-fg,var(--ob-fg));font:inherit;font-size:13px;font-weight:500;white-space:nowrap;text-decoration:none;cursor:pointer;transition:background var(--ts-motion-dur-xs,120ms),transform var(--ts-motion-dur-xs,120ms)}
+.ob-btn{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 12px;border:1px solid var(--ts-btn-line,var(--ob-line));border-radius:var(--ts-radius-control,8px);background:var(--ts-btn-bg,var(--ob-bg));color:var(--ts-btn-fg,var(--ob-fg));font:inherit;font-size:13px;font-weight:500;white-space:nowrap;text-decoration:none;cursor:pointer;transition:background var(--ts-motion-dur-xs,120ms),transform var(--ts-motion-dur-xs,120ms)}
 .ob-btn:hover{background:var(--ob-soft)}
 .ob-btn:active{transform:scale(.97)}
 .ob-btn.is-primary{border-color:var(--ob-strong);background:var(--ob-strong);color:#fff}
 .ob-btn.is-primary:hover{background:color-mix(in srgb,var(--ob-strong) 88%,#000)}
 .ob :focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--ob-bg),0 0 0 2px var(--ob-strong)}
 .ob-kpis{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.ob-kpi{display:grid;gap:2px;padding:12px 14px;border:1px solid var(--ob-line);border-radius:var(--ts-radius-card,12px);background:var(--ob-bg);min-width:0}
+.ob-kpi{display:grid;gap:1px;padding:10px 12px;border:1px solid var(--ob-line);border-radius:var(--ts-radius-card,12px);background:var(--ob-bg);min-width:0}
 .ob-kpi-l{font-size:12px;color:var(--ob-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ob-kpi-v{font:600 22px/1.2 var(--ts-font-head,var(--ts-font,Inter,system-ui,sans-serif));font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.ob-kpi-v{font:600 20px/1.25 var(--ts-font,Inter,system-ui,sans-serif);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .ob-kpi-v small{margin-left:4px;font:400 12px/1 var(--ts-font,Inter,system-ui,sans-serif);color:var(--ob-faint);letter-spacing:0}
 .ob-kpi-d{font-size:12px;font-variant-numeric:tabular-nums;color:var(--ob-muted)}
 .ob-kpi-d b{font-weight:600}
 .ob-kpi-d[data-good=true] b{color:var(--ob-good)}
 .ob-kpi-d[data-good=false] b{color:var(--ob-bad)}
-.ob-card{padding:14px 16px;border:1px solid var(--ob-line);border-radius:var(--ts-radius-card,12px);background:var(--ob-bg);min-width:0}
+.ob-card{padding:12px 14px;border:1px solid var(--ob-line);border-radius:var(--ts-radius-card,12px);background:var(--ob-bg);min-width:0}
 .ob-h{margin:0 0 10px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:13px;font-weight:600}
 .ob-h small{font-size:12px;font-weight:400;color:var(--ob-faint);font-variant-numeric:tabular-nums}
 .ob-bar{display:flex;gap:2px;height:10px;border-radius:5px;overflow:hidden;background:var(--ob-soft)}
@@ -137,6 +143,19 @@ container:ob / inline-size;display:grid;gap:16px;width:100%;box-sizing:border-bo
 .ob-tl-bar[data-tone=idle]{border-style:dashed}
 .ob-tl-today{position:absolute;top:0;bottom:0;left:calc(var(--side-w) + 12px + (100% - var(--side-w) - 12px)*var(--t)/var(--cols));width:0;border-left:1.5px solid var(--ob-strong);pointer-events:none}
 .ob-tl-today span{position:absolute;top:-19px;left:0;transform:translateX(-50%);padding:0 6px;border-radius:4px;background:var(--ob-strong);color:#fff;font-size:10.5px;line-height:16px;font-weight:500;white-space:nowrap}
+.ob-body{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:start}
+.ob-body.has-props{grid-template-columns:minmax(0,1fr) 248px}
+.ob-main{display:grid;gap:14px;min-width:0}
+.ob-props dl{margin:0;display:grid;gap:0}
+.ob-props dl>div{display:grid;grid-template-columns:88px minmax(0,1fr);gap:8px;align-items:start;padding:7px 0;border-top:1px solid var(--ob-line)}
+.ob-props dl>div:first-child{border-top:0;padding-top:0}
+.ob-props dt{font-size:12px;color:var(--ob-faint);line-height:1.5}
+.ob-props dd{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 6px;align-items:start;font-size:12.5px;font-weight:500;line-height:1.5;min-width:0}
+.ob-props dd>.ob-mark{margin-top:5px}
+.ob-props dd>span:first-child:not(.ob-mark){grid-column:1/-1}
+.ob-props dd>span{min-width:0;overflow-wrap:anywhere}
+.ob-prog{grid-column:1/-1;height:4px;border-radius:2px;background:var(--ob-soft);overflow:hidden}
+.ob-prog i{display:block;height:100%;border-radius:2px;background:var(--ob-strong)}
 .ob-lists{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .ob-list ul{list-style:none;margin:0;padding:0}
 .ob-list li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;min-height:40px;padding:6px 0;border-top:1px solid var(--ob-line)}
@@ -150,11 +169,12 @@ container:ob / inline-size;display:grid;gap:16px;width:100%;box-sizing:border-bo
 .ob[data-still] .ob-bar i,.ob[data-still] .ob-tl-bar{animation:none}
 @keyframes ob-grow{from{transform:scaleX(0)}}
 @media (prefers-reduced-motion:reduce){.ob-bar i,.ob-tl-bar{animation:none}.ob-btn{transition:none}}
+@container ob (max-width:860px){.ob-body.has-props{grid-template-columns:minmax(0,1fr)}.ob-props{order:-1}.ob-props dl{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}.ob-props dl>div:nth-child(2){border-top:0;padding-top:0}}
 @container ob (max-width:720px){.ob-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.ob-lists{grid-template-columns:minmax(0,1fr)}.ob-head{grid-template-columns:minmax(0,1fr)}.ob-actions{grid-column:1;grid-row:auto;flex-wrap:wrap}}
-@container ob (max-width:560px){.ob-tl-ticks,.ob-tl-track,.ob-tl-today{display:none}.ob-tl-row{grid-template-columns:minmax(0,1fr)}.ob-title{font-size:21px}}
+@container ob (max-width:560px){.ob-props dl{grid-template-columns:minmax(0,1fr)}.ob-props dl>div:nth-child(2){border-top:1px solid var(--ob-line);padding-top:7px}.ob-tl-ticks,.ob-tl-track,.ob-tl-today{display:none}.ob-tl-row{grid-template-columns:minmax(0,1fr)}.ob-title{font-size:21px}}
 `;
 
-export function OverviewBoard({ eyebrow, title, sentence, actions = [], kpis = [], statusTitle, status = [], timeline, lists = [], still = false, labels = overviewBoardLabelsMn, className = "" }: OverviewBoardProps) {
+export function OverviewBoard({ eyebrow, title, sentence, actions = [], properties = [], propertiesTitle, kpis = [], statusTitle, status = [], timeline, lists = [], still = false, labels = overviewBoardLabelsMn, className = "" }: OverviewBoardProps) {
   const total = status.reduce((n, s) => n + s.value, 0);
   const word = (s: BoardSegment) => s.label ?? labels.tone[s.tone];
   const hasStatus = status.length > 0 && total > 0;
@@ -192,6 +212,8 @@ export function OverviewBoard({ eyebrow, title, sentence, actions = [], kpis = [
         )}
       </header>
 
+      <div className={`ob-body${properties.length ? " has-props" : ""}`}>
+      <div className="ob-main">
       {kpis.length > 0 && (
         <ul className="ob-kpis">
           {kpis.slice(0, 4).map((k) => (
@@ -273,6 +295,25 @@ export function OverviewBoard({ eyebrow, title, sentence, actions = [], kpis = [
           ))}
         </div>
       )}
+      </div>
+      {properties.length > 0 && (
+        <aside className="ob-card ob-props" aria-label={propertiesTitle ?? labels.properties}>
+          <h3 className="ob-h">{propertiesTitle ?? labels.properties}</h3>
+          <dl>
+            {properties.map((pr) => (
+              <div key={pr.label} data-tone={pr.tone}>
+                <dt>{pr.label}</dt>
+                <dd>
+                  {pr.tone && <Mark tone={pr.tone} />}
+                  <span>{pr.value}</span>
+                  {pr.progress !== undefined && <span className="ob-prog" aria-hidden="true"><i style={{ width: `${Math.round(Math.min(1, Math.max(0, pr.progress)) * 100)}%` }} /></span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+      )}
+      </div>
     </section>
   );
 }
@@ -288,6 +329,13 @@ export const overviewBoardAreaDemo: OverviewBoardProps = {
     { label: "Зардал", value: "800", unit: "сая ₮", delta: "+86", good: false, note: "өмнөх сараас" },
     { label: "Цэвэр ашиг", value: "440", unit: "сая ₮", delta: "−26", good: false, note: "өмнөх сараас" },
     { label: "Мөнгөн үлдэгдэл", value: "1 615", unit: "сая ₮", delta: "+230", good: true, note: "өмнөх сараас" },
+  ],
+  properties: [
+    { label: "Тайлант үе", value: "2026 оны 10-р сар" },
+    { label: "Эзэн", value: "Санхүүгийн захирал" },
+    { label: "Тайлан", value: "Ноорог бэлэн, батлах хүлээж байна", tone: "needs-you" },
+    { label: "Эх сурвалж", value: "Банкны хуулга, нэхэмжлэх, цалингийн бүртгэл" },
+    { label: "Шинэчилсэн", value: "Өнөөдөр 09:10 · Санхүүгийн агент" },
   ],
   statusTitle: "Энэ сарын ажил",
   status: [
@@ -321,11 +369,14 @@ export const overviewBoardProjectDemo: OverviewBoardProps = {
   title: "Үнийн шинэчлэл",
   sentence: "9 алхмын 5 нь дууссан; гурван түвшний хүснэгтийн ноорог 11/19-нд гарч, дунд түвшний үнэ шийдвэр хүлээж байна.",
   actions: [{ label: "Тархинаас асуух" }, { label: "Шийдвэр гаргах", primary: true }],
-  kpis: [
-    { label: "Явц", value: "5/9", note: "алхам дууссан" },
-    { label: "Дуусах огноо", value: "11/26", note: "8 хоног үлдсэн" },
-    { label: "Хүлээгдэж буй", value: "1", note: "шийдвэр" },
-    { label: "Ажиллаж буй агент", value: "4" },
+  properties: [
+    { label: "Төлөв", value: "Явж байна, хуваарьтаа", tone: "running" },
+    { label: "Явц", value: "9 алхмын 5", progress: 5 / 9 },
+    { label: "Хугацаа", value: "11/03 – 11/26 · 8 хоног үлдсэн" },
+    { label: "Эзэн", value: "Борлуулалтын захирал" },
+    { label: "Хүрээ", value: "Борлуулалт" },
+    { label: "Шийдвэр", value: "Дунд түвшний үнэ · 11/21", tone: "needs-you" },
+    { label: "Агент", value: "Судлаач, Үнийн, Вэб" },
   ],
   status: [
     { tone: "done", value: 5 },
@@ -374,6 +425,13 @@ export const overviewBoardMarketingDemo: OverviewBoardProps = {
     { label: "Зарцуулсан төсөв", value: "64", unit: "%", note: "сарын төсвөөс" },
     { label: "Хариу өгөх хугацаа", value: "2.4", unit: "цаг", delta: "−0.6", good: true, note: "өмнөх сараас" },
   ],
+  properties: [
+    { label: "Аян", value: "Өвлийн хямдрал · 11/01 – 11/30" },
+    { label: "Эзэн", value: "Маркетингийн менежер" },
+    { label: "Суваг", value: "Instagram, Facebook, имэйл" },
+    { label: "Төсөв", value: "64% зарцуулсан", progress: 0.64 },
+    { label: "Зөвшөөрөл", value: "2 ноорог хүлээж байна", tone: "needs-you" },
+  ],
   statusTitle: "Аяны контент",
   status: [
     { tone: "done", value: 7, label: "Нийтэлсэн" },
@@ -406,11 +464,14 @@ export const overviewBoardLogisticsDemo: OverviewBoardProps = {
   title: "Агуулахын шилжилт",
   sentence: "Шинэ агуулах руу нүүх ажил хуваарьтаа явж байна; тавиурын нийлүүлэлт таван хоног хоцорч, нэг зардал батлах шийдвэр хүлээж байна.",
   actions: [{ label: "Тархинаас асуух" }, { label: "Шийдвэр гаргах", primary: true }],
-  kpis: [
-    { label: "Явц", value: "6/11", note: "алхам дууссан" },
-    { label: "Нүүх өдөр", value: "12/01", note: "13 хоног үлдсэн" },
-    { label: "Саатсан", value: "1", note: "нийлүүлэлт" },
-    { label: "Төсвийн гүйцэтгэл", value: "71", unit: "%" },
+  properties: [
+    { label: "Төлөв", value: "Явж байна, нэг саатал", tone: "error" },
+    { label: "Явц", value: "11 алхмын 6", progress: 6 / 11 },
+    { label: "Хугацаа", value: "11/03 – 12/01 · 13 хоног үлдсэн" },
+    { label: "Эзэн", value: "Үйл ажиллагааны захирал" },
+    { label: "Хүрээ", value: "Парк ба агуулах" },
+    { label: "Төсөв", value: "71% зарцуулсан", progress: 0.71 },
+    { label: "Шийдвэр", value: "Нүүлгэх зардал · 11/20", tone: "needs-you" },
   ],
   status: [
     { tone: "done", value: 6 },

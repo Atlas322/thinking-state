@@ -57,49 +57,75 @@ export type AppShellProps = {
 export type AppShellLabels = { ceo: string; gtd: string; para: string; views: string; calendar: string; agents: string; nav: string; title: string; ask: string };
 export const appShellLabelsMn: AppShellLabels = { ceo: "Удирдлагын тойм", gtd: "GTD", para: "PARA", views: "Харагдац", calendar: "Хуанли", agents: "Агентууд", nav: "Апп-ын цэс", title: "Second Brain", ask: "Тархинаасаа асуу" };
 
+/** Lucide paths (ISC), viewBox 24: one icon per place in the menu, so the menu reads at a glance. */
+const ICON: Record<AppShellView | "search" | "switch" | "sep", React.ReactNode> = {
+  ceo: <><rect width="7" height="9" x="3" y="3" rx="1" /><rect width="7" height="5" x="14" y="3" rx="1" /><rect width="7" height="9" x="14" y="12" rx="1" /><rect width="7" height="5" x="3" y="16" rx="1" /></>,
+  inbox: <><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></>,
+  today: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></>,
+  waiting: <><path d="M5 22h14" /><path d="M5 2h14" /><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" /><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" /></>,
+  projects: <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />,
+  areas: <><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" /><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" /><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" /></>,
+  resources: <><path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></>,
+  archive: <><rect width="20" height="5" x="2" y="3" rx="1" /><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /><path d="M10 12h4" /></>,
+  calendar: <><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /></>,
+  agents: <><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></>,
+  ask: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></>,
+  search: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></>,
+  switch: <><path d="m7 15 5 5 5-5" /><path d="m7 9 5-5 5 5" /></>,
+  sep: <path d="m9 18 6-6-6-6" />,
+};
+const Ic = ({ k }: { k: keyof typeof ICON }) => <svg className="ash-ic" viewBox="0 0 24 24" aria-hidden="true">{ICON[k]}</svg>;
+
 const CSS = `
-.ash-win{font-family:var(--ts-font,Inter,system-ui,sans-serif);color:var(--ts-fg);background:var(--ts-page);border:1px solid color-mix(in srgb,var(--ts-line) 80%,transparent);border-radius:calc(var(--ts-radius,6px) + 4px);box-shadow:var(--ts-elevation);overflow:hidden;container-type:inline-size;display:flex;flex-direction:column;min-width:0}
+.ash-win{font-family:var(--ts-font,Inter,system-ui,sans-serif);font-size:13px;color:var(--ts-fg);background:var(--ts-page);border:1px solid var(--ts-line);border-radius:calc(var(--ts-radius,6px) + 4px);box-shadow:var(--ts-elevation);overflow:hidden;container-type:inline-size;display:flex;flex-direction:column}
 .ash-win *,.ash-win *::before{box-sizing:border-box}
-.ash-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;height:36px;padding:0 10px;border-bottom:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);background:var(--ts-soft);flex:none}
-.ash-dots{display:flex;gap:5px}.ash-dots i{width:9px;height:9px;border-radius:50%;background:color-mix(in srgb,var(--ts-faint) 35%,transparent)}
-.ash-title{font-weight:500;font-size:12px;color:var(--ts-faint);white-space:nowrap}
-.ash-ask{justify-self:end;display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 6px 0 10px;border:1px solid var(--ts-line);border-radius:var(--ts-radius,6px);background:var(--ts-surface);color:var(--ts-muted);font:inherit;font-size:12px;cursor:pointer;white-space:nowrap;min-width:0}
-.ash-ask kbd{font:500 10.5px/1 var(--ts-font-mono);padding:3px 5px;border-radius:4px;background:var(--ts-soft-2);color:var(--ts-muted)}
+.ash-ic{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:var(--ts-icon-stroke,1.5);stroke-linecap:round;stroke-linejoin:round}
+.ash-bar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) minmax(0,1fr);align-items:center;gap:12px;height:40px;padding:0 12px;border-bottom:1px solid var(--ts-line);background:var(--ts-side);flex:none}
+.ash-lead{display:flex;align-items:center;gap:14px;min-width:0}
+.ash-dots{display:flex;gap:6px;flex:none}.ash-dots i{width:10px;height:10px;border-radius:50%;background:color-mix(in srgb,var(--ts-faint) 30%,transparent)}
+.ash-title{display:flex;align-items:center;gap:4px;min-width:0;font-size:12.5px;color:var(--ts-faint);white-space:nowrap}
+.ash-title .ash-ic{width:13px;height:13px}
+.ash-title b{font-weight:500;color:var(--ts-fg);overflow:hidden;text-overflow:ellipsis}
+.ash-ask{display:inline-flex;align-items:center;gap:8px;width:300px;max-width:100%;height:28px;padding:0 6px 0 9px;border:1px solid var(--ts-line);border-radius:var(--ts-radius-control,8px);background:var(--ts-surface);color:var(--ts-faint);font:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap;min-width:0;transition:border-color ${motionVar.duration("xs")},color ${motionVar.duration("xs")}}
+.ash-ask span{flex:1;text-align:left;overflow:hidden;text-overflow:ellipsis}
+.ash-ask .ash-ic{width:14px;height:14px}
+.ash-ask kbd{font:500 10.5px/1 var(--ts-font-mono);padding:3px 5px;border-radius:4px;background:var(--ts-soft);color:var(--ts-muted)}
 .ash-ask:hover,.ash-ask[aria-pressed="true"]{border-color:var(--ts-electric);color:var(--ts-electric-fg,var(--ts-electric))}
 .ash-ask:focus-visible{outline:1px solid transparent;box-shadow:0 0 0 2px var(--ts-electric)}
+.ash-me{justify-self:end;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ts-electric-soft);color:var(--ts-on-accent-soft,var(--ts-electric-fg));font-size:11px;font-weight:600}
 .ash *,.ash *::before{box-sizing:border-box}
-.ash{font-family:var(--ts-font,Inter,system-ui,sans-serif);color:var(--ts-fg);background:var(--ts-page);display:grid;grid-template-columns:220px minmax(0,1fr);min-height:560px;min-width:0;flex:1}
+.ash{font-family:var(--ts-font,Inter,system-ui,sans-serif);font-size:13px;color:var(--ts-fg);background:var(--ts-page);display:grid;grid-template-columns:216px minmax(0,1fr);min-height:560px;min-width:0;flex:1}
 .ash.no-nav{grid-template-columns:minmax(0,1fr)}
 .ash.is-bare{border:1px solid var(--ts-line);border-radius:var(--ts-radius-card,12px);overflow:hidden;container-type:inline-size}
-.ash.has-aside{grid-template-columns:220px minmax(0,1fr) 300px}
-.ash-nav{background:var(--ts-soft);padding:14px 8px;display:flex;flex-direction:column;gap:2px;min-width:0;border-right:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);overflow:auto;scrollbar-width:none}
-.ash-ws{display:flex;align-items:center;gap:10px;padding:0 8px 12px}
-.ash-ws b{width:28px;height:28px;border-radius:var(--ts-radius-tile,6px);display:grid;place-items:center;background:var(--ts-fg);color:var(--ts-surface);font-size:13px;font-weight:600;flex:none}
-.ash-ws span{display:grid;line-height:1.25;min-width:0}.ash-ws strong{font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ash-ws small{font-size:11px;color:var(--ts-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ash-h{font:500 10.5px/1 var(--ts-font-mono);letter-spacing:.06em;color:var(--ts-faint);margin:12px 10px 6px}
-.ash-it{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 8px;width:100%;padding:6px 10px;border:1px solid transparent;border-radius:var(--ts-radius-control,8px);background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;min-height:40px}
-.ash-it:hover{background:color-mix(in srgb,var(--ts-fg) 5%,transparent)}
-.ash-it[aria-current="page"]{background:var(--ts-surface);border-color:var(--ts-line)}
+.ash.has-aside{grid-template-columns:216px minmax(0,1fr) 300px}
+.ash-nav{background:var(--ts-side);padding:10px 8px;display:flex;flex-direction:column;gap:1px;min-width:0;border-right:1px solid var(--ts-line);overflow:auto;scrollbar-width:none}
+.ash-ws{display:flex;align-items:center;gap:8px;margin:0 0 8px;padding:6px 8px;border-radius:var(--ts-radius-control,8px);color:var(--ts-muted)}
+.ash-ws b{width:22px;height:22px;border-radius:var(--ts-radius-tile,6px);display:grid;place-items:center;background:var(--ts-fg);color:var(--ts-surface);font-size:11.5px;font-weight:600;flex:none}
+.ash-ws span{display:grid;line-height:1.25;min-width:0;flex:1}.ash-ws strong{font-weight:600;font-size:13px;color:var(--ts-fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ash-ws small{font-size:11px;color:var(--ts-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ash-ws .ash-ic{width:14px;height:14px;color:var(--ts-faint)}
+.ash-h{font:500 11px/1 var(--ts-font,Inter,system-ui,sans-serif);color:var(--ts-faint);margin:14px 8px 6px}
+.ash-it{display:grid;grid-template-columns:16px minmax(0,1fr) auto;align-items:center;gap:0 9px;width:100%;padding:0 8px;border:0;border-radius:var(--ts-radius-control,8px);background:none;color:var(--ts-muted);font:inherit;text-align:left;cursor:pointer;min-height:32px;transition:background ${motionVar.duration("xs")},color ${motionVar.duration("xs")}}
+.ash-it:hover{background:color-mix(in srgb,var(--ts-fg) 5%,transparent);color:var(--ts-fg)}
+.ash-it[aria-current="page"]{background:color-mix(in srgb,var(--ts-fg) 8%,transparent);color:var(--ts-fg)}
+.ash-it[aria-current="page"] .ash-ic{color:var(--ts-electric-fg,var(--ts-electric))}
 .ash-it span{font-size:13px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ash-it[aria-current="page"] span{font-weight:600}
-.ash-it small{grid-column:1;font-size:10.5px;color:var(--ts-faint);line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ash-it em{grid-row:1/span 2;grid-column:2;font-style:normal;font-size:11px;color:var(--ts-faint);font-variant-numeric:tabular-nums}
-.ash-it[aria-current="page"] em{color:var(--ts-muted)}
-.ash-it.is-ceo span{font-weight:600}.ash-it.is-ceo em{color:var(--ts-muted);font:500 10px/1 var(--ts-font-mono)}
-.ash-it:focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--ts-soft),0 0 0 2px var(--ts-electric)}
+.ash-it[aria-current="page"] span{font-weight:500}
+.ash-it small{grid-column:2;font-size:10.5px;color:var(--ts-faint);line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-bottom:5px}
+.ash-it em{grid-row:1;grid-column:3;font-style:normal;min-width:20px;padding:1px 6px;border-radius:999px;background:color-mix(in srgb,var(--ts-fg) 7%,transparent);font-size:11px;line-height:16px;text-align:center;color:var(--ts-muted);font-variant-numeric:tabular-nums}
+.ash-it:focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--ts-side),0 0 0 2px var(--ts-electric)}
 .ash-extra{margin-top:8px;min-width:0}
 .ash.is-fixed{flex:none;overflow:auto;align-items:start}.ash.is-fixed>.ash-nav{position:sticky;top:0;z-index:2;align-self:stretch;max-height:100%}.ash.is-fixed>.ash-main{overflow:visible}
-.ash-main{min-width:0;min-height:0;padding:24px 28px;overflow:auto}
+.ash-main{min-width:0;min-height:0;padding:20px 24px;overflow:auto}
 .ash-view{animation:ash-view-in ${motionVar.duration("md")} ${motionVar.easing("enter")} both}
 @keyframes ash-view-in{from{opacity:0;transform:translateY(6px)}}
-@media (prefers-reduced-motion:reduce){.ash-view{animation:none}}
-.ash-aside{border-left:1px solid var(--ts-line);background:var(--ts-surface);padding:20px;min-width:0}
+@media (prefers-reduced-motion:reduce){.ash-view{animation:none}.ash-it,.ash-ask{transition:none}}
+.ash-aside{border-left:1px solid var(--ts-line);background:var(--ts-surface);padding:16px;min-width:0}
 @container (max-width:1100px){.ash.has-aside{grid-template-columns:200px minmax(0,1fr)}.ash-aside{grid-column:2;border-left:0;border-top:1px solid var(--ts-line)}}
-@container (max-width:860px){.ash,.ash.has-aside{grid-template-columns:168px minmax(0,1fr)}.ash.no-nav{grid-template-columns:minmax(0,1fr)}.ash-it small{display:none}.ash-it{min-height:34px}.ash-main{padding:18px 20px}}
+@container (max-width:860px){.ash,.ash.has-aside{grid-template-columns:176px minmax(0,1fr)}.ash.no-nav{grid-template-columns:minmax(0,1fr)}.ash-it small{display:none}.ash-main{padding:16px 18px}.ash-ask{width:220px}}
 @container (max-width:600px){.ash,.ash.has-aside{grid-template-columns:minmax(0,1fr)}.ash-aside{grid-column:1}
-.ash-nav{flex-direction:row;overflow-x:auto;gap:4px;padding:8px;border-right:0;border-bottom:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent)}
+.ash-nav{flex-direction:row;overflow-x:auto;gap:4px;padding:6px 8px;border-right:0;border-bottom:1px solid var(--ts-line)}
 .ash-ws,.ash-h,.ash-it small,.ash-extra{display:none}.ash-it{width:auto;flex:none;min-height:36px}
-.ash-main{padding:14px}.ash-title{display:none}.ash-bar{grid-template-columns:auto 1fr}}
+.ash-main{padding:14px}.ash-title,.ash-me{display:none}.ash-bar{grid-template-columns:auto minmax(0,1fr)}.ash-ask{width:100%}}
 `;
 
 export function AppShell({ company, vocab, counts = {}, active = "ceo", onNavigate, aside, children, labels: labelsIn, className = "", frame = true, title, onAsk, navExtra, nav = true, height }: AppShellProps) {
@@ -111,9 +137,10 @@ export function AppShell({ company, vocab, counts = {}, active = "ceo", onNaviga
   const word = (k: ParaKey) => ({ ...paraBaseMn[k], ...vocab?.[k] });
   const item = (v: AppShellView, label: string, base?: string, count?: number, cls = "") => (
     <button key={v} type="button" className={`ash-it ${cls}`} aria-current={current === v ? "page" : undefined} onClick={() => go(v)} title={base && base !== label ? `${label} · ${base}` : label}>
+      <Ic k={v} />
       <span>{label}</span>
+      {count ? <em aria-label={`${count} зүйл`}>{count}</em> : null}
       {base && base !== label && <small>{base}</small>}
-      {count ? <em aria-label={`${count} зүйл`}>{count}</em> : cls === "is-ceo" ? <em>CEO</em> : null}
     </button>
   );
   const shell = (
@@ -121,7 +148,7 @@ export function AppShell({ company, vocab, counts = {}, active = "ceo", onNaviga
       <style>{CSS}</style>
       {nav && (
         <nav className="ash-nav" aria-label={L.nav}>
-          <div className="ash-ws"><b aria-hidden="true">{company.initial ?? company.name.replace(/^ac\.me\s*/i, "").slice(0, 1).toUpperCase()}</b><span><strong>{company.name}</strong>{company.note && <small>{company.note}</small>}</span></div>
+          <div className="ash-ws"><b aria-hidden="true">{company.initial ?? company.name.replace(/^ac\.me\s*/i, "").slice(0, 1).toUpperCase()}</b><span><strong>{company.name}</strong>{company.note && <small>{company.note}</small>}</span><Ic k="switch" /></div>
           {item("ceo", L.ceo, undefined, undefined, "is-ceo")}
           <p className="ash-h">{L.gtd}</p>
           {(["inbox", "today", "waiting"] as ParaKey[]).map((k) => item(k, word(k).label, paraBaseMn[k].label, counts[k]))}
@@ -138,12 +165,17 @@ export function AppShell({ company, vocab, counts = {}, active = "ceo", onNaviga
     </div>
   );
   if (!frame) return shell;
+  // where am I: the app's name, then the place that is open (the menu's own word for it)
+  const place = current === "ceo" ? L.ceo : current === "calendar" ? L.calendar : current === "agents" ? L.agents : current === "ask" ? L.ask : word(current).label;
   return (
-    <div className={`ash-win ${className}`}>
+    <div className={`ash-win ts-surface-app ${className}`}>
       <div className="ash-bar">
-        <div className="ash-dots" aria-hidden="true"><i /><i /><i /></div>
-        <span className="ash-title">{title ?? L.title}</span>
-        <button type="button" className="ash-ask" aria-pressed={current === "ask"} onClick={() => (onAsk ? onAsk() : go("ask"))}>{L.ask}<kbd>⌘K</kbd></button>
+        <div className="ash-lead">
+          <div className="ash-dots" aria-hidden="true"><i /><i /><i /></div>
+          <span className="ash-title"><span>{title ?? L.title}</span><Ic k="sep" /><b>{place}</b></span>
+        </div>
+        <button type="button" className="ash-ask" aria-pressed={current === "ask"} onClick={() => (onAsk ? onAsk() : go("ask"))}><Ic k="search" /><span>{L.ask}</span><kbd>⌘K</kbd></button>
+        <span className="ash-me" aria-hidden="true">{(company.initial ?? company.name.replace(/^ac\.me\s*/i, "").slice(0, 1) ?? "A").toUpperCase() || "A"}</span>
       </div>
       {shell}
     </div>

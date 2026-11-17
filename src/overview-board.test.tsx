@@ -11,11 +11,12 @@ vi.setConfig({ testTimeout: 30_000 });
 const demos = { area: overviewBoardAreaDemo, project: overviewBoardProjectDemo, marketing: overviewBoardMarketingDemo, logistics: overviewBoardLogisticsDemo };
 
 describe("OverviewBoard (screens.22)", () => {
-  it.each(Object.entries(demos))("%s: one sentence, at most two actions, four numbers, two lists", (_, d) => {
+  it.each(Object.entries(demos))("%s: one sentence, at most two actions, its properties, two lists", (_, d) => {
     const { container } = render(<OverviewBoard {...d} still />);
     expect(container.querySelectorAll(".ob-lede")).toHaveLength(1);
     expect(container.querySelectorAll(".ob-btn").length).toBeLessThanOrEqual(2);
-    expect(container.querySelectorAll(".ob-kpi")).toHaveLength(4);
+    expect(container.querySelectorAll(".ob-kpi").length).toBe(d.kpis ? 4 : 0); // numbers only where they are real measures
+    expect(container.querySelectorAll(".ob-props dt").length).toBeGreaterThanOrEqual(5);
     expect(container.querySelectorAll(".ob-list")).toHaveLength(2);
     expect(d.eyebrow).toMatch(/демо/);
   });
@@ -38,7 +39,7 @@ describe("OverviewBoard (screens.22)", () => {
   it("the status counts add up to what the sentence and the numbers say", () => {
     const sum = (d: typeof overviewBoardProjectDemo) => d.status!.reduce((n, s) => n + s.value, 0);
     expect(sum(overviewBoardProjectDemo)).toBe(9);
-    expect(overviewBoardProjectDemo.kpis![0].value).toBe("5/9");
+    expect(overviewBoardProjectDemo.properties!.find((x) => x.label === "Явц")?.value).toBe("9 алхмын 5");
     expect(sum(overviewBoardLogisticsDemo)).toBe(11);
     expect(sum(overviewBoardMarketingDemo)).toBe(12);
   });

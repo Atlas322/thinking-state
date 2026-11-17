@@ -59,18 +59,18 @@ const icons: Record<ScreenKey | CaptureKind | "search" | "arrow" | "check" | "sp
 };
 
 const CSS = `
-.aps-root{--ts-radius:6px;--aps-r:var(--ts-radius);--aps-r-shell:var(--ts-radius);--aps-sans:Inter,system-ui,sans-serif;--aps-serif:Spectral,Georgia,serif;--aps-mono:"IBM Plex Mono",monospace;
- --aps-h2:24px;--aps-h3:18px;--aps-lead:16px;--aps-body:16px;--aps-small:14px;--aps-label:12px;--aps-btn:44px;--aps-icon:16px;--aps-stroke:1.5}
+.aps-root{--ts-radius:6px;--aps-r:var(--ts-radius);--aps-r-shell:var(--ts-radius);--aps-sans:Inter,system-ui,sans-serif;--aps-serif:var(--aps-sans);--aps-mono:"IBM Plex Mono",monospace;
+ --aps-h2:20px;--aps-h3:15px;--aps-lead:13.5px;--aps-body:13.5px;--aps-small:12.5px;--aps-label:11px;--aps-btn:32px;--aps-icon:16px;--aps-stroke:1.5}
 .aps-stage{height:100%;font-family:var(--aps-sans);color:var(--ts-fg)}
 .aps-count{margin-left:auto;font:500 var(--aps-label) var(--aps-mono);color:var(--ts-faint)}
 .aps-win{height:100%}.aps-win .ash{min-height:0}.aps-win .ash-main{padding:28px 32px}
-.aps-h1{font:400 var(--aps-h2)/1.08 var(--aps-serif);letter-spacing:-.01em;margin:0 0 8px}
-.aps-sub{color:var(--ts-muted);font:italic 400 var(--aps-lead)/1.5 var(--aps-serif);margin:0 0 24px}
+.aps-h1{font:600 var(--aps-h2)/1.25 var(--aps-sans);letter-spacing:-.01em;margin:0 0 4px}
+.aps-sub{color:var(--ts-muted);font:400 var(--aps-lead)/1.5 var(--aps-sans);margin:0 0 16px}
 .aps-label{font:500 var(--aps-label) var(--aps-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ts-faint)}
-.aps-card{background:color-mix(in srgb,var(--ts-surface,#f7f5ee) 82%,transparent);border:1px solid color-mix(in srgb,var(--ts-line,#d8d3c6) 80%,transparent);border-radius:var(--aps-r)}
+.aps-card{background:var(--ts-surface,#fff);border:1px solid var(--ts-line,#e2e1dc);border-radius:calc(var(--aps-r) + 2px)}
 .aps-next{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:var(--aps-r);background:#ff7a1a;color:#1a0d00;font:600 var(--aps-label) var(--aps-mono);letter-spacing:.04em}
 .aps-next span{font:500 12px var(--aps-sans);letter-spacing:0}
-.aps-chip{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--aps-r);font-size:var(--aps-small);color:var(--ts-muted);background:var(--ts-soft,#efebe1)}
+.aps-chip{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:var(--aps-r);font-size:var(--aps-small);color:var(--ts-muted);background:var(--ts-soft,#efebe1)}
 .aps-chip.e{color:var(--ts-on-accent-soft,#0f3fb8);background:var(--ts-electric-soft,#dce5ff)}
 .aps-capture{display:flex;align-items:center;gap:10px;padding:14px 16px;margin-bottom:18px}
 .aps-capture input{flex:1;border:0;background:none;font:15px var(--aps-sans);color:var(--ts-fg);outline:0}
@@ -96,16 +96,16 @@ const CSS = `
 .aps-link small{font-size:var(--aps-small);color:var(--ts-faint)}
 .aps-progress{height:6px;border-radius:var(--aps-r);background:var(--ts-soft-2,#e8e3d6);overflow:hidden;margin:10px 0 4px}
 .aps-progress i{display:block;height:100%;background:#1b5cff;border-radius:var(--aps-r)}
-.aps-nextcard{padding:18px 20px;margin:18px 0;border-color:#ff7a1a;background:color-mix(in srgb,#ff7a1a 9%,var(--ts-surface))}
-.aps-nextcard h3{font:400 var(--aps-h3)/1.2 var(--aps-serif);margin:10px 0 6px}
-.aps-task{display:grid;grid-template-columns:18px 1fr auto auto;gap:12px;align-items:center;padding:14px 18px;border-top:1px solid color-mix(in srgb,var(--ts-line) 70%,transparent);font-size:var(--aps-body)}
+.aps-nextcard{padding:14px 16px;margin:14px 0;border-color:#ff7a1a;background:color-mix(in srgb,#ff7a1a 9%,var(--ts-surface))}
+.aps-nextcard h3{font:600 var(--aps-h3)/1.3 var(--aps-sans);margin:8px 0 4px}
+.aps-task{display:grid;grid-template-columns:18px 1fr auto auto;gap:10px;align-items:center;padding:8px 14px;min-height:38px;border-top:1px solid var(--ts-line);font-size:var(--aps-body)}
 .aps-task:first-child{border-top:0}
 .aps-st{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--ts-faint)}
 .aps-st.done{background:var(--ts-green,#5e7a5f);border-color:var(--ts-green)}
 .aps-st.doing{border-color:#1b5cff;border-right-color:transparent}
 .aps-st.waiting{border-color:#ff7a1a;border-style:dashed}
 .aps-task.done span:nth-child(2){text-decoration:line-through;color:var(--ts-faint)}
-.aps-truth{padding:16px 18px}.aps-truth li{font-size:var(--aps-body);margin:8px 0;color:var(--ts-muted)}.aps-truth ul{padding-left:18px;margin:8px 0 0}
+.aps-truth{padding:12px 14px}.aps-truth li{font-size:var(--aps-body);margin:8px 0;color:var(--ts-muted)}.aps-truth ul{padding-left:18px;margin:8px 0 0}
 .aps-chatgrid{display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start}
 .aps-chat{min-width:0;display:flex;flex-direction:column;gap:16px}
 .aps-q{align-self:flex-end;max-width:80%;padding:14px 18px;border-radius:var(--aps-r);background:#1b5cff;color:#fff;font-size:var(--aps-body);line-height:1.45}
@@ -342,7 +342,7 @@ export function AppScreen({ screen, data, theme = "day", variant = "tabs", still
   return (
     <MotionProvider paused={still}>
       <div
-        className={`aps-root ${dark ? "dark " : ""}${still ? "aps-still " : ""}${className}`}
+        className={`aps-root ${dark ? "dark " : "ts-surface-app "}${still ? "aps-still " : ""}${className}`}
         data-ts-theme={dark ? "dark" : "cream"}
         data-theme={dark ? "dark" : "light"}
         style={{ height: "100%" }}

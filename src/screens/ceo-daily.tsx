@@ -205,9 +205,9 @@ const NOTE = "ac.me — жишээ өгөгдөл, бодит харилцагч
 export const ceoDailyDemo: CeoDailyProps = {
   subtitle: "ac.me Маркетинг · Лхагва, 11-р сарын 18",
   kpis: [
-    { label: "Хүрэлт · 7 хоног", value: "184k", delta: "▲ 12% өмнөх 7 хоногоос", good: true },
-    { label: "Lead", value: "312", delta: "▲ 8%", good: true },
-    { label: "Зардал / lead", value: "4 200 ₮", delta: "▼ 6% (сайжирсан)", good: true },
+    { label: "Хүрэлт · 7 хоног", value: "184 мянга", delta: "▲ 12% өмнөх 7 хоногоос", good: true },
+    { label: "Шинэ хүсэлт", value: "312", delta: "▲ 8%", good: true },
+    { label: "Нэг хүсэлтийн зардал", value: "4 200 ₮", delta: "▼ 6% (сайжирсан)", good: true },
     { label: "Төсвийн гүйцэтгэл", value: "71%", delta: "▲ 9 нэгж, хурдан зарцуулж байна", good: false },
   ],
   day: [
@@ -227,8 +227,8 @@ export const ceoDailyDemo: CeoDailyProps = {
   ],
   goals: [
     { id: "g1", label: "Сарын маркетингийн төсөв", progress: 71, value: "14.2 / 20 сая ₮" },
-    { id: "g2", label: "Lead зорилт", progress: 62, value: "312 / 500" },
-    { id: "g3", label: "Зардал / lead ≤ 4 500 ₮", progress: 93, value: "4 200 ₮" },
+    { id: "g2", label: "Шинэ хүсэлтийн зорилт", progress: 62, value: "312 / 500" },
+    { id: "g3", label: "Нэг хүсэлтийн зардал ≤ 4 500 ₮", progress: 93, value: "4 200 ₮" },
   ],
   contracts: [
     { id: "c1", title: "Influencer · Номин · 3 пост", check: "хууль · хянах", due: "11/19" },
