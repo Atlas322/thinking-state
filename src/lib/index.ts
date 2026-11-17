@@ -132,3 +132,4 @@ export { EntityMention, withMentions, entityMentionDemo, type Mention, type Enti
 export { AgentAvatar, agentRoleFrom, agentStatusFrom, agentAvatarLabelsMn, agentAvatarDemo, AGENT_ROLES, type AgentRole, type AgentAvatarStatus, type AgentAvatarProps, type AgentAvatarLabels } from "../library/agent-avatar";
 export { citedSegmentsFrom, type AnswerParts } from "../library/cited-answer";
 export { askWindowMentionsDemo, askDemoMentions } from "../screens/ask-demo-data";
+export { WorkflowRun, workflowRunDemo, workflowRunLabelsMn, type WorkflowRunProps, type WorkflowRunLabels, type RunApp, type RunAppState, type RunOutput, type RunOutputState, type RunSource, type RunAgentRow } from "../screens/workflow-run";

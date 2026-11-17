@@ -21,6 +21,7 @@ export default defineConfig({
         studio: resolve(import.meta.dirname, "src/lib/studio.ts"),
         // one entry per component (2026-11-17): a page loads only what it mounts
         "agent-fleet": resolve(import.meta.dirname, "src/lib/entries/agent-fleet.ts"),
+        "workflow-run": resolve(import.meta.dirname, "src/lib/entries/workflow-run.ts"),
         "agent-findings": resolve(import.meta.dirname, "src/lib/entries/agent-findings.ts"),
         "writing-assistant": resolve(import.meta.dirname, "src/lib/entries/writing-assistant.ts"),
         "review-center": resolve(import.meta.dirname, "src/lib/entries/review-center.ts"),

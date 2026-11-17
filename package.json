@@ -136,6 +136,10 @@
       "types": "./lib/types/lib/entries/context-map.d.ts",
       "import": "./lib/context-map.js"
     },
+    "./workflow-run": {
+      "types": "./lib/types/lib/entries/workflow-run.d.ts",
+      "import": "./lib/workflow-run.js"
+    },
     "./agent-fleet": {
       "types": "./lib/types/lib/entries/agent-fleet.d.ts",
       "import": "./lib/agent-fleet.js"
