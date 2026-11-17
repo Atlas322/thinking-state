@@ -115,6 +115,8 @@ export const dashboardDemo: P<typeof Dashboard> = { c: acmeGroup, scoped: acmeGr
 export const raciDemo: P<typeof RaciView> = { c: acmeGroup, scoped: acmeGroup, onPerson: () => {}, empty: "RACI тохируулаагүй байна" };
 export { roleDashboardDemo } from "../company/role-dashboard-demo";
 export { askWindowDemo };
+export { entityMentionDemo } from "../library/entity-mention";
+export { askWindowMentionsDemo } from "../screens/ask-demo-data";
 export { secondBrainAppDemo } from "../screens/second-brain-app";
 export { decisionInboxDemo } from "../library/decision-inbox";
 export { brainCoverDemo } from "../motion/brain-cover";

@@ -127,3 +127,6 @@ export type { ContentPipelineProps, PipelineStep, PipelineActor } from "../scree
 export { BrainCover, brainCoverDemo, type BrainSource, type BrainApi, type BrainAnchor } from "../motion/brain-cover";
 export { placeBrainLabels, labelsApart, type LabelBox, type LabelNode, type LabelBounds } from "../motion/brain-labels";
 export { SecondBrainApp, secondBrainAppDemo, APP_VIEWS, type AppViewId, type SecondBrainAppProps } from "../screens/second-brain-app";
+export { EntityMention, withMentions, entityMentionDemo, type Mention, type EntityMentionProps } from "../library/entity-mention";
+export { citedSegmentsFrom, type AnswerParts } from "../library/cited-answer";
+export { askWindowMentionsDemo, askDemoMentions } from "../screens/ask-demo-data";

@@ -88,7 +88,7 @@ const CSS = `
 .ash-it.is-ceo span{font-weight:600}.ash-it.is-ceo em{color:var(--ts-muted);font:500 10px/1 var(--ts-font-mono)}
 .ash-it:focus-visible{outline:1px solid transparent;box-shadow:0 0 0 1px var(--ts-soft),0 0 0 2px var(--ts-electric)}
 .ash-extra{margin-top:8px;min-width:0}
-.ash.is-fixed{flex:none;overflow:auto;align-items:start}.ash.is-fixed>.ash-nav{position:sticky;top:0;align-self:stretch;max-height:100%}.ash.is-fixed>.ash-main{overflow:visible}
+.ash.is-fixed{flex:none;overflow:auto;align-items:start}.ash.is-fixed>.ash-nav{position:sticky;top:0;z-index:2;align-self:stretch;max-height:100%}.ash.is-fixed>.ash-main{overflow:visible}
 .ash-main{min-width:0;min-height:0;padding:24px 28px;overflow:auto}
 .ash-view{animation:ash-view-in ${motionVar.duration("md")} ${motionVar.easing("enter")} both}
 @keyframes ash-view-in{from{opacity:0;transform:translateY(6px)}}

@@ -36,3 +36,29 @@ const preview = (s: AskSource): PreviewSource => ({ id: s.id, title: s.title, ki
 export const sourcePreviewDemo: { source: PreviewSource } = { source: preview(askDemoSources[2]) };
 
 export const thinkingStateDemo: { steps: ThinkingStep[]; loop: boolean } = { steps: askDemoThinking, loop: true };
+
+// ── Answer with @mentions and numbered rows (screens.21; shape of web-app inai-home v31) ──
+import { citedSegmentsFrom } from "../library/cited-answer";
+import type { Mention } from "../library/entity-mention";
+import type { AskWindowProps } from "./ask-window";
+
+export const askDemoMentions: Mention[] = [
+  { name: "Гүйцэтгэх захирал", type: "ажилтан", lines: ["Салбар 01", "Сүүлийн үйлдэл: үнийн бодлогыг батлав", "Төлөв: батлагдсан"], sourceNote: "Үнийн бодлого" },
+  { name: "Онлайн захиалга", type: "борлуулалтын суваг", lines: ["Орлогын урсгал · ac.me Retail", "Хариуцагч: дэд захирал", "Төлөв: идэвхтэй"], sourceNote: "Бизнес загвар" },
+  { name: "Салбар 07", type: "салбар", lines: ["Менежер: салбарын менежер", "Сүүлийн тайлан: 10-р сар", "Төлөв: туршилтын салбар"], sourceNote: "Салбарын бүртгэл" },
+  { name: "Салбарын менежер", type: "ажилтан", lines: ["Салбар 07", "Хүлээгдэж буй: үнийн батлалт", "Төлөв: хүлээгдэж буй"], sourceNote: "Салбарын бүртгэл" },
+];
+
+/** The hero's ask with a direct answer, two numbered rows and the next step; names are @mentions. */
+export const askWindowMentionsDemo: Pick<AskWindowProps, "question" | "answer" | "mentions"> = {
+  question: "Үнийн шинэчлэлийг хэзээ, яагаад шийдсэн бэ?",
+  answer: citedSegmentsFrom({
+    direct: "10-р сарын удирдлагын уулзалтаар шийдсэн [2]; шийдвэрийг @Гүйцэтгэх захирал баталсан [1].",
+    list: [
+      { n: "01", text: "Дунд түвшний багц нэмнэ: @Онлайн захиалга сувагт эхэлж [1]." },
+      { n: "02", text: "Дээд багцын үнэ хэвээр; @Салбар 07 туршина [3]." },
+    ],
+    next: "Шинэ үнийг @Салбарын менежер батлахыг хүлээж байна.",
+  }, ["d", "m", "s"]),
+  mentions: askDemoMentions,
+};

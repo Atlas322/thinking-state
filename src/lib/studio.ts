@@ -62,7 +62,7 @@ export type { ChatModel, ChatApp, ChatComposerProps } from "../library/chat-comp
 export { Checkbox } from "../library/checkbox";
 export type { CheckboxProps } from "../library/checkbox";
 export { CitedAnswer } from "../library/cited-answer";
-export type { CitedSegment, CitedSource, CitedAnswerProps } from "../library/cited-answer";
+export type { CitedSegment, CitedSource, CitedAnswerProps, AnswerParts } from "../library/cited-answer";
 export { SourcePreview, sourcePreviewLabelsMn } from "../library/source-preview";
 export type { SourceKind, PreviewSource, SourcePreviewLabels, SourcePreviewProps } from "../library/source-preview";
 export { CollaborationStream } from "../library/collaboration-stream";

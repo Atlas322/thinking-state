@@ -12,6 +12,7 @@
  */
 import * as React from "react";
 import { CitedAnswer, type CitedSegment, type CitedSource } from "../library/cited-answer";
+import { withMentions, type Mention } from "../library/entity-mention";
 import { SourceIcon, SourcePreview, type PreviewSource, type SourceKind } from "../library/source-preview";
 import { ThinkingState, type ThinkingStep } from "../library/thinking-state";
 import { AppShell } from "./app-shell";
@@ -81,6 +82,8 @@ export type AskWindowProps = {
   /** Each phase of the run as it starts — for syncing e.g. the hero's brain pulse. */
   onPhase?: (phase: AskPhase) => void;
   labels?: Partial<AskWindowLabels>;
+  /** People, branches, channels named «@Нэр» in the answer: chip + card (screens.21, inai-home v31). */
+  mentions?: Mention[];
   className?: string;
 };
 export type AskPhase = "ask" | "think" | "sources" | "answer" | "done";
@@ -140,6 +143,7 @@ export function AskWindow({
   openSource,
   sidebar = true,
   onAsk,
+  mentions,
   onOpenSource,
   onNavigate,
   thinking = [],
@@ -232,7 +236,7 @@ export function AskWindow({
             )}
             {f.segs > 0 && (
               <div aria-live="polite" aria-busy={f.phase !== "done"}>
-                <CitedAnswer theme={theme} segments={answer.slice(0, f.segs)} sources={cited} pagesRead={sources.length} />
+                <CitedAnswer theme={theme} segments={answer.slice(0, f.segs)} sources={cited} pagesRead={sources.length} renderText={mentions?.length ? (t) => withMentions(t, mentions) : undefined} />
               </div>
             )}
           </div>

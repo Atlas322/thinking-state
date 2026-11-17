@@ -4,7 +4,8 @@ import * as React from "react";
 
 /** Independent implementation. No affectUI Pro source is included. */
 
-export type CitedSegment = { text: string; cite?: string[]; paragraph?: boolean };
+/** `n` («01», «02») starts a numbered row of the answer (screens.21). */
+export type CitedSegment = { text: string; cite?: string[]; paragraph?: boolean; n?: string };
 
 export type CitedSource = {
   id: string;
@@ -29,7 +30,38 @@ export type CitedAnswerProps = {
   /** Force the card light or dark regardless of the page theme. */
   theme?: "light" | "dark";
   className?: string;
+  /** Renders each piece of text, e.g. «@Нэр» → a mention chip with a card (screens.21; AskWindow passes withMentions). */
+  renderText?: (text: string) => React.ReactNode;
 };
+
+/**
+ * An answer written as {direct, list, next} (web-app inai-home v31) → segments. «[2]» marks cite the
+ * source at that number (1-based, `sourceIds` in order); list rows keep their «01», «02».
+ */
+export type AnswerParts = { direct: string; list?: { n: string; text: string }[]; next?: string };
+export function citedSegmentsFrom(parts: AnswerParts, sourceIds: string[]): CitedSegment[] {
+  const split = (text: string, extra: Partial<CitedSegment> = {}): CitedSegment[] => {
+    const out: CitedSegment[] = [];
+    const re = /\s*\[(\d+)\]/g;
+    let last = 0, first = true;
+    for (const m of text.matchAll(re)) {
+      const chunk = text.slice(last, m.index);
+      const id = sourceIds[Number(m[1]) - 1];
+      if (chunk.trim()) { out.push({ text: chunk, cite: id ? [id] : undefined, ...(first ? extra : {}) }); first = false; }
+      else if (out.length && id) out[out.length - 1].cite = [...(out[out.length - 1].cite ?? []), id];
+      last = m.index! + m[0].length;
+    }
+    const rest = text.slice(last);
+    if (rest.trim() && out.length && /^[\s.,;:!?…»)]+$/.test(rest)) out[out.length - 1] = { ...out[out.length - 1], text: out[out.length - 1].text + rest.trim() };
+    else if (rest.trim()) out.push({ text: rest, ...(first ? extra : {}) });
+    return out;
+  };
+  return [
+    ...split(parts.direct),
+    ...(parts.list ?? []).flatMap((r) => split(r.text, { n: r.n })),
+    ...(parts.next ? split(parts.next, { paragraph: true }) : []),
+  ];
+}
 
 const defaultSources: CitedSource[] = [
   {
@@ -106,6 +138,7 @@ export function CitedAnswer({
   action = { label: "Үргэлжлүүлэн асуух", onClick: () => {} },
   theme,
   className = "",
+  renderText,
 }: CitedAnswerProps) {
   const [hover, setHover] = React.useState<string | null>(null);
   const [open, setOpen] = React.useState<string | null>(defaultOpen ?? null);
@@ -124,7 +157,7 @@ export function CitedAnswer({
 
   const paragraphs: CitedSegment[][] = [];
   segments.forEach((s, i) => {
-    if (i === 0 || s.paragraph) paragraphs.push([]);
+    if (i === 0 || s.paragraph || s.n) paragraphs.push([]);
     paragraphs[paragraphs.length - 1].push(s);
   });
 
@@ -159,15 +192,16 @@ export function CitedAnswer({
         </div>
         <div className="ca-prose">
           {paragraphs.map((p, i) => (
-            <p key={i}>
-              {p.map((s, j) => {
+            <p key={i} className={p[0]?.n ? "ca-item" : undefined}>
+              {p[0]?.n && <span className="ca-n" aria-hidden="true">{p[0].n}</span>}
+              {(() => { const row = p.map((s, j) => {
                 const lit = !!active && !!s.cite?.includes(active);
                 const lead = s.text.match(/^\s*/)?.[0] ?? "";
                 const body = s.text.slice(lead.length);
                 return (
                   <React.Fragment key={j}>
                     {lead}
-                    <span className={`ca-seg ${lit ? "lit" : ""}`}>{body}</span>
+                    <span className={`ca-seg ${lit ? "lit" : ""}`}>{renderText ? renderText(body) : body}</span>
                     {s.cite?.map((c) => (
                       <button
                         key={c}
@@ -185,7 +219,7 @@ export function CitedAnswer({
                     ))}
                   </React.Fragment>
                 );
-              })}
+              }); return p[0]?.n ? <span>{row}</span> : row; })()}
             </p>
           ))}
         </div>
@@ -289,6 +323,8 @@ const css = `
 .ca-prose p{margin:0 0 10px}.ca-prose p:last-child{margin:0}
 .ca-seg{transition:color .2s,background .2s;border-radius:var(--ts-radius,3px)}
 .ca-focus .ca-seg{color:var(--ca-faint)}
+.ca-item{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px;align-items:baseline}
+.ca-n{font:500 12px/1.6 var(--ts-font-mono,monospace);color:var(--ca-faint,var(--ts-faint))}
 .ca-focus .ca-seg.lit{color:var(--ca-fg);background:var(--ca-lit);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:1px 2px;margin:0 -2px}
 .ca-num{display:inline-grid;place-items:center;min-width:15px;height:15px;margin:0 2px 0 3px;padding:0 3px;vertical-align:1px;border:0;border-radius:var(--ts-radius,3px);background:var(--ca-chip);font-size:10px!important;line-height:1;color:var(--ca-muted)!important;transition:background .15s}
 .ca-num:hover,.ca-num.on{background:color-mix(in srgb,var(--ca-fg) 16%,transparent);color:var(--ca-fg)!important}
