@@ -53,7 +53,8 @@ describe("SecondBrainApp · Тойм tabs (screens.22)", () => {
     expect(await screen.findByRole("heading", { name: "Үнийн шинэчлэл", level: 2 })).toBeTruthy();
     expect(container.querySelector("[data-view]")?.getAttribute("data-tab")).toBe("overview");
     fireEvent.click(screen.getByRole("tab", { name: "Ажил" }));
-    expect(await screen.findByRole("heading", { name: "Үнийн шинэчлэл", level: 1 })).toBeTruthy();
+    await waitFor(() => expect(container.querySelector(".aps-h1")?.textContent).toBe("Үнийн шинэчлэл"), { timeout: 15000 });
+    expect(container.querySelector("h1")).toBeNull(); // an embedded app never adds a second h1 to the host page
     expect(container.querySelectorAll(".ash-win")).toHaveLength(1);
     expect(screen.getByRole("tab", { name: "Ажил" }).getAttribute("aria-selected")).toBe("true");
   });

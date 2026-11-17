@@ -186,7 +186,7 @@ export function InboxScreen({ data, labels = appScreenLabelsMn }: { data: Screen
   const open = data.inbox.filter((i) => !i.processed).length;
   return (
     <>
-      <h1 className="aps-h1">{labels.inbox}</h1>
+      <h2 className="aps-h1">{labels.inbox}</h2>
       <p className="aps-sub">{open} шинэ зүйл. Агент газрыг нь санал болгосон — хүн батална.</p>
       <div className="aps-fieldwrap">
         <label htmlFor="aps-capture">Цуглуулах</label>
@@ -243,7 +243,7 @@ export function ProjectScreen({ data, labels = appScreenLabelsMn }: { data: Scre
     <div className="aps-grid">
       <div>
         <div className="aps-meta"><span className="aps-chip">{p.area}</span>{p.done}/{p.total} алхам</div>
-        <h1 className="aps-h1" style={{ marginTop: 8 }}>{p.name}</h1>
+        <h2 className="aps-h1" style={{ marginTop: 8 }}>{p.name}</h2>
         <p className="aps-sub" style={{ marginBottom: 0 }}>{p.why}</p>
         <div className="aps-progress"><i style={{ width: `${(p.done / p.total) * 100}%` }} /></div>
         <div className="aps-card aps-nextcard">
@@ -291,7 +291,7 @@ export function ChatScreen({ data }: { data: ScreenData }) {
 export function MemoryScreen({ data }: { data: ScreenData }) {
   return (
     <div style={{ maxWidth: 760, margin: "0 auto" }}>
-      <h1 className="aps-h1">Санах ой</h1>
+      <h2 className="aps-h1">Санах ой</h2>
       <p className="aps-sub">Агент юуг санаж байгааг хүн харж, засаж, мартуулна. Бүгд эх сурвалжтай.</p>
       <MemoryPanel memories={data.memories} categories={data.memoryCategories} title={`${data.company}-ийн санах ой`} maxHeight={520} />
     </div>
@@ -304,7 +304,7 @@ export function TeamScreen({ data }: { data: ScreenData }) {
   const sessions = t.sessions.map((x) => (x.avatar || !x.owner ? x : { ...x, avatar: <AgentAvatar role={agentRoleFrom(x.owner)} size={20} decorative /> }));
   return (
     <>
-      <h1 className="aps-h1">Нэг тархитай баг</h1>
+      <h2 className="aps-h1">Нэг тархитай баг</h2>
       <p className="aps-sub">Хүн бүр, агент бүр нэг санах ойгоос уншиж, нэг самбар дээр ажиллана.</p>
       <SessionBoard project={t.project} groups={t.groups} sessions={sessions} me={t.me} />
     </>
