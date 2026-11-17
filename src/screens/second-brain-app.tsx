@@ -24,7 +24,7 @@ const CalendarView = React.lazy(() => import("./ceo-daily").then((m) => ({ defau
     <style>{CAL_CSS}</style>
     <h2>Өнөөдөр</h2>
     <p>ac.me · Лхагва, 11-р сарын 18</p>
-    <ol>{m.ceoDailyDemo.day.map((d) => <li key={d.id} data-kind={d.kind}><time>{d.time}</time><div><b>{d.title}</b>{d.meta && <small>{d.meta}</small>}</div></li>)}</ol>
+    <ol>{m.ceoDailyDemo.day.map((d) => <li key={d.id} data-kind={d.kind}><time dateTime={d.time}>{d.time}</time><div><b>{d.title}</b>{d.meta && <small>{d.meta}</small>}</div></li>)}</ol>
   </section>
 ) })));
 const WaitingView = React.lazy(() => import("../library/decision-inbox").then((m) => ({ default: () => <m.DecisionInbox {...m.decisionInboxDemo} /> })));

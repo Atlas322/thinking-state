@@ -37,7 +37,7 @@ const SCAN = (selector, exclude = "", strict = false) => `(() => {
   const hex = (a) => "#" + a.slice(0, 3).map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
   const ratio = (fg, bg) => { const x = lum(fg), y = lum(bg); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
   const root = document.querySelector(${JSON.stringify(selector)});
-  if (!root) return [];
+  if (!root) return { hits: [], skipped: { invisible: 0 }, disabled: [], missing: true };   // the same shape as a real scan (screens.22: an array here crashed the caller with a TypeError)
   const out = new Set();
   const skipped = { invisible: 0 };
   const disabled = new Set();

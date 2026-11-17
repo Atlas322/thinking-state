@@ -122,11 +122,11 @@ export function FinanceReport({ theme, className = "", ...data }: FinanceReportP
   const d = { ...financeReportDemo, ...data };
   const dark = theme === "dark";
   const columns: DataColumn[] = [
-    { key: "line", label: "Мөр", type: "title" },
+    { key: "line", label: "Мөр", type: "title", width: "2.8fr" },
     { key: "now", label: `${d.period.replace(/^\d+ оны /, "")}, ${d.unit}`, type: "number", format: signed },
     { key: "prev", label: "Өмнөх сар", type: "number", format: signed },
     { key: "diff", label: "Зөрүү", type: "number", format: signed },
-    { key: "cite", label: "Эх", type: "tag" },
+    { key: "cite", label: "Эх", type: "tag", width: "0.7fr" },
   ];
   const rows: DataRow[] = d.pnl.map((l) => ({ id: l.id, line: l.line, now: l.now, prev: l.prev, diff: l.now - l.prev, cite: l.cite }));
   const tagTones = Object.fromEntries(d.pnl.map((l) => [l.cite, "blue" as const]));
