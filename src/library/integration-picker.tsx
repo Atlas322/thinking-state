@@ -132,7 +132,14 @@ export function IntegrationPicker({
   }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
-    listRef.current?.querySelector(`[data-id="${selected}"]`)?.scrollIntoView({ block: "nearest" });
+    // keep the selected row in view inside the list only: scrollIntoView also scrolls the page, and on a
+    // landing page that moved the whole document 750 px on load (site-recipes home v32, 2026-11-17)
+    const list = listRef.current;
+    const row = list?.querySelector<HTMLElement>(`[data-id="${selected}"]`);
+    if (!list || !row) return;
+    const r = row.getBoundingClientRect(), l = list.getBoundingClientRect();
+    if (r.top < l.top) list.scrollTop -= l.top - r.top;
+    else if (r.bottom > l.bottom) list.scrollTop += r.bottom - l.bottom;
   }, [selected]);
 
   React.useEffect(() => {
