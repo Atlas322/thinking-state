@@ -81,7 +81,7 @@ const CSS = `
 container:wr / inline-size;position:relative;display:grid;gap:14px;width:100%;box-sizing:border-box;color:var(--wr-fg);font:400 13px/1.45 var(--ts-font,Inter,system-ui,sans-serif);text-align:left}
 :where(.dark,[data-theme=dark]) .wr{--wr-bg:var(--ts-surface,#1b1b1e);--wr-fg:var(--ts-fg,#ececef);--wr-muted:var(--ts-muted,#a1a1aa);--wr-faint:var(--ts-faint,#9a9aa2);--wr-line:var(--ts-line,#303036);--wr-soft:var(--ts-soft,#26262a)}
 .wr *{box-sizing:border-box}
-.wr-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px}
+.wr-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding-right:68px}/* room for the replay and pause controls, which are always there (touch has no hover) */
 .wr-title{margin:0;font-size:15px;font-weight:600}
 .wr-sum{margin:0;font-size:12.5px;color:var(--wr-muted);font-variant-numeric:tabular-nums}
 .wr-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,.9fr) minmax(0,1.5fr) minmax(0,1.1fr);gap:28px;align-items:start}
@@ -215,7 +215,7 @@ export function WorkflowRun({ title, note, sources, agentsLine, agents, apps, ou
 
   if (still) return <section className={`wr ${className}`.trim()} aria-label={title}><style>{CSS}</style>{body(last)}</section>;
   return (
-    <ScenarioRegion<Beat> as="section" steps={steps} controls="hover" rest={2400} className={`wr ${className}`.trim()}>
+    <ScenarioRegion<Beat> as="section" steps={steps} controls="always" rest={2400} className={`wr ${className}`.trim()}>
       {(b) => <><style>{CSS}</style>{body(b ?? last)}</>}
     </ScenarioRegion>
   );
