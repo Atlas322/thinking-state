@@ -7,6 +7,8 @@
  * Colours come from the tokens: --ts-on-electric on Electric, --ts-electric on cream.
  */
 import * as React from "react";
+import { BrainGraph } from "./brain-graph";
+export { BrainGraph, brainGraphLayout, brainGraphDemo, type BrainGraphProps, type BrainGraphNote } from "./brain-graph";
 import { convergeStagesLayout, drawConvergeStages, paraNetGroups, pickNoteNodes, type NetGroup, type NetNote } from "./converge-net-stages";
 export { paraNetGroups, convergeStagesLayout, drawConvergeStages, pickNoteNodes, type NetGroup, type NetShape, type NetNote } from "./converge-net-stages";
 
@@ -39,6 +41,12 @@ export type ConvergeNetProps = {
   notes?: NetNote[];
   /** Stage 3–4 groups (label, shape, colour token). Default: PARA (paraNetGroups). */
   groups?: NetGroup[];
+  /**
+   * With `center` and `notes`: show the knowledge graph as Obsidian's graph view does — forces,
+   * size by links, hover lights the neighbours, drag, ⌘/Ctrl-wheel zoom (BrainGraph, 2026-11-19).
+   * Replaces the still stage-2 picture; the stage animation itself is unchanged.
+   */
+  interactive?: boolean;
   /** Accessible description; the canvas is an image of it. */
   label?: string;
   className?: string;
@@ -88,7 +96,13 @@ export function drawConvergeNet(x: CanvasRenderingContext2D, W: number, H: numbe
   x.globalAlpha = 1;
 }
 
-export function ConvergeNet({ stage, center, notes, groups = paraNetGroups, nodes = 72, seed = 7, tone = "electric", play = "loop", duration = 6000, t, label = "Мэдээллийн урсгал захаас орж ирж, цэгүүд нэг сүлжээ болно", className = "", style }: ConvergeNetProps) {
+export function ConvergeNet(props: ConvergeNetProps) {
+  if (props.interactive && props.center && props.notes?.length)
+    return <BrainGraph center={props.center} notes={props.notes} seed={props.seed} label={props.label} className={props.className} style={props.style} />;
+  return <ConvergeNetCanvas {...props} />;
+}
+
+function ConvergeNetCanvas({ stage, center, notes, groups = paraNetGroups, nodes = 72, seed = 7, tone = "electric", play = "loop", duration = 6000, t, label = "Мэдээллийн урсгал захаас орж ирж, цэгүүд нэг сүлжээ болно", className = "", style }: ConvergeNetProps) {
   const ref = React.useRef<HTMLCanvasElement>(null);
   const net = React.useMemo(() => convergeNetLayout(nodes, seed), [nodes, seed]);
   const net4 = React.useMemo(() => (stage === undefined ? null : convergeStagesLayout(nodes, seed, groups.length)), [stage === undefined, nodes, seed, groups.length]);

@@ -7,6 +7,7 @@
  * Colours come from the tokens: --ts-on-electric on Electric, --ts-electric on cream.
  */
 import * as React from "react";
+export { BrainGraph, brainGraphLayout, brainGraphDemo, type BrainGraphProps, type BrainGraphNote } from "./brain-graph";
 import { type NetGroup, type NetNote } from "./converge-net-stages";
 export { paraNetGroups, convergeStagesLayout, drawConvergeStages, pickNoteNodes, type NetGroup, type NetShape, type NetNote } from "./converge-net-stages";
 export type ConvergeNetProps = {
@@ -41,6 +42,12 @@ export type ConvergeNetProps = {
     notes?: NetNote[];
     /** Stage 3–4 groups (label, shape, colour token). Default: PARA (paraNetGroups). */
     groups?: NetGroup[];
+    /**
+     * With `center` and `notes`: show the knowledge graph as Obsidian's graph view does — forces,
+     * size by links, hover lights the neighbours, drag, ⌘/Ctrl-wheel zoom (BrainGraph, 2026-11-19).
+     * Replaces the still stage-2 picture; the stage animation itself is unchanged.
+     */
+    interactive?: boolean;
     /** Accessible description; the canvas is an image of it. */
     label?: string;
     className?: string;
@@ -59,7 +66,7 @@ export declare function convergeNetLayout(n: number, seed: number): {
 };
 /** Draws one frame `t` (0..1.4) of the network into a 2D context of W×H CSS px. */
 export declare function drawConvergeNet(x: CanvasRenderingContext2D, W: number, H: number, t: number, net: ReturnType<typeof convergeNetLayout>, fg: string): void;
-export declare function ConvergeNet({ stage, center, notes, groups, nodes, seed, tone, play, duration, t, label, className, style }: ConvergeNetProps): React.JSX.Element;
+export declare function ConvergeNet(props: ConvergeNetProps): React.JSX.Element;
 /** Four stages, PARA groups, on the page surface (home v6 interlude). */
 export declare const convergeNetStagesDemo: ConvergeNetProps;
 /** Stage 2 with labels: the home interlude's local graph (web-builder, t≈1.9 of converge-net-4). */
