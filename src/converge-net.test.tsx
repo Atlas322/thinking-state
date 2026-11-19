@@ -72,3 +72,46 @@ describe("BuildWizard with no props", () => {
     expect(container.textContent?.length ?? 0).toBeGreaterThan(20);
   });
 });
+
+describe("BrainGraph (Obsidian маяг, 2026-11-19)", () => {
+  const center = { label: "INAI онлайн орчин" };
+  const notes = [{ label: "Судалгаа", href: "/research.html" }, { label: "Figma дизайн" }, { label: "Brand kit", href: "/brand.html" }];
+
+  it("lays the same graph for the same seed; the centre links to every hub", async () => {
+    const { brainGraphLayout } = await import("./motion/brain-graph");
+    const a = brainGraphLayout(center, notes, 40, 11), b = brainGraphLayout(center, notes, 40, 11);
+    expect(JSON.stringify(a)).toBe(JSON.stringify(b));
+    expect(JSON.stringify(brainGraphLayout(center, notes, 40, 12))).not.toBe(JSON.stringify(a));
+    expect(a.nodes).toHaveLength(1 + notes.length + 40);
+    for (let i = 1; i <= notes.length; i++) expect(a.links).toContainEqual([0, i]);
+  });
+
+  it("hubs carry more links than plain notes, so they draw bigger", async () => {
+    const { brainGraphLayout } = await import("./motion/brain-graph");
+    const g = brainGraphLayout(center, notes, 60, 11);
+    const hubMin = Math.min(...g.degree.slice(1, notes.length + 1));
+    const noteMax = Math.max(...g.degree.slice(notes.length + 1));
+    expect(hubMin).toBeGreaterThan(noteMax);
+  });
+
+  it("ConvergeNet interactive renders the graph: an image with a description and real links", () => {
+    render(<ConvergeNet interactive stage={2} tone="cream" center={center} notes={notes} />);
+    const img = screen.getByRole("img", { name: /INAI онлайн орчин/ });
+    expect(img.tagName).toBe("CANVAS");
+    const links = screen.getAllByRole("link");
+    expect(links.map((a) => a.getAttribute("href"))).toEqual(["/research.html", "/brand.html"]);
+  });
+
+  it("without interactive the still stage-2 picture is unchanged", () => {
+    render(<ConvergeNet stage={2} tone="cream" center={center} notes={notes} />);
+    expect(screen.getByRole("img").getAttribute("data-stage")).toBe("2");
+  });
+});
+
+describe("BrainGraph on touch screens", () => {
+  it("lets a vertical swipe scroll the page instead of trapping it", async () => {
+    const { BrainGraph } = await import("./motion/brain-graph");
+    render(<BrainGraph center={{ label: "Төв" }} notes={[{ label: "А" }]} />);
+    expect((screen.getByRole("img") as HTMLCanvasElement).style.touchAction).toBe("pan-y");
+  });
+});
